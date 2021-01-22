@@ -42,7 +42,9 @@ Architecture of a Database System 中文翻译
 
 
 3  编程语言
+
 SCIP：
+
 https://github.com/DeathKing/Learning-SICP
 
 https://github.com/wizardforcel/sicp-py-zh
@@ -52,6 +54,7 @@ https://github.com/wizardforcel/sicp-py-zh
 如何屠龙？ https://www.zhihu.com/column/lfkdsk
 
 https://github.com/jiacai2050/sicp
+
 
 python编程：
 
@@ -86,6 +89,7 @@ https://docs.python.org/zh-cn/3/library/index.html
 
 
 C++: 
+
 C++ primer
 https://github.com/applenob/Cpp_Primer_Practice
 
