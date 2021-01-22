@@ -15,6 +15,7 @@ CSAPP ：
 深入理解计算机系统》读书笔记_个人文章 - SegmentFault 思否： https://segmentfault.com/a/1190000015444386
 
 OSTEP:  
+
 FrontPage - OscourseWiki ：   http://os.cs.tsinghua.edu.cn/oscourse/
 操作系统 Archives - JciX ~ ： http://blog.jcix.top/tag/%e6%93%8d%e4%bd%9c%e7%b3%bb%e7%bb%9f/
 
@@ -27,7 +28,8 @@ linux :
 The Linux Command Line(TLCL)
 http://billie66.github.io/TLCL/book/
 
-Docker: 
+Docker:
+
 Docker— 从入门到实践 
 https://yeasy.gitbook.io/docker_practice/
 
@@ -91,12 +93,15 @@ https://docs.python.org/zh-cn/3/library/index.html
 C++: 
 
 C++ primer
+
 https://github.com/applenob/Cpp_Primer_Practice
 
 efficitive C++
+
 https://blog.csdn.net/fengbingchun/article/details/102761542
 
 more efficitive C++ 及其他
+
 https://blog.csdn.net/fengbingchun/article/details/102990753
  
 
