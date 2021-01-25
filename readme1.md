@@ -1,5 +1,5 @@
 
-路线图
+**路线图**
 
 https://github.com/csr632/awesome-learning-resources
 
@@ -9,12 +9,12 @@ https://github.com/EdisonLeeeee/Awesome-Learning-Resource
 
 **1  OS**
 
-CSAPP ：
+**CSAPP ：**
 
 深度人工智障：[读书笔记]CSAPP深入理解计算机系统： https://zhuanlan.zhihu.com/p/103476182
 深入理解计算机系统》读书笔记_个人文章 - SegmentFault 思否： https://segmentfault.com/a/1190000015444386
 
-OSTEP:  
+**OSTEP:  **
 
 FrontPage - OscourseWiki ：   http://os.cs.tsinghua.edu.cn/oscourse/
 操作系统 Archives - JciX ~ ： http://blog.jcix.top/tag/%e6%93%8d%e4%bd%9c%e7%b3%bb%e7%bb%9f/
@@ -22,7 +22,7 @@ FrontPage - OscourseWiki ：   http://os.cs.tsinghua.edu.cn/oscourse/
 https://github.com/remzi-arpacidusseau/ostep-code
 
 
-linux :
+**linux :**
 空灵猎手：《Linux/UNIX系统编程手册》读书笔记 ： https://zhuanlan.zhihu.com/p/70973666
 
 The Linux Command Line(TLCL)
@@ -45,7 +45,7 @@ Architecture of a Database System 中文翻译
 
 **3  编程语言**
 
-SCIP：
+**SCIP：**
 
 https://github.com/DeathKing/Learning-SICP
 
@@ -58,7 +58,7 @@ https://github.com/wizardforcel/sicp-py-zh
 https://github.com/jiacai2050/sicp
 
 
-python编程：
+**python编程：**
 
 https://github.com/vinta/awesome-python
 
@@ -90,7 +90,7 @@ python标准库：
 https://docs.python.org/zh-cn/3/library/index.html
 
 
-C++: 
+**C++: **
 
 C++ primer
 
