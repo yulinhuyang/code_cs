@@ -23,6 +23,7 @@ https://github.com/remzi-arpacidusseau/ostep-code
 
 
 **linux :**
+
 空灵猎手：《Linux/UNIX系统编程手册》读书笔记 ： https://zhuanlan.zhihu.com/p/70973666
 
 The Linux Command Line(TLCL)
@@ -103,14 +104,23 @@ https://blog.csdn.net/fengbingchun/article/details/102761542
 more efficitive C++ 及其他
 
 https://blog.csdn.net/fengbingchun/article/details/102990753
- 
+
+Android编程： 
+
+第一行android代码
 
 **4  设计模式与软件工程**
 
-https://blog.csdn.net/LoveLion/article/details/17517213
-
-
 代码整洁之道： https://segmentfault.com/a/1190000019565037
+
+代码大全:  https://www.cnblogs.com/taceywong/p/8724601.html
+
+程序员修炼之道： https://www.cnblogs.com/me115/p/4035469.html
+
+设计模式(GOF)： https://zhuanlan.zhihu.com/p/150013932
+
+设计模式的艺术:   https://blog.csdn.net/LoveLion/article/details/17517213
+
 
 https://github.com/knightsj/object-oriented-design
 
