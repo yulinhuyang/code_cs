@@ -7,7 +7,7 @@ https://github.com/EdisonLeeeee/Awesome-Learning-Resource
 
 算法路线图：  https://zhuanlan.zhihu.com/p/192633890
 
-1  OS
+**1  OS**
 
 CSAPP ：
 
@@ -34,7 +34,7 @@ Docker— 从入门到实践
 https://yeasy.gitbook.io/docker_practice/
 
 
-2   分布式数据系统
+**2   分布式数据系统**
 
 Readings in Database Systems ：https://www.zhihu.com/column/readings-in-database
 
@@ -43,7 +43,7 @@ Readings in Database Systems ：https://www.zhihu.com/column/readings-in-databas
 Architecture of a Database System 中文翻译
 
 
-3  编程语言
+**3  编程语言**
 
 SCIP：
 
