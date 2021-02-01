@@ -6,3 +6,5 @@
 [18 Plugins for Writing Python in VS Code](https://switowski.com/blog/18-plugins-for-python-in-vscode)
 
 [ProcessPoolExecutor使用，见python cookbook](https://python3-cookbook.readthedocs.io/zh_CN/latest/c12/p08_perform_simple_parallel_programming.html?highlight=ProcessPoolExecutor)
+
+[python 多进程使用](https://docs.python.org/zh-cn/3/library/concurrent.futures.html)
