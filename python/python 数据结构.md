@@ -1,7 +1,7 @@
 
 Problem Solving with Algorithms and Data Structures Using Python SECOND EDITION
 
-中译:python数据结构与算法分析
+开源版： https://github.com/facert/python-data-structure-cn
 
 Data Structures and Algorithms in Python
 
