@@ -4,3 +4,5 @@
 [VsCode写Python时的代码错误提醒和自动格式化！](https://blog.csdn.net/Mrs_chens/article/details/102566018)
 
 [18 Plugins for Writing Python in VS Code](https://switowski.com/blog/18-plugins-for-python-in-vscode)
+
+[ProcessPoolExecutor使用，见python cookbook](https://python3-cookbook.readthedocs.io/zh_CN/latest/c12/p08_perform_simple_parallel_programming.html?highlight=ProcessPoolExecutor)
