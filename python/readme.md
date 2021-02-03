@@ -8,3 +8,6 @@
 [ProcessPoolExecutor使用，见python cookbook](https://python3-cookbook.readthedocs.io/zh_CN/latest/c12/p08_perform_simple_parallel_programming.html?highlight=ProcessPoolExecutor)
 
 [python 多进程使用](https://docs.python.org/zh-cn/3/library/concurrent.futures.html)
+
+
+[cs231 python_numpy手册](https://xuepro.github.io/2018/05/09/Python-Numpy-Tutoria/)
