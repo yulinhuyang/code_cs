@@ -123,7 +123,13 @@ Android编程：
 
 **4  设计模式与软件工程**
 
-Google style guide：https://github.com/google/styleguide
+Google style guide：
+
+https://github.com/google/styleguide
+
+https://github.com/zh-google-styleguide/zh-google-styleguide
+
+https://zh-google-styleguide.readthedocs.io/en/latest/
 
 代码整洁之道： https://segmentfault.com/a/1190000019565037
 
