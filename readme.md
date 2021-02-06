@@ -121,6 +121,10 @@ Android编程：
 
 第一行android代码
 
+https://www.jianshu.com/p/1f5c6c0a6a31
+
+https://github.com/guolindev/booksource
+
 **4  设计模式与软件工程**
 
 Google style guide：
