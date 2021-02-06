@@ -32,7 +32,7 @@ The Linux Command Line(TLCL)
 
 http://billie66.github.io/TLCL/book/
 
-Docker:
+**Docker:**
 
 Docker— 从入门到实践 
 https://yeasy.gitbook.io/docker_practice/
@@ -91,6 +91,7 @@ https://github.com/iamseancheney/python_for_data_analysis_2nd_chinese_version
 https://github.com/wesm/pydata-book
 
 python标准库：
+
 https://docs.python.org/zh-cn/3/library/index.html
 
 effective python:
@@ -103,7 +104,7 @@ python3 面向对象：
 
 https://github.com/PacktPublishing/Python-3-Object-Oriented-Programming-Third-Edition
 
-**C++**
+**C++:**
 
 C++ primer
 
@@ -117,7 +118,7 @@ more efficitive C++ 及其他
 
 https://blog.csdn.net/fengbingchun/article/details/102990753
 
-Android编程： 
+**Android编程：** 
 
 第一行android代码
 
@@ -127,7 +128,7 @@ https://github.com/guolindev/booksource
 
 **4  设计模式与软件工程**
 
-Google style guide：
+**Google style guid系列：**
 
 https://github.com/google/styleguide
 
@@ -141,9 +142,15 @@ https://zh-google-styleguide.readthedocs.io/en/latest/
 
 程序员修炼之道： https://www.cnblogs.com/me115/p/4035469.html
 
-设计模式(GOF)： https://zhuanlan.zhihu.com/p/150013932
+**oop设计与设计模式**
 
-设计模式的艺术:   https://blog.csdn.net/LoveLion/article/details/17517213
+设计模式(GOF)：
+
+https://zhuanlan.zhihu.com/p/150013932
+
+设计模式的艺术:   
+
+https://blog.csdn.net/LoveLion/article/details/17517213
 
 
 https://github.com/knightsj/object-oriented-design
