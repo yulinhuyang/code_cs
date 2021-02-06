@@ -128,7 +128,7 @@ https://github.com/guolindev/booksource
 
 **4  设计模式与软件工程**
 
-**Google style guid系列：**
+**Google style guide系列：**
 
 https://github.com/google/styleguide
 
@@ -136,11 +136,18 @@ https://github.com/zh-google-styleguide/zh-google-styleguide
 
 https://zh-google-styleguide.readthedocs.io/en/latest/
 
-代码整洁之道： https://segmentfault.com/a/1190000019565037
+代码整洁之道：
 
-代码大全:  https://www.cnblogs.com/taceywong/p/8724601.html
+https://segmentfault.com/a/1190000019565037
 
-程序员修炼之道： https://www.cnblogs.com/me115/p/4035469.html
+代码大全: 
+
+https://www.cnblogs.com/taceywong/p/8724601.html
+
+程序员修炼之道： 
+
+https://www.cnblogs.com/me115/p/4035469.html
+
 
 **oop设计与设计模式**
 
