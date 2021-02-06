@@ -15,7 +15,7 @@ https://github.com/EdisonLeeeee/Awesome-Learning-Resource
 
 深入理解计算机系统》读书笔记_个人文章 - SegmentFault 思否： https://segmentfault.com/a/1190000015444386
 
-**OSTEP:  **
+**OSTEP :**
 
 FrontPage - OscourseWiki ：   http://os.cs.tsinghua.edu.cn/oscourse/
 
