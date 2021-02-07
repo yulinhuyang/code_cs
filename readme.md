@@ -90,6 +90,8 @@ https://github.com/iamseancheney/python_for_data_analysis_2nd_chinese_version
 
 https://github.com/wesm/pydata-book
 
+https://www.jianshu.com/p/04d180d90a3f
+
 python标准库：
 
 https://docs.python.org/zh-cn/3/library/index.html
