@@ -25,3 +25,5 @@ python tricks: https://www.zhihu.com/question/48755767
 [【万字长文详解】Python库collections，让你击败99%的Pythoner](https://zhuanlan.zhihu.com/p/343747724)
 
 [Python基础方法详解](https://www.zhihu.com/column/c_1333396693417222144)
+
+[python数据结构与标准库module](https://github.com/yongxinz/tech-blog)
