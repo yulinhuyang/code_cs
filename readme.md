@@ -96,6 +96,8 @@ python标准库：
 
 https://docs.python.org/zh-cn/3/library/index.html
 
+https://learnku.com/docs/pymotw
+
 effective python:
 
 https://github.com/bslatkin/effectivepython
