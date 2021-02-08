@@ -17,3 +17,5 @@
 python tricks: https://www.zhihu.com/question/48755767
 
 [30个Python常用小技巧](https://www.pythontab.com/html/2018/pythonjichu_0917/1351.html)
+
+[程序员常用的10个Python技巧](https://zhuanlan.zhihu.com/p/341547966)
