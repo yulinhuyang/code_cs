@@ -19,3 +19,9 @@ python tricks: https://www.zhihu.com/question/48755767
 [30个Python常用小技巧](https://www.pythontab.com/html/2018/pythonjichu_0917/1351.html)
 
 [程序员常用的10个Python技巧](https://zhuanlan.zhihu.com/p/341547966)
+
+[Python中的高效迭代库itertools，排列组合随便求](https://zhuanlan.zhihu.com/p/349856235)
+
+[【万字长文详解】Python库collections，让你击败99%的Pythoner](https://zhuanlan.zhihu.com/p/343747724)
+
+[Python基础方法详解](https://www.zhihu.com/column/c_1333396693417222144)
