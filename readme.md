@@ -125,6 +125,12 @@ more efficitive C++ 及其他
 
 https://blog.csdn.net/fengbingchun/article/details/102990753
 
+**java**
+
+java核心技术
+
+https://www.zhihu.com/column/c_1208087644271697920
+
 **Android编程：** 
 
 第一行android代码
