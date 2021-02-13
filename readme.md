@@ -182,3 +182,17 @@ https://github.com/pezy/DesignPatterns
 https://github.com/kamranahmedse/design-patterns-for-humans
 
 https://github.com/iluwatar/java-design-patterns
+
+
+## 5   框架与工具
+
+
+OOP程序与系统设计框架： 设计模式
+
+工具与编程规范框架： 
+
+
+挑战性编程开源项目
+
+https://web.eecs.utk.edu/~azh/blog/challengingprojects.html
+
