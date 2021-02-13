@@ -1,5 +1,5 @@
 
-**路线图**
+## **路线图**
 
 https://github.com/csr632/awesome-learning-resources
 
@@ -7,7 +7,7 @@ https://github.com/EdisonLeeeee/Awesome-Learning-Resource
 
 算法路线图：  https://zhuanlan.zhihu.com/p/192633890
 
-**1  OS**
+## **1  OS**
 
 **CSAPP ：**
 
@@ -41,7 +41,7 @@ Docker— 从入门到实践
 https://yeasy.gitbook.io/docker_practice/
 
 
-**2   分布式数据系统**
+## **2   分布式数据系统**
 
 Readings in Database Systems ：https://www.zhihu.com/column/readings-in-database
 
@@ -50,7 +50,7 @@ Readings in Database Systems ：https://www.zhihu.com/column/readings-in-databas
 Architecture of a Database System 中文翻译
 
 
-**3  编程语言**
+## **3  编程语言**
 
 **SCIP：**
 
@@ -139,7 +139,7 @@ https://www.jianshu.com/p/1f5c6c0a6a31
 
 https://github.com/guolindev/booksource
 
-**4  设计模式与软件工程**
+## **4  设计模式与软件工程**
 
 **Google style guide系列：**
 
@@ -189,7 +189,9 @@ https://github.com/iluwatar/java-design-patterns
 
 OOP程序与系统设计框架： 设计模式
 
-工具与编程规范框架： 
+
+
+工具与编程规范框架： pylint 
 
 
 挑战性编程开源项目
