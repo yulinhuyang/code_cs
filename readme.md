@@ -198,7 +198,9 @@ OOP程序与系统设计框架： 设计模式
 
 https://web.eecs.utk.edu/~azh/blog/challengingprojects.html
 
-面向对象软件开发实践之实战技能训练(领域驱动设计)
+面向对象软件开发实践之实战技能训练
+
+(领域驱动设计、面向对象分析与设计、C++面向对象高效编程)
 
 https://study.163.com/instructor/2658707.htm
 
