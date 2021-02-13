@@ -27,3 +27,6 @@ python tricks: https://www.zhihu.com/question/48755767
 [Python基础方法详解](https://www.zhihu.com/column/c_1333396693417222144)
 
 [python数据结构与标准库module](https://github.com/yongxinz/tech-blog)
+
+
+[GitHub 上适合新手的开源项目（Python 篇）](https://zhuanlan.zhihu.com/p/280039778?utm_source=qq)
