@@ -184,11 +184,22 @@ https://github.com/kamranahmedse/design-patterns-for-humans
 https://github.com/iluwatar/java-design-patterns
 
 
+**领域驱动设计**
+
+领域驱动设计模式、原理与实践
+
+领域驱动设计：软件核心复杂性应对之道
+
+
+**面向对象分析与设计**
+
+UML和模式应用
+
+
 ## 5   框架与工具
 
 
 OOP程序与系统设计框架： 设计模式
-
 
 
 工具与编程规范框架： pylint 
@@ -199,8 +210,6 @@ OOP程序与系统设计框架： 设计模式
 https://web.eecs.utk.edu/~azh/blog/challengingprojects.html
 
 面向对象软件开发实践之实战技能训练
-
-(领域驱动设计、面向对象分析与设计)
 
 https://study.163.com/instructor/2658707.htm
 
