@@ -7,11 +7,15 @@ https://github.com/EdisonLeeeee/Awesome-Learning-Resource
 
 https://github.com/keithnull/TeachYourselfCS-CN
 
+参考问题：https://www.zhihu.com/question/37321190
+
 算法路线图：  https://zhuanlan.zhihu.com/p/192633890
 
 大学课程： https://study.163.com/curricula/cs/grade-1.htm
 
 骑鹿人的计算机科学学习指南： https://github.com/akiritsu/cslearner.cn
+
+编程入门指南 v1.5: https://zhuanlan.zhihu.com/p/19959253
 
 ##  1  OS
 
