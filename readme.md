@@ -1,5 +1,5 @@
 
-# **路线图**
+## **路线图**
 
 https://github.com/csr632/awesome-learning-resources
 
@@ -9,9 +9,9 @@ https://github.com/EdisonLeeeee/Awesome-Learning-Resource
 
 大学课程： https://study.163.com/curricula/cs/grade-1.htm
 
-# **1  OS**
+##  **1  OS**
 
-## CSAPP 
+**CSAPP: **
 
 深度人工智障：[读书笔记]CSAPP深入理解计算机系统： https://zhuanlan.zhihu.com/p/103476182
 
@@ -51,9 +51,9 @@ https://blog.csdn.net/fengbingchun/category_725584.html
 
 Readings in Database Systems ：https://www.zhihu.com/column/readings-in-database
 
-数据密集型系统设计： https://github.com/Vonng/ddia
-
 Architecture of a Database System 中文翻译
+
+数据密集型系统设计： https://github.com/Vonng/ddia
 
 
 ## **3  编程语言**
@@ -137,6 +137,8 @@ java核心技术
 
 https://www.zhihu.com/column/c_1208087644271697920
 
+
+
 **Android编程：** 
 
 第一行android代码
@@ -144,7 +146,6 @@ https://www.zhihu.com/column/c_1208087644271697920
 https://www.jianshu.com/p/1f5c6c0a6a31
 
 https://github.com/guolindev/booksource
-
 
 
 **Google style guide系列：**
