@@ -5,9 +5,13 @@ https://github.com/csr632/awesome-learning-resources
 
 https://github.com/EdisonLeeeee/Awesome-Learning-Resource
 
+https://github.com/keithnull/TeachYourselfCS-CN
+
 算法路线图：  https://zhuanlan.zhihu.com/p/192633890
 
 大学课程： https://study.163.com/curricula/cs/grade-1.htm
+
+骑鹿人的计算机科学学习指南： https://github.com/akiritsu/cslearner.cn
 
 ##  1  OS
 
@@ -58,7 +62,7 @@ Architecture of a Database System 中文翻译
 
 ## 3  编程语言
 
-**SCIP屠龙**
+**SCIP与CTM**
 
 https://github.com/DeathKing/Learning-SICP
 
@@ -70,6 +74,10 @@ https://github.com/wizardforcel/sicp-py-zh
 
 https://github.com/jiacai2050/sicp
 
+
+编程范式CTM：
+
+Concepts, Techniques and Models of Computer Programming
 
 **python程序设计：**
 
