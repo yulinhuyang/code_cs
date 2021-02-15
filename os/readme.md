@@ -4,3 +4,5 @@
 系统与网络编程：Linux UNIX系统编程手册
 
 The Missing Semester of Your CS Education
+
+程序员的自我修养:链接、装载与库
