@@ -1,5 +1,5 @@
 
-## **路线图**
+# **路线图**
 
 https://github.com/csr632/awesome-learning-resources
 
@@ -9,9 +9,9 @@ https://github.com/EdisonLeeeee/Awesome-Learning-Resource
 
 大学课程： https://study.163.com/curricula/cs/grade-1.htm
 
-## **1  OS**
+# **1  OS**
 
-**CSAPP ：**
+## CSAPP 
 
 深度人工智障：[读书笔记]CSAPP深入理解计算机系统： https://zhuanlan.zhihu.com/p/103476182
 
