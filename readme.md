@@ -7,6 +7,8 @@ https://github.com/EdisonLeeeee/Awesome-Learning-Resource
 
 算法路线图：  https://zhuanlan.zhihu.com/p/192633890
 
+大学课程： https://study.163.com/curricula/cs/grade-1.htm
+
 ## **1  OS**
 
 **CSAPP ：**
