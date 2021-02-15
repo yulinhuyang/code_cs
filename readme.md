@@ -41,6 +41,10 @@ Docker— 从入门到实践
 https://yeasy.gitbook.io/docker_practice/
 
 
+程序员的自我修养:链接、装载与库
+
+https://blog.csdn.net/fengbingchun/category_725584.html
+
 ## **2   分布式数据系统**
 
 Readings in Database Systems ：https://www.zhihu.com/column/readings-in-database
@@ -139,7 +143,7 @@ https://www.jianshu.com/p/1f5c6c0a6a31
 
 https://github.com/guolindev/booksource
 
-## **4  设计模式与软件工程**
+
 
 **Google style guide系列：**
 
@@ -149,11 +153,17 @@ https://github.com/zh-google-styleguide/zh-google-styleguide
 
 https://zh-google-styleguide.readthedocs.io/en/latest/
 
+
+## **4  设计模式与软件工程**
+
 **软件工程**
 
 代码整洁之道：
 
 https://segmentfault.com/a/1190000019565037
+
+架构整洁之道：
+
 
 代码大全: 
 
@@ -163,8 +173,15 @@ https://www.cnblogs.com/taceywong/p/8724601.html
 
 https://www.cnblogs.com/me115/p/4035469.html
 
+构建之法——现代软件工程
 
-**oop设计与设计模式**
+
+**面向对象分析与设计**
+
+面向对象软件开发实践：基本技能、专业技术、实战技术
+
+https://study.163.com/instructor/2658707.htm
+
 
 设计模式(GOF)：
 
@@ -184,18 +201,20 @@ https://github.com/kamranahmedse/design-patterns-for-humans
 https://github.com/iluwatar/java-design-patterns
 
 
+UML和模式应用
+
+重构：改善既有代码的设计 
+
+敏捷软件开发（原则模式与实践）
+
+
 **领域驱动设计**
 
 领域驱动设计模式、原理与实践
 
 领域驱动设计：软件核心复杂性应对之道
 
-
-**面向对象分析与设计**
-
-UML和模式应用
-
-架构整洁之道
+实现领域驱动设计
 
 
 
@@ -204,7 +223,6 @@ UML和模式应用
 
 OOP程序与系统设计框架： 设计模式
 
-
 工具与编程规范框架： pylint 
 
 
@@ -212,7 +230,5 @@ OOP程序与系统设计框架： 设计模式
 
 https://web.eecs.utk.edu/~azh/blog/challengingprojects.html
 
-面向对象软件开发实践之实战技能训练
 
-https://study.163.com/instructor/2658707.htm
 
