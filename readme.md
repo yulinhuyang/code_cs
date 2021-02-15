@@ -1,5 +1,5 @@
 
-## **路线图**
+## 路线图
 
 https://github.com/csr632/awesome-learning-resources
 
@@ -9,9 +9,9 @@ https://github.com/EdisonLeeeee/Awesome-Learning-Resource
 
 大学课程： https://study.163.com/curricula/cs/grade-1.htm
 
-##  **1  OS**
+##  1  OS
 
-**CSAPP: **
+**CSAPP:**
 
 深度人工智障：[读书笔记]CSAPP深入理解计算机系统： https://zhuanlan.zhihu.com/p/103476182
 
@@ -47,7 +47,7 @@ https://yeasy.gitbook.io/docker_practice/
 
 https://blog.csdn.net/fengbingchun/category_725584.html
 
-## **2   分布式数据系统**
+## 2   分布式数据系统
 
 Readings in Database Systems ：https://www.zhihu.com/column/readings-in-database
 
@@ -56,9 +56,9 @@ Architecture of a Database System 中文翻译
 数据密集型系统设计： https://github.com/Vonng/ddia
 
 
-## **3  编程语言**
+## 3  编程语言
 
-**SCIP：**
+**SCIP屠龙**
 
 https://github.com/DeathKing/Learning-SICP
 
@@ -71,7 +71,7 @@ https://github.com/wizardforcel/sicp-py-zh
 https://github.com/jiacai2050/sicp
 
 
-**python编程：**
+**python程序设计：**
 
 https://github.com/vinta/awesome-python
 
@@ -117,7 +117,7 @@ python3 面向对象：
 
 https://github.com/PacktPublishing/Python-3-Object-Oriented-Programming-Third-Edition
 
-**C++:**
+**C++程序设计**
 
 C++ primer
 
@@ -131,7 +131,7 @@ more efficitive C++ 及其他
 
 https://blog.csdn.net/fengbingchun/article/details/102990753
 
-**java**
+**java程序设计**
 
 java核心技术
 
@@ -139,7 +139,7 @@ https://www.zhihu.com/column/c_1208087644271697920
 
 
 
-**Android编程：** 
+**Android程序设计** 
 
 第一行android代码
 
@@ -229,9 +229,13 @@ OOP程序与系统设计框架： 设计模式
 工具与编程规范框架： pylint 
 
 
-挑战性编程开源项目
+挑战性编程开源项目:  https://web.eecs.utk.edu/~azh/blog/challengingprojects.html
 
-https://web.eecs.utk.edu/~azh/blog/challengingprojects.html
+GitHub 上适合新手的开源项目（Python 篇）: https://zhuanlan.zhihu.com/p/280039778?utm_source=qq
+
+适合 Java 新手的开源项目集合: https://zhuanlan.zhihu.com/p/312484956
+
+适合 C++ 新手学习的开源项目： https://zhuanlan.zhihu.com/p/273682109
 
 
 
