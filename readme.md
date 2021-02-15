@@ -83,6 +83,8 @@ https://github.com/jiacai2050/sicp
 
 Concepts, Techniques and Models of Computer Programming
 
+https://www.bilibili.com/video/av56360595/
+
 **python程序设计：**
 
 https://github.com/vinta/awesome-python
