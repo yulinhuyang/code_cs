@@ -81,11 +81,11 @@ https://github.com/wizardforcel/sicp-py-zh
 https://github.com/jiacai2050/sicp
 
 
-编程范式CTM：
+编程范式与OOP思想
 
-Concepts, Techniques and Models of Computer Programming
+编程范式： https://www.bilibili.com/video/av56360595/
 
-https://www.bilibili.com/video/av56360595/
+程序设计语言-实践之路
 
 
 **python程序设计：**
