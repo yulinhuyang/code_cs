@@ -81,7 +81,7 @@ https://github.com/wizardforcel/sicp-py-zh
 https://github.com/jiacai2050/sicp
 
 
-编程范式与OOP思想
+冒号学堂：编程范式与OOP思想
 
 编程范式： https://www.bilibili.com/video/av56360595/
 
