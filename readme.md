@@ -66,7 +66,9 @@ Architecture of a Database System 中文翻译
 
 ## 3  编程语言
 
-**SCIP与CTM**
+**编程范式**
+
+SCIP
 
 https://github.com/DeathKing/Learning-SICP
 
@@ -84,6 +86,7 @@ https://github.com/jiacai2050/sicp
 Concepts, Techniques and Models of Computer Programming
 
 https://www.bilibili.com/video/av56360595/
+
 
 **python程序设计：**
 
