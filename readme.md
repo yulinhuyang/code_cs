@@ -152,7 +152,17 @@ https://blog.csdn.net/fengbingchun/article/details/102990753
 
 java核心技术
 
+https://github.com/dunwu/javacore
+
 https://www.zhihu.com/column/c_1208087644271697920
+
+effective java： 
+
+https://github.com/mengdd/Effective-Java-Reading-Notes
+
+java 并发编程实战：
+
+https://github.com/ZHENFENG13/concurrent-programming
 
 第一行android代码
 
