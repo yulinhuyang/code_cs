@@ -59,8 +59,6 @@ https://blog.csdn.net/fengbingchun/category_725584.html
 
 计算机科学中的数学：https://github.com/xubeng/mathematics-for-computer-science/
 
-
-
 Readings in Database Systems ：https://www.zhihu.com/column/readings-in-database
 
 Architecture of a Database System 中文翻译
