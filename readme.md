@@ -55,7 +55,11 @@ https://yeasy.gitbook.io/docker_practice/
 
 https://blog.csdn.net/fengbingchun/category_725584.html
 
-## 2   分布式数据系统
+## 2   数学与数据系统
+
+计算机科学中的数学：https://github.com/xubeng/mathematics-for-computer-science/
+
+
 
 Readings in Database Systems ：https://www.zhihu.com/column/readings-in-database
 
