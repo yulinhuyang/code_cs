@@ -132,6 +132,8 @@ https://github.com/bslatkin/effectivepython
 
 https://blog.csdn.net/if_it_is_deadline/article/details/80298777
 
+https://github.com/guoruibiao/Effective-Python
+
 python3 面向对象：
 
 https://github.com/PacktPublishing/Python-3-Object-Oriented-Programming-Third-Edition
