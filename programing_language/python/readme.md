@@ -32,3 +32,6 @@ python tricks: https://www.zhihu.com/question/48755767
 [GitHub 上适合新手的开源项目（Python 篇）](https://zhuanlan.zhihu.com/p/280039778?utm_source=qq)
 
 [Python架构模式](https://zhuanlan.zhihu.com/p/257281522)
+
+[apachecn python 翻译集](https://github.com/apachecn/apachecn-python-zh)
+
