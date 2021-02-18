@@ -138,6 +138,12 @@ python3 面向对象：
 
 https://github.com/PacktPublishing/Python-3-Object-Oriented-Programming-Third-Edition
 
+python 架构模式（Architecture Patterns with Python):
+
+https://github.com/cosmicpython/book
+
+http://www.cosmicpython.com/book/preface.html
+
 **C++程序设计**
 
 C++ primer
