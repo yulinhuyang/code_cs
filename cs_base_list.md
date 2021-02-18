@@ -153,7 +153,7 @@ efficitive C++
 
 https://blog.csdn.net/fengbingchun/article/details/102761542
 
-more efficitive C++ 及其他
+more efficitive C++ 、Effective STL 、Effective Modern C++
 
 https://blog.csdn.net/fengbingchun/article/details/102990753
 
