@@ -205,14 +205,13 @@ https://zh-google-styleguide.readthedocs.io/en/latest/
 
 **软件工程 & 敏捷开发**
 
-软件工程（C编码实践篇）: https://mooc.study.163.com/course/1000002006#/info
+软件工程（C编码实践篇）
+
+https://mooc.study.163.com/course/1000002006#/info
 
 代码整洁之道：
 
 https://segmentfault.com/a/1190000019565037
-
-架构整洁之道：
-
 
 代码大全: 
 
@@ -224,13 +223,13 @@ https://www.cnblogs.com/me115/p/4035469.html
 
 构建之法——现代软件工程
 
+敏捷软件开发（原则模式与实践）
 
-**面向对象分析与设计**
+**面向对象分析与设计（OOP）**
 
 面向对象软件开发实践：基本技能、专业技术、实战技术
 
 https://study.163.com/instructor/2658707.htm
-
 
 设计模式(GOF)：
 
@@ -240,10 +239,7 @@ https://zhuanlan.zhihu.com/p/150013932
 
 https://blog.csdn.net/LoveLion/article/details/17517213
 
-
 https://github.com/knightsj/object-oriented-design
-
-https://github.com/pezy/DesignPatterns
 
 https://github.com/kamranahmedse/design-patterns-for-humans
 
@@ -254,10 +250,8 @@ UML和模式应用
 
 重构：改善既有代码的设计 
 
-敏捷软件开发（原则模式与实践）
 
-
-**领域驱动设计**
+**领域驱动设计(DDD)**
 
 领域驱动设计：软件核心复杂性应对之道
 
@@ -274,6 +268,14 @@ https://blog.fishedee.com/2020-11-28
 https://insights.thoughtworks.cn/backend-development-ddd/
 
 https://github.com/VaughnVernon/IDDD_Samples
+
+
+**架构**
+
+架构整洁之道
+
+Design Data-Intensive Applications
+
 
 
 ## 5   框架与工具
