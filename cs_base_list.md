@@ -142,6 +142,10 @@ python 架构模式（Architecture Patterns with Python):
 
 https://github.com/cosmicpython/book
 
+python应用特性：
+
+python3核心编程
+
 
 **C++程序设计**
 
@@ -161,7 +165,7 @@ C++ 面向对象高效编程
 
 **java_Android程序设计**
 
-java核心技术
+java核心技术（卷1 基础）
 
 https://github.com/dunwu/javacore
 
@@ -174,6 +178,9 @@ https://github.com/mengdd/Effective-Java-Reading-Notes
 java 并发编程实战：
 
 https://github.com/ZHENFENG13/concurrent-programming
+
+java核心技术（卷2 高级特性）
+
 
 第一行android代码
 
