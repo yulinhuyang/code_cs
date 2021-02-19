@@ -203,7 +203,7 @@ https://zh-google-styleguide.readthedocs.io/en/latest/
 
 ## **4  设计模式与软件工程**
 
-**软件工程**
+**软件工程 & 敏捷开发**
 
 软件工程（C编码实践篇）: https://mooc.study.163.com/course/1000002006#/info
 
