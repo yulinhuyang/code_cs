@@ -19,13 +19,36 @@ https://github.com/keithnull/TeachYourselfCS-CN
 
 后端程序员成长阅读书目: https://www.douban.com/doulist/3719550/
 
-##  1  OS
+##  1  CS 基础
+
+### 1.1 编程范式
+
+SCIP
+
+https://github.com/DeathKing/Learning-SICP
+
+https://github.com/wizardforcel/sicp-py-zh
+
+深度人工智障：[读书笔记]SICP计算机程序的构造和解释  https://zhuanlan.zhihu.com/p/131588785
+
+如何屠龙？ https://www.zhihu.com/column/lfkdsk
+
+https://github.com/jiacai2050/sicp
+
+
+冒号学堂：编程范式与OOP思想
+
+编程范式： https://www.bilibili.com/video/av56360595/
+
+程序设计语言-实践之路
+
+### 1.2  OS
 
 **CSAPP:**
 
 深度人工智障：[读书笔记]CSAPP深入理解计算机系统： https://zhuanlan.zhihu.com/p/103476182
 
-深入理解计算机系统》读书笔记_个人文章 - SegmentFault 思否： https://segmentfault.com/a/1190000015444386
+深入理解计算机系统 读书笔记_个人文章 - SegmentFault 思否： https://segmentfault.com/a/1190000015444386
 
 **OSTEP :**
 
@@ -49,17 +72,14 @@ http://billie66.github.io/TLCL/book/
 
 **Docker:**
 
-Docker— 从入门到实践 
-https://yeasy.gitbook.io/docker_practice/
+Docker— 从入门到实践：https://yeasy.gitbook.io/docker_practice/
 
 
 程序员的自我修养:链接、装载与库
 
 https://blog.csdn.net/fengbingchun/category_725584.html
 
-## 2   数学与数据系统
-
-计算机科学中的数学：https://github.com/xubeng/mathematics-for-computer-science/
+### 1.3 数据库
 
 Readings in Database Systems ：https://www.zhihu.com/column/readings-in-database
 
@@ -72,31 +92,16 @@ https://github.com/Vonng/ddia
 https://blog.fishedee.com/2020-12-09
 
 
-## 3  编程语言
+### 1.4   数学与数据结构
 
-**编程范式**
-
-SCIP
-
-https://github.com/DeathKing/Learning-SICP
-
-https://github.com/wizardforcel/sicp-py-zh
-
-深度人工智障：[读书笔记]SICP计算机程序的构造和解释  https://zhuanlan.zhihu.com/p/131588785
-
-如何屠龙？ https://www.zhihu.com/column/lfkdsk
-
-https://github.com/jiacai2050/sicp
+计算机科学中的数学：https://github.com/xubeng/mathematics-for-computer-science/
 
 
-冒号学堂：编程范式与OOP思想
 
-编程范式： https://www.bilibili.com/video/av56360595/
-
-程序设计语言-实践之路
+## 2  编程语言 & 性能优化 & 高级特性
 
 
-**python程序设计：**
+### 2.1 python程序设计： 
 
 https://github.com/vinta/awesome-python
 
@@ -152,7 +157,7 @@ https://github.com/cosmicpython/book
 python3核心编程（应用）
 
 
-**C++程序设计**
+### 2.2 C++程序设计
 
 C++ primer：
 
@@ -168,7 +173,7 @@ https://blog.csdn.net/fengbingchun/article/details/102990753
 
 C++ 面向对象高效编程
 
-**java_Android程序设计**
+### 2.3 java_Android程序设计
 
 java核心技术（卷1 基础  卷2 高级）：
 
@@ -192,7 +197,7 @@ https://www.jianshu.com/p/1f5c6c0a6a31
 https://github.com/guolindev/booksource
 
 
-**Google style guide系列：**
+### 2.4  Google style guide系列
 
 https://github.com/google/styleguide
 
