@@ -17,6 +17,8 @@ https://github.com/keithnull/TeachYourselfCS-CN
 
 编程入门指南 v1.5: https://zhuanlan.zhihu.com/p/19959253
 
+后端程序员成长阅读书目: https://www.douban.com/doulist/3719550/
+
 ##  1  OS
 
 **CSAPP:**
