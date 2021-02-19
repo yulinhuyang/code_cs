@@ -89,14 +89,8 @@ https://www.zhihu.com/column/readings-in-database
 
 Architecture of a Database System 中文翻译
 
-数据密集型系统设计：
 
-https://github.com/Vonng/ddia
-
-https://blog.fishedee.com/2020-12-09
-
-
-### 1.4  数学与数据结构
+### 1.4  数学基础
 
 计算机科学中的数学：https://github.com/xubeng/mathematics-for-computer-science/
 
@@ -212,7 +206,7 @@ https://github.com/zh-google-styleguide/zh-google-styleguide
 https://zh-google-styleguide.readthedocs.io/en/latest/
 
 
-## 3  设计模式与软件工程 
+## 3  软件工程与系统设计 
 
 ### 3.1 软件工程 & 敏捷开发
 
@@ -281,11 +275,16 @@ https://insights.thoughtworks.cn/backend-development-ddd/
 https://github.com/VaughnVernon/IDDD_Samples
 
 
-### 3.4 架构
+### 3.4 架构与分布式
 
 架构整洁之道
 
-Design Data-Intensive Applications
+数据密集型系统设计：
+
+https://github.com/Vonng/ddia
+
+https://blog.fishedee.com/2020-12-09
+
 
 
 ## 4  框架与工具
