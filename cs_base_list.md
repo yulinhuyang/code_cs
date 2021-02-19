@@ -256,12 +256,15 @@ UML和模式应用
 
 **领域驱动设计**
 
-领域驱动设计模式、原理与实践
-
 领域驱动设计：软件核心复杂性应对之道
 
-实现领域驱动设计
+领域驱动设计模式、原理与实践
 
+实现领域驱动设计:
+
+https://insights.thoughtworks.cn/backend-development-ddd/
+
+https://github.com/VaughnVernon/IDDD_Samples
 
 
 ## 5   框架与工具
