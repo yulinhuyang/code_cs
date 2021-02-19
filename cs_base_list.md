@@ -116,6 +116,15 @@ https://github.com/yidao620c/python3-cookbook
 
 https://note-zw.readthedocs.io/zh/latest/Python/Python%20CookBook%20%E8%AF%BB%E4%B9%A6%E7%AC%94%E8%AE%B0/index.html
 
+
+effective python:
+
+https://github.com/bslatkin/effectivepython
+
+https://blog.csdn.net/if_it_is_deadline/article/details/80298777
+
+https://github.com/guoruibiao/Effective-Python
+
 python数据分析：
 
 https://github.com/iamseancheney/python_for_data_analysis_2nd_chinese_version
@@ -130,14 +139,6 @@ https://docs.python.org/zh-cn/3/library/index.html
 
 https://learnku.com/docs/pymotw
 
-effective python:
-
-https://github.com/bslatkin/effectivepython
-
-https://blog.csdn.net/if_it_is_deadline/article/details/80298777
-
-https://github.com/guoruibiao/Effective-Python
-
 python3 面向对象：
 
 https://github.com/PacktPublishing/Python-3-Object-Oriented-Programming-Third-Edition
@@ -146,22 +147,20 @@ python 架构模式（Architecture Patterns with Python):
 
 https://github.com/cosmicpython/book
 
-python应用特性：
-
-python3核心编程
+python3核心编程（应用）
 
 
 **C++程序设计**
 
-C++ primer
+C++ primer：
 
 https://github.com/applenob/Cpp_Primer_Practice
 
-efficitive C++
+efficitive C++：
 
 https://blog.csdn.net/fengbingchun/article/details/102761542
 
-more efficitive C++ 、Effective STL 、Effective Modern C++
+more efficitive C++ 、Effective STL 、Effective Modern C++：
 
 https://blog.csdn.net/fengbingchun/article/details/102990753
 
@@ -169,7 +168,7 @@ C++ 面向对象高效编程
 
 **java_Android程序设计**
 
-java核心技术（卷1 基础）
+java核心技术（卷1 基础  卷2 高级）：
 
 https://github.com/dunwu/javacore
 
@@ -183,10 +182,8 @@ java 并发编程实战：
 
 https://github.com/ZHENFENG13/concurrent-programming
 
-java核心技术（卷2 高级特性）
 
-
-第一行android代码
+第一行android代码：
 
 https://www.jianshu.com/p/1f5c6c0a6a31
 
@@ -262,7 +259,7 @@ UML和模式应用
 
 领域驱动设计：软件核心复杂性应对之道
 
-领域驱动设计模式、原理与实践
+领域驱动设计模式、原理与实践：
 
 https://github.com/elbandit/PPPDDD
 
