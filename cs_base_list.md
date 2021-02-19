@@ -260,6 +260,8 @@ UML和模式应用
 
 领域驱动设计模式、原理与实践
 
+https://blog.fishedee.com/2020-11-28
+
 实现领域驱动设计:
 
 https://insights.thoughtworks.cn/backend-development-ddd/
