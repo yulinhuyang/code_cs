@@ -67,7 +67,7 @@ Architecture of a Database System 中文翻译
 
 https://github.com/Vonng/ddia
 
-https://blog.fishedee.com/2020-11-28
+https://blog.fishedee.com/2020-12-09
 
 
 ## 3  编程语言
