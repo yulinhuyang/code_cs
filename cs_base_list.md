@@ -264,6 +264,8 @@ UML和模式应用
 
 领域驱动设计模式、原理与实践
 
+https://github.com/elbandit/PPPDDD
+
 https://www.cnblogs.com/edisonchou/p/edc_ddd_foundation_study_part1.html
 
 https://blog.fishedee.com/2020-11-28
