@@ -63,7 +63,11 @@ Readings in Database Systems ：https://www.zhihu.com/column/readings-in-databas
 
 Architecture of a Database System 中文翻译
 
-数据密集型系统设计： https://github.com/Vonng/ddia
+数据密集型系统设计：
+
+https://github.com/Vonng/ddia
+
+https://blog.fishedee.com/2020-11-28
 
 
 ## 3  编程语言
