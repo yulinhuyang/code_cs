@@ -19,11 +19,12 @@ https://github.com/keithnull/TeachYourselfCS-CN
 
 后端程序员成长阅读书目: https://www.douban.com/doulist/3719550/
 
+
 ##  1  CS 基础
 
 ### 1.1 编程范式
 
-SCIP
+SCIP:
 
 https://github.com/DeathKing/Learning-SICP
 
@@ -79,9 +80,12 @@ Docker— 从入门到实践：https://yeasy.gitbook.io/docker_practice/
 
 https://blog.csdn.net/fengbingchun/category_725584.html
 
+
 ### 1.3 数据库
 
-Readings in Database Systems ：https://www.zhihu.com/column/readings-in-database
+Readings in Database Systems 
+
+https://www.zhihu.com/column/readings-in-database
 
 Architecture of a Database System 中文翻译
 
@@ -92,7 +96,7 @@ https://github.com/Vonng/ddia
 https://blog.fishedee.com/2020-12-09
 
 
-### 1.4   数学与数据结构
+### 1.4  数学与数据结构
 
 计算机科学中的数学：https://github.com/xubeng/mathematics-for-computer-science/
 
@@ -154,7 +158,7 @@ python 架构模式（Architecture Patterns with Python):
 
 https://github.com/cosmicpython/book
 
-python3核心编程（应用）
+python3核心编程（高级特性）
 
 
 ### 2.2 C++程序设计
@@ -175,7 +179,7 @@ C++ 面向对象高效编程
 
 ### 2.3 java_Android程序设计
 
-java核心技术（卷1 基础  卷2 高级）：
+java核心技术（卷1 基础）：
 
 https://github.com/dunwu/javacore
 
@@ -188,6 +192,8 @@ https://github.com/mengdd/Effective-Java-Reading-Notes
 java 并发编程实战：
 
 https://github.com/ZHENFENG13/concurrent-programming
+
+java核心技术（卷2 高级特性）
 
 
 第一行android代码：
@@ -206,9 +212,9 @@ https://github.com/zh-google-styleguide/zh-google-styleguide
 https://zh-google-styleguide.readthedocs.io/en/latest/
 
 
-## **4  设计模式与软件工程**
+## 3  设计模式与软件工程 
 
-**软件工程 & 敏捷开发**
+### 3.1 软件工程 & 敏捷开发
 
 软件工程（C编码实践篇）
 
@@ -230,7 +236,7 @@ https://www.cnblogs.com/me115/p/4035469.html
 
 敏捷软件开发（原则模式与实践）
 
-**面向对象分析与设计（OOP）**
+### 3.2 面向对象分析与设计（OOP）
 
 面向对象软件开发实践：基本技能、专业技术、实战技术
 
@@ -256,7 +262,7 @@ UML和模式应用
 重构：改善既有代码的设计 
 
 
-**领域驱动设计(DDD)**
+### 3.3 领域驱动设计(DDD)
 
 领域驱动设计：软件核心复杂性应对之道
 
@@ -275,15 +281,14 @@ https://insights.thoughtworks.cn/backend-development-ddd/
 https://github.com/VaughnVernon/IDDD_Samples
 
 
-**架构**
+### 3.4 架构
 
 架构整洁之道
 
 Design Data-Intensive Applications
 
 
-
-## 5   框架与工具
+## 4  框架与工具
 
 
 OOP程序与系统设计框架： 设计模式
