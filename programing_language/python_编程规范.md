@@ -37,11 +37,11 @@
 
 用列表推导来代替 map 和 filter，字典和集合也都支持列表表达式
 
-chile_rank = {'ghost':1,'habanero':2,'cayenne':3}
+    chile_rank = {'ghost':1,'habanero':2,'cayenne':3}
 
-rank_dict = {rank:name for name,rank in child_rank.items()}
+    rank_dict = {rank:name for name,rank in child_rank.items()}
 
-chile_len_set = {len(name) for name in rank_dict.values()}
+    chile_len_set = {len(name) for name in rank_dict.values()}
 
 避免使用超过两个的表达式，可以使用多if代替
 
