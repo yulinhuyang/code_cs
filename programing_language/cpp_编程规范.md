@@ -82,4 +82,20 @@ STL迭代器系以指针为根据塑模出来，所以迭代器的作用就像�
 确保当对象自我赋值时operator=有良好行为。其中技术包括比较”来源对象”和”目标对象”的地址、精心周到的语句顺序、以及copy-and-swap
 
 
+**智能指针**
+
+*以对象管理资源*
+
+在C++11中auto_ptr已经被废弃，用unique_ptr替代
+
+unique_ptr 独占所指向的对象,shared_ptr 允许多个指针指向同一个对象
+
+(1).为防止资源泄漏，请使用RAII(Resource Acquisition Is Initialization,资源取得时机便是初始化时机)对象，它们在构造函数中获得资源并在析构函数中释放资源。(2).两个常被使用的RAII classes分别是stdn::shared_ptr和auto_ptr。前者通常是较佳选择，因为其copy行为比较直观。若选择auto_ptr，复制动作会使它(被复制物)指向null
+
+
+
+
+
+
+
 
