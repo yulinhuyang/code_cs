@@ -57,9 +57,9 @@ enumerate提供了简洁的语法，再循环迭代一个迭代器的同时既�
 
 Prefer：
 
-for i, flavor in enumerate(flavor_list):
+    for i, flavor in enumerate(flavor_list):
 
-    print(‘%d: %s’ % (i + 1, flavor)) 
+        print(‘%d: %s’ % (i + 1, flavor)) 
 
 用 zip 函数来同时遍历两个迭代器:
 
@@ -67,12 +67,12 @@ for i, flavor in enumerate(flavor_list):
 
 Prefer:
 
-names = [‘Cecilia’, ‘Lise’, ‘Marie’]
+    names = [‘Cecilia’, ‘Lise’, ‘Marie’]
 
-max_letters = 0
+    max_letters = 0
 
-letters = [len(n) for n in names]
+    letters = [len(n) for n in names]
 
-for name, count in zip(names, letters):
+    for name, count in zip(names, letters):
 
 ....
