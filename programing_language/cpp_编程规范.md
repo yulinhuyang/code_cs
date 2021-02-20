@@ -7,3 +7,10 @@
 
 (1). 对于单纯常量，最好以const对象或enum替换#define；(2). 对于形式函数的宏(macro)，最好改用inline函数替换#define。
 
+prefer:
+
+  class GamePlayer {
+  private:
+    static const int NumTurns = 5; // 常量声明式
+    int scores[NumTurns]; // 使用该常量
+  };
