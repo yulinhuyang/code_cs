@@ -33,4 +33,18 @@
 
 避免在分片中同时使用start，end，stride；如果非要使用，考虑两次赋值（一个分片，一个调幅），或者使用内置模块itertoolsde 的 islice方法来进行处理。
 
+**列表表达式for  in  if 结构**
+
+用列表推导来代替 map 和 filter，字典和集合也都支持列表表达式
+
+chile_rank = {'ghost':1,'habanero':2,'cayenne':3}
+
+rank_dict = {rank:name for name,rank in child_rank.items()}
+
+chile_len_set = {len(name) for name in rank_dict.values()}
+
+
+
+
+
 
