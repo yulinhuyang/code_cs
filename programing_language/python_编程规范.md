@@ -43,6 +43,12 @@ rank_dict = {rank:name for name,rank in child_rank.items()}
 
 chile_len_set = {len(name) for name in rank_dict.values()}
 
+避免使用超过两个的表达式，可以使用多if代替
+
+b = [x for x in a if x> 4 if x%2 ==0]
+
+c = [x for x in a if x > 4 and if x%2 ==0]
+
 
 
 
