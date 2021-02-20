@@ -92,10 +92,30 @@ unique_ptr 独占所指向的对象,shared_ptr(make_shared)允许多个指针指
 
 (1).为防止资源泄漏，请使用RAII(Resource Acquisition Is Initialization,资源取得时机便是初始化时机)对象，它们在构造函数中获得资源并在析构函数中释放资源。(2).两个常被使用的RAII classes分别是stdn::shared_ptr和auto_ptr。前者通常是较佳选择，因为其copy行为比较直观。若选择auto_ptr，复制动作会使它(被复制物)指向null
 
+**new和delete**
+
+	int test_item_16()
+	{
+		std::string* stringPtr1 = new std::string;
+		std::string* stringPtr2 = new std::string[100];
+
+		delete stringPtr1;    // 删除一个对象
+		delete [] stringPtr2; // 删除一个由对象组成的数组
+
+		typedef std::string AddressLines[4]; // 每个人的地址有4行，每行是一个string
+		std::string* pal = new AddressLines; // 注意："new AddressLines"返回一个string*,就像"new string[4]"一样
+
+		//delete pal;    // 行为未有定义
+		delete [] pal; // 很好
+
+		return 0;
+	}
 
 
+new(也就是通过new动态生成一个对象)，有两件事发生：第一，内存被分配出来(通过名为operator new的函数)；第二，针对此内存会有一个(或更多)构造函数被调用。
 
+delete，也有两件事发生：针对此内存会有一个(或更多)析构函数被调用，然后内存才被释放(通过名为operator delete的函数)。
 
-
+对着一个指针使用delete: 唯一能够让delete知道内存中是否存在一个”数组大小记录”的办法就是：由你来告诉它。如果你使用delete时加上中括号(方括号)，delete便认定指针指向一个数组，否则它便认定指针指向单一对象。
 
 
