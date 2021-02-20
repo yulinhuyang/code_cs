@@ -1,7 +1,9 @@
 
 1  efficitive C++ 
 
-**尽量以const, enum, inline替换#define(Prefer consts, enums, and inlines to #defines)**
+**Const使用**
+
+*尽量以const, enum, inline替换#define(Prefer consts, enums, and inlines to #defines)
 
 宁可以编译器替换预处理器
 
@@ -32,7 +34,8 @@ prefer:
 
 第二种是class专属长量。让它成为class的一个成员(member),让它成为一个static成员.
 
-**尽可能使用const**
+
+*尽可能使用const
 
 如果关键字const出现在星号左边，表示被指物是常量；如果出现在星号右边，表示指针自身是常量；如果出现在星号两边，表示被指物和指针两者都是常量。
 
@@ -41,11 +44,19 @@ STL迭代器系以指针为根据塑模出来，所以迭代器的作用就像�
 
 请记住：(1).将某些东西声明为const可帮助编译器侦测出错误用法。const可被施加于任何作用域内的对象、函数参数、函数返回类型、成员函数本体。(2).编译器强制实施bitwise constness。(3).当const和non-const成员函数有着实质等价的实现时，令non-const版本调用const版本可避免代码重复
 
-**确定对象被使用前已先被初始化**
+**构造与析构**
 
-**为多态基类声明virtual析构函数**
+*确定对象被使用前已先被初始化
 
-(1).polymorphic(带多态性质的)base classes应该声明一个virtual析构函数。如果class带有任何virtual函数，它就应该拥有一个virtual析构函数。(2).Classes的设计目的如果不是作为base classes使用，或不是为了具备多态性(polymorphically)，就不该声明virtual析构函数。
+
+**重载**
+
+令operator=返回一个reference to *this
+
+	Widget& operator+= (const Widget& rhs) // 这个协议适用于+=、-=、*=等等
+	{
+		return *this;
+	}
 
 
 
