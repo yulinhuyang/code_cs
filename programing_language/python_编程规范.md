@@ -49,8 +49,30 @@ b = [x for x in a if x> 4 if x%2 ==0]
 
 c = [x for x in a if x > 4 and if x%2 ==0]
 
+**迭代器：enumerate zip**
 
+enumerate 比range更好用:
 
+enumerate提供了简洁的语法，再循环迭代一个迭代器的同时既能获取下标，也能获取当前值。
 
+Prefer：
 
+for i, flavor in enumerate(flavor_list):
 
+    print(‘%d: %s’ % (i + 1, flavor)) 
+
+用 zip 函数来同时遍历两个迭代器:
+
+内置的zip函数可以并行的对多个迭代器进行处理;如果所处理的迭代器的长度不一致时，zip会默认截断输出.内置模块itertools中的zip_longest函数可以并行地处理多个迭代器，而可以无视长度不一致的问题。
+
+Prefer:
+
+names = [‘Cecilia’, ‘Lise’, ‘Marie’]
+
+max_letters = 0
+
+letters = [len(n) for n in names]
+
+for name, count in zip(names, letters):
+
+....
