@@ -18,3 +18,14 @@ prefer:
       int scores[NumTurns]; // 使用该常量
 
     };
+    
+    int test_item_2()
+    {
+        #define ASPECT_RATIO 1.653 // 不推荐
+        const double AspectRatio = 1.653; // 推荐
+
+        {const char* const authorName = "Scott Meyers";} // 推荐
+        const std::string autorName("Scott Meyers"); // 更推荐
+
+        return 0;
+    }
