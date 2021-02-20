@@ -1,4 +1,6 @@
-1    effcitive  python
+## 1    effcitive  python
+
+### 1.1 Pythonic Thinking
 
 **pep8**
 
@@ -94,7 +96,9 @@ Prefer:
 
     result = list(index_words_iter(address))
     
-    
+
+### 1.2 函数
+
 **闭包中是怎样使用外围作用域变量**
 
 global 关键字用于使用全局变量，nonlocal 关键字用于使用局部变量(函数内)
@@ -154,5 +158,9 @@ prefer:
     log('Hi there!')
     sleep(0.1)
     log('Hi again!')
+
+
+### 1.3 对象
+
 
 
