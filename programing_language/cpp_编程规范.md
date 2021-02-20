@@ -29,3 +29,10 @@ prefer:
 
         return 0;
     }
+
+第一种是定义常量指针(constant pointers)，由于常量定义式通常被放在头文件内(以便被不同的源码含入)，因此有必要将指针(而不只是指针所指之物)声明为const。string对象通常比其前辈char*-base合宜。
+
+第二种是class专属长量。让它成为class的一个成员(member),让它成为一个static成员.
+
+
+
