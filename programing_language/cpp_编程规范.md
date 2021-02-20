@@ -9,12 +9,12 @@
 
 prefer:
 
-  class GamePlayer {
-  
-  private:
-  
-    static const int NumTurns = 5; // 常量声明式
-    
-    int scores[NumTurns]; // 使用该常量
-    
-  };
+    class GamePlayer {
+
+    private:
+
+      static const int NumTurns = 5; // 常量声明式
+
+      int scores[NumTurns]; // 使用该常量
+
+    };
