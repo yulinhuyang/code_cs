@@ -43,22 +43,9 @@ STL迭代器系以指针为根据塑模出来，所以迭代器的作用就像�
 
 **确定对象被使用前已先被初始化**
 
+**为多态基类声明virtual析构函数**
 
-    ABEntry::ABEntry(const std::string& name, const std::string& address)
-    {
-        // 这些都是赋值(assignments)而非初始化(initializations)
-        // 首先调用default构造函数为这些变量设初值，然后立刻再对它们赋予新值
-        theName = name;
-        theAddress = address;
-        thePhones = 2;
-    }
-
-    ABEntry::ABEntry(const std::string& name, const std::string& address, int phones)
-        : theName(name), theAddress(address), thePhones(phones) // 这些都是初始化(initializations)
-    {} // 构造函数本体不必有任何动作
-
-    ABEntry::ABEntry() : theName(), theAddress(), thePhones(0) // 调用theName等的default构造函数
-
+(1).polymorphic(带多态性质的)base classes应该声明一个virtual析构函数。如果class带有任何virtual函数，它就应该拥有一个virtual析构函数。(2).Classes的设计目的如果不是作为base classes使用，或不是为了具备多态性(polymorphically)，就不该声明virtual析构函数。
 
 
 
