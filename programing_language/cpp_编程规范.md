@@ -1,5 +1,5 @@
 
-## 1  efficitive C++ 
+## 1  efficitive C++ 、more efficitive C++
 
 **Const使用**
 
@@ -48,6 +48,10 @@ STL迭代器系以指针为根据塑模出来，所以迭代器的作用就像�
 
 *确定对象被使用前已先被初始化*
 
+*使用析构函数防止资源泄漏*
+
+*在构造函数中防止资源泄漏*
+
 
 **重载**
 
@@ -81,6 +85,10 @@ STL迭代器系以指针为根据塑模出来，所以迭代器的作用就像�
 
 确保当对象自我赋值时operator=有良好行为。其中技术包括比较”来源对象”和”目标对象”的地址、精心周到的语句顺序、以及copy-and-swap
 
+
+ *不要重载”&&”, “||”,或”,”*
+ 
+ 
 
 **智能指针**
 
@@ -137,6 +145,16 @@ delete，也有两件事发生：针对此内存会有一个(或更多)析构函
 new表达式中使用[]，必须在相应的delete表达式中也使用[]。如果你在new表达式中不使用[]，一定不要在相应的delete表达式中使用[]。
 
 
+*理解各种不同含义的new和delete*
+
+new操作符(new operator)和new操作(operator new)的区别：
+
+new操作符：1 分配足够的内存以便容纳所需类型的对象，2调用构造函数初始化内存中的对象
+
+函数operator new：仅分配内存，不会调用构造函数
+
+函数operator delete与delete操作符的关系与operator new与new操作符的关系一样
+
 **接口设计**
 
 让接口容易被正确使用，不易被误用 
@@ -156,6 +174,12 @@ pass-by-reference-to-const：尽量以pass-by-reference-to-const替换pass-by-va
 
 绝不要返回pointer或reference指向一个local stack对象，或返回reference指向一个heap-allocated对象，或返回pointer或reference指向一个local static对象而有可能同时需要多个这样的对象。
 
+**指针与引用**
+
+在任何情况下都不能使用指向空值的引用。一个引用必须总是指向某些对象。在C++里，引用应被初始化。不存在指向空值的引用这个事实意味着使用引用的代码效率比使用指针的要高。
+
+
+
 **成员函数**
 
 *宁以non-member、non-friend替换member函数，可以增加封装性、包裹弹性(packaging flexibility)和机能扩充性*
@@ -170,7 +194,7 @@ pass-by-reference-to-const：尽量以pass-by-reference-to-const替换pass-by-va
 
 const_cast: 通常被用来将对象的常量性移除(cast away the constness)。它也是唯一有此能力的C++-style转型操作符
 
-dynamic_cast: 主要用来执行”安全向下转型”(safe downcasting)，也就是用来决定某对象是否归属继承体系中的某个类型
+dynamic_cast: 主要用来执行”安全向下转型”(safe downcasting)，也就是用来决定某对象是否归属继承体系中的某个类型，它不能被用来缺乏虚函数的类型上
 
 reinterpret_cast:意图执行低级转型，实际动作(及结果)可能取决于编译器
 
@@ -249,6 +273,69 @@ pure virtual函数：为了让derived classes只继承函数接口。
 non-virtual函数的：为了令derived classes继承函数的接口及一份强制性实现
 
 (1).接口继承和实现继承不同。在public继承之下，derived classes总是继承base class的接口。(2). pure virtual函数只具体指定接口继承。(3). 简朴的(非纯)impure virtual函数具体指定接口继承及缺省实现继承。(4). non-virtual函数具体指定接口继承以及强制性实现继承。
+
+
+*考虑virtual函数以外的其它选择*
+
+(1). virtual函数的替代方案包括non-virtual interface(NVI)手法及Strategy设计模式的多种形式。NVI手法自身是一个特殊形式的Template Method设计模式。
+
+(2). 将机能从成员函数移到class外部函数，带来的一个缺点是，非成员函数无法访问class的non-public成员。
+
+(3). std::function对象的行为就像一般函数指针。这样的对象可接纳”与给定之目标签名式(target signature)兼容”的所有可调用物(callable entities)。
+
+*绝对不要重新定义继承而来的non-virtual函数。*
+
+*绝不重新定义继承而来的缺省参数值*
+
+virtual函数系动态绑定(dynamically bound)，而缺省参数值确是静态绑定(statically bound)。静态绑定又名前期绑定，early binding；动态绑定又名后期绑定，late binding
+
+*通过复合塑模出has-a或”根据某物实现出”*
+
+	class Address {};
+	class PhoneNumber {};
+	class Person {
+	private:
+		std::string name;        // 合成成分物(composed object)
+		Address address;         // 同上
+		PhoneNumber voiceNumber; // 同上
+		PhoneNumber faxNumber;   // 同上
+	};
+
+(1). 复合(composition)的意义和public继承完全不同。
+
+(2). 在应用域(application domain)，复合意味has-a(有一个)。在实现域(implementation domain)，复合意味is-implemented-in-terms-of(根据某物实现出)。
+
+*明智而审慎地使用private继承*
+
+尽可能使用复合，必要时才使用private继承。
+
+(1). private继承意味is-implemented-in-terms-of(根据某物实现出)。它通常比复合(composition)的级别低。但是当derived class需要访问protected base class的成员，或需要重新定义继承而来的virtual函数时，这么设计是合理的。
+
+(2).和复合(composition)不同，private继承可以造成empty base最优化。这对致力于”对象尺寸最小化”的程序库开发者而言，可能很重要。
+
+**模板编程**
+
+*了解typename的双重意义*
+
+typename必须作为嵌套从属类型名称的前缀词
+
+(1).声明template参数时，前缀关键字class和typename可互换。
+
+(2).请使用关键字typename标识嵌套从属类型名称；但不得在base class lists(基类列)或member initialization list(成员初值列)内以它作为base class修饰符。
+
+*学习处理模板化基类内的名称*
+
+其他模板编程待补充。。。
+
+**异常**
+
+**系统优化**
+
+*牢记80-20准则(80-20 rule)*
+
+
+
+## 2  efficitive  STL
 
 
 
