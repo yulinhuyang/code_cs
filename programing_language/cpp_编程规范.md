@@ -152,9 +152,31 @@ pass-by-value：内置类型，以及STL的迭代器和函数对象
 
 pass-by-reference-to-const：尽量以pass-by-reference-to-const替换pass-by-value。前者通常比较高效，并可避免切割问题(slicing problem)。
 
+*必须返回对象时，别妄想返回其reference*
 
+绝不要返回pointer或reference指向一个local stack对象，或返回reference指向一个heap-allocated对象，或返回pointer或reference指向一个local static对象而有可能同时需要多个这样的对象。
 
+**成员函数**
 
+*宁以non-member、non-friend替换member函数，可以增加封装性、包裹弹性(packaging flexibility)和机能扩充性*
+
+*若所有参数皆需类型转换，请为此采用non-member函数*
+
+*尽可能延后变量定义式的出现时间*
+
+尽可能延后变量定义式的出现。这样做可增加程序的清晰度并改善程序效率。
+
+**casting**
+
+const_cast: 通常被用来将对象的常量性移除(cast away the constness)。它也是唯一有此能力的C++-style转型操作符
+
+dynamic_cast: 主要用来执行”安全向下转型”(safe downcasting)，也就是用来决定某对象是否归属继承体系中的某个类型
+
+reinterpret_cast:意图执行低级转型，实际动作(及结果)可能取决于编译器
+
+static_cast: 用来强迫隐式转换(implicit conversions)，例如将non-const对象转为const对象，或将int转为double等等
+
+如果可以，尽量避免转型，特别是在注重效率的代码中避免dynamic_cast。如果有个设计需要转型动作，试着发展无须转型的替代设计
 
 
 
