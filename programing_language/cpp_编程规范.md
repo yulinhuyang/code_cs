@@ -92,7 +92,23 @@ unique_ptr 独占所指向的对象,shared_ptr(make_shared)允许多个指针指
 
 (1).为防止资源泄漏，请使用RAII(Resource Acquisition Is Initialization,资源取得时机便是初始化时机)对象，它们在构造函数中获得资源并在析构函数中释放资源。(2).两个常被使用的RAII classes分别是stdn::shared_ptr和auto_ptr。前者通常是较佳选择，因为其copy行为比较直观。若选择auto_ptr，复制动作会使它(被复制物)指向null
 
+
+以独立语句将newed对象置入智能指针：
+
+	int test_item_17()
+	{
+		// 执行new Widget17; 调用priority; 调用std::shared_ptr构造函数，它们的执行顺序不确定
+		processWidget(std::shared_ptr<Widget17>(new Widget17), priority()); // 可能泄露资源
+
+		std::shared_ptr<Widget17> pw(new Widget17); // 在单独语句内以智能指针存储newed所得对象
+		processWidget(pw, priority()); // 这个调用动作绝不至于造成泄露
+
+		return 0;
+	}
+
 **new和delete**
+
+*成对使用new和delete时要采用相同形式*
 
 	int test_item_16()
 	{
@@ -116,6 +132,10 @@ new(也就是通过new动态生成一个对象)，有两件事发生：第一，
 
 delete，也有两件事发生：针对此内存会有一个(或更多)析构函数被调用，然后内存才被释放(通过名为operator delete的函数)。
 
-对着一个指针使用delete: 唯一能够让delete知道内存中是否存在一个”数组大小记录”的办法就是：由你来告诉它。如果你使用delete时加上中括号(方括号)，delete便认定指针指向一个数组，否则它便认定指针指向单一对象。
+指针使用delete: 唯一能够让delete知道内存中是否存在一个”数组大小记录”的办法就是：由你来告诉它。如果你使用delete时加上中括号(方括号)，delete便认定指针指向一个数组，否则它便认定指针指向单一对象。
+
+new表达式中使用[]，必须在相应的delete表达式中也使用[]。如果你在new表达式中不使用[]，一定不要在相应的delete表达式中使用[]。
+
+
 
 
