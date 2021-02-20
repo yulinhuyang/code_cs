@@ -1,5 +1,5 @@
 
-1  efficitive C++ 
+## 1  efficitive C++ 
 
 **Const使用**
 
@@ -135,6 +135,26 @@ delete，也有两件事发生：针对此内存会有一个(或更多)析构函
 指针使用delete: 唯一能够让delete知道内存中是否存在一个”数组大小记录”的办法就是：由你来告诉它。如果你使用delete时加上中括号(方括号)，delete便认定指针指向一个数组，否则它便认定指针指向单一对象。
 
 new表达式中使用[]，必须在相应的delete表达式中也使用[]。如果你在new表达式中不使用[]，一定不要在相应的delete表达式中使用[]。
+
+
+**接口设计**
+
+让接口容易被正确使用，不易被误用 
+
+请记住：(1).好的接口很容易被正确使用，不容易被误用。你应该在你的所有接口中努力达成这些性质。(2).”促进正确使用”的办法包括接口的一致性，以及与内置类型的行为兼容。(3).”阻止误用”的办法包括建立新类型、限制类型上的操作，束缚对象值，以及消除客户的资源管理责任。(4).std::shared_ptr支持定制型删除器(custom deleter)。这可防范DLL问题，可被用来自动解除互斥锁(mutex)等等。
+
+
+**值与引用**
+
+ *宁以pass-by-reference-to-const替换pass-by-value*
+ 
+pass-by-value：内置类型，以及STL的迭代器和函数对象
+
+pass-by-reference-to-const：尽量以pass-by-reference-to-const替换pass-by-value。前者通常比较高效，并可避免切割问题(slicing problem)。
+
+
+
+
 
 
 
