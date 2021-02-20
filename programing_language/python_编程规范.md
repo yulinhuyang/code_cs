@@ -76,3 +76,41 @@ Prefer:
     for name, count in zip(names, letters):
 
 ....
+
+**生成器**
+
+考虑使用生成器而不是返回列表
+
+相较于返回一个列表的情况，替代方案中使用生成器可以使得代码变得更加的清晰。生成器返回的迭代器，是在其生成器内部一个把值传递给了yield变量的集合。
+
+生成器可以处理很大的输出序列就是因为它在处理的时候不会完全的包含所有的数据。
+
+    def index_words_iter(text):
+        if text:
+            yield 0
+        for index, letter in enumerate(text):
+            if letter == ' ':
+                yield index + 1
+
+    result = list(index_words_iter(address))
+    
+    
+**闭包中是怎样使用外围作用域变量**
+
+global 关键字用于使用全局变量，nonlocal 关键字用于使用局部变量(函数内)
+
+Python编译器变量查找域的顺序：
+
+- 当前函数的作用域
+
+- 任何其他的封闭域（比如其他的包含着的函数）。
+
+- 包含该段代码的模块域（也称之为全局域）
+
+- 内置域（包含了像len,str等函数的域）
+
+
+
+
+
+
