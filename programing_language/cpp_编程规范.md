@@ -211,5 +211,24 @@ inlining在大多数C++程序中是编译期行为。
 
 (2).不要只因为function templates出现在头文件，就将它们声明为inline。
 
+**文件依赖**
+
+*将文件间的编译依存关系降至最低*
+
+如果使用object references或object pointers可以完成任务，就不要使用objects。
+
+以class声明式替换class定义式。
+
+Handle classes：pointer to implementation，成员函数必须通过implementation pointer取得对象数据。
+
+interface classes：特殊的abstract base class(抽象基类），由于每个函数都是virtual，所以你必须为每次函数调用付出一个间接跳跃(indirect jump)成本
+
+(1). 支持”编译依存性最小化”的一般构想是：相依于声明式，不要相依于定义式。基于此构想的两个手段是handle classes和interface classes。
+
+(2). 程序库头文件应该以”完全且仅有声明式”(full and declaration-only forms)的形式存在。这种做法不论是否涉及templates都适用
+
+
+**类与对象*
+
 
 
