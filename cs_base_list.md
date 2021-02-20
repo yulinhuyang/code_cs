@@ -103,7 +103,9 @@ Architecture of a Database System 中文翻译
 
 https://github.com/vinta/awesome-python
 
-python编程：入门到实践
+python基础教程：
+
+https://zhuanlan.zhihu.com/p/23489050
 
 流畅的python:
 
