@@ -159,33 +159,6 @@ prefer:
     sleep(0.1)
     log('Hi again!')
 
-关键字参数： 关键字参数使得函数调用的意图更加的清晰，明显。
-
-使用keyword-only参数可以强迫函数调用者提供关键字来赋值
-
-参数列表里面的 * 号，标志着位置参数就此终结，之后的那些参数，都只能以关键字的形式来指定
-
-    def safe_division_c(number, divisor, *,
-                        ignore_overflow=False,
-                        ignore_zero_division=False):
-        try:
-            return number / divisor
-        except OverflowError:
-            if ignore_overflow:
-                return 0
-            else:
-                raise
-        except ZeroDivisionError:
-            if ignore_zero_division:
-                return float('inf')
-            else:
-                raise
-
-    safe_division_c(1, 10**500, True, False)
-    >>> 
-    TypeError: safe_division_c() takes 2 positional arguments but 4 were given
-
-    safe_division(1, 0, ignore_zero_division=True)  # OK
 
 ### 1.3 对象
 
