@@ -180,12 +180,36 @@ static_cast: 用来强迫隐式转换(implicit conversions)，例如将non-const
 
 **handles**
 
-避免返回handles指向对象内部成分
+*避免返回handles指向对象内部成分*
 
 reference、指针和迭代器统统都是所谓的handles(号码牌，用来取得某个对象)，而返回一个”代表对象内部数据”的handle，随之而来的便是”降低对象封装性”的风险。
 
 请记住：避免返回handles(包括reference、指针、迭代器)指向对象内部。遵守这个条款可增加封装性，帮助const成员函数的行为像个const，并将发生”虚吊号码牌”(dangling handles)的可能性降至最低。
 
+
+**inlining**
+
+ *透彻了解inlining的里里外外*
+ 
+ inline void f() {} // 假设编译器有意愿inline“对f的调用”
+ 
+	int test_item_30()
+	{
+		void (*pf)() = f; // pf指向f
+
+		f(); // 这个调用将被inlined,因为它是一个正常调用
+		pf(); // 这个调用或许不被inlined,因为它通过函数指针达成
+
+		return 0;
+	}
+
+inline函数：将”对此函数的每一个调用”都以函数本体替换之
+
+inlining在大多数C++程序中是编译期行为。
+
+(1).将大多数inlining限制在小型、被频繁调用的函数身上。这可使日后的调试过程和二进制升级(binary upgradability)更容易，也可使潜在的代码膨胀问题最小化，使程序的速度提升机会最大化。
+
+(2).不要只因为function templates出现在头文件，就将它们声明为inline。
 
 
 
