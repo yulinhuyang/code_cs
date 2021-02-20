@@ -114,11 +114,45 @@ Python编译器变量查找域的顺序：
 
 位置参数： 使用*args定义语句，函数可以接收可变数量的位置参数
 
+    def log(message, *values):
+        if not values:
+            print(message)
+        else:
+            values_str = ', '.join(str(x) for x in values)
+            print('%s: %s' % (message, values_str))
+
+    log('My numbers are', 1, 2)
+    log('Hi there')
+    
+
 关键字参数：可选的关键字参数应该优于位置参数
 
 关键字参数的好处:代码可读性的提高，以在定义的时候初始化一个默认值，在前面的调用方式不变的情况下可以很好的拓展函数的参数，不用修改太多的代码
 
+    def flow_rate(weight_diff, time_diff, period=1):
+        return (weight_diff / time_diff) * period
+
 默认参数：使用None和文档说明动态的指定默认参数
 
-使用None作为关键字参数的默认值会有一个动态值
+*使用None作为关键字参数的默认值会有一个动态值
+
+prefer:
+
+    def log(message, when=None):
+        """Log a message with a timestamp.
+
+        Args:
+            message: Message to print
+            when: datetime of when the message occurred.
+                Default to the present time.
+        """
+        when = datetime.now() if when is None else when
+        print("%s: %s" %(when, message))
+
+    # 测试
+
+    log('Hi there!')
+    sleep(0.1)
+    log('Hi again!')
+
 
