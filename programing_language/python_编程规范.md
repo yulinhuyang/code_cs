@@ -1,7 +1,4 @@
-1 python 
-
-effcitive  python
-
+1    effcitive  python
 
 **pep8**
 
