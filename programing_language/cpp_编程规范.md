@@ -509,6 +509,8 @@ empty对所有的标准容器都是常数时间操作，而对一些list实现�
 
 ### 删除对象
 
+**容器删除**
+
 	bool badValue(int) { return true; } // 返回x是否为"坏值"
 
 	int test_item_9()
@@ -559,6 +561,35 @@ empty对所有的标准容器都是常数时间操作，而对一些list实现�
 (2).要删除容器中满足特定判别式(条件)的所有对象：容器是vector, string或deque，使用erase-remove_if习惯用法；容器是list，使用list::remove_if；容器是一个标准关联容器，使用remove_copy_if和swap，或者写一个循环来遍历容器中的元素，记住当把迭代器传给erase时，要对它进行后缀递增。
 
 (3).要在循环内做某些(除了删除对象之外的)操作：容器是一个标准序列容器，则写一个循环来遍历容器中的元素，记住每次调用erase时，要用它的返回值更新迭代器；容器是一个标准关联容器，则写一个循环来遍历容器中的元素，记住当把迭代器传给erase时，要对迭代器做后缀递增。
+
+
+**如果确实需要删除元素，则需要在std::remove这一类算法之后调用std::erase**
+
+	int test_item_32()
+	{
+		std::vector<int> v;
+		v.reserve(10);
+		for (int i = 1; i <= 10; ++i) v.push_back(i);
+		fprintf(stdout, "v.size: %d\n", v.size()); // 输出10
+		v[3] = v[5] = v[9] = 99;
+		std::remove(v.begin(), v.end(), 99); // 删除所有值等于99的元素
+		fprintf(stdout, "v.size: %d\n", v.size()); // 仍然输出10, remove不是真正意义上的删除，因为它做不到
+		for (auto i : v) fprintf(stdout, "%d\n", i);
+
+		v.erase(std::remove(v.begin(), v.end(), 99), v.end()); // 真正删除所有值等于99的元素	
+
+		return 0;
+	}
+
+注意这里是std的标准库
+
+remove类算法：std::remove、remove_if和unique，不是真正意义上的删除，需要后面erase,因为从容器中删除元素的唯一方法是调用该容器的成员函数.
+
+std::list的remove成员函数:STL中唯一一个名为remove并且确实删除了容器中元素的函数,std::list::unique也会真正删除元素。
+
+**对包含指针的容器使用remove这一类算法时要特别小心**
+
+指向动态分配的对象的指针，避免使用remove和类似的算法。具有引用计数功能的智能指针，可以使用。
 
 
 ### 容器tricks
@@ -649,6 +680,177 @@ swap技巧：vector或string进行shrink-to-fit操作；也可以用来清除一
 等的值从来不会有前后顺序关系，对于相等的值，比较函数应当始终返回false。对set和map确实是这样，对multiset和multimap也是这样。
 
 关联容器排序的比较函数：它们所比较的对象定义一个”严格的弱序化”(strict weak ordering)，定义了”严格的弱序化”的函数必须对相同值的两个拷贝返回false。
+
+### 关联哈希容器
+
+**考虑用排序的vector替代关联容器**
+
+查找操作几乎从不跟插入和删除操作混在一起”时，再考虑使用排序的vector而不是关联容器才是合理的
+
+**当效率至关重要时，请在map::operator[]与map::insert之间谨慎做出选择**
+
+	int test_item_24()
+	{
+		std::map<int, std::string> m;
+		m[1] = "xxx"; // m[1]是m.operator[](1)的缩写形式
+		m.operator[](1) = "xxx";
+
+		// m[1] = "xxx"; 在功能上等同于
+		typedef std::map<int, std::string> IntStrMap;
+		std::pair<IntStrMap::iterator, bool> result = m.insert(IntStrMap::value_type(1, std::string()));
+
+
+map::operator[]的设计目的与众不同, 是为了提供”添加和更新”(add or update)的功能。map::operator[]返回一个引用。
+
+当向映射表中添加元素时，要优先选用insert，而不是operator[]；当更新已经在映射表中的元素的值时，要优先选择operator[]。
+
+**熟悉非标准的哈希容器**
+
+C++11中新增了四种关联容器，使用哈希函数组织的，无序的，即unordered_map（效率好）、unordered_multimap、unordered_set、unordered_multiset。
+
+### 迭代器
+
+**iterator优先于const_iterator、reverse_iterator以及const_reverse_iterator**
+
+对容器类container<T>而言，iterator类型的功效相当于T*，而const_iterator则相当于const T*。对一个iterator或者const_iterator进行递增则可以移动到容器中的下一个元素
+	
+**使用std::distance和std::advance将容器的const_iterator转换成iterator**
+
+	int test_item_27()
+	{
+		typedef std::deque<int> IntDeque;
+		typedef IntDeque::iterator Iter;
+		typedef IntDeque::const_iterator ConstIter;
+
+		IntDeque d(5, 10);
+		ConstIter ci;
+		ci = d.cbegin() + 1; // 使ci指向d
+		Iter i(d.begin());
+		std::advance(i, std::distance<ConstIter>(i, ci));
+
+		return 0;
+	}
+
+std::distance用以取得两个迭代器(它们指向同一个容器)之间的距离；
+
+std::advance则用于将一个迭代器移动指定的距离。
+
+**正确理解由reverse_iterator的base()成员函数所产生的iterator的用法**
+
+	std::vector<int> v;
+	v.reserve(5);
+ 
+	for (int i = 1; i <= 5; ++i) v.push_back(i);
+ 
+	std::vector<int>::reverse_iterator ri = std::find(v.rbegin(), v.rend(), 3); // 使ri指向3
+	std::vector<int>::iterator i(ri.base());
+	fprintf(stdout, "%d\n", (*i)); // 4
+	
+	for (int i = 1; i <= 5; ++i) v.push_back(i);
+	ri = std::find(v.rbegin(), v.rend(), 3);
+	v.erase((++ri).base());
+	
+reverse_iterator ri指定的位置上插入新元素，则只需在ri.base()位置处插入元素即可。对于插入操作而言，ri和ri.base()是等价的。
+
+reverse_iterator ri指定的位置上删除一个元素，则需要在ri.base()前面的位置上执行删除操作。对于删除操作而言，ri和ri.base()是不等价的。
+
+## 排序相关
+
+**了解各种与排序有关的选择**
+
+	bool qualityCompare(const std::string& lhs, const std::string& rhs)
+	{
+		return (lhs < rhs);
+	}
+
+	bool hasAcceptableQuality(const std::string& w)
+	{
+		return true; // 判断w的质量值是否为2或者更好
+	}
+
+	int test_item_31()
+	{
+		std::vector<std::string> vec(50, "xxx");
+		std::partial_sort(vec.begin(), vec.begin() + 20, vec.end(), qualityCompare); // 将质量最好的20个元素顺序放在vec的前20个位置上
+
+		std::nth_element(vec.begin(), vec.begin() + 19, vec.end(), qualityCompare); // 将最好的20个元素放在vec的前部，但并不关心它们的具体排列顺序
+
+		// std::partia_sort和std::nth_element在效果上唯一不同之处在于：partial_sort对位置1--20中的元素进行了排序，而
+		// nth_element没有对它们进行排序。然而，这两个算法都将质量最好的20个vec放到了矢量的前部
+
+		std::vector<std::string>::iterator begin(vec.begin());
+		std::vector<std::string>::iterator end(vec.end());
+		std::vector<std::string>::iterator goalPosition; // 用于定位感兴趣的元素
+		// 找到具有中间质量级别的string
+		goalPosition = begin + vec.size() / 2; // 如果全排序的话，待查找的string应该位于中间
+		std::nth_element(begin, goalPosition, end, qualityCompare); // 找到vec的中间质量值
+		// 现在goalPosition所指的元素具有中间质量
+
+		// 找到区间中具有75%质量的元素
+		std::vector<std::string>::size_type goalOffset = 0.25 * vec.size(); // 找出如果全排序的话，待查找的string离起始处有多远
+		std::nth_element(begin, begin + goalOffset, end, qualityCompare); // 找到75%处的质量值	
+
+		// 将满足hasAcceptableQuality的所有元素移到前部，然后返回一个迭代器，指向第一个不满足条件的string
+		std::vector<std::string>::iterator goodEnd = std::partition(vec.begin(), vec.end(), hasAcceptableQuality);
+
+		return 0;
+	}
+	
+std::sort：对给定区间所有元素进行排序。
+
+std::stable_sort：对给定区间所有元素进行稳定排序，稳定排序算法能够维持相等元素的原有顺序。
+
+std::partial_sort：对给定区间所有元素进行部分排序。
+
+std::nth_element：用于排序一个区间，它使得位置n上的元素正好是全排序情况下的第n个元素
+
+std::partition：可以把所有满足某个特定条件的元素放在区间的前部
+
+**了解哪些算法要求使用排序的区间作为参数**
+
+在include<algorithm>中
+
+要求排序区间的STL算法：binaray_search、lower_bound、upper_bound、equal_range、set_union、set_intersection、set_difference、set_symmetric_difference、merge、inplace_merge、includes。
+
+merge和inplace_merge：实现了合并和排序的联合操作：它们读入两个排序的区间，然后合并成一个新的排序区间
+
+includes： 判断一个区间中的所有对象是否都在另一个区间中
+
+### std其他函数
+
+**理解copy_if算法的正确实现**
+
+	int test_item_36()
+	{
+		std::vector<int> v1{ 1, 2, 3, 4, 5 }, v2(v1.size());
+
+		auto it = std::copy_if(v1.begin(), v1.end(), v2.begin(), [](int i) { return (i % 2 == 1); });
+		v2.resize(std::distance(v2.begin(), it));
+
+		for (const auto& v : v2)
+			fprintf(stdout, "%d\n", v); // 1 3 5
+
+		return 0;
+	}
+
+**使用accumulate或者for_each进行区间统计**
+
+	// 计算一个区间中数值的乘积
+	std::vector<float> vf{ 1.f, 2.f, 3.f, 1.5f };
+	float product = std::accumulate(vf.cbegin(), vf.cend(), 1.f, std::multiplies<float>());
+	fprintf(stdout, "product: %f\n", product); // 9.000000
+ 
+	// 计算出一个区间中所有点的平均值
+	std::list<Point> lp{ { 1, 2 }, { 2, 3 }, { 3, 4 }, { 4, 5 } };
+	Point avg = std::for_each(lp.cbegin(), lp.cend(), PointAverage()).result();
+
+std::accumulate两种形式：有两个迭代器和一个初始值，带一个初始值和一个任意的统计函数。直接返回所要的统计结果
+
+std::for_each两个参数：一个是区间，另一个是函数,对区间中的每个元素都要调用这个函数。返回一个函数对象。
+
+
+
+
 
 
 
