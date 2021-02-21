@@ -754,7 +754,9 @@ reverse_iterator ri指定的位置上插入新元素，则只需在ri.base()位�
 
 reverse_iterator ri指定的位置上删除一个元素，则需要在ri.base()前面的位置上执行删除操作。对于删除操作而言，ri和ri.base()是不等价的。
 
-## 排序相关
+## std::排序相关
+
+include<algorithm>
 
 **了解各种与排序有关的选择**
 
@@ -816,6 +818,22 @@ merge和inplace_merge：实现了合并和排序的联合操作：它们读入�
 
 includes： 判断一个区间中的所有对象是否都在另一个区间中
 
+**正确区分count、find、binary_search、lower_bound、upper_bound和equal_range**
+
+区间是排序的：通过binary_search、lower_bound、upper_bound和equal_range，你可以获得更快的查找速度。
+
+区间未排序： 局限于count、count_if、find以及find_if，线性时间的效率。
+
+
+**容器的成员函数优先于同名的算法(STL)**
+
+标准的关联容器，选择成员函数而不选择对应的同名算法：获得对数时间的性能，使用map和multimap的时候，将很自然地只考虑元素的键部分
+
+list容器：std调用了remove、remove_if或者unique算法之后，必须紧接着再调用erase；list量身定做的成员函数则无需任何对象拷贝，且实实在在地删除了元素。
+
+std::sort算法与list的sort函数:list的迭代器是双向迭代器，而sort算法要求随机访问迭代器。
+
+
 ### std其他函数
 
 **理解copy_if算法的正确实现**
@@ -849,8 +867,16 @@ std::accumulate两种形式：有两个迭代器和一个初始值，带一个�
 std::for_each两个参数：一个是区间，另一个是函数,对区间中的每个元素都要调用这个函数。返回一个函数对象。
 
 
+**总是包含(#include)正确的头文件**
 
+1 所有的标准STL容器都被声明在与之同名的头文件中：vector被声明在<vector>中，list被声明在<list>中，等等。但是<set>和<map>是个例外，<set>中声明了set和multiset，<map>中声明了map和multimap。
+	
+2 所有的算法都被声明在<algorithm>，4个算法：accumulate、inner_product、adjacent_difference和partial_sum，它们被声明在头文件<numeric>
 
+3 特殊类型的迭代器，包括istream_iterator和istreambuf_iterator，被声明在<iterator>
+	
+4 标准的函数子(比如less<T>)和函数子配接器(比如not1、bind2nd)被声明在头文件<functional>	
+	
 
 
 
