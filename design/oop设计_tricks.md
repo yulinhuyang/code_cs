@@ -23,27 +23,31 @@
 
 修改之后，修改的部分就像一开始就使用了好的设计一样
 
-**Make continual small investments to improve system design. 通过持续的小投入来改进系统设计**
+**Make continual small investments to improve system design**
 
-一次搞定就是瀑布流的思想，逐步改进就是敏捷思想。
+通过持续的小投入来改进系统设计，一次搞定就是瀑布流的思想，逐步改进就是敏捷思想。
 
-**Modules should be deep模块要有深度**
+**Modules should be deep**
 
 深度其实是对模块封装的度量，模块应该提供尽可能简单的接口和尽可能强大的功能
 
-**Interface should be designed to make the most common usage as simple as possible. 接口设计应当使得最常用的路径越简单越好**
+具有通用功能的模块更具深度，更通用功能的接口意味着更高层级的抽象，隐藏更多的实现细节。
 
-**It's more important for a module to have a simple interface than a simple implementation.相比起实现上的简单，一个模块接口的简单更加重要**
+接口设计应当使得最常用的路径越简单越好。
 
-**Seperate general-purpose and special-purpose code. 分离通用的代码和特定需求的代码。**
+相比起实现上的简单，一个模块接口的简单更加重要。
 
-抽取公共函数或者公共类
+**Seperate general-purpose and special-purpose code**
 
-**Different layers should have different abstractions. 不同的层次应当有不同的抽象**
+分离通用的代码和特定需求的代码，抽取公共函数或者公共类。
+
+**Different layers should have different abstractions**
 
 软件系统通常有不同的层次组成，每一层都通过和它之上和之下的层的接口来交互。每一层都具有自己不同的抽象
 
-**Pull complexicity downward. 把复杂性放在底层**
+**Pull complexicity downward.**
+
+把复杂性放在底层
 
 **Design it twice**
 
