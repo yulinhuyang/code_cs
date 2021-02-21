@@ -504,7 +504,6 @@ empty对所有的标准容器都是常数时间操作，而对一些list实现�
 
 使用指针的容器：用引用计数形式的智能指针对象(比如std::shared_ptr)代替指针，或者当容器被析构时手工删除其中的每个指针。
 
-使用指针的容器：用引用计数形式的智能指针对象(比如std::shared_ptr)代替指针，或者当容器被析构时手工删除其中的每个指针。
 
 **切勿创建包含auto_ptr的容器对象**
 
@@ -555,16 +554,101 @@ empty对所有的标准容器都是常数时间操作，而对一些list实现�
 		return 0;
 	}
 
-(1).要删除容器中有特定值的所有对象：如果容器是vector, string或deque，则使用erase-remove习惯用法；如果容器是list，则使用list::remove；如果容器是一个标准关联容器，则使用它的erase成员函数。
+(1).要删除容器中有特定值的所有对象：容器是vector, string或deque，使用erase-remove；容器是list，使用list::remove；容器是一个标准关联容器，使用erase成员函数。
 
-(2).要删除容器中满足特定判别式(条件)的所有对象：如果容器是vector, string或deque，则使用erase-remove_if习惯用法；如果容器是list，则使用list::remove_if；如果容器是一个标准关联容器，则使用remove_copy_if和swap，或者写一个循环来遍历容器中的元素，记住当把迭代器传给erase时，要对它进行后缀递增。
+(2).要删除容器中满足特定判别式(条件)的所有对象：容器是vector, string或deque，使用erase-remove_if习惯用法；容器是list，使用list::remove_if；容器是一个标准关联容器，使用remove_copy_if和swap，或者写一个循环来遍历容器中的元素，记住当把迭代器传给erase时，要对它进行后缀递增。
 
-(3).要在循环内做某些(除了删除对象之外的)操作：如果容器是一个标准序列容器，则写一个循环来遍历容器中的元素，记住每次调用erase时，要用它的返回值更新迭代器；如果容器是一个标准关联容器，则写一个循环来遍历容器中的元素，记住当把迭代器传给erase时，要对迭代器做后缀递增。
-
-
+(3).要在循环内做某些(除了删除对象之外的)操作：容器是一个标准序列容器，则写一个循环来遍历容器中的元素，记住每次调用erase时，要用它的返回值更新迭代器；容器是一个标准关联容器，则写一个循环来遍历容器中的元素，记住当把迭代器传给erase时，要对迭代器做后缀递增。
 
 
+### 容器tricks
 
+**vector和string优先于动态分配的数组**
+
+许多string实现在背后使用了引用计数技术，这种策略可以消除不必要的内存分配和不必要的字符拷贝；vector的实现不允许使用引用计数
+
+**使用reserve来避免不必要的重新分配**
+
+reserve成员函数：能使你把重新分配的次数减少到最低限度，避免了重新分配和指针/迭代器/引用失效带来的开销。
+
+**注意string实现的多样性**
+
+(1).string的值可能会被引用计数，默认情况下会使用引用计数，通常也提供了通过预处理宏关闭默认。
+
+(2).string对象大小的范围可以是一个char*指针大小的1倍到7倍。
+
+(3).创建一个新的字符串值可能需要零次、一次或两次动态分配内存。
+
+(4).string对象可能共享，也可能不共享其大小和容量信息。
+
+**使用”swap技巧”除去多余的容量**
+
+	class Contestant {};
+
+	int test_item_17()
+	{
+		// 从contestants矢量中除去多余的容量
+		std::vector<Contestant> contestants;
+		// ... // 让contestants变大，然后删除它的大部分元素
+		// vector<Contestant>(contestants)创建一个临时矢量，vector的拷贝构造函数只为所拷贝的元素分配所需要的内存
+		std::vector<Contestant>(contestants).swap(contestants);
+
+		contestants.shrink_to_fit(); // C++11
+
+		std::string s;
+		// ... // 让s变大，然后删除它的大部分字符
+		std::string(s).swap(s);
+
+		s.shrink_to_fit(); // C++11
+
+		std::vector<Contestant>().swap(contestants); // 清除contestants并把它的容量变为最小
+
+		std::string().swap(s); // 清除s并把它的容量变为最小
+
+		return 0;
+	}
+
+shrink_to_fit：自适应宽度是指当未明白设定容器的宽度（或外边距设为auto）时，在特定的情况下容器的宽度会依据情况自行设定。而设定的结果往往并非我们想要的。
+
+C++11中增加了shrink_to_fit成员函数。
+
+swap技巧：vector或string进行shrink-to-fit操作；也可以用来清除一个容器，并使其容量变为该实现下的最下值。
+
+**避免使用vector<bool>**
+	
+替代方案：deque<bool>，deque几乎提供了vector所提供的一切(没有reserve和capacity)；bitset，大小在编译时就确定了，不支持插入和删除元素。
+	
+### 相等与等价
+
+**理解相等(equality)和等价(equivalence)的区别**
+
+相等的概念是基于operator==的。
+
+等价关系是以”在已排序的区间中对象值的相对顺序”为基础的。
+
+标准关联容器是基于等价而不是相等。标准关联容器的使用者要为所使用的每个容器指定一个比较函数。
+
+**为包含指针的关联容器指定比较类型**
+
+	struct DereferenceLess {
+		template<typename PtrType>
+		bool operator()(PtrType pT1, PtrType pT2) const
+		{
+			return *pT1 < *pT2;
+		}
+	};
+
+	std::set<std::string*, DereferenceLess> ssp; 
+
+包含指针的关联容器时，容器将会按照指针的值进行排序。几乎肯定要创建自己的函数子类作为该容器的比较类型(comparison type)。
+
+包含智能指针或迭代器的容器，也要考虑为它指定一个比较类型
+
+**总是让比较函数在等值情况下返回false**
+
+等的值从来不会有前后顺序关系，对于相等的值，比较函数应当始终返回false。对set和map确实是这样，对multiset和multimap也是这样。
+
+关联容器排序的比较函数：它们所比较的对象定义一个”严格的弱序化”(strict weak ordering)，定义了”严格的弱序化”的函数必须对相同值的两个拷贝返回false。
 
 
 
