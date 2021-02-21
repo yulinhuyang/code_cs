@@ -232,7 +232,7 @@ https://www.cnblogs.com/me115/p/4035469.html
 
 敏捷软件开发（原则模式与实践）
 
-### 3.2 面向对象分析与设计（OOP）
+### 3.2 面向对象分析与设计&领域驱动设计（OOP&DDD）
 
 面向对象软件开发实践：基本技能、专业技术、实战技术
 
@@ -252,15 +252,10 @@ https://github.com/kamranahmedse/design-patterns-for-humans
 
 https://github.com/iluwatar/java-design-patterns
 
-
 UML和模式应用
 
 重构：改善既有代码的设计 
 
-
-### 3.3 领域驱动设计(DDD)
-
-领域驱动设计：软件核心复杂性应对之道
 
 领域驱动设计模式、原理与实践：
 
