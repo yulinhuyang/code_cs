@@ -427,7 +427,40 @@ over-eager：必须支持某些操作而其结果几乎总是被需要或不止�
 
 ## 2  efficitive  STL
 
+### 容器与迭代器
 
+*慎重选择容器类型*
 
+标准STL序列容器：vector、string、deque、list、forward_list(C++11)、array(C++11)。
+
+标准STL关联容器：set、multiset、map、multimap、unordered_set(C++11)、unordered_multiset(C++11)、unordered_map(C++11)、unordered_multimap(C++11)。
+
+标准的非STL容器，包括：bitset(include <bitset>)、valarray(include <valarray>)。其它STL容器：stack(include <stack>)、queue(include <queue>)和priority_queue((include <queue>))。
+	
+连续内存容器：vector、string、deque
+
+链表的容器：比如list、forward_list
+
+事务语义:只有list对多个元素的插入操作提供了事务语义
+
+*不要试图编写独立于容器类型的代码*
+
+STL是以泛化(generalization)原则为基础的：数组被泛化为”以其包含的对象的类型为参数”的容器，函数被泛化为”以其使用的迭代器的类型为参数”的算法，指针被泛化为”以其指向的对象的类型为参数”的迭代器
+
+迭代器： 前向迭代器、双向迭代器
+
+序列容器：支持push_front和/或push _back操作
+
+关联容器: 提供了对数时间的lower_bound、upper_bound和equal_range成员函数
+
+标准的连续内存容器: 提供了随机访问迭代器
+
+标准的基于节点的容器: 提供了双向迭代器
+
+*确保容器中的对象拷贝正确而高效*
+
+STL的工作方式（拷贝）：进去的是拷贝（insert或push_back），出来的也是拷贝（front或back）(copy in, copy out)。进一步被拷贝，插入或删除操作时，现有元素的位置通常会被移动(拷贝)；排序算法，next_permutation或previous_permutation, remove、unique或类似的操作，rotate或reverse,那么对象将会被移动(拷贝)
+
+”剥离”问题意味着向基类对象的容器中插入派生类对象几乎总是错误的。使拷贝动作高效、正确，并防止剥离问题发生的一个简单办法是使容器包含指针而不是对象。
 
 
