@@ -1,7 +1,7 @@
 
 ## 1  efficitive C++ 、more efficitive C++
 
-**混合使用C++和C**
+### 混合使用C++和C 
 
 名变换：C++支持重载，C不支持。要禁止名变换，使用C++的extern “C”。不要将extern “C”看作是声明这个函数是用C语言写的，应该看作是声明这个函数应该被当作好像C写的一样而进行调用。
 
@@ -22,9 +22,9 @@
 (5).将在两种语言间传递的东西限制在用C编译的数据结构的范围内；这些结构的C++版本可以包含非虚成员函数
 
 
-**Const使用**
+### Const使用 
 
-*尽量以const, enum, inline替换#define*
+**尽量以const, enum, inline替换#define**
 
 宁可以编译器替换预处理器
 
@@ -56,7 +56,7 @@ prefer:
 第二种是class专属长量。让它成为class的一个成员(member),让它成为一个static成员.
 
 
-*尽可能使用const*
+**尽可能使用const**
 
 如果关键字const出现在星号左边，表示被指物是常量；如果出现在星号右边，表示指针自身是常量；如果出现在星号两边，表示被指物和指针两者都是常量。
 
@@ -68,16 +68,16 @@ STL迭代器系以指针为根据塑模出来，所以迭代器的作用就像�
 
 
 
-**重载**
+### 重载 
 
-*令operator=返回一个reference to *this*
+**令operator=返回一个reference to *this**
 
 	Widget& operator+= (const Widget& rhs) // 这个协议适用于+=、-=、*=等等
 	{
 		return *this;
 	}
 
-*在operator=中处理”自我赋值”*
+**在operator=中处理”自我赋值”**
 
 	class Widget11 {
 	public:
@@ -101,20 +101,20 @@ STL迭代器系以指针为根据塑模出来，所以迭代器的作用就像�
 确保当对象自我赋值时operator=有良好行为。其中技术包括比较”来源对象”和”目标对象”的地址、精心周到的语句顺序、以及copy-and-swap
 
 
- *不要重载”&&”, “||”,或”,”*
+**不要重载”&&”, “||”,或”,”**
  
- *通过重载避免隐式类型转换*
+**通过重载避免隐式类型转换**
  
  每一个重载的operator必须带有一个用户定义类型(user-defined type)的参数,利用重载避免临时对象的方法不只是用在operator函数上。
 
-*考虑用运算符的赋值形式(op=)取代其单独形式(op)*
+**考虑用运算符的赋值形式(op=)取代其单独形式(op)**
 
 确保operator的赋值形式(assignment version)(例如operator+=)与一个operator的单独形式(stand-alone)(例如operator+)之间存在正常的关系，一种好方法是后者(指operator+)根据前者(指operator+=)来实现。
 
 
-**智能指针**
+### 智能指针 
 
-*以对象管理资源*
+**以对象管理资源**
 
 在C++11中auto_ptr已经被废弃，用unique_ptr替代
 
@@ -136,9 +136,9 @@ unique_ptr 独占所指向的对象,shared_ptr(make_shared)允许多个指针指
 		return 0;
 	}
 
-**new和delete**
+### new和delete 
 
-*成对使用new和delete时要采用相同形式*
+**成对使用new和delete时要采用相同形式**
 
 	int test_item_16()
 	{
@@ -167,7 +167,7 @@ delete，也有两件事发生：针对此内存会有一个(或更多)析构函
 new表达式中使用[]，必须在相应的delete表达式中也使用[]。如果你在new表达式中不使用[]，一定不要在相应的delete表达式中使用[]。
 
 
-*理解各种不同含义的new和delete*
+**理解各种不同含义的new和delete**
 
 new操作符(new operator)和new操作(operator new)的区别：
 
@@ -177,9 +177,9 @@ new操作符：1 分配足够的内存以便容纳所需类型的对象，2调�
 
 函数operator delete与delete操作符的关系与operator new与new操作符的关系一样
 
-**接口设计**
+### 接口设计 
 
-让接口容易被正确使用，不易被误用 
+**让接口容易被正确使用，不易被误用** 
 
 请记住：(1).好的接口很容易被正确使用，不容易被误用。你应该在你的所有接口中努力达成这些性质。
 
@@ -192,9 +192,9 @@ new操作符：1 分配足够的内存以便容纳所需类型的对象，2调�
 
 
 
-**值与引用**
+### 值与引用 
 
- *宁以pass-by-reference-to-const替换pass-by-value*
+**宁以pass-by-reference-to-const替换pass-by-value**
  
 pass-by-value：内置类型，以及STL的迭代器和函数对象
 
@@ -204,28 +204,28 @@ pass-by-reference-to-const：尽量以pass-by-reference-to-const替换pass-by-va
 
 绝不要返回pointer或reference指向一个local stack对象，或返回reference指向一个heap-allocated对象，或返回pointer或reference指向一个local static对象而有可能同时需要多个这样的对象。
 
-**指针与引用**
+### 指针与引用 
 
 在任何情况下都不能使用指向空值的引用。一个引用必须总是指向某些对象。在C++里，引用应被初始化。不存在指向空值的引用这个事实意味着使用引用的代码效率比使用指针的要高。
 
-**引用计数**
+### 引用计数 
 
 引用计数是这样一个技巧，它允许多个有相同值的对象共享这个值的实现。
 
 作用：第一个是简化跟踪堆中的对象的过程。节省内存，而且可以使得程序运行更快。
 
 
-**成员函数**
+### 成员函数 
 
-*宁以non-member、non-friend替换member函数，可以增加封装性、包裹弹性(packaging flexibility)和机能扩充性*
+**宁以non-member、non-friend替换member函数，可以增加封装性、包裹弹性(packaging flexibility)和机能扩充性**
 
-*若所有参数皆需类型转换，请为此采用non-member函数*
+**若所有参数皆需类型转换，请为此采用non-member函数**
 
-*尽可能延后变量定义式的出现时间*
+**尽可能延后变量定义式的出现时间**
 
 尽可能延后变量定义式的出现。这样做可增加程序的清晰度并改善程序效率。
 
-**casting**
+### casting 
 
 const_cast: 通常被用来将对象的常量性移除(cast away the constness)。它也是唯一有此能力的C++-style转型操作符
 
@@ -237,18 +237,18 @@ static_cast: 用来强迫隐式转换(implicit conversions)，例如将non-const
 
 如果可以，尽量避免转型，特别是在注重效率的代码中避免dynamic_cast。如果有个设计需要转型动作，试着发展无须转型的替代设计
 
-**handles**
+### handles 
 
-*避免返回handles指向对象内部成分*
+**避免返回handles指向对象内部成分**
 
 reference、指针和迭代器统统都是所谓的handles(号码牌，用来取得某个对象)，而返回一个”代表对象内部数据”的handle，随之而来的便是”降低对象封装性”的风险。
 
 请记住：避免返回handles(包括reference、指针、迭代器)指向对象内部。遵守这个条款可增加封装性，帮助const成员函数的行为像个const，并将发生”虚吊号码牌”(dangling handles)的可能性降至最低。
 
 
-**inlining**
+### inlining 
 
- *透彻了解inlining的里里外外*
+**透彻了解inlining的里里外外**
  
  inline void f() {} // 假设编译器有意愿inline“对f的调用”
  
@@ -270,9 +270,9 @@ inlining在大多数C++程序中是编译期行为。
 
 (2).不要只因为function templates出现在头文件，就将它们声明为inline。
 
-**文件依赖**
+### 文件依赖 
 
-*将文件间的编译依存关系降至最低*
+**将文件间的编译依存关系降至最低**
 
 如果使用object references或object pointers可以完成任务，就不要使用objects。
 
@@ -287,19 +287,19 @@ interface classes：特殊的abstract base class(抽象基类），由于每个�
 (2). 程序库头文件应该以”完全且仅有声明式”(full and declaration-only forms)的形式存在。这种做法不论是否涉及templates都适用
 
 
-**类与对象**
+### 类与对象 
 
-*确定你的public继承塑模出is-a关系*
+**确定你的public继承塑模出is-a关系**
 
 public inheritance(公开继承)意味”is-a”(是一种)的关系
 
 ”public继承”意味is-a。适用于base classes身上的每一件事情一定也适用于derived classes身上，因为每一个derived class对象也都是一个base class对象
 
-*避免遮挡继承而来的名称*
+**避免遮挡继承而来的名称**
 
 derived classes内的名称会遮掩base classes内的名称。在public继承下从来没有人希望如此。(2).为了让被遮掩的名称再见天日，可使用using声明式或转交函数(forwarding functions)。
 
-*区分接口继承和实现继承*
+**区分接口继承和实现继承**
 
 pure virtual函数：为了让derived classes只继承函数接口。
 
@@ -310,7 +310,7 @@ non-virtual函数的：为了令derived classes继承函数的接口及一份强
 (1).接口继承和实现继承不同。在public继承之下，derived classes总是继承base class的接口。(2). pure virtual函数只具体指定接口继承。(3). 简朴的(非纯)impure virtual函数具体指定接口继承及缺省实现继承。(4). non-virtual函数具体指定接口继承以及强制性实现继承。
 
 
-*明智而审慎地使用private继承*
+**明智而审慎地使用private继承**
 
 尽可能使用复合，必要时才使用private继承。
 
@@ -319,17 +319,17 @@ non-virtual函数的：为了令derived classes继承函数的接口及一份强
 (2).和复合(composition)不同，private继承可以造成empty base最优化。这对致力于”对象尺寸最小化”的程序库开发者而言，可能很重要。
 
 
-**构造与析构**
+### 构造与析构 
 
-*确定对象被使用前已先被初始化*
+**确定对象被使用前已先被初始化**
 
-*使用析构函数防止资源泄漏*
+**使用析构函数防止资源泄漏**
 
-*在构造函数中防止资源泄漏*
+**在构造函数中防止资源泄漏**
 
-**virtual函数**
+### virtual函数 
 
-*考虑virtual函数以外的其它选择*
+**考虑virtual函数以外的其它选择**
 
 (1). virtual函数的替代方案包括non-virtual interface(NVI)手法及Strategy设计模式的多种形式。NVI手法自身是一个特殊形式的Template Method设计模式。
 
@@ -337,13 +337,13 @@ non-virtual函数的：为了令derived classes继承函数的接口及一份强
 
 (3). std::function对象的行为就像一般函数指针。这样的对象可接纳”与给定之目标签名式(target signature)兼容”的所有可调用物(callable entities)。
 
-*绝对不要重新定义继承而来的non-virtual函数。*
+**绝对不要重新定义继承而来的non-virtual函数。**
 
-*绝不重新定义继承而来的缺省参数值*
+**绝不重新定义继承而来的缺省参数值**
 
 virtual函数系动态绑定(dynamically bound)，而缺省参数值确是静态绑定(statically bound)。静态绑定又名前期绑定，early binding；动态绑定又名后期绑定，late binding
 
-*通过复合塑模出has-a或”根据某物实现出”*
+**通过复合塑模出has-a或”根据某物实现出”**
 
 	class Address {};
 	class PhoneNumber {};
@@ -360,7 +360,7 @@ virtual函数系动态绑定(dynamically bound)，而缺省参数值确是静态
 (2). 在应用域(application domain)，复合意味has-a(有一个)。在实现域(implementation domain)，复合意味is-implemented-in-terms-of(根据某物实现出)。
 
 
-*理解虚拟函数、多继承、虚基类和RTTI所需的代码*
+**理解虚拟函数、多继承、虚基类和RTTI所需的代码**
 
 virtual table和virtual table pointers，通常被分别地称为vtbl和vptr。
 
@@ -371,13 +371,13 @@ virtual table和virtual table pointers，通常被分别地称为vtbl和vptr。
 RTTI(运行时类型识别): 在运行时找到对象和类的有关信息，所以肯定有某个地方存储了这些信息让我们查询。这些信息被存储在类型为type_info的对象里，你能通过使用typeid操作符访问一个类的type_info对象。
 
 
-**代理类**
+### 代理类 
 
 Proxy类可以完成一些其它方法很难甚至可不能实现的行为：多维数组，左值/右值的区分，限制隐式类型转换。
 
-**模板编程**
+### 模板编程 
 
-*了解typename的双重意义*
+**了解typename的双重意义**
 
 typename必须作为嵌套从属类型名称的前缀词
 
@@ -385,13 +385,13 @@ typename必须作为嵌套从属类型名称的前缀词
 
 (2).请使用关键字typename标识嵌套从属类型名称；但不得在base class lists(基类列)或member initialization list(成员初值列)内以它作为base class修饰符。
 
-*学习处理模板化基类内的名称*
+**学习处理模板化基类内的名称**
 
 其他模板编程待补充。。。
 
-**异常**
+### 异常 
 
-*理解”抛出一个异常”与”传递一个参数”或”调用一个虚函数”间的差异*
+**理解”抛出一个异常”与”传递一个参数”或”调用一个虚函数”间的差异**
 
 调用函数时，程序的控制权最终还会返回到函数的调用处，但是当你抛出一个异常时，控制权永远不会回到抛出异常的地方。
 
@@ -399,15 +399,15 @@ catch子句匹配顺序总是取决于它们在程序中出现的顺序。因此
 
 
 
-**系统优化**
+### 系统优化 
 
-*牢记80-20准则(80-20 rule)*
+**牢记80-20准则(80-20 rule)**
 
 大约20%的代码使用了80%的程序资源；大约20%的代码耗用了大约80%的运行时间；大约20%的代码使用了80%的内存。
 
-*考虑使用lazy evaluation(懒惰计算法)*
+**考虑使用lazy evaluation(懒惰计算法)**
 
-*分期摊还期望的计算*
+**分期摊还期望的计算**
 
 over-eager evaluation(过度热情计算法)：如果你认为一个计算需要频繁进行，你就可以设计一个数据结构高效地处理这些计算需求，这样可以降低每次计算需求时的开销。
 
@@ -415,13 +415,13 @@ lazy evaluation：必须支持某些操作而不总需要其结果，以提高�
 
 over-eager：必须支持某些操作而其结果几乎总是被需要或不止一次地需要时，以提高程序效率。
 
-*理解临时对象的来源*
+**理解临时对象的来源**
 
 未命名的对象通常在两种条件下产生：为了使函数成功调用而进行隐式类型转换和函数返回对象时。
 
-*考虑变更程序库*
+**考虑变更程序库**
 
-*在未来时态下开发程序*
+**在未来时态下开发程序**
 
 未来时态的考虑增加了你的代码的可重用性、可维护性、健壮性，以及在环境发生改变时易于修改。
 
