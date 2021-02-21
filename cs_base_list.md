@@ -43,6 +43,7 @@ https://github.com/jiacai2050/sicp
 
 程序设计语言-实践之路
 
+
 ### 1.2  OS
 
 **CSAPP:**
@@ -80,6 +81,8 @@ Docker— 从入门到实践：https://yeasy.gitbook.io/docker_practice/
 
 https://blog.csdn.net/fengbingchun/category_725584.html
 
+Unix 编程艺术
+
 
 ### 1.3 数据库
 
@@ -88,6 +91,8 @@ Readings in Database Systems
 https://www.zhihu.com/column/readings-in-database
 
 Architecture of a Database System 中文翻译
+
+MySQL必知必会
 
 
 ### 1.4  数学基础
@@ -228,9 +233,13 @@ https://www.cnblogs.com/taceywong/p/8724601.html
 
 https://www.cnblogs.com/me115/p/4035469.html
 
-构建之法——现代软件工程
+A Philosophy of Software Design
+
+https://zhuanlan.zhihu.com/p/66216906
 
 敏捷软件开发（原则模式与实践）
+
+构建之法——现代软件工程
 
 ### 3.2 面向对象分析与设计&领域驱动设计（OOP&DDD）
 
