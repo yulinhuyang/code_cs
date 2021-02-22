@@ -493,7 +493,7 @@ prefer:
 
 obj.name，getattr和hasattr都会调用getattribute方法，如果name不在obj.dict里面，还会调用getattr方法，如果没有自定义getattr方法会AttributeError异常
 
-只要有赋值操作（=，setattr）都会调用setattr方法（包括a = A()
+只要有赋值操作（=，setattr）都会调用setattr方法（包括a = A())
 
 
 
