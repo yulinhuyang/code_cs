@@ -227,11 +227,9 @@ prefer:
 
 **对于简单接口使用函数而不是类的实例**
 
-在Python中，不需要定义或实现什么类，对于简单接口组件而言，函数就足够了。
+对于简单接口组件而言，函数就足够了。Python中引用函数和方法的原因就在于它们是first-class，可以直接的被运用在表达式中。
 
-Python中引用函数和方法的原因就在于它们是first-class，可以直接的被运用在表达式中。
-
-特殊方法__call__允许你像调用函数一样调用一个对象实例。需要一个函数来维护状态信息，考虑一个定义了__call__方法的状态闭包类
+特殊方法__call__允许你像调用函数一样调用一个对象实例。需要一个函数来维护状态信息，考虑一个定义了__call__方法的状态闭包类。
 
 内置的API都允许你通过向函数传递参数,如
 
@@ -267,3 +265,120 @@ python hooks：函数可以作为钩子来工作，因为Python有first-class函
         assert counter.added == 2
 
 **使用@classmethod多态性构造对象**
+
+Python的每个类只支持单个的构造方法，__init__。
+
+使用@classmethod可以为你的类定义可替代构造方法的方法。
+
+class GenericInputData(object):
+    def read(self):
+        raise NotImplementedError
+
+    @classmethod
+    def generate_inputs(cls, config):
+        raise NotImplementedError
+
+class PathInputData(GenericInputData):
+    def __init__(self, path):
+        super().__init__()
+        self.path = path
+
+    def read(self):
+        return open(self.path).read()
+
+    @classmethod
+    def generate_inputs(cls, config):
+        data_dir = config['data_dir']
+        for name in os.listdir(data_dir):
+            yield cls(os.path.join(data_dir, name))
+
+
+### 继承
+
+**使用super关键字初始化父类**
+
+Python的解决实例化次序问题的方法MRO解决了菱形继承（ diamond inheritance ）中超类多次被初始化的问题。
+
+总是应该使用super来初始化父类。
+
+python中父类实例化的规则是按照MRO标准来进行的，MRO 的执行顺序是 DFS
+
+    class MyBaseClass(object):
+        def __init__(self, value):
+            self.value = value
+
+    class Implicit(MyBaseClass):
+        def __init__(self, value):
+            super().__init__(value * 2)
+
+**只在用编写Max-in组件的工具类的时候使用多继承**
+
+如果可以使用mix-in实现相同的结果输出的话，就不要使用多继承了
+
+当mix-in类需要的时候，在实例级别上使用可插拔的行为可以为每一个自定义的类工作的更好
+
+从简单的行为出发，创建功能更为灵活的mix-in
+
+Mix-in类：一个只定义了几个类必备功能方法的很小的类，不定义以自己的实例属性，也不需要它们的初始化方法__init__被调用
+
+    import json
+
+    class ToDictMixin(object):
+        def to_dict(self):
+            return self._traverse_dict(self.__dict__)
+
+        def _traverse_dict(self, instance_dict):
+            output = {}
+            for key, value in instance_dict.items():
+                output[key] = self._traverse(key, value)
+            return output
+
+    class JsonMixin(object):
+        @classmethod
+        def from_json(cls, data):
+            kwargs = json.loads(data)
+            return cls(**kwargs)
+
+        def to_json(self):
+            return json.dumps(self.to_dict())
+
+**多使用公共属性，而不是私有属性**
+
+Python 编译器无法严格保证 private 字段的私密性
+
+不要盲目将属性设置为private，而是应该从一开始就做好规划，并允子类更多地访问超类的内部的API
+
+应该多用protected 属性，并且在文档中把这些字段的合理用法告诉子类的开发者，而不要试图用 private 属性来限制子类的访问
+
+    class ClassDef(object):
+        def __init__(self):
+            # public
+            self.name = "class_def"
+            # private
+            self.__age = 29
+            # protected
+            self._sex = "man"
+
+        def fun1(self):
+            print("call public function")
+
+        def __fun2(self):
+            print("call private function")
+
+        def _fun3(self):
+            print("call protected function")
+
+默认都是pubic类型，被子类、类内以及类外被访问
+
+protected类型： _xx 以单下划线开头表示的是protected类型的变量或者方法，只能允许其本身与子类进行访问。
+
+private类型：__xx 双下划线表示的是私有类型的变量或者方法, 只能允许类内进行访问。
+
+特列方法:   __xx__定义的是特列方法。用户控制的命名空间内的变量或是属性
+
+
+
+
+
+
+
