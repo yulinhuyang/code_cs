@@ -266,4 +266,4 @@ python hooks：函数可以作为钩子来工作，因为Python有first-class函
             result[key] += amount
         assert counter.added == 2
 
-
+**使用@classmethod多态性构造对象**
