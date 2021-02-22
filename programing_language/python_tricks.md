@@ -38,3 +38,7 @@ python tricks: https://www.zhihu.com/question/48755767
 [apachecn python 翻译集](https://github.com/apachecn/apachecn-python-zh)
 
 [Python项目读取配置的正确姿势](https://zhuanlan.zhihu.com/p/54764686)
+
+[python 类中public,protected,private定义方式](https://blog.csdn.net/c_base_jin/article/details/88778553)
+
+
