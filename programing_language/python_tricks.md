@@ -41,4 +41,4 @@ python tricks: https://www.zhihu.com/question/48755767
 
 [python 类中public,protected,private定义方式](https://blog.csdn.net/c_base_jin/article/details/88778553)
 
-
+[Python 描述符(Descriptor) 附实例](https://zhuanlan.zhihu.com/p/42485483)
