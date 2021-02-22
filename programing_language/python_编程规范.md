@@ -415,7 +415,7 @@ collections.abc的 Sequence : 子类只要实现 __getitem__以及 __len__， Se
     r2.voltage = 10
     print('After:  %5r amps' % r2.current)
     
- **考虑@property来替代属性重构**
+**考虑@property来替代属性重构**
  
 使用@property给已有属性扩展新需求，可以用 @property 来逐步完善数据模型
 
@@ -481,6 +481,23 @@ prefer:
 
     exam = Exam()
     exam.writing_grade = 40
+
+
+**用 __getattr__, __getattribute__, 和__setattr__ 实现按需生产的属性**
+
+通过__getattr__ 和 __setattr__，可以用惰性的方式来加载并保存对象的属性
+
+要理解 __getattr__ 和 __getattribute__ 的区别：前者只会在待访问的属性缺失时触发，而后者则会在每次访问属性的时候触发
+
+如果要在__getattributte__ 和 __setattr__ 方法中访问实例属性，那么应该直接通过 super() 来做，以避免无限递归
+
+obj.name，getattr和hasattr都会调用getattribute方法，如果name不在obj.dict里面，还会调用getattr方法，如果没有自定义getattr方法会AttributeError异常
+
+只要有赋值操作（=，setattr）都会调用setattr方法（包括a = A()
+
+
+
+
 
 
 
