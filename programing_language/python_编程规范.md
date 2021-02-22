@@ -381,13 +381,106 @@ private类型：__xx 双下划线表示的是私有类型的变量或者方法, 
 
 如果要定制的子类比较简单，那就可以直接从Python的容器类型（如list或dict）中继承
 
-想正确实现自定义的容器类型，可能需要编写大量的特殊方法
-
 编写自制的容器类型时，可以从collection.abc 模块的抽象类基类中继承，那些基类能确保我们的子类具备适当的接口及行为
 
 collections.abc的 Sequence : 子类只要实现 __getitem__以及 __len__， Sequence 提供了 count() 以及 index()
 
+## 1.4  元类和属性
 
+**用纯属性取代 get 和 set 方法**
+
+使用public属性避免set和get方法，@property定义一些特别的行为
+
+@property 方法应该遵循最小惊讶原则，而不应该产生奇怪的副作用
+
+    class VoltageResistance(Resistor):
+        def __init__(self, ohms):
+            super().__init__(ohms)
+            self._voltage = 0
+
+        # 相当于 getter
+        @property
+        def voltage(self):
+            return self._voltage
+
+        # 相当于 setter
+        @voltage.setter
+        def voltage(self, voltage):
+            self._voltage = voltage
+            self.current = self._voltage / self.ohms
+
+    r2 = VoltageResistance(1e3)
+    print('Before: %5r amps' % r2.current)
+    # 会执行 setter 方法
+    r2.voltage = 10
+    print('After:  %5r amps' % r2.current)
+    
+ **考虑@property来替代属性重构**
+ 
+使用@property给已有属性扩展新需求，可以用 @property 来逐步完善数据模型
+
+当@property太复杂了才考虑重构
+
+**用描述符来改写需要复用的 @property 方法**
+
+如果想复用 @property 方法及其验证机制，那么可以自定义描述符类
+
+WeakKeyDictionary 可以保证描述符类不会泄露内存
+
+通过描述符协议来实现属性的获取和设置操作时，不要纠结于__getatttttribute__ 的方法的具体运作细节
+    
+not prefer：
+
+    class Exam(object):
+        def __init__(self):
+            self._writing_grade = 0
+            self._math_grade = 0
+
+        @staticmethod
+        def _check_grade(value):
+            if not (0 <= value <= 100):
+                raise ValueError('Grade must be between 0 and 100')
+
+        @property
+        def writing_grade(self):
+            return self._writing_grade
+
+        @writing_grade.setter
+        def writing_grade(self, value):
+            self._check_grade(value)
+            self._writing_grade = value
+
+        @property
+        def math_grade(self):
+            return self._math_grade
+
+        @math_grade.setter
+        def math_grade(self, value):
+            self._check_grade(value)
+            self._math_grade = value
+
+prefer:
+    from weakref import WeakKeyDictionary
+
+    class Grade(object):
+        def __init__(self):
+            self._values = WeakKeyDictionary()
+        def __get__(self, instance, instance_type):
+            if instance is None: return self
+            return self._values.get(instance, 0)
+
+        def __set__(self, instance, value):
+            if not (0 <= value <= 100):
+                raise ValueError('Grade must be between 0 and 100')
+            self._values[instance] = value
+
+    class Exam(object):
+        math_grade = Grade()
+        writing_grade = Grade()
+        science_grade = Grade()
+
+    exam = Exam()
+    exam.writing_grade = 40
 
 
 
