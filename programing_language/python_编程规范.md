@@ -225,7 +225,45 @@ prefer:
                 self._students[name] = Student()
             return self._students[name]
 
+**对于简单接口使用函数而不是类的实例**
 
+在Python中，不需要定义或实现什么类，对于简单接口组件而言，函数就足够了。
 
+Python中引用函数和方法的原因就在于它们是first-class，可以直接的被运用在表达式中。
+
+特殊方法__call__允许你像调用函数一样调用一个对象实例。需要一个函数来维护状态信息，考虑一个定义了__call__方法的状态闭包类
+
+内置的API都允许你通过向函数传递参数,如
+
+        names = ['Socrates', 'Archimedes', 'Plato', 'Aristotle']
+        names.sort(key=lambda x: len(x))
+
+python hooks：函数可以作为钩子来工作，因为Python有first-class函数，函数、方法可以像其他的变量值一样被引用，或者被传递给其他的函数
+
+        current = {'green': 12, 'blue': 3}
+        incremetns = [
+            ('red', 5),
+            ('blue', 17),
+            ('orange', 9)
+        ]
+
+        class BetterCountMissing(object):
+
+            def __init__(self):
+                self.added = 0
+
+            def __call__(self):
+                self.added += 1
+                return 0
+
+        counter = BetterCountMissing()
+        counter()
+        assert callable(counter)
+        # 这里我使用一个BetterCountMissing实例作为defaultdict函数的默认的hook值来追踪缺省值被添加的次数。
+        counter = BetterCountMissing()
+        result = defaultdict(counter, current)
+        for key, amount in increments:
+            result[key] += amount
+        assert counter.added == 2
 
 
