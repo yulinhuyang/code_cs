@@ -35,3 +35,4 @@ python tricks: https://www.zhihu.com/question/48755767
 
 [apachecn python 翻译集](https://github.com/apachecn/apachecn-python-zh)
 
+[Python项目读取配置的正确姿势](https://zhuanlan.zhihu.com/p/54764686)
