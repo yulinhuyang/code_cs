@@ -51,5 +51,5 @@ python tricks: https://www.zhihu.com/question/48755767
 
 [代码这样写不止于优雅（Python版）](https://zhuanlan.zhihu.com/p/25648644)
 
-
+[代码这样写更优雅 (Python 版)](https://zhuanlan.zhihu.com/p/25518608)
 
