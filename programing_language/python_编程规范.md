@@ -58,6 +58,34 @@ b = [x for x in a if x> 4 if x%2 ==0]
 c = [x for x in a if x > 4 and if x%2 ==0]
 
 
+**PEP8 Python 编码规范补充**
+
+文档编排：
+
+1 模块内容的顺序：模块说明和docstring—import—globals&constants—其他定义。其中import部分，又按标准、三方和自己编写顺序依次排放，之间空一行。
+
+2 不要在一句import中多个库，比如import os, sys不推荐。
+
+3 如果采用from XX import XX引用库，可以省略‘module.’，都是可能出现命名冲突，这时就要采用import XX。
+
+文档描述：
+ 
+为所有的共有模块、函数、类、方法写docstrings
+
+命名规范：
+
+ 类的属性有3种作用域public、non-public和subclass API，可以理解成C++中的public、private、protected，non-public属性前，前缀一条下划线。
+ 
+ 类的方法第一个参数必须是self，而静态方法第一个参数必须是cls。
+ 
+编码建议；
+
+1 编码中考虑到其他python实现的效率等问题，比如运算符‘+’在CPython（Python）中效率很高，都是Jython中却非常低，所以应该采用.join()的方式。
+
+2 尽可能使用‘is’‘is not’取代‘==’，比如if x is not None 要优于if x。
+
+3 使用startswith() and endswith()代替切片进行序列前缀或后缀的检查。 使用isinstance()比较对象的类型。
+
 ### 迭代器：enumerate、zip  
 
 enumerate 比range更好用:
