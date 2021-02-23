@@ -62,3 +62,5 @@ python tricks: https://www.zhihu.com/question/48755767
 [教你阅读Python开源项目代码](https://zhuanlan.zhihu.com/p/22275595)
 
 [Python不能不知的模块](https://zhuanlan.zhihu.com/p/22246193)
+
+[python glob.glob使用](https://blog.csdn.net/mantoureganmian/article/details/47949101)
