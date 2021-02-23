@@ -822,11 +822,253 @@ eg: 涉及货币计算的场合
 
 ## 1.7 协作开发
 
+**为每个函数、类和模块编写文档字符串**
+
+为模块撰写文档时，应该介绍本模块的内容，并且要把用户应该了解的重要类及重要函数列出来。
+
+    # words.py
+    # !/usr/bin/env python3
+    """Library for test words for various linguistic patterns.
+    Testing how words relate to each other can be tricky sometimes! This module
+    provides easy ways to determine when words you've found have special
+    properties.
+    Available functions:
+    - palindrome: Determine if a word is a palindrome.
+    - check_anagram: Determine if two words are anagrams.
+    ...
+    """
+    # ...
+
+为类撰写文档时，应该在 class 语句下面的 docstring 中，介绍本类的行为、重要属性，以及本类的子类应该实现的行为。
+
+
+    class Player(object):
+        """Represents a player of the game.
+        Subclasses may override the 'tick' method to provide custom animations for
+        the player's movement depending on their power level. etc.
+        Public attributes:
+        - power: Unused power-ups (float between 0 and 1).
+        - coins: Coins found during the level (integer).
+        """
+        # ...
+        pass
+
+
+为函数及方法撰写文档时，应该在 def 语句下面的 docstring 中，介绍函数的每个参数，函数返回值，函数在执行过程中可能抛出的异常，以及其他行为。
+
+    def find_anagrms(word, dictionary):
+        """Find all anagrams for a word.
+        This function only runs as fast as the test for membership in the
+        'dictionary' container. It will be slow if the dictionary is a list and
+        fast if it's a set.
+        Args:
+            word: String of the target word.
+            dictionary: Container with all strings that are known to be actual
+            words.
+        Returns:
+            List of anagrams that were found. Empty if none were found.
+        """
+        # ...
+        pass
+
+**用包来安排模块，并提供稳固的 API**
+
+只要把 __init__.py 文件放入含有其他源文件的目录里，就可以将该目录定义为包。目录中的文件，都将成为包的子模块。该包的目录下面，也可以含有其他包。
+
+把外界可见的名称，列在名为 __all__ 的特殊属性里，即可为包提供一套明确的 API。
+
+如果想隐藏某个包的内部实现，可以在包的 __init__.pyw文件中，只把外界可见的那些名称引入进来，或是给权限内部使用的那些名称添加下划线前缀。
+
+尽量不要使用import *,而是使用from x import y
+
+**为自编的模块定义根异常，以便将调用者与 API 隔离**
+
+**用适当的方式打破循环依赖关系**
+
+如果两个模块必须相互调用对方，才能完成引入操作，那就会出现循环依赖现象，这可能导致程序在启动的时候崩溃。
+
+打破循环依赖关系的最佳方案，是把导致两个模块相互依赖的那部分代码，重构为单独的模块，并把它挡在依赖树的底部。
+
+打破循环依赖关系的最简方案，是执行动态的模块引入操作，这样既可以缩减重构所花的精力，也可以尽量降低代码的复杂度
+
+**用虚拟环境隔离项目，并重建其依赖关系**
+
+python3.7 -m venv 命令可以创建虚拟环境，source bin/activate 命令可以激活虚拟环境， deactivate 命令可以停用虚拟环境。
+
+pip freeze 命令可以把某套环境所依赖的软件包，汇总到一份文件里面。我们把这个 requirements.txt 文件提供给 pip install -r 命令，即可重建一套与原来环境相仿的新环境。
+
+如果使用 Python3.4 之前的版本做开发，那么必须单独下载并安装类似的 pyvenv 工具- virtualenv
 
 ## 1.8 部署
 
+**考虑用模块级别的代码来配置不同的部署环境**
+
+    # db_connection.py
+    import sys
+
+    class Win32Database(object):
+        #...
+        pass
+
+    class PosixDatabase(object):
+        #...
+        pass
+
+    if sys.platform.startswith('win32'):
+        Database = Win32Database
+    else:
+        Database = PosixDatabase
+
+**通过 repr 字符串来输出调试信息**
+
+针对内置的 Python 类型来调用 repr 函数，会给据该值返回一条可供打印的字符串。把这个 repr 字符串传给内置的 eval 函数，就可以将其还原为初始的那个值。
+
+可以在类中编写 __repr__ 方法，用自定义的方式来提供一种可供打印的字符串，并在其中给出更为详细的调试信息。
+
+可以在任意对象的上面查询 __dict__ 属性，以观察其内部信息。
+
+    class BetterClass(object):
+        def __init__(self, x, y):
+            self.x = x
+            self.y = y
+
+        def __repr__(self):
+            return 'BetterClass(%d, %d)' % (self.x, self.y)
 
 
+    # Now, the repr value is much more useful.
+
+    obj = BetterClass(1, 2)
+    print(obj)
+    print(repr(obj))
+    # BetterClass(1, 2)
+    # BetterClass(1, 2)
+    
+    class OpaqueClass(object):
+        def __init__(self, x, y):
+            self.x = x
+            self.y = y
+            
+    obj = OpaqueClass(4, 5)
+    print(obj.__dict__)
+    # {'y': 5, 'x': 4}
+    
+**用 unittest 来测试全部代码**
+
+内置的 unittest 模块提供了测试者所需的很多功能，我们可以借助这些机制写出良好的测试。
+
+我们可以在 TestCase 子类中，为每一个需要测试的行为，定义对应的测试方法。TestCase 子类的测试方法，其名称必须以 test 开头。
+
+必须同时编写单元测试和集成测试，前者用来独立检验程序中的每个功能，而后者则用来检验模块之间的交互行为。
+
+    from unittest import TestCase, main
+    from item_56_utils import to_str
+    
+    def to_str(data):
+        if isinstance(data, str):
+            return data
+        elif isinstance(data, bytes):
+            return data.decode('utf-8')
+        else:
+            raise TypeError('Must supply str or bytes, '
+                            'found: %r' % data)
+
+    class UtilsTestCase(TestCase):
+        def test_to_str_str(self):
+            self.assertEqual('hello', to_str('hello'))
+
+        def test_to_str_bad(self):
+            self.assertRaises(TypeError, to_str, object())
+
+    class MyTest(TestCase):
+        def setUp(self):
+            self.test_dir = TemporaryDirectory()
+
+        def tearDown(self):
+            self.test_dir.cleanup()    
+            
+    if __name__ == '__main__':
+        main()
 
 
+**考虑用 pdb 实现交互调试**
+
+修改 Python 程序，在想要调试的代码上方直接加入 import pdb; pdb.set_trace() ，以触发互动调试器。
+
+在 pdb 提示符中输入命令，以便精确地控制程序的执行流程，这些命令（bt up down step next return）使得我们能够交替地查看程序状态并继续向下运行程序。
+
+    import pdb
+    def foo(num):
+        print(f"当前的数字是:{num}")
+        for i in range(num):
+            pdb.set_trace()
+            print(f"当前循环的数字:{i}")
+
+
+    if __name__ == '__main__':
+        foo(10)
+
+**先分析性能再优化**
+    
+做性能分析时，应该使用 cProfile 模块，而不要使用 profile 模块，因为前者能够给出更为精确的性能分析数据。
+
+可以通过 Profile 对象的 runcall 方法来分析程序的性能，该方法能够提供性能分析所需的全部信息，它会按照树状的函数调用关系，来单独地统计每个函数的性能。
+
+可以用 Stats 对象来筛选性能分析数据，并打印出我们所需的那一部分，以便我们据此了解程序的性能。
+
+cProfile 比 profile更精准：ncalls:调用次数，tottime:函数自身耗时，不包括调用函数的耗时，cumtime:包括调用的函数耗时
+
+    def my_utility(a, b):
+        if a > b:
+            return a + b
+        else:
+            return a * b
+
+
+    def first_func():
+        for _ in range(100000):
+            my_utility(4, 5)
+
+
+    def second_func():
+        for _ in range(1000):
+            my_utility(3, 1)
+
+
+    def my_program():
+        for _ in range(20):
+            first_func()
+            second_func()
+
+
+    # Profiling this code and using the default print_stats output will generate
+    # output statistics that are confusing.
+
+    profiler_my = Profile()
+    profiler_my.runcall(my_program)
+    stats_my = Stats(profiler_my)
+    stats_my.strip_dirs()
+    stats_my.sort_stats('cumulative')
+    stats_my.print_stats()
+    stats_my.print_callers()
+
+
+关于耗时测试：
+
+整体测试cProfile ————> 代码块测试 time.perf_counter()————> 很小的代码片段 timeit 
+    
+    整体时间测试： time python3 someprogram.py
+    
+    整体测试：
+    
+    python3 -m cProfile someprogram.py
+    
+    
+    >>> timeit('math.sqrt(2)', 'import math', number=10000000)
+    1.434852126003534
+
+
+time.perf_counter() : 会在给定平台上获取最高精度的计时值，仍然还是基于时钟时间，很多因素会影响到它的精确度，比如机器负载。 
+
+time.process_time()： 测试执行时间 
 
