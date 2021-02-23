@@ -116,6 +116,8 @@ https://www.zhihu.com/column/c_1200472332177096704
 
 https://www.zhihu.com/column/zen-of-python
 
+https://hellowac.github.io/blog/programing/
+
 https://github.com/fluentpython/example-code
 
 python cookbook:
