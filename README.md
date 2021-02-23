@@ -17,4 +17,4 @@ cs base, os，design  and others
 
 
 
-工具和编程规范箱：pylint工具、unittest、
+工具和编程规范箱：unittest、Pylint、PyChecker、PyFlakes
