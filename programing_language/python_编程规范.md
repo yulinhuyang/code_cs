@@ -1256,7 +1256,9 @@ combinations()
 
 string 的 split() ：简单的字符串分割
 
-re.split()：灵活的切割字符串 
+re.split()：灵活的切割字符串
+
+两种模式：str、re
 
 **开头或结尾匹配**
 
@@ -1268,8 +1270,108 @@ str.startswith() 、str.endswith()
     [ 'Makefile', 'foo.c', 'bar.py', 'spam.c', 'spam.h' ]
     >>> [name for name in filenames if name.endswith(('.c', '.h')) ]
     ['foo.c', 'spam.c', 'spam.h']
-    
-    
-    
+
+**Shell 通配符匹配字符串**
+
+fnmatch, fnmatchcase, glob  
+
+    >>> fnmatch('foo.txt', '*.txt')
+    True
+    >>> fnmatch('foo.txt', '?oo.txt')
+    True
+    >>> fnmatch('Dat45.csv', 'Dat[0-9]*')
+    True
+    >>> names = ['Dat1.csv', 'Dat2.csv', 'config.ini', 'foo.py']
+    >>> [name for name in names if fnmatch(name, 'Dat*.csv')]
+    ['Dat1.csv', 'Dat2.csv']
+    >>>    
+
+**查找**
+
+用re模块进行匹配和搜索文本的最基本方法。 核心步骤就是先使用 re.compile() 编译正则表达式字符串， 然后使用 match() , findall() 或者 finditer() 等方法
+
+**替换**
+
+简单: str.replace()
+
+    >>> text = 'yeah, but no, but yeah, but no, but yeah'
+    >>> text.replace('yeah', 'yep')
+    'yep, but no, but yep, but no, but yep'
+
+复杂：re.sub, re.subn
+
+    >>> import re
+    >>> datepat = re.compile(r'(\d+)/(\d+)/(\d+)')
+    >>> datepat.sub(r'\3-\1-\2', text)
+
+文本查找和替换时不区分大小写：re.IGNORECASE
+
+    >>> text = 'UPPER PYTHON, lower python, Mixed Python'
+    >>> re.findall('python', text, flags=re.IGNORECASE)
+    ['PYTHON', 'python', 'Python']
+    >>> re.sub('python', 'snake', text, flags=re.IGNORECASE)
+
+**贪婪匹配.*和懒惰匹配.*?**
+
+* 或者 + 这样的操作符后面添加一个 ? 可以强制匹配算法改成寻找最短的可能匹配
+
+re.DOTALL可以让.匹配换行符,多行匹配
+
+**Unicode处理**
+
+Unicode文本标准化：
+
+    >>> import unicodedata
+    >>> t1 = unicodedata.normalize('NFC', s1)
+    >>> t3 = unicodedata.normalize('NFD', s1)
+
+**删除**
+
+strip() 方法能用于删除开始或结尾的字符。 lstrip() 和 rstrip() 分别从左和从右执行删除操作
+
+或者：replace sub
+
+    >>> s.replace(' ', '')
+    'helloworld'
+    >>> import re
+    >>> re.sub('\s+', ' ', s)
+    'hello world'
+    >>>
+
+**对齐文本**
+
+基本对齐：ljst, rjust, center
+
+    >>> text = 'Hello World'
+    >>> text.ljust(20)
+    'Hello World         '
+    >>> text.rjust(20)
+    '         Hello World'
+    >>> text.center(20)
+    '    Hello World     '
+    >>>
+
+format的^, >, <：使用 <,> 或者 ^ 字符后面紧跟一个指定的宽度，格式化多个值
+
+    >>> '{:>10s} {:>10s}'.format('Hello', 'World')
+    '     Hello      World'
+    >>>
+
+**拼接和合并**
+
+方式：join，+，format
+
+    >>> parts = ['Is', 'Chicago', 'Not', 'Chicago?']
+    >>> ' '.join(parts)
+
+    >>> a = 'Is Chicago'
+    >>> b = 'Not Chicago?'
+    >>> a + ' ' + b
+
+    >>> print('{} {}'.format(a,b))
+    Is Chicago Not Chicago?
+    >>> print(a + ' ' + b)
+    Is Chicago Not Chicago?
+    >>>
 
 
