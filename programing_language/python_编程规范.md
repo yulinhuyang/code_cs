@@ -387,6 +387,8 @@ collections.abc的 Sequence : 子类只要实现 __getitem__以及 __len__， Se
 
 ## 1.4  元类和属性
 
+### 属性
+
 **用纯属性取代 get 和 set 方法**
 
 使用public属性避免set和get方法，@property定义一些特别的行为
@@ -495,8 +497,205 @@ obj.name，getattr和hasattr都会调用getattribute方法，如果name不在obj
 
 只要有赋值操作（=，setattr）都会调用setattr方法（包括a = A())
 
+### 元类
+
+**用元类来验证子类**
+
+通过元类，我们可以在生成子类对象之前，先验证子类的定义是否合乎规范，使用元类对类型对象进行验证
+
+Python 系统把子类的整个 class 语句体处理完毕之后，就会调用其元类的__new__ 方法
+
+元类：用来创建类的“东西”。你创建类就是为了创建类的实例对象，元类就是类的类，可以把元类称为“类工厂”。
+
+MyClass = MetaClass()
+
+MyObject = MyClass()
+
+    >>> age = 35
+    >>> age.__class__
+    <type 'int'>
+    >>> age.__class__.__class__
+    <type 'type'>
+
+先定义metaclass，就可以创建类，最后创建实例。
+
+首先，定义元类，我们要继承 type, python 默认会把那些类的 class 语句体中所含的相关内容，发送给元类的 new 方法。
+
+    class Meta(type):
+        def __new__(meta, name, bases, class_dict):
+            print(meta, name, bases, class_dict)
+            return type.__new__(meta, name, bases, class_dict)
+            
+    class MyClassInPython3(object, metaclass=Meta):
+        stuff = 123
+
+        def foo(self):
+            pass
+
+**用元类来注解类的属性**
+
+借助元类，我们可以在某个类完全定义好之前，率先修改该类的属性
+
+描述符与元类能够有效的组合起来，以便对某种行为做出修饰，或者在程序运行时探查相关信息
+
+如果把元类与描述符相结合，那就可以在不使用 weakerf 模块的前提下避免内存泄露
+
+## 1.5 并行与并发
+
+**用 subprocess 模块来管理子进程**
+
+使用 subprocess 模块运行子进程管理自己的输入和输出流
+
+subprocess 可以并行执行最大化CPU的使用
+
+communicate 的 timeout 参数避免死锁和被挂起的子进程
+
+### 线程
+
+**可以用线程来执行阻塞时I/O，但不要用它做平行计算**
+
+因为GIL，Python thread并不能并行运行多段代码
+
+Python保留thread的两个原因：1.可以模拟多线程，2.多线程可以处理I/O阻塞的情况
+
+Python thread可以并行执行多个系统调用，这使得程序能够在执行阻塞式I/O操作的同时，执行一些并行计算
+
+**在线程中使用Lock来防止数据竞争**
+
+虽然Python thread不能同时执行，但是Python解释器还是会打断操作数据的两个字节码指令，所以还是需要锁
+
+thread模块的Lock类是Python的互斥锁实现
+
+**用 Queue 来协调各线程之间的工作**
+
+管线是一种优秀的任务处理方式，它可以把处理流程划分为若干阶段，并使用多条Python线程同时执行这些任务
+
+构建并发式的管线时，要注意许多问题，包括：如何防止某个阶段陷入持续等待的状态之中、如何停止工作线程，以及如何防止内存膨胀等
+
+Queue类具备构建健壮并发管道的特性：阻塞操作，缓存大小和连接（join）
+
+    from queue import Queue
+    from threading import Thread
+
+    class ClosableQueue(Queue):
+        SENTINEL = object()
+
+        def close(self):
+            self.put(self.SENTINEL)
+
+        def __iter__(self):
+            while True:
+                item = self.get()
+                try:
+                    if item is self.SENTINEL:
+                        return  # Cause the thread to exit
+                    yield item
+                finally:
+                    self.task_done()
+
+    class StoppableWorker(Thread):
+        def __init__(self, func, in_queue, out_queue):
+            super().__init__()
+            self.func = func
+            self.in_queue = in_queue
+            self.out_queue = out_queue
+
+        def run(self):
+            for item in self.in_queue:
+                result = self.func(item)
+                self.out_queue.put(result)
+    def download(item):
+        return item
+
+    def resize(item):
+        return item
+
+    def upload(item):
+        return item
+
+    download_queue = ClosableQueue()
+    resize_queue = ClosableQueue()
+    upload_queue = ClosableQueue()
+    done_queue = ClosableQueue()
+    threads = [
+        StoppableWorker(download, download_queue, resize_queue),
+        StoppableWorker(resize, resize_queue, upload_queue),
+        StoppableWorker(upload, upload_queue, done_queue),
+    ]
 
 
+    for thread in threads:
+        thread.start()
+    for _ in range(1000):
+        download_queue.put(object())
+    download_queue.close()
+
+
+    download_queue.join()
+    resize_queue.close()
+    resize_queue.join()
+    upload_queue.close()
+    upload_queue.join()
+    print(done_queue.qsize(), 'items finished')
+
+**考虑用协程来并发地运行多个函数**
+
+线程有三个大问题：需要特定工具去确定安全性，单个线程需要8M的内存，线程启动消耗。
+
+coroutine只有1kb的内存消耗
+
+generator可以通过send方法把值传递给yield
+
+
+**考虑用 concurrent.futures 来实现真正的并行计算**
+
+CPU瓶颈模块使用C扩展
+
+concurrent.futures的multiprocessing可以并行处理一些任务
+
+使用 concurrent.futures 里面的 ProcessPoolExecutor 可以很简单地平行处理 CPU-bound 的程式，省得用 multiprocessing 自定义。
+
+    from concurrent.futures import ProcessPoolExecutor
+
+    start = time()
+    pool = ProcessPoolExecutor(max_workers=2)  # The one change
+    results = list(pool.map(gcd, numbers))
+    end = time()
+    print('Took %.3f seconds' % (end - start))
+
+
+里面的ThreadPoolExecutor和ProcessPoolExecutor，继承了Executor，分别被用来创建线程池和进程池的代码。
+
+将相应的tasks直接放入线程池/进程池，不需要维护Queue来操心死锁的问题，线程池/进程池会自动帮我们调。
+
+可以使用submit和map提交任务。
+
+    import concurrent.futures
+    import urllib.request
+
+    URLS = ['http://www.foxnews.com/',
+            'http://www.cnn.com/',
+            'http://europe.wsj.com/',
+            'http://www.bbc.co.uk/',
+            'http://some-made-up-domain.com/']
+
+    # Retrieve a single page and report the URL and contents
+    def load_url(url, timeout):
+        with urllib.request.urlopen(url, timeout=timeout) as conn:
+            return conn.read()
+
+    # We can use a with statement to ensure threads are cleaned up promptly
+    with concurrent.futures.ThreadPoolExecutor(max_workers=5) as executor:
+        # Start the load operations and mark each future with its URL
+        future_to_url = {executor.submit(load_url, url, 60): url for url in URLS}
+        for future in concurrent.futures.as_completed(future_to_url):
+            url = future_to_url[future]
+            try:
+                data = future.result()
+            except Exception as exc:
+                print('%r generated an exception: %s' % (url, exc))
+            else:
+                print('%r page is %d bytes' % (url, len(data)))
 
 
 
