@@ -54,3 +54,6 @@ python tricks: https://www.zhihu.com/question/48755767
 [代码这样写更优雅 (Python 版)](https://zhuanlan.zhihu.com/p/25518608)
 
 [Python虚拟环境pyenv、venv区别](Python虚拟环境pyenv、venv(pyvenv)、virtualenv之间的区别，终于搞清楚了！)
+
+[PEP8 Python 编码规范整理](https://zhuanlan.zhihu.com/p/31212390)
+
