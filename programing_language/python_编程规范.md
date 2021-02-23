@@ -78,6 +78,8 @@ c = [x for x in a if x > 4 and if x%2 ==0]
  
  类的方法第一个参数必须是self，而静态方法第一个参数必须是cls。
  
+ 用“has”或“is”前缀命名布尔元素
+ 
 编码建议；
 
 1 编码中考虑到其他python实现的效率等问题，比如运算符‘+’在CPython（Python）中效率很高，都是Jython中却非常低，所以应该采用.join()的方式。
@@ -1111,6 +1113,80 @@ time.process_time()： 测试执行时间
 
 
 # 2  python cookbook 摘要补充
+
+## 第一章：数据结构和算法
+
+**序列解包**
+
+用于可迭代对象： list tuple，包括字符串，文件对象，迭代器生成器
+
+    >>> data = [ 'ACME', 50, 91.1, (2012, 12, 21) ]
+    >>> name, shares, price, date = data
+
+在解包的时候利用 * 操作符来接受多个值
+
+    >>> record = ('Dave', 'dave@example.com', '773-555-1212', '847-555-1212')
+    >>> name, email, *phone_numbers = record
+
+**collections 库中的 deque**
+
+deque 还实现了 maxlen  appendleft appendright popleft popright 等方法。
+
+eg:保留最后 N 个元素
+
+**heapq模块**
+
+nlargest() 和 nsmallest() 最大最小元素
+
+    import heapq
+    nums = [1, 8, 2, 23, 7, -4, 18, 23, 42, 37, 2]
+    print(heapq.nlargest(3, nums)) # Prints [42, 37, 23]
+    print(heapq.nsmallest(3, nums)) # Prints [-4, 1, 2]
+
+ heapq.heappush() 和 heapq.heappop()分别在队列 _queue 上插入和删除第一个元素，heappop() 函数总是返回”最小的”的元素
+ 
+ eg:
+    
+    import heapq
+
+    class PriorityQueue:
+        def __init__(self):
+            self._queue = []
+            self._index = 0
+
+        def push(self, item, priority):
+            heapq.heappush(self._queue, (-priority, self._index, item))
+            self._index += 1
+
+        def pop(self):
+            return heapq.heappop(self._queue)[-1]
+ 
+**字典**
+
+defaultdict：是它会自动初始化每个 key 刚开始对应的值
+
+eg:一键多值字典
+
+OrderedDict：有序字典
+
+eg:字典交并集
+
+    a = {
+    'x' : 1,
+    'y' : 2,
+    'z' : 3
+    }
+    b = {
+    'w' : 10,
+    'x' : 11,
+    'y' : 2
+    }
+    # Find keys in common
+    a.keys() & b.keys() # { 'x', 'y' }
+    # Find keys in a that are not in b
+    a.keys() - b.keys() # { 'z' }
+    # Find (key,value) pairs in common
+    a.items() & b.items() # { ('y', 2) }
 
 
 
