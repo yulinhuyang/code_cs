@@ -1374,4 +1374,71 @@ format的^, >, <：使用 <,> 或者 ^ 字符后面紧跟一个指定的宽度�
     Is Chicago Not Chicago?
     >>>
 
+### 第四章：迭代器与生成器
+
+**手动对访问迭代器：next()**
+
+    def manual_iter():
+        with open('/etc/passwd') as f:
+            try:
+                while True:
+                    line = next(f)
+                    print(line, end='')
+            except StopIteration:
+                pass
+
+**实现迭代器协议**
+
+
+**itertools**
+
+itertools.islice()  正好适用于在迭代器和生成器上做切片操作
+
+itertools.dropwhile() 跳过可迭代对象的开始部分
+
+    >>> from itertools import dropwhile
+    >>> with open('/etc/passwd') as f:
+    ...     for line in dropwhile(lambda line: not line.startswith('#'), f):
+    ...         print(line, end='')
+
+排列组合问题：itertools.permutations()  排列
+
+itertools.combinations() 组合， itertools.combinations_with_replacement() 允许同一个元素被选择多次
+
+
+    >>> items = ['a', 'b', 'c']
+    >>> from itertools import permutations
+    >>> for p in permutations(items):
+    ...     print(p)
+
+    >>> for c in combinations(items, 3):
+    ...     print(c)
+    
+**迭代**
+
+enumerate()： 索引-值对迭代，代替for
+
+    >>> my_list = ['a', 'b', 'c']
+    >>> for idx, val in enumerate(my_list, 1):
+    ...     print(idx, val)
+
+zip()，itertools.zip_longest()：同时迭代多个容器
+
+    >>> for x, y in zip(xpts, ypts):
+    ...     print(x,y)
+
+itertools.chain()：依次迭代多个容器，不会产生新序列，省空间
+
+    >>> a = [1, 2, 3, 4]
+    >>> b = ['x', 'y', 'z']
+    >>> for x in chain(a, b):
+    ... print(x)
+
+heapq.merge()：对不同类型的容器进行排序后依次迭代
+
+    >>> import heapq
+    >>> a = [1, 4, 7, 10]
+    >>> b = [2, 5, 6, 11]
+    >>> for c in heapq.merge(a, b):
+    ...     print(c)
 
