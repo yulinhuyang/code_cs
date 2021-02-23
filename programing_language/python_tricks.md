@@ -47,7 +47,7 @@ python tricks: https://www.zhihu.com/question/48755767
 
 [深入理解Python中的元类(metaclass)](https://www.cnblogs.com/JetpropelledSnake/p/9094103.html)
 
-
+[使用concurrent.futures模块并发，实现进程池、线程池](https://www.cnblogs.com/huchong/p/7459324.html)
 
 
 
