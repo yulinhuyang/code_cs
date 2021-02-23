@@ -44,3 +44,12 @@ python tricks: https://www.zhihu.com/question/48755767
 [Python 描述符(Descriptor) 附实例](https://zhuanlan.zhihu.com/p/42485483)
 
 [python 两个list 求交集，并集，差集](https://blog.csdn.net/bitcarmanlee/article/details/51622263)
+
+[深入理解Python中的元类(metaclass)](https://www.cnblogs.com/JetpropelledSnake/p/9094103.html)
+
+
+
+
+
+
+
