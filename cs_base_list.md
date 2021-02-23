@@ -37,7 +37,7 @@ https://github.com/wizardforcel/sicp-py-zh
 https://github.com/jiacai2050/sicp
 
 
-冒号学堂：编程范式与OOP思想
+冒号学堂：编程范式与OOP思想:  https://blog.zhenghui.org/2009/08/21/contents-of-colonclass/
 
 编程范式： https://www.bilibili.com/video/av56360595/
 
