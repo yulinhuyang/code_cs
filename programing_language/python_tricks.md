@@ -49,7 +49,7 @@ python tricks: https://www.zhihu.com/question/48755767
 
 [使用concurrent.futures模块并发，实现进程池、线程池](https://www.cnblogs.com/huchong/p/7459324.html)
 
-
+[代码这样写不止于优雅（Python版）](https://zhuanlan.zhihu.com/p/25648644)
 
 
 
