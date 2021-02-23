@@ -57,3 +57,6 @@ python tricks: https://www.zhihu.com/question/48755767
 
 [PEP8 Python 编码规范整理](https://zhuanlan.zhihu.com/p/31212390)
 
+[教你阅读Python开源项目代码](https://zhuanlan.zhihu.com/p/22275595)
+
+[Python不能不知的模块](https://zhuanlan.zhihu.com/p/22246193)
