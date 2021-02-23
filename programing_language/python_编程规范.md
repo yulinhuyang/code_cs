@@ -1188,6 +1188,67 @@ eg:字典交并集
     # Find (key,value) pairs in common
     a.items() & b.items() # { ('y', 2) }
 
+字典推导式：
+
+p1 = {key: value for key, value in prices.items() if value > 200}
+
+
+字典合并：
+
+ChainMap 
+
+    from collections import ChainMap
+    c = ChainMap(a,b)
+
+**collections.Counter**
+
+Counter 对象可以接受任意的由可哈希(hashable)元素构成的序列对象。 在底层实现上，一个 Counter 对象就是一个字典，将元素映射到它出现的次数。
+
+most_common()、update()
+ 
+可以跟数学运算操作或者说是集合操作相结合
+
+>>> a = Counter(words)
+>>> b = Counter(morewords)
+>>> # Combine counts
+>>> c = a + b
+
+**sort**
+
+内置的 sorted() 函数有一个关键字参数 key ，可以传入一个 callable 对象给它
+
+类对象一种方法是使用 operator.attrgetter() 另一种则是使用 lambda 函数
+
+    >>> from operator import attrgetter
+    >>> sorted(users, key=attrgetter('user_id'))
+
+    def sort_notcompare():
+        users = [User(23), User(3), User(99)]
+        print(sorted(users, key=lambda u: u.user_id))
+
+**itertools**
+
+groupby() 分组
+
+    from operator import itemgetter
+    from itertools import groupby
+
+    # Sort by the desired field first
+    rows.sort(key=itemgetter('date'))
+    # Iterate in groups
+    for date, items in groupby(rows, key=itemgetter('date')):
+        print(date)
+        for i in items:
+            print(' ', i)
+
+filter()  过滤
+
+
+排列组合：product()
+
+permutations()
+
+combinations()
 
 
 
