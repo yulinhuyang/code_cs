@@ -1208,10 +1208,10 @@ most_common()、update()
  
 可以跟数学运算操作或者说是集合操作相结合
 
->>> a = Counter(words)
->>> b = Counter(morewords)
->>> # Combine counts
->>> c = a + b
+    >>> a = Counter(words)
+    >>> b = Counter(morewords)
+    >>> # Combine counts
+    >>> c = a + b
 
 **sort**
 
@@ -1250,5 +1250,26 @@ permutations()
 
 combinations()
 
+### 第二章 字符串和文本
+
+**分割**
+
+string 的 split() ：简单的字符串分割
+
+re.split()：灵活的切割字符串 
+
+**开头或结尾匹配**
+
+str.startswith() 、str.endswith()
+
+检查多种匹配可能，只需要将所有的匹配项放入到一个元组
+
+    >>> filenames
+    [ 'Makefile', 'foo.c', 'bar.py', 'spam.c', 'spam.h' ]
+    >>> [name for name in filenames if name.endswith(('.c', '.h')) ]
+    ['foo.c', 'spam.c', 'spam.h']
+    
+    
+    
 
 
