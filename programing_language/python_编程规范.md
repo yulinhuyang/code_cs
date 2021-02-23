@@ -1389,6 +1389,11 @@ format的^, >, <：使用 <,> 或者 ^ 字符后面紧跟一个指定的宽度�
 
 **实现迭代器协议**
 
+迭代器协议是指：对象必须提供一个next方法，执行方法要么返回迭代器中的下一项，要么就引起一个StopIteration异常，以终止迭代
+
+对象必须提供一个next方法和iter方法。作为迭代器协议应用的代表就是for方法
+
+
 
 **itertools**
 
@@ -1441,4 +1446,65 @@ heapq.merge()：对不同类型的容器进行排序后依次迭代
     >>> b = [2, 5, 6, 11]
     >>> for c in heapq.merge(a, b):
     ...     print(c)
+
+### 第五章 文件与IO
+
+**读写文件**
+
+open读写文件，
+
+模式: wt rt  at ，写，读，追加
+
+encoding：UTF-8  ，sys.getdefaultencoding()获取系统默认
+
+newline
+
+with open('somefile.txt', 'wt') as f:
+    f.write(text1)
+    f.write(text2)
+    
+with open('somefile.txt', 'rt', encoding='latin-1') as f:
+
+open() 函数中使用 x 模式来代替 w 模式：文件不存在才能写入
+
+**压缩文件读写**
+
+gzip.open()和 bz2.open() 接受跟内置的 open() 函数一样的参数， 包括 encoding，errors，newline，compresslevel 指定压缩级别。
+
+    import gzip
+    with gzip.open('somefile.gz', 'rt') as f:
+        text = f.read()
+
+    # bz2 compression
+    import bz2
+    with bz2.open('somefile.bz2', 'rt') as f:
+        text = f.read()
+
+**mmap内存映射**
+
+mmap 将文件映射到内存中
+
+    import os
+    import mmap
+
+    def memory_map(filename, access=mmap.ACCESS_WRITE):
+        size = os.path.getsize(filename)
+        fd = os.open(filename, os.O_RDWR)
+        return mmap.mmap(fd, size, access=access)
+        
+    >>> m = memory_map('data')
+    >>> len(m)
+
+**os.path**
+
+文件路径名 ：basename，dirname，expanduser，splitext  
+
+判存在：exists，isfile，isdir，islink，realpath，getsize，getmtime
+
+文件元数据：大小和日期
+
+文件列表获取：os.path.listdir
+
+
+
 
