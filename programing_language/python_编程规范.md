@@ -2,7 +2,11 @@
 
 ## 1.1 Pythonic Thinking
 
-### pep8 
+### pep8规范学习
+
+注意让写的代码尽量Pythonic和符合PEP8标准
+
+
 
 ### 基础结构
 
@@ -781,9 +785,9 @@ copyreg的 pickle 支持属性丢失，版本和导入类表信息
 
     collections.deque
 
-    collections.OrderedDict
+    collections.OrderedDict：OrderedDict 内部维护着一个根据键插入顺序排序的双向链表，要保持Key的顺序
 
-    collection.defaultdict
+    collection.defaultdict： 使用dict时，如果引用的Key不存在，就会抛出KeyError。如果希望key不存在时，返回一个默认值，就可以用defaultdict。
 
     heapq模块操作list（优先队列）：heappush，heappop和nsmallest
 
@@ -804,9 +808,24 @@ copyreg的 pickle 支持属性丢失，版本和导入类表信息
 
         连接迭代器：chain，cycle，tee和zip_longest
 
-        过滤：islice，takewhile，dropwhile，filterfalse
+        过滤：islice（索引值切割），takewhile，dropwhile，filterfalse
 
-        组合不同迭代器：product，permutations和combination
+        组合不同迭代器：product（笛卡尔积），permutations（排列），combination（组合）
+
+**在重视 精确度的场合，应该使用 decimal**
+
+高精度要求的使用 Decimal 处理，如对舍入行为要求很严的场合，
+
+eg: 涉及货币计算的场合
+
+
+
+## 1.7 协作开发
+
+
+## 1.8 部署
+
+
 
 
 
