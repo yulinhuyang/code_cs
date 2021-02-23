@@ -744,5 +744,70 @@ concurrent.futures的multiprocessing可以并行处理一些任务
 
 在函数 timethis() 中，yield 之前的代码会在上下文管理器中作为 __enter__() 方法执行， 所有在 yield 之后的代码会作为 __exit__() 方法执行。 如果出现了异常，异常会在yield语句那里抛出。
 
+**用 copyreg 实现可靠的 pickle 操作**
+
+pickle 模块只能序列化和反序列化确认没有问题的对象
+
+copyreg的 pickle 支持属性丢失，版本和导入类表信息
+
+使用 copyreg這个内建的 module, 搭配 pickle使用
+
+    def pickle_game_state(game_state):
+        kwargs = game_state.__dict__
+        kwargs['version'] = 2
+        return unpickle_game_state, (kwargs,)
+
+    def unpickle_game_state(kwargs):
+        version = kwargs.pop('version', 1)
+        if version == 1:
+            kwargs.pop('lives')
+        return GameState(**kwargs)
+
+    copyreg.pickle(GameState, pickle_game_state)
+
+**用 datetime 替代 time 来处理本地时间**
+
+不要使用time模块在转换不同时区的时间
+
+而用datetime配合 pytz 转换
+
+总数保持UTC时间，最后面再输出本地时间
+
+**使用内置算法与数据结构**
+
+使用 Python 内置的模块来描述各种算法和数据结构
+
+内置算法和数据结构
+
+    collections.deque
+
+    collections.OrderedDict
+
+    collection.defaultdict
+
+    heapq模块操作list（优先队列）：heappush，heappop和nsmallest
+
+        a = []
+        heappush(a, 5)
+        heappush(a, 3)
+        heappush(a, 7)
+        heappush(a, 4)
+        print(heappop(a), heappop(a), heappop(a), heappop(a))
+
+        # >>>
+
+        # 3 4 5 7
+
+    bisect模块：bisect_left可以对有序列表进行高效二分查找
+
+    itertools模块（Python2不一定支持）：
+
+        连接迭代器：chain，cycle，tee和zip_longest
+
+        过滤：islice，takewhile，dropwhile，filterfalse
+
+        组合不同迭代器：product，permutations和combination
+
+
 
 
