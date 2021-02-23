@@ -698,6 +698,51 @@ concurrent.futures的multiprocessing可以并行处理一些任务
                 print('%r page is %d bytes' % (url, len(data)))
 
 
+## 1.6 内置模块
+
+**用 functools.wraps 定义函数修饰器**
+
+装饰器可以对函数进行封装，但是会改变函数信息
+
+使用 functools 的 warps 可以解决这个问题
+
+    def trace(func):
+      @wraps(func)
+      def wrapper(*args, **kwargs):
+          # …
+      return wrapper
+    @trace
+    def fibonacci(n):
+      # …
+
+**考虑用 contextlib 和with 语句来改写可复用的 try/finally 代码**
+
+使用with语句代替try/finally，增加代码可读性
+
+使用 contextlib 提供的 contextmanager 装饰函数就可以被 with 使用, with 和 yield 返回值使用
+
+实现一个新的上下文管理器的最简单的方法就是使用 contexlib 模块中的 @contextmanager 装饰器
+
+
+    import time
+    from contextlib import contextmanager
+
+    @contextmanager
+    def timethis(label):
+        start = time.time()
+        try:
+            yield
+        finally:
+            end = time.time()
+            print('{}: {}'.format(label, end - start))
+
+    # Example use
+    with timethis('counting'):
+        n = 10000000
+        while n > 0:
+            n -= 1
+
+在函数 timethis() 中，yield 之前的代码会在上下文管理器中作为 __enter__() 方法执行， 所有在 yield 之后的代码会作为 __exit__() 方法执行。 如果出现了异常，异常会在yield语句那里抛出。
 
 
 
