@@ -1,3 +1,4 @@
+
 <!-- GFM-TOC -->
 * [一、常用操作以及概念](#一常用操作以及概念)
     * [求助](#求助)
@@ -141,7 +142,7 @@ Linux 发行版是 Linux 内核及各种应用软件的集成版本。
 
 ## VIM 三个模式
 
-<div align="center"> <img src="../pics//5942debd-fc00-477a-b390-7c5692cc8070.jpg" width="400"/> </div><br>
+<div align="center"> <img src="../../pics//5942debd-fc00-477a-b390-7c5692cc8070.jpg" width="400"/> </div><br>
 
 - 一般指令模式：进入 VIM 的默认模式，可以用于移动游标查看内容；
 - 编辑模式：按下 "i" 等按键之后进入，可以对文本进行编辑；
@@ -189,7 +190,7 @@ GPT 第 1 个区块记录了 MBR，紧接着是 33 个区块记录分区信息�
 
 GPT 没有扩展分区概念，都是主分区，最多可以分 128 个分区。
 
-<div align="center"> <img src="../pics//a5c25452-6fa5-49e7-9322-823077442775.jpg" width="400"/> </div><br>
+<div align="center"> <img src="../../pics//a5c25452-6fa5-49e7-9322-823077442775.jpg" width="400"/> </div><br>
 
 ## 开机检测程序
 
@@ -201,7 +202,7 @@ MBR 中的开机管理程序提供以下功能：选单、载入核心文件以�
 
 安装多重引导，最好先安装 Windows 再安装 Linux。因为安装 Windows 时会覆盖掉 MBR，而 Linux 可以选择将开机管理程序安装在 MBR 或者其它分区的启动扇区，并且可以设置开机管理程序的选单。
 
-<div align="center"> <img src="../pics//f900f266-a323-42b2-bc43-218fdb8811a8.jpg" width="600"/> </div><br>
+<div align="center"> <img src="../../pics//f900f266-a323-42b2-bc43-218fdb8811a8.jpg" width="600"/> </div><br>
 
 ### 2. UEFI
 
@@ -211,7 +212,7 @@ UEFI 相比于 BIOS 来说功能更为全面，也更为安全。
 
 挂载利用目录作为分区的进入点，也就是说，进入目录之后就可以读取分区的数据。
 
-<div align="center"> <img src="../pics//249f3bb1-feee-4805-a259-a72699d638ca.jpg" width="500"/> </div><br>
+<div align="center"> <img src="../../pics//249f3bb1-feee-4805-a259-a72699d638ca.jpg" width="500"/> </div><br>
 
 # 三、文件权限与目录配置
 
@@ -308,7 +309,7 @@ UEFI 相比于 BIOS 来说功能更为全面，也更为安全。
 - /usr (unix software resource)：所有系统默认软件都会安装到这个目录；
 - /var (variable)：存放系统或程序运行过程中的数据文件。
 
-<div align="center"> <img src="../pics//linux-filesystem.png"/> </div><br>
+<div align="center"> <img src="../../pics//linux-filesystem.png"/> </div><br>
 
 # 四、文件与目录
 
@@ -469,7 +470,7 @@ find 可以使用文件的属性和权限进行搜索。
 
 +4、4 和 -4 的指示的时间范围如下：
 
-<div align="center"> <img src="../pics//658fc5e7-79c0-4247-9445-d69bf194c539.png"/> </div><br>
+<div align="center"> <img src="../../pics//658fc5e7-79c0-4247-9445-d69bf194c539.png"/> </div><br>
 
 #### 4.2 与文件拥有者和所属群组有关的选项
 
@@ -511,7 +512,7 @@ find 可以使用文件的属性和权限进行搜索。
 
 Ext2 文件系统使用了上述的文件结构，并在此之上加入了 block 群组的概念，也就是将一个文件系统划分为多个 block 群组，方便管理。
 
-<div align="center"> <img src="../pics//1974a836-aa6b-4fb8-bce1-6eb11969284a.jpg"/> </div><br>
+<div align="center"> <img src="../../pics//1974a836-aa6b-4fb8-bce1-6eb11969284a.jpg"/> </div><br>
 
 ## inode
 
@@ -519,7 +520,7 @@ Ext2 文件系统支持的 block 大小有 1k、2k 和 4k 三种，不同的 blo
 
 inode 中记录了文件内容所在的 block，但是每个 block 非常小，一个大文件随便都需要几十万的 block。而一个 inode 大小有限，无法直接引用这么多 block。因此引入了间接、双间接、三间接引用。间接引用是指，让 inode 记录的引用 block 块当成 inode 用来记录引用信息。
 
-<div align="center"> <img src="../pics//89091427-7b2b-4923-aff6-44681319a8aa.jpg"/> </div><br>
+<div align="center"> <img src="../../pics//89091427-7b2b-4923-aff6-44681319a8aa.jpg"/> </div><br>
 
 inode 具体包含以下信息：
 
