@@ -6,11 +6,13 @@
     * [PATH](#path)
     * [运行等级](#运行等级)
     * [sudo](#sudo)
-    * [GNU](#gnu)
     * [包管理工具](#包管理工具)
     * [发行版](#发行版)
     * [VIM 三个模式](#vim-三个模式)
+    * [GNU](#gnu)
+    * [开源协议](#开源协议)
 * [二、分区](#二分区)
+    * [磁盘接口]（#磁盘接口）
     * [磁盘的文件名](#磁盘的文件名)
     * [分区表](#分区表)
     * [开机检测程序](#开机检测程序)
@@ -117,13 +119,6 @@ reboot、halt、poweroff。
 
 使用 sudo 允许一般用户使用 root 可执行的命令，只有在 /etc/sudoers 配置文件中添加的用户才能使用该指令。
 
-## GNU
-
-GNU 计划，译为革奴计划，它的目标是创建一套完全自由的操作系统，称为 GNU，其内容软件完全以 GPL 方式发布。其中 GPL 全称为 GNU 通用公共许可协议，包含了以下内容：
-
-- 以任何目的运行此程序的自由；
-- 再复制的自由；
-- 改进此程序，并公开发布改进的自由。
 
 ## 包管理工具
 
@@ -159,7 +154,47 @@ Linux 发行版是 Linux 内核及各种应用软件的集成版本。
 | :wq | 写入磁盘后离开 |
 | :wq!| 强制写入磁盘后离开 |
 
+
+## GNU
+
+GNU 计划，译为革奴计划，它的目标是创建一套完全自由的操作系统，称为 GNU，其内容软件完全以 GPL 方式发布。其中 GPL 全称为 GNU 通用公共许可协议，包含了以下内容：
+
+- 以任何目的运行此程序的自由；
+- 再复制的自由；
+- 改进此程序，并公开发布改进的自由。
+
+### 开源协议
+
+- [Choose an open source license](https://choosealicense.com/)
+- [如何选择开源许可证？](http://www.ruanyifeng.com/blog/2011/05/how_to_choose_free_software_licenses.html)
+
 # 二、分区
+
+## 磁盘接口
+
+### 1. IDE
+
+IDE（ATA）全称 Advanced Technology Attachment，接口速度最大为 133MB/s，因为并口线的抗干扰性太差，且排线占用空间较大，不利电脑内部散热，已逐渐被 SATA 所取代。
+
+<div align="center"> <img src="https://cs-notes-1256109796.cos.ap-guangzhou.myqcloud.com/924914c0-660c-4e4a-bbc0-1df1146e7516.jpg" width="400"/> </div><br>
+
+### 2. SATA
+
+SATA 全称 Serial ATA，也就是使用串口的 ATA 接口，抗干扰性强，且对数据线的长度要求比 ATA 低很多，支持热插拔等功能。SATA-II 的接口速度为 300MB/s，而 SATA-III 标准可达到 600MB/s 的传输速度。SATA 的数据线也比 ATA 的细得多，有利于机箱内的空气流通，整理线材也比较方便。
+
+<div align="center"> <img src="https://cs-notes-1256109796.cos.ap-guangzhou.myqcloud.com/f9f2a16b-4843-44d1-9759-c745772e9bcf.jpg" width=""/> </div><br>
+
+### 3. SCSI
+
+SCSI 全称是 Small Computer System Interface（小型机系统接口），SCSI 硬盘广为工作站以及个人电脑以及服务器所使用，因此会使用较为先进的技术，如碟片转速 15000rpm 的高转速，且传输时 CPU 占用率较低，但是单价也比相同容量的 ATA 及 SATA 硬盘更加昂贵。
+
+<div align="center"> <img src="https://cs-notes-1256109796.cos.ap-guangzhou.myqcloud.com/f0574025-c514-49f5-a591-6d6a71f271f7.jpg" width=""/> </div><br>
+
+### 4. SAS
+
+SAS（Serial Attached SCSI）是新一代的 SCSI 技术，和 SATA 硬盘相同，都是采取序列式技术以获得更高的传输速度，可达到 6Gb/s。此外也通过缩小连接线改善系统内部空间等。
+
+<div align="center"> <img src="https://cs-notes-1256109796.cos.ap-guangzhou.myqcloud.com/6729baa0-57d7-4817-b3aa-518cbccf824c.jpg" width=""/> </div><br>
 
 ## 磁盘的文件名
 
