@@ -8,7 +8,9 @@ linux使用：
 
 [一文助你打通 tmux](https://zhuanlan.zhihu.com/p/102546608)
 
+[SED 简明教程](https://coolshell.cn/articles/9104.html)
 
+[AWK 简明教程](https://coolshell.cn/articles/9070.html)
 
 
 ## notes
