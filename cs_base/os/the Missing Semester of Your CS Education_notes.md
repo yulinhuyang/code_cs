@@ -224,22 +224,108 @@ fasd: https://github.com/clvv/fasd, 查找最常用和/或最近使用的文件�
 其他复杂工具：  tree, broot 或更加完整的文件管理器，例如 nnn 或 ranger
 
 
+### 数据整理
+
+日志处理：
+
+ssh myserver journalctl | grep sshd
+
+改进： ssh myserver 'journalctl | grep sshd | grep "Disconnected from"' | less
+
+我们先在远端机器上过滤文本内容，然后再将结果传输到本机。 less 为我们创建来一个文件分页器，使我们可以通过翻页的方式浏览较长的文本
+
+甚至可以将当前过滤出的日志保存到文件中
+
+   $ ssh myserver 'journalctl | grep sshd | grep "Disconnected from"' > ssh.log
+   $ less ssh.log
+
+**sed**
+
+sed  基于文本编辑器ed构建的”流编辑器”
+
+可以利用一些简短的命令来修改文件，而不是直接操作文件的内容，最常用的是 s，即替换命令
+
+    ssh myserver journalctl
+     | grep sshd
+     | grep "Disconnected from"
+     | sed 's/.*Disconnected from //'
+
+s 命令的语法：s/REGEX/SUBSTITUTION/, 其中 REGEX 部分是我们需要使用的正则表达式，而 SUBSTITUTION 是用于替换匹配结果的文本
+
+**正则表达式**
+
+常见的模式有：
+
+    . 除空格之外的”任意单个字符”
+    * 匹配前面字符零次或多次
+    + 匹配前面字符一次或多次
+    [abc] 匹配 a, b 和 c 中的任意一个
+    (RX1|RX2) 任何能够匹配RX1 或 RX2的结果
+    ^ 行首
+    $ 行尾
+
+* 和 + 在默认情况下是贪婪模式，会尽可能多的匹配文本。可以给 * 或 + 增加一个? 后缀使其变成非贪婪模式。
+
+perl 的命令行模式：
+
+    perl -pe 's/.*?Disconnected from //'
 
 
+正则表达式在线调试工具regex debugger： https://regex101.com/r/qqbZqh/2
 
+    | sed -E 's/.*Disconnected from (invalid |authenticating )?user (.*) [^ ]+ port [0-9]+( \[preauth\])?$/\2/'
 
+捕获组（capture groups）： 被圆括号内的正则表达式匹配到的文本，都会被存入一系列以编号区分的捕获组中。捕获组的内容可以在替换字符串时使用
 
+**回到数据整理**
 
+sed  文本注入：(使用 i 命令)，打印特定的行 (使用 p命令)
 
+sort 会对其输入数据进行排序。sort -n 会按照数字顺序对输入进行排序.  -k1,1 则表示“仅基于以空格分割的第一列进行排序”。,n 部分表示“仅排序到第n个部分”
 
+uniq -c 会把连续出现的行折叠为一行并使用出现次数作为前缀
 
+登陆次数最少的用户: 可以使用 head 来代替tail。或者使用sort -r来进行倒序排序
 
+    ssh myserver journalctl
+     | grep sshd
+     | grep "Disconnected from"
+     | sed -E 's/.*Disconnected from (invalid |authenticating )?user (.*) [^ ]+ port [0-9]+( \[preauth\])?$/\2/'
+     | sort | uniq -c
+     | sort -nk1,1 | tail -n10
+     | awk '{print $2}' | paste -sd,
 
+paste命令来合并行(-s)，并指定一个分隔符进行分割 (-d)
 
+**awk – 另外一种编辑器**
 
+awk 程序接受一个模式串（可选），以及一个代码块，指定当模式匹配时应该做何种操作. 在代码块中，$0 表示整行的内容，$1 到 $n 为一行中的 n 个区域，区域的分割基于 awk 的域分隔符.
 
+    | awk '$1 == 1 && $2 ~ /^c[^ ]*e$/ { print $2 }' | wc -l
 
+第一部分需要等于1, 其第二部分必须满足给定的一个正则表达式, 代码块中的内容则表示打印用户名。然后我们使用 wc -l 统计输出结果的行数
 
+    BEGIN { rows = 0 }
+    $1 == 1 && $2 ~ /^c[^ ]*e$/ { rows += $1 }
+    END { print rows }
 
+**分析数据**
 
+  gnuplot: 绘制一些简单的图表
+
+  xargs:  给命令传递参数的一个过滤器. 利用数据整理技术从一长串列表里找出你所需要安装或移除的东西
+  
+    rustup toolchain list | grep nightly | grep -vE "nightly-x86" | sed 's/-x86.*//' | xargs rustup toolchain uninstall
+
+ 整理二进制数据: 用 ffmpeg 从相机中捕获一张图片，将其转换成灰度图后通过SSH将压缩后的文件发送到远端服务器，并在那里解压、存档并显示。
+ 
+    ffmpeg -loglevel panic -i /dev/video0 -frames 1 -f image2 -
+    | convert - -colorspace gray -
+    | gzip
+    | ssh mymachine 'gzip -d | tee copy.jpg | env DISPLAY=:0 feh -'
+ 
+ 
+    
+    
+ 
 
