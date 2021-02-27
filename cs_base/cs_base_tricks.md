@@ -14,7 +14,11 @@ linux使用：
 
 [程序员精进之路：性能调优利器--火焰图](https://zhuanlan.zhihu.com/p/147875569)
 
-[pro git](https://git-scm.com/book/zh/v2）
+[pro_git](https://git-scm.com/book/zh/v2）
+
+[pycallgraph 函数代码生成调用图](https://github.com/gak/pycallgraph)
+
+
 
 ## notes
 
