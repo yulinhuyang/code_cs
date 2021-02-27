@@ -223,8 +223,24 @@ Live USB 通过在闪存盘上 写入 操作系统的镜像制作，而写入不
 
 Vagrant 是一个构建和配置虚拟开发环境的工具。它支持用户在配置文件中写入比如操作系统、系统服务、需要安装的软件包等描述，然后使用 vagrant up 命令在各种环境（VirtualBox，KVM，Hyper-V等）中启动一个虚拟机。Docker 是一个使用容器化概念的类似工具。
 
+**软件包和工具存储**
 
+https://en.wikipedia.org/wiki/Filesystem_Hierarchy_Standard
 
+    /bin - 基本命令二进制文件
+    /sbin - 基本的系统二进制文件，通常是root运行的
+    /dev - 设备文件，通常是硬件设备接口文件
+    /etc - 主机特定的系统配置文件
+    /home - 系统用户的家目录
+    /lib - 系统软件通用库
+    /opt - 可选的应用软件
+    /sys - 包含系统的信息和配置(第一堂课介绍的)
+    /tmp - 临时文件( /var/tmp ) 通常在重启之间删除
+    /usr/ - 只读的用户数据
+    /usr/bin - 非必须的命令二进制文件
+    /usr/sbin - 非必须的系统二进制文件，通常是由root运行的
+    /usr/local/bin - 用户编译程序的二进制文件
+    /var -变量文件 像日志或缓存
 
 
 
