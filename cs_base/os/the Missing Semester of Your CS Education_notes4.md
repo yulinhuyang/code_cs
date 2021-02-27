@@ -208,6 +208,20 @@ Hammerspoon 是面向 macOS 的一个桌面自动化框架。它允许用户编�
 
 **开机引导以及 Live USB**
 
+BIOS 或者 UEFI 会在加载操作系统之前对硬件系统进行初始化，这被称为引导（booting）。在 BIOS 菜单中你可以对硬件相关的设置进行更改，也可以在引导菜单中选择从硬盘以外的其他设备加载操作系统——比如 Live USB。
+
+Live USB 是包含了完整操作系统的闪存盘：
+
+    作为安装操作系统的启动盘；
+    在不将操作系统安装到硬盘的情况下，直接运行 Live USB 上的操作系统；
+    对硬盘上的相同操作系统进行修复；
+    恢复硬盘上的数据。
+
+Live USB 通过在闪存盘上 写入 操作系统的镜像制作，而写入不是单纯的往闪存盘上复制 .iso 文件。你可以使用 UNetbootin 、Rufus 等 Live USB 写入工具制作。
+
+**Docker, Vagrant, VMs, Cloud, OpenStack**
+
+Vagrant 是一个构建和配置虚拟开发环境的工具。它支持用户在配置文件中写入比如操作系统、系统服务、需要安装的软件包等描述，然后使用 vagrant up 命令在各种环境（VirtualBox，KVM，Hyper-V等）中启动一个虚拟机。Docker 是一个使用容器化概念的类似工具。
 
 
 
