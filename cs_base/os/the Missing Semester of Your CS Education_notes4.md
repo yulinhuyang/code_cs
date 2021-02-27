@@ -62,7 +62,154 @@ makefiles 都提供了 一个名为 clean 的构建目标，可以使用它清�
 
 ## 大杂烩
 
-###  
+###  修改键位映射
+
+当某一个按键被按下，软件截获键盘发出的按键事件（keypress event）并使用另外一个事件取代。
+
+比如：
+
+    将 Caps Lock 映射为 Ctrl 或者 Escape：Caps Lock 使用了键盘上一个非常方便的位置而它的功能却很少被用到，所以我们（讲师）非常推荐这个修改；
+    将 PrtSc 映射为播放/暂停：大部分操作系统支持播放/暂停键；
+    交换 Ctrl 和 Meta 键（Windows 的徽标键或者 Mac 的 Command 键）。
+
+也可以将键位映射为任意常用的指令。软件监听到特定的按键组合后会运行设定的脚本。
+
+        打开一个新的终端或者浏览器窗口；
+        输出特定的字符串，比如：一个超长邮件地址或者 MIT ID；
+        使计算机或者显示器进入睡眠模式。
+        
+ 甚至更复杂的修改也可以通过软件实现：
+
+        映射按键顺序，比如：按 Shift 键五下切换大小写锁定；
+        区别映射单点和长按，比如：单点 Caps Lock 映射为 Escape，而长按 Caps Lock 映射为 Ctrl；
+        对不同的键盘或软件保存专用的映射配置。
+        
+修改键位映射的软件:
+
+    macOS - karabiner-elements, skhd 或者 BetterTouchTool
+    Linux - xmodmap 或者 Autokey
+    Windows - 控制面板，AutoHotkey 或者 SharpKeys
+    QMK - 如果你的键盘支持定制固件，QMK 可以直接在键盘的硬件上修改键位映射。保留在键盘里的映射免除了在别的机器上的重复配置。
+    
+### 守护进程
+
+守护进程,在后台保持运行。以守护进程运行的程序名一般以 d 结尾，比如 SSH 服务端 sshd，用来监听传入的 SSH 连接请求并对用户进行鉴权。
+
+Linux 中的 systemd（the system daemon）是最常用的配置和运行守护进程的方法。运行 systemctl status 命令可以看到正在运行的所有守护进程。
+
+用户使用 systemctl 命令和 systemd 交互来enable（启用）、disable（禁用）、start（启动）、stop（停止）、restart（重启）、或者status（检查）配置好的守护进程及系统服务
+
+systemd 提供了一个很方便的界面用于配置和启用新的守护进程或系统服务。   
+   
+    # /etc/systemd/system/myapp.service
+    [Unit]
+    # 配置文件描述
+    Description=My Custom App
+    # 在网络服务启动后启动该进程
+    After=network.target
+
+    [Service]
+    # 运行该进程的用户
+    User=foo
+    # 运行该进程的用户组
+    Group=foo
+    # 运行该进程的根目录
+    WorkingDirectory=/home/foo/projects/mydaemon
+    # 开始该进程的命令
+    ExecStart=/usr/bin/local/python3.7 app.py
+    # 在出现错误时重启该进程
+    Restart=on-failure
+
+    [Install]
+    # 相当于Windows的开机启动。即使GUI没有启动，该进程也会加载并运行
+    WantedBy=multi-user.target
+    # 如果该进程仅需要在GUI活动时运行，这里应写作：
+    # WantedBy=graphical.target
+    # graphical.target在multi-user.target的基础上运行和GUI相关的服务   
+
+### FUSE
+
+UNIX 文件系统在传统上是以内核模块的形式实现，导致只有内核可以进行文件系统相关的调用
+
+FUSE（用户空间文件系统）允许运行在用户空间上的程序实现文件系统调用，并将这些调用与内核接口联系起来
+
+FUSE 可以用于实现如：一个将所有文件系统操作都使用 SSH 转发到远程主机，由远程主机处理后返回结果到本地计算机的虚拟文件系统。sshfs就是一个实现了这种功能的 FUSE 文件系统
+
+一些有趣的 FUSE 文件系统包括：
+
+    sshfs：使用 SSH 连接在本地打开远程主机上的文件
+    rclone：将 Dropbox、Google Drive、Amazon S3、或者 Google Cloud Storage 一类的云存储服务挂载为本地文件系统
+    gocryptfs：覆盖在加密文件上的文件系统。文件以加密形式保存在磁盘里，但该文件系统挂载后用户可以直接从挂载点访问文件的明文
+    kbfs：分布式端到端加密文件系统。在这个文件系统里有私密（private），共享（shared），以及公开（public）三种类型的文件夹
+    borgbackup：方便用户浏览删除重复数据后的压缩加密备份
+
+### 备份
+
+有效备份方案的几个核心特性是：版本控制，删除重复数据，以及安全性。
+
+更多： https://missing-semester-cn.github.io/2019/backups/
+
+### API（应用程序接口）
+
+大多数线上服务提供的 API（应用程序接口）让你可以通过编程方式来访问这些服务的数据。比如，美国国家气象局就提供了一个可以从 shell 中获取天气预报的 API.
+
+API 大多具有类似的格式。它们的结构化 URL 通常使用 api.service.com 作为根路径.
+ 
+ 以美国天气数据为例，为了获得某个地点的天气数据，你可以发送一个 GET 请求（比如使用curl）到https://api.weather.gov/points/42.3604,-71.094。返回中会包括一系列用于获取特定信息（比如小时预报、气象观察站信息等）的 URL。通常这些返回都是JSON格式，你可以使用jq等工具来选取需要的部分.
+
+有些需要认证的 API 通常要求用户在请求中加入某种私密令牌（secret token）,大多数 API 都会使用 OAuth，OAuth 通过向用户提供一系列仅可用于该 API 特定功能的私密令牌进行校验
+
+IFTTT 这个网站可以将很多 API 整合在一起，让某 API 发生的特定事件触发在其他 API 上执行的任务
+
+### 常见命令行标志参数及模式
+
+    --help 或者类似的标志参数（flag）来显示它们的简略用法
+    --version 或者 -V 标志参数可以让工具显示它的版本信息
+    --verbose 或者 -v 标志参数来输出详细的运行信息，-vvv，可以让工具输出更详细的信息
+    --quiet 标志参数来抑制除错误提示之外的其他输出
+    - 代替输入或者输出文件名意味着工具将从标准输入（standard input）获取所需内容，或者向标准输出（standard output）输出结果
+    - 会造成破坏性结果的工具一般默认进行非递归的操作，但是支持使用“递归”（recursive）标志函数（通常是 -r）
+    - 有的时候你可能需要向工具传入一个 看上去 像标志参数的普通参数，可以使用特殊参数 -- 让某个程序 停止处理 -- 后面出现的标志参数以及选项
+     eg: rm -- -r 会让 rm 将 -r 当作文件名
+     
+### 其他
+
+**窗口管理器**
+
+堆叠式（floating/stacking）
+
+平铺式（tiling）管理器,把不同的窗口像贴瓷砖一样平铺在一起而不和其他窗口重叠
+
+**VPN**
+
+ WireGuard 以及 Algo
+   
+**Markdown**
+
+Markdown 致力于将人们编写纯文本时的一些习惯标准化。
+
+    用*包围的文字表示强调（斜体），或者用**表示特别强调（粗体）；
+    以#开头的行是标题，#的数量表示标题的级别，比如：##二级标题；
+    以-开头代表一个无序列表的元素。一个数字加.（比如1.）代表一个有序列表元素；
+    反引号 `（backtick）包围的文字会以代码字体显示。如果要显示一段代码，可以在每一行前加四个空格缩进，或者使用三个反引号包围整个代码片段：
+
+        就像这样
+        
+    如果要添加超链接，将 需要显示 的文字用方括号包围，并在后面紧接着用圆括号包围链接：[显示文字](指向的链接)。
+
+**Hammerspoon (macOS 桌面自动化)**
+
+Hammerspoon 是面向 macOS 的一个桌面自动化框架。它允许用户编写和操作系统功能挂钩的 Lua 脚本，从而与键盘、鼠标、窗口、文件系统等交互。示例应用:
+
+    绑定移动窗口到的特定位置的快捷键
+    创建可以自动将窗口整理成特定布局的菜单栏按钮
+    在你到实验室以后，通过检测所连接的 WiFi 网络自动静音扬声器
+    在你不小心拿了朋友的充电器时弹出警告
+
+**开机引导以及 Live USB**
+
+
+
 
 
 
