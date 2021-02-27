@@ -12,6 +12,9 @@ linux使用：
 
 [AWK 简明教程](https://coolshell.cn/articles/9070.html)
 
+[程序员精进之路：性能调优利器--火焰图](https://zhuanlan.zhihu.com/p/147875569)
+
+[pro git](https://git-scm.com/book/zh/v2）
 
 ## notes
 
