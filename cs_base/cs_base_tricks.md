@@ -18,7 +18,9 @@ linux使用：
 
 [pycallgraph 函数代码生成调用图](https://github.com/gak/pycallgraph)
 
+[在Linux下做性能分析3：perf](https://zhuanlan.zhihu.com/p/22194920)
 
+[内存泄漏检测工具valgrind神器](https://zhuanlan.zhihu.com/p/75416381)
 
 ## notes
 
