@@ -26,5 +26,7 @@ linux使用：
 
 [cuda版本切换](https://blog.csdn.net/yinxingtianxia/article/details/80462892)
 
+[/usr/bin/ld: cannot find -lxxx 的解决办法](https://www.cnblogs.com/zhming26/p/6164131.html)
+
 ## notes
 
