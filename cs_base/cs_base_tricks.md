@@ -28,5 +28,7 @@ linux使用：
 
 [/usr/bin/ld: cannot find -lxxx 的解决办法](https://www.cnblogs.com/zhming26/p/6164131.html)
 
+[通过tar file来安装TensorRT](https://zhuanlan.zhihu.com/p/259848864)
+
 ## notes
 
