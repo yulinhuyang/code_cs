@@ -22,5 +22,7 @@ linux使用：
 
 [内存泄漏检测工具valgrind神器](https://zhuanlan.zhihu.com/p/75416381)
 
+[Linux下各种查找命令（find, grep, which, whereis, locate）](https://blog.csdn.net/wzzfeitian/article/details/40985549)
+
 ## notes
 
