@@ -24,5 +24,7 @@ linux使用：
 
 [Linux下各种查找命令（find, grep, which, whereis, locate）](https://blog.csdn.net/wzzfeitian/article/details/40985549)
 
+[cuda版本切换](https://blog.csdn.net/yinxingtianxia/article/details/80462892)
+
 ## notes
 
