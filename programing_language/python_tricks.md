@@ -64,3 +64,5 @@ python tricks: https://www.zhihu.com/question/48755767
 [Python不能不知的模块](https://zhuanlan.zhihu.com/p/22246193)
 
 [python glob.glob使用](https://blog.csdn.net/mantoureganmian/article/details/47949101)
+
+[Python 嵌套函数](https://blog.csdn.net/liang19890820/article/details/73864242)
