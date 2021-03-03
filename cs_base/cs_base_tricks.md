@@ -34,3 +34,6 @@ linux使用：
 
 ## notes
 
+convert example.png -resize 200x100! example.png
+
+
