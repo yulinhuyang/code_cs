@@ -30,5 +30,7 @@ linux使用：
 
 [通过tar file来安装TensorRT](https://zhuanlan.zhihu.com/p/259848864)
 
+[How to Quickly Resize, Convert & Modify Images from the Linux Terminal]https://www.howtogeek.com/109369/how-to-quickly-resize-convert-modify-images-from-the-linux-terminal/
+
 ## notes
 
