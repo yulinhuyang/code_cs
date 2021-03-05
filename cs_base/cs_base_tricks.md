@@ -32,8 +32,17 @@ linux使用：
 
 [How to Quickly Resize, Convert & Modify Images from the Linux Terminal](https://www.howtogeek.com/109369/how-to-quickly-resize-convert-modify-images-from-the-linux-terminal/)
 
+[Linux命令必知必会](https://github.com/mylxsw/growing-up/blob/master/doc/Linux%E5%91%BD%E4%BB%A4%E5%BF%85%E7%9F%A5%E5%BF%85%E4%BC%9A.md)
+
 ## notes
 
-convert example.png -resize 200x100! example.png
+convert  example.png  -resize  200x100!  example.png
+
+ps aux最初用到Unix Style中，而ps -ef被用在System V Style中，| grep xxx, 对进程进行监测和控制。
+
+find . -name  "*.java"，指定多个起始目录：  find /usr /home  /tmp -name "*.jar"
+
+tee命令用于将标准输入拷贝到标准输出， echo "hello,world"|tee -a test.txt
+
 
 
