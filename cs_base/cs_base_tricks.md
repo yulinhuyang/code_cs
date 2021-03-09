@@ -1,6 +1,6 @@
 ##  tricks
 
-linux使用：
+**linux使用：**
 
 [Ubuntu下挂载远程主机的目录](https://www.huaweicloud.com/articles/9313c263375fde826d7d5da603c7e682.html)
 
@@ -33,6 +33,12 @@ linux使用：
 [How to Quickly Resize, Convert & Modify Images from the Linux Terminal](https://www.howtogeek.com/109369/how-to-quickly-resize-convert-modify-images-from-the-linux-terminal/)
 
 [Linux命令必知必会](https://github.com/mylxsw/growing-up/blob/master/doc/Linux%E5%91%BD%E4%BB%A4%E5%BF%85%E7%9F%A5%E5%BF%85%E4%BC%9A.md)
+
+
+**Cmake:**
+
+[cmake学习笔记之add_library、target_link_libraries和link_directories](https://blog.csdn.net/bigdog_1027/article/details/79113342)
+
 
 ## notes
 
