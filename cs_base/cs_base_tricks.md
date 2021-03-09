@@ -39,6 +39,7 @@
 
 [cmake学习笔记之add_library、target_link_libraries和link_directories](https://blog.csdn.net/bigdog_1027/article/details/79113342)
 
+[link_directories, LINK_LIBRARIES, target_link_libraries使用总结](https://blog.csdn.net/arackethis/article/details/43488177)
 
 ## notes
 
