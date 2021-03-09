@@ -41,6 +41,7 @@
 
 [link_directories, LINK_LIBRARIES, target_link_libraries使用总结](https://blog.csdn.net/arackethis/article/details/43488177)
 
+[Clion 结合主流开发库的cmakelist完整配置](https://www.codeqq.com/log/MyopB5gZ.html)
 ## notes
 
 convert  example.png  -resize  200x100!  example.png
