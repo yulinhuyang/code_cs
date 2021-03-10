@@ -56,7 +56,9 @@ find . -name  "*.java"，指定多个起始目录：  find /usr /home  /tmp -nam
 
 tee命令用于将标准输入拷贝到标准输出， echo "hello,world"|tee -a test.txt
 
-指定路径链接：
+第三方库 三板斧：
+
+include_directories(../../../thirdparty/comm/include)
 
 link_libraries(“/home/server/third/lib/libcommon.a”)
 
