@@ -42,6 +42,10 @@
 [link_directories, LINK_LIBRARIES, target_link_libraries使用总结](https://blog.csdn.net/arackethis/article/details/43488177)
 
 [Clion 结合主流开发库的cmakelist完整配置](https://www.codeqq.com/log/MyopB5gZ.html)
+
+
+[cmake 添加头文件目录，链接动态、静态库](https://www.cnblogs.com/binbinjx/p/5626916.html)
+
 ## notes
 
 convert  example.png  -resize  200x100!  example.png
@@ -52,5 +56,9 @@ find . -name  "*.java"，指定多个起始目录：  find /usr /home  /tmp -nam
 
 tee命令用于将标准输入拷贝到标准输出， echo "hello,world"|tee -a test.txt
 
+指定路径链接：
 
+link_libraries(“/home/server/third/lib/libcommon.a”)
+
+target_link_libraries(myProject libcomm.a)
 
