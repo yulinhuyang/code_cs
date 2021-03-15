@@ -6,3 +6,5 @@
 [C++的三个阶段](https://www.zhihu.com/people/lin-qi-53-1)
 
 [c++ 之 std::move 原理实现与用法总结](https://blog.csdn.net/p942005405/article/details/84644069)
+
+[微软C++ 参考 ](https://docs.microsoft.com/zh-cn/cpp/cpp/cpp-language-reference?view=msvc-160)
