@@ -46,6 +46,8 @@
 
 [cmake 添加头文件目录，链接动态、静态库](https://www.cnblogs.com/binbinjx/p/5626916.html)
 
+[vscode利用cmake调试](https://blog.csdn.net/code_segment/article/details/81151443)
+
 ## notes
 
 convert  example.png  -resize  200x100!  example.png
