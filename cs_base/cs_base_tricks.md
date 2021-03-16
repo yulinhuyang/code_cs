@@ -48,6 +48,8 @@
 
 [vscode利用cmake调试](https://blog.csdn.net/code_segment/article/details/81151443)
 
+[18.find-exec — 执行find的结果](https://blog.csdn.net/KingBoyWorld/article/details/78298559)
+
 ## notes
 
 convert  example.png  -resize  200x100!  example.png
@@ -55,6 +57,10 @@ convert  example.png  -resize  200x100!  example.png
 ps aux最初用到Unix Style中，而ps -ef被用在System V Style中，| grep xxx, 对进程进行监测和控制。
 
 find . -name  "*.java"，指定多个起始目录：  find /usr /home  /tmp -name "*.jar"
+
+find 后，-exec 执行复制命令：
+
+find . -name  "*.png"  -exec cp {}  /data1/visiondection/VPS/vps_problem/segbuilding_dataset/openscene/ \;
 
 tee命令用于将标准输入拷贝到标准输出， echo "hello,world"|tee -a test.txt
 
@@ -65,4 +71,5 @@ include_directories(../../../thirdparty/comm/include)
 link_libraries(“/home/server/third/lib/libcommon.a”)
 
 target_link_libraries(myProject libcomm.a)
+
 
