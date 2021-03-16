@@ -19,6 +19,7 @@ https://github.com/keithnull/TeachYourselfCS-CN
 
 后端程序员成长阅读书目: https://www.douban.com/doulist/3719550/
 
+JavaGuide: https://github.com/Snailclimb/JavaGuide
 
 ##  1  CS 基础
 
@@ -198,6 +199,7 @@ https://github.com/ZHENFENG13/concurrent-programming
 
 java核心技术（卷2 高级特性）
 
+alibaba java手册：  https://github.com/alibaba/p3c
 
 第一行android代码：
 
