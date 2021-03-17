@@ -50,6 +50,10 @@
 
 [18.find-exec — 执行find的结果](https://blog.csdn.net/KingBoyWorld/article/details/78298559)
 
+**VScode:**
+
+[快捷键大全](https://blog.csdn.net/crper/article/details/54099319)
+
 ## notes
 
 convert  example.png  -resize  200x100!  example.png
