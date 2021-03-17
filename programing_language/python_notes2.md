@@ -190,6 +190,15 @@ skipIf() 和 skipUnless()
 
 **warning.warn**
 
+灵活使用
+
+    try:
+
+    except:
+
+    else:
+
+处理异常
 
 **程序优化**
 
