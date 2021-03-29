@@ -26,7 +26,28 @@ docker image ls ：查看当前的镜像
 
 
 容器拷贝到宿主机：
+
 docker cp mycontainer:/opt/testnew/file.txt /opt/test/
 
-从宿主机拷贝文件到容器
+从宿主机拷贝文件到容器:
+
 docker cp /data1/3559yjn/docker_qemusudo/source/apt.conf  11c5617bc286:/etc/apt
+
+Docker images导出和导入: https://www.jianshu.com/p/8408e06b7273
+
+
+镜像导出和导入:
+
+docker save 9045（imageID） > tomcat8-apr.tar
+
+docker load < tomcat8-apr.tar
+
+容器导出和导入：
+
+docker export b91d9ad83efa(容器名) > tomcat80824.tar
+
+docker import tomcat80824.tar
+
+
+
+
