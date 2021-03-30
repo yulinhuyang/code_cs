@@ -94,4 +94,10 @@ link_libraries(“/home/server/third/lib/libcommon.a”)
 
 target_link_libraries(myProject libcomm.a)
 
+vi常用命令:
+
+:set number
+
+
+
 
