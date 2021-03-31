@@ -52,5 +52,23 @@ docker export b91d9ad83efa(容器名) > tomcat80824.tar
 docker import tomcat80824.tar
 
 
+容器操作其他：
+
+docker container stop 停止容器
+
+docker container  rm  杀死容器
+
+docker container  ls -a 列出来所有容器，包括杀死的
+
+镜像操作其他：
+
+
+
+
+
+
+
+
+
 
 
