@@ -1,5 +1,5 @@
 
-1  docker 基本命令:
+### 1  docker 基本命令:
 
 docker 官方库： https://github.com/docker-library/official-images/blob/master/library/ros
 
@@ -68,7 +68,9 @@ docker container  ls -a 列出来所有容器，包括杀死的
 
 
 
+### 2 docker file 文件
 
+[Dockerfile 文件详解](https://blog.csdn.net/xiaojin21cen/article/details/84568656)
 
 
 
