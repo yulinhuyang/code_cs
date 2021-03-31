@@ -5,6 +5,8 @@ docker 官方库： https://github.com/docker-library/official-images/blob/maste
 
 [终于有人把 Docker 讲清楚了，万字详解！](https://zhuanlan.zhihu.com/p/89587030)
 
+[深入浅出docker读书笔记](https://www.jianshu.com/nb/41522986)
+
 
 导入镜像:
 
