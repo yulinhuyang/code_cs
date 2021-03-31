@@ -3,6 +3,9 @@ docker 基本命令:
 
 docker 官方库： https://github.com/docker-library/official-images/blob/master/library/ros
 
+[终于有人把 Docker 讲清楚了，万字详解！](https://zhuanlan.zhihu.com/p/89587030)
+
+
 导入镜像:
 cat ubuntu-base-16.04.6-base-amd64.tar.gz | docker import - ubuntu_arm64_1604_6
 
