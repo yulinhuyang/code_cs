@@ -91,6 +91,29 @@ docker image build  根据dockerfile 的命令构建镜像
 如上，以 && 符号连接命令，这样执行后，只会创建 1 层镜像。
 
 
+### 3 深入浅出docker notes
+
+**docker 引擎**
+
+Docker引擎由以下主要的组件构成：Docker客户端（Docker Client）、Docker守护进程（Docker daemon）、containerd以及runc
+
+containerd将Docker镜像转换为OCI bundle，并让runc基于此创建一个新的容器
+
+shim的部分职责如下：
+
+保持所有的STDIN和STDOUT流是开启状态，从而当daemon重启的时候，容器不会因为管道的关闭而终止。
+
+将容器的退出状态反馈给daemon
+
+在Linux系统中，前面谈到的组件由单独的二进制来实现，具体包括docker（docker daemon）、docker-containerd（containerd）、docker-containerd-shim（shim）和docker-runc(runc)
+
+
+
+
+
+
+
+
 
 
 
