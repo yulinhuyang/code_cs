@@ -50,6 +50,8 @@
 
 [18.find-exec — 执行find的结果](https://blog.csdn.net/KingBoyWorld/article/details/78298559)
 
+[cmake list 常用变量](https://blog.csdn.net/gubenpeiyuan/article/details/8667279)
+
 **VScode:**
 
 [快捷键大全](https://blog.csdn.net/crper/article/details/54099319)
