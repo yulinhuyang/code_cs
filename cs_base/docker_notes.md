@@ -1,5 +1,5 @@
 
-docker 基本命令:
+1  docker 基本命令:
 
 docker 官方库： https://github.com/docker-library/official-images/blob/master/library/ros
 
@@ -7,6 +7,7 @@ docker 官方库： https://github.com/docker-library/official-images/blob/maste
 
 
 导入镜像:
+
 cat ubuntu-base-16.04.6-base-amd64.tar.gz | docker import - ubuntu_arm64_1604_6
 
 下载运行：
@@ -14,7 +15,10 @@ cat ubuntu-base-16.04.6-base-amd64.tar.gz | docker import - ubuntu_arm64_1604_6
 docker pull forumi0721ubuntuaarch64/ubuntu-aarch64-dev
 docker run -it --privileged  -v /usr/bin/qemu-aarch64-static:/usr/bin/qemu-aarch64-static  ubuntu_arm64_1604_6 /bin/bash
 
-运行某个容器： 
+
+**运行某个容器：**
+
+docker container exec -it  + 容器名   + 命令
 
 docker exec -it 2e57cec46995 /bin/bash
 
@@ -28,31 +32,31 @@ docker ps ： 查看容器
 docker image ls ：查看当前的镜像
 
 
-容器拷贝到宿主机：
+**容器拷贝到宿主机：**
 
 docker cp mycontainer:/opt/testnew/file.txt /opt/test/
 
-从宿主机拷贝文件到容器:
+**从宿主机拷贝文件到容器:**
 
 docker cp /data1/3559yjn/docker_qemusudo/source/apt.conf  11c5617bc286:/etc/apt
 
 Docker images导出和导入: https://www.jianshu.com/p/8408e06b7273
 
 
-镜像导出和导入:
+**镜像导出和导入:**
 
 docker save 9045（imageID） > tomcat8-apr.tar
 
 docker load < tomcat8-apr.tar
 
-容器导出和导入：
+**容器导出和导入：**
 
 docker export b91d9ad83efa(容器名) > tomcat80824.tar
 
 docker import tomcat80824.tar
 
 
-容器操作其他：
+**容器操作其他：**
 
 docker container stop 停止容器
 
@@ -60,7 +64,7 @@ docker container  rm  杀死容器
 
 docker container  ls -a 列出来所有容器，包括杀死的
 
-镜像操作其他：
+**镜像操作其他：**
 
 
 
