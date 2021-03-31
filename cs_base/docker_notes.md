@@ -107,7 +107,69 @@ shim的部分职责如下：
 
 在Linux系统中，前面谈到的组件由单独的二进制来实现，具体包括docker（docker daemon）、docker-containerd（containerd）、docker-containerd-shim（shim）和docker-runc(runc)
 
+**docker 镜像**
 
+在该前提下，镜像可以理解为一种构建时结构，而容器可以理解为一种运行时结构。
+
+docker image rm    删除镜像
+
+Docker service主要用于使用Docker swarm配置主节点，以便docker容器可以在分布式环境中运行，并且可以轻松管理
+
+Docker service： 将一些较大应用程序环境中微服务的镜像。服务可能包括HTTP服务器，数据库或您希望在分布式环境中运行的任何其他类型的可执行程序。
+
+镜像：
+
+默认情况下，我们拉取的是带有标签 "latest"的镜像，如果要拉取不同的镜像，需要指定特有的标签
+
+docker image pull ubuntu:18.04
+
+Docker提供了--filter参数来过滤docker image ls命令返回的镜像列表内容。
+
+docker image pull -a ubuntu   拉取所有标签
+
+docker image ls --filter dangling=true
+
+过滤器:
+
+dangling：可以指定true或者false，仅返回悬虚镜像或者非悬虚镜像。
+
+before： 需要镜像名称或者ID作为参数，返回之前被创建的全部镜像
+
+label：根据标注（label）的名称或者值，对镜像进行过滤。docker image ls 命令中不显示标注内容。
+
+docker search 命令允许通过CLI的方式搜索Docker Hub
+
+docker search ubuntu
+
+docker search ubuntu --filter is-official=true
+
+镜像分层：
+
+所有的Docker镜像都起始于一个基础镜像层，当进行修改或增加新的内容时，就会在当前镜像层之上，创建新的镜像层
+
+docker image inspect 命令来查看镜像的分层
+
+Docker通过存储引擎（新版本采用快照机制）的方式来实现镜像层堆栈，并保证多个镜像层对外展示为一个统一的文件。Linux上可用的存储引擎有AUFS、Overlay2、Device Maooer等等。
+
+镜像摘要：--digests
+
+镜像散列：
+
+每个镜像层同时包含一个分发散列值，这是一个压缩版镜像的散列值。校验传输过程中是否被篡改。
+
+多层架构的镜像：
+
+一个镜像标签下可以支持多个平台和架构，manifest列表和manifest。
+
+选择当前平台和架构所需的正确镜像版本是由docker完成的
+
+删除镜像：
+
+docker image rm 
+
+docker image rm 9b915a241e29(ID)
+
+如果被删除的镜像上存在运行状态的容器，那么该删除操作不会被允许。再次执行删除镜像命令之前，需要停止并删除该镜像相关的全部容器
 
 
 
