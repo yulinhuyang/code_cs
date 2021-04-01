@@ -171,7 +171,45 @@ docker image rm 9b915a241e29(ID)
 
 如果被删除的镜像上存在运行状态的容器，那么该删除操作不会被允许。再次执行删除镜像命令之前，需要停止并删除该镜像相关的全部容器
 
+**docker 容器**
 
+docker container run <image> <app>中，指定启动所需的镜像以及要运行的应用。docker container run -it ubuntu /bin/bash 则会启动某个ubuntu Linux容器，并允许Bash Shell作为其应用。
+
+docker container stop 命令可以手动停止容器运行 
+
+docker container start再次启动该容器
+
+Hypervisor是硬件虚拟化（Hardware Virtualization）——Hypervisor将硬件物理资源划分为虚拟资源；另外，容器时操作系统虚拟机（OS Virtualization）——容器将系统资源划分为虚拟资源
+
+容器共享一个操作系统/内核。这意味着只有一个操作系统消耗CPU、内存等资源，只有一个系统需要授权，只有一个系统需要升级和打补丁。
+
+容器的启动时间远远小于虚拟机
+
+添加用户到docker unix： usermod -aG docker <user>
+
+检查docker daemon状态： service docker status
+
+容器进程：一旦我们退出了bash shell,该容器也会退出（终止）。原因是容器如果不允许任何进程则无法存在，退出了bash shell也就是等于杀死了容器。我们使用 Crtl-PQ组合键来退出容器但不会终止容器运行，然后我们使用docker container ls命令来观察当前系统中正在运行的容器列表。
+
+容器的生命周期：容器时可以持久化数据的。但是说到持久化，卷（volume）才是容器中存储持久化数据的首选方式
+
+docker container stop 命令向容器内的PID 1进程发送了SIGTERM这样的信号
+
+docker container rm -f 就是直接发出SIGKILL的信号，直接杀掉容器
+
+重启策略进行容器的自我修复:
+
+重启策略包括 always、unless-stoped 和 on-failed 三种。
+
+docker container run -it  --restart always ubuntu /bin/bash
+
+--restart always 策略有个比较有趣的特征，就是当daemon重启的时候，停止的容器也会被重启。
+
+always和unless-stopped 的最大区别，就是那些指定了--restart unless-stopped并处于Stopped(Exited)状态的容器，不会在Docker daemon重启的时候被重启。
+
+on-failure 策略会在退出容器并且返回值不是0的时候，重启容器。
+
+docker container rm $(docker container ls -aq) -f   删除所有容器
 
 
 
