@@ -262,6 +262,50 @@ Dockerfile 中的ENTRYPOINT指令用于指定镜像以容器方式启动后默�
 
 其他的Dockerfile指令还有LABEL、ENV、ONBUILD、HEALTHCHECK、CMD等
 
+**3.9 Docker Compose**
+
+Docker Compose: 一个声明式的配置文件描述整个应用，从而使用一条命令完成部署 
+
+Docker Compose 是一个需要在Docker主机上进行安装的外部Python工具。使用它时，首先编写定义多容器（多服务）应用的YAML文件，然后将其交由给docker-compose命令处理
+
+安装docker compose 
+
+下载二进制包，目前最新版本时1.24.1
+
+        sudo curl -L "https://github.com/docker/compose/releases/download/1.24.1/docker-compose-$(uname -s)-$(uname -m)" -o /usr/local/bin/docker-compose
+
+修改文件权限
+
+sudo chmod +x /usr/local/bin/docker-compose
+
+查看docker-compose查看版本信息
+
+docker-compose --version
+
+Dockers Compose默认使用的文件名为 docker-compose.yml
+
+包含了4个一级key：version、services、networks、volumes。
+
+volumes用于指引Docker来创建新的卷。
+
+docker-compose up 命令。它会构建所需的镜像，创建网络和卷，并启动容器。默认情况下，docker-compose up 会查找名为docker-compose.yml或者docker-compose.yaml的Compose文件。-d  后台启动
+
+docker-compose down 来关闭应用
+
+docker-compose ps 观察应用的状态
+
+docker-compose top 命令可以列出各个服务内运行的进程
+
+docker-compose stop 可以停止应用，但是不会删除资源
+
+docker-compose rm命令去删除资源
+
+docker volume ls 
+
+inspect找到我们这个卷所在的位置 
+
+ [pangcm@docker01 counter-app]$ docker volume inspect counter-app_counter-vol |grep Mountpoint
+        "Mountpoint": "/var/lib/docker/volumes/counter-app_counter-vol/_data",
 
 
 
