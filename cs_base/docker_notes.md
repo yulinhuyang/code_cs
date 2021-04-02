@@ -528,5 +528,28 @@ docker network prune 删除Docker主机上全部未使用的网络
 docker network rm 删除Docker主机上指定的网络
 
 
+### 3.12 Docker覆盖网络
+
+覆盖网络：允许创建扁平的、安全的二层网络来连接多个主机，容器可以连接到覆盖网络并且直接相互通信。
+
+Swarm模式下构建并测试Docker覆盖网络：构建Swarm——>创建新的覆盖网络——>将服务连接到覆盖网络——>测试覆盖网络
+
+Docker使用VXLAN隧道技术创建了虚拟二层覆盖网络。在VXLAN的设计中，允许用户基于已经存在的三层网络结构创建虚拟的二层网络。
+
+VXLAN基于现有的三层IP网络创建了隧道
+
+VXLAN隧道两端都是VXLAN隧道终端（VXLAN Tunnel Endpoint,VTEP）。VTEP完成了封装和解压的步骤。
+
+在Sandbox内部创建了一个名为Br0的虚拟交换机。同时Sandbox内部还创建了一个VETP，其中一端接入到名为Br0的虚拟交换机当中，另一端接入主机网络栈（VETP）
+
+不同主机上的两个VTEP通过VXLAN隧道创建了一个新的覆盖网络
+
+docker network create 是创建新网络所使用的命令，-d 参数允许用户指定所用驱动，常见的驱动是 Overlay。
+
+docker network ls 用于列出Docker主机上全部可见的容器网络。Swarm模式下的Docker主机只能看到已经接入运行中的容器的网络。这种方式保证了Gossip开销最小化。
+
+docker network inspect 用于查看特定容器网络的详情。其中包括范围、驱动、IPV6、子网配置、VXLAN网络ID以及加密状态。
+
+docker network rm 删除指定网络。
 
 
