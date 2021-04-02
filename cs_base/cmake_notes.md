@@ -43,15 +43,43 @@ CMake的关于文件的内置变量用于屏蔽各个编译地址的差异，可
     Variable	                       Info
 
     CMAKE_SOURCE_DIR                 The root source directory
-    CMAKE_CURRENT_SOURCE_DIR	       The current source directory if using sub-projects and directories.
+    CMAKE_CURRENT_SOURCE_DIR	     The current source directory if using sub-projects and directories.
     PROJECT_SOURCE_DIR	             The source directory of the current cmake project.
-    CMAKE_BINARY_DIR	               The root binary / build directory. This is the directory where you ran the cmake command.
-    CMAKE_CURRENT_BINARY_DIR	       The build directory you are currently in.
+    CMAKE_BINARY_DIR	             The root binary / build directory. This is the directory where you ran the cmake command.
+    CMAKE_CURRENT_BINARY_DIR	     The build directory you are currently in.
     PROJECT_BINARY_DIR	             The build directory for the current project.
 
+#### 链接库和链接头文件
 
+相当于给GCC添加 -I 选项
 
+    target_include_directories(${PROJECT_NAME} PRIVATE
+        ${PROJECT_SOURCE_DIR}/include
+    )
+    
+生成静态库和使用静态库
 
+    add_library(hello_library STATIC
+        src/Hello.cpp
+    )
+    target_link_libraries( hello_binary PRIVATE
+        hello_library
+    )
+
+生成 libhello_library.so 只需要将修饰符变为 SHARED即可，其它不用变
+
+    add_library(hello_library SHARED
+        src/Hello.cpp
+    )
+    add_library(hello::library ALIAS hello_library)
+    target_link_libraries( hello_binary PRIVATE
+        hello::library
+    )
+
+    修饰符	        含义
+    INTERFACE	the directory is added to the include directories for any targets that link this library.
+    PRIVATE	the directory is added to this target’s include directories
+    PUBLIC	As above, it is included in this library and also any targets that link this library.
 
 
 
