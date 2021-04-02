@@ -40,14 +40,14 @@ CMakeLists.txt 是 cmake 命令
 
 CMake的关于文件的内置变量用于屏蔽各个编译地址的差异，可以根据注释酌情使用
 
-    Variable	                       Info
-
-    CMAKE_SOURCE_DIR                 The root source directory
-    CMAKE_CURRENT_SOURCE_DIR	     The current source directory if using sub-projects and directories.
-    PROJECT_SOURCE_DIR	             The source directory of the current cmake project.
-    CMAKE_BINARY_DIR	             The root binary / build directory. This is the directory where you ran the cmake command.
-    CMAKE_CURRENT_BINARY_DIR	     The build directory you are currently in.
-    PROJECT_BINARY_DIR	             The build directory for the current project.
+| Variable | Info|
+|  ----  | ----  |
+| CMAKE_SOURCE_DIR |  The root source directory  |
+| CMAKE_CURRENT_SOURCE_DIR	| The current source directory if using sub-projects and directories. |
+| PROJECT_SOURCE_DIR|  The source directory of the current cmake project. |
+| CMAKE_BINARY_DIR|The root binary / build directory. This is the directory where you ran the cmake command. |
+| CMAKE_CURRENT_BINARY_DIR | The build directory you are currently in. |
+| PROJECT_BINARY_DIR| The build directory for the current project. |
 
 #### 链接库和链接头文件
 
@@ -76,11 +76,12 @@ CMake的关于文件的内置变量用于屏蔽各个编译地址的差异，可
         hello::library
     )
 
-    修饰符	            含义
-    
-    INTERFACE	   the directory is added to the include directories for any targets that link this library.
-    PRIVATE	       the directory is added to this target’s include directories
-    PUBLIC	       As above, it is included in this library and also any targets that link this library.
+
+|修饰符	|含义|
+|  ----  | ----  |
+|INTERFACE	| the directory is added to the include directories for any targets that link this library.|
+|PRIVATE| the directory is added to this target’s include directories|
+|PUBLIC	| As above, it is included in this library and also any targets that link this library.|
 
 ####  编译类型
 
@@ -88,12 +89,12 @@ CMake的关于文件的内置变量用于屏蔽各个编译地址的差异，可
 
 cmake ../ -DCMAKE_BUILD_TYPE=Release
 
-    编译选项	           含义
-
-    Release	           Adds the -O3 -DNDEBUG flags to the compiler
-    Debug	           Adds the -g flag
-    MinSizeRel	       Adds -Os -DNDEBUG
-    RelWithDebInfo	   Adds -O2 -g -DNDEBUG flags
+|编译选项| 含义|
+|  ----  | ----  |
+|Release| Adds the -O3 -DNDEBUG flags to the compiler|
+|Debug|Adds the -g flag|
+|MinSizeRel|Adds -Os -DNDEBUG|
+|RelWithDebInfo|Adds -O2 -g -DNDEBUG flags|
 
 cmake 默认没有编译选项，你可以通过如下脚本设置默认的编译选项为RelWithDebInfo
 
