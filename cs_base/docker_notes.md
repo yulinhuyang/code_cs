@@ -17,6 +17,7 @@ cat ubuntu-base-16.04.6-base-amd64.tar.gz | docker import - ubuntu_arm64_1604_6
 docker pull forumi0721ubuntuaarch64/ubuntu-aarch64-dev
 docker run -it --privileged  -v /usr/bin/qemu-aarch64-static:/usr/bin/qemu-aarch64-static  ubuntu_arm64_1604_6 /bin/bash
 
+--name 中的参数设定运行容器实例的名字，--privileged 设定特权模式（docker 容器实际上是做了从 linux 内核到用户进程的映射，容器中的 root 权限实际上并不是外面物理机的 root 权限，而只是一个普通权限）， -volume  参数选择挂载硬盘
 
 **运行某个容器：**
 
