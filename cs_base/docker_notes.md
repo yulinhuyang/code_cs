@@ -308,7 +308,7 @@ inspect找到我们这个卷所在的位置
         "Mountpoint": "/var/lib/docker/volumes/counter-app_counter-vol/_data",
 
 
-### 3.9 Docker Swarm
+### 3.10 Docker Swarm
 
 Docker Swarm包含两方面：一个企业级的Docker安全集群，以及一个微服务应用编排引擎。
 
@@ -417,6 +417,115 @@ docker service logs 可以查看Swarm的服务日志。然而并非所有的日�
 Docker节点默认的配置是，服务使用json-file日志驱动，其他的驱动还有 journald(Linux特有)、syslog、splunk和gelf。
 
 
+### 3.11 Docker网络
+
+Docker网络架构源自一种叫做容器的网络模型（CNM）的方案，该方案是开源的并且支持插式连接。Libnetwork式Docker对CNM的一种实现，提供了Docker核心网络架构的全部功能。
+
+Docker封装了一系列本地驱动、覆盖了大部分常见的网络需求。其中包括单机桥接网络、多级覆盖网络，并且支持接入现有的VLAN。
+
+不同的驱动可以通过插拔的方式接入Libnetwork来提供定制化的网络拓扑。
+
+Libnetwork提供了本地服务发现和基础的容器负载均衡的解决方案。
+
+**基础理论**
+
+Docker网络架构由3个主要部分构成：CNM、Libnetwork和驱动
+
+CNM是涉及标准，规定了Docker网络架构的基础组成要素；Libnetwork是CNM的具体实现，并且被Docker采用。Libnetwork通过Go语言编写。
+
+CNM定义了3个基本要素：沙盒（Sandbox）、终端（Endpoint）、和网络（Network）。
+
+沙盒是一个独立的网络栈。其中包括以太网接口、端口、路由表以及DNS配置；终端就是虚拟网络接口，主要职责是负责创建连接。网络就是 802.1d网桥（交换机）的软件实现。
+
+沙盒放置在容器内部，为容器提供给网络连接。
+
+Libnetwork：CNM是设计规范文档，Libnetwork是标准的实现。实现CNM中定义的三个组件，实现了本地服务发现、基于 Ingress的容器负载均衡以及网络控制层。
+
+Docker封装了若干内置驱动，通常被叫做原生驱动或者本地驱动。在Linux中包括Bridge、overlay以及Macvlan。
+
+**单机桥接网络**
+
+单机意味着该网络只能在单个Docker主机上运行，并且只能与所在Docker主机上的容器进行连接。桥接意味着这是 802.1d桥接的一种实现。
+
+Linux Docker创建单机桥接网络采用内置的桥接驱动，而Windows Docker创建时使用内置的NAT驱动。
+
+docker network ls 查看Docker主机的网络情况
+
+		NETWORK ID          NAME                DRIVER              SCOPE
+		7cb75625ceeb        bridge              bridge              local
+
+docker network inspect 查看网络的更多内容
+
+Docker网络由Bridge驱动创建，底层是Linux Bridge技术，Bridge是高性能并且非常稳定的。 ip link show 查看网络
+
+		[pangcm@docker01 ~]$ ip link show docker0
+		3: docker0: <NO-CARRIER,BROADCAST,MULTICAST,UP> mtu 1500 qdisc noqueue state DOWN mode DEFAULT group default 
+			link/ether 02:42:01:12:07:d9 brd ff:ff:ff:ff:ff:ff
+
+在Linux Docker主机之上，默认的 bridge 网络被映射到内核中为 docker0 的Linux网桥，dokcer network inspect  命令去观察
+			
+docker network create 命令创建一个单机桥接的网络。
+
+		docker network create -d bridge localnet
+
+docker network ls   查看网络
+
+新创建的网络一样在我们Docker 主机上新建一个Linux网桥
+	
+brctl show 命令即可查看
+	
+	[pangcm@docker01 ~]$ brctl show 
+	bridge name bridge id       STP enabled interfaces
+	br-e6bca1080f16     8000.0242126f947e   no      
+	docker0     8000.0242011207d9   no  
+
+新建一个容器，并加入到新建的桥接网络中去
+	
+docker container run -d --name test2 --network localnet alpine sleep 1d
+
+docker network inspect 命令去确认
+
+		docker network inspect localnet format
+
+自定义的网络中除了可以使用IP来进行通信之外，还可以使用容器名称去进行通信,新容器都会注册到指定的Docker DNS 服务中
+
+同一个Docker主机同一个桥接网络之间的容器可以相互通信的。那么不同Docker主机上的桥接网络容器可以通过端口映射进行相互通信。
+
+
+
+接入现有网络：Docker内置的Macvlan驱动（Windows上是Transparent）就是为此场景而生。通过为容器提供MAC和IP地址，让容器在物理网络上成为“一等公民”。
+
+服务发现：Docker内置的DNS服务器，和真实的DNS解析过程类似，本地解析器找不到域名的话会向Docker的DNS服务发起一个递归查询。
+
+参数： --dns参数允许读者指定自定义的DNS服务列表，--dns-search 参数指定自定义查询时所使用的域名， 
+
+可以通过容器内部 /et/resolve.conf 文件内部增加条目来实现
+
+		docker container run -it --name test5 --dns=8.8.8.8 \
+		--dns-search=dockercerts.com alpine sh
+
+会启动一个新的容器，并添加声名狼藉的 8.8.8.8 Google DNS服务器，同时指定 dockercerts.com 作为域名添加到非完整查询
+
+
+**Ingress网格**
+
+Swarm支持两种服务发布模式，两种模式均保证服务从集群外可访问。分别是：Ingress模式（默认）和Host模式
+
+通过Ingress模式发布的服务，可以保证从Swarm集群内任一节点（即使没有运行服务的副本）都能访问该服务；以Host模式发布的服务只能通过运行服务副本的节点来访问。
+
+Ingress模式是默认方式，如果要使用Host模式发布服务，读者需要使用 --publish 参数的完整格式，并添加 mode=host
+
+		docker service create -d --name svc1 --publish published=5000,target=80,mode=host nginx
+
+Ingress模式采用名为Service Mesh 或者Swarm Mode Service Mesh 的四层路由网络来实现	
+
+一是使用Ingress模式的服务，访问任意一个节点（即使没有运行对应的容器），Docker都能把流量转到实际运行容器的节点上，；二是并且如果存在多个运行中的副本，流量会均衡到每个副本上
+
+docker network inspect 提供 Docker网络的详细配置信息。
+
+docker network prune 删除Docker主机上全部未使用的网络
+
+docker network rm 删除Docker主机上指定的网络
 
 
 
