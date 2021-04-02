@@ -93,7 +93,7 @@ docker image build  根据dockerfile 的命令构建镜像
 
 ### 3 深入浅出docker notes
 
-**docker 引擎**
+**3.5 docker 引擎**
 
 Docker引擎由以下主要的组件构成：Docker客户端（Docker Client）、Docker守护进程（Docker daemon）、containerd以及runc
 
@@ -107,7 +107,7 @@ shim的部分职责如下：
 
 在Linux系统中，前面谈到的组件由单独的二进制来实现，具体包括docker（docker daemon）、docker-containerd（containerd）、docker-containerd-shim（shim）和docker-runc(runc)
 
-**docker 镜像**
+**3.6 docker 镜像**
 
 在该前提下，镜像可以理解为一种构建时结构，而容器可以理解为一种运行时结构。
 
@@ -171,7 +171,7 @@ docker image rm 9b915a241e29(ID)
 
 如果被删除的镜像上存在运行状态的容器，那么该删除操作不会被允许。再次执行删除镜像命令之前，需要停止并删除该镜像相关的全部容器
 
-**docker 容器**
+**3.7 docker 容器**
 
 docker container run <image> <app>中，指定启动所需的镜像以及要运行的应用。docker container run -it ubuntu /bin/bash 则会启动某个ubuntu Linux容器，并允许Bash Shell作为其应用。
 
@@ -210,6 +210,58 @@ always和unless-stopped 的最大区别，就是那些指定了--restart unless-
 on-failure 策略会在退出容器并且返回值不是0的时候，重启容器。
 
 docker container rm $(docker container ls -aq) -f   删除所有容器
+
+**3.8 应用的容器化**
+
+将应用整合到容器中并且运行起来的这个过程，称为“容器化”（Containerizing），有时也叫做“Docker化”（Dockerizing）
+
+应用容器化过程主要分为以下几个步骤：
+
+编写应用代码
+
+创建一个Dockerfile，其中包括当前应用的描述、依赖以及该如何运行这个应用。
+
+对该Dockerfile执行docker image build 命令。
+
+等待Docker 将应用程序构建到Docker镜像中。
+ 
+获取应用代码——>分析Dockerfile——>构建应用镜像——>运行该应用——>测试应用——>容器应用化细节——>生产环境中多阶段构建——>最佳实践
+
+包含应用文件的目录通常被称为构建上下文（Build Context）。通常将Dockerfile放到构建上下文的根目录下
+
+文件开头字母是大写的D
+
+通过ENTRYPOINT 指令来指定当前应用程序的入口程序
+
+docker image tag来打标签
+
+
+生产环境中的多阶段构建
+
+每个RUN指令都会新增一个镜像层。因此，通过使用 && 连接多个命令以及使用反斜杠换行的方法，将多个命令包含在一个RUN指令中，这是一种值得提倡的做
+
+建造者模式
+
+Docker的构建过程利用了缓存机制
+
+当要构建镜像的层次很多的时候，我们可以考虑把这些镜像层给合并,在 docker image build 的时候加上参数 --squash
+
+相关命令：
+
+docker image build 命令会读取 Dockerfile，并将应用程序容器化。使用 -t 参数给镜像打标签，使用 -f 参数指定Dockerfile的路径和名称。构建上下文是指文件存放的位置，可能是本地Docker主机上的一个目录或者远程的Git库。
+
+Dockerfile 中的FROM 指令用于指定要构建的镜像的基础镜像。
+
+Dockerfile 中的RUN指令用于在镜像中执行命令，这会构建新的镜像层。
+
+Dockerfile 中的COPY指令用于将文件作为一个新的层添加到镜像中。
+
+Dockerfile 中的EXPOSE指令用于记录应用所使用的网络端口。
+
+Dockerfile 中的ENTRYPOINT指令用于指定镜像以容器方式启动后默认运行的程序。
+
+其他的Dockerfile指令还有LABEL、ENV、ONBUILD、HEALTHCHECK、CMD等
+
 
 
 
