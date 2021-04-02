@@ -552,4 +552,173 @@ docker network inspect 用于查看特定容器网络的详情。其中包括范
 
 docker network rm 删除指定网络。
 
+### 3.14 使用Docker Stack 部署应用
+
+大规模场景下的多服务部署和管理，Docker Stack 通过提供期望状态、滚动升级、简单易用、扩缩容、健康检查等特性简化了应用的管理。这些功能都封装在一个完美的声明式模型。
+
+Stack能够在单个声明文件中定义复杂的多服务应用。Stack还提供了简单的方式来部署应用并管理完整的生命周期：初始化部署—>健康检查—>扩容—>更新—>回滚
+
+
+步骤： 在Compose文件中定义应用，然后通过 docker stack deploy 命令完成部署和管理。Compose文件中包含了构成应用所需的完整服务栈，此外还包括了卷、网络、安全以及应用所需的其他架构。然后基于该文件使用docker stack deploy 命令来部署应用。
+
+Stack是基于Docker Swarm之上来完成应用的部署。因此诸如安全等高级特性，其实都是来自Swarm。简而言之，Docker适用于开发和测试。Docker Stack则适用于大规模场景和生产环境。
+
+
+**使用Docker Stack 部署应用**
+
+Stack位于Docker应用层级的最顶端。Stack基于服务进行构建，而服务又基于容器。
+
+docker-stack.yml：version、services、networks、secrets。
+
+secrets定义的是应用用到的密钥。
+
+Stack文件就是Docker Compose文件，要求就是version:一项需要是3.0或者更高的值，
+
+
+网络：默认情况下，覆盖网络的所有控制层都是加密的。默认情况下网络都是使用overlay驱动，payment网络比较特殊，需要对数据层加密。如果需要加密数据层，有两种选择。
+
+在docker network create命令中指定 -o encrypted 参数。在stack文件中的 driver_opts 之下指定 encrypted:'yes'
+
+密钥： 4个密钥都被定义为external。这意味着在Stack部署之前，这些密钥必须存在。
+	
+	  secrets:
+	  postgres_password:
+		external: true
+	  staging_token:
+		external: true
+	  revprox_key:
+		external: true
+	  revprox_cert:
+		external: true
+
+服务：部署中主要的操作都在服务这个环节。每个服务都是一个JSON集合。
+
+	reverse_proxy 服务
+
+		reverse_proxy:
+		image: dockersamples/atseasampleshopapp_reverse_proxy
+		ports:
+		  - "80:80"
+		  - "443:443"
+		secrets:
+		  - source: revprox_cert
+			target: revprox_cert
+		  - source: revprox_key
+			target: revprox_key
+		networks:
+		  - front-tier
+ 
+	ports关键字，所有端口映射都采用Ingress模式，Host模式需要使用完整的格式去配置。
+	
+	networks关键字确保服务所有副本都会连接到front-tier网络
+	
+	文件的名称就是stack文件中定义的target属性的值，其在Linux下的路径为 /run/secrets，Linux将 /run/secrets作为内存文件系统挂载。
+	
+	database服务
+	
+		database:
+		image: dockersamples/atsea_db
+		environment:
+		  POSTGRES_USER: gordonuser
+		  POSTGRES_DB_PASSWORD_FILE: /run/secrets/postgres_password
+		  POSTGRES_DB: atsea
+		networks:
+		  - back-tier
+		secrets:
+		  - postgres_password
+		deploy:
+		  placement:
+			constraints:
+			  - 'node.role == worker'
+	
+	环境变量和部署约束
+	
+	environment关键字允许在服务副本中注入环境变量
+	
+	deploy关键字下定义了部署约束，部署约束是一种拓扑感知定时任务。
+	
+	Swarm目前允许通过如下几种方式进行调度： 节点ID、角色、引擎标签、自定义标签
+	
+	appserver 服务
+	
+		appserver:
+		image: dockersamples/atsea_app
+		networks:
+		  - front-tier
+		  - back-tier
+		  - payment
+		deploy:
+		  replicas: 2
+		  update_config:
+			parallelism: 2
+			failure_action: rollback
+		  placement:
+			constraints:
+			  - 'node.role == worker'
+		  restart_policy:
+			condition: on-failure
+			delay: 5s
+			max_attempts: 3
+			window: 120s
+		secrets:
+		  - postgres_password
+		  
+	appserver 服务使用了一个镜像，连接到3个网络，并且挂载了一个密钥。
+	
+	replicas: 2 设置了期望服务的副本数量为2。update_config 定义了服务在滚动升级的时候应该如何操作。restart_policy 定义了Swarm针对容器异常退出的重启策略。
+	
+	visualizer 服务
+	
+		visualizer:
+		image: dockersamples/visualizer:stable
+		ports:
+		  - "8001:8080"
+		stop_grace_period: 1m30s
+		volumes:
+		  - "/var/run/docker.sock:/var/run/docker.sock"
+		deploy:
+		  update_config:
+			failure_action: rollback
+		  placement:
+			constraints:
+			  - 'node.role == manager'
+		
+	volumes关键字用于挂载提前创建的卷或者主机目录到某个服务副本中。在这里挂载Docker主机的 /var/run/docker.sock 目录到每个副本的 /var/run/docker.sock 路径。这意味着在服务副本中任何对 /var/run/docker.sock 的读写操作都会指向 Docker 主机的对应目录。
+	
+	docker.sock文件是Docker提供的套接字，Docker daemon通过该套接字对其他进程暴露其API终端
+	
+	payment_gateway 服务：
+	
+**部署应用**	 
+	
+前置处理:
+
+	Swarm模式：应用将采用Docker Stack 部署，而Stack依赖Swarm模式。
+	
+	标签： 某个Swarm worker节点需要自定义标签。
+	
+	密钥： 应用所需的密钥需要在部署前创建完成。	
+	
+	添加节点标签： docker node update --label-add pcidss=yes docker02
+	
+	创建密钥：docker secret create revprox_cert domain.crt
+    
+	docker secret ls 
+	
+	docker stack ls 和docker stack ps 去查看 stack的更多信息
+	 
+部署应用： 通过声明式方式修改，即将Stack文件作为配置的唯一声明。再重新部署  docker stack deploy -c docker-stack.yml seastack
+	
+	
+docker stack deploy 用于根据 Stack 文件部署和更新Stack服务的命令。
+
+docker stack ls 会列出 Swarm 集群中全部的Stack，包括每个Stack拥有多少服务。
+
+docker stack ps 列出某个已经部署的Stack相关详情。该命令支持Stack名称作为其主要参数，列举了服务副本在节点的分布情况，以及期望状态和当前状态。
+
+docker stack rm 命令用于从Swarm集群中移除Stack。移除操作执行前并不会进行二次确认。
+ 
+		
+		
+
 
