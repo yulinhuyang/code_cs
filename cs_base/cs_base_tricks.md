@@ -56,23 +56,6 @@
 
 [快捷键大全](https://blog.csdn.net/crper/article/details/54099319)
 
-**docker**
-
-[只要一小时，零基础入门Docker](https://zhuanlan.zhihu.com/p/23599229)
-
-[Docker 入门教程 阮一峰](http://www.ruanyifeng.com/blog/2018/02/docker-tutorial.html)
-
-https://github.com/yeasy/docker_practice
-
-https://github.com/moby/moby
-
-https://www.runoob.com/docker/docker-tutorial.html
-
-http://c.biancheng.net/docker/
-
-第一本docker书
-
-深入浅出docker
 
 ## notes
 
