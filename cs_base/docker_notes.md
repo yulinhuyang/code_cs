@@ -719,6 +719,48 @@ docker stack ps 列出某个已经部署的Stack相关详情。该命令支持St
 docker stack rm 命令用于从Swarm集群中移除Stack。移除操作执行前并不会进行二次确认。
  
 		
-		
+### 3.15 Docker安全
+
+安全的本质就是分层！通俗地讲，拥有更多的安全层，就能拥有更多的安全性
+
+Linux通用的安全技术:命名空间、控制组、系统权限、强制访问控制、安全计算。
+
+Docker平台技术：
+	
+	Docker Swarm 模式：默认是开启安全功能的。
+	
+	Docker内容信任：允许用户对镜像签名，并且对拉取镜像的完整度和发布者进行验证。
+	
+	Docker密钥：Docker密钥存储在加密集群存储中，在容器传输过程中实时解密。
+
+**Linux安全技术**
+
+Namespace：内核命名空间将操作系统进行拆分。
+
+	Docker容器是由各种命名空间组合而成的，Docker容器本质就是命名空间的组织集合。
+	
+	Linux Docker 现在利用了下列内核命名空间：进程ID、网络、文件系统/挂载、进程内通信、用户、UTS等。
+
+Control Group:
+
+	命名空间用于隔离，那么控制组就是用于限额。CGroup允许用户设置一些限制来保证不会存在单一容器占用全部的公共资源。
+	
+	在Docker的世界中，容器之间是相互隔离的，但却共享OS资源，比如CPU、RAM以及硬盘IO。CGroup允许用户设置限制，这样单个容器就不能占用主机全部的资源。
+	
+Capability: Docker采用Capability机制来实现用户以root身份运行容器的同时，还能移除非必须的root能力。
+	
+MAC: Docker采用主流Linux MAC技术，例如AppArmor以及SELinux。对新容器增加了默认的AppArmor配置文件.
+
+Seccomp:使用过滤模式下的Seccomp来限制容器对宿主机内核发起的系统调用。每个新容器都会设置默认的Seccomp配置，文件中设置了合理的默认值。
+
+**Docker平台安全技术**
+
+Swarm模式：支持用户集群化管理多个Docker主机。
+
+安全扫描：Docker安全扫描对Docker镜像进行二进制代码级别的扫描，对其中的软件根据已知缺陷数据库（CVE数据库）进行检查。
+
+Docker内容信任：使得用户很容易确认所下载镜像的完整性以及其发布者。
+
+Docker 密钥：docker secret 来管理密钥。	
 
 
