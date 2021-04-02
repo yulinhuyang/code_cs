@@ -93,7 +93,7 @@ docker image build  根据dockerfile 的命令构建镜像
 
 ### 3 深入浅出docker notes
 
-**3.5 docker 引擎**
+#### 3.5 docker 引擎 
 
 Docker引擎由以下主要的组件构成：Docker客户端（Docker Client）、Docker守护进程（Docker daemon）、containerd以及runc
 
@@ -107,7 +107,7 @@ shim的部分职责如下：
 
 在Linux系统中，前面谈到的组件由单独的二进制来实现，具体包括docker（docker daemon）、docker-containerd（containerd）、docker-containerd-shim（shim）和docker-runc(runc)
 
-**3.6 docker 镜像**
+#### 3.6 docker 镜像 
 
 在该前提下，镜像可以理解为一种构建时结构，而容器可以理解为一种运行时结构。
 
@@ -117,7 +117,7 @@ Docker service主要用于使用Docker swarm配置主节点，以便docker容器
 
 Docker service： 将一些较大应用程序环境中微服务的镜像。服务可能包括HTTP服务器，数据库或您希望在分布式环境中运行的任何其他类型的可执行程序。
 
-镜像：
+**镜像**
 
 默认情况下，我们拉取的是带有标签 "latest"的镜像，如果要拉取不同的镜像，需要指定特有的标签
 
@@ -171,7 +171,7 @@ docker image rm 9b915a241e29(ID)
 
 如果被删除的镜像上存在运行状态的容器，那么该删除操作不会被允许。再次执行删除镜像命令之前，需要停止并删除该镜像相关的全部容器
 
-**3.7 docker 容器**
+#### 3.7 docker 容器 
 
 docker container run <image> <app>中，指定启动所需的镜像以及要运行的应用。docker container run -it ubuntu /bin/bash 则会启动某个ubuntu Linux容器，并允许Bash Shell作为其应用。
 
@@ -197,7 +197,7 @@ docker container stop 命令向容器内的PID 1进程发送了SIGTERM这样的�
 
 docker container rm -f 就是直接发出SIGKILL的信号，直接杀掉容器
 
-重启策略进行容器的自我修复:
+**重启策略进行容器的自我修复**
 
 重启策略包括 always、unless-stoped 和 on-failed 三种。
 
@@ -211,7 +211,7 @@ on-failure 策略会在退出容器并且返回值不是0的时候，重启容�
 
 docker container rm $(docker container ls -aq) -f   删除所有容器
 
-**3.8 应用的容器化**
+#### 3.8 应用的容器化 
 
 将应用整合到容器中并且运行起来的这个过程，称为“容器化”（Containerizing），有时也叫做“Docker化”（Dockerizing）
 
@@ -236,7 +236,7 @@ docker container rm $(docker container ls -aq) -f   删除所有容器
 docker image tag来打标签
 
 
-生产环境中的多阶段构建
+**生产环境中的多阶段构建**
 
 每个RUN指令都会新增一个镜像层。因此，通过使用 && 连接多个命令以及使用反斜杠换行的方法，将多个命令包含在一个RUN指令中，这是一种值得提倡的做
 
@@ -246,7 +246,7 @@ Docker的构建过程利用了缓存机制
 
 当要构建镜像的层次很多的时候，我们可以考虑把这些镜像层给合并,在 docker image build 的时候加上参数 --squash
 
-相关命令：
+**相关命令**
 
 docker image build 命令会读取 Dockerfile，并将应用程序容器化。使用 -t 参数给镜像打标签，使用 -f 参数指定Dockerfile的路径和名称。构建上下文是指文件存放的位置，可能是本地Docker主机上的一个目录或者远程的Git库。
 
@@ -262,13 +262,13 @@ Dockerfile 中的ENTRYPOINT指令用于指定镜像以容器方式启动后默�
 
 其他的Dockerfile指令还有LABEL、ENV、ONBUILD、HEALTHCHECK、CMD等
 
-**3.9 Docker Compose**
+#### 3.9 Docker Compose 
 
 Docker Compose: 一个声明式的配置文件描述整个应用，从而使用一条命令完成部署 
 
 Docker Compose 是一个需要在Docker主机上进行安装的外部Python工具。使用它时，首先编写定义多容器（多服务）应用的YAML文件，然后将其交由给docker-compose命令处理
 
-安装docker compose 
+**安装docker compose** 
 
 下载二进制包，目前最新版本时1.24.1
 
