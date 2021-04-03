@@ -88,6 +88,22 @@ docker container  ls -a 列出来所有容器，包括杀死的
 **镜像操作其他：**
 
 
+**普通用户加入docker组**
+
+创建docker用户组：   sudo groupadd docker
+
+应用用户加入docker用户组： sudo usermod -aG docker ${USER}
+
+重启docker服务： sudo systemctl restart docker
+
+切换或者退出当前账户再从新登入：
+
+su root             切换到root用户
+su ${USER}          再切换到原来的应用用户以上配置才生效
+
+
+
+
 
 ## 2 docker file 文件
 
