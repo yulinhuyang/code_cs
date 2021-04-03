@@ -68,6 +68,8 @@ Docker images导出和导入: https://www.jianshu.com/p/8408e06b7273
 
 docker save 9045（imageID） > tomcat8-apr.tar
 
+或者： docker save -o ubuntu_arm_ros.tar   arm64v8/ros:latest 
+
 docker load < tomcat8-apr.tar
 
 **容器导出和导入：**
