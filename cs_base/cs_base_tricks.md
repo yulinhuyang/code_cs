@@ -39,6 +39,9 @@
 
 [快捷键大全](https://blog.csdn.net/crper/article/details/54099319)
 
+**markdown技巧**
+
+[Markdown进阶（更改字体、颜色、大小，设置文字背景色，调整图片大小设置居中）](https://blog.csdn.net/heimu24/article/details/81189700)
 
 ## notes
 
