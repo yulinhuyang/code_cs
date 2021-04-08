@@ -16,6 +16,7 @@ http://c.biancheng.net/docker/
 
 深入浅出docker
 
+[Docker buildx 多架构镜像](https://zhuanlan.zhihu.com/p/299116754)
 
 ## 1  docker 基本命令:
 
