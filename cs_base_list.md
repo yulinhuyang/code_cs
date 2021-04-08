@@ -266,6 +266,7 @@ UML和模式应用
 
 重构：改善既有代码的设计 
 
+https://www.kancloud.cn/sstd521/refactor/194266
 
 领域驱动设计模式、原理与实践：
 
