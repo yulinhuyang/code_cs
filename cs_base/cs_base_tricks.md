@@ -47,6 +47,10 @@
 
 [tmux使用教程](https://www.ruanyifeng.com/blog/2019/10/tmux.html)
 
+**apt-get相关**
+
+[add-apt-repository使用](https://blog.csdn.net/l740450789/article/details/50856596)
+
 ## notes
 
 convert  example.png  -resize  200x100!  example.png
@@ -72,6 +76,11 @@ target_link_libraries(myProject libcomm.a)
 vi常用命令:
 
 :set number
+
+add-apt-repository使用： 
+
+配置代理----> sudo apt-add-repository ppa:ubuntu-mozilla-daily/ppa   --->sudo apt-get update  --->sudo apt-get install firefox-4.0
+
 
 
 
