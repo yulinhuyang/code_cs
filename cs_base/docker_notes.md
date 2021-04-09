@@ -18,6 +18,8 @@ http://c.biancheng.net/docker/
 
 [Docker buildx 多架构镜像](https://zhuanlan.zhihu.com/p/299116754)
 
+[二进制安装docker](https://my.oschina.net/daoflow/blog/4700063)
+
 ## 1  docker 基本命令:
 
 docker 官方库： https://github.com/docker-library/official-images/blob/master/library/ros
