@@ -3,4 +3,4 @@
 
 https://github.com/sjsdfg/effective-java-3rd-chinese
 
-https://sjsdfg.github.io/e ective-java-3rd-chinese/#/
+https://sjsdfg.github.io/effective-java-3rd-chinese/#/
