@@ -51,6 +51,10 @@
 
 [add-apt-repository使用](https://blog.csdn.net/l740450789/article/details/50856596)
 
+[etc/profile和~/.bashrc的区别](https://blog.csdn.net/ZoeYen_/article/details/78560905)
+
+[Ubuntu设置代理](https://www.jianshu.com/p/f569a404ee0b)
+
 ## notes
 
 convert  example.png  -resize  200x100!  example.png
