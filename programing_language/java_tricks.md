@@ -4,3 +4,6 @@
 [狂神说java课程](https://www.kuangstudy.com/course)
 
 [狂神说java视频教程](https://www.bilibili.com/video/BV1og4y1q7M4)
+
+[java try-with-resource语句使用](https://www.jianshu.com/p/258c5ce1a2bd)
+
