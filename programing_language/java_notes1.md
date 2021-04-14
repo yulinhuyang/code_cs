@@ -6,7 +6,7 @@ https://github.com/sjsdfg/effective-java-3rd-chinese
 https://sjsdfg.github.io/effective-java-3rd-chinese/#/
 
 
-effective java
+[effective Java 读书笔记](https://www.zybuluo.com/caos/note/44777)
 
 
 
