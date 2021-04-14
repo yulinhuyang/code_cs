@@ -85,6 +85,12 @@ add-apt-repository使用：
 
 配置代理----> sudo apt-add-repository ppa:ubuntu-mozilla-daily/ppa   --->sudo apt-get update  --->sudo apt-get install firefox-4.0
 
+查看符号表：
+strings libstdc++.so.6|grep GLIBC
+
+查看so依赖：
+ldd  + so
+
 
 
 
