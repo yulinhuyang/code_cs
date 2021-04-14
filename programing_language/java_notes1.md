@@ -8,6 +8,7 @@ https://sjsdfg.github.io/effective-java-3rd-chinese/#/
 
 [effective Java 读书笔记](https://www.zybuluo.com/caos/note/44777)
 
+https://einverne.github.io/post/2016/09/effective-java.html
 
 
 ## 第2章　创建和销毁对象 
