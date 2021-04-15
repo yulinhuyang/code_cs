@@ -36,6 +36,7 @@ cat ubuntu-base-16.04.6-base-amd64.tar.gz | docker import - ubuntu_arm64_1604_6
 下载运行：
 
 docker pull forumi0721ubuntuaarch64/ubuntu-aarch64-dev
+
 docker run -it --privileged  -v /usr/bin/qemu-aarch64-static:/usr/bin/qemu-aarch64-static  ubuntu_arm64_1604_6 /bin/bash
 
 --name 中的参数设定运行容器实例的名字，--privileged 设定特权模式（docker 容器实际上是做了从 linux 内核到用户进程的映射，容器中的 root 权限实际上并不是外面物理机的 root 权限，而只是一个普通权限）， -volume  参数选择挂载硬盘， 可以用多个-v 挂载多个路径
@@ -46,7 +47,20 @@ docker container exec -it  + 容器名   + 命令
 
 docker exec -it 2e57cec46995 /bin/bash
 
-提交修改： 
+
+**attach和detach对比**
+
+docker run -it IMAGES_NAME会创建前台进程，但是会在输入exit后终止进程。
+
+docker attach DOCKER_ID 会通过连接stdin，连接到容器内输入输出流，会在输入exit后终止进程.
+
+docker exec -it DOCKER_ID /bin/bash 会连接到容器，可以像SSH一样进入容器内部，进行操作，可以通过exit退出容器，不影响容器运行。
+
+以上几种方式均可通过输入Ctrl+P+Q把前台容器放入后台运行，不终止进程
+
+启动容器的时候一定要加上--detach或者-d来保持容器在后台持续运行。
+
+**提交修改： **
 
 docker commit + 容器名 + 仓库名
 
