@@ -60,10 +60,9 @@ docker exec -it DOCKER_ID /bin/bash 会连接到容器，可以像SSH一样进�
 
 启动容器的时候一定要加上--detach或者-d来保持容器在后台持续运行。
 
-**提交修改： **
+**提交修改**
 
-docker commit + 容器名 + 仓库名
-
+docker commit + 容器名 + 仓库名：tag
 
 docker ps ： 查看容器
 
