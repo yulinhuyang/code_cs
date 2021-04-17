@@ -13,7 +13,7 @@
 
 [json for modern c++的使用](https://blog.csdn.net/fengxinlinux/article/details/71037244)
 
-[glog]（https://github.com/google/glog）
+[glog](https://github.com/google/glog)
 
 2 面试notes： 
 
