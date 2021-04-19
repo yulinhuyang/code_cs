@@ -1,4 +1,4 @@
-1  tricks
+**1 tricks**
 
 
 [万字长文把 VSCode 打造成 C++ 开发利器](https://zhuanlan.zhihu.com/p/96819625)
@@ -17,7 +17,9 @@
 
 [cnpy](https://github.com/rogersce/cnpy)
 
-2 面试notes： 
+[C++ 多线程教程](https://github.com/sprinfall/cpp-thread-study)
+
+***2 面试notes：** 
 
 2.1 使用struct关键字和class关键字定义类以及在类的继承方面有啥区别？
 
@@ -34,3 +36,6 @@ C语言中的struct 关键字也可以实现类，用class 关键字和struct �
 因此，主要就两个区别：默认的访问级别和默认的继承级别：class 都是private的，struct 都是public的。
 
 （3） 结构体是一种值类型，而类是引用类型。值类型用于存储数据的值，引用类型用于存储对实际数据的引用。那么结构体就是当成值来使用的，类则通过引用来对实际数据操作。
+
+
+**3 多线程**
