@@ -43,6 +43,8 @@
 
 [Markdown进阶（更改字体、颜色、大小，设置文字背景色，调整图片大小设置居中）](https://blog.csdn.net/heimu24/article/details/81189700)
 
+[Typora画流程图、时序图(顺序图)、甘特图（转）](https://www.jianshu.com/p/7ddbb7dc8fec)
+
 **tmux**
 
 [tmux使用教程](https://www.ruanyifeng.com/blog/2019/10/tmux.html)
