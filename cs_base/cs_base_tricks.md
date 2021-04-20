@@ -34,6 +34,8 @@
 
 [Linux命令必知必会](https://github.com/mylxsw/growing-up/blob/master/doc/Linux%E5%91%BD%E4%BB%A4%E5%BF%85%E7%9F%A5%E5%BF%85%E4%BC%9A.md)
 
+[Linux启动顺序、运行级别及开机启动](https://blog.csdn.net/soonfly/article/details/72876001)
+
 
 **VScode:**
 
