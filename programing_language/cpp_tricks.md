@@ -19,7 +19,7 @@
 
 [C++ 多线程教程](https://github.com/sprinfall/cpp-thread-study)
 
-***2 面试notes：** 
+**2 面试notes：** 
 
 2.1 使用struct关键字和class关键字定义类以及在类的继承方面有啥区别？
 
@@ -37,5 +37,17 @@ C语言中的struct 关键字也可以实现类，用class 关键字和struct �
 
 （3） 结构体是一种值类型，而类是引用类型。值类型用于存储数据的值，引用类型用于存储对实际数据的引用。那么结构体就是当成值来使用的，类则通过引用来对实际数据操作。
 
+结构体初始化问题：
+
+https://blog.csdn.net/ericbar/article/details/79567108
+
+C语言没有构造函数的概念，如同内建类型的变量：
+
+1.定义全局或静态的struct变量时，其成员会初始化为零。
+2.定义局部的struct变量时，其成员为不确定的值。
+
+C语言对struct(以及union和数组)变量使用初始化列表。
+
+[C语言结构体初始化的四种方法](https://blog.csdn.net/ericbar/article/details/79567108)
 
 **3 多线程**
