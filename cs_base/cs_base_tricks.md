@@ -97,7 +97,7 @@ strings libstdc++.so.6|grep GLIBC
 查看so依赖：
 ldd  + so
 
-
+查看当前目录下文件夹大小： du -h --max-depth=1
 
 
 
