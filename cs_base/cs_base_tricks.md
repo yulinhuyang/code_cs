@@ -65,6 +65,10 @@
 
 [linux下的高效代码搜索工具-ack](https://www.the5fire.com/about-ack-grep-in-linux.html)
 
+**linux信号量同步**
+
+[线程同步之信号量（sem_init,sem_post,sem_wait）](https://www.cnblogs.com/zhengAloha/p/8665719.html)
+
 ## notes
 
 convert  example.png  -resize  200x100!  example.png
@@ -106,4 +110,17 @@ ldd  + so
 代码搜索ack：  
 
 当前目录下 ack -r "xxx"  就可以搜索所有
+
+信号量线程同步：
+
+    int sem_init(sem_t *sem, int pshared, unsigned int value);，其中sem是要初始化的信号量，pshared表示此信号量是在进程间共享还是线程间共享，value是信号量的初始值。
+    
+    int sem_destroy(sem_t *sem);,其中sem是要销毁的信号量。只有用sem_init初始化的信号量才能用sem_destroy销毁。
+    
+    int sem_wait(sem_t *sem);等待信号量，如果信号量的值大于0,将信号量的值减1,立即返回。如果信号量的值为0,则线程阻塞。相当于P操作。成功返回0,失败返回-1。
+    
+    int sem_post(sem_t *sem); 释放信号量，让信号量的值加1。相当于V操作。
+    
+    
+
 
