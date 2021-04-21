@@ -121,6 +121,10 @@ ldd  + so
     
     int sem_post(sem_t *sem); 释放信号量，让信号量的值加1。相当于V操作。
     
-    
+改变文件用户和组： chown  chgrp
+
+查看jobs:  jobs
+
+查看文件修改时间和大小:  ls -lht
 
 
