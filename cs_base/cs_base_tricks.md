@@ -103,5 +103,7 @@ ldd  + so
 
 查看当前目录下文件夹大小： du -h --max-depth=1
 
+代码搜索ack：  
 
+当前目录下 ack -r "xxx"  就可以搜索所有
 
