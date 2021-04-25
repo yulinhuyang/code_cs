@@ -20,6 +20,11 @@ http://c.biancheng.net/docker/
 
 [二进制安装docker](https://my.oschina.net/daoflow/blog/4700063)
 
+
+查看所在contaioner的id： cat /proc/self/cgroup | head -1
+
+
+
 ## 1  docker 基本命令:
 
 docker 官方库： https://github.com/docker-library/official-images/blob/master/library/ros
