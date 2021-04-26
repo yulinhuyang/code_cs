@@ -139,3 +139,7 @@ eg:
 
 硬链接：ln  [源文件或目录][目标文件或目录]
 
+apt-get锁定问题： sudo rm -rf /var/cache/apt/archives/lock
+
+
+
