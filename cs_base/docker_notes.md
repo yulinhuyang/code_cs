@@ -23,6 +23,7 @@ http://c.biancheng.net/docker/
 
 查看所在contaioner的id： cat /proc/self/cgroup | head -1
 
+docker tag : 标记本地镜像，将其归入某一仓库。   docker tag ubuntu:15.10 runoob/ubuntu:v3
 
 
 ## 1  docker 基本命令:
