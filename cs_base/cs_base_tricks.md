@@ -71,6 +71,8 @@
 
 ## notes
 
+### linux 命令
+
 convert  example.png  -resize  200x100!  example.png
 
 ps aux最初用到Unix Style中，而ps -ef被用在System V Style中，| grep xxx, 对进程进行监测和控制。
@@ -140,6 +142,12 @@ eg:
 硬链接：ln  [源文件或目录][目标文件或目录]
 
 apt-get锁定问题： sudo rm -rf /var/cache/apt/archives/lock
+
+
+### markdown
+
+添加代码说明： ```c++   ```
+
 
 
 
