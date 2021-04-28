@@ -53,7 +53,7 @@ C语言对struct(以及union和数组)变量使用初始化列表。
 **3 多线程**
 
 
-**4 RAII**
+**4 RAII  RTTI**
 
 https://zhuanlan.zhihu.com/p/34660259
 
@@ -70,7 +70,11 @@ https://zhuanlan.zhihu.com/p/34660259
       }
 
 
+RTTI（Run-Time Type Identification)-运行时类型识别
+
 [C++ typeid关键字详解](https://blog.csdn.net/gatieme/article/details/50947821)
+
+它使程序能够获取由基指针或引用所指向的对象的实际派生类型，即允许“用指向基类的指针或引用来操作对象”的程序能够获取到“这些指针或引用所指对象”的实际派生类型。
 
 在C++中，为了支持RTTI提供了两个操作符：dynamic_cast和typeid
 
