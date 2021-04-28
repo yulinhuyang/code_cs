@@ -27,3 +27,9 @@ equals 是方法，而 == 是操作符；
 对于引用类型的变量来说（例如 String 类）才有 equals 方法，因为 String 继承了 Object 类， equals 是 Object 类的通用方法。对于该类型对象的比较，默认情况下，也就是没有复写 Object 类的 equals 方法，使用 == 和 equals 比较是一样效果的，都是比较的是它们在内存中的存放地址。但是对于某些类来说，为了满足自身业务需求，可能存在equals 方法被复写的情况，这时使用 equals 方法比较需要看具体的情况，例如 String 类，使用 equals 方法会比较它们的值；
 
 https://www.jianshu.com/p/9cbed9f33a4d
+
+**3 对象传递**
+
+在Java中，当对象作为参数传递时，实际上传递的是一份“引用的拷贝”。
+
+
