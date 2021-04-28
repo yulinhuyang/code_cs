@@ -124,7 +124,9 @@ public class Main {
 同时extend implement 时，类优先
 
 
+### 6 comparable  clone
 
+clone: 如果对象包含子对象的引用，拷贝域就包括相同子对象的引用。
 
 
 
