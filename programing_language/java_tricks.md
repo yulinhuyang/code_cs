@@ -119,7 +119,9 @@ public class Main {
 
 2. 接口是对行为的抽象，是一种行为的规范和约束 (like-a)
 
+**类优先**
 
+同时extend implement 时，类优先
 
 
 
