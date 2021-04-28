@@ -62,6 +62,37 @@ public class Main {
 }
 
 
+**5 extend implement 区别**
+
+[抽象类和接口的区别已经变了](https://zhuanlan.zhihu.com/p/75513356)
+
+子类继承抽象类通过 extends , 单继承
+
+	public abstract class A {}
+	public class B extends A {}
+
+
+抽象类实现接口通过 implements , 多实现，接口继承接口通过 extends
+
+	public interface A {}
+	public interface B {}
+
+	public interface C extends A {}
+
+	public class D implements B,C {}
+
+实例化
+
+抽象类和接口均不能实例化
+
+抽象类可以有构造方法，接口不能有构造方法
+
+	public abstract class A {
+	 public A () {}
+	}
+
+
+
 
 
 
