@@ -51,3 +51,34 @@ C语言对struct(以及union和数组)变量使用初始化列表。
 [C语言结构体初始化的四种方法](https://blog.csdn.net/ericbar/article/details/79567108)
 
 **3 多线程**
+
+
+**4 RAII**
+
+https://zhuanlan.zhihu.com/p/34660259
+
+资源获取即初始化
+
+构造函数的写法：
+
+      person(const std::string name = "", int age = 0) : 
+      name_(name), age_(age) {
+            std::cout << "Init a person!" << std::endl;
+      }
+      ~person() {
+            std::cout << "Destory a person!" << std::endl;
+      }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
