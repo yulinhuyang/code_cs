@@ -124,7 +124,7 @@ public class Main {
 同时extend implement 时，类优先
 
 
-### 6 comparable  clone
+### 6  Cloneable clone
 
 copy:  浅拷贝
 
@@ -136,8 +136,28 @@ clone: 浅克隆和深克隆之分。
 
 浅克隆：覆盖Object类的clone()方法可以实现浅克隆。
 
-深克隆：如果需要实现深克隆，可以通过覆盖Object类的clone()方法实现，也可以通过序列化(Serialization)等方式来实现。
+深克隆：
+
+先对对象进行序列化，紧接着马上反序列化出；
+
+先调用super.clone()方法克隆出一个新对象来，然后在子类的clone()方法中手动给克隆出来的非基本数据类型（引用类型）赋值，比如ArrayList的clone()方法。
 
 
+***Cloneable接口***
 
+（1）此类实现了Cloneable接口，以指示Object的clone()方法可以合法地对该类实例进行按字段复制
+
+（2）如果在没有实现Cloneable接口的实例上调用Object的clone()方法，则会导致抛出CloneNotSupporteddException
+
+（3）按照惯例，实现此接口的类应该使用公共方法重写Object的clone()方法，Object的clone()方法是一个受保护的方法
+
+***Object的clone()方法***
+
+创建并返回此对象的一个副本。对于任何对象x，表达式：
+
+（1）x.clone() != x为true
+
+（2）x.clone().getClass() == x.getClass()为true
+
+（3）x.clone().equals(x)一般情况下为true，但这并不是必须要满足的要求
 
