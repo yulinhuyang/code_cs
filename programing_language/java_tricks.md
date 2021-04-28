@@ -33,4 +33,35 @@ https://www.jianshu.com/p/9cbed9f33a4d
 
 在Java中，当对象作为参数传递时，实际上传递的是一份“引用的拷贝”。
 
+**4 实现反射**
+
+java 获取反射机制三种方式
+
+1. new对象 
+
+2. 路径
+
+3. 类名
+
+public class Main {
+
+	public static void main(String[] args) throws ClassNotFoundException {
+		// 方式一、new对象
+		Student student = new Student();
+		Class classObj1 = student.getClass();
+		System.out.println(classObj1.getName());
+
+		// 方式二、路径-相对路径
+		Class classObj2 = Class.forName("com.aop8.reflect.Student");
+		System.out.println(classObj2.getName());
+
+		// 方式三、类名
+		Class classObj3 = Student.class;
+		System.out.println(classObj3.getName());
+	}
+}
+
+
+
+
 
