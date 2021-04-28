@@ -11,7 +11,7 @@
 
 [JavaCore](https://github.com/dunwu/javacore)
 
-**1  @Override：**
+### 1  @Override 
 
 是伪代码,表示重写(当然不写也可以)，不过写上有如下好处:
 
@@ -19,7 +19,7 @@
 
 2、编译器可以给你验证@Override下面的方法名是否是你父类中所有的，如果没有则报错
 
-**2  equals 和 == 的区别：**
+### 2  equals 和 == 的区别 
 
 equals 是方法，而 == 是操作符；
 
@@ -29,11 +29,11 @@ equals 是方法，而 == 是操作符；
 
 https://www.jianshu.com/p/9cbed9f33a4d
 
-**3 对象传递**
+### 3 对象传递 
 
 在Java中，当对象作为参数传递时，实际上传递的是一份“引用的拷贝”。
 
-**4 实现反射**
+### 4 实现反射 
 
 java 获取反射机制三种方式
 
@@ -62,7 +62,7 @@ public class Main {
 }
 
 
-**5 extend implement 区别**
+### 5 extend implement 区别 
 
 [抽象类和接口的区别已经变了](https://zhuanlan.zhihu.com/p/75513356)
 
@@ -81,7 +81,7 @@ public class Main {
 
 	public class D implements B,C {}
 
-实例化
+**实例化**
 
 抽象类和接口均不能实例化
 
@@ -90,6 +90,36 @@ public class Main {
 	public abstract class A {
 	 public A () {}
 	}
+
+
+**属性**
+
+接口中定义属性只能是 (public)静态常量
+	public interface A {
+	 //默认(public static final) String A="ABC";
+	 String A = "ABC";
+	}
+	
+抽象类中可以定义有任意变量常量
+
+//任意访问修饰符的变量及常量
+
+	public abstract class A {
+		 private String a = "a";
+		 boolean b = true;
+		 public char c = 'a';
+		 protected int d = 2;
+		 public static final int e = 1;
+	}
+
+**设计**
+
+1. 抽象类是对一组类的共同特征进行抽象 ，是子类的模板（is-a）
+
+2. 接口是对行为的抽象，是一种行为的规范和约束 (like-a)
+
+
+
 
 
 
