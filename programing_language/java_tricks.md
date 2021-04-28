@@ -164,7 +164,7 @@ clone: 浅克隆和深克隆之分。
 
 ### 7 lambda 表达式
 
-带参变量的表达式
+**带参变量的表达式**
 
 	(parameters) -> expression
 
@@ -191,7 +191,23 @@ lambda 表达式的体与嵌套块有相同的作用域。
 
 使用lambda 表达式的重点是延迟执行 deferred execution
 
+**java常用函数式接口：**
 
+Consumer< T>:消费型接口
+
+接口方法 void accept(T t)：参数类型是T，无返回值
+
+Supplier< T>供给型接口
+
+接口方法 T get()：参数类型是T，返回T类型参数
+
+Function<T,R>函数型接口</T,R>
+
+接口方法R apply(T)：对类型T参数操作，返回R类型参数
+
+Predicate< T>段言型接口
+
+接口方法 boolean test（T t）：对类型T进行条件筛选操作，返回boolean
 
 ### 8 闭包
 
