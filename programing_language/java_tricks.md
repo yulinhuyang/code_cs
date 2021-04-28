@@ -126,9 +126,9 @@ public class Main {
 
 ### 6 comparable  clone
 
-copy: 浅拷贝
+copy:  浅拷贝
 
-clone: 深拷贝
+clone: 浅克隆和深克隆之分。
 
 clone: 如果对象包含子对象的引用，拷贝域就包括相同子对象的引用。
 
