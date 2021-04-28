@@ -70,9 +70,14 @@ https://zhuanlan.zhihu.com/p/34660259
       }
 
 
+[C++ typeid关键字详解](https://blog.csdn.net/gatieme/article/details/50947821)
 
+在C++中，为了支持RTTI提供了两个操作符：dynamic_cast和typeid
 
+dynamic_cast允许运行时刻进行类型转换，从而使程序能够在一个类层次结构中安全地转化类型，与之相对应的还有一个非安全的转换操作符static_cast，因为这不是本文的讨论重点，所以这里不再详述，感兴趣的可以自行查阅资料。
 
+typeid是C++的关键字之一，等同于sizeof这类的操作符。typeid操作符的返回结果是名为type_info的标准库类型的对象的引用（在头文件typeinfo中定义，稍后我们看一下vs和gcc库里面的源码），它的表达式有下图两种形式。
+ 
 
 
 
