@@ -1,5 +1,6 @@
 **1 tricks**
 
+[c++ 那些事](https://github.com/Light-City/CPlusPlusThings)
 
 [万字长文把 VSCode 打造成 C++ 开发利器](https://zhuanlan.zhihu.com/p/96819625)
 
@@ -19,7 +20,6 @@
 
 [C++ 多线程教程](https://github.com/sprinfall/cpp-thread-study)
 
-[c++ 那些事](https://github.com/Light-City/CPlusPlusThings)
 
 **2 面试notes：** 
 
@@ -53,6 +53,8 @@ C语言对struct(以及union和数组)变量使用初始化列表。
 [C语言结构体初始化的四种方法](https://blog.csdn.net/ericbar/article/details/79567108)
 
 **3 多线程**
+
+
 
 
 **4 RAII  RTTI**
