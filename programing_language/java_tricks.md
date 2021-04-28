@@ -184,4 +184,13 @@ clone: 浅克隆和深克隆之分。
 	(String s) -> System.out.print(s)
 
 
+### 8 闭包
+
+在JAVA中，闭包是通过“接口+内部类”实现，JAVA的内部类也可以有匿名内部类。
+
+Lambda表达式也是闭包。
+
+
+
+
 
