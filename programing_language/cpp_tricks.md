@@ -61,7 +61,7 @@ C语言对struct(以及union和数组)变量使用初始化列表。
 
 https://zhuanlan.zhihu.com/p/34660259
 
-资源获取即初始化
+RAII  资源获取即初始化
 
 构造函数的写法：
 
