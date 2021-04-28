@@ -19,6 +19,8 @@
 
 [C++ 多线程教程](https://github.com/sprinfall/cpp-thread-study)
 
+[c++ 那些事](https://github.com/Light-City/CPlusPlusThings)
+
 **2 面试notes：** 
 
 2.1 使用struct关键字和class关键字定义类以及在类的继承方面有啥区别？
