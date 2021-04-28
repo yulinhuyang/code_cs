@@ -161,3 +161,27 @@ clone: 浅克隆和深克隆之分。
 
 （3）x.clone().equals(x)一般情况下为true，但这并不是必须要满足的要求
 
+
+### 7 lambda 表达式
+
+带参变量的表达式
+
+	(parameters) -> expression
+
+	或
+
+	(parameters) ->{ statements; }
+
+	eg：
+	
+	// 3. 接受2个参数(数字),并返回他们的差值  
+	(x, y) -> x – y  
+
+	// 4. 接收2个int型整数,返回他们的和  
+	(int x, int y) -> x + y  
+
+	// 5. 接受一个 string 对象,并在控制台打印,不返回任何值(看起来像是返回void)  
+	(String s) -> System.out.print(s)
+
+
+
