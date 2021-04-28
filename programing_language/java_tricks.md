@@ -95,6 +95,7 @@ public class Main {
 **属性**
 
 接口中定义属性只能是 (public)静态常量
+
 	public interface A {
 	 //默认(public static final) String A="ABC";
 	 String A = "ABC";
