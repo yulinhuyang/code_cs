@@ -403,7 +403,9 @@ scan_bt.setOnClickListener(new OnClickListener() {
 2 通过Proxy.newProxyInstance()创建interface实例，它需要3个参数：
 
 	使用的ClassLoader，通常就是接口类的ClassLoader；
+	
 	需要实现的接口数组，至少需要传入一个接口进去；
+	
 	用来处理接口方法调用的InvocationHandler实例。
 	
 3 将返回的Object强制转型为接口。
