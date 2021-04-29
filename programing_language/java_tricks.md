@@ -218,7 +218,7 @@ Lambda表达式也是闭包。
 ### 9 内部类
 
 
-### 10 反汇编
+### 10 反编译
 
 	java reflection.ReflectionTest irmerClass.lilkingClock\STimePrinter
 
