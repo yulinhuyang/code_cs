@@ -423,6 +423,55 @@ scan_bt.setOnClickListener(new OnClickListener() {
 
 应该捕获那些知道如何处理的异常，而将那些不知道怎样处理的异常继续进行传递
 
+不管是否有异常被捕获，finally 子句中的代码都被执行。
+
+try 语句可以只有finally 子句，而没有catch 子句
+
+强烈建议解搞合try/catch 和try/finally 语句块
+
+	InputStrean in = . . .;
+	try
+	{
+		try
+		{
+			code that might throw exceptions
+		}
+		finally
+		{
+			in.doseO;
+		}
+	}
+	catch (IOException e)
+	{
+		show error message
+	}
+
+带资源的try 语句（try-with-resources) 的最简形式为：
+
+	try (Resource res = . . .)
+	{
+		work with res
+	}
+	
+	try (Scanner in = new Scanner(new FileInputStream(7usr/share/dict/words")), "UTF-8")
+	{
+		while (in.hasNextO)
+		System.out.pri ntl n(in.next()) ;
+	}
+
+try 块退出时，会自动调用res.doseO。
+
+这个块正常退出时，或者存在一个异常时，都会调用inxloseO 方法，就好像使用了finally 块一样。
+
+还可以指定多个资源: 例如：
+
+	try (Scanner in = new Scanne「(new FileInputStream('7usr/share/dict/words"). "UTF-8"):
+	PrintWriter out = new Pri ntWriter("out.txt"))
+	{
+		while (in.hasNextO)
+		out.pri ntl n(i n.next().toUpperCaseO);
+	}
+
 
 
 
