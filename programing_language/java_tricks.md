@@ -527,7 +527,14 @@ jconsole 的图形工具，可以用于显示虚拟机性能的统计结果
 
 [Java中的泛型方法](https://www.cnblogs.com/iyangyuan/archive/2013/04/09/3011274.html)
 
-注释：从表面上看，Java 的泛型类类似于C++ 的模板类。唯一明显的不同是Java 没有专用的template 关键字。
+[java 泛型详解](https://blog.csdn.net/s10461/article/details/53941091)
+
+从表面上看，Java 的泛型类类似于C++ 的模板类。唯一明显的不同是Java 没有专用的template 关键字。
+
+泛型只在编译阶段有效。
+
+在编译之后程序会采取去泛型化的措施。也就是说Java中的泛型，只在编译阶段有效。在编译过程中，正确检验泛型结果后，会将泛型的相关信息擦出，并且在对象进入和离开方法的边界处添加类型检查和类型转换的方法。也就是说，泛型信息不会进入到运行时阶段。
+
 
 泛型类：
 
@@ -544,5 +551,28 @@ jconsole 的图形工具，可以用于显示虚拟机性能的统计结果
 		    return a[a.length / 2];
 		}
 	}
+
+泛型接口： 
+
+	//定义一个泛型接口
+	public interface Generator<T> {
+	    public T next();
+	}
+	
+泛型类，是在实例化类的时候指明泛型的具体类型；泛型方法，是在调用方法的时候指明泛型的具体类型 。
+
+通配符： 类型通配符一般是使用?代替具体的类型参数。例如 List<?> 在逻辑上是List<String>,List<Integer> 等所有List<具体类型实参>的父类。
+
+	public class GenericTest {
+
+	    public static void main(String[] args) {
+		List<String> name = new ArrayList<String>();
+		name.add("icon");
+		getData(name);
+	   }
+
+	   public static void getData(List<?> data) {
+	      System.out.println("data :" + data.get(0));
+	   }
 
 
