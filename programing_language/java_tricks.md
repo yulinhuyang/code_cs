@@ -478,5 +478,12 @@ try 块退出时，会自动调用res.doseO。
 	}
 ```
 
+堆栈轨迹： 调用 Throwable 类的 printStackTrace 方法访问堆栈轨迹的文本描述信息。
+
+使用 getStackTrace 方法， 它会得到 StackTraceElement 对象的一个数组， 可以在你的程序中分析这个对象数组。
+
+静态的 Thread.getAllStackTrace 方法， 它可以产生所有线程的堆栈轨迹。
+
+
 
 
