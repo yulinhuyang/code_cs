@@ -217,6 +217,8 @@ Lambda表达式也是闭包。
 
 ### 9 内部类
 
+[内部类详解](https://www.cnblogs.com/dolphin0520/p/3811445.html)
+
 Java的内部类可分为Inner Class（成员内部类、局部内部类）、Anonymous Class和Static Nested Class三种：
 
 Inner Class和Anonymous Class本质上是相同的，都必须依附于Outer Class的实例，即隐含地持有Outer.this实例，并拥有Outer Class的private访问权限；
