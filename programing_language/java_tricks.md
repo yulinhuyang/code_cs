@@ -217,6 +217,24 @@ Lambda表达式也是闭包。
 
 ### 9 内部类
 
+特殊语法： 
+
+	OwterC/ass.this    表示外围类引用
+
+	if (TalkingClock.this,beep) Toolkit.getDefaultToolkitO.beep();
+
+编写内部对象的构造器
+
+	outerObject.n&H InnerClass{construction parameters)
+
+	ActionListener listener = this.new TimePrinterO;
+	
+	TalkingClock jabberer = new Ta1kingClock(1000, true);
+	
+	TalkingOock.TiiePrinter listener = jabberer.new TimePrinterO；
+	
+在外围类的作用域之外，可以这样引用内部类：OuterClass.InnerClass	
+		
 
 ### 10 反编译
 
