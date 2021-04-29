@@ -505,7 +505,7 @@ Logger.getClobal ().setLevel (Level .OFF);
 
 将会取消所有的日志。
 
-
+处理器  ----> 过滤器  ---->格式化器
 
 
 
