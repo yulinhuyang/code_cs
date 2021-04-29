@@ -358,6 +358,7 @@ scan_bt.setOnClickListener(new OnClickListener() {
 
 可以在运行期动态创建某个interface的实例。
 
+```java
 	import java.lang.reflect.InvocationHandler;
 	import java.lang.reflect.Method;
 	import java.lang.reflect.Proxy;
@@ -385,5 +386,5 @@ scan_bt.setOnClickListener(new OnClickListener() {
 	interface Hello {
 	    void morning(String name);
 	}
-
+```
 
