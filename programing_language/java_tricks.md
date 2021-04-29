@@ -419,7 +419,7 @@ scan_bt.setOnClickListener(new OnClickListener() {
 面向切面编程：如AOP in Spring
 
 
-### 12 异常
+### 12 异常 断言 日志
 
 应该捕获那些知道如何处理的异常，而将那些不知道怎样处理的异常继续进行传递
 
@@ -492,6 +492,21 @@ try 块退出时，会自动调用res.doseO。
 断言检查只用于开发和测阶段。
 
 断言是一种测试和调试阶段所使用的战术性工具; 而日志记录是一种在程序的整个生命周期都可以使用的策略性工具。
+
+**日志**
+
+使用全局日志记录器（global logger) 并调用其info 方法：
+
+Logger.getClobal 0,info("File->Open menu item selected");
+
+如果在适当的地方（如main 开始）调用  
+
+Logger.getClobal ().setLevel (Level .OFF);
+
+将会取消所有的日志。
+
+
+
 
 
 
