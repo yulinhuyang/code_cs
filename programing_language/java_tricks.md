@@ -581,6 +581,11 @@ jconsole 的图形工具，可以用于显示虚拟机性能的统计结果
 	      System.out.println("data :" + data.get(0));
 	   }
 
+子类型限定： ? extends Employee
+
+超类型限定： ? super Manager
+
+
 
 java 类型擦除, C++ 中每个模板的实例化产生不同的类型，这一现象称为“ 模板代码膨账”
 
