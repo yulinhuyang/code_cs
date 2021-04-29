@@ -394,3 +394,21 @@ scan_bt.setOnClickListener(new OnClickListener() {
 	}
 ```
 
+
+
+在运行期动态创建一个interface实例的方法如下：
+
+1 定义一个InvocationHandler实例，它负责实现接口的方法调用；
+
+2 通过Proxy.newProxyInstance()创建interface实例，它需要3个参数：
+
+	使用的ClassLoader，通常就是接口类的ClassLoader；
+	需要实现的接口数组，至少需要传入一个接口进去；
+	用来处理接口方法调用的InvocationHandler实例。
+	
+3 将返回的Object强制转型为接口。
+
+动态代理实际上是JVM在运行期动态创建class字节码并加载的过程，它并没有什么黑魔法
+
+
+
