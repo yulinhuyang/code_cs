@@ -484,6 +484,9 @@ try 块退出时，会自动调用res.doseO。
 
 静态的 Thread.getAllStackTrace 方法， 它可以产生所有线程的堆栈轨迹。
 
+在出错的地方抛出一个EmptyStackException异常要比在后面抛出一个NullPointerException 异常更好
 
+
+	assert 条件：表达式；
 
 
