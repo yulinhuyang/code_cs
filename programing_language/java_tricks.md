@@ -561,6 +561,9 @@ jconsole 的图形工具，可以用于显示虚拟机性能的统计结果
 	
 泛型类，是在实例化类的时候指明泛型的具体类型；泛型方法，是在调用方法的时候指明泛型的具体类型 。
 
+类型限制：  public static <T extends Coiparab1e> T a) . . .
+
+
 通配符： 类型通配符一般是使用?代替具体的类型参数。例如 List<?> 在逻辑上是List<String>,List<Integer> 等所有List<具体类型实参>的父类。
 
 	public class GenericTest {
