@@ -563,6 +563,9 @@ jconsole 的图形工具，可以用于显示虚拟机性能的统计结果
 
 类型限制：  public static <T extends Coiparab1e> T a) . . .
 
+多个通配符限制：     T extends Comparable & Serializable
+
+	 public static <T extends Comparable〉Pair<T> minmax(T[] a)
 
 通配符： 类型通配符一般是使用?代替具体的类型参数。例如 List<?> 在逻辑上是List<String>,List<Integer> 等所有List<具体类型实参>的父类。
 
@@ -577,5 +580,14 @@ jconsole 的图形工具，可以用于显示虚拟机性能的统计结果
 	   public static void getData(List<?> data) {
 	      System.out.println("data :" + data.get(0));
 	   }
+
+
+java 类型擦除, C++ 中每个模板的实例化产生不同的类型，这一现象称为“ 模板代码膨账”
+
+
+
+
+
+
 
 
