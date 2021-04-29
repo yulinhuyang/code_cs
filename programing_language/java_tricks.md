@@ -217,7 +217,13 @@ Lambda表达式也是闭包。
 
 ### 9 内部类
 
-特殊语法： 
+Java的内部类可分为Inner Class（成员内部类、局部内部类）、Anonymous Class和Static Nested Class三种：
+
+Inner Class和Anonymous Class本质上是相同的，都必须依附于Outer Class的实例，即隐含地持有Outer.this实例，并拥有Outer Class的private访问权限；
+
+Static Nested Class是独立类，但拥有Outer Class的private访问权限。
+
+**特殊语法：** 
 
 	OwterC/ass.this    表示外围类引用
 
@@ -234,7 +240,108 @@ Lambda表达式也是闭包。
 	TalkingOock.TiiePrinter listener = jabberer.new TimePrinterO；
 	
 在外围类的作用域之外，可以这样引用内部类：OuterClass.InnerClass	
-		
+	
+**成员内部类**
+
+成员内部类是最普通的内部类，它的定义为位于另一个类的内部
+
+外部访问：
+
+外部类.this.成员变量
+
+外部类.this.成员方法
+
+	class Circle {
+	    double radius = 0;
+
+	    public Circle(double radius) {
+		this.radius = radius;
+	    }
+
+	    class Draw {     //内部类
+		public void drawSahpe() {
+		    System.out.println("drawshape");
+		}
+	    }
+	}
+
+成员内部类是依附外部类而存在的，也就是说，如果要创建成员内部类的对象，前提是必须存在一个外部类的对象
+
+        //第一种方式：
+        Outter outter = new Outter();
+        Outter.Inner inner = outter.new Inner();  //必须通过Outter对象来创建
+         
+        //第二种方式：
+        Outter.Inner inner1 = outter.getInnerInstance();
+
+**局部内部类**
+
+局部内部类是定义在一个方法或者一个作用域里面的类，它和成员内部类的区别在于局部内部类的访问仅限于方法内或者该作用域内。
+
+	class People{
+	    public People() {
+
+	    }
+	}
+
+	class Man{
+	    public Man(){
+
+	    }
+
+	    public People getWoman(){
+		class Woman extends People{   //局部内部类
+		    int age =0;
+		}
+		return new Woman();
+	    }
+	}
+
+**匿名内部类**
+
+匿名内部类应该是平时我们编写代码时用得最多的，在编写事件监听的代码时使用匿名内部类不但方便，而且使代码更加容易维护
+
+scan_bt.setOnClickListener(new OnClickListener() {
+             
+            @Override
+            public void onClick(View v) {
+                // TODO Auto-generated method stub
+            }
+        });
+         
+        history_bt.setOnClickListener(new OnClickListener() {
+             
+            @Override
+            public void onClick(View v) {
+                // TODO Auto-generated method stub  
+            }
+        });
+	
+**静态内部类**
+
+	public class Main {
+	    public static void main(String[] args) {
+		Outer.StaticNested sn = new Outer.StaticNested();
+		sn.hello();
+	    }
+	}
+
+	class Outer {
+	    private static String NAME = "OUTER";
+
+	    private String name;
+
+	    Outer(String name) {
+		this.name = name;
+	    }
+
+	    static class StaticNested {
+		void hello() {
+		    System.out.println("Hello, " + Outer.NAME);
+		}
+	    }
+	}
+
 
 ### 10 反编译
 
