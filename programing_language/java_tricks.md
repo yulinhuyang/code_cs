@@ -418,3 +418,11 @@ scan_bt.setOnClickListener(new OnClickListener() {
 
 面向切面编程：如AOP in Spring
 
+
+### 12 异常
+
+应该捕获那些知道如何处理的异常，而将那些不知道怎样处理的异常继续进行传递
+
+
+
+
