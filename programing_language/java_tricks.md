@@ -215,7 +215,14 @@ Predicate< T>段言型接口
 
 Lambda表达式也是闭包。
 
+### 9 内部类
 
+
+### 10 反汇编
+
+	java reflection.ReflectionTest irmerClass.lilkingClock\STimePrinter
+
+	javap -private innerClass.W kingClock\STimePrinte
 
 
 
