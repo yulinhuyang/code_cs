@@ -412,5 +412,9 @@ scan_bt.setOnClickListener(new OnClickListener() {
 
 动态代理实际上是JVM在运行期动态创建class字节码并加载的过程，它并没有什么黑魔法
 
+解决特定问题：一个接口的实现在编译时无法知道，需要在运行时才能实现
 
+实现某些设计模式：适配器(Adapter)或修饰器(Decorator)
+
+面向切面编程：如AOP in Spring
 
