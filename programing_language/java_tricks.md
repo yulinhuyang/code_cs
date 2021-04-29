@@ -280,6 +280,7 @@ Static Nested Class是独立类，但拥有Outer Class的private访问权限。
 
 局部内部类是定义在一个方法或者一个作用域里面的类，它和成员内部类的区别在于局部内部类的访问仅限于方法内或者该作用域内。
 
+```java
 	class People{
 	    public People() {
 
@@ -298,11 +299,14 @@ Static Nested Class是独立类，但拥有Outer Class的private访问权限。
 		return new Woman();
 	    }
 	}
+```	
+
 
 **匿名内部类**
 
 匿名内部类应该是平时我们编写代码时用得最多的，在编写事件监听的代码时使用匿名内部类不但方便，而且使代码更加容易维护
 
+```java
 scan_bt.setOnClickListener(new OnClickListener() {
              
             @Override
@@ -318,9 +322,11 @@ scan_bt.setOnClickListener(new OnClickListener() {
                 // TODO Auto-generated method stub  
             }
         });
+```
 	
 **静态内部类**
 
+```java
 	public class Main {
 	    public static void main(String[] args) {
 		Outer.StaticNested sn = new Outer.StaticNested();
@@ -343,7 +349,7 @@ scan_bt.setOnClickListener(new OnClickListener() {
 		}
 	    }
 	}
-
+```
 
 ### 10 反编译
 
