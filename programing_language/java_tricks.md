@@ -429,6 +429,7 @@ try 语句可以只有finally 子句，而没有catch 子句
 
 强烈建议解搞合try/catch 和try/finally 语句块
 
+```java
 	InputStrean in = . . .;
 	try
 	{
@@ -445,9 +446,11 @@ try 语句可以只有finally 子句，而没有catch 子句
 	{
 		show error message
 	}
+```
 
 带资源的try 语句（try-with-resources) 的最简形式为：
 
+```java
 	try (Resource res = . . .)
 	{
 		work with res
@@ -458,6 +461,7 @@ try 语句可以只有finally 子句，而没有catch 子句
 		while (in.hasNextO)
 		System.out.pri ntl n(in.next()) ;
 	}
+```
 
 try 块退出时，会自动调用res.doseO。
 
@@ -465,13 +469,14 @@ try 块退出时，会自动调用res.doseO。
 
 还可以指定多个资源: 例如：
 
+```java
 	try (Scanner in = new Scanne「(new FileInputStream('7usr/share/dict/words"). "UTF-8"):
 	PrintWriter out = new Pri ntWriter("out.txt"))
 	{
 		while (in.hasNextO)
 		out.pri ntl n(i n.next().toUpperCaseO);
 	}
-
+```
 
 
 
