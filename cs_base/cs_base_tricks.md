@@ -69,6 +69,11 @@
 
 [线程同步之信号量（sem_init,sem_post,sem_wait）](https://www.cnblogs.com/zhengAloha/p/8665719.html)
 
+
+**jenkins使用**
+
+[Jenkins详细教程](https://www.jianshu.com/p/5f671aca2b5a)
+
 ## notes
 
 ### linux 命令
