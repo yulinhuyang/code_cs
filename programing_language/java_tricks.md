@@ -11,6 +11,8 @@
 
 [JavaCore](https://github.com/dunwu/javacore)
 
+[Java核心 卷一笔记](https://blog.csdn.net/qq_39326472/category_8572091.html)
+
 ### 1  @Override 
 
 是伪代码,表示重写(当然不写也可以)，不过写上有如下好处:
@@ -641,7 +643,15 @@ Add 方法在迭代器位置之前添加一个新对象。
 
 contains：检测某个元素是否出现在链表
 
-get ：访问某个特定元素
+get ：访问某个特定元素，get 方法做了微小的优化：如果索引大于 size() / 2 就从列表尾端开始搜索元素。
+
+add 方法只依赖于迭代器的位置， 而 remove 方法依赖于迭代器的状态。
+
+set 方法用一个新元素取代调用 next 或 previous 方法返回的上一个元素。
+
+列表迭代器接口：nextlndex 方法返回下一次调用 next 方法时返回元素的整数索引；previouslndex 方法返回下一次调用 previous 方法时 返回元素的整数索引。
+
+
 
 
 
