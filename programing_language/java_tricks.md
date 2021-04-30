@@ -590,7 +590,58 @@ jconsole 的图形工具，可以用于显示虚拟机性能的统计结果
 java 类型擦除, C++ 中每个模板的实例化产生不同的类型，这一现象称为“ 模板代码膨账”
 
 
+### 14  集合
 
+让类库规模小且易于学习，而不希望像C++ 的“ 标准模版库” （S卩STL) 那样复杂，但却又希望能够得到STL 率先推出的“ 泛型算法” 所具有的优点。
+
+将接口（interface) 与实现(implementation) 分离。
+
+**队列**
+
+队列通常有两种实现方式：一种是使用循环数组；另一种是使用链表。
+
+集合类的基本接口是Collection 接口
+
+	public interface Collection<b
+	{
+		boolean add(E element);
+		Iterator<E> iteratorQ；
+	}
+
+Iterator 接口包含4 个方法：
+
+	public interface Iterator<E>
+	{
+		E next();
+		boolean hasNext();
+		void remove();
+		default void forEachRemaining(Consumer<? super E> action);
+	}
+
+
+	for (String element : c)
+	{
+		do something with element
+	}
+
+
+删除两个相邻元素： 调用remove之前必须调用next
+
+	it.remove(); 
+	it.next()；
+	it.remove(); 
+
+**List**
+
+所有链表实际上都是双向链接的(doubly linked) ——即每个结点还存放着指向前驱结点的引用
+
+Add 方法在迭代器位置之前添加一个新对象。
+
+可以根据需要给容器附加许多的迭代器，但是这些迭代器只能读取列表。另外，再单独附加一个既能读又能写的迭代器
+
+contains：检测某个元素是否出现在链表
+
+get ：访问某个特定元素
 
 
 
