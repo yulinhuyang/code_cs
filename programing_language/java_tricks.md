@@ -651,7 +651,11 @@ set 方法用一个新元素取代调用 next 或 previous 方法返回的上一
 
 列表迭代器接口：nextlndex 方法返回下一次调用 next 方法时返回元素的整数索引；previouslndex 方法返回下一次调用 previous 方法时 返回元素的整数索引。
 
+**Vector与 ArrayList 区别**
 
+Vector类的所有方法都是同步的。可以由两个线程安全地访问一个Vector对象。但是，如果由一个线程访问Vector, 代码要在同步操作上耗费大量的时间。这种情况还是很常见的。而ArrayList方法不是同步的，
+
+因此，建议在不需要同步时使用ArrayList, 而不要使用Vector。
 
 
 
