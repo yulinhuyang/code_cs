@@ -1,4 +1,4 @@
-## 1  必看总结
+### 1  必看总结
 
 [C++ 那些事](https://github.com/Light-City/CPlusPlusThings)
 
@@ -7,7 +7,13 @@
 [C++ Template 进阶指南](https://github.com/wuye9036/CppTemplateTutorial)
 
 
-## 2  题目整理
+### 2 代码模板
+
+  https://github.com/microsoft/calculator
+
+
+
+### 3 题目整理
 
 C++基础
 
@@ -177,9 +183,5 @@ C语言
     
     动态链接库和静态链接库的区别是什么？
     
-
-### 3 代码模板
-
-  https://github.com/microsoft/calculator
 
 
