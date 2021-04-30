@@ -598,7 +598,7 @@ java 类型擦除, C++ 中每个模板的实例化产生不同的类型，这一
 
 将接口（interface) 与实现(implementation) 分离。
 
-**队列**
+#### 队列
 
 队列通常有两种实现方式：一种是使用循环数组；另一种是使用链表。
 
@@ -633,7 +633,7 @@ Iterator 接口包含4 个方法：
 	it.next()；
 	it.remove(); 
 
-**List**
+#### List
 
 所有链表实际上都是双向链接的(doubly linked) ——即每个结点还存放着指向前驱结点的引用
 
@@ -659,7 +659,7 @@ Vector类的所有方法都是同步的。可以由两个线程安全地访问�
 
 因此，建议在不需要同步时使用ArrayList, 而不要使用Vector。
 
-**散列集**
+#### 散列集 HashSet
 
 如果a_equals(b) 为true, a 与b 必须具有相同的散列码。
 
@@ -671,7 +671,7 @@ Vector类的所有方法都是同步的。可以由两个线程安全地访问�
 
 HashSet 类，它实现了基于散列表的集。可以用add 方法添加元素。
 
-**树集**
+**树集 Tree Set**
 
 树集(Tree Set)是一个有序集合 (sorted collection)可以以任意顺序将元素插入到集合中。在对集合进行遍历时，每个值将自动地按照排序后的顺序呈现.排序是用树结构完成的（当前实现使用的
 
@@ -680,6 +680,203 @@ HashSet 类，它实现了基于散列表的集。可以用add 方法添加元�
 将一个元素添加到树中要比添加到散列表中慢。
 
 队列：有两个端头的队列，即双端队列，可以让人们有效地在头部和尾部同时添加或删除元素。Deque接口，并由 ArrayDeque 和 LinkedList 类实现。
+
+**优先级队列（priority queue) **
+
+优先级队列（priority queue) 中的元素可以按照任意的顺序插人，却总是按照排序的顺序进行检索
+
+优先级队列使用了一个优雅且高效的数据结构，称为堆（heap)。堆是一个可以自我调整的二叉树，对树执行添加（add) 和删除（remore) 操作，可以让最小的元素移动到根，而不必花费时间对元素进行排序。
+
+典型示例是任务调度。每一个任务有一个优先级，任务以随机顺序添加到队列中。
+
+	PriorityQueue<LocalDate> pq = new PriorityQueueoO;
+
+#### 映射map
+
+HashMap和TreeMap
+
+	Map<String, Employee> staff = new HashMap<>();//HashMap implements Map
+	Employee harry = new Employee ('Harry Hacker");
+	staff.put(”987-98-9996",harry);
+
+散列映射对键进行散列，树映射用键的整体顺序对元素进行排序， 并将其组织成搜索树
+
+remove方法用于从映射中删除给定键对应的元素。size 方法用于返回映射中的元素数。 要迭代处理映射的键和值， 最容易的方法是使用forEach 方法。可以提供一个接收键和值的lambda 表达式。映射中的每一项会依序调用这个表达式。 
+
+	map.forEach((k,v)->{
+		    System.out.println("k="+k);
+		});
+
+更新映射项:  
+
+getOrDefault方法
+
+	counts.put(word,getOrDefault(word,0)+1);
+
+首先调用 putlfAbsent 方法。只有当键原先不存在时才会放入一个值。
+
+	counts.putIfAbsent(word,0);
+	counts.put(word,counts.get(word）+1）；
+
+merge方法，将把word与1关联
+
+	counts.merge(word, 1, Integer::sum);
+
+映射视图：
+
+可以得到映射的视图（View)————这是实现了 Collection 接口或某个子接口的对象，键集、值集合（不是一个集）以及键 / 值对集
+ 
+        Map<String,String> map=new HashMap<>();
+        map.put("a","b");
+        Set<String> set=map.keySet();
+        Collection<String> collection=map.values();
+        Set<Map.Entry<String, String>> set2=map.entrySet();
+        Iterator itr=set2.iterator();
+        while(itr.hasNext()) {
+        	System.out.println(itr.next());
+        }
+        for(Map.Entry<String, String> entry:set2) {
+        	String a=entry.getValue();
+        	String b=entry.getKey();
+        }
+
+**弱散列映射：**
+
+负责从长期存活的映射表中删除那些无用的值。 或者使用WeakHashMap完成这件事情。当对键的唯一引用来自散列条目时。
+
+WeakHashMap 使用弱引用（weak references) 保存键，WeakReference对象将引用保存到另外一个对象中，在这里，就是散列键。对于这种类型的对象，垃圾回收器用一种特有的方式进行处理。通常，如果垃圾回收
+
+器发现某个特定的对象已经没有他人引用了，就将其回收。然而，如果某个对象只能由WeakReference引用，垃圾回收器仍然回收它，但要将引用这个对象的弱引用放人队列中。WeakHashMap将周期性地检查队
+
+列， 以便找出新添加的弱引用。一个弱引用进人队列意味着这个键不再被他人使用， 并且已经被收集起来。于是， WeakHashMap将删除对应的条目。
+ 
+**链接散列集与映射**
+
+LinkedHashSet 和 LinkedHashMap类用来记住插人元素项的顺序，这样就可以避免在散列表中的项从表面上看是随机排列的。
+
+链接散列映射将用访问顺序（谁访问的多）， 而不是插入顺序， 对映射条目进行迭代。每次调用 get 或 put, 受到影响的条目将从当前的位置删除，并放到条目链表的尾部
+
+LinkedHashMap<K, V>(initialCapacity, loadFactor, true)
+
+**枚举集与映射**
+
+EnumSet 是一个枚举类型元素集的高效实现。
+
+EnumMap是一个键类型为枚举类型的映射。
+
+EnumMap<Weekday, Employee〉personlnCharge = new EnumMap<>(Weekday.class); 
+
+**表示散列映射**
+
+类 IdentityHashMap 有特殊的作用，在这个类中， 键的散列值不是用hashCode函数计算的， 而是用 System.identityHashCode 方法计算的。 这是 Object.hashCode 方法根据对象的内 存地址来计算散列码时所使用的方式。
+
+#### 视图与包装器
+
+通过使用视图 (views) 可以获得其他的实现了 Collection接口和 Map 接口的对象。
+
+keySet方法返回一个实现 Set 接口的类对象， 这个类的方法对原映射进行操作。这种集合称为视图。
+
+轻量级集合包装器
+
+	List<Card> cardList = Arrays.asList(cardDeck):
+
+返回的对象不是 ArrayList。它是一个视图对象， 带有访问底层数组的 get 和 set方法。
+
+**子范围视图**
+
+不可修改的视图
+
+subList 方法来获得一个列表的子范围视图
+
+	List group2 = staff.subList(10, 20);
+
+类似的：
+
+	SortedSet< E> subSet(E from, E to)
+	SortedSet< E> headSet(E to)
+	SortedSet< E> tail Set(E from)
+
+
+**不可修改的视图**
+
+Collections.unmodifiableList
+
+Collections 还有几个方法， 用于产生集合的不可修改视图 
+
+	List<String> staff = new LinkedListoO ;
+	
+	1ookAt (Coll ecti ons.unmodi fiabl eLi st(staff));
+
+同步视图
+
+synchronizedMap 方法可以将任何一个映射表转换成具有同步访问方法的Map:
+
+	Map<String, Employee>map = Collections.synchronizedMap(new HashMap<String, Employee>())； 
+
+
+#### 算法
+
+交集： 
+
+	Set<String> result = new HashSeto(a);
+	result.retainAll(b);
+
+视图删除： staffMap.keySet().removeAll (terminatedIDs);
+
+toArray： 从集合得到数组
+
+	Object values = staff.toArray（）;
+	
+批操作
+
+很多操作会“ 成批” 复制或删除元素。通过使用一个子范围视图，可以把批操作限制在子列表和子集上。这个子范围还可以完成更改操作。 staff.subList（0，10）.clear()； 
+
+**集合与数组的转换**
+
+如果需要把一个数组转换为集合，Arrays.asList 包装器可以达到这个目的。例如：
+
+数组---->集合
+
+List<String> list=new ArrayList<>();
+    	String[] a=new String[10];
+    	HashSet<String> set=new HashSet<>(Arrays.asList(a));
+	
+集合-->数组
+
+    	String[] b=set.toArray(new String[0]);
+    	String[] b=set.toArray(new String[10]);
+	
+ 
+#### 遗留集合
+
+Hashtable ：与HashMap 类的作用一样，实际上，它们拥有相同的接口。与Vector 类的方法一样。Hashtable 的方法也是同步的。
+
+枚举： Enumeration 接口有两个方法，即hasMoreElements 和nextElement
+
+Collections.enumeration 将产生一个枚举对象，枚举集合中的元素
+
+属性映射（property map) :
+
+• 键与值都是字符串。
+
+• 表可以保存到一个文件中，也可以从文件中加载。
+
+• 使用一个默认的辅助表。
+
+实现属性映射的 Java 平台类称为 Properties
+
+栈（stack）
+
+位集
+
+由于位集将位包装在字节里，所以，使用位集要比使用 Boolean对象的 ArrayList 更加高效
+
+BitSet 类提供了一个便于读取、设置或清除各个位的接口。使用这个接口可以避免屏蔽和其他麻烦的位操作。
+
+
+
+
+
 
 
 
