@@ -7,6 +7,11 @@
 [C++ Template 进阶指南](https://github.com/wuye9036/CppTemplateTutorial)
 
 
+https://github.com/huihut/interview
+
+[68道C语言/C++常见面试题](https://zhuanlan.zhihu.com/p/346821046)
+
+
 ### 2 代码模板
 
   https://github.com/microsoft/calculator
