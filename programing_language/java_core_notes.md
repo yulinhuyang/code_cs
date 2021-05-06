@@ -874,14 +874,288 @@ Collections.enumeration 将产生一个枚举对象，枚举集合中的元素
 BitSet 类提供了一个便于读取、设置或清除各个位的接口。使用这个接口可以避免屏蔽和其他麻烦的位操作。
 
 
+### 15  并发
+
+**一个单独的线程中执行一个任务的简单过程**
+
+```java     
+	package com;
+	import java.util.*;
+	import java.lang.*;
+	import java.io.*;
+	public class Welcome{
+	    class a implements Runnable{
+		public void run() {
+			System.out.println("a");
+		}
+	    }
+	    public void x() {
+		 Runnable i=new a();
+			Thread thread=new Thread(new a());
+			thread.start();
+	    }
+	    public static void main(String []args){
+		 new Welcome().x();
+
+	    }
+	}
+```
+
+1 ) 将任务代码移到实现了 Runnable 接口的类的 run方法中。这个接口非常简单，只有 一个方法：
+
+public interface Runnable { void run（）； } 由于 Runnable 是一个函数式接口，可以用 lambda 表达式建立一个实例： Runnable r = () -> { taskcode};
+
+2 ) 由 Runnable 创建一个 Thread 对象： Thread t = new Thread(r);
+
+3 ) 启动线程： t.start（）；
+ 
+
+#### 中断线程
+
+interrupt 方法可以用来请求终止线程。当对一个线程调用 interrupt 方法时，线程的中断状态将被置位。这是每一个线程都具有的 boolean 标志。
+
+每个线程都应该不时地检査这个标志，以判断线程是否被中断。 要想弄清中断状态是否被置位，首先调用静态的 Thread.currentThread方法获得当前线 程，然后调用 islnterrupted方法
+ 
+	while(!Thread.currentThread().isInterrupted()) {
+
+	}
+	
+当在一个被阻塞的线程（调用sleep或wait) 上调用 interrupt方法时，阻塞调用将会被 Interrupted Exception 异常中断。	
+	
+被中断的线程可以决定如何响应中断。某些线程是如此重要以至于应该处理完异常
+
+```java
+	Runnable r = () -> {
+	 try { 
+		while (!Thread.currentThread().islnterrupted0 && more work todo) 
+		{ 
+		    do morework 
+		}
+	     } 
+	catch(InterruptedException e) 
+	{ 
+	     // thread was interr叩ted during sleep or wait } 
+	    finally
+	
+	    { cleanup,if required } // exiting the run method terminates the thread 
+	} 
+```
+
+interrupted和islnterrupted。Interrupted方法是一个静态方法，它检测当前的线程是否被中断。 调用interrupted方法会清除该线程的中断状态。
+
+islnterrupted方法是一个实例方法，可用来检验是否有线程被中断。调用这个方法不会改变中断状态。
+
+InterruptedException 异常被抑制在很低的层次上，
+
+有两种合理 的选择：
+
+•在catch子句中调用 Thread.currentThread().interrupt() 来设置中断状态。于是，调用者可以对其进行检测。
+
+```java
+	void mySubTask() {
+	try { 
+	    sleep(delay); 
+	} 
+	catch (InterruptedException e) 
+	{
+	    Thread.currentThread()-interrupt(); 
+	}
+```
+
+•或者，更好的选择是，用 throws InterruptedException标记你的方法， 不采用 try语句块捕获异常。于是，调用者（或者，最终的 run 方法）可以捕获这一异常。 
+
+#### 线程状态
+
+线程可以有如下 6 种状态：
+
+•New (新创建）
+
+•Runnable (可运行）
+
+•Blocked (被阻塞）
+
+•Waiting (等待）
+
+•Timed waiting (计时等待）
+
+•Terminated (被终止） 
 
 
+当用new操作符创建一个新线程时，如 new Thread(r)，该线程还没有开始运行。
+
+可运行线程, 一旦调用start方法，线程处于runnable状态。
+
+抢占式调度系统给每一个可运行线程一个时间片来执行任务。当时间片用完，操作系统剥夺该线程的运行权，并给另一个线程运行机会（见图 14-4 )。当选择下一个线程时， 操作系统考虑线程的优先级。
+
+**被阻塞线程和等待线程**
+
+当线程处于被阻塞或等待状态时，它暂时不活动。它不运行任何代码且消耗最少的资源。直到线程调度器重新激活它。
+
+*当一个线程试图获取一个内部的对象锁（而不是java.util.concurrent 库中的锁)，而该锁被其他线程持有，则该线程进人阻塞状态。当所有其他线程释放该锁，并且线程调度器允许本线程持有它的时候，该线程将变成非阻塞状态。
+
+*当线程等待另一个线程通知调度器一个条件时，它自己进入等待状态。在调用Object.wait方法或 Thread.join方法，或者是等待 java, util.concurrent 库中的 Lock 或 Condition 时， 就会出现这种情况。
+
+*有几个方法有一个超时参数。调用它们导致线程进人计时等待（timed waiting)状态。这一状态将一直保持到超时期满或者接收到适当的通知。带有超时参数的方法有 Thread.sleep 和 Object.wait、Thread.join、Lock.tryLock 以及 Condition.await 的计时版。
+
+**被终止的线程**
+
+线程因如下两个原因之一而被终止:  因为run方法正常退出而自然死亡。因为一个没有捕获的异常终止了run方法而意外死亡。
+
+#### 线程属性
+
+**线程优先级**
+
+线程的各种属性：线程优先级、守护线程、线程组以及处理未捕获异常的处理器。
+
+在 Java 程序设计语言中，每一个线程有一个优先级。默认情况下，一个线程继承它的父线程的优先级。可以用setPriority方法提高或降低任何一个线程的优先级。可以将优先级设置为在 MIN_PRIORITY (在 Thread类中定义为 1) 与 MAX_PRIORITY (定义为 10) 之间的任何值。NORM_PRIORITY 被定义为 5。
+
+**守护线程**
+
+t.setDaemon(true); 将线程转换为守护线程（daemon thread)。守护线程的唯一用途是为其他线程提供服务。
+
+计时线程就是一个例子，它定时地发送“ 计时器嘀嗒” 信号给其他线程或清空过时的高速缓存项的线程。当只剩下守护线程时， 虚拟机就退出了，由于如果只 剩下守护线程， 就没必要继续运行程序了。 
+
+守护线程应该永远不去访问固有资源，如文件、 数据库，因为它会在任何时候甚至在一个操作的中间发生中断。
+
+**未捕获异常处理器**
+
+在线程死亡之前，异常被传递到一个用于未捕获异常的处理器。 该处理器必须属于一个实现 Thread.UncaughtExceptionHandler 接口的类
+
+就在线程死亡之前， 异常被传递到一个用于未捕获异常的处理器。 该处理器必须属于一个实现 Thread.UncaughtExceptionHandler 接口的类。这个接口只有— 个方法。
+
+	void uncaughtException(Thread t, Throwable e)
+
+可以用 setUncaughtExceptionHandler方法为任何线程安装一个处理器。也可以用 Thread 类的静态方法 setDefaultUncaughtExceptionHandler 为所有线程安装一个默认的处理器。
+
+线程组是一个可以统一管理的线程集合。默认情况下，创建的所有线程属于相同的线程组， 但是， 也可能会建立其他的组。现在引入了更好的特性用于线程集合的操作， 所以建议不要在自己的程序中使用线程组。
+
+**ThreadGroup 类**
+
+ThreadGroup类实现Thread.UncaughtExceptionHandler接口。它的uncaughtException方法做如下操作：
+
+1 ) 如果该线程组有父线程组，那么父线程组的uncaughtException方法被调用。
+
+2 ) 否则，如果 Thread.getDefaultExceptionHandler方法返回一个非空的处理器， 则调用该处理器。
+
+3 ) 否则，如果 Throwable是ThreadDeath的一个实例， 什么都不做。
+
+4 ) 否则，线程的名字以及Throwable的栈轨迹被输出到System.err 上。 这是你在程序中肯定看到过许多次的栈轨迹
 
 
+#### 同步
+
+两个或两个以上的线程需要共享对同一数据的存取。如果两个线程存取相同的对象，并且每一个线程都调用了一个修改该对象状态的方法，这样一个情况通常称为竞争条件（race condition)。
+
+**锁对象**
+
+有两种机制防止代码块受并发访问的干扰。synchronized 关键字自动提供一个锁
+
+用 ReentrantLock 保护代码块的基本结构如下：
+
+```java
+	myLock.lock（）; // a ReentrantLock object 
+	try { critical section } 
+	finally 
+	{ myLock.unlock（）；// make sure the lock is unlocked even if an exception isthrown } 
+```
+
+这一结构确保任何时刻只有一个线程进人临界区。一旦一个线程封锁了锁对象， 其他任 何线程都无法通过 lock语句。当其他线程调用 lock 时，它们被阻塞，直到第一个线程释放 锁对象。
+
+警告：把解锁操作括在 finally 子句之内是至关重要的。如果在临界区的代码抛出异常， 锁必须被释放。否则， 其他线程将永远阻塞。
+
+如果使用锁，就不能使用带资源的try语句。首先， 解锁方法名不是 close。不过， 即使将它重命名，带资源的 try语句也无法正常工作。它的首部希望声明一个新变量。但 是如果使用一个锁， 你可能想使用多个线程共享的那个变量。
+
+同步，简单地理解，就是协同步调，一个完成了，另一个才能开始。
+
+异步，就是你说的不同步，就是互不干扰，各干各的，多个线程可能同时进行。
+
+锁是可重入的，因为线程可以重复地获得已经持有的锁。锁保持一个持有计数（hold count) 来跟踪对 lock 方法的嵌套调用。线程在每一次调用 lock 都要调用 unlock 来释放锁。 由于这一特性， 被一个锁保护的代码可以调用另一个使用相同的锁的方法  
+
+通常， 可能想要保护需若干个操作来更新或检查共享对象的代码块。要确保这些操作完 成后， 另一个线程才能使用相同对象。 
+
+**条件对象**
+
+要使用一个条件对象来管理那些已经获得了一个锁但是却不能做有用工作的线程。
+
+一个锁对象可以有一个或多个相关的条件对象 。习惯上给每一个条件对象命名为可以反映它所表达的条件的名字。
+
+等待获得锁的线程和调用await 方法的线程存在本质上的不同。一旦一个线程调用await方法，它进人该条件的等待集。当锁可用时，该线程不能马上解除阻塞。相反，它处于阻塞状态，直到另一个线程调用同一条件上的signalAll 方法时为止。
+
+这一调用重新激活因为这一条件而等待的所有线程。当这些线程从等待集当中移出时， 它们再次成为可运行的，调度器将再次激活它们。
+
+同时，它们将试图重新进人该对象。一旦锁成为可用的，它们中的某个将从 await 调用返回， 获得该锁并从被阻塞的地方继续执行。
+
+此时， 线程应该再次测试该条件。由于无法确保该条件被满足
+
+signalAll 方法仅仅是通知正在等待的线程 ：此时有可能已经满足条件， 值得再次去检测该条件。 在对象的状态有利于等待线程的方向改变时调用signalAll。
+
+另一个方法 signal, 则是随机解除等待集中某个线程的阻塞状态。这比解除所有线程的阻塞更加有效。当一个线程拥有某个条件的锁时， 它仅仅可以在该条件上调用 await、signalAll 或 signal 方法。
+
+**synchronized关键字**
+
+• 锁用来保护代码片段， 任何时刻只能有一个线程执行被保护的代码。
+
+• 锁可以管理试图进入被保护代码段的线程。
+
+• 锁可以拥有一个或多个相关的条件对象。
+
+• 每个条件对象管理那些已经进入被保护的代码段但还不能运行的线程。
+
+Java 中的每一个对象都有一个内部锁。如果一个方法用 synchronized关键字声明，那么对象的锁 将保护整个方法。也就是说，要调用该方法，线程必须获得内部的对象锁
+
+```java
+public synchronized void method（） { method body }
+ 
+public void method(){
+ 
+this.intrinsicLock.lock();
+ 
+try{
+ 
+}finally{
+    this.intrinsicLock.unlock();
+}
+ 
+}
+
+```
+
+内部对象锁只有一个相关条件。wait方法添加一个线程到等待集中，notifyAll /notify方法解除等待线程的阻塞状态。换句话说，调用wait 或notityAll 等价于
+
+	intrinsicCondition.await（）;
+	intrinsicCondition.signalAll（）; 
 
 
+内部锁和条件存在一些局限。包括：
 
+• 不能中断一个正在试图获得锁的线程。
 
+• 试图获得锁时不能设定超时。
+
+• 每个锁仅有单一的条件，可能是不够的。
+
+ Lock 和 Condition 对象还是同步方法？下面是一些建议:
+ 
+•  最好既不使用 Lock/Condition 也不使用 synchronized 关键字。在许多情况下你可以使用java.util.concurrent 包中的一种机制，它会为你处理所有的加锁。
+
+• 如果synchronized关键字适合你的程序，那么请尽量使用它，这样可以减少编写的代码数量，减少出错的几率。
+
+• 如果特别需要Lock/Condition结构提供的独有特性时，才使用Lock/Condition.
+
+synchronized锁住对象的时候锁住的是堆中的对象，而不是栈中对象的引用。
+
+```java
+	Object o=new Object();
+	synchronized(o){
+	}
+
+	o=new Object();
+	synchronized(o){
+	}
+	//这两个锁住的是不同的对象。
+```
+
+不要锁字符串常量，因为相同的字符串常量在一个地址，都在常量池里。不要去锁字符串常量。
 
 
 
