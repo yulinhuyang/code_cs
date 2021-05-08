@@ -6,13 +6,9 @@ P400-P436
 #### **12.1 动态指针与智能指针**
 
 | 智能指针 | 用途 |
-
 | ---------- | ------------------------------------------------------------ |
-
 | shared_ptr | 提供所有权共享的智能指针：对共享对象来说，当最后一个指向它的shared_ptr被销毁时会被释放。 |
-
 | unique_ptr | 提供独享所有权的智能指针：当unique_ptr被销毁的时，它指向的独享被释放。unique_ptr不能直接拷贝或赋值。 |
-
 | weak_ptr | 一种智能指针，指向由shared_ptr管理的对象。在确定是否应释放对象视，shared_ptr并不把weak_ptr统计在内。 |
 
 （1）shared_ptr类
@@ -70,23 +66,14 @@ delete表达式执行两个动作：销毁给定的指针指向的对象；释�
 当unique_ptr销毁时，它所指向的对象也被销毁。
 
 | unique_ptr操作 |
-
 | --------------------- |
-
 | unique_ptr<T> u1 |
-
 | unique_ptr<T, D> u2 |
-
 | unique_ptr<T, D> u(d) |
-
 | u = nullptr |
-
 | u.release() |
-
 | u.reset() |
-
 | u.reset(p) |
-
 | u.reset(nullptr) |
 
 （4）weak_ptr
@@ -94,21 +81,13 @@ delete表达式执行两个动作：销毁给定的指针指向的对象；释�
 weak+ptr是一种不受控制所指向对象生存期的智能指针，它指向由一个shared_ptr管理的对象，而且不会改变shared_ptr的引用计数。
 
 | weak_ptr 操作 | |
-
 | ----------------- | ----------------------------- |
-
 | weak_ptr<T> w | |
-
 | weak_ptr<T> w(sp) | |
-
 | w = p | |
-
 | w.reset() | 将w置空 |
-
 | w.use_count() | 与w共享对象的shared_ptr的数量 |
-
 | w.expired() | |
-
 | w.lock() | |
 
 使用weak_ptr之前，需要调用lock，检查weak_ptr指向的对象是否存在。
@@ -144,15 +123,10 @@ auto const p = alloc.allocate(n);
 ```
 
 | 表达式 | 作用 |
-
 | -------------------- | ------------------------------------------------------------ |
-
 | allocator[T] a | 定义了一个名为a的allocator对象，它可以为类型为T的对象分配内存 |
-
 | a.allocate(n) | 分配一段原始的、未构造的内存，保存n个类型为T的对象 |
-
 | a.construct(p, args) | 为了使用allocate返回的内存，我们必须使用construct构造对象。使用未构造的内存，其行为是未定义的。 |
-
 | a.destroy(p) | p为T*类型的指针，此算法对p指向的对象执行析构函数 |
 
 #### **术语**
