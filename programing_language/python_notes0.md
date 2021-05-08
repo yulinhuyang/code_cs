@@ -10,1048 +10,786 @@ https://github.com/StdioA/fluent-python-notes/tree/master/markdown
 https://segmentfault.com/a/1190000011568813
 
 
+## 第一章: python数据模型
 
-# 1  Python 数据类型
-> Guido 对语言设计美学的深入理解让人震惊。我认识不少很不错的编程语言设计者，他们设计出来的东西确实很精彩，但是从来都不会有用户。Guido 知道如何在理论上做出一定妥协，设计出来的语言让使用者觉得如沐春风，这真是不可多得。  
-> ——Jim Hugunin  
->   Jython 的作者，AspectJ 的作者之一，.NET DLR 架构师
+这部分主要介绍了python的魔术方法, 它们经常是两个下划线包围来命名的(比如 `__init__` , `__lt__`, `__len__` ). 这些特殊方法是为了被python解释器调用的, 这些方法会注册到他们的类型中方法集合中, 相当于为cpython提供抄近路. 这些方法的速度也比普通方法要快, 当然在自己不清楚这些魔术方法的用途时, 不要随意添加.
 
-Python 最好的品质之一是**一致性**：你可以轻松理解 Python 语言，并通过 Python 的语言特性在类上定义**规范的接口**，来支持 Python 的核心语言特性，从而写出具有“Python 风格”的对象。  
-Python 解释器在碰到特殊的句法时，会使用特殊方法（我们称之为魔术方法）去激活一些基本的对象操作。如 `my_c[key]` 语句执行时，就会调用 `my_c.__getitem__` 函数。这些特殊方法名能让你自己的对象实现和支持一下的语言构架，并与之交互：
-* 迭代
-* 集合类
-* 属性访问
-* 运算符重载
-* 函数和方法的调用
-* 对象的创建和销毁
-* 字符串表示形式和格式化
-* 管理上下文（即 `with` 块）
+关于字符串的表现形式是两种, `__str__` 与 `__repr__` . python的内置函数 `repr` 就是通过 `__repr__` 这个特殊方法来得到一个对象的字符串表示形式. 这个在交互模式下比较常用, 如果没有实现 `__repr__` , 当控制台打印一个对象时往往是 `<A object at 0x000>` . 而 `__str__` 则是 `str()` 函数时使用的, 或是在 `print` 函数打印一个对象的时候才被调用, 终端用户友好.
 
+两者还有一个区别, 在字符串格式化时, `"%s"` 对应了 `__str__` . 而 `"%r"` 对应了 `__repr__`. `__str__` 和 `__repr__` 在使用上比较推荐的是，前者是给终端用户看，而后者则更方便我们调试和记录日志.
+
+更多的特殊方法: https://docs.python.org/3/reference/datamodel.html
+
+## 第二章: 序列构成的数组
+
+这部分主要是介绍序列, 着重介绍数组和元组的一些高级用法.
+
+序列按照容纳数据的类型可以分为:
+
+- `容器序列`: list、tuple 和 collections.deque 这些序列能存放不同类型的数据
+- `扁平序列`: str、bytes、bytearray、memoryview 和 array.array，这类序列只能容纳一种类型.
+
+如果按照是否能被修改可以分为:
+
+- `可变序列`: list、bytearray、array.array、collections.deque 和 memoryview
+- `不可变序列`: tuple、str 和 bytes
+
+### 列表推导
+
+列表推导是构建列表的快捷方式, 可读性更好且效率更高.
+
+例如, 把一个字符串变成unicode的码位列表的例子, 一般:
 
 ```python
-# 通过实现魔术方法，来让内置函数支持你的自定义对象
-# https://github.com/fluentpython/example-code/blob/master/01-data-model/frenchdeck.py
+symbols = '$¢£¥€¤'
+codes = []
+for symbol in symbols:
+    codes.append(ord(symbol))
+```
+
+使用列表推导:
+
+```python
+symbols = '$¢£¥€¤'
+codes = [ord(symbol) for symbol in symbols]
+```
+
+能用列表推导来创建一个列表, 尽量使用推导, 并且保持它简短.
+
+### 笛卡尔积与生成器表达式
+
+生成器表达式是能逐个产出元素, 节省内存. 例如:
+
+```python
+>>> colors = ['black', 'white']
+>>> sizes = ['S', 'M', 'L']
+>>> for tshirt in ('%s %s' % (c, s) for c in colors for s in sizes):
+... print(tshirt)
+```
+
+实例中列表元素比较少, 如果换成两个各有1000个元素的列表, 显然这样组合的笛卡尔积是一个含有100万元素的列表, 内存将会占用很大, 而是用生成器表达式就可以帮忙省掉for循环的开销.
+
+### 具名元组
+
+元组经常被作为 `不可变列表` 的代表. 经常只要数字索引获取元素, 但其实它还可以给元素命名:
+
+```python
+>>> from collections import namedtuple
+>>> City = namedtuple('City', 'name country population coordinates')
+>>> tokyo = City('Tokyo', 'JP', 36.933, (35.689722, 139.691667))
+>>> tokyo
+City(name='Tokyo', country='JP', population=36.933, coordinates=(35.689722,
+139.691667))
+>>> tokyo.population
+36.933
+>>> tokyo.coordinates
+(35.689722, 139.691667)
+>>> tokyo[1]
+'JP'
+```
+
+### 切片
+
+列表中是以0作为第一个元素的下标, 切片可以根据下标提取某一个片段.
+
+用 `s[a:b:c]` 的形式对 `s` 在 `a` 和 `b` 之间以 `c` 为间隔取值。`c` 的值还可以为负, 负值意味着反向取值.
+
+```python
+>>> s = 'bicycle'
+>>> s[::3]
+'bye'
+>>> s[::-1]
+'elcycib'
+>>> s[::-2]
+'eccb'
+```
+
+## 第三章: 字典和集合
+
+`dict` 类型不但在各种程序里广泛使用, 它也是 `Python` 语言的基石. 正是因为 `dict` 类型的重要, `Python` 对其的实现做了高度的优化, 其中最重要的原因就是背后的「散列表」 set（集合）和dict一样, 其实现基础也是依赖于散列表.
+
+散列表也叫哈希表, 对于dict类型, 它的key必须是可哈希的数据类型. 什么是可哈希的数据类型呢, 它的官方解释是:
+
+> 如果一个对象是可散列的，那么在这个对象的生命周期中，它的散列值是不变
+> 的，而且这个对象需要实现 `__hash__()` 方法。另外可散列对象还要有
+> `__qe__()` 方法，这样才能跟其他键做比较。如果两个可散列对象是相等的，那么它们的散列值一定是一样的……
+
+`str`, `bytes`, `frozenset` 和 `数值` 都是可散列类型.
+
+### 字典推导式
+
+```python
+DIAL_CODE = [
+    (86, 'China'),
+    (91, 'India'),
+    (7, 'Russia'),
+    (81, 'Japan'),
+]
+
+### 利用字典推导快速生成字典
+country_code = {country: code for code, country in DIAL_CODE}
+print(country_code)
+
+'''
+OUT:
+{'China': 86, 'India': 91, 'Russia': 7, 'Japan': 81}
+'''
+```
+
+### defaultdict：处理找不到的键的一个选择
+
+当某个键不在映射里, 我们也希望也能得到一个默认值. 这就是 `defaultdict` , 它是 `dict` 的子类, 并实现了 `__missing__` 方法.
+
+```python
 import collections
-import random
-
-Card = collections.namedtuple('Card', ['rank', 'suit'])
-
-class FrenchDeck:
-    ranks = [str(n) for n in range(2, 11)] + list('JQKA')
-    suits = 'spades diamonds clubs hearts'.split()
-
-    def __init__(self):
-        self._cards = [Card(rank, suit) for suit in self.suits
-                                        for rank in self.ranks]
-
-    def __len__(self):
-        return len(self._cards)
-
-    def __getitem__(self, position):
-        return self._cards[position]
-
-deck = FrenchDeck()
-# 实现 __length__ 以支持 len
-print(len(deck))
-# 实现 __getitem__ 以支持下标操作
-print(deck[1])
-print(deck[5::13])
-# 有了这些操作，我们就可以直接对这些对象使用 Python 的自带函数了
-print(random.choice(deck))
-```
-
-    52
-    Card(rank='3', suit='spades') [Card(rank='7', suit='spades'), Card(rank='7', suit='diamonds'), Card(rank='7', suit='clubs'), Card(rank='7', suit='hearts')]
-    Card(rank='6', suit='diamonds')
-
-
-Python 支持的所有魔术方法，可以参见 Python 文档 [Data Model](https://docs.python.org/3/reference/datamodel.html) 部分。
-
-比较重要的一点：不要把 `len`，`str` 等看成一个 Python 普通方法：由于这些操作的频繁程度非常高，所以 Python 对这些方法做了特殊的实现：它可以让 Python 的内置数据结构走后门以提高效率；但对于自定义的数据结构，又可以在对象上使用通用的接口来完成相应工作。但在代码编写者看来，`len(deck)` 和 `len([1,2,3])` 两个实现可能差之千里的操作，在 Python 语法层面上是高度一致的。
-
-
-
-# 2 序列构成的数组
-> 你可能注意到了，之前提到的几个操作可以无差别地应用于文本、列表和表格上。  
-> 我们把文本、列表和表格叫作数据火车……FOR 命令通常能作用于数据火车上。  
-> ——Geurts、Meertens 和 Pemberton  
->   *ABC Programmer’s Handbook*
-
-* 容器序列  
-    `list`、`tuple` 和 `collections.deque` 这些序列能存放不同类型的数据。
-* 扁平序列  
-    `str`、`bytes`、`bytearray`、`memoryview` 和 `array.array`，这类序列只能容纳一种类型。
-   
-容器序列存放的是它们所包含的任意类型的对象的**引用**，而扁平序列里存放的**是值而不是引用**。换句话说，扁平序列其实是一段连续的内存空间。由此可见扁平序列其实更加紧凑，但是它里面只能存放诸如字符、字节和数值这种基础类型。
-
-序列类型还能按照能否被修改来分类。
-* 可变序列  
-    `list`、`bytearray`、`array.array`、`collections.deque` 和 `memoryview`。
-* 不可变序列  
-    `tuple`、`str` 和 `bytes`
-
-
-```python
-# 列表推导式和生成器表达式
-symbols = "列表推导式"
-[ord(symbol) for symbol in symbols]
-(ord(symbol) for symbol in symbols)
-```
-
-
-```python
-# 因为 pack/unpack 的存在，元组中的元素会凸显出它们的位置信息
-first, *others, last = (1, 2, 3, 4, 5)
-print(first, others, last)
-# 当然后面很多可迭代对象都支持 unpack 了…
-```
-
-
-```python
-# namedtuple
-from collections import namedtuple
-
-Point = namedtuple('Point', ['x', 'y'])
-p = Point(1, 2)
-print(p, p.x, p.y)
-# _asdict() 会返回 OrderedDict
-print(p._asdict())
-```
-
-
-```python
-# 为什么切片(slice)不返回最后一个元素
-a = list(range(6))
-# 使用同一个数即可将列表进行分割
-print(a[:2], a[2:])
-```
-
-
-```python
-# Ellipsis
-def test(first, xxx, last):
-    print(xxx)
-    print(type(xxx))
-    print(xxx == ...)
-    print(xxx is ...)
-    return first, last
-
-# ... 跟 None 一样，有点神奇
-print(test(1, ..., 2))
-```
-
-### bisect 二分查找
-
-
-```python
-import bisect
-def grade(score, breakpoints=[60, 70, 80, 90], grades='FDCBA'):
-    i = bisect.bisect(breakpoints, score)
-    return grades[i]
-
-print([grade(score) for score in [33, 99, 77, 70, 89, 90, 100]])
-
-a = list(range(0, 100, 10))
-# 插入并保持有序
-bisect.insort(a, 55)
-print(a)
-```
-
-### Array
-> 虽然列表既灵活又简单，但面对各类需求时，我们可能会有更好的选择。比如，要存放 1000 万个浮点数的话，数组（array）的效率要高得多，因为数组在背后存的并不是 float 对象，而是数字的机器翻译，也就是字节表述。这一点就跟 C 语言中的数组一样。再比如说，如果需要频繁对序列做先进先出的操作，deque（双端队列）的速度应该会更快。
-
-`array.tofile` 和 `fromfile` 可以将数组以二进制格式写入文件，速度要比写入文本文件快很多，文件的体积也小。
-
-> 另外一个快速序列化数字类型的方法是使用 pickle（https://docs.python.org/3/library/pickle.html）模块。pickle.dump 处理浮点数组的速度几乎跟array.tofile 一样快。不过前者可以处理几乎所有的内置数字类型，包含复数、嵌套集合，甚至用户自定义的类。前提是这些类没有什么特别复杂的实现。
-
-array 具有 `type code` 来表示数组类型：具体可见 [array 文档](https://docs.python.org/3/library/array.html).
-
-### memoryview
-> memoryview.cast 的概念跟数组模块类似，能用不同的方式读写同一块内存数据，而且内容字节不会随意移动。
-
-
-```python
-import array
-
-arr = array.array('h', [1, 2, 3])
-memv_arr = memoryview(arr)
-# 把 signed short 的内存使用 char 来呈现
-memv_char = memv_arr.cast('B') 
-print('Short', memv_arr.tolist())
-print('Char', memv_char.tolist())
-memv_char[1] = 2  # 更改 array 第一个数的高位字节
-# 0x1000000001
-print(memv_arr.tolist(), arr)
-print('-' * 10)
-bytestr = b'123'
-# bytes 是不允许更改的
-try:
-    bytestr[1] = '3'
-except TypeError as e:
-    print(repr(e))
-memv_byte = memoryview(bytestr)
-print('Memv_byte', memv_byte.tolist())
-# 同样这块内存也是只读的
-try:
-    memv_byte[1] = 1
-except TypeError as e:
-    print(repr(e))
-
-```
-
-### Deque
-`collections.deque` 是比 `list` 效率更高，且**线程安全**的双向队列实现。
-
-除了 collections 以外，以下 Python 标准库也有对队列的实现：
-* queue.Queue (可用于线程间通信)
-* multiprocessing.Queue (可用于进程间通信)
-* asyncio.Queue
-* heapq
-
-
-
-# 3 字典和集合
-
-> 字典这个数据结构活跃在所有 Python 程序的背后，即便你的源码里并没有直接用到它。  
-> ——A. M. Kuchling 
-
-可散列对象需要实现 `__hash__` 和 `__eq__` 函数。  
-如果两个可散列对象是相等的，那么它们的散列值一定是一样的。
-
-
-```python
-# 字典提供了很多种构造方法
-a = dict(one=1, two=2, three=3)
-b = {'one': 1, 'two': 2, 'three': 3} 
-c = dict(zip(['one', 'two', 'three'], [1, 2, 3])) 
-d = dict([('two', 2), ('one', 1), ('three', 3)]) 
-e = dict({'three': 3, 'one': 1, 'two': 2})
-a == b == c == d == e
-```
-
-
-```python
-# 字典推导式
-r = range(5)
-d = {n * 2: n for n in r if n < 3}
-print(d)
-# setdefault
-for n in r:
-    d.setdefault(n, 0)
-print(d)
-```
-
-
-```python
-# defaultdcit & __missing__
-class mydefaultdict(dict):
-    def __init__(self, value, value_factory):
-        super().__init__(value)
-        self._value_factory = value_factory
-
-    def __missing__(self, key):
-        # 要避免循环调用
-        # return self[key]
-        self[key] = self._value_factory()
-        return self[key]
-
-d = mydefaultdict({1:1}, list)
-print(d[1])
-print(d[2])
-d[3].append(1)
-print(d)
+index = collections.defaultdict(list)
+for item in nums:
+    key = item % 2
+    index[key].append(item)
 ```
 
 ### 字典的变种
-* collections.OrderedDict
-* collections.ChainMap (容纳多个不同的映射对象，然后在进行键查找操作时会从前到后逐一查找，直到被找到为止)
-* collections.Counter
-* colllections.UserDict (dict 的 纯 Python 实现)
 
+标准库里 `collections` 模块中，除了 `defaultdict` 之外的不同映射类型:
+
+- **OrderDict**： 这个类型在添加键的时候，会保存顺序，因此键的迭代顺序总是一致的
+- **ChainMap**： 该类型可以容纳数个不同的映射对像，在进行键的查找时，这些对象会被当做一个整体逐个查找，直到键被找到为止 `pylookup = ChainMap(locals(), globals())`
+- **Counter**： 这个映射类型会给键准备一个整数技术器，每次更行一个键的时候都会增加这个计数器，所以这个类型可以用来给散列表对象计数，或者当成多重集来用.
 
 ```python
-# UserDict
-# 定制化字典时，尽量继承 UserDict 而不是 dict
-from collections import UserDict
-
-class mydict(UserDict):
-    def __getitem__(self, key):
-        print('Getting key', key)
-        return super().__getitem__(key)
-
-d = mydict({1:1})
-print(d[1], d[2])
+import collections
+ct = collections.Counter('abracadabra')
+print(ct)   # Counter({'a': 5, 'b': 2, 'r': 2, 'c': 1, 'd': 1})
+ct.update('aaaaazzz')
+print(ct)   # Counter({'a': 10, 'z': 3, 'b': 2, 'r': 2, 'c': 1, 'd': 1})
+print(ct.most_common(2)) # [('a', 10), ('z', 3)]
 ```
 
+- **UserDict**: 这个类其实就是把标准 dict 用纯 Python 又实现了一遍
 
 ```python
-# MyppingProxyType 用于构建 Mapping 的只读实例
+import collections
+class StrKeyDict(collections.UserDict):
+    def __missing__(self, key):
+        if isinstance(key, str):
+            raise KeyError(key)
+        return self[str(key)]
+        
+    def __contains__(self, key):
+        return str(key) in self.data
+        
+    def __setitem__(self, key, item):
+        self.data[str(key)] = item
+```
+
+### 不可变映射类型
+
+说到不可变, 第一想到的肯定是元组, 但是对于字典来说, 要将key和value的对应关系变成不可变, `types` 模块的 `MappingProxyType` 可以做到:
+
+```python
 from types import MappingProxyType
-
-d = {1: 1}
+d = {1:'A'}
 d_proxy = MappingProxyType(d)
-print(d_proxy[1])
-try:
-    d_proxy[1] = 1
-except Exception as e:
-    print(repr(e))
+d_proxy[1]='B' # TypeError: 'mappingproxy' object does not support item assignment
 
-d[1] = 2
-print(d_proxy[1])
+d[2] = 'B'
+print(d_proxy) # mappingproxy({1: 'A', 2: 'B'})
 ```
 
+`d_proxy` 是动态的, 也就是说对 `d` 所做的任何改动都会反馈到它上面.
+
+### 集合论
+
+集合的本质是许多唯一对象的聚集. 因此, 集合可以用于去重. 集合中的元素必须是可散列的, 但是 `set` 本身是不可散列的, 而 `frozenset` 本身可以散列.
+
+集合具有唯一性, 与此同时, 集合还实现了很多基础的中缀运算符. 给定两个集合 a 和 b, `a | b` 返
+回的是它们的合集, `a & b` 得到的是交集, 而 `a - b` 得到的是差集.
+
+合理的利用这些特性, 不仅能减少代码的数量, 更能增加运行效率.
 
 ```python
-# set 的操作
-# 子集 & 真子集
-a, b = {1, 2}, {1, 2}
-print(a <= b, a < b)
+# 集合的创建
+s = set([1, 2, 2, 3])
 
-# discard
-a = {1, 2, 3}
-a.discard(3)
-print(a)
+# 空集合
+s = set()
 
-# pop
-print(a.pop(), a.pop())
-try:
-    a.pop()
-except Exception as e:
-    print(repr(e))
+# 集合字面量
+s = {1, 2}
+
+# 集合推导
+s = {chr(i) for i in range(23, 45)}
 ```
 
-### 集合字面量
-除空集之外，集合的字面量——`{1}`、`{1, 2}`，等等——看起来跟它的数学形式一模一样。**如果是空集，那么必须写成 `set()` 的形式**，否则它会变成一个 `dict`.  
-跟 `list` 一样，字面量句法会比 `set` 构造方法要更快且更易读。
+## 第四章: 文本和字节序列
 
-### 集合和字典的实现
-集合和字典采用散列表来实现：
-1. 先计算 key 的 `hash`, 根据 hash 的某几位（取决于散列表的大小）找到元素后，将该元素与 key 进行比较
-2. 若两元素相等，则命中
-3. 若两元素不等，则发生散列冲突，使用线性探测再散列法进行下一次查询。
+本章讨论了文本字符串和字节序列, 以及一些编码上的转换. 本章讨论的 `str` 指的是python3下的.
 
-这样导致的后果：
-1. 可散列对象必须支持 `hash` 函数；
-2. 必须支持 `__eq__` 判断相等性；
-3. 若 `a == b`, 则必须有 `hash(a) == hash(b)`。
+### 字符问题
 
-注：所有由用户自定义的对象都是可散列的，因为他们的散列值由 id() 来获取，而且它们都是不相等的。
+字符串是个比较简单的概念: 一个字符串是一个字符序列. 但是关于 `"字符"` 的定义却五花八门, 其中, `"字符"` 的最佳定义是 `Unicode 字符` . 因此, python3中的 `str` 对象中获得的元素就是 unicode 字符.
 
-
-### 字典的空间开销
-由于字典使用散列表实现，所以字典的空间效率低下。使用 `tuple` 代替 `dict` 可以有效降低空间消费。  
-不过：内存太便宜了，不到万不得已也不要开始考虑这种优化方式，**因为优化往往是可维护性的对立面**。
-
-往字典中添加键时，如果有散列表扩张的情况发生，则已有键的顺序也会发生改变。所以，**不应该在迭代字典的过程各种对字典进行更改**。
-
+把码位转换成字节序列的过程就是 `编码`, 把字节序列转换成码位的过程就是 `解码` :
 
 ```python
-# 字典中就键的顺序取决于添加顺序
-
-keys = [1, 2, 3]
-dict_ = {}
-for key in keys:
-    dict_[key] = None
-
-for key, dict_key in zip(keys, dict_):
-    print(key, dict_key)
-    assert key == dict_key
-
-# 字典中键的顺序不会影响字典比较
+>>> s = 'café'
+>>> len(s)
+4 
+>>> b = s.encode('utf8') 
+>>> b
+b'caf\xc3\xa9'
+>>> len(b)
+5 
+>>> b.decode('utf8') #'café
 ```
 
-# 4 文本和字节序列
+码位可以认为是人类可读的文本, 而字符序列则可以认为是对机器更友好. 所以要区分 `.decode()` 和 `.encode()` 也很简单. 从字节序列到人类能理解的文本就是解码(decode). 而把人类能理解的变成人类不好理解的字节序列就是编码(encode).
 
-> 人类使用文本，计算机使用字节序列  
-> —— Esther Nam 和 Travis Fischer  "Character Encoding and Unicode in Python"
+### 字节概要
 
-Python 3 明确区分了人类可读的文本字符串和原始的字节序列。  
-隐式地把字节序列转换成 Unicode 文本（的行为）已成过去。
+python3有两种字节序列, 不可变的 `bytes` 类型和可变的 `bytearray` 类型. 字节序列中的各个元素都是介于 `[0, 255]` 之间的整数.
 
-### 字符与编码
-字符的标识，及**码位**，是 0~1114111 的数字，在 Unicode 标准中用 4-6 个十六进制数字表示，如 A 为 U+0041, 高音谱号为 U+1D11E，😂 为 U+1F602.  
-字符的具体表述取决于所用的**编码**。编码时在码位与字节序列自减转换时使用的算法。  
-把码位转换成字节序列的过程是**编码**，把字节序列转成码位的过程是**解码**。
+### 处理编码问题
 
-### 序列类型
-Python 内置了两种基本的二进制序列类型：不可变的 `bytes` 和可变的 `bytearray`
+python自带了超过100中编解码器. 每个编解码器都有一个名称, 甚至有的会有一些别名, 如 `utf_8` 就有 `utf8`, `utf-8`, `U8` 这些别名.
 
+如果字符序列和预期不符, 在进行解码或编码时容易抛出 `Unicode*Error` 的异常. 造成这种错误是因为目标编码中没有定义某个字符(没有定义某个码位对应的字符), 这里说说解决这类问题的方式.
+
+- 使用python3, python3可以避免95%的字符问题.
+- 主流编码尝试下: latin1, cp1252, cp437, gb2312, utf-8, utf-16le
+- 留意BOM头部 `b'\xff\xfe'` , UTF-16编码的序列开头也会有这几个额外字节.
+- 找出序列的编码, 建议使用 `codecs` 模块
+
+### 规范化unicode字符串
 
 ```python
-# 基本的编码
-content = "São Paulo"
-for codec in ["utf_8", "utf_16"]:
-    print(codec, content.encode(codec))
-
-# UnicodeEncodeError
-try:
-    content.encode('cp437')
-except UnicodeEncodeError as e:
-    print(e)
-
-# 忽略无法编码的字符
-print(content.encode('cp437', errors='ignore'))
-# 把无法编码的字符替换成 ?
-print(content.encode('cp437', errors='replace'))
-# 把无法编码的字符替换成 xml 实体
-print(content.encode('cp437', errors='xmlcharrefreplace'))
-
-# 还可以自己设置错误处理方式
-# https://docs.python.org/3/library/codecs.html#codecs.register_error
+s1 = 'café'
+s2 = 'caf\u00e9'
 ```
 
-    utf_8 b'S\xc3\xa3o Paulo'
-    utf_16 b'\xff\xfeS\x00\xe3\x00o\x00 \x00P\x00a\x00u\x00l\x00o\x00'
-    'charmap' codec can't encode character '\xe3' in position 1: character maps to <undefined>
-    b'So Paulo'
-    b'S?o Paulo'
-    b'S&#227;o Paulo'
-
-
+这两行代码完全等价. 而有一种是要避免的是, 在Unicode标准中 `é` 和 `e\u0301` 这样的序列叫 `"标准等价物"`. 这种情况用NFC使用最少的码位构成等价的字符串:
 
 ```python
-# 基本的解码
-# 处理 UnicodeDecodeError
-octets = b'Montr\xe9al'
-print(octets.decode('cp1252'))
-print(octets.decode('iso8859_7'))
-print(octets.decode('koi8_r'))
-try:
-    print(octets.decode('utf-8'))
-except UnicodeDecodeError as e:
-    print(e)
-
-# 将错误字符替换成 � (U+FFFD)
-octets.decode('utf-8', errors='replace')
+>>> s1 = 'café'
+>>> s2 = 'cafe\u0301'
+>>> s1, s2
+('café', 'café')
+>>> len(s1), len(s2)
+(4, 5)
+>>> s1 == s2
+False
 ```
 
+改进后:
 
 ```python
-# Python3 可以使用非 ASCII 名称
-São = 'Paulo'
-# 但是不能用 Emoji…
+>>> from unicodedata import normalize
+>>> s1 = 'café' # 把"e"和重音符组合在一起
+>>> s2 = 'cafe\u0301' # 分解成"e"和重音符
+>>> len(s1), len(s2)
+(4, 5)
+>>> len(normalize('NFC', s1)), len(normalize('NFC', s2))
+(4, 4)
+>>> len(normalize('NFD', s1)), len(normalize('NFD', s2))
+(5, 5)
+>>> normalize('NFC', s1) == normalize('NFC', s2)
+True
+>>> normalize('NFD', s1) == normalize('NFD', s2)
+True
 ```
 
-可以用 `chardet` 检测字符所使用的编码
+### unicode文本排序
 
-BOM：字节序标记 (byte-order mark)：  
-`\ufffe` 为字节序标记，放在文件开头，UTF-16 用它来表示文本以大端表示(`\xfe\xff`)还是小端表示(`\xff\xfe`)。  
-UTF-8 编码并不需要 BOM，但是微软还是给它加了 BOM，非常烦人。
+对于字符串来说, 比较的码位. 所以在非 ascii 字符时, 得到的结果可能会不尽人意.
 
-### 处理文本文件
-处理文本文件的最佳实践是“三明治”：要尽早地把输入的字节序列解码成字符串，尽量晚地对字符串进行编码输出；在处理逻辑中只处理字符串对象，不应该去编码或解码。  
-除非想判断编码，否则不要再二进制模式中打开文本文件；即便如此，也应该使用 `Chardet`，而不是重新发明轮子。  
-常规代码只应该使用二进制模式打开二进制文件，比如图像。
+## 第五章: 一等函数
 
-### 默认编码
-可以使用 `sys.getdefaultincoding()` 获取系统默认编码；  
-Linux 的默认编码为 `UTF-8`，Windows 系统中不同语言设置使用的编码也不同，这导致了更多的问题。  
-`locale.getpreferredencoding()` 返回的编码是最重要的：这是打开文件的默认编码，也是重定向到文件的 `sys.stdout/stdin/stderr` 的默认编码。不过这个编码在某些系统中是可以改的…  
-所以，关于编码默认值的最佳建议是：别依赖默认值。
+在python中, 函数是一等对象. 编程语言把 `"一等对象"` 定义为满足下列条件:
 
-### Unicode 编码方案
+- 在运行时创建
+- 能赋值给变量或数据结构中的元素
+- 能作为参数传给函数
+- 能作为函数的返回结果
+
+在python中, 整数, 字符串, 列表, 字典都是一等对象.
+
+### 把函数视作对象
+
+Python即可以函数式编程，也可以面向对象编程. 这里我们创建了一个函数, 然后读取它的 `__doc__` 属性, 并且确定函数对象其实是 `function` 类的实例:
+
 ```python
-a = 'café'
-b = 'cafe\u0301'
-print(a, b)                       # café café
-print(ascii(a), ascii(b))         # 'caf\xe9' 'cafe\u0301'
-print(len(a), len(b), a == b)     # 4 5 False
+def factorial(n):
+    '''
+    return n
+    '''
+    return 1 if n < 2 else n * factorial(n-1)
+
+print(factorial.__doc__)
+print(type(factorial))
+print(factorial(3))
+
+'''
+OUT
+
+    return n
+
+<class 'function'>
+6
+'''
 ```
 
-在 Unicode 标准中，é 和 e\u0301 这样的序列叫“标准等价物”，应用程序应将它视为相同的字符。但 Python 看到的是不同的码位序列，因此判断两者不相同。  
-我们可以用 `unicodedata.normalize` 将 Unicode 字符串规范化。有四种规范方式：NFC, NFD, NFKC, NFKD
+### 高阶函数
 
-NFC 使用最少的码位构成等价的字符串，而 NFD 会把组合字符分解成基字符和单独的组合字符。  
-NFKC 和 NFKD 是出于兼容性考虑，在分解时会将字符替换成“兼容字符”，这种情况下会有格式损失。  
-兼容性方案可能会损失或曲解信息（如 "4²" 会被转换成 "42"），但可以为搜索和索引提供便利的中间表述。
+高阶函数就是接受函数作为参数, 或者把函数作为返回结果的函数. 如 `map`, `filter` , `reduce` 等.
 
-> 使用 NFKC 和 NFKC 规范化形式时要小心，而且只能在特殊情况中使用，例如搜索和索引，而不能用户持久存储，因为这两种转换会导致数据损失。
+比如调用 `sorted` 时, 将 `len` 作为参数传递:
 
-
-```python
-from unicodedata import normalize, name
-# Unicode 码位
-a = 'café'
-b = 'cafe\u0301'
-print(a, b)
-print(ascii(a), ascii(b))
-print(len(a), len(b), a == b)
-
-## NFC 和 NFD
-print(len(normalize('NFC', a)), len(normalize('NFC', b)))
-print(len(normalize('NFD', a)), len(normalize('NFD', b)))
-print(len(normalize('NFC', a)) == len(normalize('NFC', b)))
-
-print('-' * 15)
-# NFKC & NFKD
-s = '\u00bd'
-l = [s, normalize('NFKC', s),  normalize('NFKD', s)]
-print(*l)
-print(*map(ascii, l))
-micro = 'μ'
-l = [s, normalize('NFKC', micro)]
-print(*l)
-print(*map(ascii, l))
-print(*map(name, l), sep='; ')
 ```
-
-### Unicode 数据库
-`unicodedata` 库中提供了很多关于 Unicode 的操作及判断功能，比如查看字符名称的 `name`，判断数字大小的 `numric` 等。  
-文档见 <https://docs.python.org/3.7/library/unicodedata.html>.
-
-
-```python
-import unicodedata
-print(unicodedata.name('½'))
-print(unicodedata.numeric('½'), unicodedata.numeric('卅'))
-```
-
-    VULGAR FRACTION ONE HALF
-    0.5 30.0
-
-
-
-```python
-# 处理鬼符：按字节序将无法处理的字节序列依序替换成 \udc00 - \udcff 之间的码位
-x = 'digits-of-π'
-s = x.encode('gb2312')
-print(s)                                              # b'digits-of-\xa6\xd0'
-ascii_err = s.decode('ascii', 'surrogateescape')
-print(ascii_err)                                      # 'digits-of-\udca6\udcd0'
-print(ascii_err.encode('ascii', 'surrogateescape'))   # b'digits-of-\xa6\xd0'
-```
-
-# 5 一等函数
-
-> 不管别人怎么说或怎么想，我从未觉得 Python 受到来自函数式语言的太多影响。我非常熟悉命令式语言，如 C 和 Algol 68，虽然我把函数定为一等对象，但是我并不把 Python 当作函数式编程语言。  
-> —— Guido van Rossum: Python 仁慈的独裁者
-
-在 Python 中，函数是一等对象。  
-编程语言理论家把“一等对象”定义为满足下述条件的程序实体：
-* 在运行时创建
-* 能赋值给变量或数据结构中的元素
-* 能作为参数传给函数
-* 能作为函数的返回结果
-
-
-```python
-# 高阶函数：有了一等函数（作为一等对象的函数），就可以使用函数式风格编程
 fruits = ['strawberry', 'fig', 'apple', 'cherry', 'raspberry', 'banana']
-print(list(sorted(fruits, key=len)))  # 函数 len 成为了一个参数
-
-# lambda 函数 & map
-fact = lambda x: 1 if x == 0 else x * fact(x-1)
-print(list(map(fact, range(6))))
-
-# reduce
-from functools import reduce
-from operator import add
-print(reduce(add, range(101)))
-
-# all & any
-x = [0, 1]
-print(all(x), any(x))
+sorted(fruits, key=len)
+# ['fig', 'apple', 'cherry', 'banana', 'raspberry', 'strawberry']
 ```
 
-    ['fig', 'apple', 'cherry', 'banana', 'raspberry', 'strawberry']
-    [1, 1, 2, 6, 24, 120]
-    5050
-    False True
+### 匿名函数
 
-
-Python 的可调用对象
-* 用户定义的函数：使用 `def` 或 `lambda` 创建
-* 内置函数：如 `len` 或 `time.strfttime`
-* 内置方法：如 `dict.get`（没懂这俩有什么区别…是说这个函数作为对象属性出现吗？）
-* 类：先调用 `__new__` 创建实例，再对实例运行 `__init__` 方法
-* 类的实例：如果类上定义了 `__call__` 方法，则实例可以作为函数调用
-* 生成器函数：调用生成器函数会返回生成器对象
-
+`lambda` 关键字是用来创建匿名函数. 匿名函数一些限制, 匿名函数的定义体只能使用纯表达式. 换句话说, `lambda` 函数内不能赋值, 也不能使用while和try等语句.
 
 ```python
-# 获取函数中的信息
-# 仅限关键词参数
-def f(a, *, b):
-    print(a, b)
-f(1, b=2)
+fruits = ['strawberry', 'fig', 'apple', 'cherry', 'raspberry', 'banana']
+sorted(fruits, key=lambda word: word[::-1])
+# ['banana', 'apple', 'fig', 'raspberry', 'strawberry', 'cherry']
+```
 
-# 获取函数的默认参数
-# 原生的方法
-def f(a, b=1, *, c, d=3):
+### 可调用对象
+
+除了用户定义的函数, 调用运算符即 `()` 还可以应用到其他对象上. 如果像判断对象能否被调用, 可以使用内置的 `callable()` 函数进行判断. python的数据模型中有7种可是可以被调用的:
+
+- 用户定义的函数: 使用def语句或lambda表达式创建
+- 内置函数:如len
+- 内置方法:如dict.get
+- 方法:在类定义体中的函数
+- 类
+- 类的实例: 如果类定义了 `__call__` , 那么它的实例可以作为函数调用.
+- 生成器函数: 使用 `yield` 关键字的函数或方法.
+
+### 从定位参数到仅限关键字参数
+
+就是可变参数和关键字参数:
+
+```python
+def fun(name, age, *args, **kwargs):
     pass
-
-def parse_defaults(func):
-    code = func.__code__
-    argcount = code.co_argcount  # 2
-    varnames = code.co_varnames  # ('a', 'b', 'c', 'd')
-    argdefaults = dict(zip(reversed(varnames[:argcount]), func.__defaults__))
-    kwargdefaults = func.__kwdefaults__
-    return argdefaults, kwargdefaults
-
-print(*parse_defaults(f))
-print('-----')
-# 看起来很麻烦，可以使用 inspect 模块
-from inspect import signature
-sig = signature(f)
-print(str(sig))
-for name, param in sig.parameters.items():
-    print(param.kind, ':', name, "=", param.default)
-print('-----')
-# signature.bind 可以在不真正运行函数的情况下进行参数检查
-args = sig.bind(1, b=5, c=4)
-print(args)
-args.apply_defaults()
-print(args)
 ```
 
-    1 2
-    {'b': 1} {'d': 3}
-    -----
-    (a, b=1, *, c, d=3)
-    POSITIONAL_OR_KEYWORD : a = <class 'inspect._empty'>
-    POSITIONAL_OR_KEYWORD : b = 1
-    KEYWORD_ONLY : c = <class 'inspect._empty'>
-    KEYWORD_ONLY : d = 3
-    -----
-    <BoundArguments (a=1, b=5, c=4)>
-    <BoundArguments (a=1, b=5, c=4, d=3)>
+其中 `*args` 和 `**kwargs` 都是可迭代对象, 展开后映射到单个参数. args是个元组, kwargs是字典.
 
+## 第六章: 使用一等函数实现设计模式
 
+虽然设计模式与语言无关, 但这并不意味着每一个模式都能在每一个语言中使用. Gamma 等人合著的 `《设计模式：可复用面向对象软件的基础》` 一书中有 `23` 个模式, 其中有 `16` 个在动态语言中"不见了, 或者简化了".
 
-```python
-# 函数注解
-def clip(text: str, max_len: 'int > 0'=80) -> str:
-    pass
+这里不举例设计模式, 因为书里的模式不常用.
 
-from inspect import signature
-sig = signature(clip)
-print(sig.return_annotation)
-for param in sig.parameters.values():
-    note = repr(param.annotation).ljust(13)
-    print("{note:13} : {name} = {default}".format(
-        note=repr(param.annotation), name=param.name,
-        default=param.default))
-```
+## 第七章: 函数装饰器和闭包
 
-    <class 'str'>
-    <class 'str'> : text = <class 'inspect._empty'>
-    'int > 0'     : max_len = 80
+> 函数装饰器用于在源码中“标记”函数，以某种方式增强函数的行为。这是一项强大的功
+> 能，但是若想掌握，必须理解闭包。
 
+修饰器和闭包经常在一起讨论, 因为修饰器就是闭包的一种形式. 闭包还是回调式异步编程和函数式编程风格的基础.
 
-#### 支持函数式编程的包
-`operator` 里有很多函数，对应着 Python 中的内置运算符，使用它们可以避免编写很多无趣的 `lambda` 函数，如：
-* `add`: `lambda a, b: a + b`
-* `or_`: `lambda a, b: a or b`
-* `itemgetter`: `lambda a, b: a[b]`
-* `attrgetter`: `lambda a, b: getattr(a, b)`
+### 装饰器基础知识
 
-`functools` 包中提供了一些高阶函数用于函数式编程，如：`reduce` 和 `partial`。  
-此外，`functools.wraps` 可以保留函数的一些元信息，在编写装饰器时经常会用到。
-
-
+装饰器是可调用的对象, 其参数是另一个函数(被装饰的函数). 装饰器可能会处理被
+装饰的函数, 然后把它返回, 或者将其替换成另一个函数或可调用对象.
 
 ```python
-# Bonus: 获取闭包中的内容
-def fib_generator():
-    i, j = 0, 1
-    def f():
-        nonlocal i, j
-        i, j = j, i + j
-        return i
-    return f
-
-c = fib_generator()
-for _ in range(5):
-    print(c(), end=' ')
-print()
-print(dict(zip(
-    c.__code__.co_freevars,
-    (x.cell_contents for x in c.__closure__))))
-```
-
-    1 1 2 3 5 
-    {'i': 5, 'j': 8}
-
-	
-
-# 6 使用一等函数实现设计模式
-
-> 符合模式并不表示做得对。
-> ——Ralph Johnson: 经典的《设计模式：可复用面向对象软件的基础》的作者之一
-
-本章将对现有的一些设计模式进行简化，从而减少样板代码。
-
-## 策略模式
-实现策略模式，可以依赖 `abc.ABC` 和 `abc.abstractmethod` 来构建抽象基类。  
-但为了实现“策略”，并不一定要针对每种策略来编写子类，如果需求简单，编写函数就好了。  
-我们可以通过 `globals()` 函数来发现所有策略函数，并遍历并应用策略函数来找出最优策略。
-
-## 命令模式
-“命令模式”的目的是解耦操作调用的对象（调用者）和提供实现的对象（接受者）。
-
-在 Python 中，我们可以通过定义 `Command` 基类来规范命令调用协议；通过在类上定义 `__call__` 函数，还可以使对象支持直接调用。
-
-```python
-import abc
-
-class BaseCommand(ABC):
-    def execute(self, *args, **kwargs):
-        raise NotImplemented
-```
-
-> 事实证明，在 Gamma 等人合著的那本书中，尽管大部分使用 C++ 代码说明（少数使用 Smalltalk），但是 23 个“经典的”设计模式都能很好地在“经典的”Java 中运用。然而，这并不意味着所有模式都能一成不变地在任何语言中运用。
-
-
-# 7 函数装饰器与闭包
-
-> 有很多人抱怨，把这个特性命名为“装饰器”不好。主要原因是，这个名称与 GoF 书使用的不一致。**装饰器**这个名称可能更适合在编译器领域使用，因为它会遍历并注解语法书。
-> —“PEP 318 — Decorators for Functions and Methods”
-
-本章的最终目标是解释清楚函数装饰器的工作原理，包括最简单的注册装饰器和较复杂的参数化装饰器。  
-
-讨论内容：
-* Python 如何计算装饰器语法
-* Python 如何判断变量是不是局部的
-* 闭包存在的原因和工作原理
-* `nonlocal` 能解决什么问题
-* 实现行为良好的装饰器
-* 标准库中有用的装饰器
-* 实现一个参数化的装饰器
-
-装饰器是可调用的对象，其参数是一个函数（被装饰的函数）。装饰器可能会处理被装饰的函数，然后把它返回，或者将其替换成另一个函数或可调用对象。
-
-装饰器两大特性：
-1. 能把被装饰的函数替换成其他函数
-2. 装饰器在加载模块时立即执行
-
-
-```python
-# 装饰器通常会把函数替换成另一个函数
-def decorate(func):
-    def wrapped():
-        print('Running wrapped()')
-    return wrapped
-
 @decorate
 def target():
     print('running target()')
+```
 
-target()
-# 以上写法等同于
+这种写法与下面写法完全等价:
+
+```python
 def target():
     print('running target()')
-
 target = decorate(target)
-target()
 ```
 
+装饰器是语法糖, 它其实是将函数作为参数让其他函数处理. 装饰器有两大特征:
+
+- 把被装饰的函数替换成其他函数
+- 装饰器在加载模块时立即执行
+
+要理解立即执行看下等价的代码就知道了, `target = decorate(target)` 这句调用了函数. 一般情况下装饰函数都会将某个函数作为返回值.
+
+### 变量作用域规则
+
+要理解装饰器中变量的作用域, 应该要理解闭包, 我觉得书里将闭包和作用域的顺序换一下比较好. 在python中, 一个变量的查找顺序是 `LEGB` (L：Local 局部环境，E：Enclosing 闭包，G：Global 全局，B：Built-in 内建).
 
 ```python
-# 装饰器在导入时（模块加载时）立即执行
-registry = []
-def register(func):
-    print('running register {}'.format(func))
-    registry.append(func)
-    return func
-
-@register
-def f1():
-    print('running f1()')
-
-@register
-def f2():
-    print('running f2()')
-
-
-print('registry →', registry)
-```
-
-上面的装饰器会原封不动地返回被装饰的函数，而不一定会对函数做修改。  
-这种装饰器叫注册装饰器，通过使用它来中心化地注册函数，例如把 URL 模式映射到生成 HTTP 响应的函数上的注册处。
-
-```python
-@app.get('/')
-def index():
-    return "Welcome."
-```
-
-可以使用装饰器来实现策略模式，通过它来注册并获取所有的策略。
-
-
-```python
-# 变量作用域规则
-b = 1
-def f2(a):
-    print(a)
-    print(b)        # 因为 b 在后面有赋值操作，所以认为 b 为局部变量，所以referenced before assignment
-    b = 2
-
-f2(3)
-```
-
-
-```python
-# 使用 global 声明 b 为全局变量
-b = 1
-def f3(a):
-    global b
-    print(a)
-    print(b)
-    b = 9
-
-print(b)
-f3(2)
-print(b)
-```
-
-
-```python
-# 闭包
-# 涉及嵌套函数时，才会产生闭包问题
-def register():
-    rrrr = []                # 叫 registry 会跟上面的变量重名掉…
-    def wrapped(n):
-        print(locals())      # locals() 的作用域延伸到了 wrapped 之外
-        rrrr.append(n)
-        return rrrr
-    return wrapped
-
-# num 为**自由变量**，它未在本地作用域中绑定，但函数可以在其本身的作用域之外引用这个变量
-c = register()
-print(c(1))
-print(c(2))
-assert 'rrrr' not in locals()
-
-# 获取函数中的自由变量
-print({
-    name: cell.cell_contents
-    for name, cell in zip(c.__code__.co_freevars, c.__closure__)
-})
-```
-
-    {'n': 1, 'rrrr': []}
-    [1]
-    {'n': 2, 'rrrr': [1]}
-    [1, 2]
-    {'rrrr': [1, 2]}
-
-
-
-```python
-# 闭包内变量赋值与 nonlocal 声明
-def counter():
-    n = 0
-    def count():
-        n += 1      # n = n + 1, 所以将 n 视为局部变量，但未声明，触发 UnboundLocalError
-        return n
-    return count
-
-def counter():
-    n = 0
-    def count():
-        nonlocal n  # 使用 nonlocal 对 n 进行声明，它可以把 n 标记为局部变量
-        n += 1      # 这个 n 和上面的 n 引用的时同一个值，更新这个，上面也会更新
-        return n
-    return count
-
-
-c = counter()
-print(c(), c())
-```
-
-    1 2
-
-
-
-```python
-# 开始实现装饰器
-# 装饰器的典型行为：把被装饰的函数替换成新函数，二者接受相同的参数，而且（通常）返回被装饰的函数本该返回的值，同时还会做些额外操作
-import time
-from functools import wraps
-
-def clock(func):
-    @wraps(func)                         # 用 func 的部分标注属性（如 __doc__, __name__）覆盖新函数的值
-    def clocked(*args, **kwargs):
-        t0 = time.perf_counter()
-        result = func(*args, **kwargs)
-        t1 = time.perf_counter()
-        print(t1 - t0)
-        return result
-    return clocked
-
-@clock
-def snooze(seconds):
-    time.sleep(seconds)
-
-snooze(1)
-```
-
-    1.002901900000012
-
-
-Python 内置的三个装饰器分别为 `property`, `classmethod` 和 `staticmethod`.  
-但 Python 内置的库中，有两个装饰器很常用，分别为 `functools.lru_cache` 和 [`functools.singledispatch`](https://docs.python.org/3/library/functools.html#functools.singledispatch).
-
-
-```python
-# lru_cache
-# 通过内置的 LRU 缓存来存储函数返回值
-# 使用它可以对部分递归函数进行优化（比如递归的阶乘函数）（不过也没什么人会这么写吧）
-from functools import lru_cache
-
-@lru_cache()
-def func(n):
-    print(n, 'called')
-    return n
-
-print(func(1))
-print(func(1))
-print(func(2))
-```
-
-    1 called
-    1
-    1
-    2 called
-    2
-
-
-
-```python
-# singledispatch
-# 单分派泛函数：将多个函数绑定在一起组成一个泛函数，它可以通过参数类型将调用分派至其他函数上
-from functools import singledispatch
-import numbers
-
-@singledispatch
-def func(obj):
-    print('Object', obj)
-
-# 只要可能，注册的专门函数应该处理抽象基类，不要处理具体实现（如 int）
-@func.register(numbers.Integral)
-def _(n):
-    print('Integer', n)
-
-# 可以使用函数标注来进行分派注册
-@func.register
-def _(s:str):
-    print('String', s)
+base = 20
+def get_compare():
+    base = 10
+    def real_compare(value):
+        return value > base
+    return real_compare
     
-func(1)
-func('test')
-func([])
+compare_10 = get_compare()
+print(compare_10(5))
 ```
 
-    Integer 1
-    Object test
-    Object []
+在闭包的函数 `real_compare` 中, 使用的变量 `base` 其实是 `base = 10` 的. 因为base这个变量在闭包中就能命中, 而不需要去 `global` 中获取.
 
+### 闭包
 
-### 叠放装饰器
-```python
-@d1
-@d2
-def func():
-    pass
+闭包其实挺好理解的, 当匿名函数出现的时候, 才使得这部分难以掌握. 简单简短的解释闭包就是:
 
-# 等同于
-func = d1(d2(func))
-```
+**名字空间与函数捆绑后的结果被称为一个闭包(closure).**
 
-### 参数化装饰器
-为了方便理解，可以把参数化装饰器看成一个函数：这个函数接受任意参数，返回一个装饰器（参数为 func 的另一个函数）。
+这个名字空间就是 `LEGB` 中的 `E` . 所以闭包不仅仅是将函数作为返回值. 而是将名字空间和函数捆绑后作为返回值的. 多少人忘了理解这个 `"捆绑"` , 不知道变量最终取的哪和哪啊. 哎.
 
+### 标准库中的装饰器
+
+python内置了三个用于装饰方法的函数: `property` 、 `classmethod` 和 `staticmethod` .
+这些是用来丰富类的.
 
 ```python
-# 参数化装饰器
-def counter(start=1):
-    def decorator(func):
-        n = start
-        def wrapped(*args, **kwargs):
-            nonlocal n
-            print(f'{func.__name__} called {n} times.')
-            n += 1
-            return func(*args, **kwargs)
-        return wrapped
-    return decorator
-
-def test():
-    return
-
-t1 = counter(start=1)(test)
-t1()
-t1()
-
-@counter(start=2)
-def t2():
-    return
-
-t2()
-t2()
+class A(object):
+    @property
+    def age():
+        return 12
 ```
 
-    test called 1 times.
-    test called 2 times.
-    t2 called 2 times.
-    t2 called 3 times.
+## 第八章: 对象引用、可变性和垃圾回收
 
+### 变量不是盒子
 
+很多人把变量理解为盒子, 要存什么数据往盒子里扔就行了.
 
 ```python
-# （可能是）更简洁的装饰器实现方式
-# 利用 class.__call__
-
-class counter:
-    def __init__(self, func):
-        self.n = 1
-        self.func = func
-
-    def __call__(self, *args, **kwargs):
-        print(f'{self.func.__name__} called {self.n} times.')
-        self.n += 1
-        return self.func(*args, **kwargs)
-
-@counter
-def t3():
-    return
-
-t3()
-t3()
+a = [1,2,3]
+b = a 
+a.append(4)
+print(b) # [1, 2, 3, 4]
 ```
 
-    t3 called 1 times.
-    t3 called 2 times.
+变量 `a` 和 `b` 引用同一个列表, 而不是那个列表的副本. 因此赋值语句应该理解为将变量和值进行引用的关系而已.
 
+### 标识、相等性和别名
 
-推荐阅读：[decorator 第三方库](http://decorator.readthedocs.io/en/latest/)
-
+要知道变量a和b是否是同一个值的引用, 可以用 `is` 来进行判断:
 
 ```python
-from decorator import decorator
-
-@decorator
-def counter(func, *args, **kwargs):
-    if not hasattr(func, 'n'):
-        func.n = 1
-    print(f'{func.__qualname__} called {func.n} times.')
-    retval = func(*args, **kwargs)
-    func.n += 1
-    return retval
-
-
-@counter
-def f(n):
-    return n
-
-print(f(2))
-print(f(3))
+>>> a = b = [4,5,6]
+>>> c = [4,5,6]
+>>> a is b
+True
+>>> x is c
+False
 ```
 
-    f called 1 times.
-    2
-    f called 2 times.
-    3
+如果两个变量都是指向同一个对象, 我们通常会说变量是另一个变量的 `别名` .
+
+**在==和is之间选择**
+运算符 `==` 是用来判断两个对象值是否相等(注意是对象值). 而 `is` 则是用于判断两个变量是否指向同一个对象, 或者说判断变量是不是两一个的别名, is 并不关心对象的值. 从使用上, `==` 使用比较多, 而 `is` 的执行速度比较快.
+
+### 默认做浅复制
+
+```python
+l1 = [3, [55, 44], (7, 8, 9)]
+
+l2 = list(l1) # 通过构造方法进行复制 
+l2 = l1[:]  #也可以这样想写
+>>> l2 == l1
+True
+>>> l2 is l1
+False
+```
+
+尽管 l2 是 l1 的副本, 但是复制的过程是先复制(即复制了最外层容器，副本中的元素是源容器中元素的引用). 因此在操作 l2[1] 时, l1[1] 也会跟着变化. 而如果列表中的所有元素是不可变的, 那么就没有这样的问题, 而且还能节省内存. 但是, 如果有可变元素存在, 就可能造成意想不到的问题.
+
+python标准库中提供了两个工具 `copy` 和 `deepcopy` . 分别用于浅拷贝与深拷贝:
+
+```python
+import copy
+l1 = [3, [55, 44], (7, 8, 9)]
+
+l2 = copy.copy(l1)
+l2 = copy.deepcopy(l1)
+```
+
+### 函数的参数做引用时
+
+python中的函数参数都是采用共享传参. 共享传参指函数的各个形式参数获得实参中各个引用的副本. 也就是说, 函数内部的形参
+是实参的别名.
+
+这种方案就是当传入参数是可变对象时, 在函数内对参数的修改也就是对外部可变对象进行修改. 但这种参数试图重新赋值为一个新的对象时则无效, 因为这只是相当于把参数作为另一个东西的引用, 原有的对象并不变. 也就是说, 在函数内, 参数是不能把一个对象替换成另一个对象的.
+
+### 不要使用可变类型作为参数的默认值
+
+参数默认值是个很棒的特性. 对于开发者来说, 应该避免使用可变对象作为参数默认值. 因为如果参数默认值是可变对象, 而且修改了它的内容, 那么后续的函数调用上都会收到影响.
+
+### del和垃圾回收
+
+在python中, 当一个对象失去了最后一个引用时, 会当做垃圾, 然后被回收掉. 虽然python提供了 `del` 语句用来删除变量. 但实际上只是删除了变量和对象之间的引用, 并不一定能让对象进行回收, 因为这个对象可能还存在其他引用.
+
+在CPython中, 垃圾回收主要用的是引用计数的算法. 每个对象都会统计有多少引用指向自己. 当引用计数归零时, 意味着这个对象没有在使用, 对象就会被立即销毁.
+
+## 符合Python风格的对象
+
+> 得益于 Python 数据模型，自定义类型的行为可以像内置类型那样自然。实现如此自然的
+> 行为，靠的不是继承，而是鸭子类型（duck typing）：我们只需按照预定行为实现对象所
+> 需的方法即可。
+
+### 对象表示形式
+
+每门面向对象的语言至少都有一种获取对象的字符串表示形式的标准方式。Python 提供了
+两种方式。
+
+- `repr()` : 以便于开发者理解的方式返回对象的字符串表示形式。
+- `str()` : 以便于用户理解的方式返回对象的字符串表示形式。
+
+### classmethod 与 staticmethod
+
+这两个都是python内置提供了装饰器, 一般python教程都没有提到这两个装饰器. 这两个都是在类 `class` 定义中使用的, 一般情况下, class 里面定义的函数是与其类的实例进行绑定的. 而这两个装饰器则可以改变这种调用方式.
+
+先来看看 `classmethod` , 这个装饰器不是操作实例的方法, 并且将类本身作为第一个参数. 而 `staticmethod` 装饰器也会改变方法的调用方式, 它就是一个普通的函数,
+
+`classmethod` 与 `staticmethod` 的区别就是 `classmethod` 会把类本身作为第一个参数传入, 其他都一样了.
+
+看看例子:
+
+```python
+>>> class Demo:
+... @classmethod
+... def klassmeth(*args):
+...     return args
+... @staticmethod
+... def statmeth(*args):
+...     return args
+...
+>>> Demo.klassmeth()
+(<class '__main__.Demo'>,)
+>>> Demo.klassmeth('spam')
+(<class '__main__.Demo'>, 'spam')
+>>> Demo.statmeth()
+()
+>>> Demo.statmeth('spam')
+('spam',)
+```
+
+### 格式化显示
+
+内置的 `format()` 函数和 `str.format()` 方法把各个类型的格式化方式委托给相应的 `.__format__(format_spec)` 方法. `format_spec` 是格式说明符，它是：
+
+- `format(my_obj, format_spec)` 的第二个参数
+- `str.format()` 方法的格式字符串，{} 里代换字段中冒号后面的部分
+
+### Python的私有属性和"受保护的"属性
+
+python中对于实例变量没有像 `private` 这样的修饰符来创建私有属性, 在python中, 有一个简单的机制来处理私有属性.
+
+```python
+class A:
+    def __init__(self):
+        self.__x = 1
+
+a = A()
+print(a.__x) # AttributeError: 'A' object has no attribute '__x'
+
+print(a.__dict__)
+```
+
+如果属性以 `__name` 的 `两个下划线为前缀, 尾部最多一个下划线` 命名的实例属性, python会把它名称前面加一个下划线加类名, 再放入 `__dict__` 中, 以 `__name` 为例, 就会变成 `_A__name` .
+
+名称改写算是一种安全措施, 但是不能保证万无一失, 它能避免意外访问, 但不能阻止故意做坏事.
+
+只要知道私有属性的机制, 任何人都能直接读取和改写私有属性. 因此很多python程序员严格规定: `遵守使用一个下划线标记对象的私有属性` . Python 解释器不会对使用单个下划线的属性名做特殊处理, 由程序员自行控制, 不在类外部访问这些属性. 这种方法也是所推荐的, 两个下划线的那种方式就不要再用了. 引用python大神的话:
+
+> 绝对不要使用两个前导下划线，这是很烦人的自私行为。如果担心名称冲突，应该明
+> 确使用一种名称改写方式（如 _MyThing_blahblah）。这其实与使用双下划线一
+> 样，不过自己定的规则比双下划线易于理解。
+
+**Python中的把使用一个下划线前缀标记的属性称为"受保护的"属性**
+
+### 使用 **slots** 类属性节省空间
+
+默认情况下, python在各个实例中, 用 `__dict__` 的字典存储实例属性. 因此实例的属性是动态变化的, 可以在运行期间任意添加属性. 而字典是消耗内存比较大的结构. 因此当对象的属性名称确定时, 使用 `__slots__` 可以节约内存.
+
+```python
+class Vector2d:
+    __slots__ = ('__x', '__y')
+    typecode = 'd'
+    # 下面是各个方法（因排版需要而省略了）
+```
+
+在类中定义` __slots__` 属性的目的是告诉解释器："这个类中的所有实例属性都在这儿
+了！" 这样, Python 会在各个实例中使用类似元组的结构存储实例变量, 从而避免使用消
+耗内存的 `__dict__` 属性. 如果有数百万个实例同时活动, 这样做能节省大量内存.
+
+## 第十章: 序列的修改、散列和切片
+
+### 协议和鸭子类型
+
+在python中, 序列类型不需要使用继承, 只需要符合序列协议的方法即可. 这里的协议就是实现 `__len__` 和 `__getitem__` 两个方法. 任何类, 只要实现了这两个方法, 它就满足了序列操作, 因为它的行为像序列.
+
+协议是非正式的, 没有强制力, 因此你知道类的具体使用场景, 通常只要实现一个协议的部分. 例如, 为了支持迭代, 只需实现 `__getitem__` 方法, 没必要提供 `__len__` 方法, 这也就解释了 `鸭子类型` :
+
+> 当看到一只鸟走起来像鸭子、游泳起来像鸭子、叫起来也像鸭子，
+> 那么这只鸟就可以被称为鸭子
+
+### 可切片的序列
+
+切片(Slice)是用来获取序列某一段范围的元素. 切片操作也是通过 `__getitem__` 来完成的:
+
+```python
+class Vector:
+    # 省略了很多行
+    # ...
+    def __len__(self):
+        return len(self._components)
+    # 省略了很多
+    def __getitem__(self, index):
+        cls = type(self)  # 获取实例的类型
+
+        if isinstance(index, slice):  # 如果index参数值是切片的对象
+            # 调用Vector的构造方法，建立一个新的切片后的Vector类
+            return cls(self._components[index])
+        elif isinstance(index, numbers.Integral):  # 如果参数是整数类型
+            return self._components[index]  # 我们就对数组进行切片
+        else:  # 否则我们就抛出异常
+            msg = '{cls.__name__} indices must be integers'
+            raise TypeError(msg.format(cls=cls))
+```
+
+### 动态存取属性
+
+通过访问分量名来获取属性:
+
+```python
+shortcut_names = 'xyzt'
+def __getattr__(self, name):
+        cls = type(self) # 获取类型
+        if len(name) == 1: # 判断属性名是否在我们定义的names中
+            pos = cls.shortcut_names.find(name)
+            if 0 <= pos < len(self._components):
+                return self._components[pos]
+        msg = '{} objects has no attribute {}'
+        raise AttributeError(msg.format(cls, name))
+        
+test = Vector([3, 4, 5])
+print(test.x)
+print(test.y)
+print(test.z)
+print(test.c)
+```
+
+### 散列和快速等值测试
+
+实现 `__hash__` 方法。加上现有的 `__eq__` 方法，这会把实例变成可散列的对象.
+
+当序列是多维是时候, 我们有一个效率更高的方法:
+
+```python
+def __eq__(self, other):
+        if len(self) != len(other): # 首先判断长度是否相等
+            return False
+            for a, b in zip(self, other): # 接着逐一判断每个元素是否相等 
+                if a != b:
+                    return False
+        return True
+        
+# 我们也可以写的漂亮点
+
+def __eq__(self, other):
+    return (len(self) == len(other)) and all(a == b for a, b in zip(self, other))
+```
+
+## 第十一章: 接口：从协议到抽象基类
+
+这些协议定义为非正式的接口, 是让编程语言实现多态的方式. 在python中, 没有 `interface` 关键字, 而且除了抽象基类, 每个类都有接口: 所有类都可以自行实现 `__getitem__` 和 `__add__` .
+
+有写规定则是程序员在开发过程中慢慢总结出来的, 如受保护的属性命名采用单个前导下划线, 还有一些编码规范之类的.
+
+协议是接口, 但不是正式的, 这些规定并不是强制性的, 一个类可能只实现部分接口, 这是允许的.
+
+既然有非正式的协议, 那么有没有正式的协议呢? 有, 抽象基类就是一种强制性的协议.
+
+抽象基类要求其子类需要实现定义的某个接口, 且抽象基类不能实例化.
+
+### Python文化中的接口和协议
+
+引入抽象基类之前, python就已经非常成功了, 即使现在也很少使用抽象基类. 通过鸭子类型和协议, 我们把协议定义为非正式接口, 是让python实现多态的方式.
+
+另一边面, 不要觉得把公开数据属性放入对象的接口中不妥, 如果需要, 总能实现读值和设值方法, 把数据属性变成特性. 对象公开方法的自己, 让对象在系统中扮演特定的角色. 因此, 接口是实现特定角色的方法集合.
+
+序列协议是python最基础的协议之一, 即便对象只实现那个协议最基本的一部分, 解释器也会负责地处理.
+
+### 水禽和抽象基类
+
+鸭子类型在很多情况下十分有用, 但是随着发展, 通常由了更好的方式.
+
+近代, 属和种基本是根据表型系统学分类的, 鸭科属于水禽, 而水禽还包括鹅, 鸿雁等. 水禽是对某一类表现一致进行的分类, 他们有一些统一"描述"部分.
+
+因此, 根据分类的演化, 需要有个水禽类型, 只要 `cls` 是抽象基类, 即 `cls` 的元类是 `abc.ABCMeta` , 就可以使用 `isinstance(obj, cls)` 来进行判断.
+
+与具类相比, 抽象基类有很多理论上的优点, 被注册的类必须满足抽象基类对方法和签名的要求, 更重要的是满足底层语义契约.
+
+### 标准库中的抽象基类
+
+大多数的标准库的抽象基类在 `collections.abc` 模块中定义. 少部分在 `numbers` 和 `io` 包中有一些抽象基类. 标准库中有两个 `abc` 模块, 这里只讨论 `collections.abc` .
+
+这个模块中定义了 16 个抽象基类.
+
+**Iterable、Container 和 Sized**
+各个集合应该继承这三个抽象基类，或者至少实现兼容的协议。`Iterable` 通过 `__iter__` 方法支持迭代，Container 通过 `__contains__` 方法支持 in 运算符，Sized
+通过 `__len__` 方法支持 len() 函数。
+
+**Sequence、Mapping 和 Set**
+　　这三个是主要的不可变集合类型，而且各自都有可变的子类。
+
+**MappingView**
+　　在 Python3 中，映射方法 `.items()`、`.keys()` 和 `.values()` 返回的对象分别是
+ItemsView、KeysView 和 ValuesView 的实例。前两个类还从 Set 类继承了丰富的接
+口。
+
+**Callable 和 Hashable**
+　　这两个抽象基类与集合没有太大的关系，只不过因为 `collections.abc` 是标准库中
+定义抽象基类的第一个模块，而它们又太重要了，因此才把它们放到 `collections.abc`
+模块中。我从未见过 `Callable` 或 `Hashable` 的子类。这两个抽象基类的主要作用是为内
+置函数 `isinstance` 提供支持，以一种安全的方式判断对象能不能调用或散列。
+
+**Iterator**
+　　注意它是 Iterable 的子类。
+　　
+
+## 第十二章: 继承的优缺点
+
+很多人觉得多重继承得不偿失, 那些不支持多继承的编程语言好像也没什么损失.
+
+### 子类化内置类型很麻烦
+
+python2.2 以前, 内置类型(如list, dict)是不能子类化的. 它们是不能被其他类所继承的, 原因是内置类型是C语言实现的, 不会调用用户定义的类覆盖的方法.
+
+至于内置类型的子类覆盖的方法会不会隐式调用, CPython 官方也没有制定规则. 基本上, 内置类型的方法不会调用子类覆盖的方法. 例如, dict 的子类覆盖的 `__getitem__` 方法不会覆盖内置类型的 `get()` 方法调用.
+
+### 多重继承和方法解析顺序
+
+任何实现多重继承的语言都要处理潜在的命名冲突，这种冲突由不相关的祖先类实现同名
+方法引起。这种冲突称为“菱形问题”，如图.
 
 
+Python 会按照特定的顺序遍历继承
+图。这个顺序叫方法解析顺序（Method Resolution Order，MRO）。类都有一个名为
+**mro** 的属性，它的值是一个元组，按照方法解析顺序列出各个超类，从当前类一直
+向上，直到 object 类。
+
+从C.__mro__的值可以看出, Python的方法解析优先级从高到低为:
+
+1. 实例本身(instance)
+
+2. 类(class)
+
+3. super class, 继承关系越近, 越先定义, 优先级越高.
 	
 
