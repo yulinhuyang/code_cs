@@ -21,8 +21,7 @@ https://github.com/taizilongxu/interview_python
 
 [110道Python面试题（真题）](https://zhuanlan.zhihu.com/p/54430650)
 
-https://github.com/kenwoodjw/python_interview_question
-
 [吐血总结！50道Python面试题集锦（附答案）](https://blog.csdn.net/sinat_38682860/article/details/94763641)
 
-https://github.com/jackfrued/Python-Interview-Bible/blob/master/Python%E9%9D%A2%E8%AF%95%E5%AE%9D%E5%85%B8-%E5%9F%BA%E7%A1%80%E7%AF%87-2020.md
+https://github.com/jackfrued/Python-Interview-Bible
+
