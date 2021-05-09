@@ -10,6 +10,10 @@ https://github.com/huihut/interview
 
 [68道C语言/C++常见面试题](https://zhuanlan.zhihu.com/p/346821046)
 
+[如果你是一个C++面试官，你会问哪些问题？](https://www.zhihu.com/question/451327108/answer/1868370927)
+
+https://www.zhihu.com/people/lin-qi-53-1
+
 
 ### 2  开源代码模板
 
