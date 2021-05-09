@@ -1,14 +1,4 @@
 
-[适合 Java 新手的开源项目集合](https://zhuanlan.zhihu.com/p/312484956)
-
-[狂神说java课程](https://www.kuangstudy.com/course)
-
-[狂神说java视频教程](https://www.bilibili.com/video/BV1og4y1q7M4)
-
-[java try-with-resource语句使用](https://www.jianshu.com/p/258c5ce1a2bd)
-
-[阿里P8 java面试](https://github.com/Snailclimb/JavaGuide)
-
 [JavaCore](https://github.com/dunwu/javacore)
 
 [Java核心 卷一笔记](https://blog.csdn.net/qq_39326472/category_8572091.html)
