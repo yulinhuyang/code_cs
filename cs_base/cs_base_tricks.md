@@ -87,6 +87,11 @@
 [ubuntu 16.04 安装VNC远程桌面](https://blog.csdn.net/wuchenlhy/article/details/79865437)
 
 
+**性能调优**
+
+[arm优化——绑定核](https://zhuanlan.zhihu.com/p/138905432)
+
+
 
 ## notes
 
