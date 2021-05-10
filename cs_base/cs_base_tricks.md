@@ -82,6 +82,11 @@
 
 [用tcpdump抓包](https://www.cnblogs.com/chyingp/p/linux-command-tcpdump.html)
 
+**工具使用**
+
+[ubuntu 16.04 安装VNC远程桌面](https://blog.csdn.net/wuchenlhy/article/details/79865437)
+
+
 
 ## notes
 
