@@ -1,4 +1,4 @@
-**1 tricks**
+## 1 tricks 
 
 [c++ 那些事](https://github.com/Light-City/CPlusPlusThings)
 
@@ -28,9 +28,9 @@ https://github.com/fightingwangzq/cpp-learning
 https://github.com/forthespada/InterviewGuide
 
 
-**2 notes：** 
+## 2 notes：  
 
-2.1 使用struct关键字和class关键字定义类以及在类的继承方面有啥区别？
+### 1 使用struct关键字和class关键字定义类以及在类的继承方面有啥区别？
 
 （1）定义类的差别：
 
@@ -59,16 +59,72 @@ C语言对struct(以及union和数组)变量使用初始化列表。
 
 [C语言结构体初始化的四种方法](https://blog.csdn.net/ericbar/article/details/79567108)
 
-**3 多线程**
+### 2 多线程 
+
+https://blog.csdn.net/xibeichengf/article/details/71173543
+
+**创建线程**
+
+join: 当thread::join()函数被调用后，调用它的线程会被block，直到线程的执行被完成
+
+detach: 当thread::detach()函数被调用后，执行的线程从线程对象中被分离，已不再被一个线程对象所表达--这是两个独立的事情。
+
+      int main() {
+        std::thread t1(Counter(3));
+        t1.join();
+
+        std::thread t2(Counter(3));
+        t2.detach();
+
+        // 等待几秒，不然 t2 根本没机会执行。
+        std::this_thread::sleep_for(std::chrono::seconds(4));
+
+        return 0;
+      }
+
+**Mutex（互斥锁）**
+
+多个线程访问同一资源时
+
+Mutex 1：
+
+直接操作 mutex，即直接调用 mutex 的 lock / unlock 函数。
+
+```c++
+std::mutex g_mutex;
+int g_count = 0;
+
+void Counter() {
+  g_mutex.lock();
+
+  int i = ++g_count;
+  std::cout << "count: " << i << std::endl;
+
+  // 前面代码如有异常，unlock 就调不到了。
+  g_mutex.unlock();
+}
+
+  // 创建一组线程。
+  std::vector<std::thread> v;
+  v.reserve(SIZE);
+
+  for (std::size_t i = 0; i < SIZE; ++i) {
+    v.emplace_back(&Counter);
+  }
+
+  // 等待所有线程结束。
+  for (std::thread& t : v) {
+    t.join();
+  }
+```
 
 
 
-
-**4 RAII  RTTI**
+### 3 RAII   RTTI 
 
 https://zhuanlan.zhihu.com/p/34660259
 
-RAII  资源获取即初始化
+RAII (Resource Acquisition Is Initialization) 资源获取即初始化
 
 构造函数的写法：
 
@@ -93,7 +149,7 @@ dynamic_cast允许运行时刻进行类型转换，从而使程序能够在一�
 
 typeid是C++的关键字之一，等同于sizeof这类的操作符。typeid操作符的返回结果是名为type_info的标准库类型的对象的引用（在头文件typeinfo中定义，稍后我们看一下vs和gcc库里面的源码），它的表达式有下图两种形式。
  
-
+###  
 
 
 
