@@ -14,6 +14,10 @@ https://github.com/huihut/interview
 
 https://www.zhihu.com/people/lin-qi-53-1
 
+https://github.com/fightingwangzq/cpp-learning
+
+https://github.com/forthespada/InterviewGuide
+
 
 ### 2  开源代码模板
 
