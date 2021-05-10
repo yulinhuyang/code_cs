@@ -74,6 +74,15 @@
 
 [Jenkins详细教程](https://www.jianshu.com/p/5f671aca2b5a)
 
+**定位命令**
+
+[lsof命令](https://www.cnblogs.com/peida/archive/2013/02/26/2932972.html)
+
+[net-tools 和 iproute2](https://blog.csdn.net/kevin3101/article/details/52368860)
+
+[用tcpdump抓包](https://www.cnblogs.com/chyingp/p/linux-command-tcpdump.html)
+
+
 ## notes
 
 ### linux 命令
