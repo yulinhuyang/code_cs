@@ -18,6 +18,8 @@ https://github.com/fightingwangzq/cpp-learning
 
 https://github.com/forthespada/InterviewGuide
 
+[整理了一年的Linux C++武林秘籍，你早晚用得到（C++进阶必看)](https://zhuanlan.zhihu.com/p/351840523)
+
 
 ### 2  开源代码模板
 
