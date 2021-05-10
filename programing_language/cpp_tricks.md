@@ -22,6 +22,12 @@
 
 [C++11多线程并发基础入门教程](https://zhuanlan.zhihu.com/p/194198073)
 
+
+https://github.com/fightingwangzq/cpp-learning
+
+https://github.com/forthespada/InterviewGuide
+
+
 **2 notes：** 
 
 2.1 使用struct关键字和class关键字定义类以及在类的继承方面有啥区别？
