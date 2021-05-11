@@ -63,7 +63,7 @@ C语言对struct(以及union和数组)变量使用初始化列表。
 
 https://blog.csdn.net/xibeichengf/article/details/71173543
 
-**创建线程**
+#### 创建线程
 
 linux C++:
 
@@ -107,7 +107,7 @@ pthread_detach: 主线程与子线程分离，子线程结束后，资源自动�
 
 
 
-**Mutex（互斥锁）**
+####  Mutex（互斥锁） 
 
 多个线程访问同一资源时
 
@@ -229,7 +229,7 @@ void Counter() {
 }
 ```
 
-**条件变量**
+#### 条件变量 
 
 条件变量（Condition Variable）的一般用法是：线程 A 等待某个条件并挂起，直到线程 B 设置了这个条件，并通知条件变量，然后线程 A 被唤醒。经典的「生产者-消费者」问题就可以用条件变量来解决。
 
@@ -315,7 +315,7 @@ cv.wait(lock, [] { return ready; }); 相当于：while (!ready) { cv.wait(lock);
 
 被声明为explicit的构造函数通常比其 non-explicit 兄弟更受欢迎, 因为它们禁止编译器执行非预期 (往往也不被期望) 的类型转换。
 
-**线程池**
+#### 线程池 
 
 线程池就是首先创建一些线程，它们的集合称为线程池。使用线程池可以很好地提高性能，线程池在系统启动时即创建大量空闲的线程，程序将一个任务传给线程池，线程池就会启动一条线程来执行这个任务，执行结束以后，该线程并不会死亡，而是再次返回线程池中成为空闲状态，等待执行下一个任务。
 
@@ -433,7 +433,7 @@ typedef struct threadpool_t {
 
 
 
-**生产者和消费者**
+####  生产者和消费者 
 
 生产者 - 消费者（Producer-Consumer），也叫有限缓冲（Bounded-Buffer）
 
@@ -571,7 +571,7 @@ int main() {
 ```
 
 
-**信号量（Semaphore）**
+#### 信号量（Semaphore） 
 
 C++11 和 Boost.Thread 都没有提供信号量, 就是信号量太容易出错了（too error prone），通过组合互斥锁（mutex）和条件变量（condition variable）可以达到相同的效果，且更加安全。实现如下：
 
@@ -756,7 +756,7 @@ int main()
 }
 ```
 
-**读写者问题 读写锁（Read-Write Lock）**
+#### 读写者问题 读写锁（Read-Write Lock） 
 
 STL 和 Boost 都提供了 shared_mutex 来解决「读者-写者」问题。shared_mutex 这个名字并不十分贴切，不如 pthread 直呼「读写锁」。
 
