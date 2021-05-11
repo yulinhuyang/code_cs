@@ -93,6 +93,11 @@
 
 
 
+**linux/unix编程**
+
+[Linux/UNIX系统编程手册](https://zhuanlan.zhihu.com/p/70973666)
+
+
 ## notes
 
 ### linux 命令
