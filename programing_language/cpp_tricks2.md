@@ -89,5 +89,48 @@ C++支持两种多态性：编译时多态性，运行时多态性。
 
 向下类型转换：将基类指针或引用转换为派生类指针或引用被称为向下类型转换，向下类型转换不会自动进行，因为一个基类对应几个派生类，所以向下类型转换时不知道对应哪个派生类，所以在向下类型转换时必须加动态类型识别技术。RTTI技术，用dynamic_cast进行向下类型转换。
 
+**拷贝与移动**
+
+C++11之前，对象的拷贝控制由三个函数决定：拷贝构造函数（Copy Constructor）、拷贝赋值运算符（Copy Assignment operator）和析构函数（Destructor）。
+
+C++11之后，新增加了两个函数：移动构造函数（Move Constructor）和移动赋值运算符（Move Assignment operator）。
+
+区分构造和赋值：构造函数与赋值运算符的区别是，构造函数在创建或初始化对象的时候调用，而赋值运算符在更新一个对象的值时调用。
+
+区分拷贝与移动：用对象a初始化对象b，拷贝构造函数，实际上就是把a对象的内容复制一份到b中。这样就避免了新的空间的分配，大大降低了构造的成本。这就是移动构造函数设计的初衷
+
+https://www.jianshu.com/p/f5d48a7f5a52
+
+```cpp
+class A {
+public:
+    int x;
+    A(int x) : x(x)
+    {
+        cout << "Constructor" << endl;
+    }
+    A(A& a) : x(a.x)
+    {
+        cout << "Copy Constructor" << endl;
+    }
+    A& operator=(A& a)
+    {
+        x = a.x;
+        cout << "Copy Assignment operator" << endl;
+        return *this;
+    }
+    A(A&& a) : x(a.x)
+    {
+        cout << "Move Constructor" << endl;
+    }
+    A& operator=(A&& a)
+    {
+        x = a.x;
+        cout << "Move Assignment operator" << endl;
+        return *this;
+    }
+};
+```
+
 
 
