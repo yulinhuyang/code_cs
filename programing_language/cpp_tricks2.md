@@ -299,11 +299,35 @@ C++ 中推荐使用 inline 代替 #define 声明函数
 
 protected ： 派生类来说，相当于公有成员，在派生类中可以被访问
 
+#### 迭代器++it,it++
 
+迭代器++it,it++哪个好，为什么
 
+前置返回一个引用，后置返回一个对象
 
+// ++i实现代码为：
 
+int& operator++()
 
+{
+    *this += 1;
+    
+    return *this;
+}
+
+前置不会产生临时对象，后置必须产生临时对象，临时对象会导致效率降低
+
+//i++实现代码为：                                 
+
+int operator++(int)                                 
+{
+
+int temp = *this;                                    
+
+       ++*this;                                            
+
+       return temp;     
+}
 
 
 
