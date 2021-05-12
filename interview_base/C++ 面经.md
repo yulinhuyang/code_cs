@@ -1,3 +1,5 @@
+**原则： 以题出发，反向复习，实用主义**
+
 ### 1  必看总结
 
 [C++ 那些事](https://github.com/Light-City/CPlusPlusThings)
