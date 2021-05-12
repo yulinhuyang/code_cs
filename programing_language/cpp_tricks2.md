@@ -237,7 +237,7 @@ allocator将这两部分分开进行，allocator申请一部分内存，不进�
 
   n值必须为1,2,4,8…，为其他值时就按照默认的分配规则
 
-#### define、const、typedef、inline使用方法
+#### typedef、define、const、inline使用方法
 
 [C++ typedef、define、const 和 inline](https://zhuanlan.zhihu.com/p/106576540)
 
