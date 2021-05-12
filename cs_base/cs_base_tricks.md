@@ -98,6 +98,11 @@
 [Linux/UNIX系统编程手册](https://zhuanlan.zhihu.com/p/70973666)
 
 
+**PDF 输出**
+
+[新CSDN文章一键打印、输出PDF](https://www.codenong.com/cs106602341)
+
+
 ## notes
 
 ### linux 命令
