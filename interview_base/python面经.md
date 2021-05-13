@@ -19,6 +19,8 @@ https://github.com/taizilongxu/interview_python
 
 [python的一些基础面题](https://blog.csdn.net/alvine008/article/details/39229057)
 
+https://github.com/wolverinn/Waking-Up/blob/master/Python%20Handbook.md
+
 [春招苦短，我用百道Python面试题备战](https://zhuanlan.zhihu.com/p/58344591)
 
 [110道Python面试题（真题）](https://zhuanlan.zhihu.com/p/54430650)
