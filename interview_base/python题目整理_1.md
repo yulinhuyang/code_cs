@@ -214,9 +214,38 @@ print type(a),type(b),type(c) # <type 'list'> <type 'dict'> <type 'bool'>
 print isinstance(a,list)  # True
 ```
  
-### 字典推导式
+### 推导式
+
+字典推导式：
 
 d = {key: value for (key, value) in iterable}
+
+列表生成式：
+
+>>> L = [x*x for x in range(10)]
+>>> L
+[0, 1, 4, 9, 16, 25, 36, 49, 64, 81]
+
+### python中is和==的区别
+
+Python中对象包含的三个基本要素，分别是：id(身份标识) 、type(数据类型)和value(值)。
+
+‘==’比较的是value值，  ‘is’比较的是id
+
+简述read、readline、readlines的区别：read读取整个文件，readline读取下一行数据，readlines读取整个文件到一个迭代器以供我们遍历（读取到一个list中，以供使用，比较方便）
+
+###  *args and **kwargs
+
+当你不确定你的函数里将要传递多少参数时你可以用*args.例如,它可以传递任意数量的参数:
+
+**kwargs允许你使用没有事先定义的参数名
+
+
+
+
+
+
+
 
 
 
