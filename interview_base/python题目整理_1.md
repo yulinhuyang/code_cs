@@ -187,6 +187,14 @@ cls2 = Cls4()
 print(id(cls1) == id(cls2))
 ```
 
+### 交集 差集
 
+交集： [val for val in b1 if val in b2]
+ 
+差集： [val for val in b1 if val not in b2]
+ 
+ 
+ 
+ 
 
 
