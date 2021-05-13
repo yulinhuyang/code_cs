@@ -115,6 +115,8 @@ python 装饰器实现
 
 使用函数装饰器实现单例
 
+通过id来看引用a的内存地址可以比较理解：
+
 ```python3
 def singleton(cls):
     _instance = {}
