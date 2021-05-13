@@ -78,13 +78,112 @@ Python默认定义了三代对象集合，索引数越大，对象存活时间�
 copy.copy属于浅拷贝，拷贝的是第一层list，而copy.deepcopy属于深拷贝，对list所有子元素都进行深拷贝。
 
 
+### python实现单例
+
+**装饰器**
+
+装饰器本质上是一个Python函数，它可以让其他函数在不需要做任何代码变动的前提下增加额外功能，装饰器的返回值也是一个函数对象。它经常用于有切面需求的场景，比如：插入日志、性能测试、事务处理、缓存、权限校验等场景。装饰器是解决这类问题的绝佳设计，有了装饰器，我们就可以抽离出大量与函数功能本身无关的雷同代码并继续重用。概括的讲，装饰器的作用就是为已经存在的对象添加额外的功能。
+
+简单装饰器
+
+```python
+def use_logging(func):
+
+    def wrapper(*args, **kwargs):
+        logging.warn("%s is running" % func.__name__)
+        return func(*args, **kwargs)
+    return wrapper
+
+def bar():
+    print('i am bar')
+
+bar = use_logging(bar)
+bar()
+```
+
+函数use_logging就是装饰器，它把执行真正业务方法的func包裹在函数里面，看起来像bar被use_logging装饰了。在这个例子中，函数进入和退出时 ，被称为一个横切面(Aspect)，这种编程方式被称为面向切面的编程(Aspect-Oriented Programming)。
+
+python 装饰器实现
+
+- 使用函数装饰器实现单例
+- 使用类装饰器实现单例
+- 使用 __new__ 关键字实现单例
+- 使用 metaclass 实现单例
+
+装饰器：参考 https://www.zhihu.com/question/26930016
 
 
+使用函数装饰器实现单例
+
+```python3
+def singleton(cls):
+    _instance = {}
+
+    def inner():
+        if cls not in _instance:
+            _instance[cls] = cls()
+        return _instance[cls]
+    return inner
+    
+@singleton
+class Cls(object):
+    def __init__(self):
+        pass
+
+cls1 = Cls()
+cls2 = Cls()
+print(id(cls1) == id(cls2))
+```
+
+类装饰器
+
+```python3
+class Singleton(object):
+    def __init__(self, cls):
+        self._cls = cls
+        self._instance = {}
+    def __call__(self):
+        if self._cls not in self._instance:
+            self._instance[self._cls] = self._cls()
+        return self._instance[self._cls]
+
+@Singleton
+class Cls2(object):
+    def __init__(self):
+        pass
+
+cls1 = Cls2()
+cls2 = Cls2()
+print(id(cls1) == id(cls2))
+```
 
 
+元类实现
 
+```python3
+def func(self):
+    print("do sth")
 
+Klass = type("Klass", (), {"func": func})
 
+c = Klass()
+c.func()
+```
+以上，我们使用 type 创造了一个类出来。这里的知识是 mataclass 实现单例的基础。
+
+class Singleton(type):
+    _instances = {}
+    def __call__(cls, *args, **kwargs):
+        if cls not in cls._instances:
+            cls._instances[cls] = super(Singleton, cls).__call__(*args, **kwargs)
+        return cls._instances[cls]
+
+class Cls4(metaclass=Singleton):
+    pass
+
+cls1 = Cls4()
+cls2 = Cls4()
+print(id(cls1) == id(cls2))
 
 
 
