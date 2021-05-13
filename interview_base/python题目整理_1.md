@@ -187,6 +187,11 @@ cls2 = Cls4()
 print(id(cls1) == id(cls2))
 ```
 
+### 设计模式python实现
+
+[python 23种常用模式设计总结](https://zhuanlan.zhihu.com/p/57869247)
+
+
 ### 交集 差集
 
 交集： [val for val in b1 if val in b2]
