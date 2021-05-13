@@ -171,6 +171,7 @@ c.func()
 ```
 以上，我们使用 type 创造了一个类出来。这里的知识是 mataclass 实现单例的基础。
 
+```python3
 class Singleton(type):
     _instances = {}
     def __call__(cls, *args, **kwargs):
@@ -184,7 +185,7 @@ class Cls4(metaclass=Singleton):
 cls1 = Cls4()
 cls2 = Cls4()
 print(id(cls1) == id(cls2))
-
+```
 
 
 
