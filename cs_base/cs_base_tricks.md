@@ -91,7 +91,7 @@
 
 [arm优化——绑定核](https://zhuanlan.zhihu.com/p/138905432)
 
-
+[Linux中线程与CPU核的绑定](https://www.cnblogs.com/vanishfan/archive/2012/11/16/2773325.html)
 
 **linux/unix编程**
 
@@ -181,6 +181,46 @@ apt-get锁定问题： sudo rm -rf /var/cache/apt/archives/lock
 ### markdown
 
 添加代码说明： ```c++   ```
+
+### 绑定核
+
+int pthread_setaffinity_np(pthread_t thread, size_t cpusetsize，const cpu_set_t *cpuset);
+
+int pthread_getaffinity_np(pthread_t thread, size_t cpusetsize, cpu_set_t *cpuset);
+
+cpu_set_t这个结构体了。这个结构体的理解类似于select中的fd_set，可以理解为cpu集，也是通过约定好的宏来进行清除、设置以及判断：
+
+```cpp
+   void CPU_ZERO (cpu_set_t *set); 
+   //将某个cpu加入cpu集中 
+   void CPU_SET (int cpu, cpu_set_t *set); 
+   //将某个cpu从cpu集中移出 
+   void CPU_CLR (int cpu, cpu_set_t *set); 
+   //判断某个cpu是否已在cpu集中设置了 
+   int CPU_ISSET (int cpu, const cpu_set_t *set); 
+```   
+   
+cpu集可以认为是一个掩码，每个设置的位都对应一个可以合法调度的 cpu，而未设置的位则对应一个不可调度的 CPU。换而言之，线程都被绑定了，只能在那些对应位被设置了的处理器上运行。通常，掩码中的所有位都被置位了，也就是可以在所有的cpu中调度。 
+
+```cpp
+
+    CPU_ZERO(&mask);
+    CPU_SET(i, &mask);
+    if (pthread_setaffinity_np(pthread_self(), sizeof(mask), &mask) < 0) {
+        fprintf(stderr, "set thread affinity failed\n");
+    }
+    CPU_ZERO(&get);
+    if (pthread_getaffinity_np(pthread_self(), sizeof(get), &get) < 0) {
+        fprintf(stderr, "get thread affinity failed\n");
+    }
+    for (j = 0; j < num; j++) {
+        if (CPU_ISSET(j, &get)) {
+            printf("thread %d is running in processor %d\n", (int)pthread_self(), j);
+        }
+    }
+
+```
+
 
 
 
