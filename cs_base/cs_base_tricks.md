@@ -184,6 +184,8 @@ apt-get锁定问题： sudo rm -rf /var/cache/apt/archives/lock
 
 ### 绑定核
 
+**方法1：**
+
 int pthread_setaffinity_np(pthread_t thread, size_t cpusetsize，const cpu_set_t *cpuset);
 
 int pthread_getaffinity_np(pthread_t thread, size_t cpusetsize, cpu_set_t *cpuset);
@@ -221,6 +223,15 @@ cpu集可以认为是一个掩码，每个设置的位都对应一个可以合�
 
 ```
 
+**方法2**
+
+sched_setaffinity 设置 CPU 亲和力的掩码
+
+头文件 sched.h
+
+sched_setaffinity(pid_t pid, unsigned int cpusetsize, cpu_set_t *mask)
+
+如果pid的值为0,则表示指定的是当前进程,使当前进程运行在mask所设定的那些CPU上.
 
 
 
