@@ -10,6 +10,9 @@
 
 [StarUML之七、StarUML的Class Diagram(类图)示例](https://www.cnblogs.com/sun-null/p/12228234.html)
 
+
+[软件工程常用文档](https://github.com/cuizhenjie/software-engineering-document)
+
 ### 2  notes
 
 最重要的： 用例图、类图、时序图
