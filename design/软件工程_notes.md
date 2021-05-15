@@ -8,12 +8,11 @@
 
 [使用starUML绘制时序图 step by step](https://cloud.tencent.com/developer/article/1543471)
 
+[StarUML之七、StarUML的Class Diagram(类图)示例](https://www.cnblogs.com/sun-null/p/12228234.html)
 
 ### 2  notes
 
+最重要的： 用例图、类图、时序图
 
-用例图
 
-类图
 
-时序图
