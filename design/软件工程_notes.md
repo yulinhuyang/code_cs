@@ -6,6 +6,8 @@
 
 [OOAD与UML教学视频](https://www.bilibili.com/video/BV19x411L7HH?p=2)
 
+[使用starUML绘制时序图 step by step](https://cloud.tencent.com/developer/article/1543471)
+
 
 ### 2  notes
 
