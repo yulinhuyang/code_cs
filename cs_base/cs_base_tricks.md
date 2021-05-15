@@ -234,5 +234,8 @@ sched_setaffinity(pid_t pid, unsigned int cpusetsize, cpu_set_t *mask)
 如果pid的值为0,则表示指定的是当前进程,使当前进程运行在mask所设定的那些CPU上.
 
 
+### 压缩命令
+
+zip –q –r xahot.zip /home/wwwroot/xahot
 
 
