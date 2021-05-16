@@ -109,7 +109,7 @@
 
 **bashrc与 profile区别**
 
-[~/.profile ~/.bashrc和~./bash_profile的理解](https://www.jianshu.com/p/b39fd35e2360)
+[~/.profile  ~/.bashrc和 ~./bash_profile的理解](https://www.jianshu.com/p/b39fd35e2360)
 
 
 ## notes
