@@ -243,3 +243,24 @@ sched_setaffinity(pid_t pid, unsigned int cpusetsize, cpu_set_t *mask)
 zip –q –r xahot.zip /home/wwwroot/xahot
 
 
+### shell 脚本中if判断方法
+
+for second in 1  
+do
+    num=$(ps -ef | grep service_registration | grep -v grep | wc -l)
+    echo "$check_results"
+	
+	if [ "$num" -lt  "1" ];then
+		echo "haha"
+		break
+	else
+		./service_registration &
+		echo "start rosmaster!" >> $log_path
+        break
+	fi
+done
+
+
+
+
+
