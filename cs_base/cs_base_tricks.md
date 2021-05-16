@@ -102,6 +102,10 @@
 
 [新CSDN文章一键打印、输出PDF](https://www.codenong.com/cs106602341)
 
+**SHELL脚本**
+
+[shell之if判断的总结](https://www.huaweicloud.com/articles/41b6cb8516ef474673fef27d038ca804.html)
+
 
 ## notes
 
