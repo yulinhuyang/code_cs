@@ -107,6 +107,11 @@
 [shell之if判断的总结](https://www.huaweicloud.com/articles/41b6cb8516ef474673fef27d038ca804.html)
 
 
+**bashrc与 profile区别**
+
+[~/.profile ~/.bashrc和~./bash_profile的理解](https://www.jianshu.com/p/b39fd35e2360)
+
+
 ## notes
 
 ### linux 命令
