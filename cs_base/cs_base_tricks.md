@@ -245,6 +245,7 @@ zip –q –r xahot.zip /home/wwwroot/xahot
 
 ### shell 脚本中if判断方法
 
+```shell
 for second in 1  
 do
     num=$(ps -ef | grep service_registration | grep -v grep | wc -l)
@@ -259,7 +260,7 @@ do
         break
 	fi
 done
-
+```
 
 
 
