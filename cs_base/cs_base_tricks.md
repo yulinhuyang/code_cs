@@ -111,6 +111,9 @@
 
 [~/.profile  ~/.bashrc和 ~./bash_profile的理解](https://www.jianshu.com/p/b39fd35e2360)
 
+**update-alternatives命令使用**
+
+[python默认版本更换](https://www.jianshu.com/p/929cd16edc2c)
 
 ## notes
 
