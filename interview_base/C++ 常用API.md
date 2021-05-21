@@ -556,6 +556,7 @@ make_heap, pop_heap, push_heap, sort_heap都是标准算法库里的模板函数
 
 [用法](https://blog.csdn.net/lskyne/article/details/10418823)
 
+```
 assign() 给list赋值 
 back() 返回最后一个元素 
 begin() 返回指向第一个元素的迭代器 
@@ -583,3 +584,4 @@ sort() 给list排序
 splice() 合并两个list 
 swap() 交换两个list 
 unique() 删除list中重复的元素
+```
