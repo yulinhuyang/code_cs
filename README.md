@@ -21,3 +21,20 @@ cs base, os，design  and others
 
 
 部分笔记来源github cs_notes等
+
+**一书一记**
+
+C++ primer
+
+流畅的python  
+
+CSAPP
+
+重构
+
+CS notes 笔记部分
+
+
+
+
+
