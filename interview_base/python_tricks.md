@@ -1,19 +1,13 @@
-### 1 必看总结
+## 1  tricks
 
-
-
-
-
-
-
-### 2  代码模板
+### 1.1 代码模板
 
 https://github.com/JDAI-CV/fast-reid
 
 https://github.com/open-mmlab/mmdetection
 
 
-### 3  试题整理
+### 1.2 试题整理
 
 https://github.com/taizilongxu/interview_python
 
@@ -29,3 +23,7 @@ https://github.com/wolverinn/Waking-Up/blob/master/Python%20Handbook.md
 
 https://github.com/jackfrued/Python-Interview-Bible
 
+
+## 2  notes
+
+使用SQLite: https://www.liaoxuefeng.com/wiki/1016959663602400/1017801751919456
