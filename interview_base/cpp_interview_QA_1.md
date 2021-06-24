@@ -5,6 +5,21 @@
 [动态存储区、静态存储区、堆和栈的区别](https://blog.csdn.net/chen1083376511/article/details/54930191)
 
 
+#### 秋招总结------C++面试题总结 1-5系列
+
+https://blog.csdn.net/qq_39503189/article/details/104718499
+
+https://blog.csdn.net/qq_39503189/article/details/104880359
+
+https://blog.csdn.net/qq_39503189/article/details/104895023
+
+https://blog.csdn.net/qq_39503189/article/details/104925389
+
+
+####   面经汇总 C++基础再探
+
+https://wangpengcheng.github.io/2019/11/28/%E9%9D%A2%E7%BB%8F%E6%B1%87%E6%80%BB-C++%E5%9F%BA%E7%A1%80%E5%86%8D%E6%8E%A2/
+
 ### 2  notes
 
 
