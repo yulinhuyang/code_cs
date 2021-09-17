@@ -21,6 +21,8 @@ https://github.com/keithnull/TeachYourselfCS-CN
 
 JavaGuide: https://github.com/Snailclimb/JavaGuide
 
+
+
 ##  1  CS 基础
 
 ### 1.1 编程范式
@@ -44,8 +46,68 @@ https://github.com/jiacai2050/sicp
 
 程序设计语言-实践之路
 
+### 1.2 数据结构与算法
 
-### 1.2  OS
+#### 1.2.1 数据结构与算法
+
+**DSACPP DJH**
+
+教学视频：https://www.bilibili.com/video/BV1jt4y117KR/
+
+配套笔记: https://github.com/bluove/dsacpp-notebook/blob/master/2_vector.ipynb
+
+随书代码：https://github.com/programming-book-practice/DSACPP
+
+**ALG4**
+
+配套代码：https://algs4.cs.princeton.edu/code/
+
+https://github.com/kevin-wayne/algs4
+
+
+**Problem Solving with Algorithms and Data Structures Using Python**
+
+开源版： https://github.com/facert/python-data-structure-cn
+
+原书网站； https://runestone.academy/runestone/books/published/pythonds/index.html
+
+**编程珠玑**
+
+#### 1.2.2 leetcode 
+
+**labuladong**
+
+https://github.com/labuladong/fucking-algorithm
+
+
+**剑指offer**
+
+https://github.com/gatieme/CodingInterviews
+
+https://github.com/JushuangQiao/Python-Offer
+
+https://blog.csdn.net/qq_21201267/article/details/104271963
+
+
+**soulmachine** 
+
+https://github.com/soulmachine/leetcode
+
+
+**程序员金典**
+
+https://github.com/F8F-1BearCat/CtCI-6th-Edition-CN
+
+https://github.com/careercup/CtCI-6th-Edition
+
+https://blog.csdn.net/qq_21201267/article/details/104306869
+
+
+**左程云指南**
+
+https://github.com/yiliyili/algorithms_zuochengyun
+
+### 1.3  OS
 
 **CSAPP:**
 
@@ -83,7 +145,7 @@ Docker— 从入门到实践：https://yeasy.gitbook.io/docker_practice/
 https://blog.csdn.net/fengbingchun/category_725584.html
 
 
-### 1.3 数据库
+### 1.4 数据库
 
 Readings in Database Systems 
 
@@ -94,7 +156,7 @@ Architecture of a Database System 中文翻译
 MySQL必知必会
 
 
-### 1.4  数学基础
+### 1.5  数学基础
 
 计算机科学中的数学：https://github.com/xubeng/mathematics-for-computer-science/
 
@@ -295,13 +357,7 @@ https://blog.fishedee.com/2020-12-09
 
 
 
-## 4  框架与工具
-
-
-OOP程序与系统设计框架： 设计模式
-
-工具与编程规范框架： pylint 
-
+## 3.5  开源项目实践
 
 挑战性编程开源项目:  https://web.eecs.utk.edu/~azh/blog/challengingprojects.html
 
