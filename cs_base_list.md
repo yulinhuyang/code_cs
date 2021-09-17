@@ -46,9 +46,9 @@ https://github.com/jiacai2050/sicp
 
 程序设计语言-实践之路
 
-### 1.2 数据结构与算法
+### 1.2 数据结构、算法与leetcode
 
-#### 1.2.1 数据结构与算法
+#### 1.2.1 DSA
 
 **DSACPP DJH**
 
