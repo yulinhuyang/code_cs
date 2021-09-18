@@ -19,15 +19,13 @@ https://github.com/keithnull/TeachYourselfCS-CN
 
 后端程序员成长阅读书目: https://www.douban.com/doulist/3719550/
 
-JavaGuide: https://github.com/Snailclimb/JavaGuide
-
-
+合集notes：CyC2018/CS-Notes: https://github.com/CyC2018/CS-Notes
 
 ##  1  CS 基础
 
 ### 1.1 编程范式
 
-SCIP:
+**SCIP**:
 
 https://github.com/DeathKing/Learning-SICP
 
@@ -65,7 +63,7 @@ https://github.com/jiacai2050/sicp
 https://github.com/kevin-wayne/algs4
 
 
-**Problem Solving with Algorithms and Data Structures Using Python**
+Problem Solving with Algorithms and Data Structures Using Python:
 
 开源版： https://github.com/facert/python-data-structure-cn
 
@@ -94,7 +92,7 @@ https://blog.csdn.net/qq_21201267/article/details/104271963
 https://github.com/soulmachine/leetcode
 
 
-**程序员金典**
+程序员金典:
 
 https://github.com/F8F-1BearCat/CtCI-6th-Edition-CN
 
@@ -103,7 +101,7 @@ https://github.com/careercup/CtCI-6th-Edition
 https://blog.csdn.net/qq_21201267/article/details/104306869
 
 
-**左程云指南**
+左程云指南:
 
 https://github.com/yiliyili/algorithms_zuochengyun
 
@@ -173,7 +171,7 @@ python基础教程：
 
 https://zhuanlan.zhihu.com/p/23489050
 
-流畅的python:
+**流畅的python**：
 
 https://www.zhihu.com/column/c_1200472332177096704
 
@@ -229,7 +227,7 @@ python3核心编程（高级特性）
 
 ### 2.2 C++程序设计
 
-C++ primer：
+**C++ primer**:
 
 https://github.com/applenob/Cpp_Primer_Practice
 
@@ -314,7 +312,7 @@ https://study.163.com/instructor/2658707.htm
 
 https://zhuanlan.zhihu.com/p/150013932
 
-设计模式的艺术:   
+**设计模式的艺术**:   
 
 https://blog.csdn.net/LoveLion/article/details/17517213
 
@@ -326,7 +324,7 @@ https://github.com/iluwatar/java-design-patterns
 
 UML和模式应用
 
-重构：改善既有代码的设计 
+**重构：改善既有代码的设计** 
 
 https://www.kancloud.cn/sstd521/refactor/194266
 
@@ -349,12 +347,11 @@ https://github.com/VaughnVernon/IDDD_Samples
 
 架构整洁之道
 
-数据密集型系统设计：
+**数据密集型系统设计DDIA**：
 
 https://github.com/Vonng/ddia
 
 https://blog.fishedee.com/2020-12-09
-
 
 
 ## 3.5  开源项目实践
