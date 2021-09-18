@@ -1,7 +1,5 @@
 # code_base
-cs base, os，design  and others
-
-
+ 
 
 **oop程序与系统设计流程：**
 
@@ -26,13 +24,23 @@ cs base, os，design  and others
 
 C++ primer
 
-流畅的python  
+流畅的python 
+
+SICP
 
 CSAPP
 
 重构
 
-CS notes 笔记部分
+CS notes 笔记
+
+DSA 邓俊辉 
+
+ALG4
+
+剑指offer
+
+labuladong算法小抄
 
 
 
