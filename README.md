@@ -1,5 +1,3 @@
-# code_base
- 
 
 **oop程序与系统设计流程：**
 
@@ -20,15 +18,19 @@
 
 部分笔记来源github cs_notes等
 
-**一书一记**
-
-C++ primer
-
-流畅的python 
+**核心必背**
 
 SICP
 
 CSAPP
+
+OSTEP
+
+DDIA
+
+C++ primer
+
+流畅的python 
 
 重构
 
