@@ -11,7 +11,9 @@
 
 5  不断重构，性能调优，进行小的重构。
 
-工具和编程规范箱：unittest、Pylint、PyChecker、PyFlakes
+6  工具和编程规范箱：unittest、Pylint、PyChecker、PyFlakes，
+
+google 开源规范：https://zh-google-styleguide.readthedocs.io/en/latest/google-cpp-styleguide/contents/
 
 **一书一记一题**
 
