@@ -11,14 +11,9 @@
 
 5  不断重构，性能调优，进行小的重构。
 
-
-
 工具和编程规范箱：unittest、Pylint、PyChecker、PyFlakes
 
-
-部分笔记来源github cs_notes等
-
-**核心必背**
+**一书一记一题**
 
 SICP
 
