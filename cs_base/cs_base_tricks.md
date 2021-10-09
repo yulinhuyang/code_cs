@@ -275,6 +275,8 @@ du -sm * | sort -nr 排序
 
 ls -a 查看隐藏文件
 
+ls -lh: 查看，用M显示
+
 du -sm * | sort -nr | head 查看最大的
 
 精简docker镜像：
