@@ -1,4 +1,3 @@
-
 **oop程序与系统设计流程：**
 
 1  设计，确定问题，参考设计模式、ddd设计,设计系统结构和主要函数功能，进行数据结构与算法分析，或者算法与模型设计，确定合理的文件和代码组织结构，并保持良好的文档。
@@ -17,13 +16,11 @@ google 开源规范：https://zh-google-styleguide.readthedocs.io/en/latest/goog
 
 **一书一记一题**
 
-SICP
+SICP-CS61A
+
+DSA DJH + alg4(CS61B + CS170）
 
 CSAPP
-
-OSTEP
-
-DDIA
 
 C++ primer
 
@@ -31,17 +28,10 @@ C++ primer
 
 重构
 
-CS notes 笔记
-
-DSA 邓俊辉 
-
-ALG4
+设计模式的艺术
 
 剑指offer
 
 labuladong算法小抄
-
-
-
 
 
