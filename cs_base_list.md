@@ -1,4 +1,3 @@
-
 ## 路线图
 
 https://github.com/csr632/awesome-learning-resources
@@ -21,11 +20,10 @@ https://github.com/keithnull/TeachYourselfCS-CN
 
 合集notes：CyC2018/CS-Notes: https://github.com/CyC2018/CS-Notes
 
-##  1  CS 基础
 
-### 1.1 编程范式
+### 1 编程范式
 
-**SCIP**:
+**SCIP-CS61A**:
 
 https://github.com/DeathKing/Learning-SICP
 
@@ -35,7 +33,7 @@ https://github.com/wizardforcel/sicp-py-zh
 
 如何屠龙？ https://www.zhihu.com/column/lfkdsk
 
-https://github.com/jiacai2050/sicp
+CS61A: https://www-inst.eecs.berkeley.edu/~cs61a/archives.html
 
 
 冒号学堂：编程范式与OOP思想:  https://blog.zhenghui.org/2009/08/21/contents-of-colonclass/
@@ -44,11 +42,11 @@ https://github.com/jiacai2050/sicp
 
 程序设计语言-实践之路
 
-### 1.2 数据结构、算法与leetcode
+### 2 数据结构、算法与leetcode
 
-#### 1.2.1 DSA
+#### 2.1 数据结构与算法
 
-**DSACPP DJH**
+**DSACPP DJH-CS61B**
 
 教学视频：https://www.bilibili.com/video/BV1jt4y117KR/
 
@@ -56,11 +54,18 @@ https://github.com/jiacai2050/sicp
 
 随书代码：https://github.com/programming-book-practice/DSACPP
 
-**ALG4**
+CS61B: https://inst.eecs.berkeley.edu/~cs61b/archives.html
 
-配套代码：https://algs4.cs.princeton.edu/code/
+**ALG4-CS170**
+
+配套代码：https://algs4.cs.princeton.edu/lectures/
 
 https://github.com/kevin-wayne/algs4
+
+CS170: https://cs170.org/
+
+https://www.bilibili.com/video/BV1BU4y1b7RK
+
 
 
 Problem Solving with Algorithms and Data Structures Using Python:
@@ -71,7 +76,7 @@ Problem Solving with Algorithms and Data Structures Using Python:
 
 **编程珠玑**
 
-#### 1.2.2 leetcode 
+#### 2.2 leetcode 
 
 **labuladong**
 
@@ -105,13 +110,15 @@ https://blog.csdn.net/qq_21201267/article/details/104306869
 
 https://github.com/yiliyili/algorithms_zuochengyun
 
-### 1.3  OS
+### 3  OS
 
-**CSAPP:**
+**CSAPP-CMU 15-213**
 
 深度人工智障：[读书笔记]CSAPP深入理解计算机系统： https://zhuanlan.zhihu.com/p/103476182
 
 深入理解计算机系统 读书笔记_个人文章 - SegmentFault 思否： https://segmentfault.com/a/1190000015444386
+
+CMU 15-213: http://www.cs.cmu.edu/~./213/schedule.html
 
 **OSTEP :**
 
@@ -143,7 +150,7 @@ Docker— 从入门到实践：https://yeasy.gitbook.io/docker_practice/
 https://blog.csdn.net/fengbingchun/category_725584.html
 
 
-### 1.4 数据库
+### 4 数据库
 
 Readings in Database Systems 
 
@@ -154,16 +161,16 @@ Architecture of a Database System 中文翻译
 MySQL必知必会
 
 
-### 1.5  数学基础
+###  5  数学基础
 
 计算机科学中的数学：https://github.com/xubeng/mathematics-for-computer-science/
 
 
 
-## 2  编程语言 & 性能优化 & 高级特性
+### 6  编程语言 & 性能优化 & 高级特性
 
 
-### 2.1 python程序设计： 
+#### 6.1 python程序设计： 
 
 https://github.com/vinta/awesome-python
 
@@ -225,7 +232,7 @@ https://github.com/cosmicpython/book
 python3核心编程（高级特性）
 
 
-### 2.2 C++程序设计
+#### 6.2 C++程序设计
 
 **C++ primer**:
 
@@ -241,7 +248,7 @@ https://blog.csdn.net/fengbingchun/article/details/102990753
 
 C++ 面向对象高效编程
 
-### 2.3 java_Android程序设计
+#### 6.3 java_Android程序设计
 
 java核心技术（卷1 基础）：
 
@@ -268,7 +275,7 @@ https://www.jianshu.com/p/1f5c6c0a6a31
 https://github.com/guolindev/booksource
 
 
-### 2.4  Google style guide系列
+#### 6.4  Google style guide系列
 
 https://github.com/google/styleguide
 
@@ -277,13 +284,22 @@ https://github.com/zh-google-styleguide/zh-google-styleguide
 https://zh-google-styleguide.readthedocs.io/en/latest/
 
 
-## 3  软件工程与系统设计 
 
-### 3.1 软件工程 & 敏捷开发
+### 7 设计模式与重构
 
-软件工程（C编码实践篇）
+**设计模式的艺术**:   
 
-https://mooc.study.163.com/course/1000002006#/info
+https://blog.csdn.net/LoveLion/article/details/17517213
+
+https://github.com/knightsj/object-oriented-design
+
+https://github.com/kamranahmedse/design-patterns-for-humans
+
+https://github.com/iluwatar/java-design-patterns
+
+**重构：改善既有代码的设计** 
+
+https://www.kancloud.cn/sstd521/refactor/194266
 
 代码整洁之道：
 
@@ -297,12 +313,11 @@ https://www.cnblogs.com/taceywong/p/8724601.html
 
 https://www.cnblogs.com/me115/p/4035469.html
 
-
 敏捷软件开发（原则模式与实践）
 
-构建之法——现代软件工程
+软件工程（C编码实践篇）
 
-### 3.2 面向对象分析与设计&领域驱动设计（OOP&DDD）
+https://mooc.study.163.com/course/1000002006#/info
 
 面向对象软件开发实践：基本技能、专业技术、实战技术
 
@@ -312,40 +327,10 @@ https://study.163.com/instructor/2658707.htm
 
 https://zhuanlan.zhihu.com/p/150013932
 
-**设计模式的艺术**:   
-
-https://blog.csdn.net/LoveLion/article/details/17517213
-
-https://github.com/knightsj/object-oriented-design
-
-https://github.com/kamranahmedse/design-patterns-for-humans
-
-https://github.com/iluwatar/java-design-patterns
-
 UML和模式应用
 
-**重构：改善既有代码的设计** 
 
-https://www.kancloud.cn/sstd521/refactor/194266
-
-领域驱动设计模式、原理与实践：
-
-https://github.com/elbandit/PPPDDD
-
-https://www.cnblogs.com/edisonchou/p/edc_ddd_foundation_study_part1.html
-
-https://blog.fishedee.com/2020-11-28
-
-实现领域驱动设计:
-
-https://insights.thoughtworks.cn/backend-development-ddd/
-
-https://github.com/VaughnVernon/IDDD_Samples
-
-
-### 3.4 架构与分布式
-
-架构整洁之道
+### 8 分布式系统
 
 **数据密集型系统设计DDIA**：
 
@@ -353,8 +338,9 @@ https://github.com/Vonng/ddia
 
 https://blog.fishedee.com/2020-12-09
 
+架构整洁之道
 
-## 3.5  开源项目实践
+### 9  开源项目实践
 
 挑战性编程开源项目:  https://web.eecs.utk.edu/~azh/blog/challengingprojects.html
 
