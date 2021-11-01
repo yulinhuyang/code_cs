@@ -48,6 +48,8 @@ CS61A: https://www-inst.eecs.berkeley.edu/~cs61a/archives.html
 
 **DSACPP DJH-CS61B**
 
+官方网页： http://dsa.cs.tsinghua.edu.cn/~deng/ds/dsacpp/
+
 教学视频：https://www.bilibili.com/video/BV1jt4y117KR/
 
 配套笔记: https://github.com/bluove/dsacpp-notebook/blob/master/2_vector.ipynb
