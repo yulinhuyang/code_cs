@@ -12,6 +12,9 @@ leetcode 700:
 
 https://blog.csdn.net/qq_32424059/article/details/88855423
 
+tag分类：
+
+[LeetCode按照怎样的顺序来刷题比较好？](https://www.zhihu.com/question/36738189/answer/908664455)
 
 ### 2 notes 
 
