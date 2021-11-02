@@ -119,9 +119,34 @@
 
 ### linux 命令
 
+[15 个『牛逼』的Linux工具，提高效率的同时增加乐趣](https://cloud.tencent.com/developer/article/1496938)
+
+**高效15工具**
+
+终端ctrl-r命令 + fzf : 查看历史
+
+fzf: 命令行下模糊搜索工具
+
+ag：比grep、ack更快的递归搜索文件内容。 
+
+glances：更强大的 htop / top 代替者, htop 代替 top，glances 代替 htop：
+
+tmux：终端复用工具
+
 convert  example.png  -resize  200x100!  example.png
 
+**ps命令**
+
 ps aux最初用到Unix Style中，而ps -ef被用在System V Style中，| grep xxx, 对进程进行监测和控制。
+
+ ps -u +用户
+ 
+
+**find命令**
+
+find path   -option   [-print]   [-exec   -ok   command ]   {} \;
+	
+    find . -name "*.c"
 
 find . -name  "*.java"，指定多个起始目录：  find /usr /home  /tmp -name "*.jar"
 
@@ -131,7 +156,7 @@ find . -name  "*.png"  -exec cp {}  /data1/visiondection/VPS/vps_problem/segbuil
 
 tee命令用于将标准输入拷贝到标准输出， echo "hello,world"|tee -a test.txt
 
-第三方库 三板斧：
+**第三方库 三板斧**
 
 include_directories(../../../thirdparty/comm/include)
 
@@ -139,13 +164,15 @@ link_libraries(“/home/server/third/lib/libcommon.a”)
 
 target_link_libraries(myProject libcomm.a)
 
-vi常用命令:
+**vi常用命令**
 
 :set number
 
 add-apt-repository使用： 
 
 安装software-properties-common，配置代理export代理 或者bashrc ----> sudo apt-add-repository ppa:ubuntu-mozilla-daily/ppa  --->sudo apt-get update  --->sudo apt-get install firefox-4.0
+
+**so相关**
 
 查看符号表：
 
@@ -179,9 +206,6 @@ ls -lR /bin： 将 /bin 目录以下所有目录及文件详细资料列出 :
 
 ls -AF： 列出目前工作目录下所有文件及目录
 
-find path   -option   [-print]   [-exec   -ok   command ]   {} \;
-	
-    find . -name "*.c"
 
 **信号量线程同步**
 
