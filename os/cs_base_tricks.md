@@ -148,18 +148,34 @@ add-apt-repository使用：
 安装software-properties-common，配置代理export代理 或者bashrc ----> sudo apt-add-repository ppa:ubuntu-mozilla-daily/ppa  --->sudo apt-get update  --->sudo apt-get install firefox-4.0
 
 查看符号表：
+
 strings libstdc++.so.6|grep GLIBC
 
 查看so依赖：
+
 ldd  + so
 
 查看当前目录下文件夹大小： du -h --max-depth=1
 
-代码搜索ack：  
+**代码搜索ack：**  
 
 当前目录下 ack -r "xxx"  就可以搜索所有
 
-信号量线程同步：
+ack --python XXX 搜索所有python文件
+
+**htop**
+
+[htop使用详解--史上最强](https://cloud.tencent.com/developer/article/1115041)
+
+[linux htop：比top更好用的top](https://www.jianshu.com/p/6e9b0cc7f348)
+
+类似的有ps 、top
+
+**目录下查看文件**
+
+
+
+**信号量线程同步**
 
     int sem_init(sem_t *sem, int pshared, unsigned int value);，其中sem是要初始化的信号量，pshared表示此信号量是在进程间共享还是线程间共享，value是信号量的初始值。
     
