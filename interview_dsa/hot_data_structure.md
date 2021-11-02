@@ -1,6 +1,8 @@
 
 数据结构百科 https://zh.wikipedia.org/wiki/%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84
 
+热点零散知识点整理
+
 ### 1 堆栈（Stack） 
 
 ### 2 队列（Queue）
