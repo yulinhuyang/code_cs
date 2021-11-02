@@ -1,6 +1,16 @@
 
 操作系统：深入理解操作系统（CSAPP）、操作系统导论（OSTEP）
 
+**CSAPP相关**
+
+https://fengmuzi2003.gitbook.io/csapp3e/
+
+https://www.bilibili.com/video/BV1iW411d7hd
+
+https://www.zhihu.com/question/20402534/answer/1670374116
+
+其他：
+
 系统与网络编程：Linux UNIX系统编程手册
 
 The Missing Semester of Your CS Education
