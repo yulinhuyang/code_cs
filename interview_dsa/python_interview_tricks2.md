@@ -23,6 +23,73 @@ class list_node:
 
 ```
 
+链表基本操作：
+
+```
+class node:
+    def __init__(self,x):
+        self.data = x
+        self.next = None
+
+class MyLinkedList:
+    def __init__(self):
+        self.head = node(0)
+        self.size = 0
+    
+    def get(self,index:int) -> int:
+        
+        if index < 0 or index >= self.size:
+            return -1
+        head_node = self.head
+        for _ in range(index+1):
+            head_node = head_node.next
+        return head_node.data
+    
+    def addAtHead(self,val:int) -> None:
+        self.addAtIndex(0,val)
+        
+    def addAtTail(self,val:int) -> None:
+        self.addAtIndex(self.size,val)
+
+    def addAtIndex(self, index: int, val: int) -> None:
+        
+        if index > self.size:
+            return
+        
+        if index < 0:
+            index = 0
+        
+        head_node = self.head
+        for _ in range(index):
+            head_node = head_node.next
+        new_node = node(val)
+        new_node.next = head_node.next
+        head_node.next = new_node
+        self.size = self.size + 1
+
+    def deleteAtIndex(self, index: int) -> None:
+        
+        if 0 <= index < self.size:
+            head_node = self.head
+            for i in range(index):
+                head_node = head_node.next
+            head_node.next = head_node.next.next
+            self.size = self.size -1
+	    
+	    
+// 1 有sentinel==0的哨兵节点,然后index 从0 开始
+
+//2 所有的插入和删除都是针对index=0 开始的，哨兵节点不动
+
+//3 get的时候，需要range index +1 ,add的时候，range index
+
+//4 主要边界条件，delete < size。
+	
+//5  头插，尾插，初始化，增加删除查询index
+	   	   
+```
+
+
 单调栈：下一个最大元素、包含min函数的栈
 
 ```python
