@@ -119,9 +119,9 @@
 
 ### linux 命令
 
-[15 个『牛逼』的Linux工具，提高效率的同时增加乐趣](https://cloud.tencent.com/developer/article/1496938)
-
 **高效15工具**
+
+[15 个『牛逼』的Linux工具，提高效率的同时增加乐趣](https://cloud.tencent.com/developer/article/1496938)
 
 终端ctrl-r命令 + fzf : 查看历史
 
@@ -137,11 +137,12 @@ convert  example.png  -resize  200x100!  example.png
 
 **ps命令**
 
-ps aux最初用到Unix Style中，而ps -ef被用在System V Style中，| grep xxx, 对进程进行监测和控制。
+ps aux最初用到Unix Style中，而ps -ef被用在System V Style中，
+
+| grep xxx, 对进程进行监测和控制。
 
  ps -u +用户
  
-
 **find命令**
 
 find path   -option   [-print]   [-exec   -ok   command ]   {} \;
