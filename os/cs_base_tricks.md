@@ -173,7 +173,15 @@ ack --python XXX 搜索所有python文件
 
 **目录下查看文件**
 
+ls -ltr s* ：所有名称是 s 开头的文件，越新的排越后面 
 
+ls -lR /bin： 将 /bin 目录以下所有目录及文件详细资料列出 :
+
+ls -AF： 列出目前工作目录下所有文件及目录
+
+find path   -option   [-print]   [-exec   -ok   command ]   {} \;
+	
+    find . -name "*.c"
 
 **信号量线程同步**
 
