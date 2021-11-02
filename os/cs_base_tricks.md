@@ -285,4 +285,6 @@ du -sm * | sort -nr | head 查看最大的
 ack --python task_0 --> 搜索指定文件的指定字符
 
 
+反汇编: objdump -S obj C
+
 
