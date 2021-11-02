@@ -22,4 +22,4 @@ UCB CS61B 学习记录 : https://testerhome.com/topics/27380
 
 伯克利神课CS61B 总结感悟 ：ttps://www.cxymm.net/article/lindaicoding/119439923
 
-##### 2 notes hot
+#### 2 notes hot
