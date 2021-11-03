@@ -329,9 +329,15 @@ ls -lh: 查看，用M显示
 du -sm * | sort -nr | head 查看最大的
 
 
-
-
-
 反汇编: objdump -S obj C
+
+### json 处理
+
+在线查看json www.json.cn  
+
+jq: json文件处理以及格式化显示  
+
+cat demo.json | jq '.id,.name,.status,.attachments'
+
 
 
