@@ -823,3 +823,15 @@ Docker内容信任：使得用户很容易确认所下载镜像的完整性以�
 Docker 密钥：docker secret 来管理密钥。	
 
 
+###3.13  docker 其他命令
+
+精简docker镜像：
+
+删掉container 里面的core.* 相关的无效文件，然后将container export处理，再import进去，再save成tar包，就可以了
+ack --python task_0 --> 搜索指定文件的指定字符
+
+GPU docker 启动： docker run -itd --gpus all --net=host --shm-size=64g -v adas_proj/:/adas_proj/ --name adas_proj_wty 6d3d2b2cd6a0 /bin/bash 
+
+
+	
+	
