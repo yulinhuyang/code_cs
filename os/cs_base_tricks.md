@@ -155,6 +155,21 @@ find 后，-exec 执行复制命令：
 
 find . -name  "*.png"  -exec cp {}  /data1/visiondection/VPS/vps_problem/segbuilding_dataset/openscene/ \;
 
+fd 命令，更快速，替代find  https://github.com/sharkdp/fd#how-to-use
+
+	直接搜索：
+		> fd netfl
+		Software/python/imdb-ratings/netflix-details.py
+	正则匹配：
+		> cd /etc
+		> fd '^x.*rc$'
+		X11/xinit/xinitrc
+		X11/xinit/xserverrc****
+	
+**查看命令**
+
+cat 
+
 tee命令用于将标准输入拷贝到标准输出， echo "hello,world"|tee -a test.txt
 
 **第三方库 三板斧**
