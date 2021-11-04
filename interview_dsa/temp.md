@@ -47,3 +47,27 @@ public:
 };
 
 ```
+#### 198 打家劫舍
+
+```C++
+class Solution {
+public:
+    int rob(vector<int>& nums) {
+
+        //dp array -->简化
+        int dp_i = 0;
+        int dp_i_1 = 0;
+        int dp_i_2 = 0;
+        for(int i = 0;i < nums.size();i++){
+            dp_i = max(dp_i_1,dp_i_2 + nums[i]);
+            dp_i_2 = dp_i_1;
+            dp_i_1 = dp_i;
+        }
+        return  dp_i;
+    }
+};
+
+```
+
+
+
