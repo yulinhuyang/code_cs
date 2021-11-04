@@ -20,13 +20,30 @@ public:
     }
 };
 
-
 ```
 
+#### 169 多数元素
 
-alg4 去/
+```C++
+class Solution {
+public:
+    int majorityElement(vector<int>& nums) {
 
-SICP 合1，img存
+        //投票法
+        int count = 1;
+        int conda = nums[0];
+        for(int i = 1;i < nums.size();i++){
+            if(count == 0){
+                conda = nums[i];
+            }
+            if(conda == nums[i]){
+                count++;
+            } else{
+                count--;
+            }
+        }
+        return conda;
+    }
+};
 
-CSAPP notes，img存
-
+```
