@@ -108,6 +108,52 @@ public:
 
 ```
 
+#### 206. 反转链表 
+
+递归法
+
+```C++
+class Solution {
+public:
+    ListNode* reverseList(ListNode* head) {
+        if(head == nullptr || head->next == nullptr){
+            return head;
+        }
+
+        ListNode* node = reverseList(head->next);
+        //反转且避免成环
+        head->next->next = head;
+        head->next = nullptr;
+        return node;
+    }
+};
+```
+
+
+迭代法：pre cur next
+
+```C++
+class Solution {
+public:
+    ListNode* reverseList(ListNode* head) {
+        if(head == nullptr || head->next == nullptr){
+            return head;
+        }
+        ListNode* pre = nullptr;
+        ListNode* cur = head;
+        while(cur){
+            //pre cur next的使用
+            ListNode* next = cur->next;
+            cur->next = pre;
+            pre = cur;
+            cur = next;
+        }
+
+        return pre;
+    }
+};
+```
+
 
 
 
