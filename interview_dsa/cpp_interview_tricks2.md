@@ -15,7 +15,7 @@ struct ListNode {
 }
 ```	
 	
-dummy的使用（注意定义与删除）、head tail使用
+dummy的使用（注意new与delete）、head tail使用
 
 迭代法：pre cur next使用、递归法：防止成环
  
@@ -60,6 +60,56 @@ dummy的使用（注意定义与删除）、head tail使用
         }        
    
 ```
+
+链表基本操作
+
+```C++
+
+
+// 206. 反转链表 
+
+递归法
+
+class Solution {
+public:
+    ListNode* reverseList(ListNode* head) {
+        if(head == nullptr || head->next == nullptr){
+            return head;
+        }
+
+        ListNode* node = reverseList(head->next);
+        //反转且避免成环
+        head->next->next = head;
+        head->next = nullptr;
+        return node;
+    }
+};
+
+迭代法：pre cur next
+
+class Solution {
+public:
+    ListNode* reverseList(ListNode* head) {
+        if(head == nullptr || head->next == nullptr){
+            return head;
+        }
+        ListNode* pre = nullptr;
+        ListNode* cur = head;
+        while(cur){
+            //pre cur next的使用
+            ListNode* next = cur->next;
+            cur->next = pre;
+            pre = cur;
+            cur = next;
+        }
+
+        return pre;
+    }
+};
+
+```
+
+
     
     测试用例的链表定义
     
