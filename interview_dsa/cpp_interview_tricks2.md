@@ -16,6 +16,8 @@ struct ListNode {
 ```	
 	
 dummy的使用（注意定义与删除）、head tail使用
+
+迭代法：pre cur next使用、递归法：防止成环
  
 
 ```c++
