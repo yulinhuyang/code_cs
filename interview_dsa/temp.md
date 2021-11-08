@@ -1,161 +1,43 @@
-##### 152 乘积最大子数组
+#### 207. 课程表
 
 ```C++
-
 class Solution {
 public:
-    int maxProduct(vector<int>& nums) {
-        int n = nums.size();
-        vector<int> dpMax(n,0);
-        vector<int> dpMin(n,0);
-        dpMax[0] = nums[0];
-        dpMin[0] = nums[0];
-        int ans = nums[0];
-        for(int i = 1;i < n;i++){
-            dpMax[i] = max(nums[i],max(dpMax[i-1]*nums[i],dpMin[i-1]*nums[i]));
-            dpMin[i] = min(nums[i],min(dpMax[i-1]*nums[i],dpMin[i-1]*nums[i]));
-            ans = max(ans,dpMax[i]);
+    bool canFinish(int numCourses, vector<vector<int>> &prerequisites) {
+        //inDegree表 + 邻接表
+        vector<int> inDeg(numCourses, 0);
+        vector<vector<int>> edges;
+        edges.resize(numCourses);
+        for (auto course:prerequisites) {
+            inDeg[course[0]]++;
+            edges[course[1]].emplace_back(course[0]);
         }
-        return  ans;
-    }
-};
 
-```
-
-#### 169 多数元素
-
-```C++
-class Solution {
-public:
-    int majorityElement(vector<int>& nums) {
-
-        //投票法
-        int count = 1;
-        int conda = nums[0];
-        for(int i = 1;i < nums.size();i++){
-            if(count == 0){
-                conda = nums[i];
-            }
-            if(conda == nums[i]){
-                count++;
-            } else{
-                count--;
+        //bfs
+        queue<int> workQueue;
+        for (int i = 0; i < numCourses; i++) {
+            if (inDeg[i] == 0) {
+                workQueue.push(i);
             }
         }
-        return conda;
-    }
-};
 
-```
-#### 198 打家劫舍
-
-```C++
-class Solution {
-public:
-    int rob(vector<int>& nums) {
-
-        //dp array -->简化
-        int dp_i = 0;
-        int dp_i_1 = 0;
-        int dp_i_2 = 0;
-        for(int i = 0;i < nums.size();i++){
-            dp_i = max(dp_i_1,dp_i_2 + nums[i]);
-            dp_i_2 = dp_i_1;
-            dp_i_1 = dp_i;
-        }
-        return  dp_i;
-    }
-};
-
-```
-
-#### 200 岛屿问题
-
-```C++
-class Solution {
-public:
-    void dfs(vector<vector<char>> &grid, int row, int col) {
-        if (row < 0 || row > grid.size() - 1 || col < 0 || col > grid[0].size() - 1) {
-            return;
-        }
-        if (grid[row][col] != '1') {
-            return;
-        }
-        grid[row][col] = '2';
-        dfs(grid, row - 1, col);
-        dfs(grid, row, col - 1);
-        dfs(grid, row + 1, col);
-        dfs(grid, row, col + 1);
-
-    }
-
-    int numIslands(vector<vector<char>> &grid) {
-
-        int m = grid.size();
-        int n = grid[0].size();
-        int sum = 0;
-        for (int i = 0; i < m; i++) {
-            for (int j = 0; j < n; j++) {
-                if (grid[i][j] == '1') {
-                    dfs(grid, i, j);
-                    sum += 1;
+        int visited = 0;
+        while (!workQueue.empty()) {
+            auto top = workQueue.front();
+            workQueue.pop();
+            visited++;
+            for (auto edge:edges[top]) {
+                inDeg[edge]--;
+                if (inDeg[edge] == 0) {
+                    workQueue.push(edge);
                 }
             }
         }
-        return sum;
-    }
-};
 
-```
-
-#### 206. 反转链表 
-
-递归法
-
-```C++
-class Solution {
-public:
-    ListNode* reverseList(ListNode* head) {
-        if(head == nullptr || head->next == nullptr){
-            return head;
-        }
-
-        ListNode* node = reverseList(head->next);
-        //反转且避免成环
-        head->next->next = head;
-        head->next = nullptr;
-        return node;
+        return numCourses == visited;
     }
 };
 ```
-
-
-迭代法：pre cur next
-
-```C++
-class Solution {
-public:
-    ListNode* reverseList(ListNode* head) {
-        if(head == nullptr || head->next == nullptr){
-            return head;
-        }
-        ListNode* pre = nullptr;
-        ListNode* cur = head;
-        while(cur){
-            //pre cur next的使用
-            ListNode* next = cur->next;
-            cur->next = pre;
-            pre = cur;
-            cur = next;
-        }
-
-        return pre;
-    }
-};
-```
-
-
-
 
 
 
