@@ -285,6 +285,9 @@ time complexity 是输入规模 n 的一个函数，有所有的 n! 种输入中
 
 在 O 记号确定上界，大 $\Omega$ 记号确定下界，而 大 $\Theta$ 记号给出了一个确界，是一个准确估计：
 
+复杂度顺序：坏->中-> 好： O --> theta --> Omega，通常情况下考虑最坏情况。
+
+
 ![time_complexity.png](../pics/time_complexity.png)
 
 
