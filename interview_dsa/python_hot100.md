@@ -2656,7 +2656,6 @@ self使用：类中函数的第一个参数是实例对象本身，并且约定�
 ###### 208. 实现 Trie (前缀树)
 
 ```python
-
 class Trie:
     
     def __init__(self):
@@ -2668,6 +2667,7 @@ class Trie:
         
     def searchPrefix(self, prefix: str):
         node = self
+	//返回node
         for i in range(len(prefix)):
             ch = ord(prefix[i]) - ord('a')
             if not node.children[ch]:
@@ -2702,9 +2702,8 @@ class Trie:
         """
         Returns if there is any word in the trie that starts with the given prefix.
         """
-        if self.searchPrefix(prefix) and not self.isEnd:
-            return True
-        return False
+        return self.searchPrefix(prefix) is not None
+
 ```
 
 ##### 并查集
