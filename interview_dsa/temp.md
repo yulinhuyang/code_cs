@@ -96,5 +96,57 @@ public:
 
 ```
 
+```python
+class Trie:
+    
+    def __init__(self):
+        """
+        Initialize your data structure here.
+        """
+        self.children = [None] *26
+        self.isEnd = False
+        
+    def searchPrefix(self, prefix: str):
+        node = self
+        for i in range(len(prefix)):
+            ch = ord(prefix[i]) - ord('a')
+            if not node.children[ch]:
+                return None
+            node = node.children[ch]
+        return node
+    
+    def insert(self, word: str) -> None:
+        """
+        Inserts a word into the trie.
+        """
+        node = self
+        for i in range(len(word)):
+            ch = ord(word[i]) - ord('a')
+            if not node.children[ch]:
+                node.children[ch] = Trie();
+            node = node.children[ch]
+        node.isEnd = True
+        return 
+
+    def search(self, word: str) -> bool:
+        """
+        Returns if the word is in the trie.
+        """
+        ret = self.searchPrefix(word)
+        if ret and ret.isEnd:
+            return True
+        return False
+
+
+    def startsWith(self, prefix: str) -> bool:
+        """
+        Returns if there is any word in the trie that starts with the given prefix.
+        """
+        if self.searchPrefix(prefix) and not self.isEnd:
+            return True
+        return False
+
+```
+
 
 
