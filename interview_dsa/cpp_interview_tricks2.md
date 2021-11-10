@@ -489,7 +489,71 @@ public:
 
 ### 6.1 base code
 
-[冒泡排序的三种改进方法](https://www.cnblogs.com/mistermoney/p/9550590.html)
+冒泡排序优化版
+
+```C++
+void bubbleSort(vector<int> &nums) {
+
+	int sortBorder = nums.size() - 1;
+	int lastExchangeIndex = 0;
+	for (int i = 0; i < nums.size(); i++) {
+		bool isSorted = true;
+		for (int j = 0; j < sortBorder; j++) {
+			//j的相邻原始比较向上冒泡
+			if (nums[j] > nums[j + 1]) {
+				swap(nums[j], nums[j + 1]);
+				isSorted = false;
+				//设置有序边界,扩大有序区长度
+				lastExchangeIndex = j;
+			}
+		}
+		if (isSorted) {
+			break;
+		}
+		sortBorder = lastExchangeIndex;
+	}
+}
+```
+
+快速排序随机优化版
+
+```C++
+class Solution {
+public:
+    int partition(vector<int> &nums, int low, int high) {
+        //gen random index
+        int index = (rand()%(high - low + 1))+1;
+        swap(nums[low],nums[index]);
+
+        int pivot = nums[low];
+        int i = low;
+        int j = high;
+        while (i < j) {
+            //i在大于基准数的地方停下，j在小于基准数的地方停下，如果i先走，最后停下跟基准数交换时，总是大于基准数的
+            //j先走
+            while (i < j && nums[j] >= pivot) {
+                j--;
+            }
+            while (i < j && nums[i] <= pivot) {
+                i++;
+            }
+            swap(nums[i], nums[j]);
+        }
+        swap(nums[low], nums[i]);
+        return i;
+    }
+
+    void quickSort(vector<int> &nums, int start, int end) {
+        if (start >= end) {
+            return;
+        }
+        int index = partition(nums, start, end);
+        quickSort(nums, start, index - 1);
+        quickSort(nums, index + 1, end);
+    }
+}
+```
+
 
 ## 7 二分搜索
 
