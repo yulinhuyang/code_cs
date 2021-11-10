@@ -1,5 +1,8 @@
 #####  冒泡的三种方法
 
+[冒泡排序的三种改进方法](https://www.cnblogs.com/mistermoney/p/9550590.html)
+
+
 ```C++
 
 //冒泡排序1
