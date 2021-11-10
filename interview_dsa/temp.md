@@ -1,152 +1,44 @@
-#### 207. 课程表
+##### 912. 排序数组
 
 ```C++
 class Solution {
 public:
-    bool canFinish(int numCourses, vector<vector<int>> &prerequisites) {
-        //inDegree表 + 邻接表
-        vector<int> inDeg(numCourses, 0);
-        vector<vector<int>> edges;
-        edges.resize(numCourses);
-        for (auto course:prerequisites) {
-            inDeg[course[0]]++;
-            edges[course[1]].emplace_back(course[0]);
-        }
+    int partition(vector<int> &nums, int low, int high) {
+        //gen random index
+        int index = (rand()%(high - low + 1))+1;
+        swap(nums[low],nums[index]);
 
-        //bfs
-        queue<int> workQueue;
-        for (int i = 0; i < numCourses; i++) {
-            if (inDeg[i] == 0) {
-                workQueue.push(i);
+        int pivot = nums[low];
+        int i = low;
+        int j = high;
+        while (i < j) {
+            //i在大于基准数的地方停下，j在小于基准数的地方停下，如果i先走，最后停下跟基准数交换时，总是大于基准数的
+            //j先走
+            while (i < j && nums[j] >= pivot) {
+                j--;
             }
-        }
-
-        int visited = 0;
-        while (!workQueue.empty()) {
-            auto top = workQueue.front();
-            workQueue.pop();
-            visited++;
-            for (auto edge:edges[top]) {
-                inDeg[edge]--;
-                if (inDeg[edge] == 0) {
-                    workQueue.push(edge);
-                }
+            while (i < j && nums[i] <= pivot) {
+                i++;
             }
+            swap(nums[i], nums[j]);
         }
+        swap(nums[low], nums[i]);
+        return i;
+    }
 
-        return numCourses == visited;
+    void quickSort(vector<int> &nums, int start, int end) {
+        if (start >= end) {
+            return;
+        }
+        int index = partition(nums, start, end);
+        quickSort(nums, start, index - 1);
+        quickSort(nums, index + 1, end);
+    }
+
+    int findKthLargest(vector<int> &nums, int k) {
+
+        quickSort(nums, 0, nums.size() - 1);
+        return nums[nums.size() - k - 1];
     }
 };
 ```
-#### 208. 实现 Trie (前缀树)
-
-Python，实例对象调用函数时，自动将对象本身传入函数的第一个变量是self，显示写出来
-
-C++，系统也会将实例对象传入函数，对象的这个参数都是隐藏的，在函数内部才可以显性的使用它this
-
-类与对象的使用
-
-```C++
-class Trie {
-private:
-    bool isEnd;
-    vector<Trie *> children;//index 0~26范围,以index为下标
-
-    Trie *searchPrefix(string prefix) {
-        Trie *node = this;
-        for (auto ch:prefix) {
-            ch -= 'a';
-            //if 的顺序
-            if (node->children[ch] == nullptr) {
-                return nullptr;
-            }
-            node = node->children[ch];
-        }
-        return node;
-    }
-
-public:
-    //列表初始化
-    Trie() : children(26), isEnd(false) {
-    }
-
-    void insert(string word) {
-        //this与self
-        Trie *node = this;
-        for (auto ch:word) {
-            ch -= 'a';
-            if (node->children[ch] == nullptr) {
-                node->children[ch] = new Trie();
-            }
-            node = node->children[ch];
-        }
-        node->isEnd = true;
-    }
-
-    bool search(string word) {
-        Trie *ret = this->searchPrefix(word);
-        return ret != nullptr && ret->isEnd;
-    }
-
-    bool startsWith(string prefix) {
-        Trie *ret = this->searchPrefix(prefix);
-        return ret != nullptr;
-    }
-};
-
-```
-
-```python
-class Trie:
-    
-    def __init__(self):
-        """
-        Initialize your data structure here.
-        """
-        self.children = [None] *26
-        self.isEnd = False
-        
-    def searchPrefix(self, prefix: str):
-        node = self
-        for i in range(len(prefix)):
-            ch = ord(prefix[i]) - ord('a')
-            if not node.children[ch]:
-                return None
-            node = node.children[ch]
-        return node
-    
-    def insert(self, word: str) -> None:
-        """
-        Inserts a word into the trie.
-        """
-        node = self
-        for i in range(len(word)):
-            ch = ord(word[i]) - ord('a')
-            if not node.children[ch]:
-                node.children[ch] = Trie();
-            node = node.children[ch]
-        node.isEnd = True
-        return 
-
-    def search(self, word: str) -> bool:
-        """
-        Returns if the word is in the trie.
-        """
-        ret = self.searchPrefix(word)
-        if ret and ret.isEnd:
-            return True
-        return False
-
-
-    def startsWith(self, prefix: str) -> bool:
-        """
-        Returns if there is any word in the trie that starts with the given prefix.
-        """
-        if self.searchPrefix(prefix) and not self.isEnd:
-            return True
-        return False
-
-```
-
-
-
