@@ -353,3 +353,21 @@ longlong： 属于int型，一般来讲，是longint型大小的两倍，int型�
 内置类型变量（如 int ，double，bool等）： 定义于任何函数之外的变量被初始化为0, 定义于函数体内部的内置类型将不被初始化，一个未被初始化的内置类型变量的值是未定义的.
 
 其他类型的变量（如 string 或 其他自定义类型）：不管定义于何处，都会执行默认构造函数。如果该类没有默认构造函数，则会引发错误。因此，建议为每个类都定义一个默认构造函数（=default）。
+
+#### 13 统计运行时间
+
+C++ 11使用 chrono
+
+```C++
+#include <chrono>
+using namespace std::chrono;
+
+auto start = system_clock::now();
+auto end  = system_clock::now();
+
+std::chrono::duration<double> elapsed = end - start;
+std::cout << "Elapsed time: " << elapsed.count() << "s";
+
+```
+	
+	
