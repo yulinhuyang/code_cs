@@ -346,6 +346,21 @@ du -sm * | sort -nr | head 查看最大的
 
 反汇编: objdump -S obj C
 
+统计当前目录下文件的个数（不包括目录）
+
+$ ls -l | grep "^-" | wc -l
+
+统计当前目录下文件的个数（包括子目录）
+
+$ ls -lR| grep "^-" | wc -l
+
+查看某目录下文件夹(目录)的个数（包括子目录）
+
+$ ls -lR | grep "^d" | wc -l
+
+
+
+
 ### json 处理
 
 在线查看json www.json.cn  
