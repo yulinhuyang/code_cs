@@ -19,6 +19,7 @@ dummy的使用（注意new与delete）、head tail使用
 
 迭代法：pre cur next使用、递归法：防止成环
  
+ListNode *new = nullptr和Listnode的默认值不一样，默认值val是0
 
 ```c++
         //dummy定义与释放
