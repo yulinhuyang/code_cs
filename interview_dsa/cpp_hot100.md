@@ -1010,7 +1010,34 @@ public:
     }
 };
 ```
+##### 236. 二叉树的最近公共祖先
 
+树天然递归
+
+```C++
+class Solution {
+public:
+    TreeNode* lowestCommonAncestor(TreeNode* root, TreeNode* p, TreeNode* q) {
+        if(root == nullptr){
+            return nullptr;
+        }
+        if(root->val == p->val || root->val == q->val){
+            return root;
+        }
+
+        TreeNode* left = lowestCommonAncestor(root->left,p,q);
+        TreeNode* right = lowestCommonAncestor(root->right,p,q);
+        if(right == nullptr){
+            return left;
+        }
+        if(left == nullptr){
+            return right;
+        }
+        
+        return root;
+    }
+};
+```
 
 ### 3 动态规划
 
