@@ -369,5 +369,12 @@ jq: json文件处理以及格式化显示
 
 cat demo.json | jq '.id,.name,.status,.attachments'
 
+### apt相关
 
+ apt download docker-ce-cli 下载相关的离线安装包
+ 
+ dpkg -i 安装
+ 
+ 
+ 
 
