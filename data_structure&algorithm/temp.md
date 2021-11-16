@@ -66,3 +66,11 @@ void bubbleSort(vector<int> &nums) {
 
 
 自顶向下递归，自底向上迭代
+
+
+List ---->
+
+头head -- 首first -- 末last -- 尾tailer
+
+
+
