@@ -237,7 +237,11 @@ sta.size();
 sta.empty();
 ```
 
-#### 6 queue
+#### 6 queue、deque
+
+queue：头pop,尾 push
+
+deque:双端
 
 ```c++
 #include <queue>
@@ -251,7 +255,19 @@ que.pop();
 eg:
 int e = q.front();
 q.pop();
+
+
+deque<int> deque;
+
+//滑动窗口，单调队列，存index,先出头端，再判断尾部，
+
+deque.emplace_back(1);
+deque.pop_back();
+deque.pop_front();
+deque.push_front(2);
+
 ```
+
 
 #### 7 set(unordered_set)
 
