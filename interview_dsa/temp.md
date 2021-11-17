@@ -73,7 +73,7 @@ list：8164 ms	27.5 MB
 
 class Solution:
     def maxSlidingWindow(self, nums: List[int], k: int) -> List[int]:
-		#性能比list更好,存索引
+	#性能比list更好,存索引
         deque = collections.deque()
         res = []
         for i in range(k):
