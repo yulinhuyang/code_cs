@@ -61,3 +61,31 @@ public:
 };
 
 ```
+
+##### 240 240. 搜索二维矩阵 II
+
+```C++
+class Solution {
+public:
+    bool searchMatrix(vector<vector<int>>& matrix, int target) {
+        int m = matrix.size();
+        int n = matrix[0].size();
+        int i = 0;
+        int j = n - 1;
+        while(i < m && j > -1){
+            if(matrix[i][j] < target){
+                i++;
+                //二分查找的区间写法
+            } else if(target < matrix[i][j]){
+                j--;
+            } else{
+                return true;
+            }
+        }
+        return false;
+    }
+};
+
+```
+
+
