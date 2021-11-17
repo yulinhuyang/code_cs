@@ -62,6 +62,63 @@ public:
 
 ```
 
+
+性能对比：
+
+deque: 280 ms	26.9 MB	
+
+list：8164 ms	27.5 MB
+
+```python
+
+class Solution:
+    def maxSlidingWindow(self, nums: List[int], k: int) -> List[int]:
+		#性能比list更好,存索引
+        deque = collections.deque()
+        res = []
+        for i in range(k):
+            #单调降序队列
+            while deque and nums[deque[-1]] < nums[i]:
+                deque.pop()
+            deque.append(i)
+        
+        res.append(nums[deque[0]])
+        for i in range(k,len(nums)):
+            if deque[0] == i - k:
+                deque.popleft()
+            while deque and nums[deque[-1]] < nums[i]:
+                deque.pop()
+                
+            deque.append(i)
+            res.append(nums[deque[0]])
+
+        return res
+
+class Solution:
+    def maxSlidingWindow(self, nums: List[int], k: int) -> List[int]:
+
+        #存索引
+        deque = []
+        res = []
+        for i in range(0,k):
+            #单调降序队列
+            while deque and nums[deque[-1]] < nums[i]:
+                deque.pop(-1)
+            deque.append(i)
+        res.append(nums[deque[0]])
+
+        for i in range(k,len(nums)):
+            if deque and deque[0] == i - k:
+                deque.pop(0)
+            while deque and nums[deque[-1]] < nums[i]:
+                deque.pop(-1)
+
+            deque.append(i)
+            res.append(nums[deque[0]])
+        
+        return res
+```
+
 ##### 240. 搜索二维矩阵 II
 
 ```C++
