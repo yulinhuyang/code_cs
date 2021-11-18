@@ -144,5 +144,55 @@ public:
 };
 
 ```
+0-1背包模板(最值)，部分可以简化为一维的
 
+for i in [1..N]:
+    for w in [1..W]:
+        dp[i][w] = max(
+            dp[i-1][w],
+            dp[i-1][w - wt[i-1]] + val[i-1]
+        )
+return dp[N][W]
+
+
+子集背包模板(能否)：
+
+ #装入或者不装入
+ dp[i][j] = dp[i - 1][j] || dp[i - 1][j - nums[i - 1]]
+
+
+完全背包模板(方法数)
+
+https://labuladong.gitee.io/algo/3/25/81/
+
+for i in range(n + 1):
+    for j in range(amount + 1):
+        if j - coins[i-1] >= 0：
+            dp[i][j] = dp[i - 1][j] + dp[i][j - coins[i-1]] #这里表示i可以反复使用
+        else:
+            dp[i][j] = dp[i - 1][j]
+
+
+##### 279. 完全平方数
+
+```C++
+class Solution {
+public:
+    int numSquares(int n) {
+        //square数组 j -->j *j
+        vector<int> dp(n + 1,n);//初始化无穷大
+        dp[0] = 0;
+        for (int i = 1; i < n + 1; i++) {
+            for(int j = 1;j *j <= i;j++){
+                if(i < j *j){
+                    break;
+                }
+                //完全背包，dp[i]反复
+                dp[i] = min(dp[i],dp[i-j*j] + 1);
+            }
+        }
+        return  dp[n];
+    }
+};
+```
 
