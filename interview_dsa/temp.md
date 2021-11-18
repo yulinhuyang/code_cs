@@ -148,6 +148,8 @@ public:
 ```C++
 0-1背包模板(最值)，部分可以简化为一维的
 
+coins和amount哪个位于外循环，其实都可以
+
 for i in [1..N]:
     for w in [1..W]:
         dp[i][w] = max(
