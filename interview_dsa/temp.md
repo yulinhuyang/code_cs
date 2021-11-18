@@ -188,7 +188,7 @@ for i in range(n + 1):
 
 ```C++
 
-正常情况下coins外循环，amount内循环，这里反过来反过来。
+正常情况下coins外循环，amount内循环，这里反过来了。
 
 class Solution {
 public:
