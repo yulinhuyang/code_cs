@@ -145,11 +145,14 @@ public:
 
 ```
 
-```C++
+
+背包问题，正常情况下 choice(coins)在外循环，amount在内循环，根据choice是否有限进行求最值、能否、方法数等，
+
+部分特殊情况，如完全平方数等，choice不使用sqrt可以简化放在内循环。
+
 0-1背包模板(最值)，部分可以简化为一维的
 
-coins和amount哪个位于外循环，其实都可以
-
+```C++
 for i in [1..N]:
     for w in [1..W]:
         dp[i][w] = max(
@@ -157,18 +160,20 @@ for i in [1..N]:
             dp[i-1][w - wt[i-1]] + val[i-1]
         )
 return dp[N][W]
-
+```
 
 子集背包模板(能否)：
 
+```C++
  #装入或者不装入
  dp[i][j] = dp[i - 1][j] || dp[i - 1][j - nums[i - 1]]
-
+```
 
 完全背包模板(方法数)
 
 https://labuladong.gitee.io/algo/3/25/81/
 
+```C++
 for i in range(n + 1):
     for j in range(amount + 1):
         if j - coins[i-1] >= 0：
@@ -179,7 +184,38 @@ for i in range(n + 1):
 
 ##### 279. 完全平方数
 
+相当于完全背包的结合最值问题
+
 ```C++
+
+正常情况下coins外循环，amount内循环，这里反过来反过来。
+
+class Solution {
+public:
+    int numSquares(int n) {
+        int num = sqrt(n);
+        vector<int> squareNum(num + 1);
+        for (int i = 0; i < num + 1; i++) {
+            squareNum[i] = i * i;
+        }
+
+        vector<int> dp(n + 1, n);
+        dp[0] = 0;
+        for (int i = 1; i < n + 1; i++) {
+            for (int j = 1; j < num + 1; j++) {
+                if (i < squareNum[j]) {
+                    break;
+                }
+                dp[i] = min(dp[i], dp[i - squareNum[j]] + 1);
+            }
+        }
+        return dp[n];
+    }
+};
+
+
+简化sqrt数组存储后，coins在内循环
+
 class Solution {
 public:
     int numSquares(int n) {
