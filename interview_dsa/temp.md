@@ -258,4 +258,43 @@ public:
 
 ```
 
+##### 287 寻找重复数
+
+基于值的二分查找，nlogn复杂度
+
+```C++
+class Solution {
+public:
+    int findDuplicate(vector<int> &nums) {
+        int n = nums.size();
+        int left = 1;
+        int right = n - 1;
+        int ans;
+        //基于值的二分查找
+        while (left <= right) {
+            int mid = left + (right - left) / 2;
+            int count = 0;
+            for (int i = 0; i < n; i++) {
+                if (nums[i] <= mid) {
+                    count++;
+                }
+            }
+            if (count <= mid) {
+                left = mid + 1;
+            } else {
+                right = mid - 1;
+                ans = mid;
+            }
+        }
+
+        return ans;
+    }
+};
+
+```
+
+
+
+
+
 
