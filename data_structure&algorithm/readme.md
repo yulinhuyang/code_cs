@@ -8,6 +8,8 @@ DSAPP + ALG4 (CS61B + CS170)
 
 https://dsa.cs.tsinghua.edu.cn/~deng/ds/dsacpp/
 
+[邓俊辉数据结构与算法学习笔记](https://blog.csdn.net/xiaodidadada/article/details/108365403)
+
 **CS61B**
 
 https://inst.eecs.berkeley.edu/~cs61b/fa21/
