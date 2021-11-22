@@ -375,6 +375,11 @@ cat demo.json | jq '.id,.name,.status,.attachments'
  
  dpkg -i 安装
  
+### yum相关
+
+centos使用yum源
+
+[CentOS yum 源的配置与使用](https://www.cnblogs.com/mchina/archive/2013/01/04/2842275.html)
  
  
 
