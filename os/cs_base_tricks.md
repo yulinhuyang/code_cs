@@ -381,5 +381,5 @@ centos使用yum源
 
 [CentOS yum 源的配置与使用](https://www.cnblogs.com/mchina/archive/2013/01/04/2842275.html)
  
- 
+[CentOS 7 安装配置 NFS](https://abelsu7.top/2019/10/17/centos7-install-nfs/)
 
