@@ -293,8 +293,56 @@ public:
 
 ```
 
+#####300. 最长递增子序列
 
+```C++
+class Solution {
+public:
+    int lengthOfLIS(vector<int>& nums) {
+        int n = nums.size();
+        vector<int> dp(n,1);
+        int max_len = 1;
+        for (int i = 1; i < n; i++) {
+            //双循环仿insertSort
+            for (int j = 0; j < i; j++) {
+                if (nums[i] > nums[j]) {
+                    dp[i] = max(dp[i],dp[j] + 1);
+                }
+            }
+            max_len = max(max_len,dp[i]);
+        }
+        return max_len;
 
+    }
+};
+```
+
+##### 309. 最佳买卖股票时机含冷冻期
+
+```C++
+class Solution {
+public:
+    int maxProfit(vector<int> &prices) {
+        int dp_i_0 = 0;
+        int dp_i_1 = INT_MIN;
+        int pre = 0;
+        //间隔+冷冻
+        for (int i = 0; i < prices.size(); i++) {
+            int temp = dp_i_0;
+            dp_i_0 = max(dp_i_0, dp_i_1 + prices[i]);
+            dp_i_1 = max(dp_i_1, pre - prices[i]);
+            pre = temp;
+        }
+
+        return dp_i_0;
+    }
+};
+
+```
+
+链表标准形式
+
+括号与栈、栈混洗
 
 
 
