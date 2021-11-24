@@ -344,5 +344,150 @@ public:
 
 括号与栈、栈混洗
 
+#####  301. 删除无效的括号
+
+理解DSAPP栈与括号部分
+
+单种括号计数可以，多种需要使用栈
+
+去重复,判断前后重复，要从start开始
+
+多叉递归回溯 + 剪枝 远快于   <  双分支回溯
+
+```python
+
+class Solution:
+    def __init__(self):
+        self.res = []
+
+    def isValid(self,s):
+        cnt = 0
+        #理解DSAPP栈与括号部分
+        #单种括号计数可以，多种需要使用栈
+        for c in  s:
+            if c == '(':
+                cnt += 1
+            elif c == ')':
+                cnt -= 1
+            if cnt < 0:
+                return False
+        
+        return True
+
+
+    def dfs(self,s,start,left_remove,right_remove):
+        if left_remove == 0 and right_remove == 0:
+            if self.isValid(s):
+                self.res.append(s)
+            return
+
+        #从start开始，避免)(f重复
+        for i in range(start,len(s)):
+            #去重复
+            if i != start and s[i-1] == s[i]:
+                continue
+            if left_remove + right_remove > len(s) - i :
+                return
+
+            if left_remove > 0 and s[i] == '(':
+                self.dfs(s[:i] + s[i+1:],i,left_remove - 1,right_remove)
+            elif right_remove > 0 and s[i] == ')':
+                self.dfs(s[:i] + s[i+1:],i,left_remove,right_remove -1)
+    
+        return
+
+
+    def removeInvalidParentheses(self, s: str) -> List[str]:
+        left_remove = 0
+        right_remove = 0
+        for i in range(len(s)):
+            if s[i] == '(':
+                left_remove += 1
+            elif s[i] == ')':
+                if left_remove != 0:
+                    left_remove -= 1
+                else:
+                    right_remove += 1
+        
+        self.dfs(s,0,left_remove,right_remove)
+
+        return self.res
+```
+
+```C++
+class Solution {
+    vector<string> res;
+public:
+    bool isValid(string s) {
+        int cnt = 0;
+        //理解DSAPP栈与括号部分
+        //单种括号计数可以，多种需要使用栈
+        for (auto c:s) {
+            if (c == '(') {
+                cnt++;
+            } else if (c == ')') {
+                cnt--;
+            }
+            if (cnt < 0) {
+                return false;
+            }
+        }
+        return true;
+    }
+
+    void dfs(string s, int start, int left_remove, int right_remove) {
+        if (left_remove == 0 && right_remove == 0) {
+            if (isValid(s)) {
+                res.emplace_back(s);
+            }
+            return;
+        }
+        //从start开始，避免)(f重复
+        for (int i = start; i < s.size(); i++) {
+            //去重复
+            if (i != start && s[i] == s[i - 1]) {
+                continue;
+            }
+
+            //choice
+            if (left_remove + right_remove > s.size() - i) {
+                return;
+            }
+
+            if (left_remove > 0 && s[i] == '(') {
+                dfs(s.substr(0, i) + s.substr(i + 1), i, left_remove - 1, right_remove);
+            } else if (right_remove > 0 && s[i] == ')') {
+                dfs(s.substr(0, i) + s.substr(i + 1), i, left_remove, right_remove - 1);
+            }
+        }
+
+    }
+
+
+    vector<string> removeInvalidParentheses(string s) {
+        int left_remove = 0;
+        int right_remove = 0;
+        for (auto c:s) {
+            if (c == '(') {
+                left_remove++;
+            } else if (c == ')') {
+                if (left_remove == 0) {
+                    right_remove++;
+                } else {
+                    left_remove--;
+                }
+            }
+        }
+
+        string path;
+        dfs(s, 0, left_remove, right_remove);
+        return res;
+    }
+};
+
+```
+
+
+
 
 
