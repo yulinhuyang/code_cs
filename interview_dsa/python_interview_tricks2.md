@@ -628,6 +628,9 @@ def search(self, nums: List[int], target: int) -> int:
 
 ### 8.1 base code 
 
+
+滑动窗口
+
 ```python
 
 
@@ -682,6 +685,35 @@ python 三目运算符 max = a if a>b else b
 map必记录的api： keys、values、get、setdefault、pop、update、in
 
 hash表（用list 或者 dict()）: 用true 或者false表示是否出现过(a-z)；count计算出现的数量（32位宽）；记录上次出现的索引位置（滑窗）。
+
+
+滑动窗口+ 单调队列
+
+```python
+class Solution:
+    def maxSlidingWindow(self, nums: List[int], k: int) -> List[int]:
+	#性能比list更好,存索引
+        deque = collections.deque()
+        res = []
+        for i in range(k):
+            #单调降序队列
+            while deque and nums[deque[-1]] < nums[i]:
+                deque.pop()
+            deque.append(i)
+        
+        res.append(nums[deque[0]])
+        for i in range(k,len(nums)):
+            if deque[0] == i - k:
+                deque.popleft()
+            while deque and nums[deque[-1]] < nums[i]:
+                deque.pop()
+                
+            deque.append(i)
+            res.append(nums[deque[0]])
+
+        return res
+```
+
 
 ## 9 其他高频
 
