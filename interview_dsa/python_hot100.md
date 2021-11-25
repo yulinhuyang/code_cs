@@ -1523,52 +1523,74 @@ class Solution:
 
 ##### 301 删除无效的括号
 
+理解DSAPP栈与括号部分
+
+单种括号计数可以，多种需要使用栈
+
+去重复,判断前后重复，要从start开始
+
+多叉递归回溯 + 剪枝 远快于   <  双分支回溯
+
+
 ```python
+
 class Solution:
-    def removeInvalidParentheses(self, s: str) -> List[str]:
-        def dfs(index,left_count,right_count,left_remove,right_remove,path):
-            if index == len(s):
-                if left_remove == 0 and right_remove == 0:
-                    res.add(''.join(path))
-                return
+    def __init__(self):
+        self.res = []
 
-            #删除当前字符
-            if s[index] == '('  and left_remove > 0:
-                dfs(index+1,left_count,right_count,left_remove - 1,right_remove,path)
-            elif s[index] == ')' and right_remove > 0:
-                dfs(index+1,left_count,right_count,left_remove,right_remove - 1,path)
+    def isValid(self,s):
+        cnt = 0
+        #理解DSAPP栈与括号部分
+        #单种括号计数可以，多种需要使用栈
+        for c in  s:
+            if c == '(':
+                cnt += 1
+            elif c == ')':
+                cnt -= 1
+            if cnt < 0:
+                return False
+        
+        return True
 
-            #保留当前字符
-            path.append(s[index])
-            if s[index] != '(' and s[index] != ')':
-                dfs(index+1,left_count,right_count,left_remove,right_remove,path)
-            elif s[index] == '(':
-                dfs(index+1,left_count + 1,right_count,left_remove,right_remove,path)
-            elif right_count < left_count:
-                dfs(index+1,left_count,right_count + 1,left_remove,right_remove,path)
 
-            path.pop(-1)
+    def dfs(self,s,start,left_remove,right_remove):
+        if left_remove == 0 and right_remove == 0:
+            if self.isValid(s):
+                self.res.append(s)
             return
 
-        n = len(s)
+        #从start开始，避免)(f重复
+        for i in range(start,len(s)):
+            #去重复
+            if i != start and s[i-1] == s[i]:
+                continue
+            if left_remove + right_remove > len(s) - i :
+                return
+
+            if left_remove > 0 and s[i] == '(':
+                self.dfs(s[:i] + s[i+1:],i,left_remove - 1,right_remove)
+            elif right_remove > 0 and s[i] == ')':
+                self.dfs(s[:i] + s[i+1:],i,left_remove,right_remove -1)
+    
+        return
+
+
+    def removeInvalidParentheses(self, s: str) -> List[str]:
         left_remove = 0
         right_remove = 0
-        for i in range(n):
+        for i in range(len(s)):
             if s[i] == '(':
                 left_remove += 1
             elif s[i] == ')':
-                if left_remove == 0:
-                    right_remove += 1
-                if left_remove > 0:
+                if left_remove != 0:
                     left_remove -= 1
+                else:
+                    right_remove += 1
         
-        #set去重复
-        res = set()
-        path = []
-        dfs(0,0,0,left_remove,right_remove,path)
-        return list(res)
-```
+        self.dfs(s,0,left_remove,right_remove)
 
+        return self.res
+```
 
 ##### 39. 组合总和
 
