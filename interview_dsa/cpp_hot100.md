@@ -1162,6 +1162,7 @@ public:
 
 ```
 
+
 #### 路径问题
 
 ##### 62. 不同路径
@@ -1332,6 +1333,32 @@ public:
             max_len = max(max_len, num_len);
         }
         return max_len;
+    }
+};
+```
+
+##### 300. 最长递增子序列
+
+双循环模仿insertSort
+
+```C++
+class Solution {
+public:
+    int lengthOfLIS(vector<int>& nums) {
+        int n = nums.size();
+        vector<int> dp(n,1);
+        int max_len = 1;
+        for (int i = 1; i < n; i++) {
+            //双循环仿insertSort
+            for (int j = 0; j < i; j++) {
+                if (nums[i] > nums[j]) {
+                    dp[i] = max(dp[i],dp[j] + 1);
+                }
+            }
+            max_len = max(max_len,dp[i]);
+        }
+        return max_len;
+
     }
 };
 ```
@@ -2303,7 +2330,28 @@ public:
     }
 };
 ```	
-	
+
+##### 283 移动零
+
+```C++
+class Solution {
+public:
+    void moveZeroes(vector<int>& nums) {
+        int n = nums.size();
+
+        int left =  0;
+        int right = 0;
+        while(right < n){
+            if(nums[right] != 0){
+                swap(nums[left],nums[right]);
+                left++;
+            }
+            right++;
+        }
+    }
+};
+
+```	
 
 	
 	
@@ -2510,7 +2558,7 @@ public:
 	
 存索引，方便出的判断
 	
-deque 双端队列
+deque + 单调队列
 
 ```C++
 class Solution {
