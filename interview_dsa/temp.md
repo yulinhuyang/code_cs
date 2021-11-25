@@ -487,7 +487,30 @@ public:
 
 ```
 
+##### 322 零钱兑换
 
+```C++
+class Solution {
+public:
+    int coinChange(vector<int> &coins, int amount) {
+
+        //取inf 下面+1可能会存在问题
+        vector<int> dp(amount + 1, amount + 1);
+        dp[0] = 0;
+        for (auto coin: coins) {
+            for (int i = coin; i < amount + 1; i++) {
+                dp[i] = min(dp[i], dp[i - coin] + 1);
+            }
+        }
+
+        if (dp[amount] > amount) {
+            return -1;
+        } else {
+            return dp[amount];
+        }
+    }
+};
+```
 
 
 
