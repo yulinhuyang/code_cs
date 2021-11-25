@@ -622,7 +622,7 @@ public:
 
 ```
 
-滑动窗口，单调队列
+deque + 单调队列
 
 ```C++
 class Solution {
