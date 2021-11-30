@@ -191,6 +191,8 @@ solid 原则：
 		
 		散布各处的相似switch问题:
 		
+		switch惊悚现身:以多态来代替。 Replace Type Code with Subclass （以子类取代类型码）或 Replace Type Code with State/Strategy （以状态/策略取代类型码）
+		
 	临时字段：
 	
 		---> 特殊阶段，成员函数传参用。可以封装成小类。
