@@ -135,6 +135,12 @@ tmux：终端复用工具
 
 convert  example.png  -resize  200x100!  example.png
 
+**ag命令
+
+ag --lua search_pattern
+
+ag -G .lua search_pattern
+
 **ps命令**
 
 ps aux最初用到Unix Style中，而ps -ef被用在System V Style中，
