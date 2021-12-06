@@ -182,6 +182,8 @@ https://zhuanlan.zhihu.com/p/23489050
 
 **流畅的python**：
 
+https://github.com/StdioA/fluent-python-notes
+
 https://www.zhihu.com/column/c_1200472332177096704
 
 https://www.zhihu.com/column/zen-of-python
@@ -239,6 +241,8 @@ python3核心编程（高级特性）
 **C++ primer**:
 
 https://github.com/applenob/Cpp_Primer_Practice
+
+https://github.com/czs108/Cpp-Primer-5th-Notes-CN
 
 efficitive C++：
 
