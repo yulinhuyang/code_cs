@@ -1,5 +1,5 @@
 
-(100个gdb小技巧)[https://github.com/hellogcc/100-gdb-tips]
+[100个gdb小技巧](https://github.com/hellogcc/100-gdb-tips)
 
 
 GDB调试方法：
