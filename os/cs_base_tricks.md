@@ -389,3 +389,26 @@ centos使用yum源
  
 [CentOS 7 安装配置 NFS](https://abelsu7.top/2019/10/17/centos7-install-nfs/)
 
+### ImageMagick 使用
+
+https://github.com/ohmycloud/ImageMagick
+
+当前目录下批量文件resize: 
+
+mogrify -resize 896x512! -format jpg *
+
+批量改格式
+
+mogrify -format png *.jpg
+
+多张图片转pdf 
+
+convert *.jpg foo.pdf
+
+ 学习笔记：https://github.com/ohmycloud/ImageMagick/blob/master/ImageMagick%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0.md
+
+
+
+
+
+
