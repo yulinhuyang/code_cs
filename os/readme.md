@@ -9,6 +9,8 @@ https://www.bilibili.com/video/BV1iW411d7hd
 
 https://www.zhihu.com/question/20402534/answer/1670374116
 
+https://github.com/EugeneLiu/translationCSAPP
+
 其他：
 
 系统与网络编程：Linux UNIX系统编程手册
