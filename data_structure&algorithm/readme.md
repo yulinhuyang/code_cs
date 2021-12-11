@@ -20,4 +20,4 @@ https://github.com/xiaoyang-sde/berkeley-cs61b
 
 UCB CS61B 学习记录 : https://testerhome.com/topics/27380
 
-伯克利神课CS61B 总结感悟 ：ttps://www.cxymm.net/article/lindaicoding/119439923
+伯克利神课CS61B 总结感悟 ：https://www.cxymm.net/article/lindaicoding/119439923
