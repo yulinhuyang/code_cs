@@ -11,6 +11,10 @@ https://www.zhihu.com/question/20402534/answer/1670374116
 
 https://github.com/EugeneLiu/translationCSAPP
 
+https://nju-projectn.github.io/ics-pa-gitbook/ics2019/
+
+http://www.cs.cmu.edu/afs/cs/academic/class/15213-f15/www/schedule.html
+
 其他：
 
 系统与网络编程：Linux UNIX系统编程手册
