@@ -1,6 +1,8 @@
 
 SICP
 
+https://cs61a.org/
+
 https://github.com/wizardforcel/sicp-py-zh
 
 冒号课堂 : 编程范式与OOP思想
