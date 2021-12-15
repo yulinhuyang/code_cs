@@ -18,7 +18,7 @@ google 开源规范：https://zh-google-styleguide.readthedocs.io/en/latest/goog
 
 SICP + CS61A
 
-DSA DJH + ALG4(CS61B + CS170）
+DSACPP + ALG4(CS61B + CS170）
 
 CSAPP + CMU 15-213
 
