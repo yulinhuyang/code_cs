@@ -16,11 +16,11 @@ google 开源规范：https://zh-google-styleguide.readthedocs.io/en/latest/goog
 
 **一书一记一题**
 
-SICP-CS61A
+SICP + CS61A
 
-DSA DJH + alg4(CS61B + CS170）
+DSA DJH + ALG4(CS61B + CS170）
 
-CSAPP
+CSAPP + CMU 15-213
 
 C++ primer
 
@@ -37,4 +37,4 @@ labuladong算法小抄
 
 **Code实践**
 
-code：刷题,hot 100
+code: hot 100  + 花花酱等扩展
