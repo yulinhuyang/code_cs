@@ -1,7 +1,7 @@
 
 操作系统：深入理解操作系统（CSAPP）、操作系统导论（OSTEP）
 
-**CSAPP相关**
+**CSAPP（CMU 15-213）相关**
 
 https://fengmuzi2003.gitbook.io/csapp3e/
 
