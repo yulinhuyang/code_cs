@@ -1,10 +1,10 @@
-DSAPP + ALG4 (CS61B + CS170)
+DSACPP + ALG4 (CS61B + CS170)
 
 数据结构百科： https://zh.wikipedia.org/wiki/%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84
 
 数据结构代码： https://www.runoob.com/data-structures/random-quick-sort.html
 
-**DSAPP**
+**DSACPP**
 
 https://dsa.cs.tsinghua.edu.cn/~deng/ds/dsacpp/
 
