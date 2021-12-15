@@ -37,4 +37,4 @@ labuladong算法小抄
 
 **Code实践**
 
-code: hot 100  + 花花酱等扩展
+code: hot 100  + 扩展(花花酱等)
