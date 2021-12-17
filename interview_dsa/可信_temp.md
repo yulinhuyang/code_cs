@@ -42,6 +42,142 @@ Python	heapq	heappush、heappop	系统自带	小顶堆
 
 【c++】STL里的priority_queue用法总结: https://blog.csdn.net/xiaoquantouer/article/details/52015928
 
+priority_queue<Type, Container, Functional>
+
+Type为数据类型， Container为保存数据的容器，Functional为元素比较方式。
+
+如果不写后两个参数，那么容器默认用的是vector，比较方式默认用operator<，也就是优先队列是大顶堆，队头元素最大。
+
+## 二分法
+
+
+| 语言   | 支持二分的常用数据结构             | 找值          | lower_bound     | upper_bound  |
+| ------ | ---------------------------------- | ------------- | --------------- | ------------ |
+| C++    | vector  multiset/set  map/multimap | binary_search | lower_bound     | upper_bound  |
+| Python | List                               | bisect_left   | **bisect**_left | bisect_right |
+
+**C++**:
+
+**升序序列**
+
+lower_bound：返回第一个 >= 目标值的迭代器，找不到则返回end()。
+
+upper_bound：返回第一个 > 目标值的迭代器，找不到则返回end()。
+
+**降序序列**
+
+需要重载或者目标比较器，例如greater<int >()
+
+lower_bound：返回第一个 <= 目标值的迭代器，找不到则返回end()。
+
+upper_bound：返回第一个 < 目标值的迭代器，找不到则返回end()。
+
+eg: 
+```C++
+ // 返回第一个小于等于目标值的迭代器
+
+**lower_bound**(vec.begin(), vec.end(), 8, greater<int>());
+
+// 返回第一个小于目标值的迭代器
+
+**upper_bound**(vec.begin(), vec.end(), 8, greater<int>());
+
+ bool isFind = **binary**_**search**(vec.begin(), vec.end(), 7);
+
+// 返回第一个大于等于目标值的迭代器
+
+ vector<int>::iterator iter1 = **lower**_bound(vec.begin(), vec.end(), 8);
+
+ // 返回第一个大于目标值的迭代器
+
+ vector<int>::iterator iter2 = upper_bound(vec.begin(), vec.end(), 8);
+```
+
+**Python** 
+
+**升序序列**
+
+a） bisect_left (同lower_bound)：返回插入位置的索引i，使得a[:i]的所有元素都 < 目标值，a[i:]的所有元素 >=目标值；
+
+b） bisect_right (同upper_bound)：返回插入位置的索引i，使得a[:i]的所有元素都 <= 目标值，a[i:]的所有元素 >目标值。
+
+ 降序序列：
+
+不支持。可以先反转之后再使用上述方法模拟实现。
+
+eg：
+
+import bisect
+
+point_left = bisect.bisect_left(num_list, 7)
+
+point_right = bisect.bisect_right(num_list, 8)
+
+ 
+## 字典序
+ 
+字典序：指按照单词出现在字典的顺序进行排序的方法。先按照第一个字母以 0、1、2 … 9，a、b、c … z 等的ASCII码值顺序排列，如果第一个字母一样，那么比较第二个、第三个乃至后面的字母。如果比到最后两个单词不一样长（比如 sigh 和 sight），那么把短者排在前。
+
+**C++** 
+
+1. 字符串比较：类似于C语言的strcmp函数，C++标准库string类重载了大于、等于、小于等运算符，可直接用于字符串的比较（基于字典序）。例如 "apple" < "banana", "9"> "10" 。
+
+2. 字符串序列排序：同样的，类似于C语言的qsort函数，C++标准库还提供了 sort函数，可用于对字符串序列进行排序。sort 函数默认的排序方式是字典序升序，两个参数就可以了。sort函数原型如下：
+
+基于sort函数，可以采用不同形式的comp参数，来实现按字典序降序排序：
+
+1）lambda表达式（其中调用string类的比较运算符实现）；2）全局函数或者静态函数；3）greater模板类对象；
+
+也可以采用 sort 的默认形式完成升序排序，然后再调用 reverse 反转实现降序排序
+ 
+
+**Python**
+
+1.  字符串比较：Python的大于、等于、小于等运算符可直接用于比较两个字符串（基于字典序），例如 "apple" < "banana", "9" > "10"。
+
+2.  字符串序列排序：Python库函数 sort 可用于多个字符串的排序，其背后逻辑就是利用字符串比较运算符（字典序的），默认为字典序升序排序。降序的实现方式有：
+
+1）  sort + reverse参数  2）  sort + 比较函数
+ 
+
+ ```C++
+ 
+//原型
+void sort(RandomIt first, RandomIt last);
+void sort(RandomIt first, RandomIt last, Compare comp);
+ 
+bool Cmp(const string &a, const string &b)
+{
+    return a > b;
+}
+ 
+sort(arr.begin(), arr.end(), [](string a, string b) { return a > b; });
+// sort(arr.begin(), arr.end(), Cmp);
+// sort(arr.begin(), arr.end(), greater<string>());
+
+sort(arr.begin(), arr.end());
+reverse(arr.begin(), arr.end());	
+
+```
+
+ 
+```python
+from functools import cmp_to_key
+ 
+# 字符串序列排序-sort+reverse参数
+arr = ["apple", "banana", "9", "10"]
+
+arr.sort(reverse=True)  # 降序
+
+def cmp(x, y):
+    if x < y: return 1
+    elif x == y: return 0
+    else: return -1
+arr = ["apple", "banana", "9", "10"]
+arr.sort(key=cmp_to_key(cmp))
+
+``` 
+
 
 # 题目
 
