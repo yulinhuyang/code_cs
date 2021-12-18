@@ -19,7 +19,7 @@ http://www.cs.cmu.edu/afs/cs/academic/class/15213-f15/www/schedule.html
 
 系统与网络编程：Linux UNIX系统编程手册
 
-The Missing Semester of Your CS Education
+The Missing Semester of Your CS Education: https://missing.csail.mit.edu/
 
 程序员的自我修养:链接、装载与库
 
