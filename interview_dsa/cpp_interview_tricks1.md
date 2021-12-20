@@ -302,8 +302,35 @@ cacheList.splice(cacheList.begin(), cacheList, cacheMap[key]);
 
 ```
 	
+#### 8 priority_queue 
 	
-##### 8 pair 
+[【c++】STL里的priority_queue用法总结](https://blog.csdn.net/xiaoquantouer/article/details/52015928)
+
+priority_queue<Type, Container, Functional>
+
+Type为数据类型， Container为保存数据的容器，Functional为元素比较方式。
+
+如果不写后两个参数，那么容器默认用的是vector，比较方式默认用operator<，也就是优先队列是大顶堆，队头元素最大。
+
+改成优先小顶堆： priority_queue<int, vector<int>, greater<int> > p;
+
+```C++
+#include <queue>	
+
+//升序队列
+priority_queue <int,vector<int>,greater<int> > q;
+//降序队列
+priority_queue <int,vector<int>,less<int> >q;
+	
+//greater和less是std实现的两个仿函数（就是使一个类的使用看上去像一个函数。其实现就是类中实现一个operator()，这个类就有了类似函数的行为，就是一个仿函数类了）
+
+//pair的比较，先比较第一个元素，第一个相等比较第二个
+priority_queue<pair<int, int> > a;	
+	
+```
+	
+
+#### 9 pair 
 
 ```c++
 vector<pair<int,int>> relations;
@@ -317,15 +344,15 @@ vector<pair<int,int>> direct = {{-1,0},{0,-1},{1,0},{0,1}};
 
 ```
 	
-##### 9 tuple
+#### 9 tuple
 
 	
 
-##### 10 
+#### 10 
 	
 
 
-##### 11  bitsets
+#### 11  bitsets
 
 ```c++
 
