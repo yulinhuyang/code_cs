@@ -271,7 +271,36 @@ to_string
 double a = 3.14;
 str1 = to_string(a);
 ```
+	
+#####split与join的实现
 
+join函数
+
+```cpp
+string join(vector<string> sequence, string separator) {
+    string result;
+    for (int i = 0; i < sequence.size(); i++) {
+        if (sequence[i] != "") {
+            result += sequence[i] + ((i != sequence.size() - 1) ? separator : "");
+        }
+    }
+    return result;
+}
+```					
+
+split函数
+
+```cpp					
+void SplitString(const string& input, char sperChar, vector<string>& outArray)
+
+{
+    stringstream sstr(input);
+    string token;
+    while (getline(sstr, token, sperChar)) {
+        outArray.push_back(token);
+    }
+}
+```
 
 #### 4 stack
 
