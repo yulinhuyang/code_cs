@@ -408,7 +408,19 @@ convert *.jpg foo.pdf
  学习笔记：https://github.com/ohmycloud/ImageMagick/blob/master/ImageMagick%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0.md
 
 
+### xcopy Robocopy 
 
+多线程拷贝命令
+
+[永不过时的 XCOPY命令](https://hellokandy.blog.csdn.net/article/details/52367906)
+
+[Robocopy 用法](https://blog.csdn.net/mutougede/article/details/5691765)
+
+XCOPY source [destination] [命令参数]
+
+Xcopy   dirA   dirB   /E/H/C/I   >> D:copy.txt
+
+robocopy     dirA   dirB /E    /MT:90  /copy:dt  /LOG:D:copy2.txt
 
 
 
