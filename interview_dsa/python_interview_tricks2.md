@@ -390,22 +390,40 @@ dp[m][n] ---> i,j含义是位置，定义dp[m][n],结果是dp[m-1][n-1]
 
 ####背包问题
 	
-dp[i][w] 的定义如下：对于前 i 个物品，当前背包的容量为 w，这种情况下可以装的最大价值是 dp[i][w]
+0-1 背包 模板
 
-```python 
-	int[][] dp[N+1][W+1]
-	dp[0][..] = 0
-	dp[..][0] = 0
+dp[i][w] 的定义如下：对于前 i 个物品，当前背包的容量为 w，这种情况下可以装的最大价值是 dp[i][w]。
 
-	for i in [1..N]:
-	for w in [1..W]:
-		dp[i][w] = max(
-			把物品 i 装进背包,dp[i-1][w - wt[i-1]] + val[i-1]
-			不把物品 i 装进背包，dp[i-1][w],
-		)
-	return dp[N][W]
+int[][] dp[N+1][W+1]
+dp[0][..] = 0
+dp[..][0] = 0
 
-```
+for i in [1..N]:
+    for w in [1..W]:
+        dp[i][w] = max(
+            dp[i-1][w],
+            dp[i-1][w - wt[i-1]] + val[i-1]
+        )
+		
+return dp[N][W]
+
+
+完全背包 模板
+
+dp[i][j] 定义: 若只使用 coins 中的前 i 个(种)硬币的面值，若想凑出金额 j，有 dp[i][j] 种凑法
+
+N = len(coins)
+int dp[N+1][amount+1]
+dp[0][..] = 0
+dp[..][0] = 1
+
+
+for (int i = 1; i <= N; i++) {
+    for (int j = 1; j <= amount; j++) {
+        if (j - coins[i-1] >= 0)
+            dp[i][j] = dp[i - 1][j] 
+                     + dp[i][j-coins[i-1]];
+return dp[N][W]
 
 
 2.1 涉及两个字符串/数组时（比如最长公共子序列），dp 数组的含义如下：
