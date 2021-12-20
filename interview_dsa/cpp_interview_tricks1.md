@@ -207,6 +207,70 @@ while (getline(ss, str, '.')) {
 }
 string binDstIP = outDstIP.str();//转string
 ```
+	
+##### 字典序输出
+	
+1. 字符串比较：类似于C语言的strcmp函数，C++标准库string类重载了大于、等于、小于等运算符，可直接用于字符串的比较（基于字典序）。例如 "apple" < "banana", "9"> "10" 。
+
+2. 字符串序列排序：同样的，类似于C语言的qsort函数，C++标准库还提供了 sort函数，可用于对字符串序列进行排序。sort 函数默认的排序方式是字典序升序，两个参数就可以了。sort函数原型如下：
+
+基于sort函数，可以采用不同形式的comp参数，来实现按字典序降序排序：
+
+1）lambda表达式（其中调用string类的比较运算符实现）；2）全局函数或者静态函数；3）greater模板类对象；
+
+也可以采用 sort 的默认形式完成升序排序，然后再调用 reverse 反转实现降序排序	
+
+```C++
+	
+//原型
+void sort(RandomIt first, RandomIt last);
+void sort(RandomIt first, RandomIt last, Compare comp);
+
+bool Cmp(const string &a, const string &b)
+{
+   return a > b;
+}
+
+sort(arr.begin(), arr.end(), [](string a, string b) { return a > b; });
+
+// sort(arr.begin(), arr.end(), Cmp);
+// sort(arr.begin(), arr.end(), greater<string>());
+
+sort(arr.begin(), arr.end());
+reverse(arr.begin(), arr.end());	
+
+```
+#####  to_string atoi  stoi
+	
+[c++中的atoi()和stoi()函数的用法和区别](https://blog.csdn.net/qq_33221533/article/details/82119031)
+
+都是C++的字符处理函数，把数字字符串转换成int输出,
+
+atoi和stoi都是只转换字符串的数字部分，遇到其他字符则停止转换。
+
+atoi()的参数是 const char* ,因此对于一个字符串str我们必须调用 c_str()的方法把这个string转换成 const char*类型的,
+	
+stoi()的参数是const string*,不需要转化为 const char*；
+
+stoi()会做范围检查，默认范围是在int的范围内的，如果超出范围的话则会runtime error
+
+atoi()不会做范围检查，如果超出范围的话，超出上界，则输出上界，超出下界，则输出下界;
+	
+```C++
+	
+string s1 = "2147482", s2 = "-214748";
+cout << stoi(s1);
+cout << atoi(s2.c_str()) << endl;
+
+```
+to_string
+	
+把数值类型如int、double、long等转化为string
+
+```C++
+double a = 3.14;
+str1 = to_string(a);
+```
 
 
 #### 4 stack
@@ -359,7 +423,8 @@ std::tie(name, ages) = getPreson();
 	
 [C++ tuple元组的基本用法(总结)](https://blog.csdn.net/sevenjoin/article/details/88420885)
 		
-tuple是一个固定大小的不同类型值的集合，是泛化的std::pair
+tuple是一个固定大小的不同类型值的集合，是泛化的std::pair，可以大量作为结构体使用
+	
 ```C++
 //创建
 std::make_tuple(v1, v2);
@@ -367,6 +432,11 @@ std::make_tuple(v1, v2);
 	
 //和结构体一样使用
 std::tuple<const char *, const char *, int>
+	
+//TI作为一种数据类型使用
+using TI = tuple<pair<int,int>,int,int>
+
+vector<tuple<int,int,int>> vec;
 	
 //可以通过get<Ith>(obj)方法
 std::tuple<int, char, double> mytuple (10, 'a', 3.14);
@@ -378,20 +448,7 @@ std::tie(name, ages, addr, areaCode) = tp;
 
 ```
 	
-
-#### 11  bitsets
-
-[c++ bitset类用法](https://blog.csdn.net/qll125596718/article/details/6901935)
-
-```c++
-
-#include <bitset>
-bitset<n> b(u);  //n位,int初始化
-bitset<n> b(str);//n位，string初始化
-
-```	
-
-#### 12 algorithm文件函数
+#### 11 algorithm文件函数
 
 [C++ algorithm头文件函数的基本用法](https://blog.csdn.net/knighkingLOL/article/details/79851806)
 
@@ -451,6 +508,19 @@ reverse(str.begin()+2, str.begin()+6);//对a[2]~a[5]逆转*左闭右开*
 sort(首元素地址(必填), 尾元素地址的下一个地址(必填), 比较函数(非必填))
 	
 默认是递增数列
+	
+
+#### 12  bitsets
+
+[c++ bitset类用法](https://blog.csdn.net/qll125596718/article/details/6901935)
+
+```c++
+
+#include <bitset>
+bitset<n> b(u);  //n位,int初始化
+bitset<n> b(str);//n位，string初始化
+
+```	
 	
 #### 13 lambda表达式用法
 
