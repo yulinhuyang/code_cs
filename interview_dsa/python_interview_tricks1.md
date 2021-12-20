@@ -192,6 +192,32 @@ int转为ASCII码：chr(65)    'A'
 
 ```
 
+##### 字典序输出
+
+1.  字符串比较：Python的大于、等于、小于等运算符可直接用于比较两个字符串（基于字典序），例如 "apple" < "banana", "9" > "10"。
+
+2.  字符串序列排序：Python库函数 sort 可用于多个字符串的排序，其背后逻辑就是利用字符串比较运算符（字典序的），默认为字典序升序排序。降序的实现方式有：
+
+1）  sort + reverse参数  2）  sort + 比较函数
+
+
+```python
+
+from functools import cmp_to_key
+ 
+# 字符串序列排序-sort+reverse参数
+arr = ["apple", "banana", "9", "10"]
+
+arr.sort(reverse=True)  # 降序
+
+def cmp(x, y):
+    if x < y: return 1
+    elif x == y: return 0
+    else: return -1
+arr = ["apple", "banana", "9", "10"]
+arr.sort(key=cmp_to_key(cmp))
+
+``` 
 
 #### 2.5 tuple API
 
@@ -218,13 +244,17 @@ d.popleft() # 将最左边的元素取出
 
 ```
 
-#### 2.7 heapq API 
+#### 2.7 优先队列、堆 heapq API 
+
+可以使用可自动排序的map进行替代，也能够达到减少时间复杂度的目的。如  C++(map)、 Python(SortedDict)
+
+heapq默认的是小顶堆
+
+用最小堆解决heapq:  heapq.heappop， heapq.heappush
 
 ```python
 
 import heapq
-
-heapq默认的是小顶堆
 
 空列表 A = []
 
@@ -262,7 +292,9 @@ set的只要作用就是用来给数据去重。
 ```
 
     
-#### 2.9 counter
+#### 2.9  Collections
+
+Collections(deque/defaultdict/Counter)
 
 ```python
 
@@ -275,15 +307,37 @@ count.items()
 count.keys()
 
 count.values()
+
+
    
 ```    
    
+   
+#### 2.10  bisect_left
 
-#### 2.10 面向对象
+升序序列 
 
-装饰器
+a） bisect_left (同lower_bound)：返回插入位置的索引i，使得a[:i]的所有元素都 < 目标值，a[i:]的所有元素 >=目标值；
 
-@property
+b） bisect_right (同upper_bound)：返回插入位置的索引i，使得a[:i]的所有元素都 <= 目标值，a[i:]的所有元素 >目标值。
+
+降序序列：
+
+不支持。可以先反转之后再使用上述方法模拟实现。
+
+```python
+
+import bisect
+
+point_left = bisect.bisect_left(num_list, 7)
+
+point_right = bisect.bisect_right(num_list, 8)
+
+```
+
+#### 2.11 面向对象
+
+##### 值与引用
 
 [Python值传递还是引用传递](https://blog.csdn.net/hohaizx/article/details/78427406)
 
@@ -297,7 +351,14 @@ Python中一切事物皆对象，变量是对对象在内存中的存储和地�
 
 深拷贝(deepcopy()):完全复制原变量的所有层的所有数据
 
-#### 2.11 其他
+##### 装饰器
+
+@property
+
+@lru_cache
+
+
+#### 2.12 其他
 
 **位运算**
 
