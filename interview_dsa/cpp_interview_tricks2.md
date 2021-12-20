@@ -119,10 +119,9 @@ public:
         ListNode *l1_next = new ListNode(2,l1_next_next);
         ListNode *l1 = new ListNode(1,l1_next);
 ```
+ 
 
-### 1.2 常用方法
-
-#### 单调栈
+### 单调栈
 
 ans + stack辅助
 
@@ -152,7 +151,7 @@ stack: 存坐标、存值，单调升、单调降
 
 ```
 
-#### 优先队列
+### 优先队列
 
 优先队列的入和出与元素（数据）进的次序无关，而是由设定的优先级来决定元素的弹出次序，优先级最高的元素最先得到服务，优先级相同的元素按照其在优先队列中的顺序得到服务
 
@@ -286,7 +285,46 @@ public:
 ### 3.1 base code
 
 
+### 背包问题
 
+0-1背包
+
+完全背包
+
+背包问题，正常情况下 choice(coins)在外循环，amount在内循环，根据choice是否有限进行求最值、能否、方法数等，
+
+部分特殊情况，如完全平方数等，choice不使用sqrt可以简化放在内循环。
+
+0-1背包模板(最值)，部分可以简化为一维的
+```Cpp
+for i in [1..N]:
+    for w in [1..W]:
+        dp[i][w] = max(
+            dp[i-1][w],
+            dp[i-1][w - wt[i-1]] + val[i-1]
+        )
+return dp[N][W]
+```
+
+子集背包模板(能否)：
+
+ #装入或者不装入
+```cpp
+ dp[i][j] = dp[i - 1][j] || dp[i - 1][j - nums[i - 1]]
+```
+ 
+完全背包模板(方法数)
+
+https://labuladong.gitee.io/algo/3/25/81/
+
+```cpp
+for i in range(n + 1):
+    for j in range(amount + 1):
+        if j - coins[i-1] >= 0：
+            dp[i][j] = dp[i - 1][j] + dp[i][j - coins[i-1]] #这里表示i可以反复使用
+        else:
+            dp[i][j] = dp[i - 1][j]
+```
 
 ## 4 回溯（DFS）
 
@@ -310,10 +348,9 @@ void backtrack(){
 }
 ```
 
-### 4.2 常用方法
+ 
 
-
-#### 子集、排列、组合问题
+### 子集、排列、组合问题
 
 **全排列问题** 
 
@@ -463,7 +500,7 @@ public:
 
 ```
 
-#### flood fill问题
+### flood fill问题
 
 ```
 
@@ -691,7 +728,7 @@ public:
 
 ```
 
-**deque + 单调队列**
+### 8.2 deque + 单调队列 
 
 ```C++
 class Solution {
@@ -734,9 +771,7 @@ public:
 
 ## 9 其他高频
 
-### 9.1 base code
-
-#### 前缀和与差分数组
+### 前缀和与差分数组
 
 一维前缀和： S[i]= S[i-1]  + A[i]
 
