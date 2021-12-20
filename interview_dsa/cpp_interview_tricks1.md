@@ -87,22 +87,7 @@ auto v2 = vector<int> (v1.begin(),v1.begin() + 4);
 
 ```
 
-
-#### 2 pair 
-
-```c++
-vector<pair<int,int>> relations;
-pair<int, string> p1;
-p1.first;
-p1.second;
-relations.emplace_back(make_pair(1,2));
-
-// 四向回溯访问路径
-vector<pair<int,int>> direct = {{-1,0},{0,-1},{1,0},{0,1}};
-
-```
-
-#### 3 map（**unordered_map** ）
+#### 2 map（**unordered_map** ）
 
 ```c++
 unordered_map<string,int> dict;
@@ -170,7 +155,7 @@ public:
 
 ```
 
-#### 4 string
+#### 3  string
 
 ```c++
 string str;
@@ -224,7 +209,7 @@ string binDstIP = outDstIP.str();//转string
 ```
 
 
-#### 5 stack
+#### 4 stack
 
 ```c++
 #include <stack>
@@ -237,7 +222,7 @@ sta.size();
 sta.empty();
 ```
 
-#### 6 queue、deque
+#### 5 queue、deque
 
 queue：头pop,尾 push
 
@@ -269,7 +254,7 @@ deque.push_front(2);
 ```
 
 
-#### 7 set(unordered_set)
+#### 6 set(unordered_set)
 
 ```c++
 unordered<int> set;
@@ -294,17 +279,7 @@ for (auto word:wordDict) {
 
 ```
 
-##### 8 bitsets
-
-```c++
-
-#include <bitset>
-bitset<n> b(u);  //n位,int初始化
-bitset<n> b(str);//n位，string初始化
-
-```
-
-#### 9 list
+#### 7 list
 
 list是一个双向链表,不支持随机取元素
 
@@ -326,6 +301,41 @@ cacheList.erase(pos);
 cacheList.splice(cacheList.begin(), cacheList, cacheMap[key]);
 
 ```
+	
+	
+##### 8 pair 
+
+```c++
+vector<pair<int,int>> relations;
+pair<int, string> p1;
+p1.first;
+p1.second;
+relations.emplace_back(make_pair(1,2));
+
+// 四向回溯访问路径
+vector<pair<int,int>> direct = {{-1,0},{0,-1},{1,0},{0,1}};
+
+```
+	
+##### 9 tuple
+
+	
+
+##### 10 
+	
+
+
+##### 11  bitsets
+
+```c++
+
+#include <bitset>
+bitset<n> b(u);  //n位,int初始化
+bitset<n> b(str);//n位，string初始化
+
+```	
+
+ 
 
 #### 10 指针的使用 与new
 
