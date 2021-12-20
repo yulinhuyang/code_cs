@@ -275,7 +275,7 @@ double a = 3.14;
 str1 = to_string(a);
 ```
 	
-#####split与join的实现
+##### split与join的实现
 
 join函数
 
@@ -398,7 +398,9 @@ cacheList.splice(cacheList.begin(), cacheList, cacheMap[key]);
 
 ```
 	
-#### 8 priority_queue 
+#### 8 priority_queue(堆)
+
+
 	
 [【c++】STL里的priority_queue用法总结](https://blog.csdn.net/xiaoquantouer/article/details/52015928)
 
@@ -421,7 +423,11 @@ priority_queue <int,vector<int>,less<int> > q;
 //greater和less是std实现的两个仿函数（就是使一个类的使用看上去像一个函数。其实现就是类中实现一个operator()，这个类就有了类似函数的行为，就是一个仿函数类了）
 
 //pair的比较，先比较第一个元素，第一个相等比较第二个
-priority_queue<pair<int, int> > p;	
+priority_queue<pair<int, int> > p;
+
+//自定义lambda比较
+auto cmp = [](int left, int right) { return (left ^ 1) < (right ^ 1); };
+std::priority_queue<int, std::vector<int>, decltype(cmp)> q3(cmp);
 
 //API
 priority_queue<int> p;
