@@ -88,6 +88,9 @@ auto v2 = vector<int> (v1.begin(),v1.begin() + 4);
 ```
 
 #### 2 map（**unordered_map** ）
+	
+map基于红黑树，自动排序；unordered_map基于哈希表，无序快，所以可以使用map来的代替vector,使用find 快速查找
+
 
 ```c++
 unordered_map<string,int> dict;
