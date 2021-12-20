@@ -320,19 +320,27 @@ Type为数据类型， Container为保存数据的容器，Functional为元素�
 //升序队列
 priority_queue <int,vector<int>,greater<int> > q;
 //降序队列
-priority_queue <int,vector<int>,less<int> >q;
+priority_queue <int,vector<int>,less<int> > q;
 	
 //greater和less是std实现的两个仿函数（就是使一个类的使用看上去像一个函数。其实现就是类中实现一个operator()，这个类就有了类似函数的行为，就是一个仿函数类了）
 
 //pair的比较，先比较第一个元素，第一个相等比较第二个
-priority_queue<pair<int, int> > a;	
+priority_queue<pair<int, int> > p;	
+
+//API
+priority_queue<int> p;
+p.push(2);
+p.pop();
+p.top();
 	
 ```
-	
 
 #### 9 pair 
 
+template<class T1,class T2> struct pair
+
 ```c++
+	
 vector<pair<int,int>> relations;
 pair<int, string> p1;
 p1.first;
@@ -342,17 +350,38 @@ relations.emplace_back(make_pair(1,2));
 // 四向回溯访问路径
 vector<pair<int,int>> direct = {{-1,0},{0,-1},{1,0},{0,1}};
 
+//函数会以pair对象作为返回值,可以直接通过std::tie进行接收
+std::tie(name, ages) = getPreson();
+
 ```
 	
-#### 9 tuple
+#### 10 tuple
+	
+[C++ tuple元组的基本用法(总结)](https://blog.csdn.net/sevenjoin/article/details/88420885)
+		
+tuple是一个固定大小的不同类型值的集合，是泛化的std::pair
+```C++
+//创建
+std::make_tuple(v1, v2);
 
 	
-
-#### 10 
+//和结构体一样使用
+std::tuple<const char *, const char *, int>
 	
+//可以通过get<Ith>(obj)方法
+std::tuple<int, char, double> mytuple (10, 'a', 3.14);
+std::cout << std::get<0>(mytuple)
 
+//利用tie进行解包元素的值
+std::tuple<std::string, int, std::string, int> tp;
+std::tie(name, ages, addr, areaCode) = tp;
+
+```
+	
 
 #### 11  bitsets
+
+[c++ bitset类用法](https://blog.csdn.net/qll125596718/article/details/6901935)
 
 ```c++
 
@@ -362,9 +391,76 @@ bitset<n> b(str);//n位，string初始化
 
 ```	
 
- 
+#### 12 algorithm文件函数
 
-#### 10 指针的使用 与new
+[C++ algorithm头文件函数的基本用法](https://blog.csdn.net/knighkingLOL/article/details/79851806)
+
+##### 二分法
+	
+支持二分的常用数据结构： vector multiset/set map/multimap
+	
+**binary_search**
+	
+```C++
+//查找 [first, last) 区域内是否包含 val
+bool binary_search (ForwardIterator first, ForwardIterator last,
+                      const T& val);
+```
+
+**升序序列**
+
+lower_bound：返回第一个 >= 目标值的迭代器，找不到则返回end()。
+
+upper_bound：返回第一个 > 目标值的迭代器，找不到则返回end()。
+
+**降序序列**
+
+需要重载或者目标比较器，例如greater()
+
+lower_bound：返回第一个 <= 目标值的迭代器，找不到则返回end()。
+
+upper_bound：返回第一个 < 目标值的迭代器，找不到则返回end()。
+
+```C++
+
+ // 返回第一个小于等于目标值的迭代器
+lower_bound(vec.begin(), vec.end(), 8, greater<int>());
+
+// 返回第一个小于目标值的迭代器
+upper_bound(vec.begin(), vec.end(), 8, greater<int>());
+
+ bool isFind = binary_search(vec.begin(), vec.end(), 7);
+
+// 返回第一个大于等于目标值的迭代器
+ vector<int>::iterator iter1 = lower_bound(vec.begin(), vec.end(), 8);
+
+ // 返回第一个大于目标值的迭代器
+ vector<int>::iterator iter2 = upper_bound(vec.begin(), vec.end(), 8);
+```
+
+#####排序
+	
+**reverse()**
+	
+reverse(it, it2) 可以将数组指针在[it, it2)之间的元素或容器的迭代器在 [it, it2) 范围内的元素,可以对字符串进行反转
+
+reverse(str.begin()+2, str.begin()+6);//对a[2]~a[5]逆转*左闭右开* 
+	
+**sort()**
+
+sort(首元素地址(必填), 尾元素地址的下一个地址(必填), 比较函数(非必填))
+	
+默认是递增数列
+	
+#### 13 lambda表达式用法
+
+[capture list] (params list) mutable exception-> return type { function body }
+
+//用于复杂的逻辑比较
+sort(lbvec.begin(), lbvec.end(), [](int a, int b) -> bool { return a < b; });   // Lambda表达式
+
+
+#### 14 指针的使用 与new
 
 ```python
 
@@ -374,7 +470,7 @@ head = new ListNode(sum%10); // new MyClass 返回的是MyClass的指针
 int *p = new int(87); //
 ```
 
-#### 11 类与继承
+#### 15 类与继承
 
 继承类的 虚函数必须要实现
 
@@ -393,7 +489,7 @@ int *p = new int(87); //
 栈上空间自动回收，堆空间需要程序员手动回收。
 
 
-#### 12 常规数据类型
+#### 16 常规数据类型
 
 INT_MIN,INT_MAX
 
@@ -407,7 +503,7 @@ longlong： 属于int型，一般来讲，是longint型大小的两倍，int型�
 
 其他类型的变量（如 string 或 其他自定义类型）：不管定义于何处，都会执行默认构造函数。如果该类没有默认构造函数，则会引发错误。因此，建议为每个类都定义一个默认构造函数（=default）。
 
-#### 13 统计运行时间
+#### 17 统计运行时间
 
 C++ 11使用 chrono
 
