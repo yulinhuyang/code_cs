@@ -320,14 +320,14 @@ str1 = to_string(a);
 join函数
 
 ```cpp
-string join(vector<string> sequence, string separator) {
-    string result;
-    for (int i = 0; i < sequence.size(); i++) {
-        if (sequence[i] != "") {
-            result += sequence[i] + ((i != sequence.size() - 1) ? separator : "");
-        }
+//dirs中无空格
+stringstream out;
+if(dirs.empty()){
+    out<<'/';
+} else{
+    for(auto ch:dirs){
+	out << "/" << ch;
     }
-    return result;
 }
 ```					
 
