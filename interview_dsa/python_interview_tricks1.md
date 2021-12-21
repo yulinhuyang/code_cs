@@ -86,19 +86,7 @@ sort的key的使用:
     
     res[::-1]  reverse(res)
 
-list 和str互相转换：
-  
-    str->list
-    
-    str1 = "12345"
-    list1 = list(str1)
-    
 
-    list2 = str2.split( ) 或者  list3 = str3.split(".")
-    
-    list->str
-    
-    str4 = "".join(list3)  或者 str4 = " ".join(list3)
 
 
 list的拷贝
@@ -124,7 +112,7 @@ map = dict()
 
 map = {'a': 1,'b': 2}
 
-添加或者更新
+#添加或者更新
 
     map['a'] = 1 
     map['b'] = 2
@@ -134,25 +122,27 @@ map = {'a': 1,'b': 2}
     print(map.items())
 
 
-map的迭代方式：
+#map的迭代方式：
 
     for key,values in  dict.items():
     .    ...
     
-删除条目
+#删除条目
     print(map.pop('a'))
 
-判存在
+#判存在
     if 'b' in map:
         print(2)
 
-更新指定值：
+#更新指定值：
 
     map[sum_i] = map.get(sum_i,0) +1
     
-    dict.get(key, default=None)  获取指定key对应的值
+    dict.get(key, default=None)  #获取指定key对应的值
 
-map —>value->list 结构：
+```
+
+**map —>value->list 结构**
 
     map = collections.defaultdict(list)
     
@@ -165,7 +155,7 @@ map —>value->list 结构：
             map[char_str].append(strs[i])
         
         return list(map.values())
-```
+
 
 
 #### 2.4 str  API 
@@ -191,6 +181,24 @@ ASCII码转换为int：ord('A')    65
 int转为ASCII码：chr(65)    'A'
 
 ```
+
+**list 和str互相转换**
+  
+```python
+    str->list
+    
+    str1 = "12345"
+    list1 = list(str1)
+    
+
+    list2 = str2.split( ) 或者  list3 = str3.split(".")
+    
+    list->str
+    
+    str4 = "".join(list3)  或者 str4 = " ".join(list3)
+```
+
+
 
 ##### 字典序输出
 
