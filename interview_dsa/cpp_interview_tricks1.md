@@ -220,8 +220,12 @@ std::string str = "870";
 int i = atoi(str.c_str());
 
 //查找
-int pos = str.find('ab') // rfind 反向找
+int pos = str.find('ab') 
 str1 == str2 //判断相等
+position=str.rfind ('ab'); // rfind 反向找
+position = str.find_first_of('ab');
+position = str.find_last_of('ab');
+
 
 //char和int转换 
 char c4 = i + '0';
@@ -684,7 +688,7 @@ functional头文件中，有很多比较函数对象
 	
 equal_to<Type>、not_equal_to<Type>、greater<Type>、greater_equal<Type>、less<Type>、less_equal<Type>	
 
-#####find函数
+##### find函数
 	
 find (InputIterator first,   InputIterator last, const T& val);
  
