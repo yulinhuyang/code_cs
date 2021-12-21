@@ -684,6 +684,16 @@ functional头文件中，有很多比较函数对象
 	
 equal_to<Type>、not_equal_to<Type>、greater<Type>、greater_equal<Type>、less<Type>、less_equal<Type>	
 
+#####find函数
+	
+find (InputIterator first,   InputIterator last, const T& val);
+ 
+查找vector
+find(ar1.begin(), ar1.end(), "bbb")
+
+查找string
+ if(str.find(ch)!=string::npos)
+
 #### 12  bitsets
 
 [c++ bitset类用法](https://blog.csdn.net/qll125596718/article/details/6901935)
