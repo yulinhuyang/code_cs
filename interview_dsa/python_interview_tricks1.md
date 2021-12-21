@@ -349,10 +349,81 @@ point_right = bisect.bisect_right(num_list, 8)
 
 #### 2.11 内置函数
 
+**sorted**
 
+sorted() 函数对所有可迭代的对象进行排序操作。
 
+sorted(iterable, key=None, reverse=False)  
+
+list.sort() 方法只为 list 定义, 而 sorted() 函数可以接收任何的 iterable
+
+```python
+array = [{"age":20,"name":"a"},{"age":25,"name":"b"},{"age":10,"name":"c"}]
+array = sorted(array,key=lambda x:x["age"])
+
+example_list = [5, 0, 6, 1, 2, 7, 3, 4]
+result_list = sorted(example_list, key=lambda x: x*-1)
+```
+**enumerate**
+
+将一个可遍历的数据对象(如列表、元组或字符串)组合为一个索引序列，同时列出数据和数据下标
+
+```python
+seq = ['one', 'two', 'three']
+for i, element in enumerate(seq):
+    print(i, element)
+```
+
+**zip**
+
+zip() 函数用于将可迭代的对象作为参数，将对象中对应的元素打包成一个个元组，然后返回由这些元组组成的对象
+
+```python
+a = [1,2,3]
+b = [4,5,6]
+zipped = zip(a,b)     # 返回一个对象
+```
 
 #### 2.12 面向对象
+
+##### 内置函数 -- 面向对象
+
+**classmethod**
+
+classmethod 修饰符对应的函数不需要实例化，不需要 self 参数，但第一个参数需要是表示自身类的 cls 参数，可以来调用类的属性，类的方法，实例化对象等。
+
+**staticmethod**
+
+class C(object):
+    @staticmethod
+    def f(arg1, arg2, ...):
+    
+```python
+class C(object):
+    @staticmethod
+    def f():
+        print('runoob');
+ 
+C.f();          # 静态方法无需实例化
+cobj = C()
+cobj.f()        # 也可以实例化后调用
+```
+
+**setattr**
+
+setattr() 函数对应函数 getattr()，用于设置属性值，该属性不一定是存在的。
+
+setattr(object, name, value)
+
+getattr(object, name[, default])
+
+```python
+class A(object):
+     bar = 1
+ 
+a = A()
+getattr(a, 'bar')        # 获取属性 bar 值
+```
 
 ##### 值与引用
 
