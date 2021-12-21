@@ -539,7 +539,7 @@ while (!pq.empty())
 	
 [C++ STL中set/map 与 priority_queue 中greater、less 的用法区别](https://blog.csdn.net/liqinzhe11/article/details/79278235)
 	
-set和map：底层都是红黑树 less<> 最小堆，greater<>是最大堆。 默认是less。
+set和map：底层都是红黑树 less<> 最小堆，greater<>是最大堆。 默认是less，升序。
 
 make_heap:  less<>() 展现出来的是最大堆， greater<>()展现出来是最小堆。  默认是less。
 
@@ -547,6 +547,25 @@ priority_queue:   底层是使用heap实现的，所以表现出来的特性和h
 
                      less<>() 展现出来的是最大堆， greater<>()展现出来是最小堆。  默认是less。
 
+greater: a > b  ,less: a < b
+			    
+```
+template <class T> struct greater {
+  bool operator() (const T& x, const T& y) const {return x>y;}
+  typedef T first_argument_type;
+  typedef T second_argument_type;
+  typedef bool result_type;
+};
+
+template <class T> struct less {
+  bool operator() (const T& x, const T& y) const {return x<y;}
+  typedef T first_argument_type;
+  typedef T second_argument_type;
+  typedef bool result_type;
+};
+	
+```
+	
 #### 9 pair 
 
 template<class T1,class T2> struct pair
