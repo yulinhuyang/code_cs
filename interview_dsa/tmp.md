@@ -37,6 +37,8 @@ public:
 ```
 ##### 71. 简化路径
 
+std:find截取
+
 ```C++
 class Solution {
 public:
@@ -71,4 +73,48 @@ public:
 };
 
 ```
+find + substr截取
+
+```C++
+class Solution {
+public:
+    string simplifyPath(string path) {
+        vector<string> dirs;
+        for (int i = 0; i < path.size();) {
+            ++i;
+            auto j = path.find("/", i);
+            if (j == string::npos) {
+                j = path.size();
+            }
+            auto dir = path.substr(i, j - i);
+
+            if (!dir.empty() && dir != ".") {
+                if (dir == "..") {
+                    if (!dirs.empty()) {
+                        dirs.pop_back();
+                    }
+                } else if (dir != ".") {
+                    dirs.emplace_back(dir);
+                }
+            }
+            i = j;
+        }
+
+        stringstream out;
+        if (dirs.empty()) {
+            out << '/';
+        } else {
+            for (auto ch:dirs) {
+                out << "/" << ch;
+            }
+        }
+        return out.str();
+    }
+};
+
+```
+
+
+
+
 
