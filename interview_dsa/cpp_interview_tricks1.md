@@ -24,7 +24,7 @@ reverse(nums.begin() + j,nums.end());//反转一段数组
 
 ```
 
-**C++ 不提倡使用vector<bool>**
+##### C++ 不提倡使用vector<bool> 
 
  |=  重载了 vector<int>类型
  
@@ -32,12 +32,13 @@ reverse(nums.begin() + j,nums.end());//反转一段数组
 
 dp[i][j] |= dp[i][j-1]
 
-**快速交换**
 
-swap(vector[0],vector[4]);
+##### for范围循环	
 
-**for范围循环**
+ range for结构: for(auto &num: nums)  
+	
 ```c++
+	
 string str("some string"); 
  
 // range for 语句  
@@ -51,16 +52,28 @@ for(const int &num:nums)
     
 }
 
+```
+**引用与更新**
+	
 auto matrix_new = matrix;   // C++ 这里的 = 拷贝是值拷贝，会得到一个新的数组
 
 matrix = matrix_new;  //赋值拷贝
 
-```
-**引用与更新**
-
 merged.back()[1] = max(merged.back()[1],R);
+	
+**快速交换**
 
-**cmp自定义比较**
+swap(vector[0],vector[4]);
+
+##### 排序
+
+比较函数模板:
+
+升序：sort(begin,end,less<data-type>());
+	
+降序：sort(begin,end,greater<data-type>()).
+	
+cmp自定义比较: 
 
 ```c++
 class Solution {
@@ -75,9 +88,9 @@ public:
     vector<vector<int>> merge(vector<vector<int>>& intervals) {
 
         sort(intervals.begin(),intervals.end(),cmp);
-	}
+    }
 ```
-**C++ vector切片**
+##### C++ vector切片
 
 ```C++
 
@@ -547,6 +560,13 @@ sort(首元素地址(必填), 尾元素地址的下一个地址(必填), 比较�
 	
 默认是递增数列
 	
+##### 比较函数模板
+	
+functional头文件中，有很多比较函数对象
+	
+[sort()函数与升序、降序 C++](https://blog.csdn.net/zhinanpolang/article/details/50917019)
+	
+equal_to<Type>、not_equal_to<Type>、greater<Type>、greater_equal<Type>、less<Type>、less_equal<Type>	
 
 #### 12  bitsets
 
