@@ -145,12 +145,13 @@ for(auto [k,v]:dict){
 }
 
 //map基于红黑树，自动排序；unordered_map基于哈希表，无序快
+```
 
-
-//map —>value->list 结构：
+##### map —>value->list 结构：
 
 字母异位词
 
+```C++
 class Solution {
 public:
     vector<vector<string>> groupAnagrams(vector<string>& strs) {
@@ -168,8 +169,30 @@ public:
         return ans;
     }
 };
-
 ```
+
+	
+##### map排序
+
+[C++ STL中set/map 与 priority_queue 中greater、less 的用法区别](https://blog.csdn.net/liqinzhe11/article/details/79278235)
+
+[C++ STL中Map的按Key排序和按Value排序](https://blog.csdn.net/iicy266/article/details/11906189)
+
+比较函数模板(默认是less升序)
+	
+map<string, int, greater<string> > name_score_map;
+
+自定义cmp
+	
+```C++
+struct CmpByKeyLength {
+  bool operator()(const string& k1, const string& k2) {
+    return k1.length() < k2.length();
+  }
+};
+map<string, int, CmpByKeyLength> name_score_map;
+```
+	
 
 #### 3  string
 
@@ -410,6 +433,20 @@ cacheList.erase(pos);
 cacheList.splice(cacheList.begin(), cacheList, cacheMap[key]);
 
 ```
+	
+##### list 排序
+
+比较函数模板法
+
+
+自定义cmp
+```C++
+bool compare(A a1, A a2){
+	return a1.a < a2.a;  //会产生升序排列，若改为>,则会产生降序； 
+}
+list_a.sort(compare); //排序操作； 
+``` 	
+
 	
 #### 8 priority_queue(堆)
 
