@@ -140,7 +140,7 @@ if(need.count(char_right)){
 for(auto iter = dict.begin(); iter != dict.end(); iter++) {
     cout << iter->first << " : " << iter->second << endl;
 }
-for(auto [k,v]:dict){
+for(auto & [k,v]:dict){
     cout << k <<" " <<v<<endl;
 }
 
@@ -522,6 +522,18 @@ p.pop();
 p.top();
 	
 ```
+
+**遍历**
+	
+```C++	
+std::priority_queue<std::string> pq {words};  
+while (!pq.empty())
+{
+    std:: cout << pq.top () <<" ";
+    pq.pop();
+}
+	
+```	
 
 ##### 排序比较
 	
