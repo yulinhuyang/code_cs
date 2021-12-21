@@ -222,11 +222,14 @@ std::string str = "870";
 int i = atoi(str.c_str());
 
 //查找
-int pos = str.find('ab') 
-str1 == str2 //判断相等
+int pos = str.find('ab')
+int pos = str.find('ab',5) //从5开始找 
 position=str.rfind ('ab'); // rfind 反向找
 position = str.find_first_of('ab');
 position = str.find_last_of('ab');
+	
+//判等
+str1 == str2  
 
 
 //char和int转换 
@@ -250,6 +253,28 @@ while (getline(ss, str, '.')) {
 }
 string binDstIP = outDstIP.str();//转string
 ```
+##### 字符串截取
+	
+**std::find** 
+
+查找[first,last)范围内，与val等价的第一个元素，返回一个迭代器。如果没有这个元素，将返回last。
+	
+auto pos = find(i,path.end(),'/');
+String tmp = string(i,pos);
+ 
+**find + substr 字符串截取**
+
+/..   后漏掉后的.., 查找不到会返回 string::npos
+	
+```C++
+auto j = path.find_first_of("/",i);
+if(j == string::npos){
+   j = path.size();
+}
+autodir=path.substr(i,j-i);
+
+```
+通过getline方法最好
 	
 ##### 字典序输出
 	
