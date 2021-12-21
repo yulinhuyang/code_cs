@@ -174,15 +174,13 @@ public:
 	
 ##### map排序
 
-[C++ STL中set/map 与 priority_queue 中greater、less 的用法区别](https://blog.csdn.net/liqinzhe11/article/details/79278235)
-
 [C++ STL中Map的按Key排序和按Value排序](https://blog.csdn.net/iicy266/article/details/11906189)
 
-比较函数模板(默认是less升序)
+比较函数模板(默认是less 升序)
 	
 map<string, int, greater<string> > name_score_map;
 
-自定义cmp
+自定义cmp：带operator结构体、函数指针、lambda表达式
 	
 ```C++
 struct CmpByKeyLength {
@@ -388,6 +386,8 @@ deque.push_front(2);
 
 #### 6 set(unordered_set)
 
+set基于红黑树，自动排序；unordered_set基于哈希表，无序快
+
 ```c++
 unordered<int> set;
 unordered_set<int> set;
@@ -408,6 +408,27 @@ unordered_set<string> set;
 for (auto word:wordDict) {
     set.emplace(word);
 }
+
+```
+	
+比较函数模板
+	
+自定义：带operator的结构体、函数指针、lambda表达式
+	
+```c++
+//comp也可以是less<Type>
+	
+struct comp
+{
+	template<typename T>
+	bool operator()(const T& l, const T& r) const
+	{
+		if (l.first == r.first)
+			return l.second > r.second;
+		return l.first < r.first;
+	}
+};
+std::set<std::pair<std::string,int>, comp> set
 
 ```
 
@@ -438,7 +459,6 @@ cacheList.splice(cacheList.begin(), cacheList, cacheMap[key]);
 
 比较函数模板法
 
-
 自定义cmp
 ```C++
 bool compare(A a1, A a2){
@@ -449,8 +469,6 @@ list_a.sort(compare); //排序操作；
 
 	
 #### 8 priority_queue(堆)
-
-
 	
 [【c++】STL里的priority_queue用法总结](https://blog.csdn.net/xiaoquantouer/article/details/52015928)
 
@@ -461,6 +479,11 @@ Type为数据类型， Container为保存数据的容器，Functional为元素�
 如果不写后两个参数，那么容器默认用的是vector，比较方式默认用operator<，也就是优先队列是大顶堆，队头元素最大。
 
 改成优先小顶堆： priority_queue<int, vector<int>, greater<int> > p;
+
+
+比较函数模板
+	
+自定义：带operator的结构体、函数指针、lambda表达式
 
 ```C++
 #include <queue>	
@@ -475,6 +498,19 @@ priority_queue <int,vector<int>,less<int> > q;
 //pair的比较，先比较第一个元素，第一个相等比较第二个
 priority_queue<pair<int, int> > p;
 
+
+//可调用的函数操作符的对象 
+struct mycmp{
+    bool operator()(const student & a,const student & b){
+        return a.age < b.age;
+    }
+};
+			     
+//函数指针 
+bool cmpfunc(const student& a, const student& b){
+    return a.age < b.age;
+}
+
 //自定义lambda比较
 auto cmp = [](int left, int right) { return (left ^ 1) < (right ^ 1); };
 std::priority_queue<int, std::vector<int>, decltype(cmp)> q3(cmp);
@@ -486,6 +522,18 @@ p.pop();
 p.top();
 	
 ```
+
+##### 排序比较
+	
+[C++ STL中set/map 与 priority_queue 中greater、less 的用法区别](https://blog.csdn.net/liqinzhe11/article/details/79278235)
+	
+set和map：底层都是红黑树 less<> 最小堆，greater<>是最大堆。 默认是less。
+
+make_heap:  less<>() 展现出来的是最大堆， greater<>()展现出来是最小堆。  默认是less。
+
+priority_queue:   底层是使用heap实现的，所以表现出来的特性和heap一致。 
+
+                     less<>() 展现出来的是最大堆， greater<>()展现出来是最小堆。  默认是less。
 
 #### 9 pair 
 
