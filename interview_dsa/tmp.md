@@ -1,3 +1,25 @@
+#### 338. 比特位计数
+
+```C++
+class Solution {
+public:
+    vector<int> countBits(int n) {
+        vector<int> res;
+        for (int i = 0; i <= n; i++) {
+            int sum = 0;
+            int num = i;
+            while (num) {
+                num = num & (num - 1);
+                sum += 1;
+            }
+            res.emplace_back(sum);
+        }
+        return res;
+    }
+};
+```
+
+
 ##### 347. 前 K 个高频元素
 
 ```C++
@@ -35,6 +57,9 @@ public:
 };
 
 ```
+
+#### 字符串操作类
+ 
 ##### 71. 简化路径
 
 std:find截取
@@ -113,7 +138,30 @@ public:
 };
 
 ```
+##### 1233. 删除子文件夹
 
+```C++
+class Solution {
+public:
+    vector<string> removeSubfolders(vector<string>& folder) {
+        sort(folder.begin(),folder.end());
+        vector<string> ans(1,folder[0]);
+        string cur = ans[0] + "/";
+        for(int i = 1;i < folder.size();){
+            while(i < folder.size() && folder[i].find(cur) == 0){
+                ++i;
+            }
+            if(i < folder.size()){
+                ans.emplace_back(folder[i]);
+                cur = folder[i] + "/";
+                i++;
+            }
+        }
+
+        return  ans;
+    }
+};
+```
 
 
 
