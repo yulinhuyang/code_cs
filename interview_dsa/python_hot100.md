@@ -1,8 +1,6 @@
-###   1 链表（栈 队列 堆 ）
+###   1 线性表（数组、链表、字符串）
 
-#### 链表
-
-熟练掌握 链表的反转、合并
+#### 链表基本操作
 
 ##### 2. 两数相加
 
@@ -76,82 +74,9 @@ ListNode reverse(ListNode a) --> ListNode reverse(ListNode a, ListNode b) -->
 	ListNode reverseKGroup(ListNode head, int k)
 
 
-##### 23. 合并K个升序链表
-
-关于虚拟节点(链表类题目)
-
-dummy = ListNode(0)
-dummy.next = head  //合并，则用新链表 head = dummy
-
-return dummy.next 
-
-```python
-
-class Solution:
-    def mergeTwoLists(self, list1:ListNode,list2:ListNode) -> ListNode:
-        
-        head1 = list1
-        head2 = list2
-        dummy = ListNode(0)
-        head = dummy
-        while head1 and head2:
-            if head1.val < head2.val:
-                head.next = head1
-                head1 = head1.next  
-            else:
-                head.next = head2
-                head2 = head2.next
-            head = head.next
-        
-        if head1:
-            head.next = head1
-        if head2:
-            head.next = head2
-
-        return dummy.next
-
-    def mergeKLists(self, lists: List[ListNode]) -> ListNode:
-        if not lists:
-            return 
-
-        list1 = lists[0]
-        for k in range(1,len(lists)):
-            list1 = self.mergeTwoLists(list1,lists[k])
-        return list1
-```
 
 
-##### 206 反转链表
 
-________
- A        |
-pre ---- cur ---- next 
-|_________B _______ C
-
-
-1  nxt 保存
-
-2  cur.next 指向pre 
-
-3  pre = cur
-
-4  cur = nxt
-
-```python
-class Solution:
-    # 返回ListNode
-    def ReverseList(self, pHead):
-        if not pHead:
-            return 
-        pre = None
-        cur = pHead
-        while cur:
-            nxt = cur.next
-            cur.next = pre
-            pre = cur
-            cur = nxt
-        return pre
-```
 
 ##### 148. 排序链表
 
@@ -223,77 +148,42 @@ class Solution:
         return nodeA
 ```
 
-##### 146. LRU 缓存机制
+#### 链表翻转
+
+##### 206 反转链表
+
+________
+ A        |
+pre ---- cur ---- next 
+|_________B _______ C
+
+
+1  nxt 保存
+
+2  cur.next 指向pre 
+
+3  pre = cur
+
+4  cur = nxt
 
 ```python
-
-from typing import List
-class DLinkedNode:
-    def __init__(self,key = 0,value = 0):
-        self.key = key
-        self.value = value
-        self.prev = None
-        self.next = None
-
-class LRUCache:
-    def __init__(self, capacity: int):
-        #Dlist相关，伪头伪尾
-        self.head = DLinkedNode(0)
-        self.tail = DLinkedNode(0)
-        self.head.next = self.tail
-        self.tail.prev = self.head
-        self.size = 0 
-        #cachemap相关
-        self.cache = dict()
-        self.capacity = capacity
-
-    def get(self, key: int) -> int:
-        if key not in self.cache:
-            return -1
-        node = self.cache[key]
-        self.removeNode(node)
-        self.addToHead(node)
-        #self.cache[key] = node
-        return node.value
-
-    def put(self, key: int, value: int) -> None:
-        if key in self.cache:
-            node = self.cache[key]
-            self.removeNode(node)
-            #相当于引用
-            node.value = value
-            self.addToHead(node)
-            #self.cache[key] = node
-        else:
-            node = DLinkedNode(key,value)
-            self.cache[key] = node
-            self.addToHead(node)
-            self.size += 1
-            if self.size > self.capacity:
-                key = self.deleteTail()
-                self.cache.pop(key)
-                self.size -= 1
-            
-    #DList API
-    def removeNode(self, node):
-        node.prev.next = node.next
-        node.next.prev = node.prev
-
-    def addToHead(self, node):
-        node.next = self.head.next
-        node.prev = self.head
-        self.head.next.prev = node
-        self.head.next = node
-
-    def deleteTail(self) ->int:
-        node = self.tail.prev
-        self.removeNode(node)
-        return node.key
-
+class Solution:
+    # 返回ListNode
+    def ReverseList(self, pHead):
+        if not pHead:
+            return 
+        pre = None
+        cur = pHead
+        while cur:
+            nxt = cur.next
+            cur.next = pre
+            pre = cur
+            cur = nxt
+        return pre
 ```
-唯一的元素，二分法
 
-多个元素，加n，排除法
+
+#### 数组类问题
 
 ##### 448. 找到所有数组中消失的数字
 
@@ -316,11 +206,109 @@ class Solution:
 
 
 
+##### 48. 旋转图像
+
+旋转问题
+
+```python
+
+class Solution:
+    def rotate(self, matrix: List[List[int]]) -> None:
+        m = len(matrix)
+        n = len(matrix[0])
+        #上下对换
+        for i in range(m//2):
+            for j in range(n):
+                matrix[i][j],matrix[m - i - 1][j] = matrix[m - i - 1][j],matrix[i][j]
+        #对角线对换
+        for i in range(m):
+            for j in range(i):
+                matrix[i][j],matrix[j][i] = matrix[j][i],matrix[i][j] 
+        return matrix
+```
+
+##### 560. 和为 K 的子数组
+
+```python
+class Solution:
+    def subarraySum(self, nums: List[int], k: int) -> int:
+
+        map = dict()
+        sum_i = 0
+        ans  = 0
+        map[0] = 1
+        for i in range(len(nums)):
+            sum_i += nums[i]
+
+            sum_j = sum_i - k
+            if sum_j in map:
+                ans += map[sum_j]
+            
+            map[sum_i] = map.get(sum_i,0) +1
+        return ans
+
+```
+
+##### 169.  多数元素
+
+```python
+
+class Solution:
+    def majorityElement(self, nums: List[int]) -> int:
+        #投票法
+        canda = nums[0]
+        count = 1
+        for num in nums[1:]:
+            if count == 0:
+                canda = num
+            if num == canda:
+                count += 1
+            else:
+                count -= 1
+        return canda
+```
 
 
-#### 栈 stack
 
-括号类问题、单调栈问题、
+#### 前缀和与差分数组
+ 
+##### 437. 路径总和 III
+
+```python
+class Solution:
+    def pathSum(self, root: TreeNode, targetSum: int) -> int:
+        
+        def recurPathSum(root,curSum,targetSum):
+            if not root:
+                return 0
+            
+            curSum += root.val
+
+            res = 0
+            res += mapSum.get(curSum - targetSum,0)
+            mapSum[curSum] = mapSum.get(curSum,0) + 1
+
+            res += recurPathSum(root.left,curSum,targetSum)
+            res += recurPathSum(root.right,curSum,targetSum)
+
+            mapSum[curSum] = mapSum.get(curSum,0) - 1
+
+            return res
+
+        mapSum = dict()
+        mapSum[0] = 1
+        return recurPathSum(root,0,targetSum)
+
+```
+
+#### 字符串操作
+
+
+### 2 栈与队列（堆）
+
+括号类问题、单调栈问题
+
+#### 栈基本操作
 
 
 ##### 20.有效的括号
@@ -393,6 +381,7 @@ class Solution:
         return res
 ```
 
+#### 单调栈
 
 ##### 单调栈  84. 柱状图中最大的矩形    矩形面积
 
@@ -423,8 +412,6 @@ class Solution:
             ret_max = max(ret_max,(right[i]-left[i] - 1)*heights[i])   
         return ret_max   
 ```
-
-
 
 ##### 85. 最大矩形
 
@@ -475,7 +462,6 @@ class Solution:
 
 接雨水：左边最大、右边最大，min(leftmax,rightMax）- height[i]。 矩形： (右边小于index - 左边小于index  - 1) * height[i]
 
-
 ##### 155. 最小栈
 
 ```python
@@ -524,9 +510,10 @@ class Solution:
         return res
 ```
 
-#### 堆 heap 队列
+#### 单调队列
 
 
+#### ToP k问题
 
 ##### 347. 前 K 个高频元素
 
@@ -574,7 +561,56 @@ class Solution:
 
 ```
 
+#### K-way merge，多路归并
+
+##### 23. 合并K个升序链表
+
+关于虚拟节点(链表类题目)
+
+dummy = ListNode(0)
+dummy.next = head  //合并，则用新链表 head = dummy
+
+return dummy.next 
+
+```python
+
+class Solution:
+    def mergeTwoLists(self, list1:ListNode,list2:ListNode) -> ListNode:
+        
+        head1 = list1
+        head2 = list2
+        dummy = ListNode(0)
+        head = dummy
+        while head1 and head2:
+            if head1.val < head2.val:
+                head.next = head1
+                head1 = head1.next  
+            else:
+                head.next = head2
+                head2 = head2.next
+            head = head.next
+        
+        if head1:
+            head.next = head1
+        if head2:
+            head.next = head2
+
+        return dummy.next
+
+    def mergeKLists(self, lists: List[ListNode]) -> ListNode:
+        if not lists:
+            return 
+
+        list1 = lists[0]
+        for k in range(1,len(lists)):
+            list1 = self.mergeTwoLists(list1,lists[k])
+        return list1
+```
+
+
 ### 2 树 
+
+#### 树的DFS（Tree Depth First Search，stack）
 
 ##### 236. 二叉树的最近公共祖先
 
@@ -686,34 +722,6 @@ class Solution:
 
         return recur(root.left,root.right)
 
-```
-
-##### 102. 二叉树的层序遍历
-
-BFS问题
-
-```python
-
-class Solution:
-    def levelOrder(self, root: TreeNode) -> List[List[int]]:
-        if not root:
-            return []
-        queue = []
-        res = []
-        queue.append(root)
-        while queue:
-            size = len(queue)
-            lis = []
-            for i in range(size):
-                node = queue.pop(0)
-                if node.left:
-                    queue.append(node.left)
-                if node.right:
-                    queue.append(node.right)
-                lis.append(node.val)
-            res.append(lis)    
-
-        return res    
 ```
 
 
@@ -918,9 +926,107 @@ class Codec:
         return root
 ```
 
-### 3 动态规划
+
+
+#### 树的BFS(Tree Breadth First Search，queue)
+
+##### 102. 二叉树的层序遍历
+
+BFS问题
+
+```python
+
+class Solution:
+    def levelOrder(self, root: TreeNode) -> List[List[int]]:
+        if not root:
+            return []
+        queue = []
+        res = []
+        queue.append(root)
+        while queue:
+            size = len(queue)
+            lis = []
+            for i in range(size):
+                node = queue.pop(0)
+                if node.left:
+                    queue.append(node.left)
+                if node.right:
+                    queue.append(node.right)
+                lis.append(node.val)
+            res.append(lis)    
+
+        return res    
+```
+
+#### 前缀树（字典树）
+
+self使用：类中函数的第一个参数是实例对象本身，并且约定俗成，把其名字写为self。其作用相当于java中的this
+
+字符串处理ord
+
+本质是一个26节点的树
+
+###### 208. 实现 Trie (前缀树)
+
+```python
+class Trie:
+    
+    def __init__(self):
+        """
+        Initialize your data structure here.
+        """
+        self.children = [None] *26
+        self.isEnd = False
+        
+    def searchPrefix(self, prefix: str):
+        node = self
+	//返回node
+        for i in range(len(prefix)):
+            ch = ord(prefix[i]) - ord('a')
+            if not node.children[ch]:
+                return None
+            node = node.children[ch]
+        return node
+    
+    def insert(self, word: str) -> None:
+        """
+        Inserts a word into the trie.
+        """
+        node = self
+        for i in range(len(word)):
+            ch = ord(word[i]) - ord('a')
+            if not node.children[ch]:
+                node.children[ch] = Trie();
+            node = node.children[ch]
+        node.isEnd = True
+        return 
+
+    def search(self, word: str) -> bool:
+        """
+        Returns if the word is in the trie.
+        """
+        ret = self.searchPrefix(word)
+        if ret and ret.isEnd:
+            return True
+        return False
+
+
+    def startsWith(self, prefix: str) -> bool:
+        """
+        Returns if there is any word in the trie that starts with the given prefix.
+        """
+        return self.searchPrefix(prefix) is not None
+
+```
+
+
+### 4 动态规划（DFS\DP）
 
 重叠子问题、最优子结构
+
+#### 经典动归
+
+字符串（编辑距离、正则）问题、子序列问题、路径问题
 
 ##### 10 正则表达式匹配
 
@@ -949,17 +1055,6 @@ class Solution:
         return dp[m][n]
 ```
 
-##### 70. 爬楼梯
-```python
-class Solution:
-    def climbStairs(self, n: int) -> int:
-        dp = [0 for i in range(n+1)]
-        dp[0] = 1
-        dp[1] = 1
-        for i in range(2,n+1):
-            dp[i] = dp[i-1] + dp[i-2]
-        return dp[n]
-```
 #####  72. 编辑距离
 
 ```python
@@ -984,6 +1079,34 @@ class Solution:
 
 ```
 
+##### 139. 单词拆分
+
+```python
+    def wordBreak(self, s: str, wordDict: List[str]) -> bool:
+        # dp[i] 代表dp[i-1] 能否被拆分
+
+        dp = [False for i in range(len(s)+1)]
+        dp[0] = True
+        for i in range(len(s) + 1):
+            for j in range(i):
+                if dp[j] and s[j:i] in wordDict:
+                    dp[i] = True
+
+        return dp[len(s)]
+```
+
+##### 70. 爬楼梯
+```python
+class Solution:
+    def climbStairs(self, n: int) -> int:
+        dp = [0 for i in range(n+1)]
+        dp[0] = 1
+        dp[1] = 1
+        for i in range(2,n+1):
+            dp[i] = dp[i-1] + dp[i-2]
+        return dp[n]
+```
+
 ##### 300. 最长递增子序列
 
 ```python
@@ -1001,7 +1124,6 @@ class Solution:
         return max_len
 ```
 
-#### 路径问题
 
 ##### 62. 不同路径
 
@@ -1043,24 +1165,6 @@ class Solution:
         return dp[m-1][n-1]
 ```
 
-
-##### 139. 单词拆分
-
-```python
-    def wordBreak(self, s: str, wordDict: List[str]) -> bool:
-        # dp[i] 代表dp[i-1] 能否被拆分
-
-        dp = [False for i in range(len(s)+1)]
-        dp[0] = True
-        for i in range(len(s) + 1):
-            for j in range(i):
-                if dp[j] and s[j:i] in wordDict:
-                    dp[i] = True
-
-        return dp[len(s)]
-```
-
-#### 最值类问题
 
 ##### 53 最大子序和
 
@@ -1112,104 +1216,6 @@ class Solution:
         return farest >= len(nums) - 1
 ```
 
-##### 56. 合并区间
-
-区间类问题
-
-```python
-class Solution:
-    def merge(self, intervals: List[List[int]]) -> List[List[int]]:
-
-        intervals.sort(key = lambda x:x[0])
-        res = []
-        res.append(intervals[0])
-
-        for i in range(1,len(intervals),1):
-            #这里是引用
-            last = res[-1]
-            if intervals[i][0] <= last[1]:
-                last[-1] = max(last[-1],intervals[i][1])
-            else:
-                res.append(intervals[i])
-            
-        return res
-
-```
-
-##### 121. 买卖股票的最佳时机
-
-```python
-class Solution:
-    def maxProfit(self, prices: List[int]) -> int:
-
-        dp_i_0 = 0
-        dp_i_1 = -float('inf')
-
-        for i in range(len(prices)):
-            dp_i_0 = max(dp_i_0,dp_i_1 + prices[i])
-            dp_i_1 = max(dp_i_1,-prices[i])
-        
-        return dp_i_0
-
-```
-##### 309. 最佳买卖股票时机含冷冻期
-
-```python
-class Solution:
-    def maxProfit(self, prices: List[int]) -> int:
-
-        dp_i_0 = 0
-        dp_i_1 = -float('inf')
-        pre = 0 
-
-        for i in range(len(prices)):
-            temp = dp_i_0
-            dp_i_0 = max(dp_i_0,dp_i_1 + prices[i])
-            dp_i_1 = max(dp_i_1,pre - prices[i])
-            pre = temp
-        
-        return dp_i_0
-
-```
-
-##### 198. 打家劫舍
-
-```python
-class Solution:
-    def rob(self, nums: List[int]) -> int:
-
-        dp_i = 0 
-        dp_i_1 = 0
-        dp_i_2 = 0
-        n = len(nums)
-        for i in range(n-1,-1,-1):
-            dp_i = max(dp_i_1,nums[i] + dp_i_2)
-            dp_i_2 = dp_i_1
-            dp_i_1 = dp_i
-        
-        return dp_i
-```
-
-##### 337. 打家劫舍 III
-
-```python
-class Solution:
-    def rob(self, root: TreeNode) -> int:
-        def dfs(root):
-            if not root:return 0,0
-
-            left_select,left_noselect = dfs(root.left)
-            right_select,right_noselect = dfs(root.right)
-
-            select = left_noselect + root.val + right_noselect
-            noselect = max(left_select,left_noselect) + max(right_select,right_noselect)
-
-            return select,noselect
-        
-        return max(dfs(root))
-
-```
-
 ##### 128. 最长连续序列
 
 ```python
@@ -1257,6 +1263,53 @@ class Solution:
                     maxside = max(maxside,dp[i][j])
                 
         return maxside * maxside
+```
+
+##### 238. 除自身以外数组的乘积
+
+```python
+
+class Solution:
+    def productExceptSelf(self, nums: List[int]) -> List[int]:
+        answer = [0 for i in range(len(nums))]
+        answer[0] = 1
+        for i in range(1,len(nums)):
+            answer[i] = answer[i-1]*nums[i-1]
+        
+        Rmul = 1
+        for i in range(len(nums)-1,-1,-1):
+            answer[i] = answer[i] * Rmul
+            Rmul = Rmul * nums[i]
+
+        return answer
+```
+
+
+##### 312. 戳气球
+
+```python
+class Solution:
+    #dp:子问题必须独立
+    #dp: i 和 j 的遍历顺序，可以根据base case和最终状态进行推导
+    #dp[i][j]:戳破气球 i 和气球 j 之间（开区间，不包括 i 和 j）的所有气球，得到的最高分数
+    #dp[i][j] = dp[i][k]+dp[k][j]+ nums[i]*nums[k]*nums[j]
+    #这里是斜着 走上三角 进行迭代
+    def maxCoins(self, nums: List[int]) -> int:
+        #添加虚拟气球
+        n = len(nums)
+        points = [0 for i in range(n+2)]
+        dp = [[0 for i in range(n+2)] for j in range(n+2)]
+        #添加辅助气球
+        points[0] = 1
+        points[n+1] = 1
+        for i in range(1,n+1):
+            points[i] = nums[i-1]
+        for i in range(n-1,-1,-1):
+            for j in range(i+1,n+2,1):
+                for k in range(i+1,j,1):      
+                    dp[i][j] = max(dp[i][j],dp[i][k] + dp[k][j] + points[i]*points[k]*points[j])        
+        
+        return dp[0][n+1]
 ```
 
 #### 背包问题
@@ -1357,55 +1410,118 @@ class Solution:
 ```
 
 
-##### 238. 除自身以外数组的乘积
+#### 股票问题
+
+##### 121. 买卖股票的最佳时机
 
 ```python
-
 class Solution:
-    def productExceptSelf(self, nums: List[int]) -> List[int]:
-        answer = [0 for i in range(len(nums))]
-        answer[0] = 1
-        for i in range(1,len(nums)):
-            answer[i] = answer[i-1]*nums[i-1]
-        
-        Rmul = 1
-        for i in range(len(nums)-1,-1,-1):
-            answer[i] = answer[i] * Rmul
-            Rmul = Rmul * nums[i]
+    def maxProfit(self, prices: List[int]) -> int:
 
-        return answer
+        dp_i_0 = 0
+        dp_i_1 = -float('inf')
+
+        for i in range(len(prices)):
+            dp_i_0 = max(dp_i_0,dp_i_1 + prices[i])
+            dp_i_1 = max(dp_i_1,-prices[i])
+        
+        return dp_i_0
+
+```
+##### 309. 最佳买卖股票时机含冷冻期
+
+```python
+class Solution:
+    def maxProfit(self, prices: List[int]) -> int:
+
+        dp_i_0 = 0
+        dp_i_1 = -float('inf')
+        pre = 0 
+
+        for i in range(len(prices)):
+            temp = dp_i_0
+            dp_i_0 = max(dp_i_0,dp_i_1 + prices[i])
+            dp_i_1 = max(dp_i_1,pre - prices[i])
+            pre = temp
+        
+        return dp_i_0
+
 ```
 
+#### 打家劫舍问题
 
-##### 312. 戳气球
+##### 198. 打家劫舍
 
 ```python
 class Solution:
-    #dp:子问题必须独立
-    #dp: i 和 j 的遍历顺序，可以根据base case和最终状态进行推导
-    #dp[i][j]:戳破气球 i 和气球 j 之间（开区间，不包括 i 和 j）的所有气球，得到的最高分数
-    #dp[i][j] = dp[i][k]+dp[k][j]+ nums[i]*nums[k]*nums[j]
-    #这里是斜着 走上三角 进行迭代
-    def maxCoins(self, nums: List[int]) -> int:
-        #添加虚拟气球
+    def rob(self, nums: List[int]) -> int:
+
+        dp_i = 0 
+        dp_i_1 = 0
+        dp_i_2 = 0
         n = len(nums)
-        points = [0 for i in range(n+2)]
-        dp = [[0 for i in range(n+2)] for j in range(n+2)]
-        #添加辅助气球
-        points[0] = 1
-        points[n+1] = 1
-        for i in range(1,n+1):
-            points[i] = nums[i-1]
         for i in range(n-1,-1,-1):
-            for j in range(i+1,n+2,1):
-                for k in range(i+1,j,1):      
-                    dp[i][j] = max(dp[i][j],dp[i][k] + dp[k][j] + points[i]*points[k]*points[j])        
+            dp_i = max(dp_i_1,nums[i] + dp_i_2)
+            dp_i_2 = dp_i_1
+            dp_i_1 = dp_i
         
-        return dp[0][n+1]
+        return dp_i
+```
+
+##### 337. 打家劫舍 III
+
+```python
+class Solution:
+    def rob(self, root: TreeNode) -> int:
+        def dfs(root):
+            if not root:return 0,0
+
+            left_select,left_noselect = dfs(root.left)
+            right_select,right_noselect = dfs(root.right)
+
+            select = left_noselect + root.val + right_noselect
+            noselect = max(left_select,left_noselect) + max(right_select,right_noselect)
+
+            return select,noselect
+        
+        return max(dfs(root))
+
 ```
 
 
-###  4 回溯
+##### 56. 合并区间
+
+区间类问题
+
+```python
+class Solution:
+    def merge(self, intervals: List[List[int]]) -> List[List[int]]:
+
+        intervals.sort(key = lambda x:x[0])
+        res = []
+        res.append(intervals[0])
+
+        for i in range(1,len(intervals),1):
+            #这里是引用
+            last = res[-1]
+            if intervals[i][0] <= last[1]:
+                last[-1] = max(last[-1],intervals[i][1])
+            else:
+                res.append(intervals[i])
+            
+        return res
+
+```
+
+###  5 回溯
+
+
+子集、排列、组合、floodfill回溯
+
+二叉、多叉
+
+
+括号组合问题
 
 
 ##### 17. 电话号码的字母组合
@@ -1448,78 +1564,6 @@ class Solution:
         return res
 ```
 
-##### 46. 全排列
-
-1  全局visit[bool] 函数
-
-2  swap动态交换，模仿组合排列过程
-
-```python
-class Solution:
-    def __init__(self):
-        self.res = []
-        self.visit = []
-
-    def backtrack(self,nums,track):
-        if len(track) == len(nums):
-            self.res.append(list(track))
-            return 
-        
-        for i in range(len(nums)):
-            if self.visit[i]:
-                continue
-            
-            self.visit[i] = True
-            track.append(nums[i])
-            self.backtrack(nums,track)
-            track.pop(-1)
-            self.visit[i] = False
-
-
-    def permute(self, nums: List[int]) -> List[List[int]]:
-        track = []
-        self.visit = [False for i in range(len(nums))]
-        self.backtrack(nums,track)
-
-        return self.res
-```
-
-```python
-
-class Solution:
-    def permute(self, nums: List[int]) -> List[List[int]]:
-        
-        def backtrack(first):
-            if first == len(nums):
-                ans.append(list(nums)) #nums[:]  list需要拷贝或者切片
-                 
-
-            for i in range(first,len(nums)):
-                nums[first],nums[i] = nums[i],nums[first]
-                backtrack(first + 1)
-                nums[first],nums[i] = nums[i],nums[first]
-
-        ans = []
-        backtrack(0)
-
-        return ans
-
-```
-##### 49. 字母异位词分组
-
-collections.defaultdict 使用
-
-```python
-class Solution:
-    def groupAnagrams(self, strs: List[str]) -> List[List[str]]:
-        #map --> value(list)
-        map = collections.defaultdict(list)
-        for i in range(len(strs)):
-            char_str = ''.join(sorted(strs[i]))
-            map[char_str].append(strs[i])
-        
-        return list(map.values())
-```
 
 ##### 301 删除无效的括号
 
@@ -1592,6 +1636,68 @@ class Solution:
         return self.res
 ```
 
+
+
+#### 子集问题（排列、组合）
+
+##### 46. 全排列
+
+1  全局visit[bool] 函数
+
+2  swap动态交换，模仿组合排列过程
+
+```python
+class Solution:
+    def __init__(self):
+        self.res = []
+        self.visit = []
+
+    def backtrack(self,nums,track):
+        if len(track) == len(nums):
+            self.res.append(list(track))
+            return 
+        
+        for i in range(len(nums)):
+            if self.visit[i]:
+                continue
+            
+            self.visit[i] = True
+            track.append(nums[i])
+            self.backtrack(nums,track)
+            track.pop(-1)
+            self.visit[i] = False
+
+
+    def permute(self, nums: List[int]) -> List[List[int]]:
+        track = []
+        self.visit = [False for i in range(len(nums))]
+        self.backtrack(nums,track)
+
+        return self.res
+```
+
+```python
+
+class Solution:
+    def permute(self, nums: List[int]) -> List[List[int]]:
+        
+        def backtrack(first):
+            if first == len(nums):
+                ans.append(list(nums)) #nums[:]  list需要拷贝或者切片
+                 
+
+            for i in range(first,len(nums)):
+                nums[first],nums[i] = nums[i],nums[first]
+                backtrack(first + 1)
+                nums[first],nums[i] = nums[i],nums[first]
+
+        ans = []
+        backtrack(0)
+
+        return ans
+
+```
+
 ##### 39. 组合总和
 
 背包问题，求全部路径的回溯解法
@@ -1643,6 +1749,9 @@ class Solution:
             track.pop(-1)
 ```
 		
+
+#### floodfill问题
+
 ##### 79. 单词搜索
 
 ```python
@@ -1681,7 +1790,7 @@ class Solution:
                     return True
         return False
 
-```		
+```
 
 ##### 200. 岛屿数量
 
@@ -1717,7 +1826,7 @@ class Solution:
 ```
 
 			
-### 5 BFS
+### 6 BFS
 
 #####  层序遍历
 
@@ -1748,7 +1857,7 @@ class Solution:
 ```
 
 
-###  6 双指针
+###  7 双指针
 
 快慢指针、左右指针、双向遍历、回文问题、归并排序、三指针
 
@@ -1820,92 +1929,6 @@ class Solution:
         return dummy.next
 ```
 
-##### 5. 最长回文子串
-
-寻找回文串是从中间向两端扩展，判断回文串是从两端向中间收缩
- 
-```python
-class Solution:
-    def PalindromeStr(self,s,l,r):
-        while l >= 0 and r < len(s):
-            if s[l] == s[r]:
-                l -= 1
-                r += 1
-            else:
-                break
-        
-
-        return s[l+1:r]
-
-
-    def longestPalindrome(self, s: str) -> str:
-
-        index = 0
-        res = s[0]
-        while index < len(s):
-            str1 = self.PalindromeStr(s,index,index)
-            str2 = self.PalindromeStr(s,index,index + 1)
-            max_str = str1 if len(str1) > len(str2) else str2
-            res = res if len(res) > len(max_str) else max_str
-
-            index += 1
-        
-        return res
-```
-
-##### 647. 回文子串
-
-字符串中 回文子串 的数目
-
-```python
-class Solution:
-    def countSubstrings(self, s: str) -> int:
-        slen = len(s) 
-        num = 2 * slen - 1
-        left = 0
-        right = 0
-        ans = 0 
-        for center in range(num):
-            left = center // 2 
-            right = left + center % 2
-            
-            while left >= 0 and right < len(s) and  s[left] == s[right]:
-                ans += 1
-                left -= 1
-                right += 1
-        return ans 
-```
-
-##### 234. 回文链表
-
-```python
-
-class Solution:
-    def isPalindrome(self, head: ListNode) -> bool:
-        
-        slow = head
-        fast = head
-        pre = head
-        prepre = None
-        while fast and fast.next:
-            pre = slow
-            slow = slow.next
-            fast = fast.next.next
-            pre.next = prepre
-            prepre = pre    
-        #模拟奇数偶数情况
-        if fast:
-            slow = slow.next
-        while pre and slow:
-            if pre.val != slow.val:
-                return False
-            
-            pre = pre.next
-            slow = slow.next
- 
-        return True
-```
-
 ##### 11. 盛最多水的容器
 
 ```python
@@ -1960,36 +1983,6 @@ class Solution:
                 else:
                     R -= 1
         return ans
-
-
-```
-
-##### 42. 接雨水
-
-```python
-
-class Solution:
-    def trap(self, height: List[int]) -> int:
-        n = len(height)
-        left_max = [0 for i in range(n)]
-        right_max = [0 for i in range(n)]
-
-        left_max[0] = height[0]
-        right_max[n-1] = height[n-1]
-
-        for i in range(1,n):
-            left_max[i] = max(left_max[i-1],height[i])
-        
-        for j in range(n-2,-1,-1):
-            right_max[j] = max(right_max[j+1],height[j])
-
-        sum = 0 
-        for k in range(n):
-            water = min(left_max[k],right_max[k])
-            sum += water - height[k]
-
-        return sum
-
 ```
 
 ##### 75. 颜色分类
@@ -2022,7 +2015,6 @@ class Solution:
 ```
 
 #####  最长无重复子数组		
-
 
 ```python
 	
@@ -2068,34 +2060,7 @@ class Solution:
 ```
 
 
-##### 581. 最短无序连续子数组
 
-双指针+ 双向遍历
-
-双向遍历：柱形面积、接雨水，左边一遍，右边一遍
-
-```python
-class Solution:
-    def findUnsortedSubarray(self, nums: List[int]) -> int:
-        #双指针+双向遍历
-        left = 0
-        right = 0
-        max = -1000
-        min = 1000
-        for i in range(len(nums)):
-            if nums[i] >= max:
-                max = nums[i]
-            else:
-                right = i
-
-        for i in range(right,-1,-1):
-            if nums[i] <= min:
-                min = nums[i]
-            else:
-                left = i
-        
-        return 0 if right == left else right - left +1
-```
 
 ##### 4. 寻找两个正序数组的中位数
 
@@ -2204,7 +2169,155 @@ class Solution:
 ```
 
 
-### 7 二分查找
+#### 双向遍历
+
+##### 42. 接雨水
+
+```python
+
+class Solution:
+    def trap(self, height: List[int]) -> int:
+        n = len(height)
+        left_max = [0 for i in range(n)]
+        right_max = [0 for i in range(n)]
+
+        left_max[0] = height[0]
+        right_max[n-1] = height[n-1]
+
+        for i in range(1,n):
+            left_max[i] = max(left_max[i-1],height[i])
+        
+        for j in range(n-2,-1,-1):
+            right_max[j] = max(right_max[j+1],height[j])
+
+        sum = 0 
+        for k in range(n):
+            water = min(left_max[k],right_max[k])
+            sum += water - height[k]
+
+        return sum
+
+```
+
+##### 581. 最短无序连续子数组
+
+双指针+ 双向遍历
+
+双向遍历：柱形面积、接雨水，左边一遍，右边一遍
+
+```python
+class Solution:
+    def findUnsortedSubarray(self, nums: List[int]) -> int:
+        #双指针+双向遍历
+        left = 0
+        right = 0
+        max = -1000
+        min = 1000
+        for i in range(len(nums)):
+            if nums[i] >= max:
+                max = nums[i]
+            else:
+                right = i
+
+        for i in range(right,-1,-1):
+            if nums[i] <= min:
+                min = nums[i]
+            else:
+                left = i
+        
+        return 0 if right == left else right - left +1
+```
+
+#### 回文问题
+
+##### 5. 最长回文子串
+
+寻找回文串是从中间向两端扩展，判断回文串是从两端向中间收缩
+ 
+```python
+class Solution:
+    def PalindromeStr(self,s,l,r):
+        while l >= 0 and r < len(s):
+            if s[l] == s[r]:
+                l -= 1
+                r += 1
+            else:
+                break
+        
+
+        return s[l+1:r]
+
+
+    def longestPalindrome(self, s: str) -> str:
+
+        index = 0
+        res = s[0]
+        while index < len(s):
+            str1 = self.PalindromeStr(s,index,index)
+            str2 = self.PalindromeStr(s,index,index + 1)
+            max_str = str1 if len(str1) > len(str2) else str2
+            res = res if len(res) > len(max_str) else max_str
+
+            index += 1
+        
+        return res
+```
+
+##### 647. 回文子串
+
+字符串中 回文子串 的数目
+
+```python
+class Solution:
+    def countSubstrings(self, s: str) -> int:
+        slen = len(s) 
+        num = 2 * slen - 1
+        left = 0
+        right = 0
+        ans = 0 
+        for center in range(num):
+            left = center // 2 
+            right = left + center % 2
+            
+            while left >= 0 and right < len(s) and  s[left] == s[right]:
+                ans += 1
+                left -= 1
+                right += 1
+        return ans 
+```
+
+##### 234. 回文链表
+
+```python
+
+class Solution:
+    def isPalindrome(self, head: ListNode) -> bool:
+        
+        slow = head
+        fast = head
+        pre = head
+        prepre = None
+        while fast and fast.next:
+            pre = slow
+            slow = slow.next
+            fast = fast.next.next
+            pre.next = prepre
+            prepre = pre    
+        #模拟奇数偶数情况
+        if fast:
+            slow = slow.next
+        while pre and slow:
+            if pre.val != slow.val:
+                return False
+            
+            pre = pre.next
+            slow = slow.next
+ 
+        return True
+```
+
+
+### 8 二分查找
 
 ##### 33. 搜索旋转排序数组
 
@@ -2317,7 +2430,7 @@ class Solution:
         return left
 ```
 
-### 8 滑动窗口
+### 9 滑动窗口
 
 
 ##### 3. 无重复字符的最长子串
@@ -2382,6 +2495,8 @@ class Solution:
                     start = left
 
 ```
+
+#### 单调队列 + 滑动窗口
 
 ##### 239. 滑动窗口最大值
 
@@ -2490,72 +2605,14 @@ class Solution:
 ```
 
 
-### 9  其他 高频
+### 10 图算法及高频
 
-#### 位运算、 **前缀和** 、哈希、拓扑排序、字典树
 
-哈希
+#### 图算法--拓扑排序 
 
-##### 1. 两数之和
-
-```python
-class Solution:
-    def twoSum(self, nums: List[int], target: int) -> List[int]:
-
-        map = dict()
-        for i in range(len(nums)):
-            sub = target - nums[i]
-            if sub in map:
-                return [map[sub],i]
-            map[nums[i]] = i
-        return []
-
-```
-
-##### 560. 和为 K 的子数组
-
-```python
-class Solution:
-    def subarraySum(self, nums: List[int], k: int) -> int:
-
-        map = dict()
-        sum_i = 0
-        ans  = 0
-        map[0] = 1
-        for i in range(len(nums)):
-            sum_i += nums[i]
-
-            sum_j = sum_i - k
-            if sum_j in map:
-                ans += map[sum_j]
-            
-            map[sum_i] = map.get(sum_i,0) +1
-        return ans
-
-```
-
-##### 169.  多数元素
-
-```python
-
-class Solution:
-    def majorityElement(self, nums: List[int]) -> int:
-        #投票法
-        canda = nums[0]
-        count = 1
-        for num in nums[1:]:
-            if count == 0:
-                canda = num
-            if num == canda:
-                count += 1
-            else:
-                count -= 1
-        return canda
-```
+BFS:Indegree入度表、edges邻接表、BFS(queue)遍历
 
 ##### 207 课程表
-
-拓扑排序BFS:degree入度表、adjacency邻接表、queue(deque)遍历
 
 ```python
 	
@@ -2608,162 +2665,8 @@ class Solution:
         return max(minTime,len(tasks))
 ```
 
-#### 位运算
+#### 图算法--并查集(Union-Find)
 
-##### 136. 只出现一次的数字
-```python
-class Solution:
-    def singleNumber(self, nums: List[int]) -> int:
-        oneTimeNumber = 0
-        for i in range(len(nums)):
-            oneTimeNumber ^= nums[i]
-        
-        return oneTimeNumber
-```
-
-##### 338. 比特位计数
-
-```python
-class Solution:
-    def countBits(self, n: int) -> List[int]:
-        res = []
-        for i in range(n + 1):
-            count = 0
-            tmp = i
-            while tmp:
-                tmp = tmp & (tmp - 1)
-                count += 1
-            res.append(count)
-        
-        return res 
-```
-##### 461. 汉明距离
-
-```python
-class Solution:
-    def hammingDistance(self, x: int, y: int) -> int:
-        s = x ^ y
-        count = 0
-        while s:
-            s  = s &(s - 1)
-            count += 1
-
-        return count
-```
-
-
-##### 48. 旋转图像
-
-旋转问题
-
-```python
-
-class Solution:
-    def rotate(self, matrix: List[List[int]]) -> None:
-        m = len(matrix)
-        n = len(matrix[0])
-        #上下对换
-        for i in range(m//2):
-            for j in range(n):
-                matrix[i][j],matrix[m - i - 1][j] = matrix[m - i - 1][j],matrix[i][j]
-        #对角线对换
-        for i in range(m):
-            for j in range(i):
-                matrix[i][j],matrix[j][i] = matrix[j][i],matrix[i][j] 
-        return matrix
-```
-
-#### 前缀和数组
-
-##### 437. 路径总和 III
-
-```python
-class Solution:
-    def pathSum(self, root: TreeNode, targetSum: int) -> int:
-        
-        def recurPathSum(root,curSum,targetSum):
-            if not root:
-                return 0
-            
-            curSum += root.val
-
-            res = 0
-            res += mapSum.get(curSum - targetSum,0)
-            mapSum[curSum] = mapSum.get(curSum,0) + 1
-
-            res += recurPathSum(root.left,curSum,targetSum)
-            res += recurPathSum(root.right,curSum,targetSum)
-
-            mapSum[curSum] = mapSum.get(curSum,0) - 1
-
-            return res
-
-        mapSum = dict()
-        mapSum[0] = 1
-        return recurPathSum(root,0,targetSum)
-
-```
-
-##### 前缀树
-
-self使用：类中函数的第一个参数是实例对象本身，并且约定俗成，把其名字写为self。其作用相当于java中的this
-
-字符串处理ord
-
-本质是一个26节点的树
-
-###### 208. 实现 Trie (前缀树)
-
-```python
-class Trie:
-    
-    def __init__(self):
-        """
-        Initialize your data structure here.
-        """
-        self.children = [None] *26
-        self.isEnd = False
-        
-    def searchPrefix(self, prefix: str):
-        node = self
-	//返回node
-        for i in range(len(prefix)):
-            ch = ord(prefix[i]) - ord('a')
-            if not node.children[ch]:
-                return None
-            node = node.children[ch]
-        return node
-    
-    def insert(self, word: str) -> None:
-        """
-        Inserts a word into the trie.
-        """
-        node = self
-        for i in range(len(word)):
-            ch = ord(word[i]) - ord('a')
-            if not node.children[ch]:
-                node.children[ch] = Trie();
-            node = node.children[ch]
-        node.isEnd = True
-        return 
-
-    def search(self, word: str) -> bool:
-        """
-        Returns if the word is in the trie.
-        """
-        ret = self.searchPrefix(word)
-        if ret and ret.isEnd:
-            return True
-        return False
-
-
-    def startsWith(self, prefix: str) -> bool:
-        """
-        Returns if there is any word in the trie that starts with the given prefix.
-        """
-        return self.searchPrefix(prefix) is not None
-
-```
 
 ##### 并查集
 
@@ -2809,8 +2712,6 @@ class UnionFind:
             x = parent[x]
         return x
 ```
-
-
 ###### 399 除法求值
 
 ```python
@@ -2882,3 +2783,154 @@ class Solution:
         return res
 	
 ```
+
+
+#### 哈希表
+
+##### 1. 两数之和
+
+```python
+class Solution:
+    def twoSum(self, nums: List[int], target: int) -> List[int]:
+
+        map = dict()
+        for i in range(len(nums)):
+            sub = target - nums[i]
+            if sub in map:
+                return [map[sub],i]
+            map[nums[i]] = i
+        return []
+
+```
+##### 49. 字母异位词分组
+
+collections.defaultdict 使用
+
+```python
+class Solution:
+    def groupAnagrams(self, strs: List[str]) -> List[List[str]]:
+        #map --> value(list)
+        map = collections.defaultdict(list)
+        for i in range(len(strs)):
+            char_str = ''.join(sorted(strs[i]))
+            map[char_str].append(strs[i])
+        
+        return list(map.values())
+```
+
+
+
+#### 位运算
+
+##### 136. 只出现一次的数字
+```python
+class Solution:
+    def singleNumber(self, nums: List[int]) -> int:
+        oneTimeNumber = 0
+        for i in range(len(nums)):
+            oneTimeNumber ^= nums[i]
+        
+        return oneTimeNumber
+```
+
+##### 338. 比特位计数
+
+```python
+class Solution:
+    def countBits(self, n: int) -> List[int]:
+        res = []
+        for i in range(n + 1):
+            count = 0
+            tmp = i
+            while tmp:
+                tmp = tmp & (tmp - 1)
+                count += 1
+            res.append(count)
+        
+        return res 
+```
+##### 461. 汉明距离
+
+```python
+class Solution:
+    def hammingDistance(self, x: int, y: int) -> int:
+        s = x ^ y
+        count = 0
+        while s:
+            s  = s &(s - 1)
+            count += 1
+
+        return count
+```
+
+#### 数据结构设计 LRU/LFU
+
+##### 146. LRU 缓存机制
+
+```python
+
+from typing import List
+class DLinkedNode:
+    def __init__(self,key = 0,value = 0):
+        self.key = key
+        self.value = value
+        self.prev = None
+        self.next = None
+
+class LRUCache:
+    def __init__(self, capacity: int):
+        #Dlist相关，伪头伪尾
+        self.head = DLinkedNode(0)
+        self.tail = DLinkedNode(0)
+        self.head.next = self.tail
+        self.tail.prev = self.head
+        self.size = 0 
+        #cachemap相关
+        self.cache = dict()
+        self.capacity = capacity
+
+    def get(self, key: int) -> int:
+        if key not in self.cache:
+            return -1
+        node = self.cache[key]
+        self.removeNode(node)
+        self.addToHead(node)
+        #self.cache[key] = node
+        return node.value
+
+    def put(self, key: int, value: int) -> None:
+        if key in self.cache:
+            node = self.cache[key]
+            self.removeNode(node)
+            #相当于引用
+            node.value = value
+            self.addToHead(node)
+            #self.cache[key] = node
+        else:
+            node = DLinkedNode(key,value)
+            self.cache[key] = node
+            self.addToHead(node)
+            self.size += 1
+            if self.size > self.capacity:
+                key = self.deleteTail()
+                self.cache.pop(key)
+                self.size -= 1
+            
+    #DList API
+    def removeNode(self, node):
+        node.prev.next = node.next
+        node.next.prev = node.prev
+
+    def addToHead(self, node):
+        node.next = self.head.next
+        node.prev = self.head
+        self.head.next.prev = node
+        self.head.next = node
+
+    def deleteTail(self) ->int:
+        node = self.tail.prev
+        self.removeNode(node)
+        return node.key
+
+```
+
