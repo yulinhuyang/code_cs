@@ -28,6 +28,26 @@ reverse(nums.begin() + j,nums.end());//反转一段数组
 
 ```
 
+##### erase相关
+```c++
+// erase the 6th element
+myvector.erase (myvector.begin()+5);
+
+// erase the first 3 elements:
+myvector.erase (myvector.begin(),myvector.begin()+3);
+
+//迭代器删除
+for(vector<int>::iterator iter = vecInt.begin(); iter != vecInt.end(); iter++){
+	if(*iter == 444){		
+		vecInt.erase(iter);			
+	}
+}
+
+// Erase–remove惯用法
+v.erase(std::remove(v.begin(), v.end(), 5), v.end());
+```
+remove把不“符合”删除标准的元素搬移到容器的前部，并保持这些元素的相对次序
+
 ##### C++ 不提倡使用vector<bool> 
 
  |=  重载了 vector<int>类型
