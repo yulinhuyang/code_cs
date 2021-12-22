@@ -162,7 +162,40 @@ public:
     }
 };
 ```
+##### 435. 无重叠区间
 
+```C++
+class Solution {
+    static bool cmp(vector<int> &a, vector<int> &b) {
+        if (a[1] < b[1]) {
+            return true;
+        }
+        return false;
+    }
+
+public:
+    int eraseOverlapIntervals(vector<vector<int>> &intervals) {
+        if (intervals.empty()) {
+            return 0;
+        }
+        //sort(intervals.begin(),intervals.end(),cmp);
+        sort(intervals.begin(), intervals.end(), [](auto &u, auto &v) {
+            return u[1] < v[1];
+        });
+
+        auto right = intervals[0][1];
+        int ans = 0;
+        for (int i = 1; i < intervals.size(); i++) {
+            if (intervals[i][0] < right) {
+                ans++;
+            } else {
+                right = intervals[i][1];
+            }
+        }
+        return ans;
+    }
+};
+```
 
 
 
