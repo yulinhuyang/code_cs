@@ -278,11 +278,14 @@ public:
 ```
 
 
-## 3 动态规划
+## 3 动态规划（DP）
 
 重叠子问题，最优子结构
 
+ 
 ### 3.1 base code
+
+
 
 
 ### 背包问题
@@ -326,6 +329,7 @@ for i in range(n + 1):
             dp[i][j] = dp[i - 1][j]
 ```
 
+ 
 ## 4 回溯（DFS）
 
 ### 4.1 base code
@@ -348,7 +352,41 @@ void backtrack(){
 }
 ```
 
- 
+```C++
+//三种状态：unDiscovered、Discovered、visited
+template <typename Tv, typename Te> //深度优先搜索DFS算法（全图）
+void Graph<Tv, Te>::dfs ( int s ) { //assert: 0 <= s < n
+   reset(); int clock = 0; int v = s; //初始化
+   do //逐一检查所有顶点
+      if ( UNDISCOVERED == status ( v ) ) //一旦遇到尚未发现的顶点
+         DFS ( v, clock ); //即从该顶点出发启动一次DFS
+   while ( s != ( v = ( ++v % n ) ) ); //按序号检查，故不漏不重
+}
+
+template <typename Tv, typename Te> //深度优先搜索DFS算法（单个连通域）
+void Graph<Tv, Te>::DFS ( int v, int& clock ) { //assert: 0 <= v < n
+   dTime ( v ) = ++clock; status ( v ) = DISCOVERED; //发现当前顶点v
+   for ( int u = firstNbr ( v ); -1 < u; u = nextNbr ( v, u ) ) //枚举v的所有邻居u
+      switch ( status ( u ) ) { //并视其状态分别处理
+         case UNDISCOVERED: //u尚未发现，意味着支撑树可在此拓展
+            type ( v, u ) = TREE; parent ( u ) = v; DFS ( u, clock ); break;
+         case DISCOVERED: //u已被发现但尚未访问完毕，应属被后代指向的祖先
+            type ( v, u ) = BACKWARD; break;
+         default: //u已访问完毕（VISITED，有向图），则视承袭关系分为前向边或跨边
+            type ( v, u ) = ( dTime ( v ) < dTime ( u ) ) ? FORWARD : CROSS; break;
+      }
+   status ( v ) = VISITED; fTime ( v ) = ++clock; //至此，当前顶点v方告访问完毕
+}
+```
+
+DFS 防止死循环
+
+1 涂色法。
+
+2 visited数组法, unDiscovered  0，Discovered 1， visited  2 ，表示不同状态，注意是否能兼顾memo功能，有时会有更新循环问题
+
+memo缓存： floodfill变形慎重缓存，visited了部分情况下也需要更新
+
 
 ### 子集、排列、组合问题
 
@@ -443,11 +481,13 @@ public:
 };
 ```
 
-**四方向回溯**
+###  flood fill问题
+
+四方向回溯
 
 pair集合  +  visited去重
 
-visited这里类似涂色了
+visited代替涂色了
 
 ```C++
 class Solution {
@@ -500,21 +540,64 @@ public:
 
 ```
 
-### flood fill问题
+直接涂色
 
-```
-
-
-
-
+```C++
+void fill(int[][] image, int x, int y,
+        int origColor, int newColor) {
+    // 出界：超出数组边界
+    if (!inArea(image, x, y)) return;
+    // 碰壁：遇到其他颜色，超出 origColor 区域
+    if (image[x][y] != origColor) return;
+    // 已探索过的 origColor 区域
+    if (image[x][y] == -1) return;
+    
+    // choose：打标记，以免重复
+    image[x][y] = -1;
+    fill(image, x, y + 1, origColor, newColor);
+    fill(image, x, y - 1, origColor, newColor);
+    fill(image, x - 1, y, origColor, newColor);
+    fill(image, x + 1, y, origColor, newColor);
+    // unchoose：将标记替换为 newColor
+    image[x][y] = newColor;
+}
 ```
 
 ## 5 BFS
 
 ### 5.1 base code
 
-两个循环（while + for） + 一个遍历（for adj点）
+核心思想：
 
+```C++
+template <typename Tv, typename Te> //广度优先搜索BFS算法（全图）
+void Graph<Tv, Te>::bfs ( int s ) { //assert: 0 <= s < n
+   reset(); int clock = 0; int v = s; //初始化
+   do //逐一检查所有顶点
+      if ( UNDISCOVERED == status ( v ) ) //一旦遇到尚未发现的顶点
+         BFS ( v, clock ); //即从该顶点出发启动一次BFS
+   while ( s != ( v = ( ++v % n ) ) ); //按序号检查，故不漏不重
+}
+
+template <typename Tv, typename Te> //广度优先搜索BFS算法（单个连通域）
+void Graph<Tv, Te>::BFS ( int v, int& clock ) { //assert: 0 <= v < n
+   Queue<int> Q; //引入辅助队列
+   status ( v ) = DISCOVERED; Q.enqueue ( v ); //初始化起点
+   while ( !Q.empty() ) { //在Q变空之前，不断
+      int v = Q.dequeue(); dTime ( v ) = ++clock; //取出队首顶点v
+      for ( int u = firstNbr ( v ); -1 < u; u = nextNbr ( v, u ) ) //枚举v的所有邻居u
+         if ( UNDISCOVERED == status ( u ) ) { //若u尚未被发现，则
+            status ( u ) = DISCOVERED; Q.enqueue ( u ); //发现该顶点
+            type ( v, u ) = TREE; parent ( u ) = v; //引入树边拓展支撑树
+         } else { //若u已被发现，或者甚至已访问完毕，则
+            type ( v, u ) = CROSS; //将(v, u)归类于跨边
+         }
+      status ( v ) = VISITED; //至此，当前顶点访问完毕
+   }
+}
+```
+
+两个循环（while + for） + 一个遍历（for adj点）
 
 ```C++
 class Solution {
