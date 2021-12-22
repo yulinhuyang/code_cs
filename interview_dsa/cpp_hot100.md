@@ -1,8 +1,9 @@
-###   1 链表（栈 队列 堆 ）
 
-#### 链表
+###   1 线性表（数组、链表、字符串）
 
-熟练掌握 链表的反转、合并
+#### 链表基本操作
+
+熟练掌握 链表的基本操作
 
 
 ##### 2. 两数相加
@@ -45,10 +46,6 @@ public:
 
 ```
 
-
-
-
-
 ##### 19 删除链表的倒数第 N 个结点
 
 ```c++
@@ -80,298 +77,7 @@ public:
 };
 
 ```
-##### 21 合并两个有序链表
 
-```c++
-class Solution {
-public:
-    ListNode* mergeTwoLists(ListNode* l1, ListNode* l2) {
-        ListNode *dummy = new ListNode(0);
-        ListNode *head = dummy;
-        while(l1 && l2){
-            if(l1->val < l2->val){
-                head->next = l1;
-                l1 = l1->next;
-            } else{
-                head->next = l2;
-                l2 = l2->next;
-            }
-            head = head->next;
-        }
-        if(l1){
-            head->next = l1;
-        }
-        if(l2){
-            head->next = l2;
-        }
-        return  dummy->next;
-```
-##### 23 合并K个升序链表
-
-```c++
-class Solution {
-public:
-    ListNode* mergeKLists(vector<ListNode*>& lists) {
-        if(lists.size() == 0){
-            return nullptr;
-        }
-
-        ListNode *head = nullptr;
-        for(int i = 0;i < lists.size();i++){
-            head = mergeTwoLists(head,lists[i]);
-        }
-        return head;
-    }
-
-    ListNode* mergeTwoLists(ListNode* l1, ListNode* l2) {
-
-        ListNode *dummy = new ListNode(0);
-        ListNode *head = dummy;
-        while(l1 && l2){
-            if(l1->val < l2->val){
-                head->next = l1;
-                l1 = l1->next;
-                head = head->next;
-            }else{
-                head->next = l2;
-                l2 = l2->next;
-                head = head->next;
-            }
-        }
-        if(l1){
-            head->next = l1;
-        }
-        if(l2){
-            head->next = l2;
-        }
-        return dummy->next;
-    }
-};
-
-```
-
-
-##### 141 环形链表
-
-```C++
-
-class Solution {
-public:
-    bool hasCycle(ListNode *head) {
-        if(head == nullptr || head->next == nullptr){
-            return false;
-        }
-
-        ListNode *slow = head;
-        ListNode *fast = head;
-        while(fast && fast->next){
-            slow = slow->next;
-            fast = fast->next->next;
-            if(fast==slow){
-                return true;
-            }
-        }
-
-        return false;
-    }
-};
-
-```
-##### 142. 环形链表 II
-
-```C++							  
-class Solution {
-public:
-    ListNode *detectCycle(ListNode *head) {
-        if(head== nullptr || head->next == nullptr){
-            return nullptr;
-        }
-        ListNode *slow = head;
-        ListNode *fast = head;
-        while(fast && fast->next){
-            slow = slow->next;
-            fast = fast->next->next;
-            if(slow == fast){
-                break;
-            }
-        }
-
-        if(slow != fast){
-            return nullptr;
-        }
-
-        slow = head;
-        while(slow != fast){
-            fast = fast->next;
-            slow = slow->next;
-        }
-        return fast;
-    }
-};
-```
-##### 146. LRU 缓存机制
-
-双向链表(添加删除) + hashMAP（保存key + 地址）
-
-双向链表：时间复杂度是O(1)，删除需要前驱节点。
-
-struct Dnode --> Dnode List定义(伪头伪尾) + LRU定义 -——>Dnode API(delete、delte_tail、add_head)  -> LRU API get put 函数
-				
-				
-```C++
-
-//STL版,看思路，分解替换
-
-class LRUCache {
-private:
-
-    int capacity;
-    //cachelist 和cache map同步变化
-    list<pair<int, int>> cacheList;// pair内为key、value
-    unordered_map<int, list<pair<int, int>>::iterator> cacheMap;
-
-public:
-    LRUCache(int capacity) {
-        this->capacity = capacity;
-    }
-
-    int get(int key) {
-        if (!cacheMap.count(key)) {
-            return -1;
-        }
-        //*取值迭代器
-        auto it = *cacheMap[key];
-        //删除迭代器
-        cacheList.erase(cacheMap[key]);
-        cacheList.push_front(it);
-        cacheMap[key] = cacheList.begin();
-        return cacheList.front().second;
-    }
-
-    void put(int key, int value) {
-        //已存在
-        if (cacheMap.count(key)) {
-            auto it = *cacheMap[key];
-            cacheList.erase((cacheMap[key]));
-            it.second = value;
-            cacheList.push_front(it);
-            cacheMap[key] = cacheList.begin();
-        } else {
-            if (cacheList.size() == capacity) {
-                cacheMap.erase(cacheList.back().first);
-                cacheList.pop_back();
-            }
-            cacheList.push_front(make_pair(key, value));
-            cacheMap[key] = cacheList.begin();
-        }
-        return;
-
-    }
-};
-
-
-//Dlist 定义版
-
-申请与释放
-
-DListNode *head = new DListNode();
-
-delete(head):
-
-正常删除节点,都要delete node释放内存，但这里如果后面addhead,则不用释放
-
-delete tail的时候，需要释放内存
-
-
-struct DListNode {
-    int key;
-    int val;
-    DListNode *prev;
-    DListNode *next;
-
-    DListNode() : key(0), val(0), prev(NULL), next(NULL) {};
-
-    DListNode(int key, int val) : key(key), val(val), prev(NULL), next(NULL) {};
-};
-
-
-class LRUCache {
-private:
-    //Dlist定义
-    DListNode *head = new DListNode();
-    DListNode *tail = new DListNode();
-    int size;
-    //类相关定义，list 和cache map同步变化
-    unordered_map<int, DListNode *> cacheMap;
-    int capacity;
-
-public:
-    LRUCache(int capacity) {
-        //伪头 伪尾
-        head->next = tail;
-        tail->prev = head;
-        this->size = 0;
-        this->capacity = capacity;
-    }
-
-    void addHead(DListNode *node) {
-        //先插后断
-        node->next = head->next;
-        node->prev = head;
-        head->next->prev = node;
-        head->next = node;
-    }
-
-    //正常删除节点,都要delete释放内存，但这里如果后面addhead,则不用释放
-    void deleteNode(DListNode *node) {
-        node->next->prev = node->prev;
-        node->prev->next = node->next;
-    }
-
-    //delete tail的时候，先断关系，再释放内存
-    DListNode *deleteTail() {
-        DListNode *node = tail->prev;
-        deleteNode(node);
-        return node;
-    }
-
-    int get(int key) {
-        if (!cacheMap.count(key)) {
-            return -1;
-        }
-        //*取值迭代器
-        DListNode *node = cacheMap[key];
-        //删除迭代器
-        deleteNode(node);
-        addHead(node);
-        //cacheMap[key] = node;
-        return node->val;
-    }
-
-    void put(int key, int value) {
-        //已存在
-        if (cacheMap.count(key)) {
-            DListNode *node = cacheMap[key];
-            deleteNode(node);
-            node->val = value;
-            addHead(node);
-            //cacheMap[key] = node;
-        } else {
-            DListNode *node = new DListNode(key, value);
-            addHead(node);
-            cacheMap[key] = node;
-            size++;
-            if (size > capacity) {
-                DListNode *tail = deleteTail();
-                cacheMap.erase(tail->key);
-                delete tail;
-                size--;
-            }
-        }
-    }
-};
-
-```
 
 ##### 148. 排序链表
 
@@ -466,6 +172,10 @@ public:
 };
 
 ```
+
+
+#### 链表翻转
+
 ##### 206. 反转链表 
 
 递归法
@@ -512,9 +222,185 @@ public:
 };
 ```
 
-#### 栈 stack
+#### 数组类问题
+
+##### 48 旋转图像
+
+二次旋转
+
+auto matrix_new = matrix;   // C++ 这里的 = 拷贝是值拷贝，会得到一个新的数组
+
+matrix = matrix_new;  //赋值拷贝
+
+
+```c++
+
+class Solution {
+public:
+    void rotate(vector<vector<int>>& matrix) {
+        int n = matrix.size();
+        for(int i = 0;i < n/2;i++){
+            for(int j = 0;j < n;j++){
+                swap(matrix[i][j],matrix[n-i -1][j]);
+            }
+        }
+        for(int i = 0;i <n;i++){
+            for(int j = i + 1;j< n;j++){
+                swap(matrix[i][j],matrix[j][i]);
+            }
+        }
+
+    }
+};
+```
+
+#### 169 多数元素
+
+投票法
+	
+```C++
+class Solution {
+public:
+    int majorityElement(vector<int>& nums) {
+
+        //投票法
+        int count = 1;
+        int conda = nums[0];
+        for(int i = 1;i < nums.size();i++){
+            if(count == 0){
+                conda = nums[i];
+            }
+            if(conda == nums[i]){
+                count++;
+            } else{
+                count--;
+            }
+        }
+        return conda;
+    }
+};
+
+```
+
+
+
+#### 前缀和与差分数组
+
+#### 字符串操作
+ 
+##### 71. 简化路径
+
+std:find截取
+
+```C++
+class Solution {
+public:
+    string simplifyPath(string path) {
+        vector<string> dirs;
+        for(auto i = path.begin();i != path.end();){
+            ++i;
+            auto j = find(i,path.end(),'/');
+            auto dir = string(i,j);
+            if(!dir.empty() && dir != "."){
+                if(dir == ".."){
+                    if(!dirs.empty()){
+                        dirs.pop_back();
+                    }
+                } else if (dir != "."){
+                    dirs.emplace_back(dir);
+                }
+            }
+            i = j;
+        }
+
+        stringstream out;
+        if(dirs.empty()){
+            out<<'/';
+        } else{
+            for(auto ch:dirs){
+                out << "/" << ch;
+            }
+        }
+        return out.str();
+    }
+};
+
+```
+find + substr截取
+
+```C++
+class Solution {
+public:
+    string simplifyPath(string path) {
+        vector<string> dirs;
+        for (int i = 0; i < path.size();) {
+            ++i;
+            auto j = path.find("/", i);
+            if (j == string::npos) {
+                j = path.size();
+            }
+            auto dir = path.substr(i, j - i);
+
+            if (!dir.empty() && dir != ".") {
+                if (dir == "..") {
+                    if (!dirs.empty()) {
+                        dirs.pop_back();
+                    }
+                } else if (dir != ".") {
+                    dirs.emplace_back(dir);
+                }
+            }
+            i = j;
+        }
+
+        stringstream out;
+        if (dirs.empty()) {
+            out << '/';
+        } else {
+            for (auto ch:dirs) {
+                out << "/" << ch;
+            }
+        }
+        return out.str();
+    }
+};
+
+```
+##### 1233. 删除子文件夹
+
+```C++
+class Solution {
+public:
+    vector<string> removeSubfolders(vector<string>& folder) {
+        sort(folder.begin(),folder.end());
+        vector<string> ans(1,folder[0]);
+        string cur = ans[0] + "/";
+        for(int i = 1;i < folder.size();){
+            while(i < folder.size() && folder[i].find(cur) == 0){
+                ++i;
+            }
+            if(i < folder.size()){
+                ans.emplace_back(folder[i]);
+                cur = folder[i] + "/";
+                i++;
+            }
+        }
+
+        return  ans;
+    }
+};
+```
+
+
+
+
+
+
+### 2 栈与队列（堆）
 
 括号类问题、单调栈问题
+
+#### 栈基本操作
 
 ##### 20 有效的括号
 
@@ -580,6 +466,8 @@ public:
 };
 
 ```
+
+#### 单调栈
 
 ##### 84 柱状图中最大的矩形
 
@@ -722,10 +610,125 @@ public:
 };
 ```
 
-#### 堆 heap 队列
+#### 单调队列
 
-### 2 树
+#### ToP k问题
 
+##### 347. 前 K 个高频元素
+
+```C++
+class Solution {
+public:
+    static bool cmp(pair<int, int> &a, pair<int, int> &b) {
+        return a.second > b.second;
+    }
+
+    vector<int> topKFrequent(vector<int> &nums, int k) {
+        map<int, int> occurrences;
+        for (auto &v:nums) {
+            occurrences[v]++;
+        }
+        //自定义排序
+        priority_queue<pair<int, int>, vector<pair<int, int>>, decltype(&cmp)> q(cmp);
+        for (auto &[num, count] :occurrences) {
+            if (q.size() == k) {
+                if (q.top().second < count) {
+                    q.pop();
+                    q.emplace(num, count);
+                }
+            } else {
+                q.emplace(num, count);
+            }
+        }
+
+        vector<int> res;
+        while(!q.empty()){
+            res.emplace_back(q.top().first);
+            q.pop();
+        }
+        return res;
+    }
+};
+
+```
+
+#### K-way merge，多路归并
+
+##### 21 合并两个有序链表
+
+```c++
+class Solution {
+public:
+    ListNode* mergeTwoLists(ListNode* l1, ListNode* l2) {
+        ListNode *dummy = new ListNode(0);
+        ListNode *head = dummy;
+        while(l1 && l2){
+            if(l1->val < l2->val){
+                head->next = l1;
+                l1 = l1->next;
+            } else{
+                head->next = l2;
+                l2 = l2->next;
+            }
+            head = head->next;
+        }
+        if(l1){
+            head->next = l1;
+        }
+        if(l2){
+            head->next = l2;
+        }
+        return  dummy->next;
+```
+##### 23 合并K个升序链表
+
+```c++
+class Solution {
+public:
+    ListNode* mergeKLists(vector<ListNode*>& lists) {
+        if(lists.size() == 0){
+            return nullptr;
+        }
+
+        ListNode *head = nullptr;
+        for(int i = 0;i < lists.size();i++){
+            head = mergeTwoLists(head,lists[i]);
+        }
+        return head;
+    }
+
+    ListNode* mergeTwoLists(ListNode* l1, ListNode* l2) {
+
+        ListNode *dummy = new ListNode(0);
+        ListNode *head = dummy;
+        while(l1 && l2){
+            if(l1->val < l2->val){
+                head->next = l1;
+                l1 = l1->next;
+                head = head->next;
+            }else{
+                head->next = l2;
+                l2 = l2->next;
+                head = head->next;
+            }
+        }
+        if(l1){
+            head->next = l1;
+        }
+        if(l2){
+            head->next = l2;
+        }
+        return dummy->next;
+    }
+};
+
+```
+
+
+
+### 3 树
+
+#### 树的DFS（Tree Depth First Search，stack）
 
 ##### 94. 二叉树的中序遍历
 
@@ -754,7 +757,6 @@ public:
 ##### 96. 不同的二叉搜索树
 
 二叉搜索树形状递归，向上比较
-
 
 ```C++
 
@@ -839,44 +841,7 @@ public:
 };
 ```
 
-##### 102 二叉树的层序遍历
 
-queue<TreeNode *> 结构
-
-```C++
-class Solution {
-public:
-    vector<vector<int>> levelOrder(TreeNode *root) {
-        vector<vector<int>> ans;
-        if (!root) {
-            return ans;
-        }
-        
-        queue<TreeNode *> q;
-        q.push(root);
-        while (!q.empty()) {
-            int len = q.size();
-            vector<int> oneLevel;
-            for (int i = 0; i < len; i++) {
-                auto node = q.front();
-                q.pop();
-                
-                oneLevel.emplace_back(node->val);
-                if (node->left){
-                    q.push(node->left);
-                }
-                if (node->right) {
-                    q.push(node->right);
-                }
-            }
-            ans.emplace_back(oneLevel);
-        }
-
-        return ans;
-    }
-};
-
-```
 
 ##### 104. 二叉树的最大深度
 
@@ -1039,9 +1004,116 @@ public:
 };
 ```
 
-### 3 动态规划
+#### 树的BFS(Tree Breadth First Search，queue)
+
+##### 102 二叉树的层序遍历
+
+queue<TreeNode *> 结构
+
+```C++
+class Solution {
+public:
+    vector<vector<int>> levelOrder(TreeNode *root) {
+        vector<vector<int>> ans;
+        if (!root) {
+            return ans;
+        }
+        
+        queue<TreeNode *> q;
+        q.push(root);
+        while (!q.empty()) {
+            int len = q.size();
+            vector<int> oneLevel;
+            for (int i = 0; i < len; i++) {
+                auto node = q.front();
+                q.pop();
+                
+                oneLevel.emplace_back(node->val);
+                if (node->left){
+                    q.push(node->left);
+                }
+                if (node->right) {
+                    q.push(node->right);
+                }
+            }
+            ans.emplace_back(oneLevel);
+        }
+
+        return ans;
+    }
+};
+
+```
+
+#### 前缀树（字典树）
+	
+##### 208. 实现 Trie (前缀树)
+
+Python，实例对象调用函数时，自动将对象本身传入函数的第一个变量是self，显示写出来
+
+C++，系统也会将实例对象传入函数，对象的这个参数都是隐藏的，在函数内部才可以显性的使用它this
+
+类与对象的使用
+
+```C++
+class Trie {
+private:
+    bool isEnd;
+    vector<Trie *> children;//index 0~26范围,以index为下标
+
+    Trie *searchPrefix(string prefix) {
+        Trie *node = this;
+        for (auto ch:prefix) {
+            ch -= 'a';
+            //if 的顺序
+            if (node->children[ch] == nullptr) {
+                return nullptr;
+            }
+            node = node->children[ch];
+        }
+        return node;
+    }
+
+public:
+    //列表初始化
+    Trie() : children(26), isEnd(false) {
+    }
+
+    void insert(string word) {
+        //this与self
+        Trie *node = this;
+        for (auto ch:word) {
+            ch -= 'a';
+            if (node->children[ch] == nullptr) {
+                node->children[ch] = new Trie();
+            }
+            node = node->children[ch];
+        }
+        node->isEnd = true;
+    }
+
+    bool search(string word) {
+        Trie *ret = this->searchPrefix(word);
+        return ret != nullptr && ret->isEnd;
+    }
+
+    bool startsWith(string prefix) {
+        Trie *ret = this->searchPrefix(prefix);
+        return ret != nullptr;
+    }
+};
+
+```	
+
+
+### 4 动态规划（DFS\DP）
 
 重叠子问题、最优子结构
+
+#### 经典动归
+
+字符串（编辑距离、正则）问题、子序列问题、路径问题、
+
 
 ##### 10 正则表达式匹配
 
@@ -1083,51 +1155,7 @@ public:
 };
 
 ```
-##### 53. 最大子序和
 
-简化动归
-
-```C++
-class Solution {
-public:
-    int maxSubArray(vector<int>& nums) {
-
-        int dp = 0;
-        int maxRes = nums[0];
-        for(auto &num:nums){
-            dp = max(dp + num,num);
-            maxRes = max(maxRes,dp);
-        }
-        return maxRes;
-    }
-};
-
-```
-
-##### 70 爬楼梯
-
-```C++
-class Solution {
-public:
-    int climbStairs(int n) {
-        if(n == 0){
-            return 1;
-        }
-        if(n == 1){
-            return 1;
-        }
-        vector<int> dp(n + 1,0);
-        dp[0] = 1;
-        dp[1] = 1;
-        for(int i = 2;i < n+1;i++){
-            dp[i] = dp[i - 1] + dp[i - 2];
-        }
-        return dp[n];
-
-    }
-};
-
-```
 ##### 72 编辑距离
 
 ```C++
@@ -1159,67 +1187,28 @@ public:
     }
 };
 
-
 ```
 
+##### 53. 最大子序和
 
-#### 路径问题
-
-##### 62. 不同路径
+简化动归
 
 ```C++
 class Solution {
 public:
-    int uniquePaths(int m, int n) {
-        vector<vector<int>> dp(m,vector<int> (n,0));
-        for(int i = 0;i < m;i++){
-            dp[i][0] = 1;
+    int maxSubArray(vector<int>& nums) {
+
+        int dp = 0;
+        int maxRes = nums[0];
+        for(auto &num:nums){
+            dp = max(dp + num,num);
+            maxRes = max(maxRes,dp);
         }
-        for(int j = 0;j < n;j++){
-            dp[0][j] = 1;
-        }
-        for(int i = 1;i < m ;i++){
-            for(int j = 1;j < n;j++){
-                dp[i][j] = dp[i - 1][j] + dp[i][j-1];
-            }
-        }
-        
-        return  dp[m-1][n-1];
+        return maxRes;
     }
 };
+
 ```
-
-##### 64. 最小路径和
-
-```c++
-class Solution {
-public:
-    int minPathSum(vector<vector<int>>& grid) {
-        if(grid.size() == 0 || grid[0].size() == 0){
-            return 0;
-        }
-        int m = grid.size();
-        int n = grid[0].size();
-        vector<vector<int>> dp(m,vector<int> (n,0));
-        dp[0][0] = grid[0][0];
-        for(int i = 1;i < m;i++){
-            dp[i][0] = dp[i - 1][0] + grid[i][0];
-        }
-        for(int j = 1;j < n;j++){
-            dp[0][j] = dp[0][j - 1] + grid[0][j];
-        }
-        for(int i = 1;i < m ;i++){
-            for(int j = 1;j < n;j++){
-                dp[i][j] = min(dp[i - 1][j],dp[i][j-1]) + grid[i][j];
-            }
-        }
-
-        return  dp[m-1][n-1];
-    }
-};
-```
-
-#### 最值类问题
 
 ##### 152 乘积最大子数组
 
@@ -1244,64 +1233,6 @@ public:
 };
 
 ```
-
-
-##### 139 单词拆分
-
-字典类动归
-
-两层迭代：i 外层，j内层/字典层
-
-
-```c++
-
-class Solution {
-public:
-    bool wordBreak(string s, vector<string>& wordDict) {
-
-        unordered_set<string> set;
-        for (auto word:wordDict) {
-            set.emplace(word);
-        }
-
-        vector<int> dp(s.size() + 1, 0);
-        dp[0] = true;
-        for (int i = 0; i < s.size() + 1; i++) {
-            //j用set迭代
-            for (int j = 0; j < i; j++) {
-                if (dp[j] && set.count(s.substr(j, i - j))) {
-                    dp[i] = true;
-                }
-            }
-        }
-
-        return dp[s.size()];
-    }
-};
-
-class Solution {
-public:
-    bool wordBreak(string s, vector<string>& wordDict) {
-
-        vector<int> dp(s.size() + 1, 0);
-        dp[0] = true;
-        for (int i = 0; i < s.size() +1; i++) {
-            //字典迭代
-            for(auto word:wordDict){
-                if(word.size() <= i && dp[i-word.size()]){
-                    if(s.substr(i-word.size(),word.size()) == word){
-                        dp[i] = true;    
-                    }
-                }
-            }
-        }
-
-        return dp[s.size()];
-    }
-};
-
-```
-
 
 ##### 128 最长连续序列
 
@@ -1363,65 +1294,297 @@ public:
 };
 ```
 
-#### 区间问题
 
-##### 56. 合并区间
+##### 70 爬楼梯
 
 ```C++
 class Solution {
 public:
-    vector<vector<int>> merge(vector<vector<int>>& intervals) {
-        sort(intervals.begin(),intervals.end());
-        vector<vector<int>> merged;
-        merged.emplace_back(intervals[0]);
-
-        for(int i = 1;i < intervals.size();i++){
-            int L = intervals[i][0];
-            int R = intervals[i][1];
-            if(L <= merged.back()[1]){
-                merged.back()[1] = max(merged.back()[1],R);
-            }else{
-                merged.emplace_back(intervals[i]);
-            }
+    int climbStairs(int n) {
+        if(n == 0){
+            return 1;
         }
-        
-        return merged;
-    }
-};
-
-
-//自定义key比较
-
-class Solution {
-public:
-    static bool cmp(vector<int> &a,vector<int> &b){
-        if(a[0] > b[0]){
-            return false;
+        if(n == 1){
+            return 1;
         }
-
-        return true;
-    }
-    vector<vector<int>> merge(vector<vector<int>>& intervals) {
-
-        sort(intervals.begin(),intervals.end(),cmp);
-        vector<vector<int>> merged;
-        merged.emplace_back(intervals[0]);
-
-        for(int i = 1;i < intervals.size();i++){
-            int L = intervals[i][0];
-            int R = intervals[i][1];
-            if(L <= merged.back()[1]){
-                merged.back()[1] = max(merged.back()[1],R);
-            }else{
-                merged.emplace_back(intervals[i]);
-            }
+        vector<int> dp(n + 1,0);
+        dp[0] = 1;
+        dp[1] = 1;
+        for(int i = 2;i < n+1;i++){
+            dp[i] = dp[i - 1] + dp[i - 2];
         }
-        
-        return merged;
+        return dp[n];
+
     }
 };
 
 ```
+
+
+##### 62. 不同路径
+
+```C++
+class Solution {
+public:
+    int uniquePaths(int m, int n) {
+        vector<vector<int>> dp(m,vector<int> (n,0));
+        for(int i = 0;i < m;i++){
+            dp[i][0] = 1;
+        }
+        for(int j = 0;j < n;j++){
+            dp[0][j] = 1;
+        }
+        for(int i = 1;i < m ;i++){
+            for(int j = 1;j < n;j++){
+                dp[i][j] = dp[i - 1][j] + dp[i][j-1];
+            }
+        }
+        
+        return  dp[m-1][n-1];
+    }
+};
+```
+
+##### 64. 最小路径和
+
+```c++
+class Solution {
+public:
+    int minPathSum(vector<vector<int>>& grid) {
+        if(grid.size() == 0 || grid[0].size() == 0){
+            return 0;
+        }
+        int m = grid.size();
+        int n = grid[0].size();
+        vector<vector<int>> dp(m,vector<int> (n,0));
+        dp[0][0] = grid[0][0];
+        for(int i = 1;i < m;i++){
+            dp[i][0] = dp[i - 1][0] + grid[i][0];
+        }
+        for(int j = 1;j < n;j++){
+            dp[0][j] = dp[0][j - 1] + grid[0][j];
+        }
+        for(int i = 1;i < m ;i++){
+            for(int j = 1;j < n;j++){
+                dp[i][j] = min(dp[i - 1][j],dp[i][j-1]) + grid[i][j];
+            }
+        }
+
+        return  dp[m-1][n-1];
+    }
+};
+```
+
+
+##### 139 单词拆分
+
+字典类动归
+
+两层迭代：i 外层，j内层/字典层
+
+
+```c++
+
+class Solution {
+public:
+    bool wordBreak(string s, vector<string>& wordDict) {
+
+        unordered_set<string> set;
+        for (auto word:wordDict) {
+            set.emplace(word);
+        }
+
+        vector<int> dp(s.size() + 1, 0);
+        dp[0] = true;
+        for (int i = 0; i < s.size() + 1; i++) {
+            //j用set迭代
+            for (int j = 0; j < i; j++) {
+                if (dp[j] && set.count(s.substr(j, i - j))) {
+                    dp[i] = true;
+                }
+            }
+        }
+
+        return dp[s.size()];
+    }
+};
+
+class Solution {
+public:
+    bool wordBreak(string s, vector<string>& wordDict) {
+
+        vector<int> dp(s.size() + 1, 0);
+        dp[0] = true;
+        for (int i = 0; i < s.size() +1; i++) {
+            //字典迭代
+            for(auto word:wordDict){
+                if(word.size() <= i && dp[i-word.size()]){
+                    if(s.substr(i-word.size(),word.size()) == word){
+                        dp[i] = true;    
+                    }
+                }
+            }
+        }
+
+        return dp[s.size()];
+    }
+};
+
+```
+
+#### 312. 戳气球
+
+状态转移所依赖的状态必须被提前计算出来，需要根据 base case 和最终状态进行推导，合理安排i,j的遍历顺序
+
+```C++
+class Solution {
+public:
+    int maxCoins(vector<int> &nums) {
+        int n = nums.size();
+        vector<int> points(n + 2, 0);
+        for (int i = 1; i < points.size() - 1; i++) {
+            points[i] = nums[i - 1];
+        }
+        points[0] = 1;
+        points[n + 1] = 1;
+        vector<vector<int>> dp(n + 2, vector<int>(n + 2, 0));
+        //对角线为0
+        for (int i = n; i > -1; i--) {
+            for (int j = i + 1; j < n + 2; j++) {
+                for (int k = i + 1; k < j; k++) {
+                    dp[i][j] = max(dp[i][j], dp[i][k] + dp[k][j] + points[i] * points[k] * points[j]);
+                }
+            }
+        }
+        return dp[0][n + 1];
+    }
+};
+
+```
+
+#### 背包问题
+
+0-1背包
+
+完全背包
+	
+背包问题，正常情况下 choice(coins)在外循环，amount在内循环，根据choice是否有限进行求最值、能否、方法数等，
+
+部分特殊情况，如完全平方数等，choice不使用sqrt可以简化放在内循环。
+
+0-1背包模板(最值)，部分可以简化为一维的
+
+```C++
+for i in [1..N]:
+    for w in [1..W]:
+        dp[i][w] = max(
+            dp[i-1][w],
+            dp[i-1][w - wt[i-1]] + val[i-1]
+        )
+return dp[N][W]
+```
+
+子集背包模板(能否)：
+
+```C++
+ #装入或者不装入
+ dp[i][j] = dp[i - 1][j] || dp[i - 1][j - nums[i - 1]]
+```
+
+完全背包模板(方法数)
+
+https://labuladong.gitee.io/algo/3/25/81/
+
+```C++
+for i in range(n + 1):
+    for j in range(amount + 1):
+        if j - coins[i-1] >= 0：
+            dp[i][j] = dp[i - 1][j] + dp[i][j - coins[i-1]] #这里表示i可以反复使用
+        else:
+            dp[i][j] = dp[i - 1][j]
+```
+	
+##### 279. 完全平方数
+
+相当于完全背包的结合最值问题
+
+```C++
+
+正常情况下coins外循环，amount内循环，这里反过来了。
+
+class Solution {
+public:
+    int numSquares(int n) {
+        int num = sqrt(n);
+        vector<int> squareNum(num + 1);
+        for (int i = 0; i < num + 1; i++) {
+            squareNum[i] = i * i;
+        }
+
+        vector<int> dp(n + 1, n);
+        dp[0] = 0;
+        for (int i = 1; i < n + 1; i++) {
+            for (int j = 1; j < num + 1; j++) {
+                if (i < squareNum[j]) {
+                    break;
+                }
+                dp[i] = min(dp[i], dp[i - squareNum[j]] + 1);
+            }
+        }
+        return dp[n];
+    }
+};
+
+
+简化sqrt数组存储后，coins在内循环
+
+class Solution {
+public:
+    int numSquares(int n) {
+        //square数组 j -->j *j
+        vector<int> dp(n + 1,n);//初始化无穷大
+        dp[0] = 0;
+        for (int i = 1; i < n + 1; i++) {
+            for(int j = 1;j *j <= i;j++){
+                if(i < j *j){
+                    break;
+                }
+                //完全背包，dp[i]反复
+                dp[i] = min(dp[i],dp[i-j*j] + 1);
+            }
+        }
+        return  dp[n];
+    }
+};
+```
+	
+##### 322 零钱兑换
+
+```C++
+class Solution {
+public:
+    int coinChange(vector<int> &coins, int amount) {
+
+        //取inf 下面+1可能会存在问题
+        vector<int> dp(amount + 1, amount + 1);
+        dp[0] = 0;
+        for (auto coin: coins) {
+            for (int i = coin; i < amount + 1; i++) {
+                dp[i] = min(dp[i], dp[i - coin] + 1);
+            }
+        }
+
+        if (dp[amount] > amount) {
+            return -1;
+        } else {
+            return dp[amount];
+        }
+    }
+};
+```	
+	
+
+
 
 #### 股票问题
 
@@ -1561,134 +1724,160 @@ public:
 
 ```					   
 					   
-#### 背包问题
+#### 贪心算法  
 
-0-1背包
+区间问题
 
-完全背包
-	
-背包问题，正常情况下 choice(coins)在外循环，amount在内循环，根据choice是否有限进行求最值、能否、方法数等，
-
-部分特殊情况，如完全平方数等，choice不使用sqrt可以简化放在内循环。
-
-0-1背包模板(最值)，部分可以简化为一维的
+##### 56. 合并区间
 
 ```C++
-for i in [1..N]:
-    for w in [1..W]:
-        dp[i][w] = max(
-            dp[i-1][w],
-            dp[i-1][w - wt[i-1]] + val[i-1]
-        )
-return dp[N][W]
-```
+class Solution {
+public:
+    vector<vector<int>> merge(vector<vector<int>>& intervals) {
+        sort(intervals.begin(),intervals.end());
+        vector<vector<int>> merged;
+        merged.emplace_back(intervals[0]);
 
-子集背包模板(能否)：
+        for(int i = 1;i < intervals.size();i++){
+            int L = intervals[i][0];
+            int R = intervals[i][1];
+            if(L <= merged.back()[1]){
+                merged.back()[1] = max(merged.back()[1],R);
+            }else{
+                merged.emplace_back(intervals[i]);
+            }
+        }
+        
+        return merged;
+    }
+};
 
-```C++
- #装入或者不装入
- dp[i][j] = dp[i - 1][j] || dp[i - 1][j - nums[i - 1]]
-```
 
-完全背包模板(方法数)
-
-https://labuladong.gitee.io/algo/3/25/81/
-
-```C++
-for i in range(n + 1):
-    for j in range(amount + 1):
-        if j - coins[i-1] >= 0：
-            dp[i][j] = dp[i - 1][j] + dp[i][j - coins[i-1]] #这里表示i可以反复使用
-        else:
-            dp[i][j] = dp[i - 1][j]
-```
-	
-##### 279. 完全平方数
-
-相当于完全背包的结合最值问题
-
-```C++
-
-正常情况下coins外循环，amount内循环，这里反过来了。
+//自定义key比较
 
 class Solution {
 public:
-    int numSquares(int n) {
-        int num = sqrt(n);
-        vector<int> squareNum(num + 1);
-        for (int i = 0; i < num + 1; i++) {
-            squareNum[i] = i * i;
+    static bool cmp(vector<int> &a,vector<int> &b){
+        if(a[0] > b[0]){
+            return false;
         }
 
-        vector<int> dp(n + 1, n);
-        dp[0] = 0;
-        for (int i = 1; i < n + 1; i++) {
-            for (int j = 1; j < num + 1; j++) {
-                if (i < squareNum[j]) {
-                    break;
+        return true;
+    }
+    vector<vector<int>> merge(vector<vector<int>>& intervals) {
+
+        sort(intervals.begin(),intervals.end(),cmp);
+        vector<vector<int>> merged;
+        merged.emplace_back(intervals[0]);
+
+        for(int i = 1;i < intervals.size();i++){
+            int L = intervals[i][0];
+            int R = intervals[i][1];
+            if(L <= merged.back()[1]){
+                merged.back()[1] = max(merged.back()[1],R);
+            }else{
+                merged.emplace_back(intervals[i]);
+            }
+        }
+        
+        return merged;
+    }
+};
+
+```
+
+##### 435. 无重叠区间
+
+```C++
+class Solution {
+    static bool cmp(vector<int> &a, vector<int> &b) {
+        if (a[1] < b[1]) {
+            return true;
+        }
+        return false;
+    }
+
+public:
+    int eraseOverlapIntervals(vector<vector<int>> &intervals) {
+        if (intervals.empty()) {
+            return 0;
+        }
+        //sort(intervals.begin(),intervals.end(),cmp);
+        sort(intervals.begin(), intervals.end(), [](auto &u, auto &v) {
+            return u[1] < v[1];
+        });
+
+        auto right = intervals[0][1];
+        int ans = 0;
+        for (int i = 1; i < intervals.size(); i++) {
+            if (intervals[i][0] < right) {
+                ans++;
+            } else {
+                right = intervals[i][1];
+            }
+        }
+        return ans;
+    }
+};
+```
+#### 452. 用最少数量的箭引爆气球
+
+```C++
+class Solution {
+public:
+    int findMinArrowShots(vector<vector<int>>& points) {
+        sort(points.begin(),points.end(),[](auto &u,auto &v){
+            return u[1] < v[1];
+        });
+        int right = points[0][1];
+        int ans = 0;
+        for(int i = 1;i < points.size();i++){
+            if(points[i][0] <= right){
+                ans++;
+            } else{
+                right = points[i][1];
+            }
+        }
+        return points.size() - ans;
+    }
+};
+```
+
+#####   55 跳跃游戏 I
+
+贪心最远
+
+```c++
+
+class Solution {
+public:
+    bool canJump(vector<int>& nums) {
+        int farest = 0;
+        int n = nums.size();
+        for(int i = 0;i < n;i++){
+            if(i <= farest){
+                farest = max(farest,i + nums[i]);
+                if(farest >= n - 1){
+                    return true;
                 }
-                dp[i] = min(dp[i], dp[i - squareNum[j]] + 1);
             }
         }
-        return dp[n];
+
+        return false;
     }
 };
 
-
-简化sqrt数组存储后，coins在内循环
-
-class Solution {
-public:
-    int numSquares(int n) {
-        //square数组 j -->j *j
-        vector<int> dp(n + 1,n);//初始化无穷大
-        dp[0] = 0;
-        for (int i = 1; i < n + 1; i++) {
-            for(int j = 1;j *j <= i;j++){
-                if(i < j *j){
-                    break;
-                }
-                //完全背包，dp[i]反复
-                dp[i] = min(dp[i],dp[i-j*j] + 1);
-            }
-        }
-        return  dp[n];
-    }
-};
 ```
 	
-##### 322 零钱兑换
 
-```C++
-class Solution {
-public:
-    int coinChange(vector<int> &coins, int amount) {
-
-        //取inf 下面+1可能会存在问题
-        vector<int> dp(amount + 1, amount + 1);
-        dp[0] = 0;
-        for (auto coin: coins) {
-            for (int i = coin; i < amount + 1; i++) {
-                dp[i] = min(dp[i], dp[i - coin] + 1);
-            }
-        }
-
-        if (dp[amount] > amount) {
-            return -1;
-        } else {
-            return dp[amount];
-        }
-    }
-};
-```	
-	
-	
-
-### 4 回溯
+### 5 回溯
 
 子集、排列、组合、floodfill回溯
 
 二叉、多叉
+
+
+括号组合问题
 
 ##### 17 电话号码的字母组合
 
@@ -1773,6 +1962,92 @@ public:
     }
 };
 ```
+
+#####  301. 删除无效的括号
+
+理解DSAPP栈与括号部分
+
+单种括号计数可以，多种需要使用栈
+
+去重复,判断前后重复，要从start开始
+
+多叉递归回溯 + 剪枝 远快于   <  双分支回溯
+
+```C++
+class Solution {
+    vector<string> res;
+public:
+    bool isValid(string s) {
+        int cnt = 0;
+        //理解DSAPP栈与括号部分
+        //单种括号计数可以，多种需要使用栈
+        for (auto c:s) {
+            if (c == '(') {
+                cnt++;
+            } else if (c == ')') {
+                cnt--;
+            }
+            if (cnt < 0) {
+                return false;
+            }
+        }
+        return true;
+    }
+
+    void dfs(string s, int start, int left_remove, int right_remove) {
+        if (left_remove == 0 && right_remove == 0) {
+            if (isValid(s)) {
+                res.emplace_back(s);
+            }
+            return;
+        }
+        //从start开始，避免)(f重复
+        for (int i = start; i < s.size(); i++) {
+            //去重复
+            if (i != start && s[i] == s[i - 1]) {
+                continue;
+            }
+
+            //choice
+            if (left_remove + right_remove > s.size() - i) {
+                return;
+            }
+
+            if (left_remove > 0 && s[i] == '(') {
+                dfs(s.substr(0, i) + s.substr(i + 1), i, left_remove - 1, right_remove);
+            } else if (right_remove > 0 && s[i] == ')') {
+                dfs(s.substr(0, i) + s.substr(i + 1), i, left_remove, right_remove - 1);
+            }
+        }
+
+    }
+
+
+    vector<string> removeInvalidParentheses(string s) {
+        int left_remove = 0;
+        int right_remove = 0;
+        for (auto c:s) {
+            if (c == '(') {
+                left_remove++;
+            } else if (c == ')') {
+                if (left_remove == 0) {
+                    right_remove++;
+                } else {
+                    left_remove--;
+                }
+            }
+        }
+
+        string path;
+        dfs(s, 0, left_remove, right_remove);
+        return res;
+    }
+};
+
+```
+
+#### 子集问题（排列、组合）
+
 ##### 39 组合总和
 
 ```C++
@@ -1869,6 +2144,10 @@ public:
 };
 
 ```
+
+
+#### floodfill问题
+
 ##### 79 单词搜索
 
 1  pair 管理方向
@@ -1970,203 +2249,75 @@ public:
 
 ```	
 
-#####  301. 删除无效的括号
 
-理解DSAPP栈与括号部分
-
-单种括号计数可以，多种需要使用栈
-
-去重复,判断前后重复，要从start开始
-
-多叉递归回溯 + 剪枝 远快于   <  双分支回溯
-
-```C++
-class Solution {
-    vector<string> res;
-public:
-    bool isValid(string s) {
-        int cnt = 0;
-        //理解DSAPP栈与括号部分
-        //单种括号计数可以，多种需要使用栈
-        for (auto c:s) {
-            if (c == '(') {
-                cnt++;
-            } else if (c == ')') {
-                cnt--;
-            }
-            if (cnt < 0) {
-                return false;
-            }
-        }
-        return true;
-    }
-
-    void dfs(string s, int start, int left_remove, int right_remove) {
-        if (left_remove == 0 && right_remove == 0) {
-            if (isValid(s)) {
-                res.emplace_back(s);
-            }
-            return;
-        }
-        //从start开始，避免)(f重复
-        for (int i = start; i < s.size(); i++) {
-            //去重复
-            if (i != start && s[i] == s[i - 1]) {
-                continue;
-            }
-
-            //choice
-            if (left_remove + right_remove > s.size() - i) {
-                return;
-            }
-
-            if (left_remove > 0 && s[i] == '(') {
-                dfs(s.substr(0, i) + s.substr(i + 1), i, left_remove - 1, right_remove);
-            } else if (right_remove > 0 && s[i] == ')') {
-                dfs(s.substr(0, i) + s.substr(i + 1), i, left_remove, right_remove - 1);
-            }
-        }
-
-    }
-
-
-    vector<string> removeInvalidParentheses(string s) {
-        int left_remove = 0;
-        int right_remove = 0;
-        for (auto c:s) {
-            if (c == '(') {
-                left_remove++;
-            } else if (c == ')') {
-                if (left_remove == 0) {
-                    right_remove++;
-                } else {
-                    left_remove--;
-                }
-            }
-        }
-
-        string path;
-        dfs(s, 0, left_remove, right_remove);
-        return res;
-    }
-};
-
-```
 	
-### 5 BFS
+### 6 BFS
 
 层序遍历
 
 BFS: queue + while + for
 
-### 6 双指针
 
-快慢指针、左右指针、双向遍历、回文问题、归并排序、三指针
+### 7 双指针
+
+快慢指针、左右指针、双向遍历、回文问题、各种排序、三指针
 
 
-
-#### 双向遍历	
-
-##### 238. 除自身以外数组的乘积
+##### 141 环形链表
 
 ```C++
+
 class Solution {
 public:
-    vector<int> productExceptSelf(vector<int> &nums) {
-        vector<int> answer(nums.size(), 0);
-        answer[0] = 1;
-        for (int i = 1; i < nums.size(); i++) {
-            answer[i] = answer[i - 1] * nums[i - 1];
-        }
-        //左右遍历合并成一
-        int Rmul = 1;
-        for (int i = nums.size() - 1; i > -1; i--) {
-            answer[i] *= Rmul;
-            Rmul *= nums[i];
+    bool hasCycle(ListNode *head) {
+        if(head == nullptr || head->next == nullptr){
+            return false;
         }
 
-        return answer;
+        ListNode *slow = head;
+        ListNode *fast = head;
+        while(fast && fast->next){
+            slow = slow->next;
+            fast = fast->next->next;
+            if(fast==slow){
+                return true;
+            }
+        }
+
+        return false;
     }
 };
 
-```	
-	
-#### 回文问题
+```
+##### 142. 环形链表 II
 
-##### 5  最长回文子串
-
-回文问题
-
-```python
+```C++							  
 class Solution {
 public:
-    string palindrome(string s,int l,int r){
-        while(l >=0 && r < s.size()){
-            if(s[l] == s[r]){
-                l -= 1;
-                r += 1;
-            }else{
+    ListNode *detectCycle(ListNode *head) {
+        if(head== nullptr || head->next == nullptr){
+            return nullptr;
+        }
+        ListNode *slow = head;
+        ListNode *fast = head;
+        while(fast && fast->next){
+            slow = slow->next;
+            fast = fast->next->next;
+            if(slow == fast){
                 break;
             }
         }
-        return s.substr(l+ 1,r - l-1);
-    }
 
-    string longestPalindrome(string s) {
-        int len = s.size();
-        int index = 0;
-        char s0 = s[0];
-        string res = string(1,s0);
-        while(index < len){
-            string str1 = palindrome(s,index,index);
-            string str2 = palindrome(s,index,index + 1);
-            string max_str = str1.size()> str2.size()?str1:str2;
-            res = res.size() > max_str.size()?res:max_str;
-            index += 1;
-        }
-        return res;
-    }
-};
-
-
-```
-##### 234. 回文链表
-
-nullptr和默认值不一样，默认的值为0
-
-```C++
-class Solution {
-public:
-    bool isPalindrome(ListNode* head) {
-        if(head == nullptr || head->next == nullptr){
-            return true;
+        if(slow != fast){
+            return nullptr;
         }
 
-        ListNode* fast = head;
-        ListNode* slow = head;
-        ListNode* pre = head;
-        //nullptr和默认值不一样，默认的值为0
-        ListNode* prepre = nullptr;
-
-        while(fast && fast->next){
-            //边走边反转
-            pre = slow;
-            fast = fast->next->next;
-            slow = slow->next;
-            pre->next = prepre;
-            prepre = pre;
-        }
-        if(fast){
-            slow = slow->next;          
-        }
-        while(pre && slow){
-            if(pre->val != slow->val){
-                return false;
-            }
-            pre = pre->next;
+        slow = head;
+        while(slow != fast){
+            fast = fast->next;
             slow = slow->next;
         }
-        return true;
+        return fast;
     }
 };
 ```
@@ -2391,11 +2542,152 @@ public:
 
 ```	
 
+#### 双向遍历
+
+##### 42. 接雨水
+
+左右两边遍历 + 动态规划
+
+```c++
+class Solution {
+public:
+    int trap(vector<int>& height) {
+
+        int n = height.size();
+        vector<int> leftMax(n,0);
+        vector<int> rightMax(n,0);
+        leftMax[0] = height[0];
+        for(int i = 1;i < n;i++){
+            leftMax[i] = max(leftMax[i - 1],height[i]);
+        }
+        rightMax[n-1] = height[n-1];
+        for(int i = n - 2;i > -1;i--){
+            rightMax[i] = max(rightMax[i + 1],height[i]);
+        }
+
+        int sum = 0;
+        for(int i = 0;i < n ;i++){
+            int water = min(leftMax[i],rightMax[i]);
+            sum += water - height[i];
+        }
+
+        return  sum;
+    }
+};
+
+```
+
+
+##### 238. 除自身以外数组的乘积
+
+```C++
+class Solution {
+public:
+    vector<int> productExceptSelf(vector<int> &nums) {
+        vector<int> answer(nums.size(), 0);
+        answer[0] = 1;
+        for (int i = 1; i < nums.size(); i++) {
+            answer[i] = answer[i - 1] * nums[i - 1];
+        }
+        //左右遍历合并成一
+        int Rmul = 1;
+        for (int i = nums.size() - 1; i > -1; i--) {
+            answer[i] *= Rmul;
+            Rmul *= nums[i];
+        }
+
+        return answer;
+    }
+};
+
+```	
+
+
+	
+#### 回文问题
+
+##### 5  最长回文子串
+
+回文问题
+
+```python
+class Solution {
+public:
+    string palindrome(string s,int l,int r){
+        while(l >=0 && r < s.size()){
+            if(s[l] == s[r]){
+                l -= 1;
+                r += 1;
+            }else{
+                break;
+            }
+        }
+        return s.substr(l+ 1,r - l-1);
+    }
+
+    string longestPalindrome(string s) {
+        int len = s.size();
+        int index = 0;
+        char s0 = s[0];
+        string res = string(1,s0);
+        while(index < len){
+            string str1 = palindrome(s,index,index);
+            string str2 = palindrome(s,index,index + 1);
+            string max_str = str1.size()> str2.size()?str1:str2;
+            res = res.size() > max_str.size()?res:max_str;
+            index += 1;
+        }
+        return res;
+    }
+};
+
+
+```
+##### 234. 回文链表
+
+nullptr和默认值不一样，默认的值为0
+
+```C++
+class Solution {
+public:
+    bool isPalindrome(ListNode* head) {
+        if(head == nullptr || head->next == nullptr){
+            return true;
+        }
+
+        ListNode* fast = head;
+        ListNode* slow = head;
+        ListNode* pre = head;
+        //nullptr和默认值不一样，默认的值为0
+        ListNode* prepre = nullptr;
+
+        while(fast && fast->next){
+            //边走边反转
+            pre = slow;
+            fast = fast->next->next;
+            slow = slow->next;
+            pre->next = prepre;
+            prepre = pre;
+        }
+        if(fast){
+            slow = slow->next;          
+        }
+        while(pre && slow){
+            if(pre->val != slow->val){
+                return false;
+            }
+            pre = pre->next;
+            slow = slow->next;
+        }
+        return true;
+    }
+};
+```
 	
 	
 	
 
-### 7 二分查找
+### 8 二分查找
 
 ##### 33  搜索旋转排序数组
 
@@ -2533,8 +2825,7 @@ public:
 ```
 					    
 
-### 8 滑动窗口
-
+### 9 滑动窗口
 
 ##### 76 最小覆盖字串
 
@@ -2592,6 +2883,8 @@ public:
 
 ```
 
+#### deque + 单调队列
+
 ##### 239. 滑动窗口最大值
 	
 存索引，方便出的判断
@@ -2636,268 +2929,9 @@ public:
 
 ```
 
-### 9 其他 高频
+### 10 图算法及高频
 
-贪心、位运算、 前缀和 、前缀树（字典树）、哈希、拓扑排序、并查集
-
-#### 贪心
-
-#####   55 跳跃游戏 I
-
-贪心最远
-
-```c++
-
-class Solution {
-public:
-    bool canJump(vector<int>& nums) {
-        int farest = 0;
-        int n = nums.size();
-        for(int i = 0;i < n;i++){
-            if(i <= farest){
-                farest = max(farest,i + nums[i]);
-                if(farest >= n - 1){
-                    return true;
-                }
-            }
-        }
-
-        return false;
-    }
-};
-
-```
-
-#### 169 多数元素
-
-投票法
-	
-```C++
-class Solution {
-public:
-    int majorityElement(vector<int>& nums) {
-
-        //投票法
-        int count = 1;
-        int conda = nums[0];
-        for(int i = 1;i < nums.size();i++){
-            if(count == 0){
-                conda = nums[i];
-            }
-            if(conda == nums[i]){
-                count++;
-            } else{
-                count--;
-            }
-        }
-        return conda;
-    }
-};
-
-```
-
-#### 哈希
-
-##### 1. 两数之和
-
-```c++
-    vector<int> twoSum(vector<int>& nums, int target) {
-        unordered_map<int,int> dict;
-        for(int i = 0;i < nums.size();i++){
-            int tmp = target - nums[i];
-	    
-            //map.find(key) != map.end()
-	    //map.count(key) > 0
-            if(dict.count(tmp) > 0){
-                return {dict[tmp],i}; //返回vector
-            }
-            dict[nums[i]] = i;
-        }
-        return  {};
-    }
-```
-
-
-
-##### 49 字母异位词分组
-
- map --value --list结构
-
-```c++
-class Solution {
-public:
-    vector<vector<string>> groupAnagrams(vector<string>& strs) {
-        unordered_map<string,vector<string>> dict;
-        for(auto &str:strs){
-            auto key = str;  //值拷贝
-            sort(key.begin(),key.end());
-            dict[key].emplace_back(str);
-        }
-
-        vector<vector<string>> ans;
-        for(auto it = dict.begin();it != dict.end();it ++){
-            ans.emplace_back(it->second);
-        }
-        return ans;
-    }
-};
-
-```
-
-
-
-#### 左右两边遍历
-
-
-##### 42. 接雨水
-
-左右两边遍历 + 动态规划
-
-```c++
-class Solution {
-public:
-    int trap(vector<int>& height) {
-
-        int n = height.size();
-        vector<int> leftMax(n,0);
-        vector<int> rightMax(n,0);
-        leftMax[0] = height[0];
-        for(int i = 1;i < n;i++){
-            leftMax[i] = max(leftMax[i - 1],height[i]);
-        }
-        rightMax[n-1] = height[n-1];
-        for(int i = n - 2;i > -1;i--){
-            rightMax[i] = max(rightMax[i + 1],height[i]);
-        }
-
-        int sum = 0;
-        for(int i = 0;i < n ;i++){
-            int water = min(leftMax[i],rightMax[i]);
-            sum += water - height[i];
-        }
-
-        return  sum;
-    }
-};
-
-```
-
-
-##### 48 旋转图像
-
-二次旋转
-
-auto matrix_new = matrix;   // C++ 这里的 = 拷贝是值拷贝，会得到一个新的数组
-
-matrix = matrix_new;  //赋值拷贝
-
-
-```c++
-
-class Solution {
-public:
-    void rotate(vector<vector<int>>& matrix) {
-        int n = matrix.size();
-        for(int i = 0;i < n/2;i++){
-            for(int j = 0;j < n;j++){
-                swap(matrix[i][j],matrix[n-i -1][j]);
-            }
-        }
-        for(int i = 0;i <n;i++){
-            for(int j = i + 1;j< n;j++){
-                swap(matrix[i][j],matrix[j][i]);
-            }
-        }
-
-    }
-};
-```
-
-
-#### 位运算
-
-
-##### 136. 只出现一次的数字
-
-```C++
-class Solution {
-public:
-    int singleNumber(vector<int> &nums) {
-        //要自己初始化，否则one的值随机的
-        int one = 0;
-        for(auto num:nums) {
-            one ^= num;
-        }
-        return one;
-    }
-};
-```
-
-#### 前缀和数组
-
-#### 前缀树（字典树）
-	
-##### 208. 实现 Trie (前缀树)
-
-Python，实例对象调用函数时，自动将对象本身传入函数的第一个变量是self，显示写出来
-
-C++，系统也会将实例对象传入函数，对象的这个参数都是隐藏的，在函数内部才可以显性的使用它this
-
-类与对象的使用
-
-```C++
-class Trie {
-private:
-    bool isEnd;
-    vector<Trie *> children;//index 0~26范围,以index为下标
-
-    Trie *searchPrefix(string prefix) {
-        Trie *node = this;
-        for (auto ch:prefix) {
-            ch -= 'a';
-            //if 的顺序
-            if (node->children[ch] == nullptr) {
-                return nullptr;
-            }
-            node = node->children[ch];
-        }
-        return node;
-    }
-
-public:
-    //列表初始化
-    Trie() : children(26), isEnd(false) {
-    }
-
-    void insert(string word) {
-        //this与self
-        Trie *node = this;
-        for (auto ch:word) {
-            ch -= 'a';
-            if (node->children[ch] == nullptr) {
-                node->children[ch] = new Trie();
-            }
-            node = node->children[ch];
-        }
-        node->isEnd = true;
-    }
-
-    bool search(string word) {
-        Trie *ret = this->searchPrefix(word);
-        return ret != nullptr && ret->isEnd;
-    }
-
-    bool startsWith(string prefix) {
-        Trie *ret = this->searchPrefix(prefix);
-        return ret != nullptr;
-    }
-};
-
-```	
-
-#### 并查集
-
-#### 拓扑排序
+#### 图算法--拓扑排序 
 
 BFS:Indegree入度表、edges邻接表、BFS(queue)遍历
 	
@@ -2941,8 +2975,263 @@ public:
     }
 };
 ```
+
+#### 图算法--并查集(Union-Find)
+
+
+#### 哈希表
+
+##### 1. 两数之和
+
+```c++
+    vector<int> twoSum(vector<int>& nums, int target) {
+        unordered_map<int,int> dict;
+        for(int i = 0;i < nums.size();i++){
+            int tmp = target - nums[i];
+	    
+            //map.find(key) != map.end()
+	    //map.count(key) > 0
+            if(dict.count(tmp) > 0){
+                return {dict[tmp],i}; //返回vector
+            }
+            dict[nums[i]] = i;
+        }
+        return  {};
+    }
+```
+
+##### 49 字母异位词分组
+
+ map --value --list结构
+
+```c++
+class Solution {
+public:
+    vector<vector<string>> groupAnagrams(vector<string>& strs) {
+        unordered_map<string,vector<string>> dict;
+        for(auto &str:strs){
+            auto key = str;  //值拷贝
+            sort(key.begin(),key.end());
+            dict[key].emplace_back(str);
+        }
+
+        vector<vector<string>> ans;
+        for(auto it = dict.begin();it != dict.end();it ++){
+            ans.emplace_back(it->second);
+        }
+        return ans;
+    }
+};
+
+```
+
+
+#### 位运算
+
+
+##### 136. 只出现一次的数字
+
+```C++
+class Solution {
+public:
+    int singleNumber(vector<int> &nums) {
+        //要自己初始化，否则one的值随机的
+        int one = 0;
+        for(auto num:nums) {
+            one ^= num;
+        }
+        return one;
+    }
+};
+```
+
+#### 338. 比特位计数
+
+```C++
+class Solution {
+public:
+    vector<int> countBits(int n) {
+        vector<int> res;
+        for (int i = 0; i <= n; i++) {
+            int sum = 0;
+            int num = i;
+            while (num) {
+                num = num & (num - 1);
+                sum += 1;
+            }
+            res.emplace_back(sum);
+        }
+        return res;
+    }
+};
+```
+
+
+#### 数据结构设计 LRU/LFU
+
 	
-	
-	
+##### 146. LRU 缓存机制
+
+双向链表(添加删除) + hashMAP（保存key + 地址）
+
+双向链表：时间复杂度是O(1)，删除需要前驱节点。
+
+struct Dnode --> Dnode List定义(伪头伪尾) + LRU定义 -——>Dnode API(delete、delte_tail、add_head)  -> LRU API get put 函数
+				
+				
+```C++
+
+//STL版,看思路，分解替换
+
+class LRUCache {
+private:
+
+    int capacity;
+    //cachelist 和cache map同步变化
+    list<pair<int, int>> cacheList;// pair内为key、value
+    unordered_map<int, list<pair<int, int>>::iterator> cacheMap;
+
+public:
+    LRUCache(int capacity) {
+        this->capacity = capacity;
+    }
+
+    int get(int key) {
+        if (!cacheMap.count(key)) {
+            return -1;
+        }
+        //*取值迭代器
+        auto it = *cacheMap[key];
+        //删除迭代器
+        cacheList.erase(cacheMap[key]);
+        cacheList.push_front(it);
+        cacheMap[key] = cacheList.begin();
+        return cacheList.front().second;
+    }
+
+    void put(int key, int value) {
+        //已存在
+        if (cacheMap.count(key)) {
+            auto it = *cacheMap[key];
+            cacheList.erase((cacheMap[key]));
+            it.second = value;
+            cacheList.push_front(it);
+            cacheMap[key] = cacheList.begin();
+        } else {
+            if (cacheList.size() == capacity) {
+                cacheMap.erase(cacheList.back().first);
+                cacheList.pop_back();
+            }
+            cacheList.push_front(make_pair(key, value));
+            cacheMap[key] = cacheList.begin();
+        }
+        return;
+
+    }
+};
+
+
+//Dlist 定义版
+
+申请与释放
+
+DListNode *head = new DListNode();
+
+delete(head):
+
+正常删除节点,都要delete node释放内存，但这里如果后面addhead,则不用释放
+
+delete tail的时候，需要释放内存
+
+
+struct DListNode {
+    int key;
+    int val;
+    DListNode *prev;
+    DListNode *next;
+
+    DListNode() : key(0), val(0), prev(NULL), next(NULL) {};
+
+    DListNode(int key, int val) : key(key), val(val), prev(NULL), next(NULL) {};
+};
+
+
+class LRUCache {
+private:
+    //Dlist定义
+    DListNode *head = new DListNode();
+    DListNode *tail = new DListNode();
+    int size;
+    //类相关定义，list 和cache map同步变化
+    unordered_map<int, DListNode *> cacheMap;
+    int capacity;
+
+public:
+    LRUCache(int capacity) {
+        //伪头 伪尾
+        head->next = tail;
+        tail->prev = head;
+        this->size = 0;
+        this->capacity = capacity;
+    }
+
+    void addHead(DListNode *node) {
+        //先插后断
+        node->next = head->next;
+        node->prev = head;
+        head->next->prev = node;
+        head->next = node;
+    }
+
+    //正常删除节点,都要delete释放内存，但这里如果后面addhead,则不用释放
+    void deleteNode(DListNode *node) {
+        node->next->prev = node->prev;
+        node->prev->next = node->next;
+    }
+
+    //delete tail的时候，先断关系，再释放内存
+    DListNode *deleteTail() {
+        DListNode *node = tail->prev;
+        deleteNode(node);
+        return node;
+    }
+
+    int get(int key) {
+        if (!cacheMap.count(key)) {
+            return -1;
+        }
+        //*取值迭代器
+        DListNode *node = cacheMap[key];
+        //删除迭代器
+        deleteNode(node);
+        addHead(node);
+        //cacheMap[key] = node;
+        return node->val;
+    }
+
+    void put(int key, int value) {
+        //已存在
+        if (cacheMap.count(key)) {
+            DListNode *node = cacheMap[key];
+            deleteNode(node);
+            node->val = value;
+            addHead(node);
+            //cacheMap[key] = node;
+        } else {
+            DListNode *node = new DListNode(key, value);
+            addHead(node);
+            cacheMap[key] = node;
+            size++;
+            if (size > capacity) {
+                DListNode *tail = deleteTail();
+                cacheMap.erase(tail->key);
+                delete tail;
+                size--;
+            }
+        }
+    }
+};
+
+```	
 	
 	
