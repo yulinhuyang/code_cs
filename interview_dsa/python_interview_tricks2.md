@@ -95,7 +95,29 @@ class MyLinkedList:
 
 ### 1.3 Cyclic Sort，循环排序
 
-### 1.4 字符串
+### 1.4 前缀和与差分 
+
+一维前缀和： S[i]= S[i-1]  + A[i]
+
+二维前缀和： S[i][j] = S[i-1][j] + S[i][j-1] – S[i-1][j-1] + A[i][j]
+
+树上前缀和：从根到某节点的路径上点（或边）的值之和（上到下）；某节点及其所有子节点（或边）的值之和（下到上）
+
+
+差分数组定义
+
+真实数组a = {a[1]、a[2]、…、a[n]}          // 各点真实数据
+
+差分数组df = {df[1]、df[2]、…、df[n]}      // 各点数据的变更值 
+
+df[i] = a[i] - a[i-1]                      // 差分数组各点数据为真实数据的变更值
+
+a[i] = df[1] + df[2] …+ df[i]              // 差分数组的前缀和即为真实数组
+
+a[i] = a[i-1] + df[i]                      // 真实数据也可以从上一点数据+变更值求出
+
+
+### 1.5 字符串
 
 ## 2 栈与队列（堆）
 
@@ -253,6 +275,16 @@ class Solution:
 
 层序遍历： 把根节点加到队列中，不断遍历直到队列为空。每一次循环中，我们都会把队头结点拿出来（remove）
 
+### 3.4 字典树（Trie树、前缀树）
+
+文件目录问题
+
+self使用：类中函数的第一个参数是实例对象本身，并且约定俗成，把其名字写为self。其作用相当于java中的this
+
+字符串处理ord
+
+本质是一个26节点的树
+
 ## 4 动态规划（DFS\DP）
 
 ### 4.1  base code 
@@ -264,7 +296,6 @@ class Solution:
 递归(自顶向下)：暴力递归---> memo 解法
 
 动归(自底而上)：dp 数组 ---> 状态压缩二维变一维---> pre cur for循环解法 
-
 
 递归 + memo：
 
@@ -324,11 +355,7 @@ def fib(n):
 	dp数组里面存的内容和memo是完全一样的，只不过把递归改成了for循环迭代了而已。
         
 
-dp数组模板：
-
-[告别动态规划，连刷 40 道题](https://zhuanlan.zhihu.com/p/91582909)
-
-最优子结构 + 重叠子问题
+**dp数组模板**
 
 明确 状态和选择--->base case ---> 明确dp数组含义(m,n)或(m+1,n+1)，状态转移--->返回dp值
 
@@ -347,7 +374,7 @@ dp数组模板：
 	#返回dp[m-1][n-1](或dp[m][n])	
 ```
 
-##### dp的数组的遍历方向：
+**dp的数组的遍历方向**
 
 	1、遍历的过程中，所需的状态必须是已经计算出来的。
 
@@ -386,35 +413,12 @@ for (int l = 2; l <= n; l++) {
 
 大部分的dp都是二维dp，用dp[m][n]还是dp[m+1][n+1]取决于含义，dp[0][0]是否有意义,是否需要定义
 
-### 3.2  常见问题模板：
+### 4.2 背包问题 
 	
-#### 序列问题
-
-dp[i] 表示以 nums[i] 这个数结尾的最长递增子序列的长度
-
-#### 路径轨迹问题
-
-dp[m][n] ---> i,j含义是位置，定义dp[m][n],结果是dp[m-1][n-1]
-
-#### 字符串(两个)问题(编辑距离)
- 
- dp[m+1][n+1] --> i,j含义是长度,定义dp[m+1][n+1],结果是dp[m][n]，可递归解
-
-```python
-	int[][] dp[m+1][n+1]
-	dp[0][..] = 0
-	dp[..][0] = 0
-	for i in [1..m]:
-		for j in [1..n]:
-	
-```		
-
-### 3.3 背包问题
-	
-0-1 背包 模板
+**0-1 背包**
 
 dp[i][w] 的定义如下：对于前 i 个物品，当前背包的容量为 w，这种情况下可以装的最大价值是 dp[i][w]。
-
+```python
 int[][] dp[N+1][W+1]
 dp[0][..] = 0
 dp[..][0] = 0
@@ -427,12 +431,12 @@ for i in [1..N]:
         )
 		
 return dp[N][W]
+```
 
-
-完全背包 模板
+**完全背包**
 
 dp[i][j] 定义: 若只使用 coins 中的前 i 个(种)硬币的面值，若想凑出金额 j，有 dp[i][j] 种凑法
-
+```python
 N = len(coins)
 int dp[N+1][amount+1]
 dp[0][..] = 0
@@ -445,18 +449,30 @@ for (int i = 1; i <= N; i++) {
             dp[i][j] = dp[i - 1][j] 
                      + dp[i][j-coins[i-1]];
 return dp[N][W]
+```
+### 4.3 贪心算法
 
+区间合并
 
-2.1 涉及两个字符串/数组时（比如最长公共子序列），dp 数组的含义如下：
+6种情况
+
+打点标记法、区间合并法
+
+会议室安排问题
+
+### 4.4 子序列问题：
+
+dp[i] 表示以 nums[i] 这个数结尾的最长递增子序列的长度
+
+1 涉及两个字符串/数组时（比如最长公共子序列），dp 数组的含义如下：
 
 在子数组 arr1[0..i] 和子数组 arr2[0..j] 中，我们要求的子序列（最长公共子序列）长度为 dp[i][j]。
 
-2.2 只涉及一个字符串/数组时（比如本文要讲的最长回文子序列），dp 数组的含义如下：
+2 只涉及一个字符串/数组时（比如本文要讲的最长回文子序列），dp 数组的含义如下：
 
 在子数组 array[i..j] 中，我们要求的子序列（最长回文子序列）的长度为 dp[i][j]。
 
 ```python
-
 def fib(n):
     if n == 0: return 0
     if n == 1 or n == 2: return 1
@@ -468,19 +484,30 @@ def fib(n):
         dp[i] = dp[i-1] + dp[i-2] 
     
     return dp[n]
-	
 ```
 
-### 3.4 区间合并问题
+**路径轨迹**
 
-打点标记法
+dp[m][n] ---> i,j含义是位置，定义dp[m][n],结果是dp[m-1][n-1]
 
-区间合并法
+**字符串(两个)问题(编辑距离)**
+ 
+ dp[m+1][n+1] --> i,j含义是长度,定义dp[m+1][n+1],结果是dp[m][n]，可递归解
 
+```python
+	int[][] dp[m+1][n+1]
+	dp[0][..] = 0
+	dp[..][0] = 0
+	for i in [1..m]:
+		for j in [1..n]:
+```	
+### 4.5 打家劫舍问题
 
-## 4 回溯（DFS）
+## 5 回溯（DFS特例）
 
-### 4.1 base code 
+回溯是DFS的一种，会剪枝和修改后恢复全局变量
+
+### 5.1 base code 
 
 	递归+选择
 
@@ -489,7 +516,6 @@ def fib(n):
 二叉选择、多叉选择
 
 ```python
-
 	result = []
 	
 	def backtrack(路径、选择列表)：
@@ -503,21 +529,26 @@ def fib(n):
 			做选择
 			backtrack(路径，选择列表)
 			撤销选择
-	
-	
-
 ```
+1 涂色法。
 
-### 排列组合问题
+2 visited数组法, unDiscovered 0，Discovered 1， visited 2 ，表示不同状态，注意是否能兼顾memo功能，有时会有更新循环问题
 
+memo缓存： floodfill变形慎重缓存，visited了部分情况下也需要更新
 
-### floodfill问题
+### 5.2 子集问题（排列、组合）
 
+### 5.3 flood fill问题
 
+四方向回溯
 
-## 5  BFS
+pair集合 + visited去重
 
-### 5.1 base code
+visited代替涂色了
+
+## 6  BFS
+
+### 6.1 base code
 
 ```python
 
@@ -543,9 +574,9 @@ def BFS(Node start,Node target):
 
 两个循环（while + for） + 一个遍历（adj点）
 
-## 6 双指针
+## 7 双指针
 
-### 6.1 base code 
+### 7.1 base code 
 
 	快慢指针(fast slow)： 也包括前后指针(pre cur、i j)  ->pre cur next。归并找中点、链表成环。
 
@@ -575,7 +606,7 @@ def has_cycle(head:list_node)->bool:
 ```	
 注意是fast!=null 还是fast.next!=null
 
-
+### 7.2 各种排序
 
 前后指针: 快速排序 随机法：
 
@@ -615,20 +646,19 @@ random partition:  pivot选择l的时候，快排为什么j先走：https://blog
 
 交换两个数： a,b = b,a
 
-###  回文问题
+### 7.3 回文问题
 
 
-### 双指针+ 双向遍历
+### 7.4 双指针+ 双向遍历
 
 双向遍历：柱形面积、接雨水，左边一遍，右边一遍
 
 
-## 7 二分搜索
+## 8 二分搜索
 
-### 7.1 base code 
+### 8.1 base code 
 
-```python
-		
+```python	
 def search(self, nums: List[int], target: int) -> int:
 
     left = 0
@@ -643,10 +673,7 @@ def search(self, nums: List[int], target: int) -> int:
         else:
     	    return mid
     return -1
-
 ```	
-	
-
 不要出现 else，把所有情况用 else if 写清楚
 
 防止溢出:left + (right - left) / 2
@@ -658,47 +685,43 @@ def search(self, nums: List[int], target: int) -> int:
 	while(left < right) 的终止条件是 left == right，会漏掉=节点
 
 理解区间：
-		
-		[left,right]      left(0) <= right(num-1)
-		
-		[left,right)      left(0) < right(num)
+	[left,right]      left(0) <= right(num-1)
+
+	[left,right)      left(0) < right(num)
 
 ```python
 
 左侧边界搜索：
 	
-		} else if (nums[mid] == target) {
-			// 收缩右侧边界
-		    right = mid - 1;
-					
-		// 检查出界情况
-		if (left >= nums.length || nums[left] != target)
-		    return -1;
-		return left;
+	} else if (nums[mid] == target) {
+		// 收缩右侧边界
+	    right = mid - 1;
+
+	// 检查出界情况
+	if (left >= nums.length || nums[left] != target)
+	    return -1;
+	return left;
 
 右侧边界搜索：
 
-		} else if (nums[mid] == target) {
-		// 这里改成收缩左侧边界即可
-		    left = mid + 1;
+	} else if (nums[mid] == target) {
+	// 这里改成收缩左侧边界即可
+	    left = mid + 1;
 
-		//检查出界情况
-		// 这里改为检查 right 越界的情况，见下图
-		if (right < 0 || nums[right] != target)
-		    return -1;
-		return right;
+	//检查出界情况
+	// 这里改为检查 right 越界的情况，见下图
+	if (right < 0 || nums[right] != target)
+	    return -1;
+	return right;
 ```			
 
+## 9 滑动窗口
 
-## 8 滑动窗口
-
-### 8.1 base code 
+### 9.1 base code 
 
 滑动窗口
 
 ```python
-
-
 import sys
 
 def sliding_window(s:str,t:str):
@@ -742,7 +765,6 @@ def sliding_window(s:str,t:str):
     return " " if start_len == sys.maxsize else s[start:start + start_len]
     
 ```
-
 right进，再左缩，两个while
 
 python 三目运算符 max = a if a>b else b
@@ -751,8 +773,7 @@ map必记录的api： keys、values、get、setdefault、pop、update、in
 
 hash表（用list 或者 dict()）: 用true 或者false表示是否出现过(a-z)；count计算出现的数量（32位宽）；记录上次出现的索引位置（滑窗）。
 
-
-### 8.2 滑动窗口+ 单调队列
+### 9.2 滑动窗口+ 单调队列
 
 ```python
 class Solution:
@@ -778,14 +799,25 @@ class Solution:
 
         return res
 ```
+## 10 图算法及高频
 
+### 10.1 图算法--拓扑排序
 
-## 9 其他高频
+依赖元素之间的线性顺序
 
-### 位运算 
+BFS:degree入度表、adjacency邻接表、queue(deque)遍历
 
-位运算相关操作
+Tasks Scheduling
 
+### 10.2 图算法--并查集(Union-Find)
+
+合并集合、查找集合中的元素
+
+合并：把两个不相交的集合按照某种条件合并为一个集合。 
+
+查询：查询两个元素是否在同一个集合中
+
+### 10.3 位运算
 
 & 按位与
 
@@ -800,55 +832,7 @@ class Solution:
 >> 右移
 
 
-//整除   math.pow() 求幂
-
-
-
-### 贪心算法 
-
-贪心差分算法
-
-贪心算法是动态规划的特例
-
-##### 122. 买卖股票的最佳时机 II
-
-贪心算法只能用于计算最大利润，计算的过程并不是实际的交易过程
-
-```python
-
-class Solution:
-    def maxProfit(self, prices: List[int]) -> int:
-        profit = [0]*len(prices)
-        sum_profit = 0
-        for i in range(1,len(prices)):
-            sum_profit += max(0,prices[i] - prices[i-1])
-        
-        return sum_profit
-		
-```
-
-### 前缀和与差分 
-
-一维前缀和： S[i]= S[i-1]  + A[i]
-
-二维前缀和： S[i][j] = S[i-1][j] + S[i][j-1] – S[i-1][j-1] + A[i][j]
-
-树上前缀和：从根到某节点的路径上点（或边）的值之和（上到下）；某节点及其所有子节点（或边）的值之和（下到上）
-
-
-差分数组定义
-
-真实数组a = {a[1]、a[2]、…、a[n]}          // 各点真实数据
-
-差分数组df = {df[1]、df[2]、…、df[n]}      // 各点数据的变更值 
-
-df[i] = a[i] - a[i-1]                      // 差分数组各点数据为真实数据的变更值
-
-a[i] = df[1] + df[2] …+ df[i]              // 差分数组的前缀和即为真实数组
-
-a[i] = a[i-1] + df[i]                      // 真实数据也可以从上一点数据+变更值求出
-
-### 哈希 
+### 10.4 哈希表
 
 ##### 560. 和为K的子数组
 
@@ -872,25 +856,7 @@ class Solution:
         return ans
 ```
 
+### 10.5 数据结构设计 LRU/LFU
 
+ 
 
-
-### 并查集 
-
-合并集合、查找集合中的元素
-
-合并：把两个不相交的集合按照某种条件合并为一个集合。 
-
-查询：查询两个元素是否在同一个集合中
-
-### 拓扑排序
-
-BFS:degree入度表、adjacency邻接表、queue(deque)遍历
-
-### 前缀树
-
-self使用：类中函数的第一个参数是实例对象本身，并且约定俗成，把其名字写为self。其作用相当于java中的this
-
-字符串处理ord
-
-本质是一个26节点的树
