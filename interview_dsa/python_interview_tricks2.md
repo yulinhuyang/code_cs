@@ -501,6 +501,7 @@ dp[m][n] ---> i,j含义是位置，定义dp[m][n],结果是dp[m-1][n-1]
 	for i in [1..m]:
 		for j in [1..n]:
 ```	
+
 ### 4.5 打家劫舍问题
 
 ## 5 回溯（DFS特例）
@@ -573,6 +574,10 @@ def BFS(Node start,Node target):
 ```
 
 两个循环（while + for） + 一个遍历（adj点）
+
+### 6.2 迷宫问题
+
+路径障碍、迷宫问题
 
 ## 7 双指针
 
