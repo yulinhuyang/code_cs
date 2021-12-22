@@ -1,4 +1,4 @@
-## 1 链表（堆 栈）
+## 1 线性表（数组、链表、字符串）
 
 ### 1.1  base code
 
@@ -88,36 +88,47 @@ class MyLinkedList:
 //5  头插，尾插，初始化，增加删除查询index
 	   	   
 ```
+### 1.2 链表翻转
+迭代法：pre cur next使用，不需要额外空间
 
-#### 1.2 单调栈：下一个最大元素、包含min函数的栈
+递归法：防止成环
+
+### 1.3 Cyclic Sort，循环排序
+
+### 1.4 字符串
+
+## 2 栈与队列（堆）
+
+### 2.1 单调栈
+
+下一个最大元素、包含min函数的栈
+
+stack: 存坐标、存值，单调升、单调降
+
+左右双栈：左一遍、右一遍
 
 ```python
-
 def nextGreatElement(nums):
+	ans = [0 for i in range(len(nums))]
+	stack = []
 
-ans = [0 for i in range(len(nums))]
-stack = []
+	for i in range(len(nums) - 1,0,-1):
+	    while stack and stack[-1] <= nums[i]:
+		stack.pop(-1)
 
-for i in range(len(nums) - 1,0,-1):
-    while stack and stack[-1] <= nums[i]:
-        stack.pop(-1)
+	    if not stack:
+		ans[i] = -1
+	    else:
+		ans[i] = stack[-1]
 
-    if not stack:
-        ans[i] = -1
-    else:
-        ans[i] = stack[-1]
+	    stack.append(nums[i])
 
-    stack.append(nums[i])
-	
-return ans
+	return ans
 ```
+### 2.2 单调队列
 
-
-#### 1.3 单调队列：滑动窗口的最大值
-
- 
+滑动窗口的最大值
 ```python
-
 import collections
 
 class Solution:
@@ -141,12 +152,25 @@ class Solution:
 
             deque.append(nums[i])
             res.append(deque[0])
-        
         return res
-
 ```
+### 2.3 ToP k问题
 
-## 2 树
+### 2.4 双堆（Two Heaps）
+
+类似的有双栈
+
+中位数，优先队列计划安排问题（Scheduling）
+
+### 2.5 K-way merge，多路归并
+
+Merge K Sorted Lists, Kth Smallest Number in M Sorted Lists
+
+K个排好序的数组，用堆来高效顺序遍历，合并K个list, 和找第K小元素、
+
+把每个数组中的第一个元素都加入最小堆中 --> 取出堆顶元素（全局最小），将该元素放入排好序的结果集合里面 --> 将刚取出的元素所在的数组里面的下一个元素加入堆 --> 重复步骤2，3，直到处理完所有数字
+
+## 3 树
 
 树天生为了递归左右子树而存在
 
@@ -170,10 +194,9 @@ class Solution:
 	
 	如果最后一层不满,缺少的节点也全部集中在右边。
 
-### 2.1  base code
+### 3.1  base code
 
 ```python
-
 class tree_node:
     def __init__(self,x):
         self.data = x
@@ -193,7 +216,10 @@ class tree_node:
     def traverse(self,root):
         for chid in root.children:
             self.traverse(chid)
+```
+### 3.2 树的DFS（Tree Depth First Search，stack）
 
+```python
 #验证二叉搜索树
 
 class Solution:
@@ -208,11 +234,7 @@ class Solution:
         return self.isValidBSTTree(root.left,min,root) and self.isValidBSTTree(root.right,root,max)
 
 #验证平衡二叉树
-
-自顶而下： o(n*n）
-
 class Solution:
-
     def depth(self,root:TreeNode) -> int:
         if not root:
             return 0 
@@ -226,12 +248,14 @@ class Solution:
             return False
         
         return self.isBalanced(root.left) and self.isBalanced(root.right)
-
 ```
+### 3.3 树的BFS(Tree Breadth First Search，queue)
 
-## 3 动态规划
+层序遍历： 把根节点加到队列中，不断遍历直到队列为空。每一次循环中，我们都会把队头结点拿出来（remove）
 
-### 3.1  base code 
+## 4 动态规划（DFS\DP）
+
+### 4.1  base code 
 
 重叠子问题、状态转移方程、最优子结构
 
@@ -242,7 +266,7 @@ class Solution:
 动归(自底而上)：dp 数组 ---> 状态压缩二维变一维---> pre cur for循环解法 
 
 
-#### 递归 + memo：
+递归 + memo：
 
 	自顶向下的递归：f(20)————>f(19)————>.....f(0)
 	
@@ -293,14 +317,14 @@ def fib(n):
 	
 ```
 	
-#### 动态规划:
+动态规划:
 	
 	自底向上的迭代：f(0)--->f(1)————>....f（20）
 
 	dp数组里面存的内容和memo是完全一样的，只不过把递归改成了for循环迭代了而已。
         
 
-##### dp数组模板：
+dp数组模板：
 
 [告别动态规划，连刷 40 道题](https://zhuanlan.zhihu.com/p/91582909)
 
