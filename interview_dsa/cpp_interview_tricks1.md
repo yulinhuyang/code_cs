@@ -638,6 +638,10 @@ vector<pair<int,int>> direct = {{-1,0},{0,-1},{1,0},{0,1}};
 std::tie(name, ages) = getPreson();
 
 ```
+两者 std::set<>和 std::map<>可以使用 std::pair作为关键，但为什么不能std::unordered_set<>和 std::unordered_map<> ?
+
+unordered_*容器需要一个哈希函数。默认情况下，他们使用 std::hash但没有特化std::hash为 std::pair<T1,T2>标准库中提供。
+另一方面，有序容器依赖于 std::less (默认)和 std::pair确实有operator<提供。这就是为什么它只是有效。
 	
 #### 10 tuple
 	
