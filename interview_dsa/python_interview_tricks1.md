@@ -142,7 +142,7 @@ map = {'a': 1,'b': 2}
 ```
 
 **map —>value->list 结构**
-
+```python
     map = collections.defaultdict(list)
     
     eg：
@@ -154,7 +154,33 @@ map = {'a': 1,'b': 2}
             map[char_str].append(strs[i])
         
         return list(map.values())
+```
 
+**map排序**
+
+[python天天进步(3)--字典排序](https://www.cnblogs.com/vivilisa/archive/2009/03/01/1400972.html)
+
+python map是无序的，可以进行排序。
+```python
+def sortedDictValues1(adict):
+    items = adict.items()
+    items.sort()
+    return [value for key, value in items]
+   
+def sortedDictValues1(adict):
+    keys = adict.keys()
+    keys.sort()
+    return [adict[key] for key in keys]
+    
+#映射
+def sortedDictValues1(adict):
+    keys = adict.keys()
+    keys.sort()
+    return map（adict.get,keys）
+    
+#对字典按键排序，用元组列表的形式返回，同时使用lambda函数来进行
+sorted(d.items, key=lambda d:d[1])
+```
 
 
 #### 2.4 str  API 
@@ -303,6 +329,10 @@ set的只要作用就是用来给数据去重。
     
     return list(res)   
 ```
+**set排序**
+
+
+
 
     
 #### 2.9  Collections
