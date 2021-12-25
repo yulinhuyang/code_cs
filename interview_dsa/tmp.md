@@ -61,6 +61,69 @@ public:
 };
 
 ```
+#### 394. 字符串解码
+
+```cpp
+class Solution {
+public:
+    string getDigits(string &s, int &ptr) {
+        string ret;
+        while (isdigit(s[ptr])) {
+            ret.push_back(s[ptr++]);
+        }
+        return ret;
+    }
+
+    string getString(vector<string> &str) {
+        string ret;
+        for (const auto &s:str) {
+            ret += s;
+        }
+        return ret;
+    }
+
+    string decodeString(string s) {
+        vector<string> stk;
+        //局部变量必须初始化
+        int ptr=0;
+        while (ptr < s.size()) {
+            if (isdigit(s[ptr])) {
+                string digits = getDigits(s, ptr);
+                stk.emplace_back(digits);
+            } else if (isalpha(s[ptr]) || s[ptr] == '[') {
+                stk.emplace_back(string(1, s[ptr]));
+                ptr++;
+            } else {
+                vector<string> sub;
+                while (stk.back() != "[") {
+                    sub.emplace_back(stk.back());
+                    stk.pop_back();
+                }
+                stk.pop_back();
+
+                reverse(sub.begin(), sub.end());
+                auto times = stoi(stk.back());
+                stk.pop_back();
+
+                auto subString = getString(sub);
+                string ret;
+                while (times--) {
+                    ret += subString;
+                }
+                stk.emplace_back(ret);
+                ptr++;
+            }
+        }
+        return getString(stk);
+    }
+};
+
+
+
+```
+
+
+
 
 
 
