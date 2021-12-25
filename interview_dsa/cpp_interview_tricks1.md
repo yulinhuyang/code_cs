@@ -806,7 +806,8 @@ INT_MIN,INT_MAX
 
 LONG_MIN,LONG_MAX 
 
-longlong： 属于int型，一般来讲，是longint型大小的两倍，int型的4倍。
+long long： 属于int型，一般来讲，是longint型大小的两倍，int型的4倍。
+									 
 
 **初始化**
 
@@ -829,5 +830,27 @@ std::chrono::duration<double> elapsed = end - start;
 std::cout << "Elapsed time: " << elapsed.count() << "s";
 
 ```
+#### 18 其他功能函数
 	
+**cmath.h 数学函数**
+	
+ceil()：向上取整; floor():向下取整; round() 四舍五入
+	
+**cctype.h 字符处理库**
+
+isalnum: 检查字符是否为字母或数字
+
+isalpha:检查字符是否为字母	
+	
+isdigit:检查字符是否为数字	
+	
+tolower 转换字符为小写
+	
+**numeric 数值算法**
+	
+accumulate：两个形参指定要累加的元素范围，第三个形参则是累加的初值
+
+int sum = accumulate(vec.begin() , vec.end() , 42);  
+	
+ 
 	
