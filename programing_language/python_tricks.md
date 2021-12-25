@@ -68,9 +68,25 @@ python tricks: https://www.zhihu.com/question/48755767
 [Python 嵌套函数](https://blog.csdn.net/liang19890820/article/details/73864242)
 
 
-### 2  notes 
+### 2  fluent notes 
+
+#### 引用
 
 在Python中，数字、字符或者元组等不可变对象类型都属于值传递，而字典dict或者列表list等可变对象类型属于引用传递。如果要想修改新赋值后原对象不变，则需要用到python的copy模块，即对象拷贝。对象拷贝又包含浅拷贝和深拷贝： 
 
 https://www.zhihu.com/question/20591688
+
+**staticmethod 方法**
+
+@staticmethod
+
+staticmethod用于修饰类中的方法,使其可以在不创建类实例的情况下调用方法
+
+**memoryview**
+
+memoryview() 函数返回给定参数的内存查看对象(memory view)。
+
+
+
+
 
