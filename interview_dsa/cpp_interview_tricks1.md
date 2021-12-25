@@ -368,13 +368,24 @@ join函数
 
 ```cpp
 //dirs中无空格
-stringstream out;
-if(dirs.empty()){
-    out<<'/';
-} else{
-    for(auto ch:dirs){
-	out << "/" << ch;
+string getString(vector<string> &str) {
+    stringstream out;
+    if (dirs.empty()) {
+        out << '/';
+    } else {
+        for (auto ch:dirs) {
+            out << "/" << ch;
+        }
     }
+    return out.str();
+}
+
+string getString(vector<string> &str) {
+    string ret;
+    for (const auto &s:str) {
+        ret += s;
+    }
+    return ret;
 }
 ```					
 
@@ -388,6 +399,18 @@ void SplitString(const string& input, char sperChar, vector<string>& outArray)
     string token;
     while (getline(sstr, token, sperChar)) {
         outArray.push_back(token);
+    }
+}
+	
+void SplitString(const string &input, string str, vector<string> &outArray) {
+    int ptr = 0;
+    for (int i = 0; i < input.size(); i++) {
+        auto pos = input.find(str, i);
+        //找不到返回string::npos				     
+        if (pos < input.size()) {
+            outArray.emplace_back(input.substr(i, pos - i));
+            i = pos + str.size() - 1;
+        }
     }
 }
 ```
