@@ -239,6 +239,9 @@ str = to_string(870);
 //string 转int
 int num = stoi("870");
 
+//char 转string：
+string(1,'a')
+
 //c语言形式
 std::string str = "870";
 int i = atoi(str.c_str());
