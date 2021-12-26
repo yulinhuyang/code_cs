@@ -2014,7 +2014,7 @@ class Solution:
         return 
 ```
 
-#####  最长无重复子数组		
+##### 3 最长无重复子数组		
 
 ```python
 	
