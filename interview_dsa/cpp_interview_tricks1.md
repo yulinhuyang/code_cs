@@ -128,6 +128,24 @@ auto v2 = vector<int> (v1.begin(),v1.begin() + 4);
 	
 map基于红黑树，自动排序；unordered_map基于哈希表，无序快，所以可以使用map来的代替vector,使用find 快速查找
 
+哈希结构
+	
+|集合 |底层实现 | 是否有序 |数值是否可以重复 | 能否更改数值|查询效率 |增删效率|
+|---|---| --- |---| --- | --- | ---|
+|std::set |红黑树 |有序 |否 |否 | $O(\log n)$|$O(\log n)$ |
+|std::multiset | 红黑树|有序 |是 | 否| $O(\log n)$ |$O(\log n)$ |
+|std::unordered_set |哈希表 |无序 |否 |否 |$O(1)$ | $O(1)$|
+
+std::unordered_set底层实现为哈希表，std::set 和std::multiset 的底层实现是红黑树，红黑树是一种平衡二叉搜索树，所以key值是有序的，但key不可以修改，改动key值会导致整棵树的错乱，所以只能删除和增加。
+
+|映射 |底层实现 | 是否有序 |数值是否可以重复 | 能否更改数值|查询效率 |增删效率|
+|---|---| --- |---| --- | --- | ---|
+|std::map |红黑树 |key有序 |key不可重复 |key不可修改 | $O(\log n)$|$O(\log n)$ |
+|std::multimap | 红黑树|key有序 | key可重复 | key不可修改|$O(\log n)$ |$O(\log n)$ |
+|std::unordered_map |哈希表 | key无序 |key不可重复 |key不可修改 |$O(1)$ | $O(1)$|
+
+std::unordered_map 底层实现为哈希表，std::map 和std::multimap 的底层实现是红黑树。同理，std::map 和std::multimap 的key也是有序的（这个问题也经常作为面试题，考察对语言容器底层的理解）。
+
 
 ```c++
 unordered_map<string,int> dict;
@@ -214,9 +232,57 @@ struct CmpByKeyLength {
 };
 map<string, int, CmpByKeyLength> name_score_map;
 ```
-	
 
-#### 3  string
+#### 3 set(unordered_set)
+
+set基于红黑树，自动排序；unordered_set基于哈希表，无序快
+
+```c++
+unordered<int> set;
+unordered_set<int> set;
+
+set.insert(1);
+//判断是否包含
+if(set.count(1) > 0){ 
+    
+}
+set.erase(1);
+for(auto it:set){
+    cout<<it<<endl;
+}
+//set基于红黑树，自动排序；unordered_set基于哈希表，无序快
+
+//字典也可以用set，判断是否存在，如单词拆分问题、最长连续子序列问题
+unordered_set<string> set;
+for (auto word:wordDict) {
+    set.emplace(word);
+}
+
+```
+	
+比较函数模板
+	
+自定义：带operator的结构体、函数指针、lambda表达式
+	
+```c++
+//comp也可以是less<Type>
+	
+struct comp
+{
+	template<typename T>
+	bool operator()(const T& l, const T& r) const
+	{
+		if (l.first == r.first)
+			return l.second > r.second;
+		return l.first < r.first;
+	}
+};
+std::set<std::pair<std::string,int>, comp> set
+
+```
+
+
+#### 4  string
 
 ```c++
 string str;
@@ -418,7 +484,7 @@ void SplitString(const string &input, string str, vector<string> &outArray) {
 }
 ```
 
-#### 4 stack
+#### 5 stack
 
 ```c++
 #include <stack>
@@ -431,7 +497,7 @@ sta.size();
 sta.empty();
 ```
 
-#### 5 queue、deque
+#### 6 queue、deque
 
 queue：头pop,尾 push
 
@@ -459,55 +525,6 @@ deque.emplace_back(1);
 deque.pop_back();
 deque.pop_front();
 deque.push_front(2);
-
-```
-
-
-#### 6 set(unordered_set)
-
-set基于红黑树，自动排序；unordered_set基于哈希表，无序快
-
-```c++
-unordered<int> set;
-unordered_set<int> set;
-
-set.insert(1);
-//判断是否包含
-if(set.count(1) > 0){ 
-    
-}
-set.erase(1);
-for(auto it:set){
-    cout<<it<<endl;
-}
-//set基于红黑树，自动排序；unordered_set基于哈希表，无序快
-
-//字典也可以用set，判断是否存在，如单词拆分问题、最长连续子序列问题
-unordered_set<string> set;
-for (auto word:wordDict) {
-    set.emplace(word);
-}
-
-```
-	
-比较函数模板
-	
-自定义：带operator的结构体、函数指针、lambda表达式
-	
-```c++
-//comp也可以是less<Type>
-	
-struct comp
-{
-	template<typename T>
-	bool operator()(const T& l, const T& r) const
-	{
-		if (l.first == r.first)
-			return l.second > r.second;
-		return l.first < r.first;
-	}
-};
-std::set<std::pair<std::string,int>, comp> set
 
 ```
 
