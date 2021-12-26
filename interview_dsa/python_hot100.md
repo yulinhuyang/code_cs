@@ -608,7 +608,7 @@ class Solution:
 ```
 
 
-### 2 树 
+### 3 树 
 
 #### 树的DFS（Tree Depth First Search，stack）
 
@@ -635,9 +635,8 @@ class Solution:
 
 ```
 
-##### 二叉树遍历
+##### 94. 二叉树的中序遍历
 
-类似：94. 二叉树的中序遍历
 
 ```python
 class Solution:
