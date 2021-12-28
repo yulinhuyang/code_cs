@@ -17,3 +17,8 @@ https://leetcode-cn.com/problem-list/e8X3pBZi/
 
 https://gitee.com/Doocs/leetcode/blob/main/lcof2/README.md
 
+ACM入门(备查字典)：
+
+https://github.com/yulinhuyang/algorithm-stone
+
+算法竞赛进阶指南 
