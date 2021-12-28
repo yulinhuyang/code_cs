@@ -422,5 +422,10 @@ Xcopy   dirA   dirB   /E/H/C/I   >> D:copy.txt
 
 robocopy     dirA   dirB /E    /MT:90  /copy:dt  /LOG:D:copy2.txt
 
+### pip
 
+ pip install onnxruntime -i https://pypi.doubanio.com/simple/  --trusted-host pypi.doubanio.com
+ 
+ 
+ 
 
