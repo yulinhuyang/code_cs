@@ -18,8 +18,8 @@ https://labuladong.gitee.io/algo/
 
 https://gitee.com/programmercarl/leetcode-master
 
-ACM入门(备查字典)：
+算法竞赛进阶指南(ACM入门）: 
 
-https://github.com/yulinhuyang/algorithm-stone
+https://github.com/acm-clan/algorithm-stone
 
-算法竞赛进阶指南 
+https://github.com/lydrainbowcat/tedukuri
