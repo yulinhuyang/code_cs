@@ -36,11 +36,6 @@
 
 [Linux启动顺序、运行级别及开机启动](https://blog.csdn.net/soonfly/article/details/72876001)
 
-
-**VScode:**
-
-[快捷键大全](https://blog.csdn.net/crper/article/details/54099319)
-
 **markdown技巧**
 
 [Markdown进阶（更改字体、颜色、大小，设置文字背景色，调整图片大小设置居中）](https://blog.csdn.net/heimu24/article/details/81189700)
@@ -366,7 +361,6 @@ $ ls -lR | grep "^d" | wc -l
 
 
 
-
 ### json 处理
 
 在线查看json www.json.cn  
@@ -426,6 +420,11 @@ robocopy     dirA   dirB /E    /MT:90  /copy:dt  /LOG:D:copy2.txt
 
  pip install onnxruntime -i https://pypi.doubanio.com/simple/  --trusted-host pypi.doubanio.com
  
- 
- 
 
+### VScode技巧
+
+[快捷键大全](https://blog.csdn.net/crper/article/details/54099319)
+
+[github1s.com  VS Code](https://zhuanlan.zhihu.com/p/350330364)
+
+[VS-code SSH 远程连接 Docker 配置](https://segmentfault.com/a/1190000039964495)
