@@ -4,12 +4,130 @@
 [算法可视化](http://algorithm-visualizer.org/)
 
 ## 第7章 搜索树
- 
+
+BST
+```cpp
+//BST.h
+template <typename T> class BST : public BinTree<T> { //由BinTree派生BST模板类
+protected:
+   BinNodePosi(T) _hot; //“命中”节点的父亲
+   BinNodePosi(T) connect34 ( //按照“3 + 4”结构，联接3个节点及四棵子树
+      BinNodePosi(T), BinNodePosi(T), BinNodePosi(T),
+      BinNodePosi(T), BinNodePosi(T), BinNodePosi(T), BinNodePosi(T) );
+   BinNodePosi(T) rotateAt ( BinNodePosi(T) x ); //对x及其父亲、祖父做统一旋转调整
+public: //基本接口：以virtual修饰，强制要求所有派生类（BST变种）根据各自的规则对其重写
+   virtual BinNodePosi(T) & search ( const T& e ); //查找
+   virtual BinNodePosi(T) insert ( const T& e ); //插入
+   virtual bool remove ( const T& e ); //删除
+   /*DSA*/
+   /*DSA*/void stretchToLPath() { stretchByZag ( _root ); } //借助zag旋转，转化为左向单链
+   /*DSA*/void stretchToRPath() { stretchByZig ( _root ); } //借助zig旋转，转化为右向单链
+   /*DSA*/void stretch();
+};
+
+//bst_insert.h
+template <typename T> BinNodePosi(T) BST<T>::insert ( const T& e ) { //将关键码e插入BST树中
+   BinNodePosi(T) & x = search ( e ); if ( x ) return x; //确认目标不存在（留意对_hot的设置）
+   x = new BinNode<T> ( e, _hot ); //创建新节点x：以e为关键码，以_hot为父
+   _size++; //更新全树规模
+   updateHeightAbove ( x ); //更新x及其历代祖先的高度
+   return x; //新插入的节点，必为叶子
+} //无论e是否存在于原树中，返回时总有x->data == e
+
+
+//BST_search.h
+template <typename T> BinNodePosi(T) & BST<T>::search ( const T & e ) { //在BST中查找关键码e
+   if ( !_root || e == _root->data ) { _hot = NULL; return _root; } //在树根v处命中
+   for ( _hot = _root; ; ) { //自顶而下
+      BinNodePosi(T) & c = ( e < _hot->data ) ? _hot->lc : _hot->rc; //确定方向
+      if ( !c || e == c->data ) return c; _hot = c; //命中返回，或者深入一层
+   } //无论命中或失败，hot均指向v之父亲（或为NULL）
+} //返回目标节点位置的引用，以便后续插入、删除操作
+
+
+//BST_RotateAt.h
+template <typename T> BinNodePosi(T) BST<T>::rotateAt ( BinNodePosi(T) v ) { //v为非空孙辈节点
+   /*DSA*/if ( !v ) { printf ( "\a\nFail to rotate a null node\n" ); exit ( -1 ); }
+   BinNodePosi(T) p = v->parent; BinNodePosi(T) g = p->parent; //视v、p和g相对位置分四种情况
+   if ( IsLChild ( *p ) ) /* zig */
+      if ( IsLChild ( *v ) ) { /* zig-zig */ //*DSA*/printf("\tzIg-zIg: ");
+         p->parent = g->parent; //向上联接
+         return connect34 ( v, p, g, v->lc, v->rc, p->rc, g->rc );
+      } else { /* zig-zag */  //*DSA*/printf("\tzIg-zAg: ");
+         v->parent = g->parent; //向上联接
+         return connect34 ( p, v, g, p->lc, v->lc, v->rc, g->rc );
+      }
+   else  /* zag */
+      if ( IsRChild ( *v ) ) { /* zag-zag */ //*DSA*/printf("\tzAg-zAg: ");
+         p->parent = g->parent; //向上联接
+         return connect34 ( g, p, v, g->lc, p->lc, v->lc, v->rc );
+      } else { /* zag-zig */  //*DSA*/printf("\tzAg-zIg: ");
+         v->parent = g->parent; //向上联接
+         return connect34 ( g, v, p, g->lc, v->lc, v->rc, p->rc );
+      }
+}
+
+```
+AVL
+
+```cpp
+//AVL.h
+#include "BST/BST.h" //基于BST实现AVL树
+template <typename T> class AVL : public BST<T> { //由BST派生AVL树模板类
+public:
+   BinNodePosi(T) insert ( const T& e ); //插入（重写）
+   bool remove ( const T& e ); //删除（重写）
+// BST::search()等其余接口可直接沿用
+};
+
+
+//AVL_Insert.h
+template <typename T> BinNodePosi(T) AVL<T>::insert ( const T& e ) { //将关键码e插入AVL树中
+   BinNodePosi(T) & x = search ( e ); if ( x ) return x; //确认目标节点不存在
+   BinNodePosi(T) xx = x = new BinNode<T> ( e, _hot ); _size++; //创建新节点x
+// 此时，x的父亲_hot若增高，则其祖父有可能失衡
+   for ( BinNodePosi(T) g = _hot; g; g = g->parent ) { //从x之父出发向上，逐层检查各代祖先g
+      if ( !AvlBalanced ( *g ) ) { //一旦发现g失衡，则（采用“3 + 4”算法）使之复衡，并将子树
+         FromParentTo ( *g ) = rotateAt ( tallerChild ( tallerChild ( g ) ) ); //重新接入原树
+         break; //g复衡后，局部子树高度必然复原；其祖先亦必如此，故调整随即结束
+      } else //否则（g依然平衡），只需简单地
+         updateHeight ( g ); //更新其高度（注意：即便g未失衡，高度亦可能增加）
+   } //至多只需一次调整；若果真做过调整，则全树高度必然复原
+   return xx; //返回新节点位置
+} //无论e是否存在于原树中，总有AVL::insert(e)->data == e
+
+//AVL_remove.h
+template <typename T> bool AVL<T>::remove ( const T& e ) { //从AVL树中删除关键码e
+   BinNodePosi(T) & x = search ( e ); if ( !x ) return false; //确认目标存在（留意_hot的设置）
+   removeAt ( x, _hot ); _size--; //先按BST规则删除之（此后，原节点之父_hot及其祖先均可能失衡）
+   for ( BinNodePosi(T) g = _hot; g; g = g->parent ) { //从_hot出发向上，逐层检查各代祖先g
+      if ( !AvlBalanced ( *g ) ) //一旦发现g失衡，则（采用“3 + 4”算法）使之复衡，并将该子树联至
+         g = FromParentTo ( *g ) = rotateAt ( tallerChild ( tallerChild ( g ) ) ); //原父亲
+      updateHeight ( g ); //并更新其高度（注意：即便g未失衡，高度亦可能降低）
+   } //可能需做Omega(logn)次调整——无论是否做过调整，全树高度均可能降低
+   return true; //删除成功
+} //若目标节点存在且被删除，返回true；否则返回false
+
+```
 
 ## 第8章 高级搜索树 高级搜索树
  
 ## 第9章 词典
- 
+
+```cpp
+//Entry.h
+
+template <typename K, typename V> struct Entry { //词条模板类
+   K key; V value; //关键码、数值
+   Entry ( K k = K(), V v = V() ) : key ( k ), value ( v ) {}; //默认构造函数
+   Entry ( Entry<K, V> const& e ) : key ( e.key ), value ( e.value ) {}; //基于克隆的构造函数
+   bool operator< ( Entry<K, V> const& e ) { return key <  e.key; }  //比较器：小于
+   bool operator> ( Entry<K, V> const& e ) { return key >  e.key; }  //比较器：大于
+   bool operator== ( Entry<K, V> const& e ) { return key == e.key; } //判等器：等于
+   bool operator!= ( Entry<K, V> const& e ) { return key != e.key; } //判等器：不等于
+}; //得益于比较器和判等器，从此往后，不必严格区分词条及其对应的关键码
+
+```
 
 ## 第10章 优先级队列
 
