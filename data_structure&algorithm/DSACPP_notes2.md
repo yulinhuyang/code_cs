@@ -53,6 +53,42 @@ template <typename T> void heapify ( T* A, const Rank n ) { //Floyd建堆算法�
 /*DSA*///}; printf("\n");
 /*DSA*///}
 }
+
+//PQ_ComplHeap_insert.h
+template <typename T> void PQ_ComplHeap<T>::insert ( T e ) { //将词条插入完全二叉堆中
+   Vector<T>::insert ( e ); //首先将新词条接至向量末尾
+   percolateUp ( _elem, _size - 1 ); //再对该词条实施上滤调整
+}
+
+//PQ_ComplHeap_percolateDown.h
+//对向量前n个词条中的第i个实施下滤，i < n
+template <typename T> Rank percolateDown ( T* A, Rank n, Rank i ) {
+   Rank j; //i及其（至多两个）孩子中，堪为父者
+   while ( i != ( j = ProperParent ( A, n, i ) ) ) //只要i非j，则
+      { swap ( A[i], A[j] ); i = j; } //二者换位，并继续考查下降后的i
+   return i; //返回下滤抵达的位置（亦i亦j）
+}
+
+//PQ_ComplHeap_percolateUp.h
+//对向量中的第i个词条实施上滤操作，i < _size
+template <typename T> Rank percolateUp ( T* A, Rank i ) {
+   while ( 0 < i ) { //在抵达堆顶之前，反复地
+      Rank j = Parent ( i ); //考查[i]之父亲[j]
+      if ( lt ( A[i], A[j] ) ) break; //一旦父子顺序，上滤旋即完成；否则
+      swap ( A[i], A[j] ); i = j; //父子换位，并继续考查上一层
+   } //while
+   return i; //返回上滤最终抵达的位置
+}
+
+//PQ_ComplHeap_getMax.h
+template <typename T> T PQ_ComplHeap<T>::getMax() {  return _elem[0];  }
+
+//PQ_ComplHeap_delMax.h
+template <typename T> T PQ_ComplHeap<T>::delMax() { //删除非空完全二叉堆中优先级最高的词条
+   T maxElem = _elem[0]; _elem[0] = _elem[ --_size ]; //摘除堆顶（首词条），代之以末词条
+   percolateDown ( _elem, _size, 0 ); //对新堆顶实施下滤
+   return maxElem; //返回此前备份的最大词条
+}
 ```
  
 ## 第11章 串
