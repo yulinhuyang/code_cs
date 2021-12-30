@@ -1,6 +1,6 @@
 ### 1 主要参考：
 
-刷题顺序： 剑指offer --> labuladong --> hot100 --> 精选TOP 70
+刷题顺序： 剑指offer --> labuladong --> hot100 --> 精选TOP
 
 剑指offer:
 
