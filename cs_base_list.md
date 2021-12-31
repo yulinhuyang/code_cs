@@ -35,6 +35,9 @@ https://github.com/wizardforcel/sicp-py-zh
 
 CS61A: https://www-inst.eecs.berkeley.edu/~cs61a/archives.html
 
+CS61A 教学视频: https://www.bilibili.com/video/BV1nJ41157p6
+
+
 
 冒号学堂：编程范式与OOP思想:  https://blog.zhenghui.org/2009/08/21/contents-of-colonclass/
 
