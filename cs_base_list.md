@@ -69,7 +69,6 @@ CS170: https://cs170.org/
 https://www.bilibili.com/video/BV1BU4y1b7RK
 
 
-
 Problem Solving with Algorithms and Data Structures Using Python:
 
 开源版： https://github.com/facert/python-data-structure-cn
@@ -83,7 +82,6 @@ Problem Solving with Algorithms and Data Structures Using Python:
 **labuladong**
 
 https://github.com/labuladong/fucking-algorithm
-
 
 **剑指offer**
 
@@ -99,6 +97,15 @@ https://blog.csdn.net/qq_21201267/article/details/104271963
 https://github.com/soulmachine/leetcode
 
 
+**算法竞赛进阶指南(ACM入门）:**
+
+https://github.com/acm-clan/algorithm-stone
+
+https://github.com/lydrainbowcat/tedukuri
+
+https://space.bilibili.com/7836741/channel/seriesdetail?sid=369279
+
+
 程序员金典:
 
 https://github.com/F8F-1BearCat/CtCI-6th-Edition-CN
@@ -112,15 +119,20 @@ https://blog.csdn.net/qq_21201267/article/details/104306869
 
 https://github.com/yiliyili/algorithms_zuochengyun
 
+代码随想：
+
+https://gitee.com/programmercarl/leetcode-master
+
+
 ### 3  OS
 
 **CSAPP-CMU 15-213**
 
+CMU 15-213: http://www.cs.cmu.edu/~./213/schedule.html
+
 深度人工智障：[读书笔记]CSAPP深入理解计算机系统： https://zhuanlan.zhihu.com/p/103476182
 
-深入理解计算机系统 读书笔记_个人文章 - SegmentFault 思否： https://segmentfault.com/a/1190000015444386
-
-CMU 15-213: http://www.cs.cmu.edu/~./213/schedule.html
+Dr.D陪跑CSAPP: bigONE 深入理解计算机系统: https://www.bilibili.com/video/BV1hf4y1P7qW 
 
 **OSTEP :**
 
@@ -141,6 +153,8 @@ http://billie66.github.io/TLCL/book/
 
 
 **The Missing Semester of Your CS Education**
+
+https://missing-semester-cn.github.io/
 
 **Docker:**
 
@@ -167,6 +181,7 @@ MySQL必知必会
 
 计算机科学中的数学：https://github.com/xubeng/mathematics-for-computer-science/
 
+[中字]麻省理工学院公开课：计算机科学的数学 MIT 6.042J&18.062J: https://www.bilibili.com/video/BV1Kb411n7oa
 
 
 ### 6  编程语言 & 性能优化 & 高级特性
@@ -182,15 +197,16 @@ https://zhuanlan.zhihu.com/p/23489050
 
 **流畅的python**：
 
+附录代码：https://github.com/fluentpython/example-code
+
+视频学习：https://www.bilibili.com/video/BV18i4y1u7Cr
+
 https://github.com/StdioA/fluent-python-notes
 
 https://www.zhihu.com/column/c_1200472332177096704
 
 https://www.zhihu.com/column/zen-of-python
 
-https://hellowac.github.io/blog/programing/
-
-https://github.com/fluentpython/example-code
 
 python cookbook:
 
@@ -244,6 +260,7 @@ https://github.com/applenob/Cpp_Primer_Practice
 
 https://github.com/czs108/Cpp-Primer-5th-Notes-CN
 
+
 efficitive C++：
 
 https://blog.csdn.net/fengbingchun/article/details/102761542
@@ -288,7 +305,6 @@ https://github.com/google/styleguide
 https://github.com/zh-google-styleguide/zh-google-styleguide
 
 https://zh-google-styleguide.readthedocs.io/en/latest/
-
 
 
 ### 7 设计模式与重构
