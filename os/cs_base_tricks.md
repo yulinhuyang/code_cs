@@ -181,13 +181,25 @@ link_libraries(“/home/server/third/lib/libcommon.a”)
 
 target_link_libraries(myProject libcomm.a)
 
-**vi常用命令**
+**vim常用命令**
 
 :set number
 
 add-apt-repository使用： 
 
 安装software-properties-common，配置代理export代理 或者bashrc ----> sudo apt-add-repository ppa:ubuntu-mozilla-daily/ppa  --->sudo apt-get update  --->sudo apt-get install firefox-4.0
+
+	  光标移动到文件头部：gg
+
+	  光标移动到文件尾部：G
+
+	  光标迅速移动到第N行：nG
+
+	  删除光标所在行：dd（其实是剪切操作）
+
+	  复制一行：yy
+
+	  复制N行：nyy
 
 **so相关**
 
