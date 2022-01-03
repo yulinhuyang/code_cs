@@ -4,7 +4,7 @@
  
  https://github.com/820fans/ACWinger-ClockIn
  
- https://github.com/livrth/cp
+https://github.com/lydrainbowcat/tedukuri
 
 
 算法竞赛进阶指南 杂谈 https://blog.nowcoder.net/zhxu98/2671
