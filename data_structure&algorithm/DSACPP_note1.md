@@ -2373,7 +2373,7 @@ simulate(10, 60*8);
 
 任何有根有序的多叉树，都可等价地转化并实现为二叉树。
 
-![btree.png](../pics/c5_binary_tree/btree.png)
+![btree.png](../pics/btree.png)
 
 + 节点 v 的深度 depth(v): v 到根的通路上所经过的边的数目，也就是 v 所在的层。规定根在第 0 层
 + 节点 v 的度数或(出)度 deg(v): 即 v 的孩子总数。该值也表示该节点连出去的边数
@@ -2386,22 +2386,22 @@ simulate(10, 60*8);
 + 在二叉树中，k 层最多 $2^k$ 个节点，则当有 h 层时，最多有节点数 n= $\sum_{k=0} ^{h}2^k$ = 2^{h+1} -1 < $2^{h+1}$，特别地，当 n=$2^{h+1} -1$，称为满树
 
 
-![btree_numbers.png](../pics/c5_binary_tree/btree_numbers.png)
+![btree_numbers.png](../pics/btree_numbers.png)
 
 ### 多叉树的表示方法
 
 + 以父节点表示，每个节点中存储父节点信息。访问父节点 O(1)，访问子节点，要遍历所有节点，O(n)。
 
-![parent_representation.png](../pics/c5_binary_tree/parent_representation.png)
+![parent_representation.png](../pics/parent_representation.png)
 
 + 以子节点表示，每个节点中将其所有子节点组织为一个列表或向量。若有 r 个子节点，则访问子节点 O(r+1)，访问父节点 O(n)。
 
-![children_representation.png](../pics/c5_binary_tree/children_representation.png)
+![children_representation.png](../pics/children_representation.png)
 
 
 + 父节点+子节点表示，操作方便，但节点的添加删除时，树拓扑结构的维护成本高。
 
-![parent_children_representation.png](../pics/c5_binary_tree/parent_children_representation.png)
+![parent_children_representation.png](../pics/parent_children_representation.png)
 
 ### 有序多叉树可转换为二叉树
 
@@ -2409,7 +2409,7 @@ simulate(10, 60*8);
 
 转换时后，原节点的**长子（即第一个子节点）** 成为了其左节点，原节点的**下一个兄弟** 成为了其右节点。
 
-![mTree2bTree.png](../pics/c5_binary_tree/mTree2bTree.png)
+![mTree2bTree.png](../pics/mTree2bTree.png)
 
 ## 编码树
 
@@ -2421,13 +2421,13 @@ simulate(10, 60*8);
 
 如下图中，左边的是一个可行的 PFC 树，右边的不可行。
 
-![PFC_instance.png](../pics/c5_binary_tree/PFC_instance.png)
+![PFC_instance.png](../pics/PFC_instance.png)
 
 基于 PFC 编码树的解码算法，可以在二进制串的接收过程中实时进行，属于**在线算法**。
 
 # 先序遍历
 
-![preorder_raversal.png](../pics/c5_binary_tree/preorder_raversal.png)
+![preorder_raversal.png](../pics/preorder_raversal.png)
 
 ## 递归版本
 
@@ -2471,7 +2471,7 @@ void travPre_I1(BinNodePosi(T) p, VST& visit) { //二叉树先序遍历算法（
 
 ## 迭代版本 2
 
-![travPre_Iterate.png](../pics/c5_binary_tree/travPre_Iterate.png)
+![travPre_Iterate.png](../pics/travPre_Iterate.png)
 
 考查先序遍历，它的过程，可分解为两段：
 
@@ -2571,7 +2571,7 @@ void swap_pre_I2(BinNodePosi(T) p) {
 
 # 中序遍历
 
-![inorder_traverse.png](../pics/c5_binary_tree/inorder_traverse.png)
+![inorder_traverse.png](../pics/inorder_traverse.png)
 
 ## 递归版本
 
@@ -2590,7 +2590,7 @@ void travIn_R(BinNodePosi(T) p, VST& visit) { //二叉树中序遍历算法（�
 
 ## 迭代版本 1
 
-![inorder_trav_interate.png](../pics/c5_binary_tree/inorder_trav_interate.png)
+![inorder_trav_interate.png](../pics/inorder_trav_interate.png)
 
 考查遍历过程：
 
@@ -2675,9 +2675,9 @@ BinNodePosi(T) BinNode<T>::succ() { //定位节点 v 的直接后继
 
 没有右孩子的情况，如图中的 e, 查找过程是先沿右向分支不断朝左上方移到 d，最后再朝右上方移动一步到 f，即后继为 f，特别地，节点 g 的后继为 NULL。
 
-![inorder_I_instance.png](../pics/c5_binary_tree/inorder_I_instance.png)
+![inorder_I_instance.png](../pics/inorder_I_instance.png)
 
-![succ_inorder.png](../pics/c5_binary_tree/succ_inorder.png)
+![succ_inorder.png](../pics/succ_inorder.png)
 
 
 ```cpp
@@ -2727,7 +2727,7 @@ void travIn_I3(BinNodePosi(T) p, VST& visit) { //二叉树中序遍历算法：�
 }
 ```
 
-![inorder_backtrack.png](../pics/c5_binary_tree/inorder_backtrack.png)
+![inorder_backtrack.png](../pics/inorder_backtrack.png)
 
 
 ## 迭代版本 4
@@ -2755,7 +2755,7 @@ void travIn_I4(BinNodePosi(T) p, VST& visit) { //二叉树中序遍历算法：�
 
 # 后序遍历
 
-![postorder_traverse.png](../pics/c5_binary_tree/postorder_traverse.png)
+![postorder_traverse.png](../pics/postorder_traverse.png)
 
 ## 递归版本
 
@@ -2773,7 +2773,7 @@ void travPost_R(BinNodePosi(T) p, VST& visit) { //二叉树后序遍历算法（
 
 ## 迭代版本
 
-![postorder_iterate.png](../pics/c5_binary_tree/postorder_iterate.png)
+![postorder_iterate.png](../pics/postorder_iterate.png)
 
 将树 T 画在二维平面上，从左侧水平向右看去，未被遮挡的最高叶节点 v（称作最高左侧可见叶节点 HLVFL），即为后序遍历首先访问的节点，该节点可能是左孩子，也可能是右孩子（故用垂直边表示）。
 
@@ -2856,7 +2856,7 @@ void replace_as_children_largest_post_I(BinNodePosi(T) p) { //参考后序迭代
 
 即先上后下，先左后右，借助队列实现。
 
-![levelorder_traversal.png](../pics/c5_binary_tree/levelorder_traversal.png)
+![levelorder_traversal.png](../pics/levelorder_traversal.png)
 
 ```cpp
 // 层次遍历
@@ -2882,7 +2882,7 @@ void travLevel(BinNodePosi(T) p, VST& visit) { //二叉树层次遍历
 
 叶节点只能出现在最底部的两层，且最底层叶节点均处于次底层叶节点的左侧。
 
-![complete_btree.png](../pics/c5_binary_tree/complete_btree.png)
+![complete_btree.png](../pics/complete_btree.png)
 
 对于高度为 h 的完全二叉树，规模应在 $2^h$ 和 $2^{h+1} - 1$ 之间。
 
@@ -2892,7 +2892,7 @@ void travLevel(BinNodePosi(T) p, VST& visit) { //二叉树层次遍历
 
 每层结点都饱和。
 
-![full_btree.png](../pics/c5_binary_tree/full_btree.png)
+![full_btree.png](../pics/full_btree.png)
 
 第 k 层的节点数是 $2^k$，当高为 h 时，总结点数是 $2^0+ 2^1+\cdots+2^h = 2^{h+1}-1$，内部节点是 $2^{h+1}-1 -2^h = 2^h-1$，叶结点为 $2^h$，叶节点总是恰好比内部节点数多 1。
 
@@ -2901,7 +2901,7 @@ void travLevel(BinNodePosi(T) p, VST& visit) { //二叉树层次遍历
 
 中序 + 先序（或后序）就能还原二叉树。
 
-![btree_rebuild.png](../pics/c5_binary_tree/btree_rebuild.png)
+![btree_rebuild.png](../pics/btree_rebuild.png)
 
 以先序+中序为例，用数学归纳法，设当 `n<N` 时以上结论成立。当 `n=N` 时，由先序遍历序列可知，这一节点为根节点。再由中序序列，可得出左子树和右子树，从而问题规模减少为两个子树，和假设相符，故成立。
 
@@ -2912,7 +2912,7 @@ void travLevel(BinNodePosi(T) p, VST& visit) { //二叉树层次遍历
 
 ## PFC 编解码
 
-![PFC_progress.png](../pics/c5_binary_tree/PFC_progress.png)
+![PFC_progress.png](../pics/PFC_progress.png)
 
 可自底而上，两两子集合并，最终生成一个全集。首先，由每一字符分别构造一棵单节点二叉树，并将它们视作一个森林（向量），此后，反复从森林中取出两棵树并将其合二为一，从而合并生成一棵完整的 PFC 编码树。再将 PFC 编码树转译成编码表。之后通过查表，将字符转化成对应的二进制编码串。
 
