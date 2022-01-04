@@ -894,17 +894,17 @@ eg:
 ```C++
  // 返回第一个小于等于目标值的迭代器
 
-**lower_bound**(vec.begin(), vec.end(), 8, greater<int>());
+ lower_bound(vec.begin(), vec.end(), 8, greater<int>());
 
 // 返回第一个小于目标值的迭代器
 
-**upper_bound**(vec.begin(), vec.end(), 8, greater<int>());
+ upper_bound(vec.begin(), vec.end(), 8, greater<int>());
 
- bool isFind = **binary**_**search**(vec.begin(), vec.end(), 7);
+ bool isFind = binary_search(vec.begin(), vec.end(), 7);
 
 // 返回第一个大于等于目标值的迭代器
 
- vector<int>::iterator iter1 = **lower**_bound(vec.begin(), vec.end(), 8);
+ vector<int>::iterator iter1 = lower_bound(vec.begin(), vec.end(), 8);
 
  // 返回第一个大于目标值的迭代器
 
