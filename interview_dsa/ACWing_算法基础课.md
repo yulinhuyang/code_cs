@@ -5,3 +5,11 @@
 yxc代码模板合集： https://blog.csdn.net/weixin_45629285/category_10218699.html
 
 代码基础课模板： https://github.com/kszlzj/algorithm
+
+ACM模板：
+
+https://github.com/Bryce1010/bryce1010-ACM-Template
+
+https://github.com/kuangbin/ACM-ICPC
+
+https://github.com/soulmachine/acm-cheat-sheet
