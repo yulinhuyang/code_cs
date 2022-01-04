@@ -1,3 +1,5 @@
+yxc代码模板合集： https://blog.csdn.net/weixin_45629285/category_10218699.html
+
 ### 双端队列
 
 BZOJ2457 双端队列
