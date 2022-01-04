@@ -1,3 +1,18 @@
+主要参考:
+
+https://github.com/livrth/algorithm-competition-advanced-guide
+
+https://github.com/820fans/ACWinger-ClockIn
+
+https://github.com/lydrainbowcat/tedukuri
+
+算法竞赛进阶指南 杂谈 https://blog.nowcoder.net/zhxu98/2671
+
+算法竞赛进阶指南题解笔记 秦淮岸： https://www.acwing.com/blog/content/89/
+
+大雪菜：https://blog.csdn.net/GarfieldEr007
+
+[算法竞赛知识合集 目录](https://blog.csdn.net/weixin_45697774/article/details/105603064)
 
 ### 双端队列
 
