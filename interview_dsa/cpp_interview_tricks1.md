@@ -25,7 +25,7 @@ dp.pop_back();
 sort(dp.begin(),dp.end());//排序
 swap(nums[i],nums[k]);//交换两个数
 reverse(nums.begin() + j,nums.end());//反转一段数组
-
+dp.insert(dp.begin()+2,3);// 2位置插入3
 ```
 
 ##### erase相关
@@ -810,6 +810,8 @@ bitset<n> b(str);//n位，string初始化
 
 [capture list] (params list) mutable exception-> return type { function body }
 
+函数名相当于使用[]代替了
+	
 //用于复杂的逻辑比较
 sort(lbvec.begin(), lbvec.end(), [](int a, int b) -> bool { return a < b; });   // Lambda表达式
 
