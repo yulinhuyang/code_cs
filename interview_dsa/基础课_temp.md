@@ -1,4 +1,570 @@
 
+### STL API模板
+
+#### 1. vector
+```cpp
+/*
+向量/动态数组
+    最常用的容器
+*/
+#pragma once
+
+#include <vector>
+#include <iostream>
+#include <algorithm>
+#include <functional>
+
+using namespace std;
+
+class Solution {
+public:
+
+    bool is_in(vector<int> v, int target) {
+        auto it = v.begin();
+        for (; it != v.end(); it++)
+            if (*it == target)
+                break;
+        return it != v.end();
+    }
+
+    void test() {
+
+        vector<int> v1;  // {}
+        vector<int> v2 = { 1,2,3,4 };
+        vector<int> v3(3, 10);  // {10,10,10}
+        vector<int> v4(v2.begin() + 1, v2.end());  // {2,3,4}
+        vector<int> v5(v4);  // {2,3,4}
+
+        // 尾插
+        v1.push_back(3);
+        v1.push_back(2);
+        v1.push_back(1);
+        v1.pop_back();
+        for (auto i : v1)
+            cout << i << ' ';
+        cout << endl;
+
+        // 头插、指定位置插入
+        v1.insert(v1.begin() + 1, 0);
+        v1.insert(v1.begin() + 1, v2.begin(), v2.end());
+        v1.insert(v1.end(), v2.begin(), v2.end());
+        auto it = v1.erase(v1.begin() + 1);
+        cout << *it << endl;
+        for (auto i : v1)
+            cout << i << ' ';
+        cout << endl;
+
+        // 删除
+        vector<int> v6 = { 1,2,3,4,5 };
+        v6.erase(v6.begin() + 1);  // { 1,3,4,5 }
+        v6.erase(v6.begin() + 1, v6.begin() + 3);  // { 1,5 }
+        v6.clear();
+        for (auto i : v6)
+            cout << i << ' ';
+        cout << endl;
+
+        // 查找
+        it = find(v2.begin(), v2.end(), 5);
+        if (it != v2.end()) {   // 找到了，必须做一次判断，以防空迭代器异常
+            //
+        }
+
+        // 获取数组大小
+        cout << "v4 size: " << v4.size() << endl;
+
+        // 整个数组交换
+        v1.swap(v2);
+        v2.swap(v1);
+
+        // 交换内部元素
+        swap(v2[1], v2[2]);
+        swap(v2[1], v2[2]);
+
+        // 不同的遍历方法
+        cout << "v3: ";
+        for (auto i : v3)
+            cout << i << ' ';
+        cout << endl;
+
+        cout << "v4: ";
+        for (size_t i = 0; i < v4.size(); i++)
+            cout << v4[i] << ' ';
+        cout << endl;
+
+        cout << "v5: ";
+        for (auto it = v5.begin(); it != v5.end(); it++)
+            cout << *it << ' ';
+        cout << endl;
+
+        cout << "r v5: ";   // 逆序遍历
+        for (auto it = v5.rbegin(); it != v5.rend(); it++)
+            cout << *it << ' ';
+        cout << endl;
+
+        // 获取第一个/最后元素
+        v2.front() = 12;            // 因为返回的是引用，所以可以直接修改
+        v2.back() -= v2.front();
+        cout << v2.front() << ", " << v2.back() << endl;
+
+        // 判断空
+        if (v1.empty())
+            cout << "v1 is empty" << endl;
+
+        // 排序
+        // 默认升序
+        sort(v2.begin(), v2.end());
+        // 降序
+        sort(v2.begin(), v2.end(), greater<int>());
+
+        // 自定义排序
+        typedef pair<int, int> ii;
+        vector<ii> vp{ { 1,1 },{ 1,2 },{ 2,2 },{ 2,3 },{ 3,3 } };
+        sort(vp.begin(), vp.end(), [](const ii &l, const ii &r) {   // 按第一个数字升序，第二个降序
+            return l.first != r.first ? l.first < r.first : l.second > r.second;
+        });
+        for (auto i : vp)
+            cout << '{' << i.first << ',' << i.second << "} ";
+        cout << endl;
+    }
+};
+
+```
+
+#### 2. list
+```cpp
+/*
+链表常用操作：
+    1. 前插
+    2. 尾插
+    3. 指定位置插入
+    4. 查找
+    5. 删除
+    6. 移除全部某个值
+链表的使用频率不高
+注意：
+    链表的迭代器不支持随机存取，即 `l.begin() + 1` 这种操作
+*/
+#pragma once
+
+#include "../../all.h"
+#include <list>
+
+using namespace std;
+
+class Solution {
+public:
+    void test() {
+        list<int> l1{ 1,2,3,4,5 };
+
+        // 前插
+        l1.push_front(0);
+        // 获取第一个元素
+        auto top = l1.front();
+        cout << top << endl;        // 0
+        // 弹出第一个元素
+        l1.pop_front();
+        cout << l1.front() << endl; // 1
+
+        // 尾插
+        l1.push_back(6);
+        // 获取最后一个元素
+        auto back = l1.back();
+        cout << back << endl;       // 6
+        // 弹出最后一个元素
+        l1.pop_back();
+        cout << l1.back() << endl;  // 5
+
+        // 删除
+        auto ret = find(l1.begin(), l1.end(), 3);
+        cout << *ret << endl;
+        l1.erase(ret);
+        ret = find(l1.begin(), l1.end(), 3);
+        if (ret == l1.end())
+            cout << "have erase 3" << endl;
+
+        // 移除某个值，会全部移除，如果该值不存在，无返回值
+        ret = find(l1.begin(), l1.end(), 5);
+        cout << *ret << endl;
+        l1.push_back(5);    // 再添加一个 5
+        l1.push_back(5);    // 再添加一个 5
+        cout << l1.size() << endl;  // 6
+        l1.remove(5);       // 移除所有 5
+        cout << l1.size() << endl;  // 3
+        ret = find(l1.begin(), l1.end(), 5);
+        if (ret == l1.end())
+            cout << "have remove all 5" << endl;
+
+        // 插入 - 有 4 种插入
+        l1.insert(l1.begin(), 3);       // 1. 在开头插入 3
+        l1.insert(l1.begin(), 5, 3);    // 2. 在开头插入 5 个 3
+        l1.insert(l1.begin(), l1.begin(), l1.end());    // 3. 在指定位置插入一个范围
+        l1.insert(l1.begin(), { 1,2,3 });               // 4. 在指定位置插入一个初始化列表
+
+        // 清空
+        l1.clear();
+    }
+
+    
+};
+```
+
+#### 3. map
+```cpp
+/*
+字典 map
+注意：
+    map 没有内置通过 value 找 key 的方法
+        一种当然是迭代器遍历，
+        下面还介绍了一种更高级的方法，通过 lambda 表达式查找
+*/
+#pragma once
+
+#include <map>
+#include <iostream>
+
+using namespace std;
+
+class Solution {
+public:
+    void test() {
+        // 构造函数
+        map<int, int> m1{ { 1,2 },{ 2,3 },{ 3,4 } };
+        map<int, int> m2(m1.begin(), m1.end());
+        map<int, int> m3(m2);
+
+        m3[1] = 3;  // 更新
+        m3[4] = 5;  // 插入，无返回值
+        
+        // 插入，如果存在则插入失败；注意与 [] 的区别
+        pair<map<int, int>::iterator, bool> ret;
+        ret = m3.insert(pair<int, int>(1, 4));
+        if (ret.second == false)
+            cout << "exist" << endl;
+
+        // hint 插入（不常用）
+        auto it = m3.begin();
+        it = m3.insert(it, pair<int, int>(6, 7));  // 效率不是最高的
+        // 这个跟效率有关，不深入
+        // > 我在 stack overflow 上的提问：
+        //      c++ - Does it matter that the insert hint place which is close the final place is before or after the final place? - Stack Overflow https://stackoverflow.com/questions/49653112/does-it-matter-that-the-insert-hint-place-which-is-close-the-final-place-is-befo
+
+        // C++11 新语法，更快
+        ret = m3.emplace(5, 6);  // 插入成功
+        ret = m3.emplace(1, 4);  // 插入失败，key=1 存在了
+        it = m3.emplace_hint(it, 8, 9);  // hint 插入
+
+        // 删除 by key
+        m3.erase(3);  
+
+        // 查找 by key
+        it = m3.find(7);  // 删除 by iterator
+        if (it == m3.end())
+            m3[7] = 77;
+
+        // 查找 by value
+        // 遍历方法，略
+        // lambda 方法
+        int v = 77;
+        it = find_if(m3.begin(), m3.end(),
+            [v](const std::map<int, int>::value_type item) {
+            return item.second == v;
+        });
+        if (it != m3.end()) {
+            int k = (*it).first;
+            cout << k << endl; // 7
+        }
+        // 此外，还有函数对象的方式
+        // > C++ map 根据value找key - CSDN博客 https://blog.csdn.net/flyfish1986/article/details/72833001
+
+        for (auto& i : m3)
+            cout << i.first << ": " << i.second << endl;
+    }
+
+    
+};
+```
+
+#### 4. stack
+```cpp
+/*
+栈 stack
+    栈的性质是“先进后出”
+    其内部是使用双端队列 deque 实现的，屏蔽了部分接口
+*/
+#pragma once
+
+#include <list>
+#include <vector>
+#include <stack>
+#include <iostream>
+
+using namespace std;
+
+class Solution {
+public:
+    void test() {
+        stack<int> s1;
+        s1.push(1);
+        s1.push(2);
+        s1.push(3);
+
+        // pop() 没有返回值，因此如果需要使用弹出的值，需要先接收
+        auto top_val = s1.top();  // 3
+        s1.pop();
+
+        // 可以使用 deque 来构造 stack
+        deque<int> d1 = { 1,2,3 };
+        stack<int> s2(d1);
+
+        s2.push(4);
+        top_val = s2.top();  // 4
+        s2.pop();  // {1,2,3}
+
+    }
+
+};
+```
+
+#### 5. queue
+```cpp
+/*
+队列：
+    队列的性质是“先进先出”
+    队列包括常规的队列 queue 和双端队列 deque
+    queue 的内部就是 deque 实现的，
+    因为双端队列包括的队列的所有功能，所以推荐使用 deque —— 它会使用 _front 和 _back 来区分头插和尾插
+    因为 list 也满足 queue 的接口，所以可以使用 list 作为 queue 背后的容器
+*/
+#pragma once
+
+#include <list>
+#include <deque>
+#include <vector>
+#include <queue>
+#include <iostream>
+#include <memory>
+
+using namespace std;
+
+class Solution {
+public:
+    void test() {
+        // 双端队列
+        deque<int> d1 = { 1,2,3 };
+
+        d1.push_front(0);  // {0,1,2,3}
+        for (auto i : d1)
+            cout << i << ' ';
+        cout << endl;
+
+        auto front_val = d1.front();
+        d1.pop_front();  // {1,2,3}
+        for (auto i : d1)
+            cout << i << ' ';
+        cout << endl;
+
+        // 一般队列
+        queue<int> q1(d1);
+        q1.push(12);
+
+        // 因为 list 也满足 queue 的接口，所以可以使用 list 作为 queue 背后的容器
+        list<int> l = { 1,2,3,4,5 };
+        queue<int, list<int>> q2(l);
+
+        //queue<int> q3{ 1,2,3 };  // error，没有相应的构造函数
+        //queue<int, vector<int>> q4;  // warning
+    }
+};
+
+```
+#### 6. set
+```cpp
+/*
+集合 set
+    set 和 map 基本一致，相当于没有 value 的 map，或者说的 map 的 key 就是一个 set
+    因此，set 跟 map 的 key 一样是不允许重复的
+    如果需要重复，可以使用 multiset
+    set 的内部实现默认是红黑树——Python 默认是 HashSet
+        因此 set 中的元素是默认有序的——升序
+        如果需要降序的 set，可以使用仿函数
+    ~~STL 也提供了 hash_set 的实现~~
+    STL 已经移除了 hash_set，改用 unordered_set 实现 Hash Set（可能）
+        注意：使用 unordered_set 并不会改变插入元素的顺序，这一点跟 Python 中的 set 不太一样——注意：但如果使用 Ipython，它会自动帮你有序显示
+        C++:
+            vector<char> vc{ 'a', 'r', 'b', 'c', 'd' };
+            unordered_set<char> hs(v.begin(), v.end());
+            for (auto i : hs)
+                cout << i << ' ';       // a b r c d
+            cout << endl;
+            hs.emplace('e');
+            for (auto i : hs)
+                cout << i << ' ';       // a b r c d e  插入位置不变
+            cout << endl;
+        Python:
+            >>> a = set('abracadabra')
+            >>> a
+            {'a', 'r', 'b', 'c', 'd'}
+            >>> a.add('e')
+            >>> a
+            {'a', 'e', 'r', 'b', 'c', 'd'}          # 'e' 的插入位置变了，但是无序
+        Ipython:
+            In [1]: a = set('abracadabra')
+            In [2]: a
+            Out[2]: {'a', 'b', 'c', 'd', 'r'}
+            In [3]: a.add('e')
+            In [4]: a
+            Out[4]: {'a', 'b', 'c', 'd', 'e', 'r'}  # 'e' 的插入位置变了，有序
+*/
+#pragma once
+
+#include "../../all.h"
+#include <set>
+#include <unordered_set>  // #include <hash_set>
+
+using namespace std;
+
+class Solution {
+public:
+    struct cmp {
+        bool operator () (int l, int r) {
+            return l > r;
+        }
+    };
+
+    void test() {
+        set<int> s1;
+        set<int> s2{ 3,1,2 };
+        vector<int> v { 3,2,1,5,4 };
+        set<int> s3(v.begin(), v.end());
+        set<int, cmp> s4(v.begin(), v.end());           // 利用仿函数构造降序集
+        set<int, greater<int>> s5(v.begin(), v.end());  // STL 提供的 greater 仿函数
+
+        // 正序遍历
+        for (auto i : s3)
+            cout << i << ' ';
+        cout << endl;
+
+        // 逆序遍历
+        for (auto it = s4.rbegin(); it != s4.rend(); it++)
+            cout << *it << ' ';
+        cout << endl;
+        //size
+        len=s2.size()
+        // 增
+        s2.insert(4);  // {1,2,3,4}
+
+        // 删
+        s2.erase(3);  // {1,2,4}
+
+        // 改
+        auto it = s2.find(4);
+        if (it != s2.end()) { // 找到了
+            //
+        }
+        // 查
+        auto ii = s2.count(4);
+
+        for (auto i : s2)
+            cout << i << ' ';
+        cout << endl;
+
+        // 允许重复的集合
+        multiset<int> ms1{ 1,2,2,2,3,4 };
+        auto itp1 = ms1.find(2);  // No.2
+        auto itp2 = ms1.lower_bound(2);  // No.2
+        cout << (itp1 == itp2) << endl;  // True
+
+        auto itp3 = ms1.upper_bound(2);  // No.5
+        cout << *itp3 << endl;  // 3
+
+        // Hash Set
+        vector<char> vc{ 'a', 'r', 'b', 'c', 'd' };
+        unordered_set<char> hs(vc.begin(), vc.end());
+        for (auto i : hs)
+            cout << i << ' ';   // a b r c d
+        cout << endl;
+        hs.emplace('e');
+        for (auto i : hs)
+            cout << i << ' ';   // a b r c d e
+        cout << endl;
+    }
+
+
+};
+```
+
+
+#### 7. heap
+```cpp
+/*
+堆
+常用有两种构建堆的方式：
+    1. 使用“优先队列”
+    2. 使用`make_heap` (todo)
+*/
+#pragma once
+
+#include "../../all.h"
+#include <queue>
+using namespace std;
+
+class Solution {
+public:
+    struct node {
+        int v1;
+        int v2;
+        //bool operator () (const node &l, const node &r) {
+        //    return l.v1 != r.v1 ? l.v1 < r.v1 : l.v2 < r.v2;
+        //}
+    };
+
+    // 仿函数比较器 - 降序
+    struct cmp {
+        bool operator () (int l, int r) {
+            return l > r;
+        }
+    };
+    // 自定义比较：先比较元素 1，再比较元素 2
+    struct cmp2 {
+        bool operator () (const node &l, const node &r) {
+            return l.v1 != r.v1 ? l.v1 < r.v1 : l.v2 < r.v2;
+        }
+    };
+
+    void test() {
+        // vector 转优先队列
+        //   如果是传统 ACM 的数据读取方式，可以不必这么做，在读取数据时，直接传入优先队列
+        //   如果是 LeetCode 的方式，如果直接接受的是一个 vec 参数，那么可能需要用到这种方法
+        vector<int> v1 = { 1,2,3 };
+        //priority_queue<int> p1(v1);  // 没有直接将 vec 转 pri_que 的构造
+        priority_queue<int> p1(v1.begin(), v1.end());
+        cout << p1.top() << endl;  // 3
+
+        // 添加数据
+        p1.push(5);
+        // 获取顶部数据
+        auto top = p1.top();
+        cout << top<< endl;  // 5
+        // 弹出顶部数据
+        p1.pop();   // 没有返回值，所以如果要使用顶部的数据，需要先接收
+
+        // 数组转优先队列
+        int arr[] = { 1,2,3 };
+        priority_queue<int, vector<int>, cmp> p2(arr, arr + 3); // 使用仿函数构建最小堆，默认最大堆
+        cout << p2.top() << endl;  // 1
+
+        // 自定义结构体
+        node arr2[] = { {1, 1}, {2, 2}, {2, 4}, {2, 3}, {1, 2} };
+        priority_queue<node, vector<node>, cmp2> p3(arr2, arr2 + 5);
+        p3.pop();  // {2, 4}
+        p3.pop();  // {2, 3}
+        p3.pop();  // {2, 2}
+        p3.pop();  // {1, 2}
+        p3.pop();  // {1, 1}
+    }
+};
+```
+
 
 ## 常用代码模板3——搜索与图论
 
@@ -524,407 +1090,4 @@ for (int i = 1; i <= n1; i ++ )
 }
 ```
 
-## 常用代码模板4——数学知识
-
-**试除法判定质数——模板题 AcWing 866. 试除法判定质数**
-```cpp
-bool is_prime(int x)
-{
-    if (x < 2) return false;
-    for (int i = 2; i <= x / i; i ++ )
-        if (x % i == 0)
-            return false;
-    return true;
-}
-```
-**试除法分解质因数——模板题 AcWing 867. 分解质因数**
-```cpp
-void divide(int x)
-{
-    for (int i = 2; i <= x / i; i ++ )
-        if (x % i == 0)
-        {
-            int s = 0;
-            while (x % i == 0) x /= i, s ++ ;
-            cout << i << ' ' << s << endl;
-        }
-    if (x > 1) cout << x << ' ' << 1 << endl;
-    cout << endl;
-}
-```
-**朴素筛法求素数——模板题 AcWing 868. 筛质数**
-```cpp
-int primes[N], cnt;     // primes[]存储所有素数
-bool st[N];         // st[x]存储x是否被筛掉
-
-void get_primes(int n)
-{
-    for (int i = 2; i <= n; i ++ )
-    {
-        if (st[i]) continue;
-        primes[cnt ++ ] = i;
-        for (int j = i + i; j <= n; j += i)
-            st[j] = true;
-    }
-}
-```
-
-**线性筛法求素数——模板题 AcWing 868. 筛质数**
-
-```cpp
-int primes[N], cnt;     // primes[]存储所有素数
-bool st[N];         // st[x]存储x是否被筛掉
-
-void get_primes(int n)
-{
-    for (int i = 2; i <= n; i ++ )
-    {
-        if (!st[i]) primes[cnt ++ ] = i;
-        for (int j = 0; primes[j] <= n / i; j ++ )
-        {
-            st[primes[j] * i] = true;
-            if (i % primes[j] == 0) break;
-        }
-    }
-}
-```
-
-**试除法求所有约数—— 模板题 AcWing 869. 试除法求约数**
-```cpp
-vector<int> get_divisors(int x)
-{
-    vector<int> res;
-    for (int i = 1; i <= x / i; i ++ )
-        if (x % i == 0)
-        {
-            res.push_back(i);
-            if (i != x / i) res.push_back(x / i);
-        }
-    sort(res.begin(), res.end());
-    return res;
-}
-```
-**约数个数和约数之和 —— 模板题 AcWing 870. 约数个数, AcWing 871. 约数之和**
-
-如果 N = p1^c1 * p2^c2 * ... *pk^ck
-约数个数： (c1 + 1) * (c2 + 1) * ... * (ck + 1)
-约数之和： (p1^0 + p1^1 + ... + p1^c1) * ... * (pk^0 + pk^1 + ... + pk^ck)
-
-**欧几里得算法 —— 模板题 AcWing 872. 最大公约数**
-int gcd(int a, int b)
-{
-    return b ? gcd(b, a % b) : a;
-}
-**求欧拉函数 —— 模板题 AcWing 873. 欧拉函数**
-```cpp
-int phi(int x)
-{
-    int res = x;
-    for (int i = 2; i <= x / i; i ++ )
-        if (x % i == 0)
-        {
-            res = res / i * (i - 1);
-            while (x % i == 0) x /= i;
-        }
-    if (x > 1) res = res / x * (x - 1);
-
-    return res;
-}
-```
-**筛法求欧拉函数 —— 模板题 AcWing 874. 筛法求欧拉函数**
-```cpp
-int primes[N], cnt;     // primes[]存储所有素数
-int euler[N];           // 存储每个数的欧拉函数
-bool st[N];         // st[x]存储x是否被筛掉
-
-
-void get_eulers(int n)
-{
-    euler[1] = 1;
-    for (int i = 2; i <= n; i ++ )
-    {
-        if (!st[i])
-        {
-            primes[cnt ++ ] = i;
-            euler[i] = i - 1;
-        }
-        for (int j = 0; primes[j] <= n / i; j ++ )
-        {
-            int t = primes[j] * i;
-            st[t] = true;
-            if (i % primes[j] == 0)
-            {
-                euler[t] = euler[i] * primes[j];
-                break;
-            }
-            euler[t] = euler[i] * (primes[j] - 1);
-        }
-    }
-}
-```
-**快速幂 —— 模板题 AcWing 875. 快速幂**
-
-```cpp
-求 m^k mod p，时间复杂度 O(logk)。
-int qmi(int m, int k, int p)
-{
-    int res = 1 % p, t = m;
-    while (k)
-    {
-        if (k&1) res = res * t % p;
-        t = t * t % p;
-        k >>= 1;
-    }
-    return res;
-}
-```
-**扩展欧几里得算法 —— 模板题 AcWing 877. 扩展欧几里得算法**
-```cpp
-// 求x, y，使得ax + by = gcd(a, b)
-int exgcd(int a, int b, int &x, int &y)
-{
-    if (!b)
-    {
-        x = 1; y = 0;
-        return a;
-    }
-    int d = exgcd(b, a % b, y, x);
-    y -= (a/b) * x;
-    return d;
-}
-```
-**高斯消元 —— 模板题 AcWing 883. 高斯消元解线性方程组**
-```cpp
-// a[N][N]是增广矩阵
-int gauss()
-{
-    int c, r;
-    for (c = 0, r = 0; c < n; c ++ )
-    {
-        int t = r;
-        for (int i = r; i < n; i ++ )   // 找到绝对值最大的行
-            if (fabs(a[i][c]) > fabs(a[t][c]))
-                t = i;
-
-        if (fabs(a[t][c]) < eps) continue;
-
-        for (int i = c; i <= n; i ++ ) swap(a[t][i], a[r][i]);      // 将绝对值最大的行换到最顶端
-        for (int i = n; i >= c; i -- ) a[r][i] /= a[r][c];      // 将当前行的首位变成1
-        for (int i = r + 1; i < n; i ++ )       // 用当前行将下面所有的列消成0
-            if (fabs(a[i][c]) > eps)
-                for (int j = n; j >= c; j -- )
-                    a[i][j] -= a[r][j] * a[i][c];
-
-        r ++ ;
-    }
-
-    if (r < n)
-    {
-        for (int i = r; i < n; i ++ )
-            if (fabs(a[i][n]) > eps)
-                return 2; // 无解
-        return 1; // 有无穷多组解
-    }
-
-    for (int i = n - 1; i >= 0; i -- )
-        for (int j = i + 1; j < n; j ++ )
-            a[i][n] -= a[i][j] * a[j][n];
-
-    return 0; // 有唯一解
-}
-```
-
-**递归法求组合数 —— 模板题 AcWing 885. 求组合数 I**
-```cpp
-// c[a][b] 表示从a个苹果中选b个的方案数
-for (int i = 0; i < N; i ++ )
-    for (int j = 0; j <= i; j ++ )
-        if (!j) c[i][j] = 1;
-        else c[i][j] = (c[i - 1][j] + c[i - 1][j - 1]) % mod;
-```
-
-**通过预处理逆元的方式求组合数 —— 模板题 AcWing 886. 求组合数 II**
-首先预处理出所有阶乘取模的余数fact[N]，以及所有阶乘取模的逆元infact[N]
-如果取模的数是质数，可以用费马小定理求逆元
-```cpp
-int qmi(int a, int k, int p)    // 快速幂模板
-{
-    int res = 1;
-    while (k)
-    {
-        if (k & 1) res = (LL)res * a % p;
-        a = (LL)a * a % p;
-        k >>= 1;
-    }
-    return res;
-}
-
-// 预处理阶乘的余数和阶乘逆元的余数
-fact[0] = infact[0] = 1;
-for (int i = 1; i < N; i ++ )
-{
-    fact[i] = (LL)fact[i - 1] * i % mod;
-    infact[i] = (LL)infact[i - 1] * qmi(i, mod - 2, mod) % mod;
-}
-```
-
-**Lucas定理 —— 模板题 AcWing 887. 求组合数 III**
-
-```cpp
-若p是质数，则对于任意整数 1 <= m <= n，有：
-    C(n, m) = C(n % p, m % p) * C(n / p, m / p) (mod p)
-
-int qmi(int a, int k, int p)  // 快速幂模板
-{
-    int res = 1 % p;
-    while (k)
-    {
-        if (k & 1) res = (LL)res * a % p;
-        a = (LL)a * a % p;
-        k >>= 1;
-    }
-    return res;
-}
-
-int C(int a, int b, int p)  // 通过定理求组合数C(a, b)
-{
-    if (a < b) return 0;
-
-    LL x = 1, y = 1;  // x是分子，y是分母
-    for (int i = a, j = 1; j <= b; i --, j ++ )
-    {
-        x = (LL)x * i % p;
-        y = (LL) y * j % p;
-    }
-
-    return x * (LL)qmi(y, p - 2, p) % p;
-}
-
-int lucas(LL a, LL b, int p)
-{
-    if (a < p && b < p) return C(a, b, p);
-    return (LL)C(a % p, b % p, p) * lucas(a / p, b / p, p) % p;
-}
-```
-**分解质因数法求组合数 —— 模板题 AcWing 888. 求组合数 IV**
-```cpp
-当我们需要求出组合数的真实值，而非对某个数的余数时，分解质因数的方式比较好用：
-    1. 筛法求出范围内的所有质数
-    2. 通过 C(a, b) = a! / b! / (a - b)! 这个公式求出每个质因子的次数。 n! 中p的次数是 n / p + n / p^2 + n / p^3 + ...
-    3. 用高精度乘法将所有质因子相乘
-
-int primes[N], cnt;     // 存储所有质数
-int sum[N];     // 存储每个质数的次数
-bool st[N];     // 存储每个数是否已被筛掉
-
-
-void get_primes(int n)      // 线性筛法求素数
-{
-    for (int i = 2; i <= n; i ++ )
-    {
-        if (!st[i]) primes[cnt ++ ] = i;
-        for (int j = 0; primes[j] <= n / i; j ++ )
-        {
-            st[primes[j] * i] = true;
-            if (i % primes[j] == 0) break;
-        }
-    }
-}
-
-
-int get(int n, int p)       // 求n！中的次数
-{
-    int res = 0;
-    while (n)
-    {
-        res += n / p;
-        n /= p;
-    }
-    return res;
-}
-
-
-vector<int> mul(vector<int> a, int b)       // 高精度乘低精度模板
-{
-    vector<int> c;
-    int t = 0;
-    for (int i = 0; i < a.size(); i ++ )
-    {
-        t += a[i] * b;
-        c.push_back(t % 10);
-        t /= 10;
-    }
-
-    while (t)
-    {
-        c.push_back(t % 10);
-        t /= 10;
-    }
-
-    return c;
-}
-
-get_primes(a);  // 预处理范围内的所有质数
-
-for (int i = 0; i < cnt; i ++ )     // 求每个质因数的次数
-{
-    int p = primes[i];
-    sum[i] = get(a, p) - get(b, p) - get(a - b, p);
-}
-
-vector<int> res;
-res.push_back(1);
-
-for (int i = 0; i < cnt; i ++ )     // 用高精度乘法将所有质因子相乘
-    for (int j = 0; j < sum[i]; j ++ )
-        res = mul(res, primes[i]);
-```
-
-**卡特兰数 —— 模板题 AcWing 889. 满足条件的01序列**
-
-给定n个0和n个1，它们按照某种顺序排成长度为2n的序列，满足任意前缀中0的个数都不少于1的个数的序列的数量为： Cat(n) = C(2n, n) / (n + 1)
-
-**NIM游戏 —— 模板题 AcWing 891. Nim游戏**
-给定N堆物品，第i堆物品有Ai个。两名玩家轮流行动，每次可以任选一堆，取走任意多个物品，可把一堆取光，但不能不取。取走最后一件物品者获胜。两人都采取最优策略，问先手是否必胜。
-
-我们把这种游戏称为NIM博弈。把游戏过程中面临的状态称为局面。整局游戏第一个行动的称为先手，第二个行动的称为后手。若在某一局面下无论采取何种行动，都会输掉游戏，则称该局面必败。
-所谓采取最优策略是指，若在某一局面下存在某种行动，使得行动后对面面临必败局面，则优先采取该行动。同时，这样的局面被称为必胜。我们讨论的博弈问题一般都只考虑理想情况，即两人均无失误，都采取最优策略行动时游戏的结果。
-NIM博弈不存在平局，只有先手必胜和先手必败两种情况。
-
-定理： NIM博弈先手必胜，当且仅当 A1 ^ A2 ^ … ^ An != 0
-
-**公平组合游戏ICG**
-
-若一个游戏满足：
-
-	由两名玩家交替行动；
-	在游戏进程的任意时刻，可以执行的合法行动与轮到哪名玩家无关；
-	不能行动的玩家判负；
-	
-则称该游戏为一个公平组合游戏。
-NIM博弈属于公平组合游戏，但城建的棋类游戏，比如围棋，就不是公平组合游戏。因为围棋交战双方分别只能落黑子和白子，胜负判定也比较复杂，不满足条件2和条件3。
-
-**有向图游戏**
-给定一个有向无环图，图中有一个唯一的起点，在起点上放有一枚棋子。两名玩家交替地把这枚棋子沿有向边进行移动，每次可以移动一步，无法移动者判负。该游戏被称为有向图游戏。
-任何一个公平组合游戏都可以转化为有向图游戏。具体方法是，把每个局面看成图中的一个节点，并且从每个局面向沿着合法行动能够到达的下一个局面连有向边。
-
-**Mex运算**
-设S表示一个非负整数集合。定义mex(S)为求出不属于集合S的最小非负整数的运算，即：
-mex(S) = min{x}, x属于自然数，且x不属于S
-
-**SG函数**
-在有向图游戏中，对于每个节点x，设从x出发共有k条有向边，分别到达节点y1, y2, …, yk，定义SG(x)为x的后继节点y1, y2, …, yk 的SG函数值构成的集合再执行mex(S)运算的结果，即：
-SG(x) = mex({SG(y1), SG(y2), …, SG(yk)})
-特别地，整个有向图游戏G的SG函数值被定义为有向图游戏起点s的SG函数值，即SG(G) = SG(s)。
-
-**有向图游戏的和 —— 模板题 AcWing 893. 集合-Nim游戏**
-
-设G1, G2, …, Gm 是m个有向图游戏。定义有向图游戏G，它的行动规则是任选某个有向图游戏Gi，并在Gi上行动一步。G被称为有向图游戏G1, G2, …, Gm的和。
-有向图游戏的和的SG函数值等于它包含的各个子游戏SG函数值的异或和，即：
-SG(G) = SG(G1) ^ SG(G2) ^ … ^ SG(Gm)
-
-定理
-有向图游戏的某个局面必胜，当且仅当该局面对应节点的SG函数值大于0。
-有向图游戏的某个局面必败，当且仅当该局面对应节点的SG函数值等于0。
- 
 
