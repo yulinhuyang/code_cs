@@ -671,8 +671,12 @@ ii. 否则和BFS一样扩展状态，放入2号队列，直到队列首元素的
 
 
 ## 5.4 动态规划 DP
-ref:  
-- 夜深人静写算法——动态规划 [[blog]](http://www.cppblog.com/menjitianya/archive/2015/10/23/212084.html)   
+
+[夜深人静写算法——动态规划](http://www.cppblog.com/menjitianya/archive/2015/10/23/212084.html)  
+
+[闫氏dp分析法](https://blog.csdn.net/qq_39782006/article/details/105420831)
+
+[【紫书第九章】动态规划(DP)常见模型汇总](https://blog.csdn.net/qq_49688477/article/details/119569267)
 
 ### 5.4.1 动态规划初探
 
