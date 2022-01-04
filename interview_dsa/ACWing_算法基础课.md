@@ -1,4 +1,37 @@
-算法基础课及模板：
+ 
+
+## 模板资源
+
+### 在线平台   
+[力扣](https://leetcode-cn.com/problemset/all/)
+[leetcode食用指南](https://github.com/azl397985856/leetcode)
+[牛客网](https://www.nowcoder.com/)
+[Comet OJ](https://www.cometoj.com/contests)
+[HDU](http://acm.hdu.edu.cn/)
+[HihoCoder](https://hihocoder.com/)
+[洛谷](https://www.luogu.org/)
+
+[算法竞赛进阶指南 题目练习](https://ac.nowcoder.com/acm/archive/oi-advance/problem)
+
+算法竞赛入门经典
+
+[LibreOJ(算法竞赛一本通——提高篇)](https://loj.ac)
+
+OI相关：
+
+[学习资源](https://oi-wiki.org/intro/resources/)  
+[OI wiki](https://oi-wiki.org/)
+[[OI & ACM 课件分享]](https://github.com/hzwer/shareOI)  
+
+Just Code [[github]](https://github.com/YaxeZhang/Just-Code) 
+  
+> 针对面试训练算法题， 目前包括字节跳动面试题、 LeetCode 和剑指 offer
+
+写在20年初的校招面试心得与自学CS经验及找工作分享 [[github]](https://github.com/conanhujinming/tips_for_interview/blob/master/README-zh_CN.md)   
+
+labuladong的算法小抄 [[github]](https://github.com/labuladong/fucking-algorithm)    
+
+### 算法基础课：
 
 算法基础课： https://www.acwing.com/activity/content/11/
 
@@ -6,20 +39,20 @@ yxc代码模板合集： https://blog.csdn.net/weixin_45629285/category_10218699
 
 代码基础课模板： https://github.com/kszlzj/algorithm
 
-ACM模板(选)：
+### ACM模板：
 
 https://github.com/Bryce1010/bryce1010-ACM-Template
 
-https://github.com/kuangbin/ACM-ICPC
+KuangBin的ACM模板 [[github]](https://github.com/kuangbin/ACM-ICPC)  
 
-https://github.com/f-zyj/ACM  
+f-zyj/ACM 模板 [[github]](https://github.com/f-zyj/ACM)
 
-在线模板： https://blog.csdn.net/f_zyj/article/details/51594851
+f-zyj/ACM 在线模板：https://blog.csdn.net/f_zyj/article/details/51594851
 
 https://github.com/soulmachine/acm-cheat-sheet
 
 
- ## 常用代码模板1—— 基础算法
+## 常用代码模板1—— 基础算法
 
 ### 排序
 
@@ -256,7 +289,7 @@ AcWing 800. 数组元素的目标和
 	for (int i = 0, j = 0; i < n; i ++ )
 	{
 		while (j < i && check(i, j)) j ++ ;
-
+	
 		// 具体问题的逻辑
 	}
 
@@ -484,7 +517,7 @@ for (int i = 0; i < n; i ++ )
     while (hh <= tt && check(q[tt], i)) tt -- ;
     q[ ++ tt] = i;
 }
-``` 
+```
 
 ### KMP 
 
@@ -716,7 +749,7 @@ for (int i = n / 2; i; i -- ) down(i);
         return t;
     }
 ```
-	
+
 **字符串哈希**
 
 模板题 AcWing 841. 字符串哈希
@@ -810,13 +843,15 @@ deque, 双端队列
     []
 
 set, map, multiset, multimap, 基于平衡二叉树（红黑树），动态维护有序序列
+
     size()
     empty()
     clear()
     begin()/end()
     ++, -- 返回前驱和后继，时间复杂度 O(logn)
-
+    
     set/multiset
+    
         insert()  插入一个数
         find()  查找一个数
         count()  返回某一个数的个数
@@ -826,7 +861,9 @@ set, map, multiset, multimap, 基于平衡二叉树（红黑树），动态维�
         lower_bound()/upper_bound()
             lower_bound(x)  返回大于等于x的最小的数的迭代器
             upper_bound(x)  返回大于x的最小的数的迭代器
+    
     map/multimap
+    
         insert()  插入的数是一个pair
         erase()  输入的参数是pair或者迭代器
         find()
@@ -845,16 +882,14 @@ bitset, 圧位
     >>, <<
     ==, !=
     []
-
+    
     count()  返回有多少个1
-
+    
     any()  判断是否至少有一个1
     none()  判断是否全为0
-
+    
     set()  把所有位置成1
     set(k, v)  将第k位变成v
     reset()  把所有位变成0
     flip()  等价于~
     flip(k) 把第k位取反
-
- 
