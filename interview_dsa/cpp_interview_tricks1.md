@@ -78,10 +78,8 @@ dp[i][j] |= dp[i][j-1]
 
  range for结构: for(auto &num: nums)  
 	
-```c++
-	
+```c++	
 string str("some string"); 
- 
 // range for 语句  
 for(auto &c : str)  
 {  
@@ -91,7 +89,6 @@ for(auto &c : str)
 for(const int &num:nums)
 {
 }
-
 ```
 **引用与更新**
 	
