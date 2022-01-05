@@ -12,29 +12,37 @@ https://labuladong.gitee.io/algo/2/
 back()返回最后一个元素，相当于a[s.size()-1]和*--a.end()
 
 ```c++
-vector<int> dp(10,0); //初始化为0
-//二维数组初始化、遍历
-vector<vector<int>> dp(m,vector<int>(n,0));
+//初始化
+vector<int> dp(10,0);  //初始化为0
+vector<vector<int>> dp(m,vector<int>(n,0));   //二维数组初始化、遍历
+vector<int> dp(dp0.begin() + 2,dp0.end() - 1);  //迭代器初始化
 
+dp.empty();  
+dp.size();
+dp.emplace_back(2);
+dp.back();
+dp.pop_back();
+
+// 查找
+it = find(v2.begin(), v2.end(), 5);
+if (it != v2.end()) {   // 找到了，必须做一次判断，以防空迭代器异常
+    //
+}
+//遍历
 for(int i = 0;i < dp.size();i++){
     for(int j = 0;j < dp[0].size();j++)
     {
         cout<<dp[i][j]<<endl;
     }
 }
-//其他数组迭代器初始化
-vector<int> dp(dp0.begin() + 2,dp0.end() - 1);
 
-dp.empty(); //判空
-dp.size();
-dp.emplace_back(2);
-dp.back();
-dp.pop_back();
-
-sort(dp.begin(),dp.end());//排序
-swap(nums[i],nums[k]);//交换两个数
-reverse(nums.begin() + j,nums.end());//反转一段数组
+//插入、交换
 dp.insert(dp.begin()+2,3);// 2位置插入3
+swap(nums[i],nums[k]);//交换两个数
+
+//排序
+sort(dp.begin(),dp.end());//排序
+reverse(nums.begin() + j,nums.end());//反转一段数组
 ```
 
 ##### erase相关
@@ -82,7 +90,6 @@ for(auto &c : str)
 
 for(const int &num:nums)
 {
-    
 }
 
 ```
@@ -94,10 +101,6 @@ matrix = matrix_new;  //赋值拷贝
 
 merged.back()[1] = max(merged.back()[1],R);
 	
-**快速交换**
-
-swap(vector[0],vector[4]);
-
 ##### 排序
 
 比较函数模板:
@@ -109,21 +112,27 @@ swap(vector[0],vector[4]);
 cmp自定义比较: 
 
 ```c++
-class Solution {
-public:
-    static bool cmp(vector<int> &a,vector<int> &b){
-        if(a[0] > b[0]){
-            return false;
-        }
-
-        return true;
+static bool cmp(vector<int> &a,vector<int> &b){
+    if(a[0] > b[0]){
+        return false;
     }
-    vector<vector<int>> merge(vector<vector<int>>& intervals) {
-
-        sort(intervals.begin(),intervals.end(),cmp);
-    }
+    return true;
+}
+vector<vector<int>> merge(vector<vector<int>>& intervals) {
+    sort(intervals.begin(),intervals.end(),cmp);
+}
 ```
 支持比较运算，按字典序
+	
+lambda自定义排序
+	
+```cpp
+typedef pair<int, int> ii;
+vector<ii> vp{ { 1,1 },{ 1,2 },{ 2,2 },{ 2,3 },{ 3,3 } };
+sort(vp.begin(), vp.end(), [](const ii &l, const ii &r) {   // 按第一个数字升序，第二个降序
+    return l.first != r.first ? l.first < r.first : l.second > r.second;
+});
+```
 	
 ##### C++ vector切片
 
