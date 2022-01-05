@@ -143,7 +143,7 @@ auto v2 = vector<int> (v1.begin(),v1.begin() + 4);
 
 #### 2 map（**unordered_map** ）
 	
-map基于红黑树，自动排序；unordered_map基于哈希表，无序快，所以可以使用map来的代替vector,使用find 快速查找
+map基于红黑树，自动排序；unordered_map基于哈希表，无序更快，可以使用map来的代替vector,使用find 快速查找
 
 哈希结构
 	
@@ -164,27 +164,34 @@ std::unordered_set底层实现为哈希表，std::set 和std::multiset 的底层
 std::unordered_map 底层实现为哈希表，std::map 和std::multimap 的底层实现是红黑树。同理，std::map 和std::multimap 的key也是有序的（这个问题也经常作为面试题，考察对语言容器底层的理解）。
 
 map解引用，得到pair类型，map[key]会默认创建，需要先find
+	
 ```c++
+//创建初始化
 unordered_map<string,int> dict;
 unordered_map<string,vector<int>> dict;
-
-dict["desk"]=1;    //自动创建该key
-dict.insert(make_pair('abc',0))
-
-// { }直接初始化：
 unordered_map<char,string> dict = {
     {'2',"abc"},
     {'3',"def"}
-}
+} // { }直接初始化：
 
-dict.erase(0); //删除key
+//插入
+dict["desk"]=1;    //自动创建该key
+ret = dict.insert(make_pair('abc',0))
+if (ret.second == false) //如果存在插入失败
+    cout << "exist" << endl;
+
+//新插入语法更快
+ret = m3.emplace(5, 6);
+it = m3.emplace_hint(it, 8, 9);  // hint 插入
+
+//删除
+dict.erase(0); 
 dict.size()
 
-判断key是否存在 两种方式：
+//查找key是否存在，两种方式：
 map.find(key) != map.end()   //find返回迭代器
 //1表示存在，0表示不存在,count只会返回0/1
 if(dict.count("key"))  //实际是dict.count("key")>0 
-
 
 //map(unordered_map)访问key自动创建，需要count(key)判断才可以访问
 if(need.count(char_right)){
@@ -193,7 +200,16 @@ if(need.count(char_right)){
         valid++;
     }
 }
-
+//查找by value
+int v = 77;
+it = find_if(m3.begin(), m3.end(),
+    [v](const std::map<int, int>::value_type item) {
+    return item.second == v;
+});
+if (it != m3.end()) {
+    int k = (*it).first;
+    cout << k << endl; // 7
+}
 
 //遍历map
 for(auto iter = dict.begin(); iter != dict.end(); iter++) {
@@ -201,9 +217,7 @@ for(auto iter = dict.begin(); iter != dict.end(); iter++) {
 }
 for(auto & [k,v]:dict){
     cout << k <<" " <<v<<endl;
-}
-
-//map基于红黑树，自动排序；unordered_map基于哈希表，无序快
+}	
 ```
 
 ##### map —>value->list 结构：
@@ -252,38 +266,56 @@ map<string, int, CmpByKeyLength> name_score_map;
 
 #### 3 set(unordered_set)
 
-set基于红黑树，自动排序；unordered_set基于哈希表，无序快
+set基于红黑树，自动排序；unordered_set基于哈希表，无序快;multiset运行重复值，可以自动排序
 
 ```c++
-unordered<int> set;
+//初始化
 unordered_set<int> set;
+set<int> s2{ 3,1,2 };
+vector<int> v { 3,2,1,5,4 };
+set<int> s3(v.begin(), v.end());                 //vector初始化
+set<int, cmp> s4(v.begin(), v.end());            // 利用仿函数构造降序集
+set<int, greater<int>> s5(v.begin(), v.end());   // STL 提供的 greater 仿函数
 
+//插入
 set.insert(1);
-//判断是否包含
-if(set.count(1) > 0){ 
-    
+	
+//查找：find count
+if(set.count(4) > 0){ 
 }
+auto it = s2.find(4);
+if (it != s2.end()) { // 找到了
+    //
+}
+//删除
 set.erase(1);
+//遍历
 for(auto it:set){
     cout<<it<<endl;
 }
-//set基于红黑树，自动排序；unordered_set基于哈希表，无序快
+//逆序遍历
+for (auto it = s4.rbegin(); it != s4.rend(); it++)
+    cout << *it << ' ';
 
 //字典也可以用set，判断是否存在，如单词拆分问题、最长连续子序列问题
 unordered_set<string> set;
 for (auto word:wordDict) {
     set.emplace(word);
 }
-
-```
 	
+//允许重复的集合
+multiset<int> ms1{ 1,2,2,2,3,4 };
+auto itp1 = ms1.find(2);  // No.2
+auto itp2 = ms1.lower_bound(2);  // No.2
+cout << (itp1 == itp2) << endl;  // True
+auto itp3 = ms1.upper_bound(2);  // No.5
+```
 比较函数模板
 	
 自定义：带operator的结构体、函数指针、lambda表达式
 	
 ```c++
 //comp也可以是less<Type>
-	
 struct comp
 {
 	template<typename T>
@@ -295,10 +327,7 @@ struct comp
 	}
 };
 std::set<std::pair<std::string,int>, comp> set
-
 ```
-
-
 #### 4  string
 
 ```c++
@@ -503,7 +532,7 @@ void SplitString(const string &input, string str, vector<string> &outArray) {
 ```
 
 #### 5 stack
-
+其内部是使用双端队列 deque 实现的，屏蔽了部分接口
 ```c++
 #include <stack>
 
@@ -534,16 +563,14 @@ eg:
 int e = q.front();
 q.pop();
 
-
 deque<int> deque;
-
+	
 //滑动窗口，单调队列，存index,先出头端，再判断尾部，
 
 deque.emplace_back(1);
 deque.pop_back();
 deque.pop_front();
 deque.push_front(2);
-
 ```
 
 #### 7 list
@@ -552,21 +579,31 @@ list是一个双向链表,不支持随机取元素
 
 ```C++
 #include <list>
-list<int> cacheList;
+list<int> l1;
 
-cacheList.push_back(1);
-cacheList.pop_back();
-cacheList.push_front();
-cacheList.pop_front();
+l1.push_back(1);
+l1.pop_back();
+l1.push_front();
+l1.pop_front();
 
-cacheList.front();  
-cacheList.back();  
+l1.front();  
+l1.back(); 
 
-cacheList.erase(pos); 
+//插入
+l1.insert(l1.begin(), 3);     // 在开头插入 3
+// 删除
+auto ret = find(l1.begin(), l1.end(), 3);
+cout << *ret << endl;
+l1.erase(ret);
+ret = find(l1.begin(), l1.end(), 3);
+if (ret == l1.end())
+    cout << "have erase 3" << endl;
+	
+//清空
+l1.clear();
 
 //void splice ( iterator pos, list& other, iterator it );  将other中的it移动到pos位置，list特有
-cacheList.splice(cacheList.begin(), cacheList, cacheMap[key]);
-
+l1.splice(l1.begin(), l1, cacheMap[key]);
 ```
 	
 ##### list 排序
@@ -581,7 +618,6 @@ bool compare(A a1, A a2){
 list_a.sort(compare); //排序操作； 
 ``` 	
 
-	
 #### 8 priority_queue(堆)
 	
 [【c++】STL里的priority_queue用法总结](https://blog.csdn.net/xiaoquantouer/article/details/52015928)
