@@ -1,6 +1,323 @@
-## 1 线性表（数组、链表、字符串）
+# 0x00 基本算法
 
-### 1.1  base code
+前缀和、二分、双指针(排序、滑窗)
+
+## 0x03 前缀和与差分
+
+一维前缀和： S[i]= S[i-1]  + A[i]
+
+二维前缀和： S[i][j] = S[i-1][j] + S[i][j-1] – S[i-1][j-1] + A[i][j]
+
+树上前缀和：从根到某节点的路径上点（或边）的值之和（上到下）；某节点及其所有子节点（或边）的值之和（下到上）
+
+差分数组定义：
+
+真实数组a = {a[1]、a[2]、…、a[n]}          // 各点真实数据
+
+差分数组df = {df[1]、df[2]、…、df[n]}      // 各点数据的变更值 
+
+df[i] = a[i] - a[i-1]                      // 差分数组各点数据为真实数据的变更值
+
+a[i] = df[1] + df[2] …+ df[i]              // 差分数组的前缀和即为真实数组
+
+a[i] = a[i-1] + df[i]                      // 真实数据也可以从上一点数据+变更值求出
+
+差分算法题型特征：在一段区间内（例如时间/站点）给出数据变更点（例如上下车/占用释放等），需要感知变更后数据值。
+
+Ÿ   一维差分：主要用于对子数组（或区间）的元素整体加减固定值，特别是子数组较多时，可提高性能。
+
+Ÿ   二维差分：对子矩阵元素整体进行加减处理，在子矩阵较多时，为提高性能，可以考虑用差分数组来处理。
+	
+## 0x04  二分和三分
+
+### 0x04.1 二分 base code
+
+```python	
+def search(self, nums: List[int], target: int) -> int:
+
+    left = 0
+    right = len(nums)-1
+    
+    while left <= right:
+        mid = left +(right - left)//2
+        if nums[mid] < target:
+    	    left = mid + 1
+        elif nums[mid] > target:
+    	    right = mid - 1
+        else:
+    	    return mid
+    return -1
+```
+不要出现 else，把所有情况用 else if 写清楚
+
+防止溢出:left + (right - left) / 2
+
+对比终止条件：
+
+	while取 <=，因为都两侧都闭的区域
+	
+	while(left < right) 的终止条件是 left == right，会漏掉=节点
+
+理解区间：
+	[left,right]      left(0) <= right(num-1)
+
+	[left,right)      left(0) < right(num)
+
+```python
+
+左侧边界搜索：
+	
+	} else if (nums[mid] == target) {
+		// 收缩右侧边界
+	    right = mid - 1;
+
+	// 检查出界情况
+	if (left >= nums.length || nums[left] != target)
+	    return -1;
+	return left;
+
+右侧边界搜索：
+
+	} else if (nums[mid] == target) {
+	// 这里改成收缩左侧边界即可
+	    left = mid + 1;
+
+	//检查出界情况
+	// 这里改为检查 right 越界的情况，见下图
+	if (right < 0 || nums[right] != target)
+	    return -1;
+	return right;
+```
+
+
+## 0x05 双指针与排序
+
+快慢指针(fast slow)： 也包括前后指针(pre cur、i j)  ->pre cur next。归并找中点、链表成环。
+
+左右指针(left right)：左右相向，反转数组，二分搜索。
+
+### 0x05.1 基础排序 base code
+
+**快速排序随机优化版**
+
+前后指针: 快速排序 随机法：
+
+```python
+class Solution:
+
+	def random_partition(self,nums,l,r)-> None:
+            pivot_index = random.randint(l,r)
+            nums[l],nums[pivot_index] = nums[pivot_index],nums[l]
+            i = l
+            j = r
+            pivot = nums[l]
+            while i < j:
+                while nums[j] >= pivot and i < j:
+                    j -= 1
+                while nums[i] <= pivot and i < j:
+                    i += 1
+                nums[i],nums[j] = nums[j],nums[i]
+            nums[i],nums[l] = nums[l],nums[i]
+    
+	def random_sort(self,nums,l,r)-> None:
+		if l >= r:
+		    return
+		index = self.random_partition(nums,l,r)
+		self.random_sort(nums,l,index - 1)
+		self.random_sort(nums,index + 1,r)
+
+	def sortArray(self, nums: List[int]) -> List[int]:
+		self.random_sort(nums,0,len(nums)-1)
+		return nums
+```
+
+random quicksort ---> random partition ---> random quicksort 左右
+
+random partition:  pivot选择l的时候，快排为什么j先走：https://blog.csdn.net/lkp1603645756/article/details/85008715
+
+交换两个数： a,b = b,a
+
+**归并排序**
+
+
+### 0x05.2 滑动窗口 base code
+
+**滑动窗口，字符串**
+
+注意map(unordered_map)访问key 则会自动创建，所以需要count先判断。
+
+```python
+
+import sys
+def sliding_window(s:str,t:str):
+
+    need = dict()
+    window = dict()
+    #迭代字符串的第二种方式
+    for a in t:
+        if a in need:
+            need[a] += 1
+        else:
+            need[a] = 1
+            window[a] = 0 
+
+    s_list = list(s)
+    left = 0 
+    right = 0 
+    valid = 0
+    start = 0 
+    start_len = sys.maxsize
+    while right < len(s):
+        c = s_list[right]
+        right +=1
+        if c in need:
+            window[c]+= 1
+            if window[c] == need[c]:
+                valid += 1
+    
+        while valid == len(need):
+            if right - left < start_len:
+                start = left
+                start_len = right - left
+
+            d = s_list[left]
+            left += 1
+            if d in need:
+                if window[d] == need[d]:
+                    valid -= 1
+                window[d] -= 1
+    
+    return " " if start_len == sys.maxsize else s[start:start + start_len]
+    
+```
+right进，再左缩，两个while
+
+python 三目运算符 max = a if a>b else b
+
+map必记录的api： keys、values、get、setdefault、pop、update、in
+
+hash表（用list 或者 dict()）: 用true 或者false表示是否出现过(a-z)；count计算出现的数量（32位宽）；记录上次出现的索引位置（滑窗）。
+
+### 0x05.3 链表成环
+
+```python 
+class list_node:
+    def __init__(self,x):
+        self.data = x
+        self.next = None
+
+def has_cycle(head:list_node)->bool:
+    fast = slow = head
+
+    while fast and fast.next:
+        fast = fast.next.next
+        slow = slow.next
+
+        if fast == slow:
+            return True
+
+    return False
+
+```
+注意是fast!=null 还是fast.next!=null
+
+### 0x05.4 双指针+ 双向遍历
+
+双向遍历：柱形面积、接雨水，左边一遍，右边一遍
+
+
+### 0x05.5 回文问题
+
+
+### 0x05.6 Cyclic Sort，循环排序
+
+在排好序/翻转过的数组中，寻找丢失的/重复的/最小的元素
+
+
+
+## 0x06 贪心
+
+区间合并 6种情况
+	
+打点标记法、区间合并法
+	
+会议室安排问题
+	
+
+# 0x10 基本数据结构
+
+单调栈、单调队列、链表、二叉堆
+
+## 0x11 栈/单调栈
+
+栈处理字符串、括号，逆向处理法
+
+### 0x11.1  单调栈
+
+下一个最大元素、包含min函数的栈
+
+stack: 存坐标、存值，单调升、单调降
+
+左右双栈：左一遍、右一遍
+
+```python
+def nextGreatElement(nums):
+	ans = [0 for i in range(len(nums))]
+	stack = []
+
+	for i in range(len(nums) - 1,0,-1):
+	    while stack and stack[-1] <= nums[i]:
+		stack.pop(-1)
+
+	    if not stack:
+		ans[i] = -1
+	    else:
+		ans[i] = stack[-1]
+
+	    stack.append(nums[i])
+
+	return ans
+```
+
+
+## 0x12 队列/单调队列
+
+collections.deque()
+
+### 0x12.1  单调队列
+
+滑动窗口的最大值
+
+```python
+import collections
+
+class Solution:
+    def maxSlidingWindow(self, nums: List[int], k: int) -> List[int]:
+        if not nums and k==0:
+            return []
+        deque = collections.deque()
+        res = []
+        
+        for i in range(k):
+            while deque and deque[-1] < nums[i]:
+                deque.pop()
+            deque.append(nums[i])
+
+        res = [deque[0]]
+        for i in range(k,len(nums)):
+            if deque[0] == nums[i-k]:
+                deque.popleft()
+            while deque and deque[-1] < nums[i]:
+                deque.pop()
+
+            deque.append(nums[i])
+            res.append(deque[0])
+        return res
+```
+
+## 0x13 链表与邻接表
+
+### 0x13.1 链表 base code
 
 链表基本结构：
 
@@ -20,11 +337,8 @@ class list_node:
         #前序print head.val
         self.traverse(head.next)
         #后序print head.val	
-
 ```
-
 链表基本操作：
-
 ```
 class node:
     def __init__(self,x):
@@ -88,103 +402,42 @@ class MyLinkedList:
 //5  头插，尾插，初始化，增加删除查询index
 	   	   
 ```
-### 1.2 链表翻转
+### 0x13.2 链表翻转
+
 迭代法：pre cur next使用，不需要额外空间
 
 递归法：防止成环
 
-### 1.3 Cyclic Sort，循环排序
+## 0x14  hash表与字符串hash
 
-### 1.4 前缀和与差分 
-
-一维前缀和： S[i]= S[i-1]  + A[i]
-
-二维前缀和： S[i][j] = S[i-1][j] + S[i][j-1] – S[i-1][j-1] + A[i][j]
-
-树上前缀和：从根到某节点的路径上点（或边）的值之和（上到下）；某节点及其所有子节点（或边）的值之和（下到上）
+## 0x15 字符串(KMP与最小表示法）
 
 
-差分数组定义
+## 0x16  Trie树（字典树）
 
-真实数组a = {a[1]、a[2]、…、a[n]}          // 各点真实数据
+文件目录问题
 
-差分数组df = {df[1]、df[2]、…、df[n]}      // 各点数据的变更值 
+self使用：类中函数的第一个参数是实例对象本身，并且约定俗成，把其名字写为self。其作用相当于java中的this
 
-df[i] = a[i] - a[i-1]                      // 差分数组各点数据为真实数据的变更值
+字符串处理ord
 
-a[i] = df[1] + df[2] …+ df[i]              // 差分数组的前缀和即为真实数组
+本质是一个26节点的树
 
-a[i] = a[i-1] + df[i]                      // 真实数据也可以从上一点数据+变更值求出
+## 0x17  二叉堆
 
+### 0x17.1 ToP k问题
 
-### 1.5 字符串
+Python	heapq	heappush、heappop	系统自带	小顶堆
 
-## 2 栈与队列（堆）
+可以使用可自动排序的map进行替代，也能够达到减少时间复杂度的目的。如 Python(SortedDict)
 
-### 2.1 单调栈
-
-下一个最大元素、包含min函数的栈
-
-stack: 存坐标、存值，单调升、单调降
-
-左右双栈：左一遍、右一遍
-
-```python
-def nextGreatElement(nums):
-	ans = [0 for i in range(len(nums))]
-	stack = []
-
-	for i in range(len(nums) - 1,0,-1):
-	    while stack and stack[-1] <= nums[i]:
-		stack.pop(-1)
-
-	    if not stack:
-		ans[i] = -1
-	    else:
-		ans[i] = stack[-1]
-
-	    stack.append(nums[i])
-
-	return ans
-```
-### 2.2 单调队列
-
-滑动窗口的最大值
-```python
-import collections
-
-class Solution:
-    def maxSlidingWindow(self, nums: List[int], k: int) -> List[int]:
-        if not nums and k==0:
-            return []
-        deque = collections.deque()
-        res = []
-        
-        for i in range(k):
-            while deque and deque[-1] < nums[i]:
-                deque.pop()
-            deque.append(nums[i])
-
-        res = [deque[0]]
-        for i in range(k,len(nums)):
-            if deque[0] == nums[i-k]:
-                deque.popleft()
-            while deque and deque[-1] < nums[i]:
-                deque.pop()
-
-            deque.append(nums[i])
-            res.append(deque[0])
-        return res
-```
-### 2.3 ToP k问题
-
-### 2.4 双堆（Two Heaps）
+### 0x17.2 双堆（Two Heaps） 
 
 类似的有双栈
 
 中位数，优先队列计划安排问题（Scheduling）
 
-### 2.5 K-way merge，多路归并
+### 0x17.3 K-way merge，多路归并
 
 Merge K Sorted Lists, Kth Smallest Number in M Sorted Lists
 
@@ -192,16 +445,25 @@ K个排好序的数组，用堆来高效顺序遍历，合并K个list, 和找第
 
 把每个数组中的第一个元素都加入最小堆中 --> 取出堆顶元素（全局最小），将该元素放入排好序的结果集合里面 --> 将刚取出的元素所在的数组里面的下一个元素加入堆 --> 重复步骤2，3，直到处理完所有数字
 
-## 3 树
+
+# 0x20  搜索
+
+树遍历、DFS、BFS、动态规划
+
+## 0x21 树与图的遍历
+
+### 0x21.1 树遍历
 
 树天生为了递归左右子树而存在
 
-树的三种遍历
+树的三种遍历：
+
+     两序恢复第三序（C++ 传递索引，代替切片），必须有中序，迭代、递归两个版本
 
 平衡二叉树:
 
 	空树是平衡二叉树；非空的树，所有子树都满足左子树和右子树高度差不超过1。
-	
+
 二叉查找树（Binary Search Tree）：（二叉搜索树，二叉排序树）
 		
 	空树是二叉查找树;左子树上所有结点的值均小于它的根结点的值,右子树上所有结点的值均大于它的根结点的值。用min,max向下比较。
@@ -209,14 +471,14 @@ K个排好序的数组，用堆来高效顺序遍历，合并K个list, 和找第
 	搜索二叉树按照中序遍历得到的序列一定是从小到大排列的.
 	
 	红黑树.平衡搜索二叉树(AVL)树,都是搜索二叉树的不同实现
-	
+
 完全二叉树： 	
 	
 	除了最后一层之外,其他每一层的节点数都是满的,如果最后一层满了就是满二叉树。
 	
 	如果最后一层不满,缺少的节点也全部集中在右边。
 
-### 3.1  base code
+树的 base code
 
 ```python
 class tree_node:
@@ -239,7 +501,10 @@ class tree_node:
         for chid in root.children:
             self.traverse(chid)
 ```
-### 3.2 树的DFS（Tree Depth First Search，stack）
+
+### 0x21.2 树的DFS（Tree Depth First Search，stack）
+
+三种遍历，递归与迭代版本（stack）
 
 ```python
 #验证二叉搜索树
@@ -271,23 +536,24 @@ class Solution:
         
         return self.isBalanced(root.left) and self.isBalanced(root.right)
 ```
-### 3.3 树的BFS(Tree Breadth First Search，queue)
 
-层序遍历： 把根节点加到队列中，不断遍历直到队列为空。每一次循环中，我们都会把队头结点拿出来（remove）
+### 0x21.3 树的BFS(Tree Breadth First Search，queue)
 
-### 3.4 字典树（Trie树、前缀树）
+层序遍历(queue)： 把根节点加到队列中，不断遍历直到队列为空。每一次循环中，我们都会把队头结点拿出来（remove）
 
-文件目录问题
 
-self使用：类中函数的第一个参数是实例对象本身，并且约定俗成，把其名字写为self。其作用相当于java中的this
+### 0x21.4 图的遍历-拓扑排序 
 
-字符串处理ord
+依赖元素之间的线性顺序
 
-本质是一个26节点的树
+BFS:degree入度表、adjacency邻接表、queue(deque)遍历
+	
+Tasks Scheduling
 
-## 4 DFS(递归、回溯)
 
-### 4.1  base code 
+## 0x22 DFS(递归、回溯)
+
+### 0x22.1 DFS base code
 
 重叠子问题、状态转移方程、最优子结构
 
@@ -304,9 +570,9 @@ self使用：类中函数的第一个参数是实例对象本身，并且约定�
 	自顶向下的递归：f(20)————>f(19)————>.....f(0)
 	
 	递归+状态变化
+	
+	    递归问题一般结构：判截止---> 查memo --->做选择 --->置memo
 
-        递归问题一般结构：判截止---> 查memo --->做选择 --->置memo
- 
 ```python
     memo = dict()
     def dp(i,j):
@@ -326,7 +592,6 @@ self使用：类中函数的第一个参数是实例对象本身，并且约定�
         memo[i,j] = ret
         
         return ret
-
 ```
 
 **回溯模板**
@@ -334,7 +599,7 @@ self使用：类中函数的第一个参数是实例对象本身，并且约定�
 回溯是DFS的一种，会剪枝和修改后恢复全局变量
 
 	递归+选择
-
+	
 	结束条件+ 做选择和撤销选择 + 决策树
 
 二叉选择、多叉选择
@@ -360,9 +625,9 @@ self使用：类中函数的第一个参数是实例对象本身，并且约定�
 
 memo缓存： floodfill变形慎重缓存，visited了部分情况下也需要更新
 
-### 4.2 子集问题（排列、组合）
+### 0x22.2 子集问题（排列、组合）
 
-### 4.3 flood fill问题
+### 0x22.3 flood fill问题
 
 四方向回溯
 
@@ -370,12 +635,12 @@ pair集合 + visited去重
 
 visited代替涂色了
 
-## 5  BFS
 
-### 5.1 base code
+## 0x23 BFS
+
+### 0x23.1 BFS base code
 
 ```python
-
 def BFS(Node start,Node target):
     queue = []
     visited = []
@@ -391,18 +656,33 @@ def BFS(Node start,Node target):
             for x cur.adj:
                 if x not in visited:
                     queue.append(x)
-                    visited.append(x)
-                    
+                    visited.append(x)                    
         step += 1
 ```
 
 两个循环（while + for） + 一个遍历（adj点）
 
-### 5.2 迷宫问题
+### 0x23.2 迷宫问题
 
 路径障碍、迷宫问题
 
-## 6 动态规划（DP）
+一 W 双 F，判空，for size, for选择 + visited数组
+
+### 0x23.3 省份问题（简化BFS）
+
+一个while 一个for
+
+## 0x41  数据结构进阶 - 并查集
+
+合并集合、查找集合中的元素
+
+合并：把两个不相交的集合按照某种条件合并为一个集合。 
+
+查询：查询两个元素是否在同一个集合中
+
+路径压缩
+
+## 0x50 动态规划
 
 重叠子问题、状态转移方程、最优子结构
 
@@ -414,7 +694,7 @@ def BFS(Node start,Node target):
 
 dp数组里面存的内容和memo是完全一样的，只不过把递归改成了for循环迭代了而已。
 
-### 6.1 base code
+### 0x50.1 base code
 
 **dp数组模板**
 
@@ -437,7 +717,7 @@ dp数组里面存的内容和memo是完全一样的，只不过把递归改成�
 **dp的数组的遍历方向**
 
 	1、遍历的过程中，所需的状态必须是已经计算出来的。
-
+	
 	2、遍历的终点必须是存储结果的那个位置。
 	
 	3. 常见的遍历方向：正向、反向、斜着
@@ -473,8 +753,8 @@ for (int l = 2; l <= n; l++) {
 
 大部分的dp都是二维dp，用dp[m][n]还是dp[m+1][n+1]取决于含义，dp[0][0]是否有意义,是否需要定义
 
-### 6.2 背包问题 
-	
+### 0x50.2 背包问题
+
 **0-1 背包**
 
 dp[i][w] 的定义如下：对于前 i 个物品，当前背包的容量为 w，这种情况下可以装的最大价值是 dp[i][w]。
@@ -510,7 +790,8 @@ for (int i = 1; i <= N; i++) {
                      + dp[i][j-coins[i-1]];
 return dp[N][W]
 ```
-### 6.3 子序列问题：
+
+### 0x50.3 子序列问题
 
 dp[i] 表示以 nums[i] 这个数结尾的最长递增子序列的长度
 
@@ -541,7 +822,7 @@ def fib(n):
 dp[m][n] ---> i,j含义是位置，定义dp[m][n],结果是dp[m-1][n-1]
 
 **字符串(两个)问题(编辑距离)**
- 
+
  dp[m+1][n+1] --> i,j含义是长度,定义dp[m+1][n+1],结果是dp[m][n]，可递归解
 
 ```python
@@ -550,304 +831,8 @@ dp[m][n] ---> i,j含义是位置，定义dp[m][n],结果是dp[m-1][n-1]
 	dp[..][0] = 0
 	for i in [1..m]:
 		for j in [1..n]:
-```	
-
-
-## 7 双指针
-
-### 7.1 base code 
-
-	快慢指针(fast slow)： 也包括前后指针(pre cur、i j)  ->pre cur next。归并找中点、链表成环。
-
-	左右指针(left right)：左右相向，反转数组，二分搜索。
-	
-链表有环判断
-
-```python 
-
-class list_node:
-    def __init__(self,x):
-        self.data = x
-        self.next = None
-
-def has_cycle(head:list_node)->bool:
-    fast = slow = head
-
-    while fast and fast.next:
-        fast = fast.next.next
-        slow = slow.next
-
-        if fast == slow:
-            return True
-
-    return False
-
-```	
-注意是fast!=null 还是fast.next!=null
-
-### 7.2 各种排序
-
-前后指针: 快速排序 随机法：
-
-```python
-
-class Solution:
-
-	def random_partition(self,nums,l,r)-> None:
-            pivot_index = random.randint(l,r)
-            nums[l],nums[pivot_index] = nums[pivot_index],nums[l]
-            i = l
-            j = r
-            pivot = nums[l]
-            while i < j:
-                while nums[j] >= pivot and i < j:
-                    j -= 1
-                while nums[i] <= pivot and i < j:
-                    i += 1
-                nums[i],nums[j] = nums[j],nums[i]
-            nums[i],nums[l] = nums[l],nums[i]
-    
-	def random_sort(self,nums,l,r)-> None:
-		if l >= r:
-		    return
-		index = self.random_partition(nums,l,r)
-		self.random_sort(nums,l,index - 1)
-		self.random_sort(nums,index + 1,r)
-
-	def sortArray(self, nums: List[int]) -> List[int]:
-		self.random_sort(nums,0,len(nums)-1)
-		return nums
-```
-	
-random quicksort ---> random partition ---> random quicksort 左右
-
-random partition:  pivot选择l的时候，快排为什么j先走：https://blog.csdn.net/lkp1603645756/article/details/85008715
-
-交换两个数： a,b = b,a
-
-### 7.3 回文问题
-
-
-### 7.4 双指针+ 双向遍历
-
-双向遍历：柱形面积、接雨水，左边一遍，右边一遍
-
-
-## 8 二分搜索
-
-### 8.1 base code 
-
-```python	
-def search(self, nums: List[int], target: int) -> int:
-
-    left = 0
-    right = len(nums)-1
-    
-    while left <= right:
-        mid = left +(right - left)//2
-        if nums[mid] < target:
-    	    left = mid + 1
-        elif nums[mid] > target:
-    	    right = mid - 1
-        else:
-    	    return mid
-    return -1
-```	
-不要出现 else，把所有情况用 else if 写清楚
-
-防止溢出:left + (right - left) / 2
-
-对比终止条件：
-
-	while取 <=，因为都两侧都闭的区域
-
-	while(left < right) 的终止条件是 left == right，会漏掉=节点
-
-理解区间：
-	[left,right]      left(0) <= right(num-1)
-
-	[left,right)      left(0) < right(num)
-
-```python
-
-左侧边界搜索：
-	
-	} else if (nums[mid] == target) {
-		// 收缩右侧边界
-	    right = mid - 1;
-
-	// 检查出界情况
-	if (left >= nums.length || nums[left] != target)
-	    return -1;
-	return left;
-
-右侧边界搜索：
-
-	} else if (nums[mid] == target) {
-	// 这里改成收缩左侧边界即可
-	    left = mid + 1;
-
-	//检查出界情况
-	// 这里改为检查 right 越界的情况，见下图
-	if (right < 0 || nums[right] != target)
-	    return -1;
-	return right;
-```			
-
-## 9 滑动窗口
-
-### 9.1 base code 
-
-滑动窗口
-
-```python
-import sys
-
-def sliding_window(s:str,t:str):
-
-    need = dict()
-    window = dict()
-    #迭代字符串的第二种方式
-    for a in t:
-        if a in need:
-            need[a] += 1
-        else:
-            need[a] = 1
-            window[a] = 0 
-
-    s_list = list(s)
-    left = 0 
-    right = 0 
-    valid = 0
-    start = 0 
-    start_len = sys.maxsize
-    while right < len(s):
-        c = s_list[right]
-        right +=1
-        if c in need:
-            window[c]+= 1
-            if window[c] == need[c]:
-                valid += 1
-    
-        while valid == len(need):
-            if right - left < start_len:
-                start = left
-                start_len = right - left
-
-            d = s_list[left]
-            left += 1
-            if d in need:
-                if window[d] == need[d]:
-                    valid -= 1
-                window[d] -= 1
-    
-    return " " if start_len == sys.maxsize else s[start:start + start_len]
-    
-```
-right进，再左缩，两个while
-
-python 三目运算符 max = a if a>b else b
-
-map必记录的api： keys、values、get、setdefault、pop、update、in
-
-hash表（用list 或者 dict()）: 用true 或者false表示是否出现过(a-z)；count计算出现的数量（32位宽）；记录上次出现的索引位置（滑窗）。
-
-### 9.2 滑动窗口+ 单调队列
-
-```python
-class Solution:
-    def maxSlidingWindow(self, nums: List[int], k: int) -> List[int]:
-	#性能比list更好,存索引
-        deque = collections.deque()
-        res = []
-        for i in range(k):
-            #单调降序队列
-            while deque and nums[deque[-1]] < nums[i]:
-                deque.pop()
-            deque.append(i)
-        
-        res.append(nums[deque[0]])
-        for i in range(k,len(nums)):
-            if deque[0] == i - k:
-                deque.popleft()
-            while deque and nums[deque[-1]] < nums[i]:
-                deque.pop()
-                
-            deque.append(i)
-            res.append(nums[deque[0]])
-
-        return res
-```
-## 10 图算法及高频
-
-### 10.1 图算法--拓扑排序
-
-依赖元素之间的线性顺序
-
-BFS:degree入度表、adjacency邻接表、queue(deque)遍历
-
-Tasks Scheduling
-
-### 10.2 图算法--并查集(Union-Find)
-
-合并集合、查找集合中的元素
-
-合并：把两个不相交的集合按照某种条件合并为一个集合。 
-
-查询：查询两个元素是否在同一个集合中
-
-### 10.3 位运算
-
-& 按位与
-
-| 按位或
-
-^ 位异或
-
-~ 按位取发
-
-<< 左移
-
->> 右移
-
-
-### 10.4 哈希表
-
-##### 560. 和为K的子数组
-
-```python
-
-class Solution:
-    def subarraySum(self, nums: List[int], k: int) -> int:
-
-        map = dict()
-        sum_i = 0
-        ans  = 0
-        map[0] = 1
-        for i in range(len(nums)):
-            sum_i += nums[i]
-
-            sum_j = sum_i - k
-            if sum_j in map:
-                ans += map[sum_j]
-            
-            map[sum_i] = map.get(sum_i,0) +1
-        return ans
 ```
 
-### 10.5 贪心算法
 
-406. 根据身高重建队列
 
-区间合并
-
-6种情况
-
-打点标记法、区间合并法
-
-会议室安排问题
-
-### 10.5 数据结构设计 LRU/LFU
-
- 
 
