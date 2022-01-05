@@ -319,11 +319,7 @@ public:
 
 文件目录问题
 	
-
-
-## 4 动态规划（DFS+DP）
-
-重叠子问题，最优子结构
+## 4 DFS(递归、回溯)
 
 递归(自顶向下)：暴力递归---> memo 解法
 
@@ -332,6 +328,8 @@ DFS：深度优先搜索
 动归(自底而上)：dp 数组 ---> 状态压缩二维变一维---> pre cur for循环解法
 
 参进阶指南区别递归、DFS、动态规划，适用范围不同。
+
+回溯是DFS的一种，会剪枝和修改后恢复全局变量
 
 ### 4.1 base code
 
@@ -362,105 +360,8 @@ void Graph<Tv, Te>::DFS ( int v, int& clock ) { //assert: 0 <= v < n
    status ( v ) = VISITED; fTime ( v ) = ++clock; //至此，当前顶点v方告访问完毕
 }
 ```
-**dp**
 
-dp：明确 状态和选择--->base case ---> 明确dp数组含义(m,n)或(m+1,n+1)，状态转移--->返回dp值
-
-```C++
-#初始化base case，填充dp[0][0]、0行、0列
-dp[0][0][...] = base
-
-#进行状态转移，遍历[1:m][1:n](或[1:m+1][1:n+1])填充dp[i][j] 
-
-for (状态1  in 状态1的所有取值)
-	(for 状态2 in 状态2的所有取值)
-		for ..
-			dp[状态1][状态2][..] = 求最值（选择1，选择2...）
-
-#返回dp[m-1][n-1](或dp[m][n])	
-
-```
-**dp遍历顺序**
-
-1、遍历的过程中，所需的状态必须是已经计算出来的。
-
-2、遍历的终点必须是存储结果的那个位置。
-
-3. 常见的遍历方向：正向、反向、斜着
-
-状态转移所依赖的状态必须被提前计算出来，需要根据 base case 和最终状态进行推导，合理安排i,j的遍历顺序
-
-注意戳气球问题
-
-### 4.2 背包问题
-
-0-1背包、子集背包、完全背包
-
-背包问题，正常情况下 choice(coins)在外循环，amount在内循环，根据choice是否有限进行求最值、能否、方法数等，
-
-部分特殊情况，如完全平方数等，choice不使用sqrt可以简化放在内循环。
-
-0-1背包模板(最值)，部分可以简化为一维的
-```Cpp
-for i in [1..N]:
-    for w in [1..W]:
-        dp[i][w] = max(
-            dp[i-1][w],
-            dp[i-1][w - wt[i-1]] + val[i-1]
-        )
-return dp[N][W]
-```
-
-子集背包模板(能否)：
-
- #装入或者不装入
-```cpp
- dp[i][j] = dp[i - 1][j] || dp[i - 1][j - nums[i - 1]]
-```
- 
-完全背包模板(方法数)
-
-https://labuladong.gitee.io/algo/3/25/81/
-
-```cpp
-for i in range(n + 1):
-    for j in range(amount + 1):
-        if j - coins[i-1] >= 0：
-            dp[i][j] = dp[i - 1][j] + dp[i][j - coins[i-1]] #这里表示i可以反复使用
-        else:
-            dp[i][j] = dp[i - 1][j]
-```
-
-零钱问题
-
-### 4.3 贪心算法  
-	
-区间合并	
-	
-6种情况
-	
-打点标记法、区间合并法
-	
-会议室安排问题
-
-### 4.4 子序列问题
-
-最长递增子序列
-
-信封嵌套问题
-
-最长公共上升子序列 
- 
-最长公共子序列 
-
-### 4.5 打家劫舍问题
-
- 
-## 5 回溯(DFS特例)
-
-回溯是DFS的一种，会剪枝和修改后恢复全局变量
-
-### 5.1 base code
+**回溯**
 
 ```c++
 void backtrack(){
@@ -479,7 +380,6 @@ void backtrack(){
         
 }
 ```
-
 DFS 防止死循环
 
 1 涂色法。
@@ -488,7 +388,7 @@ DFS 防止死循环
 
 memo缓存： floodfill变形慎重缓存，visited了部分情况下也需要更新
 
-### 5.2 子集问题（排列、组合）
+### 4.2 子集问题（排列、组合）
 
 **全排列问题** 
 
@@ -578,8 +478,7 @@ public:
     }
 };
 ```
-
-###  5.3 flood fill问题
+###  4.3 flood fill问题
 
 四方向回溯
 
@@ -658,9 +557,39 @@ void fill(int[][] image, int x, int y,
     image[x][y] = newColor;
 }
 ```
-## 6 BFS
+### 4.4 省份问题（DFS版） 岛屿问题
 
-### 6.1 base code
+```cpp
+class Solution {
+    void dfs(vector<vector<int>> &isConnected,vector<int> &visited, int index){
+        for(int j = 0;j < isConnected.size();j++){
+            if(isConnected[index][j] && !visited[j]){
+                visited[j] = 1;
+                dfs(isConnected,visited,j);
+            }
+        }
+    }
+
+public:
+    int findCircleNum(vector<vector<int>> &isConnected) {
+        int provinces = isConnected.size();
+        int circles = 0;
+        vector<int> visited(provinces, 0);
+        for (int i = 0; i < provinces; i++) {
+            if (!visited[i]) {
+                visited[i] = 1;
+                dfs(isConnected,visited,i);
+                circles++;
+            }
+        }
+        return circles;
+    }
+};
+```
+
+## 5 BFS
+
+### 5.1 base code
 
 核心思想：
 
@@ -729,8 +658,7 @@ public:
 };
 
 ```
-
-### 6.2 迷宫问题
+### 5.2 迷宫问题
 
 路径障碍、迷宫问题
 
@@ -781,6 +709,131 @@ public:
     }
 };
 ```
+### 5.3 省份问题（简化BFS）
+
+一个while 一个for
+
+```cpp
+简化的bfs
+class Solution {
+public:
+    int findCircleNum(vector<vector<int>> &isConnected) {
+        int provinces = isConnected.size();
+        int circles = 0;
+        vector<int> visited(provinces, 0);
+        for (int i = 0; i < provinces; i++) {
+            if (!visited[i]) {
+                queue<int> queue;
+                queue.push(i);
+                while (!queue.empty()) {
+                    auto top = queue.front();
+                    queue.pop();
+                    visited[top] = 1;
+                    for (int j = 0; j < provinces; j++) {
+                        if (visited[j] == 0 && isConnected[top][j]) {
+                            queue.emplace(j);
+                        }
+                    }
+                }
+                circles++;
+            }
+        }
+        return circles;
+    }
+};
+```
+
+## 6 动态规划（DP）
+
+重叠子问题，最优子结构
+
+动归(自底而上)：dp 数组 ---> 状态压缩二维变一维---> pre cur for循环解法
+
+### 6.1 base code
+
+**dp**
+
+dp：明确 状态和选择--->base case ---> 明确dp数组含义(m,n)或(m+1,n+1)，状态转移--->返回dp值
+
+```C++
+#初始化base case，填充dp[0][0]、0行、0列
+dp[0][0][...] = base
+
+#进行状态转移，遍历[1:m][1:n](或[1:m+1][1:n+1])填充dp[i][j] 
+
+for (状态1  in 状态1的所有取值)
+	(for 状态2 in 状态2的所有取值)
+		for ..
+			dp[状态1][状态2][..] = 求最值（选择1，选择2...）
+
+#返回dp[m-1][n-1](或dp[m][n])	
+
+```
+**dp遍历顺序**
+
+1、遍历的过程中，所需的状态必须是已经计算出来的。
+
+2、遍历的终点必须是存储结果的那个位置。
+
+3. 常见的遍历方向：正向、反向、斜着
+
+状态转移所依赖的状态必须被提前计算出来，需要根据 base case 和最终状态进行推导，合理安排i,j的遍历顺序
+
+注意戳气球问题
+
+### 6.2 背包问题
+
+0-1背包、子集背包、完全背包
+
+背包问题，正常情况下 choice(coins)在外循环，amount在内循环，根据choice是否有限进行求最值、能否、方法数等，
+
+部分特殊情况，如完全平方数等，choice不使用sqrt可以简化放在内循环。
+
+0-1背包模板(最值)，部分可以简化为一维的
+```Cpp
+for i in [1..N]:
+    for w in [1..W]:
+        dp[i][w] = max(
+            dp[i-1][w],
+            dp[i-1][w - wt[i-1]] + val[i-1]
+        )
+return dp[N][W]
+```
+
+子集背包模板(能否)：
+
+ #装入或者不装入
+```cpp
+ dp[i][j] = dp[i - 1][j] || dp[i - 1][j - nums[i - 1]]
+```
+ 
+完全背包模板(方法数)
+
+https://labuladong.gitee.io/algo/3/25/81/
+
+```cpp
+for i in range(n + 1):
+    for j in range(amount + 1):
+        if j - coins[i-1] >= 0：
+            dp[i][j] = dp[i - 1][j] + dp[i][j - coins[i-1]] #这里表示i可以反复使用
+        else:
+            dp[i][j] = dp[i - 1][j]
+```
+
+零钱问题
+
+
+### 6.3 子序列问题
+
+最长递增子序列
+
+信封嵌套问题
+
+最长公共上升子序列 
+ 
+最长公共子序列 
+
+### 6.4 打家劫舍问题
 
 ## 7 双指针
 
@@ -1042,8 +1095,16 @@ Tasks Scheduling
 	
 ### 10.4 哈希表
 	
-### 10.5 数据结构设计 LRU/LFU
+### 10.5 贪心算法  
 	
-
+区间合并	
+	
+6种情况
+	
+打点标记法、区间合并法
+	
+会议室安排问题
+	
+### 10.6 数据结构设计 LRU/LFU
 	
 
