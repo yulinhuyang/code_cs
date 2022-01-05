@@ -86,5 +86,47 @@ public:
     }
 };
 ```
+#### 547. 省份数量
+
+```cpp
+class Solution {
+    //寻根操作根
+    int Find(vector<int> &parent,int index){
+        //路径压缩
+        if(parent[index] != index){
+            parent[index] = Find(parent,parent[index]);
+        }
+        return parent[index];
+    }
+    void Union(vector<int> &parent,int a,int b){
+        parent[Find(parent,a)] = Find(parent,b);
+    }
+public:
+    int findCircleNum(vector<vector<int>> &isConnected) {
+        int provinces = isConnected.size();
+        vector<int> parent(provinces);
+        for(int i = 0;i < provinces;i++){
+            parent[i] = i;
+        }
+        for(int i = 0;i < provinces;i++){
+            for(int j = i + 1;j < provinces;j++){
+                if(isConnected[i][j]){
+                    Union(parent,i,j);
+                }
+            }
+        }
+        int circles = 0;
+        for(int i = 0;i < provinces;i++){
+            if(parent[i] == i){
+                circles++;
+            }
+        }
+        return  circles;
+    }
+};
+
+```
+
+
 
 
