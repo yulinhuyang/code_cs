@@ -5,6 +5,12 @@ https://labuladong.gitee.io/algo/2/
 
 #### 1 vector
 
+使用* 解迭代器 a[0]和*a.begin()一样
+
+所有容器都是前闭后开，*a.end()和a[n]都是越界访问
+
+back()返回最后一个元素，相当于a[s.size()-1]和*--a.end()
+
 ```c++
 vector<int> dp(10,0); //初始化为0
 //二维数组初始化、遍历
@@ -22,6 +28,7 @@ dp.size();
 dp.emplace_back(2);
 dp.back();
 dp.pop_back();
+
 sort(dp.begin(),dp.end());//排序
 swap(nums[i],nums[k]);//交换两个数
 reverse(nums.begin() + j,nums.end());//反转一段数组
@@ -114,6 +121,8 @@ public:
         sort(intervals.begin(),intervals.end(),cmp);
     }
 ```
+支持比较运算，按字典序
+	
 ##### C++ vector切片
 
 ```C++
@@ -146,7 +155,7 @@ std::unordered_set底层实现为哈希表，std::set 和std::multiset 的底层
 
 std::unordered_map 底层实现为哈希表，std::map 和std::multimap 的底层实现是红黑树。同理，std::map 和std::multimap 的key也是有序的（这个问题也经常作为面试题，考察对语言容器底层的理解）。
 
-
+map解引用，得到pair类型，map[key]会默认创建，需要先find
 ```c++
 unordered_map<string,int> dict;
 unordered_map<string,vector<int>> dict;
@@ -310,6 +319,7 @@ string(1,'a')
 
 //c语言形式
 std::string str = "870";
+//c_str()  返回字符串所在字符数组的起始地址
 int i = atoi(str.c_str());
 
 //查找
@@ -665,6 +675,8 @@ template <class T> struct less {
 #### 9 pair 
 
 template<class T1,class T2> struct pair
+	
+支持比较运算，以first为第一关键字，以second为第二关键字（字典序）
 
 ```c++
 	
