@@ -427,7 +427,9 @@ self使用：类中函数的第一个参数是实例对象本身，并且约定�
 
 ### 0x17.1 ToP k问题
 
-Python	heapq	heappush、heappop	系统自带	小顶堆
+heapq有两种方式创建堆， 一种是使用一个空列表，然后使用heapq.heappush()函数把值加入堆中(弹出则是heapq.heappop())，另外一种就是使用heap.heapify(list)转换列表成为堆结构
+
+heapq默认的是小顶堆，如果需要实现大顶堆，则需要push -num
 
 可以使用可自动排序的map进行替代，也能够达到减少时间复杂度的目的。如 Python(SortedDict)
 
