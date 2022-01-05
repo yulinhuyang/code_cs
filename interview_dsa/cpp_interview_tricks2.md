@@ -321,16 +321,21 @@ public:
 	
 
 
-## 4 动态规划（DFS\DP）
+## 4 动态规划（DFS+DP）
 
 重叠子问题，最优子结构
 
 递归(自顶向下)：暴力递归---> memo 解法
 
+DFS：深度优先搜索
+
 动归(自底而上)：dp 数组 ---> 状态压缩二维变一维---> pre cur for循环解法
+
+参进阶指南区别递归、DFS、动态规划，适用范围不同。
 
 ### 4.1 base code
 
+**DFS**
 ```C++
 //三种状态：unDiscovered、Discovered、visited
 template <typename Tv, typename Te> //深度优先搜索DFS算法（全图）
@@ -357,7 +362,7 @@ void Graph<Tv, Te>::DFS ( int v, int& clock ) { //assert: 0 <= v < n
    status ( v ) = VISITED; fTime ( v ) = ++clock; //至此，当前顶点v方告访问完毕
 }
 ```
-
+**dp**
 
 dp：明确 状态和选择--->base case ---> 明确dp数组含义(m,n)或(m+1,n+1)，状态转移--->返回dp值
 
@@ -375,7 +380,7 @@ for (状态1  in 状态1的所有取值)
 #返回dp[m-1][n-1](或dp[m][n])	
 
 ```
-**遍历顺序**
+**dp遍历顺序**
 
 1、遍历的过程中，所需的状态必须是已经计算出来的。
 
@@ -427,6 +432,7 @@ for i in range(n + 1):
 ```
 
 零钱问题
+
 ### 4.3 贪心算法  
 	
 区间合并	
@@ -442,6 +448,10 @@ for i in range(n + 1):
 最长递增子序列
 
 信封嵌套问题
+
+最长公共上升子序列 
+ 
+最长公共子序列 
 
 ### 4.5 打家劫舍问题
 
