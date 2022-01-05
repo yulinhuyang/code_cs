@@ -1,20 +1,4 @@
-### 1 主要参考：
 
-刷题顺序： 剑指offer --> labuladong --> hot100 --> 精选TOP
-
-剑指offer:
-
-https://github.com/JushuangQiao/Python-Offer
-
-https://zhuanlan.zhihu.com/p/75864673
-
-labuladong:
-
-https://labuladong.gitee.io/algo/2/
-
-leetcode 700:
-
-https://blog.csdn.net/qq_32424059/article/details/88855423
 
 ### 2 notes 
 
