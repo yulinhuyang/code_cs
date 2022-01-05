@@ -1,6 +1,337 @@
-## 1 线性表（数组、链表、字符串）
+# 0x00 基本算法
 
-### 1.1  base code
+前缀和、二分、双指针(排序、滑窗)
+
+## 0x03 前缀和与差分
+
+一维前缀和： S[i]= S[i-1]  + A[i]
+
+二维前缀和： S[i][j] = S[i-1][j] + S[i][j-1] – S[i-1][j-1] + A[i][j]
+
+树上前缀和：从根到某节点的路径上点（或边）的值之和（上到下）；某节点及其所有子节点（或边）的值之和（下到上）
+
+差分数组定义：
+
+真实数组a = {a[1]、a[2]、…、a[n]}          // 各点真实数据
+
+差分数组df = {df[1]、df[2]、…、df[n]}      // 各点数据的变更值 
+
+df[i] = a[i] - a[i-1]                      // 差分数组各点数据为真实数据的变更值
+
+a[i] = df[1] + df[2] …+ df[i]              // 差分数组的前缀和即为真实数组
+
+a[i] = a[i-1] + df[i]                      // 真实数据也可以从上一点数据+变更值求出
+
+差分算法题型特征：在一段区间内（例如时间/站点）给出数据变更点（例如上下车/占用释放等），需要感知变更后数据值。
+
+Ÿ   一维差分：主要用于对子数组（或区间）的元素整体加减固定值，特别是子数组较多时，可提高性能。
+
+Ÿ   二维差分：对子矩阵元素整体进行加减处理，在子矩阵较多时，为提高性能，可以考虑用差分数组来处理。
+	
+## 0x04  二分和三分
+
+### 0x04.1 二分 base code
+
+关键代码
+
+```C++
+middle = start + (end — start) / 2
+
+//左边界查找
+if (nums[mid] == target) {
+    // 收缩右侧边界
+    right = mid - 1;
+    
+//右边界查找
+if (nums[mid] == target) {
+// 这里改成收缩左侧边界即可
+    left = mid + 1;
+
+```
+
+### 0x04.2 stl二分法
+
+| 语言   | 支持二分的常用数据结构             | 找值          | lower_bound     | upper_bound  |
+| ------ | ---------------------------------- | ------------- | --------------- | ------------ |
+| C++    | vector  multiset/set  map/multimap | binary_search | lower_bound     | upper_bound  |
+
+**升序序列**
+
+lower_bound：返回第一个 >= 目标值的迭代器，找不到则返回end()。
+
+upper_bound：返回第一个 > 目标值的迭代器，找不到则返回end()。
+
+**降序序列**
+
+需要重载或者目标比较器，例如greater<int >()
+
+lower_bound：返回第一个 <= 目标值的迭代器，找不到则返回end()。
+
+upper_bound：返回第一个 < 目标值的迭代器，找不到则返回end()。
+
+eg: 
+```C++
+ // 返回第一个小于等于目标值的迭代器
+
+ lower_bound(vec.begin(), vec.end(), 8, greater<int>());
+
+// 返回第一个小于目标值的迭代器
+
+ upper_bound(vec.begin(), vec.end(), 8, greater<int>());
+
+ bool isFind = binary_search(vec.begin(), vec.end(), 7);
+
+// 返回第一个大于等于目标值的迭代器
+
+ vector<int>::iterator iter1 = lower_bound(vec.begin(), vec.end(), 8);
+
+ // 返回第一个大于目标值的迭代器
+
+ vector<int>::iterator iter2 = upper_bound(vec.begin(), vec.end(), 8);
+```
+
+
+## 0x05 双指针与排序
+
+左右指针（同向、反向）：排好序，找一些组合满足某种条件
+
+快慢指针：有环的链表和数组问题，如判断链表是否是回文
+
+### 0x05.1 基础排序 base code
+
+**冒泡排序优化版**
+
+```C++
+void bubbleSort(vector<int> &nums) {
+
+	int sortBorder = nums.size() - 1;
+	int lastExchangeIndex = 0;
+	for (int i = 0; i < nums.size(); i++) {
+		bool isSorted = true;
+		for (int j = 0; j < sortBorder; j++) {
+			//j的相邻原始比较向上冒泡
+			if (nums[j] > nums[j + 1]) {
+				swap(nums[j], nums[j + 1]);
+				isSorted = false;
+				//设置有序边界,扩大有序区长度
+				lastExchangeIndex = j;
+			}
+		}
+		if (isSorted) {
+			break;
+		}
+		sortBorder = lastExchangeIndex;
+	}
+}
+```
+
+**快速排序随机优化版**
+
+```C++
+class Solution {
+public:
+    int partition(vector<int> &nums, int low, int high) {
+        //gen random index
+        int index = (rand()%(high - low + 1))+1;
+        swap(nums[low],nums[index]);
+
+        int pivot = nums[low];
+        int i = low;
+        int j = high;
+        while (i < j) {
+            //i在大于基准数的地方停下，j在小于基准数的地方停下，如果i先走，最后停下跟基准数交换时，总是大于基准数的
+            //j先走
+            while (i < j && nums[j] >= pivot) {
+                j--;
+            }
+            while (i < j && nums[i] <= pivot) {
+                i++;
+            }
+            swap(nums[i], nums[j]);
+        }
+        swap(nums[low], nums[i]);
+        return i;
+    }
+
+    void quickSort(vector<int> &nums, int start, int end) {
+        if (start >= end) {
+            return;
+        }
+        int index = partition(nums, start, end);
+        quickSort(nums, start, index - 1);
+        quickSort(nums, index + 1, end);
+    }
+}
+```
+
+**归并排序**
+
+### 0x05.2 滑动窗口 base code
+
+**滑动窗口，字符串**
+
+注意map(unordered_map)访问key 则会自动创建，所以需要count先判断。
+
+```
+class Solution {
+public:
+    string minWindow(string s, string t) {
+        unordered_map<char,int> need;
+        unordered_map<char,int> window;
+        for(auto &str:t){
+            need[str]++;
+        }
+
+        int left = 0;
+        int right = 0;
+        int n = s.size();
+        int valid = 0;
+        int minLen = 2*s.size();
+        string minString;
+        while(right < n){
+            char char_right = s[right];
+            right++;
+            if(need.count(char_right)){
+                window[char_right]++;
+                if(window[char_right] == need[char_right]){
+                    valid++;
+                }
+            }
+
+            while(valid == need.size()){
+                if(right - left < minLen){
+                    minLen = right - left;
+                    minString = s.substr(left,minLen);
+                }
+                char char_left = s[left];
+                left++;
+                if(need.count(char_left)) {
+                    if(window[char_left] == need[char_left]) {
+                        valid--;
+                    }
+                    window[char_left]--;
+                }
+            }
+        }
+        if(minLen == 2*s.size()){
+            return "";
+        }else{
+            return minString;
+        }
+    }
+};
+
+```
+
+### 0x05.3 双指针+ 双向遍历
+
+双向遍历：柱形面积、接雨水，左边一遍，右边一遍
+
+### 0x05.4 回文问题
+
+
+### 0x05.5 Cyclic Sort，循环排序
+
+在排好序/翻转过的数组中，寻找丢失的/重复的/最小的元素
+
+
+
+## 0x06 贪心
+
+区间合并 6种情况
+	
+打点标记法、区间合并法
+	
+会议室安排问题
+	
+ 
+# 0x10 基本数据结构
+
+单调栈、单调队列、链表、二叉堆
+
+## 0x11 栈/单调栈
+
+栈处理字符串、括号，逆向处理法
+
+### 0x11.1  单调栈
+
+ans + stack辅助
+
+stack辅助：使得每次新元素入栈后，栈内的元素都保持有序
+
+stack: 存坐标、存值，单调升、单调降
+
+左右双栈：左一遍、右一遍
+
+```C++
+    for(int i = 0;i < heights.size();i++){
+        while ((!left_stack.empty()) &&(heights[left_stack.top()] >= heights[i])){
+            left_stack.pop();
+        }
+        left[i] = left_stack.empty()? -1:left_stack.top();
+        left_stack.push(i);
+    }
+    
+    for(int j = n - 1;j > -1;j--){
+        while ((!right_stack.empty()) &&(heights[right_stack.top()] >= heights[j])){
+            right_stack.pop();
+        }
+        right[j] = right_stack.empty()?n:right_stack.top();
+        right_stack.push(j);
+    }
+```
+
+
+## 0x12 队列/单调队列
+
+单向queue支持push_back、pop_front
+
+双向deque支持push_front、pop_front、push_back、pop_back
+
+**deque + 单调队列** 
+
+```C++
+class Solution {
+public:
+    vector<int> maxSlidingWindow(vector<int>& nums, int k) {
+        int m = nums.size();
+
+        //存索引，方便出的判断
+        deque<int> deque;
+        vector<int> res;
+	
+        //处理前K个,保持升序
+        for (int i = 0; i < k; i++) {
+            while (!deque.empty() && nums[i] >= nums[deque.back()]) {
+                deque.pop_back();
+            }
+            deque.emplace_back(i);
+        }
+        res.emplace_back(nums[deque.front()]);
+
+        for (int i = k; i < m; i++) {
+            //先出
+            if (deque.front() == i - k) {
+                deque.pop_front();
+            }
+            //后入并判断
+            while (!deque.empty() &&  nums[i] >= nums[deque.back()]) {
+                deque.pop_back();
+            }
+
+            deque.emplace_back(i);
+            res.emplace_back(nums[deque.front()]);
+        }
+
+        return  res;
+    }
+};
+
+```
+
+## 0x13 链表与邻接表
+
+### 0x13.1 链表 base code
 
 链表基本结构：
 
@@ -57,7 +388,7 @@ ListNode *new = nullptr和Listnode的默认值不一样，默认值val是0
         }        
 ```
 
-### 1.2 链表翻转
+### 0x13.2 链表翻转
 
 迭代法：pre cur next使用，不需要额外空间
 
@@ -103,73 +434,22 @@ public:
 };
 
 ```
-### 1.3 Cyclic Sort，循环排序
-
-在排好序/翻转过的数组中，寻找丢失的/重复的/最小的元素
-
-### 1.4 前缀和与差分数组
-
-一维前缀和： S[i]= S[i-1]  + A[i]
-
-二维前缀和： S[i][j] = S[i-1][j] + S[i][j-1] – S[i-1][j-1] + A[i][j]
-
-树上前缀和：从根到某节点的路径上点（或边）的值之和（上到下）；某节点及其所有子节点（或边）的值之和（下到上）
-
-差分数组定义：
-
-真实数组a = {a[1]、a[2]、…、a[n]}          // 各点真实数据
-
-差分数组df = {df[1]、df[2]、…、df[n]}      // 各点数据的变更值 
-
-df[i] = a[i] - a[i-1]                      // 差分数组各点数据为真实数据的变更值
-
-a[i] = df[1] + df[2] …+ df[i]              // 差分数组的前缀和即为真实数组
-
-a[i] = a[i-1] + df[i]                      // 真实数据也可以从上一点数据+变更值求出
-
-差分算法题型特征：在一段区间内（例如时间/站点）给出数据变更点（例如上下车/占用释放等），需要感知变更后数据值。
-
-Ÿ   一维差分：主要用于对子数组（或区间）的元素整体加减固定值，特别是子数组较多时，可提高性能。
-
-Ÿ   二维差分：对子矩阵元素整体进行加减处理，在子矩阵较多时，为提高性能，可以考虑用差分数组来处理。
-	
-## 1.5 字符串
 
 
-## 2 栈与队列（堆）
+## 0x14  hash表(字符串hash)
 
-栈处理字符串、括号，逆向处理法
+高级结构设计 LRU/LFU
 
-### 2.1  单调栈
+## 0x15 字符串(KMP与最小表示法）
 
-ans + stack辅助
 
-stack辅助：使得每次新元素入栈后，栈内的元素都保持有序
+## 0x16  Trie树（字典树）
 
-stack: 存坐标、存值，单调升、单调降
+文件目录问题
 
-左右双栈：左一遍、右一遍
+## 0x17  二叉堆
 
-```C++
-    for(int i = 0;i < heights.size();i++){
-        while ((!left_stack.empty()) &&(heights[left_stack.top()] >= heights[i])){
-            left_stack.pop();
-        }
-        left[i] = left_stack.empty()? -1:left_stack.top();
-        left_stack.push(i);
-    }
-    
-    for(int j = n - 1;j > -1;j--){
-        while ((!right_stack.empty()) &&(heights[right_stack.top()] >= heights[j])){
-            right_stack.pop();
-        }
-        right[j] = right_stack.empty()?n:right_stack.top();
-        right_stack.push(j);
-    }
-```
-### 2.2 单调队列
-
-### 2.3 ToP k问题
+### 0x17.1 ToP k问题
 
 优先队列（堆）
 
@@ -195,13 +475,13 @@ Type为数据类型， Container为保存数据的容器，Functional为元素�
 
 如果不写后两个参数，那么容器默认用的是vector，比较方式默认用operator<，也就是优先队列是大顶堆，队头元素最大。
 
-### 2.4 双堆（Two Heaps） 
+### 0x17.2 双堆（Two Heaps） 
 
 类似的有双栈
 
 中位数，优先队列计划安排问题（Scheduling）
 
-### 2.5 K-way merge，多路归并
+### 0x17.3 K-way merge，多路归并
 
 Merge K Sorted Lists, Kth Smallest Number in M Sorted Lists
 
@@ -210,7 +490,15 @@ K个排好序的数组，用堆来高效顺序遍历，合并K个list, 和找第
 把每个数组中的第一个元素都加入最小堆中 --> 取出堆顶元素（全局最小），将该元素放入排好序的结果集合里面 --> 将刚取出的元素所在的数组里面的下一个元素加入堆 --> 重复步骤2，3，直到处理完所有数字
 
 
-## 3 树
+
+
+# 0x20  搜索
+
+树遍历、DFS、BFS、动态规划
+
+## 0x21 树与图的遍历
+
+### 0x21.1 树
 
 树天生为了递归左右子树而存在
 
@@ -236,7 +524,7 @@ K个排好序的数组，用堆来高效顺序遍历，合并K个list, 和找第
 	
 	如果最后一层不满,缺少的节点也全部集中在右边。
 
-### 3.1 base code
+树的 base code
 
 ```C++
 struct TreeNode {
@@ -249,7 +537,7 @@ struct TreeNode {
 };
 ```
 
-### 3.2 树的DFS（Tree Depth First Search，stack）
+### 0x21.2 树的DFS（Tree Depth First Search，stack）
 
 三种遍历，递归与迭代版本（stack）
 
@@ -309,17 +597,22 @@ public:
         return root;
     }
 };
-
 ```
-### 3.3 树的BFS(Tree Breadth First Search，queue)
+### 0x21.3 树的BFS(Tree Breadth First Search，queue)
 
 层序遍历(queue)： 把根节点加到队列中，不断遍历直到队列为空。每一次循环中，我们都会把队头结点拿出来（remove）
 
-### 3.4 字典树（Trie树、前缀树）
 
-文件目录问题
+### 0x21.4 图的遍历-拓扑排序 
+
+依赖元素之间的线性顺序
+
+BFS:degree入度表、adjacency邻接表、queue(deque)遍历
 	
-## 4 DFS(递归、回溯)
+Tasks Scheduling
+
+
+## 0x22 DFS(递归、回溯)
 
 递归(自顶向下)：暴力递归---> memo 解法
 
@@ -331,7 +624,7 @@ DFS：深度优先搜索
 
 回溯是DFS的一种，会剪枝和修改后恢复全局变量
 
-### 4.1 base code
+### 0x22.1 base code
 
 **DFS**
 ```C++
@@ -388,7 +681,7 @@ DFS 防止死循环
 
 memo缓存： floodfill变形慎重缓存，visited了部分情况下也需要更新
 
-### 4.2 子集问题（排列、组合）
+### 0x22.2 子集问题（排列、组合）
 
 **全排列问题** 
 
@@ -478,7 +771,7 @@ public:
     }
 };
 ```
-###  4.3 flood fill问题
+###  0x22.3 flood fill问题
 
 四方向回溯
 
@@ -557,7 +850,7 @@ void fill(int[][] image, int x, int y,
     image[x][y] = newColor;
 }
 ```
-### 4.4 省份问题（DFS版） 岛屿问题
+### 0x22.4 省份问题（DFS版） 岛屿问题
 
 ```cpp
 class Solution {
@@ -587,9 +880,9 @@ public:
 };
 ```
 
-## 5 BFS
+## 0x23 BFS
 
-### 5.1 base code
+### 0x23.1 BFS base code
 
 核心思想：
 
@@ -658,7 +951,7 @@ public:
 };
 
 ```
-### 5.2 迷宫问题
+### 0x23.2 迷宫问题
 
 路径障碍、迷宫问题
 
@@ -709,7 +1002,7 @@ public:
     }
 };
 ```
-### 5.3 省份问题（简化BFS）
+### 0x23.3 省份问题（简化BFS）
 
 一个while 一个for
 
@@ -743,13 +1036,17 @@ public:
 };
 ```
 
-## 6 动态规划（DP）
+## 0x41  数据结构进阶 - 并查集
 
+
+
+## 0x50 动态规划
+ 
 重叠子问题，最优子结构
 
 动归(自底而上)：dp 数组 ---> 状态压缩二维变一维---> pre cur for循环解法
 
-### 6.1 base code
+### 0x50.1 base code
 
 **dp**
 
@@ -781,7 +1078,7 @@ for (状态1  in 状态1的所有取值)
 
 注意戳气球问题
 
-### 6.2 背包问题
+### 0x50.2 背包问题
 
 0-1背包、子集背包、完全背包
 
@@ -823,7 +1120,7 @@ for i in range(n + 1):
 零钱问题
 
 
-### 6.3 子序列问题
+### 0x50.3 子序列问题
 
 最长递增子序列
 
@@ -833,278 +1130,7 @@ for i in range(n + 1):
  
 最长公共子序列 
 
-### 6.4 打家劫舍问题
+### 0x50.4 打家劫舍问题
 
-## 7 双指针
 
-### 7.1 base code
-
-左右指针（同向、反向）：排好序，找一些组合满足某种条件
-
-快慢指针：有环的链表和数组问题，如判断链表是否是回文
-
-### 7.2 各种排序
-
-**冒泡排序优化版**
-
-```C++
-void bubbleSort(vector<int> &nums) {
-
-	int sortBorder = nums.size() - 1;
-	int lastExchangeIndex = 0;
-	for (int i = 0; i < nums.size(); i++) {
-		bool isSorted = true;
-		for (int j = 0; j < sortBorder; j++) {
-			//j的相邻原始比较向上冒泡
-			if (nums[j] > nums[j + 1]) {
-				swap(nums[j], nums[j + 1]);
-				isSorted = false;
-				//设置有序边界,扩大有序区长度
-				lastExchangeIndex = j;
-			}
-		}
-		if (isSorted) {
-			break;
-		}
-		sortBorder = lastExchangeIndex;
-	}
-}
-```
-
-**快速排序随机优化版**
-
-```C++
-class Solution {
-public:
-    int partition(vector<int> &nums, int low, int high) {
-        //gen random index
-        int index = (rand()%(high - low + 1))+1;
-        swap(nums[low],nums[index]);
-
-        int pivot = nums[low];
-        int i = low;
-        int j = high;
-        while (i < j) {
-            //i在大于基准数的地方停下，j在小于基准数的地方停下，如果i先走，最后停下跟基准数交换时，总是大于基准数的
-            //j先走
-            while (i < j && nums[j] >= pivot) {
-                j--;
-            }
-            while (i < j && nums[i] <= pivot) {
-                i++;
-            }
-            swap(nums[i], nums[j]);
-        }
-        swap(nums[low], nums[i]);
-        return i;
-    }
-
-    void quickSort(vector<int> &nums, int start, int end) {
-        if (start >= end) {
-            return;
-        }
-        int index = partition(nums, start, end);
-        quickSort(nums, start, index - 1);
-        quickSort(nums, index + 1, end);
-    }
-}
-```
-### 7.3 回文问题
-	
-### 7.4 双指针+ 双向遍历
-
-双向遍历：柱形面积、接雨水，左边一遍，右边一遍
-	
-## 8 二分搜索
-
-### 8.1 base code
-关键代码
-
-```C++
-middle = start + (end — start) / 2
-
-//左边界查找
-if (nums[mid] == target) {
-    // 收缩右侧边界
-    right = mid - 1;
-    
-//右边界查找
-if (nums[mid] == target) {
-// 这里改成收缩左侧边界即可
-    left = mid + 1;
-
-```
-
-### 8.2 常用方法
-
-| 语言   | 支持二分的常用数据结构             | 找值          | lower_bound     | upper_bound  |
-| ------ | ---------------------------------- | ------------- | --------------- | ------------ |
-| C++    | vector  multiset/set  map/multimap | binary_search | lower_bound     | upper_bound  |
-
-**升序序列**
-
-lower_bound：返回第一个 >= 目标值的迭代器，找不到则返回end()。
-
-upper_bound：返回第一个 > 目标值的迭代器，找不到则返回end()。
-
-**降序序列**
-
-需要重载或者目标比较器，例如greater<int >()
-
-lower_bound：返回第一个 <= 目标值的迭代器，找不到则返回end()。
-
-upper_bound：返回第一个 < 目标值的迭代器，找不到则返回end()。
-
-eg: 
-```C++
- // 返回第一个小于等于目标值的迭代器
-
- lower_bound(vec.begin(), vec.end(), 8, greater<int>());
-
-// 返回第一个小于目标值的迭代器
-
- upper_bound(vec.begin(), vec.end(), 8, greater<int>());
-
- bool isFind = binary_search(vec.begin(), vec.end(), 7);
-
-// 返回第一个大于等于目标值的迭代器
-
- vector<int>::iterator iter1 = lower_bound(vec.begin(), vec.end(), 8);
-
- // 返回第一个大于目标值的迭代器
-
- vector<int>::iterator iter2 = upper_bound(vec.begin(), vec.end(), 8);
-```
-	
-
-## 9 滑动窗口
-
-### 9.1 base code
-
-**滑动窗口，字符串**
-
-注意map(unordered_map)访问key 则会自动创建，所以需要count先判断。
-
-```
-class Solution {
-public:
-    string minWindow(string s, string t) {
-        unordered_map<char,int> need;
-        unordered_map<char,int> window;
-        for(auto &str:t){
-            need[str]++;
-        }
-
-        int left = 0;
-        int right = 0;
-        int n = s.size();
-        int valid = 0;
-        int minLen = 2*s.size();
-        string minString;
-        while(right < n){
-            char char_right = s[right];
-            right++;
-            if(need.count(char_right)){
-                window[char_right]++;
-                if(window[char_right] == need[char_right]){
-                    valid++;
-                }
-            }
-
-            while(valid == need.size()){
-                if(right - left < minLen){
-                    minLen = right - left;
-                    minString = s.substr(left,minLen);
-                }
-                char char_left = s[left];
-                left++;
-                if(need.count(char_left)) {
-                    if(window[char_left] == need[char_left]) {
-                        valid--;
-                    }
-                    window[char_left]--;
-                }
-            }
-        }
-        if(minLen == 2*s.size()){
-            return "";
-        }else{
-            return minString;
-        }
-    }
-};
-
-```
-
-### 9.2 deque + 单调队列 
-
-```C++
-class Solution {
-public:
-    vector<int> maxSlidingWindow(vector<int>& nums, int k) {
-        int m = nums.size();
-
-        //存索引，方便出的判断
-        deque<int> deque;
-        vector<int> res;
-	
-        //处理前K个,保持升序
-        for (int i = 0; i < k; i++) {
-            while (!deque.empty() && nums[i] >= nums[deque.back()]) {
-                deque.pop_back();
-            }
-            deque.emplace_back(i);
-        }
-        res.emplace_back(nums[deque.front()]);
-
-        for (int i = k; i < m; i++) {
-            //先出
-            if (deque.front() == i - k) {
-                deque.pop_front();
-            }
-            //后入并判断
-            while (!deque.empty() &&  nums[i] >= nums[deque.back()]) {
-                deque.pop_back();
-            }
-
-            deque.emplace_back(i);
-            res.emplace_back(nums[deque.front()]);
-        }
-
-        return  res;
-    }
-};
-
-```
-### 9.3 字符串系列
-	
-
-## 10 图算法及高频
-
-### 10.1 图算法--拓扑排序 
-
-依赖元素之间的线性顺序
-
-BFS:degree入度表、adjacency邻接表、queue(deque)遍历
-	
-Tasks Scheduling
-	
-### 10.2 图算法--并查集(Union-Find)
-	
-### 10.3 位运算
-	
-### 10.4 哈希表
-	
-### 10.5 贪心算法  
-	
-区间合并	
-	
-6种情况
-	
-打点标记法、区间合并法
-	
-会议室安排问题
-	
-### 10.6 数据结构设计 LRU/LFU
-	
 
