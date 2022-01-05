@@ -279,6 +279,7 @@ set<int, greater<int>> s5(v.begin(), v.end());   // STL 提供的 greater 仿函
 
 //插入
 set.insert(1);
+set.emplace(1);
 	
 //查找：find count
 if(set.count(4) > 0){ 
@@ -629,63 +630,33 @@ Type为数据类型， Container为保存数据的容器，Functional为元素�
 如果不写后两个参数，那么容器默认用的是vector，比较方式默认用operator<，也就是优先队列是大顶堆，队头元素最大。
 
 改成优先小顶堆： priority_queue<int, vector<int>, greater<int> > p;
-
-
-比较函数模板
 	
-自定义：带operator的结构体、函数指针、lambda表达式
+排序：比较函数模板、带operator的结构体、函数指针、lambda表达式
 
 ```C++
 #include <queue>	
-
-//升序队列
-priority_queue <int,vector<int>,greater<int> > q;
-//降序队列
-priority_queue <int,vector<int>,less<int> > q;
+//初始化
+priority_queue <int,vector<int>,greater<int> > q;//小顶堆
+priority_queue <int,vector<int>,less<int> > q;  //大顶堆
+priority_queue<int> p1(v1.begin(), v1.end());  //vector转pq
 	
 //greater和less是std实现的两个仿函数（就是使一个类的使用看上去像一个函数。其实现就是类中实现一个operator()，这个类就有了类似函数的行为，就是一个仿函数类了）
-
-//pair的比较，先比较第一个元素，第一个相等比较第二个
-priority_queue<pair<int, int> > p;
-
-
-//可调用的函数操作符的对象 
-struct mycmp{
-    bool operator()(const student & a,const student & b){
-        return a.age < b.age;
-    }
-};
-			     
-//函数指针 
-bool cmpfunc(const student& a, const student& b){
-    return a.age < b.age;
-}
-
-//自定义lambda比较
-auto cmp = [](int left, int right) { return (left ^ 1) < (right ^ 1); };
-std::priority_queue<int, std::vector<int>, decltype(cmp)> q3(cmp);
-
+	
 //API
 priority_queue<int> p;
 p.push(2);
 p.pop();
 p.top();
-	
-```
 
-**遍历**
-	
-```C++	
+//遍历
 std::priority_queue<std::string> pq {words};  
 while (!pq.empty())
 {
     std:: cout << pq.top () <<" ";
     pq.pop();
 }
-	
 ```	
-
-##### 排序比较
+##### 排序
 	
 [C++ STL中set/map 与 priority_queue 中greater、less 的用法区别](https://blog.csdn.net/liqinzhe11/article/details/79278235)
 	
@@ -695,7 +666,7 @@ make_heap:  less<>() 展现出来的是最大堆， greater<>()展现出来是�
 
 priority_queue:   底层是使用heap实现的，所以表现出来的特性和heap一致。 
 
-                     less<>() 展现出来的是最大堆， greater<>()展现出来是最小堆。  默认是less。
+less<>() 展现出来的是最大堆， greater<>()展现出来是最小堆。  默认是less。
 
 greater: a > b  ,less: a < b
 			    
@@ -713,7 +684,25 @@ template <class T> struct less {
   typedef T second_argument_type;
   typedef bool result_type;
 };
-	
+
+//pair的比较，先比较第一个元素，第一个相等比较第二个
+priority_queue<pair<int, int> > p;
+
+//可调用的函数操作符的对象 
+struct mycmp{
+    bool operator()(const student & a,const student & b){
+        return a.age < b.age;
+    }
+};
+			     
+//函数指针 
+bool cmpfunc(const student& a, const student& b){
+    return a.age < b.age;
+}
+
+//自定义lambda比较
+auto cmp = [](int left, int right) { return (left ^ 1) < (right ^ 1); };
+std::priority_queue<int, std::vector<int>, decltype(cmp)> q3(cmp);							   
 ```
 	
 #### 9 pair 
@@ -723,7 +712,6 @@ template<class T1,class T2> struct pair
 支持比较运算，以first为第一关键字，以second为第二关键字（字典序）
 
 ```c++
-	
 vector<pair<int,int>> relations;
 pair<int, string> p1;
 p1.first;
@@ -849,7 +837,13 @@ find(ar1.begin(), ar1.end(), "bbb")
 
 查找string
  if(str.find(ch)!=string::npos)
-
+	
+##### unique函数
+```cpp
+sort(words.begin(), words.end()); 
+vector<string>::iterator end_unique =  unique(words.begin(), words.end());    //重复元素移到后面
+words.erase(end_unique, words.end());  //删掉重复元素
+```
 #### 12  bitsets
 
 [c++ bitset类用法](https://blog.csdn.net/qll125596718/article/details/6901935)
