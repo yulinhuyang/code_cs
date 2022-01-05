@@ -22,6 +22,8 @@ for(int i = 0;i < dp.size();i++){
         cout<<dp[i][j]<<endl;
     }
 }
+//其他数组迭代器初始化
+vector<int> dp(dp0.begin() + 2,dp0.end() - 1);
 
 dp.empty(); //判空
 dp.size();
@@ -815,7 +817,16 @@ find(ar1.begin(), ar1.end(), "bbb")
 #include <bitset>
 bitset<n> b(u);  //n位,int初始化
 bitset<n> b(str);//n位，string初始化
+	
+b.count()  //返回有多少个1
+b.any()    //判断是否至少有一个1
+b.none()   //判断是否全为0
 
+b.set()    //把所有位置成1
+b.set(k, v)  //将第k位变成v
+b.reset()   //把所有位变成0
+b.flip()    //等价于~
+b.flip(k)   //把第k位取反
 ```	
 	
 #### 13 lambda表达式用法
