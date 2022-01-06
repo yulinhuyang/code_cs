@@ -81,7 +81,8 @@
 |:-----|:-----|:-----|:-----|
 |3|Longest Substring Without Repeating Characters（无重复字符的最长子串 ）|Medium|
 |76|Minimum Window Substring（最小覆盖子串）|Hard|
-
+|438|Find all Anagrams in a string（找到字符串中所有字母异位词）|Medium|
+|567|Permutation in String（字符串排列）|Medium|
 
 ### Cyclic Sort，循环排序
 
@@ -132,7 +133,7 @@
 |序号|题目|级别|类别|
 |:-----|:-----|:-----|:-----|
 |239|Sliding Window Maximum（滑动窗口最大值）|Hard|
-|438|Find all Anagrams in a string（找到字符串中所有字母异位词）|Medium|
+
 
 ## 0x13 链表与邻接表
 
