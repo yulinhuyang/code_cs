@@ -167,9 +167,14 @@ public:
 **归并排序**
 
 ### 0x05.2 滑动窗口 base code
+	
+滑窗1：先right,后缩left，最小覆盖子串，最长无重复子串
 
+滑窗2：先right,left同步前进，字符串排列，找所有字母异位词
+
+简化滑窗：找所有字母异位词，统计 vector<int> sCount(26)
+	
 **滑动窗口，字符串**
-
 注意map(unordered_map)访问key 则会自动创建，所以需要count先判断。
 
 ```
