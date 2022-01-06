@@ -299,14 +299,12 @@ flood fill问题
 |72|Edit Distance（编辑距离）|Hard|
 |139|Word Break（单词拆分）|Medium|
 |70|Climbing Stairs（爬楼梯）|Easy|
-|300|Longest Increasing Subsequence（最长上升子序列）|Medium|
 |62|Unique Paths（不同路径）|Medium|
 |63|Unique Paths II|Medium|
 |64|Minimum Path Sum（最小路径和）|Medium|
 |53|Maximum Subarray（最大子序和）|Medium|
 |152|Maximum Product Subarray（乘积最大子数组）|Medium|
 |55|Jump Game（跳跃游戏 ）|Medium|
-|128|Longest Consecutive Sequence（最长连续序列 ）|Hard|
 |221|最大正方形|Medium|
 |238|Product of Array Except Self（除自身以外数组的乘积）|Easy|
 |312|Burst Balloons（戳气球）|Hard|
@@ -335,6 +333,13 @@ flood fill问题
 |198|House Robber（打家劫舍）|Easy|
 |337|House Robber III（打家劫舍 III ）|Medium|
 
+### 子序列问题
+
+|序号|题目|级别|类别|
+|:-----|:-----|:-----|:-----|
+|128|Longest Consecutive Sequence（最长连续序列 ）|Hard|
+|300|Longest Increasing Subsequence（LIS 最长上升子序列）|Medium|
+|1143|Longest Common Subsequencee（LCS 最长公共子序列）|Medium|
 
 
 # 剑指offer + 专项突破版拓展
