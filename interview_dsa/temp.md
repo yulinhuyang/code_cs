@@ -143,6 +143,12 @@ public:
 ```
 ##### 438. 找到字符串中所有字母异位词
 
+滑窗1：先right,后缩left，最小覆盖子串，最长无重复子串
+
+滑窗2：先right,left同步前进，字符串排列，找所有字母异位词
+
+简化滑窗：找所有字母异位词，统计 vector<int> sCount(26)
+
 ```cpp
 class Solution {
 public:
