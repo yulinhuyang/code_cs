@@ -22,7 +22,7 @@ https://gitee.com/programmercarl/leetcode-master
 
 算法竞赛进阶指: 
 
-算法竞赛知识合集: https://blog.csdn.net/weixin_45697774/article/details/105603064
+[算法竞赛知识合集](https://blog.csdn.net/weixin_45697774/article/details/105603064)
 
 https://github.com/lydrainbowcat/tedukuri
 
