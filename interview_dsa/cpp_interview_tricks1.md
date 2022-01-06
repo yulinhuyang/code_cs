@@ -807,10 +807,9 @@ upper_bound(vec.begin(), vec.end(), 8, greater<int>());
 ```
 
 ##### 排序
-**reverse()**
-	
-reverse(it, it2) 可以将数组指针在[it, it2)之间的元素或容器的迭代器在 [it, it2) 范围内的元素,可以对字符串进行反转
 
+**reverse()**	
+reverse(it, it2) 可以将数组指针在[it, it2)之间的元素或容器的迭代器在 [it, it2) 范围内的元素,可以对字符串进行反转
 reverse(str.begin()+2, str.begin()+6);//对a[2]~a[5]逆转*左闭右开* 
 	
 **sort()**
@@ -820,13 +819,11 @@ sort(首元素地址(必填), 尾元素地址的下一个地址(必填), 比较�
 **比较函数模板**
 	
 functional头文件中，有很多比较函数对象
-	
 [sort()函数与升序、降序 C++](https://blog.csdn.net/zhinanpolang/article/details/50917019)
-	
 equal_to<Type>、not_equal_to<Type>、greater<Type>、greater_equal<Type>、less<Type>、less_equal<Type>	
 
 **find函数**
-``cpp
+```cpp
 find (InputIterator first,   InputIterator last, const T& val);
 查找vector: find(ar1.begin(), ar1.end(), "bbb")
 查找string: if(str.find(ch)!=string::npos)
