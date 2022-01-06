@@ -76,5 +76,39 @@ public:
 
 ```
 
+##### 437. 路径总和 III
+
+dfs：返回值，全局变量
+
+两个点：visited数组、pop撤销
+
+```cpp
+class Solution {
+    unordered_map<long long, int> prefix;
+    int path = 0;
+
+    void dfs(TreeNode *root, long long curSum, int targetSum) {
+        if (!root) {
+            return;
+        }
+        curSum += root->val;
+        if (prefix.find(curSum - targetSum) != prefix.end()) {
+            path += prefix[curSum - targetSum];
+        }
+        prefix[curSum]++;
+        dfs(root->left, curSum, targetSum);
+        dfs(root->right, curSum, targetSum);
+        prefix[curSum]--;
+        return;
+    }
+
+public:
+    int pathSum(TreeNode *root, int target) {
+        prefix[0] = 1; //必须有
+        dfs(root, 0, target);
+        return path;
+    }
+};
+```
 
 
