@@ -48,6 +48,12 @@ public:
 ```
 ##### 1143. 最长公共子序列
 
+128 最长连续序列 LCS ： set中心展开法
+
+300 最长递增子序列 LIS: insertsort dp()
+
+1143 最长公共子序列 LCS ；二维dp
+
 ```cpp
 class Solution {
 public:
