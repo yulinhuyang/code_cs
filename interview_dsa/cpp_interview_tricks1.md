@@ -807,7 +807,6 @@ upper_bound(vec.begin(), vec.end(), 8, greater<int>());
 ```
 
 ##### 排序
-	
 **reverse()**
 	
 reverse(it, it2) 可以将数组指针在[it, it2)之间的元素或容器的迭代器在 [it, it2) 范围内的元素,可以对字符串进行反转
@@ -816,11 +815,9 @@ reverse(str.begin()+2, str.begin()+6);//对a[2]~a[5]逆转*左闭右开*
 	
 **sort()**
 
-sort(首元素地址(必填), 尾元素地址的下一个地址(必填), 比较函数(非必填))
+sort(首元素地址(必填), 尾元素地址的下一个地址(必填), 比较函数(非必填)),默认是递增数列
 	
-默认是递增数列
-	
-##### 比较函数模板
+**比较函数模板**
 	
 functional头文件中，有很多比较函数对象
 	
@@ -828,21 +825,18 @@ functional头文件中，有很多比较函数对象
 	
 equal_to<Type>、not_equal_to<Type>、greater<Type>、greater_equal<Type>、less<Type>、less_equal<Type>	
 
-##### find函数
-	
+**find函数**
+``cpp
 find (InputIterator first,   InputIterator last, const T& val);
- 
-查找vector
-find(ar1.begin(), ar1.end(), "bbb")
-
-查找string
- if(str.find(ch)!=string::npos)
+查找vector: find(ar1.begin(), ar1.end(), "bbb")
+查找string: if(str.find(ch)!=string::npos)
 	
-##### unique函数
-```cpp
+//unique 
 sort(words.begin(), words.end()); 
 vector<string>::iterator end_unique =  unique(words.begin(), words.end());    //重复元素移到后面
 words.erase(end_unique, words.end());  //删掉重复元素
+//max_element  min_element
+min = *min_element(v.begin(),v.end());
 ```
 #### 12  bitsets
 
