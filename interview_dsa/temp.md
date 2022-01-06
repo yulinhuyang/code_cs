@@ -82,6 +82,8 @@ dfs：返回值，全局变量
 
 两个点：visited数组、pop撤销
 
+TreeNode * t1 = new TreeNode(10);
+
 ```cpp
 class Solution {
     unordered_map<long long, int> prefix;
