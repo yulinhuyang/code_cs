@@ -282,7 +282,7 @@ set.insert(1);
 set.emplace(1);
 	
 //查找：find count
-if(set.count(4) > 0){ 
+if(set.count(4)){ # 对应 > 0
 }
 auto it = s2.find(4);
 if (it != s2.end()) { // 找到了
