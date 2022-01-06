@@ -175,6 +175,7 @@ public:
 简化滑窗：找所有字母异位词，统计 vector<int> sCount(26)
 	
 **滑动窗口，字符串**
+	
 注意map(unordered_map)访问key 则会自动创建，所以需要count先判断。
 
 ```
