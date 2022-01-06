@@ -113,4 +113,37 @@ public:
 };
 ```
 
+##### 3. 无重复字符的最长子串
+
+```cpp
+class Solution {
+public:
+    int lengthOfLongestSubstring(string s) {
+        map <char,int> dict;
+        int left = 0;
+        int right = 0;
+        int maxlen = 0;
+        while(right < s.size()){
+            auto sright = s[right];
+            right += 1;
+            if(dict.find(sright)!= dict.end()){
+                dict[sright] += 1;
+            }else{
+                dict[sright] = 1;
+            }
+
+            while(dict[sright] > 1){
+                auto sleft = s[left];
+                left += 1;
+                dict[sleft] -= 1;
+            }
+            maxlen = max(maxlen,right - left);
+        }
+
+        return maxlen;
+    }
+};
+```
+
+
 
