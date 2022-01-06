@@ -2,6 +2,8 @@ hot100:
 
 https://leetcode-cn.com/problem-list/2cktkvj/
 
+https://soulmachine.gitbooks.io/algorithm-essentials/content/cpp/
+
 剑指 Offer（二版 + 专项突击版）：
 
 https://leetcode-cn.com/problem-list/xb9nqhhg/
@@ -18,8 +20,10 @@ https://labuladong.gitee.io/algo/
 
 https://gitee.com/programmercarl/leetcode-master
 
-算法竞赛进阶指南(ACM入门）: 
+算法竞赛进阶指: 
 
-https://github.com/acm-clan/algorithm-stone
+算法竞赛知识合集: https://blog.csdn.net/weixin_45697774/article/details/105603064
 
 https://github.com/lydrainbowcat/tedukuri
+
+https://github.com/soulmachine/acm-cheat-sheet
