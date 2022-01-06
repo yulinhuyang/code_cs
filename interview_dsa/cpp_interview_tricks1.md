@@ -335,6 +335,7 @@ std::set<std::pair<std::string,int>, comp> set
 string str;
 string str("abcdef");
 string str2(str1);
+string s2(4, 'a'); //string(size_t n, char c)
 const string str2; //const灵活使用
 str +='d'; // '' char类型
 str +="ansjcknkj";// "" string类型
