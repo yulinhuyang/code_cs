@@ -115,6 +115,8 @@ public:
 
 ##### 3. 无重复字符的最长子串
 
+cpp多用++，少+=1
+
 ```cpp
 class Solution {
 public:
@@ -124,22 +126,17 @@ public:
         int right = 0;
         int maxlen = 0;
         while(right < s.size()){
-            auto sright = s[right];
-            right += 1;
-            if(dict.find(sright)!= dict.end()){
-                dict[sright] += 1;
-            }else{
-                dict[sright] = 1;
-            }
+            char sright = s[right];
+            right++;;
+            dict[sright]++;;
 
             while(dict[sright] > 1){
-                auto sleft = s[left];
-                left += 1;
-                dict[sleft] -= 1;
+                char sleft = s[left];
+                left++;
+                dict[sleft]--;
             }
             maxlen = max(maxlen,right - left);
         }
-
         return maxlen;
     }
 };
