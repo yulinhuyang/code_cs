@@ -343,7 +343,11 @@ struct ListNode {
     ListNode(int x) : val(x), next(nullptr) {} 
     ListNode(int x, ListNode *next) : val(x), next(next) {}
 }
-```	
+	
+ListNode *node = new ListNode(0,head);   #初始化节点
+```
+
+	
 dummy的使用（注意new与delete）、head tail使用
  
 ListNode *new = nullptr和Listnode的默认值不一样，默认值val是0
@@ -535,6 +539,8 @@ struct TreeNode {
       TreeNode(int x) : val(x), left(nullptr), right(nullptr) {}
       TreeNode(int x, TreeNode *left, TreeNode *right) : val(x), left(left), right(right) {}
 };
+
+TreeNode * t1 = new TreeNode(10);
 ```
 
 ### 0x21.2 树的DFS（Tree Depth First Search，stack）
