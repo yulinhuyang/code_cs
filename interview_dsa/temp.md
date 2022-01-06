@@ -141,6 +141,55 @@ public:
     }
 };
 ```
+##### 438. 找到字符串中所有字母异位词
 
+```cpp
+class Solution {
+public:
+    vector<int> findAnagrams(string s, string p) {
+        unordered_map<char,int> need;
+        for(auto ch:p){
+            need[ch]++;
+        }
+
+        vector<int> res;
+        unordered_map<char,int> window;
+        int left = 0;
+        int right = 0;
+        int validNum = 0;
+        while(right < s.size()){
+            char ch_right = s[right];
+            right++;
+            if(need.count(ch_right)){
+                window[ch_right]++;
+                if(window[ch_right] == need[ch_right]){
+                    validNum++;
+                }
+            }
+
+            while(right - left >= p.size()){
+                if(validNum == need.size()) {
+                    res.emplace_back(left);
+                }
+                char ch_left = s[left];
+                left++;
+                if(need.count(ch_left))
+                {
+                    if(window[ch_left] == need[ch_left]){
+                        validNum--;
+                    }
+                    window[ch_left]--;
+                }
+            }
+        }
+        return res;
+    }
+};
+```
+简单滑窗
+
+```cpp
+
+```
 
 
