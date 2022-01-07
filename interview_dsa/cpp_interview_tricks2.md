@@ -172,7 +172,7 @@ public:
 
 滑窗2：先right,left同步前进，字符串排列，找所有字母异位词
 
-简化滑窗：找所有字母异位词，统计 vector<int> sCount(26)
+简化滑窗：找所有字母异位词，统计 vector<int> sCount(26), vector<int> 可以直接比较相等关系
 	
 **滑动窗口，字符串**
 	
@@ -447,7 +447,30 @@ public:
 
 
 ## 0x14  hash表(字符串hash)
+	
+hash: map -> vector简化-> 原地修改简化为自己
 
+**448. 找到所有数组中消失的数字**
+	
+```cpp
+class Solution {
+public:
+    vector<int> findDisappearedNumbers(vector<int>& nums) {
+        int n = nums.size();
+        for(auto num:nums){
+            int index = (num - 1) % n;
+            nums[index] += n;
+        }
+        vector<int> res;
+        for(int i = 0;i < nums.size();i++){
+            if(nums[i] <= n){
+                res.emplace_back(i + 1);
+            }
+        }
+        return res;
+    }
+};
+```
 高级结构设计 LRU/LFU
 
 ## 0x15 字符串(KMP与最小表示法）
