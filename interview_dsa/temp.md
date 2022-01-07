@@ -147,7 +147,7 @@ public:
 
 滑窗2：先right,left同步前进，字符串排列，找所有字母异位词
 
-简化滑窗：找所有字母异位词，统计 vector<int> sCount(26)
+简化滑窗：找所有字母异位词，统计 vector<int> sCount(26), vector<int> 可以直接比较相等关系
 
 ```cpp
 class Solution {
@@ -194,8 +194,59 @@ public:
 ```
 简单滑窗
 
+vector<int> 可以直接比较相等关系
+
+vector<int> sCount(26,0); 
+
 ```cpp
-
+class Solution {
+public:
+    vector<int> findAnagrams(string s, string p) {
+        int pLen = p.size();
+        if(s.size() < pLen){
+            return {};
+        }
+        vector<int> sCount(26,0);
+        vector<int> pCount(26,0);
+        for(int i = 0;i < p.size();i++){
+            sCount[s[i] - 'a']++;
+            pCount[p[i] - 'a']++;
+        }
+        vector<int> res;
+        if(sCount == pCount){
+            res.emplace_back(0);
+        }
+        for(int i = 0;i < s.size() - pLen;i++){
+            --sCount[s[i] - 'a'];
+            ++sCount[s[i + pLen] - 'a'];
+            if(sCount == pCount){
+                res.emplace_back(i + 1);
+            }
+        }
+        return res;
+    }
+};
 ```
+### 448. 找到所有数组中消失的数字
 
+hash: map ->vector 简化->原地修改简化为自己
 
+```cpp
+class Solution {
+public:
+    vector<int> findDisappearedNumbers(vector<int>& nums) {
+        int n = nums.size();
+        for(auto num:nums){
+            int index = (num - 1) % n;
+            nums[index] += n;
+        }
+        vector<int> res;
+        for(int i = 0;i < nums.size();i++){
+            if(nums[i] <= n){
+                res.emplace_back(i + 1);
+            }
+        }
+        return res;
+    }
+};
+```
