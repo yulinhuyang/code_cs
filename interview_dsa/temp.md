@@ -227,7 +227,7 @@ public:
     }
 };
 ```
-### 448. 找到所有数组中消失的数字
+##### 448. 找到所有数组中消失的数字
 
 hash: map ->vector 简化->原地修改简化为自己
 
@@ -250,3 +250,22 @@ public:
     }
 };
 ```
+##### 461. 汉明距离
+    
+```cpp
+class Solution {
+public:
+    int hammingDistance(int x, int y) {
+        int m = x^y;
+        int cnt = 0;
+        while(m){
+            m = m &(m - 1);
+            cnt++;
+        }
+        return cnt;
+    }
+}; 
+```
+    
+   
+    
