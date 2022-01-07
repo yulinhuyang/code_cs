@@ -13,6 +13,7 @@ list.extend(L) #扩展list
 list.count(1)
 list.index('c') #返回第一个值为'c'的索引
 list.copy() #浅拷贝，同a[:]
+l3 = l1 + l2 #两个list合并
 
 #sort
 intvs.sort(key=lambda x: x[1])
