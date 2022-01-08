@@ -267,9 +267,11 @@ eg:
 apt-get锁定问题： sudo rm -rf /var/cache/apt/archives/lock
 
 
-### markdown
+### markdown技巧
 
 添加代码说明： ```c++   ```
+
+生成表格：https://www.tablesgenerator.com/
 
 ### 绑定核
 
