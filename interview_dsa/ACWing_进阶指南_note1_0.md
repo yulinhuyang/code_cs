@@ -269,7 +269,7 @@ vector<int> div(vector<int> &A, int b, int &r)
 }
 ```
 
-####前缀和与差分 
+#### 前缀和与差分 
 
 一维前缀和 —— 模板题 AcWing 795. 前缀和
 
