@@ -3226,31 +3226,7 @@ public:
 };
 ```
 
-##### 300. 最长递增子序列
 
-双循环模仿insertSort
-
-```C++
-class Solution {
-public:
-    int lengthOfLIS(vector<int>& nums) {
-        int n = nums.size();
-        vector<int> dp(n,1);
-        int max_len = 1;
-        for (int i = 1; i < n; i++) {
-            //双循环仿insertSort
-            for (int j = 0; j < i; j++) {
-                if (nums[i] > nums[j]) {
-                    dp[i] = max(dp[i],dp[j] + 1);
-                }
-            }
-            max_len = max(max_len,dp[i]);
-        }
-        return max_len;
-
-    }
-};
-```
 
 
 ##### 70 爬楼梯
@@ -3770,13 +3746,41 @@ public:
 					   
 ### 子序列问题
 	
-##### 1143. 最长公共子序列
-
 128 最长连续序列 LCS ： set中心展开法
 
 300 最长递增子序列 LIS: insertsort dp()
 
 1143 最长公共子序列 LCS ；二维dp
+	
+	
+##### 300. 最长递增子序列
+
+双循环模仿insertSort
+
+```C++
+class Solution {
+public:
+    int lengthOfLIS(vector<int>& nums) {
+        int n = nums.size();
+        vector<int> dp(n,1);
+        int max_len = 1;
+        for (int i = 1; i < n; i++) {
+            //双循环仿insertSort
+            for (int j = 0; j < i; j++) {
+                if (nums[i] > nums[j]) {
+                    dp[i] = max(dp[i],dp[j] + 1);
+                }
+            }
+            max_len = max(max_len,dp[i]);
+        }
+        return max_len;
+
+    }
+};
+```
+	
+##### 1143. 最长公共子序列
+
 
 ```cpp
 class Solution {
