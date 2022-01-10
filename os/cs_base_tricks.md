@@ -130,7 +130,7 @@ tmux：终端复用工具
 
 convert  example.png  -resize  200x100!  example.png
 
-**ag命令
+**ag命令**
 
 ag --lua search_pattern
 
