@@ -365,8 +365,6 @@ centos使用yum源
 
 [CentOS yum 源的配置与使用](https://www.cnblogs.com/mchina/archive/2013/01/04/2842275.html)
  
-[CentOS 7 安装配置 NFS](https://abelsu7.top/2019/10/17/centos7-install-nfs/)
-
 ### ImageMagick 使用
 
 https://github.com/ohmycloud/ImageMagick
@@ -385,6 +383,11 @@ convert *.jpg foo.pdf
 
 学习笔记：https://github.com/ohmycloud/ImageMagick/blob/master/ImageMagick%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0.md
 
+### NFS挂载
+
+[CentOS 7 安装配置 NFS](https://abelsu7.top/2019/10/17/centos7-install-nfs/)
+
+mount -t nfs centos-2:/mnt/kvm /mnt/kvm
 
 ### xcopy Robocopy 
 
