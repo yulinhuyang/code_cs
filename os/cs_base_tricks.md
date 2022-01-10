@@ -1,4 +1,4 @@
-##  tricks
+###  tricks
 
 **linux使用：**
 
@@ -36,34 +36,9 @@
 
 [Linux启动顺序、运行级别及开机启动](https://blog.csdn.net/soonfly/article/details/72876001)
 
-**markdown技巧**
-
-[Markdown进阶（更改字体、颜色、大小，设置文字背景色，调整图片大小设置居中）](https://blog.csdn.net/heimu24/article/details/81189700)
-
-[Typora画流程图、时序图(顺序图)、甘特图（转）](https://www.jianshu.com/p/7ddbb7dc8fec)
-
-[如何用 Typora 神器从容地写作](https://www.jianshu.com/p/602f6ecf48fd)
-
 **tmux**
 
 [tmux使用教程](https://www.ruanyifeng.com/blog/2019/10/tmux.html)
-
-**apt-get相关**
-
-[add-apt-repository使用](https://blog.csdn.net/l740450789/article/details/50856596)
-
-[etc/profile和~/.bashrc的区别](https://blog.csdn.net/ZoeYen_/article/details/78560905)
-
-[Ubuntu设置代理](https://www.jianshu.com/p/f569a404ee0b)
-
-**ack代码搜索**
-
-[linux下的高效代码搜索工具-ack](https://www.the5fire.com/about-ack-grep-in-linux.html)
-
-**linux信号量同步**
-
-[线程同步之信号量（sem_init,sem_post,sem_wait）](https://www.cnblogs.com/zhengAloha/p/8665719.html)
-
 
 **jenkins使用**
 
@@ -81,13 +56,6 @@
 
 [ubuntu 16.04 安装VNC远程桌面](https://blog.csdn.net/wuchenlhy/article/details/79865437)
 
-
-**性能调优**
-
-[arm优化——绑定核](https://zhuanlan.zhihu.com/p/138905432)
-
-[Linux中线程与CPU核的绑定](https://www.cnblogs.com/vanishfan/archive/2012/11/16/2773325.html)
-
 **linux/unix编程**
 
 [Linux/UNIX系统编程手册](https://zhuanlan.zhihu.com/p/70973666)
@@ -96,10 +64,6 @@
 **PDF 输出**
 
 [新CSDN文章一键打印、输出PDF](https://www.codenong.com/cs106602341)
-
-**SHELL脚本**
-
-[shell之if判断的总结](https://www.huaweicloud.com/articles/41b6cb8516ef474673fef27d038ca804.html)
 
 
 **bashrc与 profile区别**
@@ -110,7 +74,6 @@
 
 [python默认版本更换](https://www.jianshu.com/p/929cd16edc2c)
 
-## notes
 
 ### linux 命令
 
@@ -185,7 +148,9 @@ echo "hello,world"|tee -a test.txt
 复制N行：nyy
 ```
 
-**代码搜索ack：**  
+**代码搜索ack：** 
+
+[linux下的高效代码搜索工具-ack](https://www.the5fire.com/about-ack-grep-in-linux.html)
 
 当前目录下 ack -r "xxx"  就可以搜索所有
 
@@ -256,11 +221,21 @@ ldd  + so
 
 ### markdown技巧
 
+[Markdown进阶（更改字体、颜色、大小，设置文字背景色，调整图片大小设置居中）](https://blog.csdn.net/heimu24/article/details/81189700)
+
+[Typora画流程图、时序图(顺序图)、甘特图（转）](https://www.jianshu.com/p/7ddbb7dc8fec)
+
+[如何用 Typora 神器从容地写作](https://www.jianshu.com/p/602f6ecf48fd)
+
 添加代码说明： ```c++   ```
 
 生成表格：https://www.tablesgenerator.com/
 
 ### 绑定核
+
+[arm优化——绑定核](https://zhuanlan.zhihu.com/p/138905432)
+
+[Linux中线程与CPU核的绑定](https://www.cnblogs.com/vanishfan/archive/2012/11/16/2773325.html)
 
 **方法1：**
 
@@ -311,7 +286,9 @@ sched_setaffinity(pid_t pid, unsigned int cpusetsize, cpu_set_t *mask)
 
 如果pid的值为0,则表示指定的是当前进程,使当前进程运行在mask所设定的那些CPU上.
 
-### 信号量线程同步 
+### 信号量线程同步
+
+[线程同步之信号量（sem_init,sem_post,sem_wait）](https://www.cnblogs.com/zhengAloha/p/8665719.html)
 
 int sem_init(sem_t *sem, int pshared, unsigned int value);，其中sem是要初始化的信号量，pshared表示此信号量是在进程间共享还是线程间共享，value是信号量的初始值。
 
@@ -351,6 +328,12 @@ cat demo.json | jq '.id,.name,.status,.attachments'
 
 ### apt相关
 
+[add-apt-repository使用](https://blog.csdn.net/l740450789/article/details/50856596)
+
+[etc/profile和~/.bashrc的区别](https://blog.csdn.net/ZoeYen_/article/details/78560905)
+
+[Ubuntu设置代理](https://www.jianshu.com/p/f569a404ee0b)
+
 add-apt-repository使用：
 
 安装software-properties-common，配置代理export代理 或者bashrc ----> sudo apt-add-repository ppa:ubuntu-mozilla-daily/ppa --->sudo apt-get update --->sudo apt-get install firefox-4.0
@@ -359,6 +342,10 @@ apt download docker-ce-cli 下载相关的离线安装包
 
 dpkg -i 安装
  
+### pip相关
+
+pip install onnxruntime -i https://pypi.doubanio.com/simple/  --trusted-host pypi.doubanio.com
+
 ### yum相关
 
 centos使用yum源
@@ -403,10 +390,11 @@ Xcopy   dirA   dirB   /E/H/C/I   >> D:copy.txt
 
 robocopy     dirA   dirB /E    /MT:90  /copy:dt  /LOG:D:copy2.txt
 
-### pip
+### SHELL脚本 
 
-pip install onnxruntime -i https://pypi.doubanio.com/simple/  --trusted-host pypi.doubanio.com
- 
+[shell之if判断的总结](https://www.huaweicloud.com/articles/41b6cb8516ef474673fef27d038ca804.html)
+
+
 
 ### VScode技巧
 
@@ -415,3 +403,12 @@ pip install onnxruntime -i https://pypi.doubanio.com/simple/  --trusted-host pyp
 [github1s.com  VS Code](https://zhuanlan.zhihu.com/p/350330364)
 
 [VS-code SSH 远程连接 Docker 配置](https://segmentfault.com/a/1190000039964495)
+
+### 资源搜索
+
+15个好用的百度网盘搜索引擎: https://zhuanlan.zhihu.com/p/60840594
+
+https://ujuso.com/
+
+
+
