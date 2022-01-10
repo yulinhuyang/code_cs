@@ -2,12 +2,12 @@ yxc活动：
 
 https://www.acwing.com/user/myspace/activity/1/
 
-算法基础课：
+算法基础课模板 + 习题：
 
 https://www.acwing.com/activity/content/activity_person/content/4102/1/
 
 
-算法进阶课：
+算法进阶课yxc + lydrainbowcat习题：
 
 https://www.acwing.com/activity/content/activity_person/content/1349/9/
 
