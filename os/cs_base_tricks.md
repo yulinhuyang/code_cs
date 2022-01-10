@@ -142,31 +142,23 @@ ps aux最初用到Unix Style中，而ps -ef被用在System V Style中，
 
 | grep xxx, 对进程进行监测和控制。
 
- ps -u +用户
+ps -u +用户
  
-**find命令**
+**find fd命令**
 
 find path   -option   [-print]   [-exec   -ok   command ]   {} \;
-	
-    find . -name "*.c"
 
-find . -name  "*.java"，指定多个起始目录：  find /usr /home  /tmp -name "*.jar"
+```vim
+find . -name "*.c"
+find . -name  "*.java"  
+find /usr /home  /tmp -name "*.jar"  #指定多个起始目录
+find . -name  "*.png"  -exec cp {}  /data1/visiondection/VPS/vps_problem/segbuilding_dataset/openscene/  #find 后，-exec 执行复制命令：
+```
 
-find 后，-exec 执行复制命令：
+fd 命令，更快速，替代find  
 
-find . -name  "*.png"  -exec cp {}  /data1/visiondection/VPS/vps_problem/segbuilding_dataset/openscene/ \;
+https://github.com/sharkdp/fd#how-to-use
 
-fd 命令，更快速，替代find  https://github.com/sharkdp/fd#how-to-use
-
-	直接搜索：
-		> fd netfl
-		Software/python/imdb-ratings/netflix-details.py
-	正则匹配：
-		> cd /etc
-		> fd '^x.*rc$'
-		X11/xinit/xinitrc
-		X11/xinit/xserverrc****
-	
 **cat命令**
 
 ```Bash
@@ -177,26 +169,14 @@ cat filename1 filename2 | grep xxx    #在filename1 和 filename2中查找xxx关
 cat aaaa*.log | grep xxx              #模糊匹配aaaa开头的文件并查找xxx关键字
 cat aaaa*.log | grep xxx   -c         #模糊匹配aaaa开头的文件并查找xxx关键字统计出现次数
 ```
-
 tee命令用于将标准输入拷贝到标准输出:
+
 echo "hello,world"|tee -a test.txt
-
-**第三方库 三板斧**
-
-include_directories(../../../thirdparty/comm/include)
-
-link_libraries(“/home/server/third/lib/libcommon.a”)
-
-target_link_libraries(myProject libcomm.a)
 
 **vim常用命令**
 
-:set number
-
-add-apt-repository使用： 
-
-安装software-properties-common，配置代理export代理 或者bashrc ----> sudo apt-add-repository ppa:ubuntu-mozilla-daily/ppa  --->sudo apt-get update  --->sudo apt-get install firefox-4.0
 ```vim
+:set number
 光标移动到文件头部：gg
 光标移动到文件尾部：G
 光标迅速移动到第N行：nG
@@ -268,7 +248,6 @@ ldd  + so
 
 反汇编: objdump -S obj C
 
-
 ### markdown技巧
 
 添加代码说明： ```c++   ```
@@ -326,7 +305,15 @@ sched_setaffinity(pid_t pid, unsigned int cpusetsize, cpu_set_t *mask)
 
 如果pid的值为0,则表示指定的是当前进程,使当前进程运行在mask所设定的那些CPU上.
 
+### 信号量线程同步 
 
+int sem_init(sem_t *sem, int pshared, unsigned int value);，其中sem是要初始化的信号量，pshared表示此信号量是在进程间共享还是线程间共享，value是信号量的初始值。
+
+int sem_destroy(sem_t *sem);,其中sem是要销毁的信号量。只有用sem_init初始化的信号量才能用sem_destroy销毁。
+
+int sem_wait(sem_t *sem);等待信号量，如果信号量的值大于0,将信号量的值减1,立即返回。如果信号量的值为0,则线程阻塞。相当于P操作。成功返回0,失败返回-1。
+
+int sem_post(sem_t *sem); 释放信号量，让信号量的值加1。相当于V操作。
 
 ### shell 脚本中if判断方法
 
@@ -358,9 +345,13 @@ cat demo.json | jq '.id,.name,.status,.attachments'
 
 ### apt相关
 
- apt download docker-ce-cli 下载相关的离线安装包
- 
- dpkg -i 安装
+add-apt-repository使用：
+
+安装software-properties-common，配置代理export代理 或者bashrc ----> sudo apt-add-repository ppa:ubuntu-mozilla-daily/ppa --->sudo apt-get update --->sudo apt-get install firefox-4.0
+
+apt download docker-ce-cli 下载相关的离线安装包
+
+dpkg -i 安装
  
 ### yum相关
 
@@ -386,7 +377,7 @@ mogrify -format png *.jpg
 
 convert *.jpg foo.pdf
 
- 学习笔记：https://github.com/ohmycloud/ImageMagick/blob/master/ImageMagick%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0.md
+学习笔记：https://github.com/ohmycloud/ImageMagick/blob/master/ImageMagick%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0.md
 
 
 ### xcopy Robocopy 
