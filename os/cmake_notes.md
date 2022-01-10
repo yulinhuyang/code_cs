@@ -385,3 +385,10 @@ cmake -DCMAKE_INSTALL_PREFIX=/usr/local ..
 |PUBLIC_HEADER|	与库关联的PUBLIC头文件|${CMAKE_INSTALL_INCLUDEDIR}|include|
 |PRIVATE_HEADER	|与库关联的PRIVATE头文件|${CMAKE_INSTALL_INCLUDEDIR}|include|
 
+**三板斧**
+
+include_directories(../../../thirdparty/comm/include)
+
+link_libraries(“/home/server/third/lib/libcommon.a”)
+
+target_link_libraries(myProject libcomm.a)
