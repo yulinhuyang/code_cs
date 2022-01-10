@@ -222,6 +222,12 @@ du -h --max-depth=1          #查看当前目录下文件夹大小：
 
 zip –q –r xahot.zip /home/wwwroot/xahot
 
+**chown chgrp**
+
+chown [-R] aita test.txt
+
+chgrp [-R] aita test.txt
+
 **链接ln ln s**
 
 硬链接(hard link)与软链接(symbolic link)，硬链接的意思是一个档案可以有多个名称，而软链接的方式则是产生一个特殊的档案，该档案的内容是指向另一个档案的位置。
