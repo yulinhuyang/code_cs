@@ -167,9 +167,8 @@ fd 命令，更快速，替代find  https://github.com/sharkdp/fd#how-to-use
 		X11/xinit/xinitrc
 		X11/xinit/xserverrc****
 	
-**查看命令**
+**cat命令**
 
-cat
 ```Bash
 cat filename | tail -n 10        #显示后10行
 cat filename | head -n 10        #显示前10行
@@ -197,30 +196,14 @@ target_link_libraries(myProject libcomm.a)
 add-apt-repository使用： 
 
 安装software-properties-common，配置代理export代理 或者bashrc ----> sudo apt-add-repository ppa:ubuntu-mozilla-daily/ppa  --->sudo apt-get update  --->sudo apt-get install firefox-4.0
-
-	  光标移动到文件头部：gg
-
-	  光标移动到文件尾部：G
-
-	  光标迅速移动到第N行：nG
-
-	  删除光标所在行：dd（其实是剪切操作）
-
-	  复制一行：yy
-
-	  复制N行：nyy
-
-**so相关**
-
-查看符号表：
-
-strings libstdc++.so.6|grep GLIBC
-
-查看so依赖：
-
-ldd  + so
-
-查看当前目录下文件夹大小： du -h --max-depth=1
+```vim
+光标移动到文件头部：gg
+光标移动到文件尾部：G
+光标迅速移动到第N行：nG
+删除光标所在行：dd（其实是剪切操作）
+复制一行：yy
+复制N行：nyy
+```
 
 **代码搜索ack：**  
 
@@ -236,32 +219,30 @@ ack --python XXX 搜索所有python文件
 
 类似的有ps 、top
 
-**目录下查看文件**
+**ls du**
 
-ls -ltr s* ：所有名称是 s 开头的文件，越新的排越后面 
+```vim
+du -sm * | sort -nr   #排序
+ls -a      #查看隐藏文件
+ls -lh     #查看，用M显示
+ls -lht   #查看文件修改时间和大小
+ls -l | grep "^-" | wc -l    #统计当前目录下文件的个数（不包括目录）
+ls -lR| grep "^-" | wc -l    #统计当前目录下文件的个数（包括子目录）
+ls -lR | grep "^d" | wc -l   #查看某目录下文件夹(目录)的个数（包括子目录)
+ls -ltr s* ：                #所有名称是 s 开头的文件，越新的排越后面 
 
-ls -lR /bin： 将 /bin 目录以下所有目录及文件详细资料列出 :
+ls -lR /bin：    #将 /bin 目录以下所有目录及文件详细资料列出 :
+ls -AF：          #列出目前工作目录下所有文件及目录
 
-ls -AF： 列出目前工作目录下所有文件及目录
+du -sm * | sort -nr | head   #查看最大的
+du -h --max-depth=1          #查看当前目录下文件夹大小： 
+```
 
+**tar zip**
 
-**信号量线程同步**
+zip –q –r xahot.zip /home/wwwroot/xahot
 
-    int sem_init(sem_t *sem, int pshared, unsigned int value);，其中sem是要初始化的信号量，pshared表示此信号量是在进程间共享还是线程间共享，value是信号量的初始值。
-    
-    int sem_destroy(sem_t *sem);,其中sem是要销毁的信号量。只有用sem_init初始化的信号量才能用sem_destroy销毁。
-    
-    int sem_wait(sem_t *sem);等待信号量，如果信号量的值大于0,将信号量的值减1,立即返回。如果信号量的值为0,则线程阻塞。相当于P操作。成功返回0,失败返回-1。
-    
-    int sem_post(sem_t *sem); 释放信号量，让信号量的值加1。相当于V操作。
-    
-改变文件用户和组： chown  chgrp
-
-查看jobs:  jobs
-
-查看文件修改时间和大小:  ls -lht
-
-**链接**
+**链接ln ln s**
 
 硬链接(hard link)与软链接(symbolic link)，硬链接的意思是一个档案可以有多个名称，而软链接的方式则是产生一个特殊的档案，该档案的内容是指向另一个档案的位置。
 
@@ -274,6 +255,18 @@ eg:
 硬链接：ln  [源文件或目录][目标文件或目录]
 
 apt-get锁定问题： sudo rm -rf /var/cache/apt/archives/lock
+
+**so相关**
+
+查看符号表：
+
+strings libstdc++.so.6|grep GLIBC
+
+查看so依赖：
+
+ldd  + so
+
+反汇编: objdump -S obj C
 
 
 ### markdown技巧
@@ -334,10 +327,6 @@ sched_setaffinity(pid_t pid, unsigned int cpusetsize, cpu_set_t *mask)
 如果pid的值为0,则表示指定的是当前进程,使当前进程运行在mask所设定的那些CPU上.
 
 
-### 压缩命令
-
-zip –q –r xahot.zip /home/wwwroot/xahot
-
 
 ### shell 脚本中if判断方法
 
@@ -357,31 +346,6 @@ do
 	fi
 done
 ```
-### 常用linux 命令整理
-
-du -sm * | sort -nr 排序
-
-ls -a 查看隐藏文件
-
-ls -lh: 查看，用M显示
-
-du -sm * | sort -nr | head 查看最大的
-
-
-反汇编: objdump -S obj C
-
-统计当前目录下文件的个数（不包括目录）
-
-$ ls -l | grep "^-" | wc -l
-
-统计当前目录下文件的个数（包括子目录）
-
-$ ls -lR| grep "^-" | wc -l
-
-查看某目录下文件夹(目录)的个数（包括子目录）
-
-$ ls -lR | grep "^d" | wc -l
-
 
 
 ### json 处理
@@ -441,7 +405,7 @@ robocopy     dirA   dirB /E    /MT:90  /copy:dt  /LOG:D:copy2.txt
 
 ### pip
 
- pip install onnxruntime -i https://pypi.doubanio.com/simple/  --trusted-host pypi.doubanio.com
+pip install onnxruntime -i https://pypi.doubanio.com/simple/  --trusted-host pypi.doubanio.com
  
 
 ### VScode技巧
