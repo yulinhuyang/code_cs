@@ -428,7 +428,16 @@ min_num = -(sys.maxsize-1)
 
 **format**
 
+#### 14 随机数
 
-
+```python
+num = random.randint(1,50)  #随机整数
+num = random.randrange(0, 101, 2)  #随机选取0到100间的偶数 
+num = random.random()  #随机浮点数 
+num = random.uniform(1, 10) # [x, y]范围内下一个随机数
+num = random.choice('abcdefghijklmnopqrstuvwxyz!@#$%^&*()') #随机字符 
+num = random.sample('zyxwvutsrqponmlkjihgfedcba',5)  #多个字符中生成指定数量的随机字符
+ran_str = ''.join(random.sample(string.ascii_letters + string.digits, 8)) # 从a-z A-Z 0-9生成指定数量的随机字符
+```
 
 
