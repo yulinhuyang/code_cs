@@ -169,9 +169,18 @@ fd 命令，更快速，替代find  https://github.com/sharkdp/fd#how-to-use
 	
 **查看命令**
 
-cat 
+cat
+```Bash
+cat filename | tail -n 10        #显示后10行
+cat filename | head -n 10        #显示前10行
+cat filename | head -n 50 | tail -n +10   #显示10行到50行
+cat filename1 filename2 | grep xxx    #在filename1 和 filename2中查找xxx关键字
+cat aaaa*.log | grep xxx              #模糊匹配aaaa开头的文件并查找xxx关键字
+cat aaaa*.log | grep xxx   -c         #模糊匹配aaaa开头的文件并查找xxx关键字统计出现次数
+```
 
-tee命令用于将标准输入拷贝到标准输出， echo "hello,world"|tee -a test.txt
+tee命令用于将标准输入拷贝到标准输出:
+echo "hello,world"|tee -a test.txt
 
 **第三方库 三板斧**
 
