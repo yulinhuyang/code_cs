@@ -21,3 +21,25 @@ public:
     }
 };
 ```
+##### 543. 二叉树的直径
+
+```cpp
+class Solution {
+    int ans = 0;
+    int dfs(TreeNode *root) {
+        if (!root) {
+            return 0;
+        }
+        int L = dfs(root->left);
+        int R = dfs(root->right);
+        ans = max(ans, L + R);
+        return max(L, R) + 1;
+    }
+
+public:
+    int diameterOfBinaryTree(TreeNode *root) {
+        dfs(root);
+        return ans;
+    }
+};
+```
