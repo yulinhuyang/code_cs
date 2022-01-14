@@ -43,3 +43,59 @@ public:
     }
 };
 ```
+
+##### 560. 和为 K 的子数组
+
+前缀和+ hash
+
+```cpp
+class Solution {
+public:
+    int subarraySum(vector<int> &nums, int k) {
+        //前缀和简化，连续子数组
+        int m = nums.size();
+        int count = 0;
+        vector<int> preSum(m + 1, 0);
+        unordered_map<int, int> preMap;
+        preMap[0] = 1;
+        for (int i = 1; i < m + 1; i++) {
+            preSum[i] = preSum[i - 1] + nums[i - 1];
+            if (preMap.find(preSum[i] - k) != preMap.end()) {
+                count += preMap[preSum[i] - k];
+            }
+            preMap[preSum[i]]++;
+        }
+        
+        return count;
+    }
+};
+
+```
+
+前缀和简化为一个数
+
+```cpp
+class Solution {
+public:
+    int subarraySum(vector<int> &nums, int k) {
+        //前缀和简化，连续子数组
+        int m = nums.size();
+        int count = 0;
+        unordered_map<int, int> preMap;
+        preMap[0] = 1;
+        int pre = 0;
+        for (auto num:nums) {
+            pre = pre + num;
+            if (preMap.find(pre - k) != preMap.end()) {
+                count += preMap[pre - k];
+            }
+            preMap[pre]++;
+        }
+
+        return count;
+    }
+};
+```
+
+
+
