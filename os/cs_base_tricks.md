@@ -231,6 +231,10 @@ ldd  + so
 
 生成表格：https://www.tablesgenerator.com/
 
+typora 画流程图、时序图(顺序图)、甘特图： https://www.runoob.com/note/47651
+
+Typora 完全使用详解： https://sspai.com/post/54912
+
 ### 绑定核
 
 [arm优化——绑定核](https://zhuanlan.zhihu.com/p/138905432)
