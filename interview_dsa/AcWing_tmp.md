@@ -5,4 +5,8 @@
 
 超市：归并排序变形
 
+BFS就是一种dijkstra算法
+
+路径规划 | 图搜索算法：DFS、BFS、GBFS、Dijkstra、A*： https://zhuanlan.zhihu.com/p/346666812
+
 
