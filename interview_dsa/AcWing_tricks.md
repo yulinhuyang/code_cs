@@ -9,4 +9,6 @@ BFS就是一种dijkstra算法
 
 路径规划 | 图搜索算法：DFS、BFS、GBFS、Dijkstra、A*： https://zhuanlan.zhihu.com/p/346666812
 
+0-1 背包，循环要逆序处理: https://zhuanlan.zhihu.com/p/255165550
+
 
