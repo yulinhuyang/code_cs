@@ -209,13 +209,15 @@ apt-get锁定问题： sudo rm -rf /var/cache/apt/archives/lock
 
 **so相关**
 
-查看符号表：
+查看动态库so命令：https://blog.csdn.net/syh63053767/article/details/14128373
 
-strings libstdc++.so.6|grep GLIBC
+查看符号表： strings libstdc++.so.6|grep GLIBC
 
-查看so依赖：
+查看so依赖： ldd libhello.so 
 
-ldd  + so
+查看有哪些函数： nm libhello.so | grep printf
+
+找so:  locate libhello.so
 
 反汇编: objdump -S obj C
 
