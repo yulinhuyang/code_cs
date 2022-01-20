@@ -17,6 +17,7 @@ BFS就是一种dijkstra算法
 
 0-1背包：使用滚动数组时为何要逆序枚举: https://blog.csdn.net/aidway/article/details/50726472
 
+闫氏DP法，集合观点
 
 ### 图论
 
