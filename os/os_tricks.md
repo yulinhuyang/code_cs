@@ -422,6 +422,8 @@ https://ujuso.com/
 
 /etc/apt/apt.conf
 
+/etc/yum.conf
+
 ~/.bashrc
 
 /etc/profile: 全局生效
