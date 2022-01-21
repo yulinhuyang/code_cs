@@ -854,6 +854,6 @@ nvidia-smi配置/etc/docker/daemon.json：
 ```
 nvidia-docker run --network=host -it --privileged --gpus all --entrypoint bash --ipc=host --shm-size 16777216 -v /data/DATA/dm/yjn:/data/DATA/dm/yjn -it harbor_image:B370
 
-	
+docker rename oldname newname
 	
 	
