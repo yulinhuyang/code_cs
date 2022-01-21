@@ -416,5 +416,24 @@ robocopy     dirA   dirB /E    /MT:90  /copy:dt  /LOG:D:copy2.txt
 
 https://ujuso.com/
 
+### 代理配置的方式
+
+当前 shell 生效:直接export
+
+/etc/apt/apt.conf
+
+~/.bashrc
+
+/etc/profile: 全局生效
+
+pip代理： pip install -r requirements.txt -i https://pypi.douban.com/simple --trusted-host=pypi.douban.com
+
+或者pip.ini 添加配置
+
+
+
+
+
+
 
 
