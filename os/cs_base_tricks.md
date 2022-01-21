@@ -430,6 +430,13 @@ pip代理： pip install -r requirements.txt -i https://pypi.douban.com/simple -
 
 或者pip.ini 添加配置
 
+### cuda安装与版本切换
+```shell 
+ls  /usr/lib/x86_64-linux-gnu/libcuda.so.1 -la    #查看之前的连接
+rm -rf /usr/local/cuda                            #删除之前软链接
+sudo ln -s /usr/local/cuda-8.0/ /usr/local/cuda/  #新建链接
+nvcc --version                                    #查看当前 cuda 版本
+```
 
 
 
