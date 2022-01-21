@@ -834,5 +834,21 @@ GPU docker 启动： docker run -itd --gpus all --net=host --shm-size=64g -v ada
 
 docker run cuda:  docker run -itd --gpus all --net=host --shm-size=64g -v adas_proj/:/adas_proj/ --name adas_proj_wty 6d3d2b2cd6a0 /bin/bash 
 
+nvidia-smi配置/etc/docker/daemon.json：
+	
+```shell
+{
+    "default-runtime": "nvidia",
+    "runtimes": {
+        "nvidia": {
+            "path": "nvidia-container-runtime",
+            "runtimeArgs": []
+        }
+    },
+    "data-root": "/home/aita/docker"]  #修改根目录
+}
+```
+
+	
 	
 	
