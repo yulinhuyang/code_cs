@@ -27,4 +27,4 @@ BFS就是一种dijkstra算法
 
 随机图：spfa飞快
 
-
+0-1分数规划模型： https://blog.csdn.net/niiick/article/details/80925267
