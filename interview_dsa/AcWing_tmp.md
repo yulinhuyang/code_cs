@@ -21,5 +21,10 @@ BFS就是一种dijkstra算法
 
 ### 图论
 
+没有负权：dij
+
+有负权 卡spfa：写spfa 最坏也是一个bellman-ford
+
+随机图：spfa飞快
 
 
