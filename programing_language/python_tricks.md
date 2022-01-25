@@ -1,20 +1,11 @@
 
-### 1   tricks
+###  tricks
 
 [让 Python 代码更易维护的七种武器](https://zhuanlan.zhihu.com/p/45671766)
 
 [VsCode写Python时的代码错误提醒和自动格式化！](https://blog.csdn.net/Mrs_chens/article/details/102566018)
 
 [18 Plugins for Writing Python in VS Code](https://switowski.com/blog/18-plugins-for-python-in-vscode)
-
-[ProcessPoolExecutor使用，见python cookbook](https://python3-cookbook.readthedocs.io/zh_CN/latest/c12/p08_perform_simple_parallel_programming.html?highlight=ProcessPoolExecutor)
-
-[python 多进程使用](https://docs.python.org/zh-cn/3/library/concurrent.futures.html)
-
-
-[cs231 python_numpy手册](https://xuepro.github.io/2018/05/09/Python-Numpy-Tutoria/)
-
-[cs231 python_numpy tutorial](https://cs231n.github.io/python-numpy-tutorial/)
 
 python tricks: https://www.zhihu.com/question/48755767
 
@@ -29,7 +20,6 @@ python tricks: https://www.zhihu.com/question/48755767
 [Python基础方法详解](https://www.zhihu.com/column/c_1333396693417222144)
 
 [python数据结构与标准库module_alwaysbeta专栏](https://github.com/yongxinz/tech-blog)
-
 
 [GitHub 上适合新手的开源项目（Python 篇）](https://zhuanlan.zhihu.com/p/280039778?utm_source=qq)
 
@@ -53,12 +43,6 @@ python tricks: https://www.zhihu.com/question/48755767
 
 [代码这样写更优雅 (Python 版)](https://zhuanlan.zhihu.com/p/25518608)
 
-[Python虚拟环境pyenv、venv区别](Python虚拟环境pyenv、venv(pyvenv)、virtualenv之间的区别，终于搞清楚了！)
-
-[PEP8 Python 编码规范整理](https://zhuanlan.zhihu.com/p/31212390)
-
-[Python 的众多 PEP 之中，除了 PEP8 ，还有哪一些是值得阅读的？](https://www.zhihu.com/question/23484654/answer/207121583)
-
 [教你阅读Python开源项目代码](https://zhuanlan.zhihu.com/p/22275595)
 
 [Python不能不知的模块](https://zhuanlan.zhihu.com/p/22246193)
@@ -68,7 +52,7 @@ python tricks: https://www.zhihu.com/question/48755767
 [Python 嵌套函数](https://blog.csdn.net/liang19890820/article/details/73864242)
 
 
-### 2  fluent notes 
+### fluent notes 
 
 #### 引用
 
@@ -86,6 +70,10 @@ staticmethod用于修饰类中的方法,使其可以在不创建类实例的情�
 
 memoryview() 函数返回给定参数的内存查看对象(memory view)。
 
+### multiprocess
+
+
+### 
 
 
 
