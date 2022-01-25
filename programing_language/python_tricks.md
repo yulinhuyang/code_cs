@@ -1,5 +1,5 @@
 
-###  tricks
+### 1 tricks
 
 [让 Python 代码更易维护的七种武器](https://zhuanlan.zhihu.com/p/45671766)
 
@@ -52,7 +52,7 @@ python tricks: https://www.zhihu.com/question/48755767
 [Python 嵌套函数](https://blog.csdn.net/liang19890820/article/details/73864242)
 
 
-### fluent notes 
+### 2 fluent notes 
 
 #### 引用
 
@@ -70,10 +70,21 @@ staticmethod用于修饰类中的方法,使其可以在不创建类实例的情�
 
 memoryview() 函数返回给定参数的内存查看对象(memory view)。
 
-### multiprocess
+### 3 编程规范
 
+[PEP8 Python 编码规范整理](https://zhuanlan.zhihu.com/p/31212390)
 
-### 
+[Python 的众多 PEP 之中，除了 PEP8 ，还有哪一些是值得阅读的？](https://www.zhihu.com/question/23484654/answer/207121583)
+
+### 4 multiprocess
+
+[ProcessPoolExecutor使用，见python cookbook](https://python3-cookbook.readthedocs.io/zh_CN/latest/c12/p08_perform_simple_parallel_programming.html?highlight=ProcessPoolExecutor)
+
+[python 多进程使用](https://docs.python.org/zh-cn/3/library/concurrent.futures.html)
+
+### 5 虚拟环境
+
+[Python虚拟环境pyenv、venv区别](Python虚拟环境pyenv、venv(pyvenv)、virtualenv之间的区别，终于搞清楚了！)
 
 
 
