@@ -13,6 +13,14 @@ BFS就是一种dijkstra算法
 路径规划 | 图搜索算法：DFS、BFS、GBFS、Dijkstra、A*： https://zhuanlan.zhihu.com/p/346666812
 
 
+### 数学知识
+
+
+### 数据结构进阶
+
+
+
+
 ### 动态规划
 
 0-1背包：使用滚动数组时为何要逆序枚举: https://blog.csdn.net/aidway/article/details/50726472
