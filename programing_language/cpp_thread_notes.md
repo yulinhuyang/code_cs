@@ -1,73 +1,13 @@
-### 1 tricks 
 
-[c++ 那些事](https://github.com/Light-City/CPlusPlusThings)
+thread中join和detach的区别： https://blog.csdn.net/xibeichengf/article/details/71173543
 
-[万字长文把 VSCode 打造成 C++ 开发利器](https://zhuanlan.zhihu.com/p/96819625)
-
-[适合 C++ 新手学习的开源项目](https://zhuanlan.zhihu.com/p/273682109)
-
-[C++的三个阶段](https://www.zhihu.com/people/lin-qi-53-1)
-
-[c++ 之 std::move 原理实现与用法总结](https://blog.csdn.net/p942005405/article/details/84644069)
-
-[微软C++ 参考 ](https://docs.microsoft.com/zh-cn/cpp/cpp/cpp-language-reference?view=msvc-160)
-
-[json for modern c++的使用](https://blog.csdn.net/fengxinlinux/article/details/71037244)
-
-[glog](https://github.com/google/glog)
-
-[cnpy](https://github.com/rogersce/cnpy)
-
-[C++ 多线程教程](https://github.com/sprinfall/cpp-thread-study)
-
-[C++11多线程并发基础入门教程](https://zhuanlan.zhihu.com/p/194198073)
-
-
-https://github.com/fightingwangzq/cpp-learning
-
-https://github.com/forthespada/InterviewGuide
-
-
-### 2  使用struct关键字和class关键字定义类以及在类的继承方面有啥区别？
-
-（1）定义类的差别：
-
-C语言中的struct 关键字也可以实现类，用class 关键字和struct 关键字定义类的唯一差别就在于默认访问级别不同：
-
-默认情况下，struct 成员的访问级别为public，而class 成员的访问级别是private 。语法使用方面都是相同，直接将class 换成struct 即可。
-
-（2）类的继承的差别：
-
-使用class 关键字定义的类，它的派生类默认具有private 继承，而使用struct 关键字定义的类，它的派生类默认具有public 继承。其他的方面没有区别。
-
-因此，主要就两个区别：默认的访问级别和默认的继承级别：class 都是private的，struct 都是public的。
-
-（3） 结构体是一种值类型，而类是引用类型。值类型用于存储数据的值，引用类型用于存储对实际数据的引用。那么结构体就是当成值来使用的，类则通过引用来对实际数据操作。
-
-结构体初始化问题：
-
-https://blog.csdn.net/ericbar/article/details/79567108
-
-C语言没有构造函数的概念，如同内建类型的变量：
-
-1.定义全局或静态的struct变量时，其成员会初始化为零。
-2.定义局部的struct变量时，其成员为不确定的值。
-
-C语言对struct(以及union和数组)变量使用初始化列表。
-
-[C语言结构体初始化的四种方法](https://blog.csdn.net/ericbar/article/details/79567108)
-
-### 3 多线程 
-
-https://blog.csdn.net/xibeichengf/article/details/71173543
-
-#### 创建线程
+#### 1 创建线程
 
 linux C++:
 
 ```cpp
-//join: 当thread::join()函数被调用后，调用它的线程会被block，直到线程的执行被完成
-//detach: 当thread::detach()函数被调用后，执行的线程从线程对象中被分离，已不再被一个线程对象所表达--这是两个独立的事情。
+join: 当thread::join()函数被调用后，调用它的线程会被block，直到线程的执行被完成
+detach: 当thread::detach()函数被调用后，执行的线程从线程对象中被分离，已不再被一个线程对象所表达--这是两个独立的事情。
 int main() {
 	std::thread t1(Counter(3));
 	t1.join();
@@ -88,22 +28,17 @@ windows C++(函数不同一样)
 ```cpp
 //pthread_create : 创建线程。
 int pthread_create(pthread_t *tidp,const pthread_attr_t *attr, (void*)(*start_rtn)(void*),void *arg);
-pthread_exit: 调用这个函数可以显示得退出线程
-
+//pthread_exit: 调用这个函数可以显示得退出线程
 void  pthread_exit（void  *retval）;
 
 pthread_join: 用来等待一个线程的结束,使一个线程等待另一个线程结束，主要于线程间同步的操作。不使用的话，该线程结束后并不会释放其内存空间，这会导致该线程变成了“僵尸线程”。
-
 pthread_detach: 主线程与子线程分离，子线程结束后，资源自动回收。pthread_join()函数的替代函数.
 ```
-
-####  Mutex（互斥锁） 
+####  2 Mutex（互斥锁） 
 
 多个线程访问同一资源时
 
-Mutex 1：
-
-直接操作 mutex，即直接调用 mutex 的 lock / unlock 函数。
+Mutex 1：直接操作 mutex，即直接调用 mutex 的 lock / unlock 函数。
 
 ```c++
 std::mutex g_mutex;
@@ -133,9 +68,7 @@ void Counter() {
   }
 ```
 
-Mutex 2:
-
-使用 lock_guard 自动加锁、解锁。原理是 RAII，和智能指针类似。
+Mutex 2:使用 lock_guard 自动加锁、解锁。原理是 RAII，和智能指针类似。
 
 ```cpp
 std::mutex g_mutex;
@@ -150,7 +83,7 @@ void Counter() {
 }
 ```
 
-Mutex 3:
+Mutex 3: unique_lock
 
 使用 unique_lock 自动加锁、解锁。 unique_lock 与 lock_guard 原理相同，但是提供了更多功能（比如可以结合条件变量使用）。 注意：mutex::scoped_lock 其实就是 unique_lock<mutex> 的 typedef。
 
@@ -196,9 +129,7 @@ int main() {
 }
 ```
 
-Mutex 4：
-
-为输出流使用单独的 mutex。 这么做是因为 IO 流并不是线程安全的
+Mutex 4：为输出流使用单独的 mutex。 这么做是因为 IO 流并不是线程安全的
 
 ```cpp
 std::mutex g_mutex;
@@ -219,7 +150,7 @@ void Counter() {
 }
 ```
 
-#### 条件变量 
+#### 3 条件变量 
 
 条件变量（Condition Variable）的一般用法是：线程 A 等待某个条件并挂起，直到线程 B 设置了这个条件，并通知条件变量，然后线程 A 被唤醒。经典的「生产者-消费者」问题就可以用条件变量来解决。
 
@@ -305,7 +236,7 @@ cv.wait(lock, [] { return ready; }); 相当于：while (!ready) { cv.wait(lock);
 
 被声明为explicit的构造函数通常比其 non-explicit 兄弟更受欢迎, 因为它们禁止编译器执行非预期 (往往也不被期望) 的类型转换。
 
-#### 线程池 
+#### 4 线程池 
 
 线程池就是首先创建一些线程，它们的集合称为线程池。使用线程池可以很好地提高性能，线程池在系统启动时即创建大量空闲的线程，程序将一个任务传给线程池，线程池就会启动一条线程来执行这个任务，执行结束以后，该线程并不会死亡，而是再次返回线程池中成为空闲状态，等待执行下一个任务。
 
@@ -391,11 +322,8 @@ private:
 
 成员变量 work_guard_ 的作用是，让 io_context 即使在没有异步任务可执行时也保持运行（即 io_context::run 不返回）
 
-```
 
-
-线程池结构体
-
+//线程池结构体
 
 typedef struct threadpool_t {
 	pthread_mutex_t lock;               /* 用于锁住本结构体 ，和条件变量一起使用 */    
@@ -420,19 +348,17 @@ typedef struct threadpool_t {
  
 	int shutdown;                       /* 标志位，线程池使用状态，true或false */
 } threadpool_t;
+```
 
 
-
-####  生产者和消费者 
+####  5 生产者和消费者 
 
 生产者 - 消费者（Producer-Consumer），也叫有限缓冲（Bounded-Buffer）
 
 https://github.com/sprinfall/cpp-thread-study/blob/master/doc/CppConcurrency05.ProducerConsumer.md
 
 ```cpp
-
-有限缓冲类
-
+//有限缓冲类
 class BoundedBuffer {
 public:
   BoundedBuffer(const BoundedBuffer& rhs) = delete;
@@ -561,11 +487,12 @@ int main() {
 ```
 
 
-#### 信号量（Semaphore） 
+#### 6 信号量（Semaphore）
+	
+[C语言多线程编程(三)——信号量](https://zhuanlan.zhihu.com/p/98717838)
 
 C++11 和 Boost.Thread 都没有提供信号量, 就是信号量太容易出错了（too error prone），通过组合互斥锁（mutex）和条件变量（condition variable）可以达到相同的效果，且更加安全。实现如下：
-
-
+	
 ```cpp
 class Semaphore {
 public:
@@ -591,9 +518,6 @@ private:
 };
 ```
 
-
-[C语言多线程编程(三)——信号量](https://zhuanlan.zhihu.com/p/98717838)
-
 信号量是在多线程环境下使用的一种设施，是可以用来保证两个或多个关键代码段不被并发调用。
 
 类似计数器，常用在多线程同步任务上，信号量可以在当前线程某个任务完成后，通知别的线程，再进行别的任务。
@@ -607,39 +531,26 @@ private:
 信号量在创建时需要设置一个初始值，表示同时可以有几个任务可以访问该信号量保护的共享资源，初始值为1就变成互斥锁Mutex，即同时只能有一个任务可以访问信号量保护的共享资源
 
 函数使用：
+```cpp
 
-sem_init
-
-创建信号量
-
+//sem_init 创建信号量
 int sem_init(sem_t *sem, int pshared, unsigned int value);
 
-sem：指向的信号对象
+//sem：指向的信号对象
+//pshared：控制信号量的类型，如果其值为0，就表示信号量是当前进程的局部信号量，否则信号量就可以在多个进程间共享
+//value：信号量sem的初始值
 
-pshared：控制信号量的类型，如果其值为0，就表示信号量是当前进程的局部信号量，否则信号量就可以在多个进程间共享
-
-value：信号量sem的初始值
-
-sem_post
-
+//sem_post 信号量的值加1
 int sem_post(sem_t *sem);
 
-信号量的值加1
-
-sem_wait
-
+//sem_wait 信号量的值加-1
 int sem_wait(sem_t *sem);
-
-信号量的值加-1
-
-sem_destroy
-
+	
+//sem_destroy用完记得销毁 
 int sem_destroy(sem_t *sem);
 
-用完记得销毁 
-
 说明：你可以进行三个下载任务，但是最多选择同时执行二个（创建两个线程）。直接看main函数即可，信号量的逻辑都在里面，在实际代码中最好，所有的线程和信号量的创建、释放都要进行校验，这里为了方便阅读，减少代码行数，就不进行校验了。
-
+```
 
 ```cpp
 #include <stdio.h>
@@ -746,7 +657,7 @@ int main()
 }
 ```
 
-#### 读写者问题 读写锁（Read-Write Lock） 
+#### 7 读写者问题 读写锁（Read-Write Lock） 
 
 STL 和 Boost 都提供了 shared_mutex 来解决「读者-写者」问题。shared_mutex 这个名字并不十分贴切，不如 pthread 直呼「读写锁」。
 
@@ -829,44 +740,6 @@ int main() {
 方法一：先解读者锁，再加写者锁。这种做法的问题是，一解一加之间，其他写者说不定已经介入并修改了数据，那么当前线程作为读者时所持有的状态（比如指针、迭代器）也就不再有效。
 
 方法二：用 upgrade_lock（仅限 Boost，STL 未提供），可以当做 shared_lock 用，但是必要时可以直接从读者「升级」为写者。
-
-
-
-### 3 RAII   RTTI 
-
-https://zhuanlan.zhihu.com/p/34660259
-
-RAII (Resource Acquisition Is Initialization) 资源获取即初始化
-
-构造函数的写法：
-
-      person(const std::string name = "", int age = 0) : 
-      name_(name), age_(age) {
-            std::cout << "Init a person!" << std::endl;
-      }
-      ~person() {
-            std::cout << "Destory a person!" << std::endl;
-      }
-
-
-RTTI（Run-Time Type Identification)-运行时类型识别
-
-[C++ typeid关键字详解](https://blog.csdn.net/gatieme/article/details/50947821)
-
-它使程序能够获取由基指针或引用所指向的对象的实际派生类型，即允许“用指向基类的指针或引用来操作对象”的程序能够获取到“这些指针或引用所指对象”的实际派生类型。
-
-在C++中，为了支持RTTI提供了两个操作符：dynamic_cast和typeid
-
-dynamic_cast允许运行时刻进行类型转换，从而使程序能够在一个类层次结构中安全地转化类型，与之相对应的还有一个非安全的转换操作符static_cast，因为这不是本文的讨论重点，所以这里不再详述，感兴趣的可以自行查阅资料。
-
-typeid是C++的关键字之一，等同于sizeof这类的操作符。typeid操作符的返回结果是名为type_info的标准库类型的对象的引用（在头文件typeinfo中定义，稍后我们看一下vs和gcc库里面的源码），它的表达式有下图两种形式。
- 
-###  
-
-
-
-
-
 
 
 
