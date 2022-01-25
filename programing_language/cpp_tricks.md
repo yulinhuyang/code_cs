@@ -1,4 +1,4 @@
-## 1 tricks 
+### 1 tricks 
 
 [c++ 那些事](https://github.com/Light-City/CPlusPlusThings)
 
@@ -28,9 +28,7 @@ https://github.com/fightingwangzq/cpp-learning
 https://github.com/forthespada/InterviewGuide
 
 
-## 2 notes：  
-
-### 1 使用struct关键字和class关键字定义类以及在类的继承方面有啥区别？
+### 2  使用struct关键字和class关键字定义类以及在类的继承方面有啥区别？
 
 （1）定义类的差别：
 
@@ -59,7 +57,7 @@ C语言对struct(以及union和数组)变量使用初始化列表。
 
 [C语言结构体初始化的四种方法](https://blog.csdn.net/ericbar/article/details/79567108)
 
-### 2 多线程 
+### 3 多线程 
 
 https://blog.csdn.net/xibeichengf/article/details/71173543
 
@@ -67,34 +65,29 @@ https://blog.csdn.net/xibeichengf/article/details/71173543
 
 linux C++:
 
-join: 当thread::join()函数被调用后，调用它的线程会被block，直到线程的执行被完成
+```cpp
+//join: 当thread::join()函数被调用后，调用它的线程会被block，直到线程的执行被完成
+//detach: 当thread::detach()函数被调用后，执行的线程从线程对象中被分离，已不再被一个线程对象所表达--这是两个独立的事情。
+int main() {
+	std::thread t1(Counter(3));
+	t1.join();
 
-detach: 当thread::detach()函数被调用后，执行的线程从线程对象中被分离，已不再被一个线程对象所表达--这是两个独立的事情。
+	std::thread t2(Counter(3));
+	t2.detach();
 
-```c++
-      int main() {
-        std::thread t1(Counter(3));
-        t1.join();
+	// 等待几秒，不然 t2 根本没机会执行。
+	std::this_thread::sleep_for(std::chrono::seconds(4));
 
-        std::thread t2(Counter(3));
-        t2.detach();
-
-        // 等待几秒，不然 t2 根本没机会执行。
-        std::this_thread::sleep_for(std::chrono::seconds(4));
-
-        return 0;
-      }
+	return 0;
+}
 ```
-
-
 windows C++(函数不同一样)
 
 [C语言多线程编程(一)](https://zhuanlan.zhihu.com/p/97418361)
 
-pthread_create : 创建线程。
-
+```cpp
+//pthread_create : 创建线程。
 int pthread_create(pthread_t *tidp,const pthread_attr_t *attr, (void*)(*start_rtn)(void*),void *arg);
-
 pthread_exit: 调用这个函数可以显示得退出线程
 
 void  pthread_exit（void  *retval）;
@@ -102,10 +95,7 @@ void  pthread_exit（void  *retval）;
 pthread_join: 用来等待一个线程的结束,使一个线程等待另一个线程结束，主要于线程间同步的操作。不使用的话，该线程结束后并不会释放其内存空间，这会导致该线程变成了“僵尸线程”。
 
 pthread_detach: 主线程与子线程分离，子线程结束后，资源自动回收。pthread_join()函数的替代函数.
-
-
-
-
+```
 
 ####  Mutex（互斥锁） 
 
