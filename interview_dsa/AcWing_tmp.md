@@ -20,6 +20,8 @@ int lowbit(int x)
 
 二分转判定
 
+离散化
+
 ### 0x10 基本数据结构
 
 由数据范围反推算法复杂度以及算法内容: https://www.acwing.com/blog/content/32/
