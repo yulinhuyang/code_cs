@@ -36,9 +36,6 @@
 
 [Linux启动顺序、运行级别及开机启动](https://blog.csdn.net/soonfly/article/details/72876001)
 
-**tmux**
-
-[tmux使用教程](https://www.ruanyifeng.com/blog/2019/10/tmux.html)
 
 **jenkins使用**
 
@@ -92,6 +89,14 @@ glances：更强大的 htop / top 代替者, htop 代替 top，glances 代替 ht
 tmux：终端复用工具
 
 convert  example.png  -resize  200x100!  example.png
+
+**tmux**
+
+[tmux使用教程](https://www.ruanyifeng.com/blog/2019/10/tmux.html)
+
+tmux new -s <session-name>
+	
+Ctrl+b d：分离当前会话
 
 **ag命令**
 
