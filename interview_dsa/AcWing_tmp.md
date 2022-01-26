@@ -2,7 +2,20 @@
 
 ### 0x00 基本算法
 
-lowbit(R)
+lowbit(x)是x的二进制表达式中最低位的1所对应的值（位置）。
+
+```cpp
+//6的二进制是110，所以lowbit(6)=2
+int lowbit(int x)
+{
+    return x&(-x);
+}
+
+int lowbit(int x)
+{
+    return x&(x^(x-1));
+}
+```
 
 
 二分转判定
