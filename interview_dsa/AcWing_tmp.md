@@ -224,7 +224,7 @@ Eratosthenes筛法：任意整数x的倍数2x,3x...都不是质数。对于每�
 
 #### 0x32 约数
 
-gcd(a,b) *lcm(a,b) = a*b
+gcd(a,b) x lcm(a,b) = a*b
 
 欧几里得算法 gcd(a,b) = gcd(b,a mod b)
 
