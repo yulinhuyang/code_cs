@@ -242,7 +242,9 @@ typora 画流程图、时序图(顺序图)、甘特图： https://www.runoob.com
 
 Typora 完全使用详解： https://sspai.com/post/54912
 	
-在线markdown: https://markdown.lovejade.cn/
+在线markdown1: https://markdown.lovejade.cn/   
+	
+在线markdown2: https://www.zybuluo.com/mdeditor
 
 ### 绑定核
 
