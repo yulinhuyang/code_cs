@@ -82,9 +82,28 @@ memoryview() 函数返回给定参数的内存查看对象(memory view)。
 
 [python 多进程使用](https://docs.python.org/zh-cn/3/library/concurrent.futures.html)
 
+```python
+def gpu_task(deploy, caffe_model,mean_file, path_images, out,images_head, gpu=0):
+	  pass
+
+multiprocessing.freeze_support()
+pool = multiprocessing.Pool()
+parts = 8
+for i in xrange(0, parts):
+    pool.apply_async(gpu_task, args = (deploy, caffe_model,mean_file,blocks[i], out_files[i],images_head, i + (8 - parts)))
+pool.close()
+pool.join()
+```
+
 ### 5 虚拟环境
 
 [Python虚拟环境pyenv、venv区别](Python虚拟环境pyenv、venv(pyvenv)、virtualenv之间的区别，终于搞清楚了！)
+```shell
+virtualenv envRote
+source envRote/bin/activate
+```
+
+
 
 
 
