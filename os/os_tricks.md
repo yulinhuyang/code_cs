@@ -245,6 +245,8 @@ Typora 完全使用详解： https://sspai.com/post/54912
 在线markdown1: https://markdown.lovejade.cn/   
 	
 在线markdown2: https://www.zybuluo.com/mdeditor
+	
+mermaid: https://github.com/mermaid-js/mermaid
 
 ### 绑定核
 
