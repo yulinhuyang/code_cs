@@ -241,6 +241,8 @@ apt-get锁定问题： sudo rm -rf /var/cache/apt/archives/lock
 typora 画流程图、时序图(顺序图)、甘特图： https://www.runoob.com/note/47651
 
 Typora 完全使用详解： https://sspai.com/post/54912
+	
+在线markdown: https://markdown.lovejade.cn/
 
 ### 绑定核
 
