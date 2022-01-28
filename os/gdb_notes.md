@@ -126,6 +126,12 @@ step                        --当用" step "命令调试线程时，其它线程
 thread apply all bt        --查看所有线程调用栈（常用）
 
 
+set args 可指定运行时参数。（如：set args 10 20 30 40 50） show args 命令可以查看设置好的运行参数。
+
+start命令在main函数入口设置一个临时断点
+
+Watch <expr> 设置一个观察点。一量表达式值有变化时，马上停住程序
+
 
 
 
