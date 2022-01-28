@@ -158,6 +158,8 @@ class Left : virtual public Top
   public: int b;
 };
 ```
+传参为&时才会触发虚函数继承
+
 ### 6 类与对象
 
 **构造函数成员变量初始化顺序**：
@@ -220,6 +222,10 @@ D::D(const D &other) :  B(other) //父类的成员变量拷贝只能用父类的
 
 编译系统生成的默认拷贝构造函数对内部数据做的都是浅拷贝（非常值成员变量），如果要拷贝要重新写拷贝构造函数进行深拷贝 ，需要新申请new内存。
 
+重载可以让 ‘>>’ 将数据输入自定义类的成员，cin >> obj
+
+friend istream& operator >> (istream& id, MyClass& a)
+
 **构造析构函数不被继承**
 
 在整个层次中的所有的构造函数和析构函数都必须被调用，也就是说，构造函数和析构函数不能被继承。
@@ -257,6 +263,210 @@ typedef unsigned int UINT;
 对静态成员函数来说，只能访问静态成员变量和静态成员函数。如果一定要访问类内的成员变量，可以将类指针作为参数传入
 
 相比类成员函数来说，静态成员函数少一个this指针参数
+
+### 7 C++基础点
+
+**引用与const**
+
+auto一般会忽略掉顶层const（指针本身是个常量），同时底层const会保留下来 
+
+Const: 从右向左读
+
+顶层const:指针本身是个常量； 底层const: 指针所指对象是一个常量
+
+右值引用：只能绑定一个将销毁的对象，&&
+
+const char *p ：指向的值不能变
+
+char *const p ： P不能变 
+
+变量是左值
+
+数组传参数时候，地址传递，相当于指针了。
+
+**new与delete**
+
+new:  1  operator new分配内存    2  编译器运行相应的构造函数以构造这些对象   3  对象被分配了空间并构造完成，返回一个指向该对象的指针
+
+delete: 1  对sp所指对象或者arr所指的对象数组中的元素执行对应的析构操作    2  编译器调用operator delete的标准库函数释放内存空间
+
+**全局变量**
+
+全局变量的使用h中extern声明，cpp中定义
+```cpp
+//res.h
+extern char g_szBuffer[]; *// 环形缓冲区*
+
+//res.cpp
+char g_szBuffer[g_nBufferSize];
+```
+**函数指针与数组指针**
+
+c语言的函数指针和void *指向函数： https://blog.csdn.net/HES_C/article/details/81944100
+
+```cpp
+//函数指针： 调用函数和做函数的参数
+int (*fp)(int a);      // 一个返回值为 int 类型的函数指针 fp 
+void (*fun_1)(void);  // 函数指针，参数为空
+
+//函数指针可以用0来初始化或者赋值，以表示该指针不指向任何函数
+//区别： int * fp(int a )  //函数返回值是int *
+//数组指针
+int a[5],*pa;  //则p=a，或p=&a[0]都可以
+```
+**Sizeof**
+
+Sizeof 数组，整个数组大小;Sizeof 指针，指针本身所占空间。
+
+sizeof(vector) 获取数据类型的,vector::size()和vector::capacity()
+
+**宏**
+
+宏定义： 简单的文本替换，(M+1)*M/2  -> NUM=(N+1+1)* N+1 /2 = 8
+
+**关于二维数组访问效率问题** 
+
+在C/C++语言中，数组在内存中是按行存储的，按行遍历时可以由指向数组第一个数的指针一直向后遍历，由于二维数组的内存地址是连续的，当前行的尾与下一行的头相邻
+
+行遍历快： a[i][j] += a[i][j];
+
+**默认初始化**： 
+
+如果不明确指出初始化列表，那么基本类型是不会被初始化的（除全局变量和静态变量外），所有的内存都是“脏的”；而类类型则会为每个元素调用默认构造函数进行初始化。
+
+全局, 静态变量,一般默认为0; 而局部变量处于堆栈区，其数值是随机的，即当时内存中的值。
+
+**inline**
+
+inline仅是一个对编译器的建议，写了编译器不一定展开，不写inline编译器也会根据实际情况来决定是否展开
+
+C++中inline用法详解 https://segmentfault.com/a/1190000019767044
+
+**命名空间**
+
+在.h文件自定义命名空间使用using声明类型
+
+在.cpp文件中，所有有文件include完成后，使用using声明类型
+
+### 8 现代C++
+
+现代C++语言（C++11/14/17）特性总结和使用建议： https://blog.csdn.net/qq_36631379/article/details/110728643
+
+**override和final成员函数**
+
+重载：是参数不同但是返回值要相同；参数相同，但是基类的函数是const的，派生类的函数却不是
+ 
+override，表示函数应当重写基类中的虚函数。
+
+final，表示派生类不应当重写这个虚函数。
+
+**auto追踪返回类型**
+
+template <typename T1, typename T2>
+ auto Sum(T1 & t1, T2 & t2) -> decltype(t1 + t2) {
+   return t1 + t2;
+ }
+
+auto占位符 + ->return_type也就是构成追踪返回类型函数的2个基本元素
+
+**lambda表达式**
+
+Lambda引用捕获会根据值作变化更新   https://blog.csdn.net/m0_48990191/article/details/114519589
+
+[capture list] (parameter list) -> return type { function body }
+
+[]中传入=的话，即是可以取得所有的外部变量
+
+```cpp
+vector<int> iv{5, 4, 3, 2, 1};  
+int a = 2, b = 1;  
+for_each(iv.begin(), iv.end(), [b](int &x){cout << (x + b) << endl;}); // (1)  
+for_each(iv.begin(), iv.end(), [=](int &x){x *= (a + b);});     // (2)  
+for_each(iv.begin(), iv.end(), [=](int &x)->int{return x * (a + b);});// (3) 
+```
+**成员函数控制：=delete和=default**
+
+=default，从而显式的指示编译器生成该函数的默认版本，为了POD类型，自定义后仍然要是生成默认的版本的
+
+=delete会指示编译器不生成函数的缺省版本。如禁止使用者使用拷贝构造函数
+
+**右值引用(&&)、移动构造、移动赋值和完美转发**
+
+左值就是一个有名字的对象，而右值则是一个无名对象（临时对象）
+
+右值 + move ，移动构造move constructor，移动赋值move assignment operator
+ 
+完美转发（perfect forwarding），指的是在函数模板中，完全依照模板的参数的类型，将参数传递给函数模板中调用的另外一个函数
+
+**int和unsigned in相加**
+
+unsigned int与int相加的问题 https://blog.csdn.net/thefutureisour/article/details/8147277  
+
+当int和unsigned in相加时，要将int转化为unsigned int
+
+**unique_ptr和shared_ptr**
+
+将指针转换为整数时, 可以使用 () 类型存放转换后的指针值
+
+shared_ptr的使用和陷阱  https://blog.csdn.net/qq_33266987/article/details/78784852
+
+多个共享指针指向同一个空间，它们的关系可能是关联（我们所期望的正常关系）或是独立的（一种错误状态）
+
+只有用一个shared_ptr为另一个shared_ptr赋值时，才将这连个共享指针关联起来，直接使用地址值会导致各个shared_ptr独立。
+```cpp
+shared_ptr<int> sp1(new int(10));
+shared_ptr<int> sp2(sp1), sp3;
+sp3 = sp1;
+
+//一个典型的错误用法*
+shared_ptr<int> sp4(sp1.get()); 
+sp1,sp2,sp3是相互关联的共享指针，共同控制所指内存的生存期，sp4是独立的
+```
+
+有C++11限制，选make_shared，没有选make_unique(C++ 14）
+
+**数组指针别名**
+
+typedef int (*Array)[10];
+
+using Array = int (*)[10];
+
+ 
+**线程同步**
+
+std::promise 对象禁止拷贝
+
+std::shared_future 对象可以拷贝
+
+std::atomic::store(val） ，用val替换包含的值
+
+std::atomic::load( )，返回包含值
+
+**std::move**
+
+vec.push_back(str1);  // 传统方法，copy 
+
+vec.push_back(std::move(str1)); // 调用移动语义的push_back方法，避免拷贝，str1会失去原有值，变成空字符串 
+
+**range-based-for**
+
+C++11新特性之基本范围的For循环（range-based-for）：https://blog.csdn.net/hailong0715/article/details/54172848
+
+基于范围的FOR循环的遍历是只读的遍历，除非将变量变量的类型声明为引用类型。
+
+**noexcept声明**
+
+delete操作符、移动构造函数、移动赋值操作符、swap函数应该有noexcept声明
+
+需要用左值引用的方法捕获异常: try… catch(std::exception**& e**)…
+
+父类虚函数声明了noexcept,子类重写的函数不默认就是noexcept，需要显式加上noexcept
+
+**匿名namespace**
+
+对于cpp文件中不需要导出的变量、常量或函数，应使用匿名namespace封装或者用static修饰，推荐使用匿名namespace
+
+
 
 
 
