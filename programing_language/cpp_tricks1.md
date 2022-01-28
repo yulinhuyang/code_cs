@@ -1,11 +1,9 @@
 
-### 1 tricks 
+### 1 参考 
 
 [c++ 那些事](https://github.com/Light-City/CPlusPlusThings)
 
 [万字长文把 VSCode 打造成 C++ 开发利器](https://zhuanlan.zhihu.com/p/96819625)
-
-[适合 C++ 新手学习的开源项目](https://zhuanlan.zhihu.com/p/273682109)
 
 [C++的三个阶段](https://www.zhihu.com/people/lin-qi-53-1)
 
@@ -23,11 +21,13 @@
 
 [C++11多线程并发基础入门教程](https://zhuanlan.zhihu.com/p/194198073)
 
-
 https://github.com/fightingwangzq/cpp-learning
 
 https://github.com/forthespada/InterviewGuide
 
+史上最全C/C++面试题汇总： https://blog.csdn.net/weixin_44816732/article/details/105646613
+
+C++后台开发校招面试常见问题： https://blog.csdn.net/shanghairuoxiao/article/details/72876248
 
 ### 2  使用struct关键字和class关键字定义类以及在类的继承方面有啥区别？
 
