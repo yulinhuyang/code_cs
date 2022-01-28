@@ -17,10 +17,6 @@
 
 [cnpy](https://github.com/rogersce/cnpy)
 
-[C++ 多线程教程](https://github.com/sprinfall/cpp-thread-study)
-
-[C++11多线程并发基础入门教程](https://zhuanlan.zhihu.com/p/194198073)
-
 https://github.com/fightingwangzq/cpp-learning
 
 https://github.com/forthespada/InterviewGuide
