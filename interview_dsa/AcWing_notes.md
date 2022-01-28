@@ -456,11 +456,17 @@ val(i,j)分成两部分，第一部分仅与i有关，第二部分仅与j有关�
 
 #### 0x61 最短路
 
-没有负权：dij
+无向边：看成两条方向相反的有向边
 
-有负权 卡spfa：写spfa 最坏也是一个bellman-ford
+邻接表：head ver edge  next
 
-随机图：spfa飞快
+SSSP问题：
+
+Dijkstra:非负权，每次选择未被标记的，dist[x]最小的节点x，标记x，扫描并更新x的所有出边。使用二叉堆优化基于贪心的Dijkstra算法。
+
+Bellman-ford：扫描所有边，如果dist[y] > dist[x] + z，则用dist[x] + z更新dist[y]，使其满足三角不等式。
+
+SPFA:队列优化Bellman-Ford算法，起初队列只有起点1，更新完dist[y]，如果y不在队列中，则y入队列。可以优先队列(二叉堆)优化基于BFS的SPFA算法。
 
 #### 0x62 最小生成树
 
