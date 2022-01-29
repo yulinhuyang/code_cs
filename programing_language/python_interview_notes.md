@@ -114,5 +114,128 @@ two = MyClass4()
 
 中文: http://taizilongxu.gitbooks.io/stackoverflow-about-python/content/3/README.html
 
+### 7 @staticmethod和@classmethod
+
+Python其实有3个方法,即静态方法(staticmethod),类方法(classmethod)和实例方法,如下:
+```python
+def foo(x):
+    print "executing foo(%s)"%(x)
+
+class A(object):
+    def foo(self,x):
+        print "executing foo(%s,%s)"%(self,x)
+
+    @classmethod
+    def class_foo(cls,x):
+        print "executing class_foo(%s,%s)"%(cls,x)
+
+    @staticmethod
+    def static_foo(x):
+        print "executing static_foo(%s)"%x
+
+a=A()
+```
+| \\      | 实例方法     | 类方法            | 静态方法            |
+| :------ | :------- | :------------- | :-------------- |
+| a = A() | a.foo(x) | a.class_foo(x) | a.static_foo(x) |
+| A       | 不可用      | A.class_foo(x) | A.static_foo(x) |
+
+对于静态方法其实和普通的方法一样,不需要对谁进行绑定,唯一的区别是调用的时候需要使用`a.static_foo(x)`或者`A.static_foo(x)`来调用.
+
+### 8  Python自省
+
+自省就是面向对象的语言所写的程序在运行时,所能知道对象的类型.简单一句就是运行时能够获得对象的类型.比如type(),dir(),getattr(),hasattr(),isinstance().
+```python
+a = [1,2,3]
+b = {'a':1,'b':2,'c':3}
+c = True
+print type(a),type(b),type(c) # <type 'list'> <type 'dict'> <type 'bool'>
+print isinstance(a,list)  # True
+```
+### 9 迭代器和生成器
+
+这个是stackoverflow里python排名第一的问题,值得一看: http://stackoverflow.com/questions/231767/what-does-the-yield-keyword-do-in-python
+
+这是中文版: http://taizilongxu.gitbooks.io/stackoverflow-about-python/content/1/README.html
+
+这里有个关于生成器的创建问题面试官有考：
+问：  将列表生成式中[]改成() 之后数据结构是否改变？ 
+答案：是，从列表变为生成器
+
+```python
+>>> L = [x*x for x in range(10)]
+>>> L
+[0, 1, 4, 9, 16, 25, 36, 49, 64, 81]
+>>> g = (x*x for x in range(10))
+>>> g
+<generator object <genexpr> at 0x0000028F8B774200>
+```
+通过列表生成式，可以直接创建一个列表。但是，受到内存限制，列表容量肯定是有限的。而且，创建一个包含百万元素的列表，不仅是占用很大的内存空间，如：我们只需要访问前面的几个元素，后面大部分元素所占的空间都是浪费的。因此，没有必要创建完整的列表（节省大量内存空间）。在Python中，我们可以采用生成器：边循环，边计算的机制—>generator
+
+### 10 Python中重载
+
+python 不需要函数重载
+
+### 11  GIL线程全局锁
+
+线程全局锁(Global Interpreter Lock),即Python为了保证线程安全而采取的独立线程运行的限制,说白了就是一个核只能在同一时间运行一个线程.**对于io密集型任务，python的多线程起到作用，但对于cpu密集型任务，python的多线程几乎占不到任何优势，还有可能因为争夺资源而变慢。**
+
+见[Python 最难的问题](http://www.oschina.net/translate/pythons-hardest-problem)
+
+解决办法就是多进程和下面的协程(协程也只是单CPU,但是能减小切换代价提升性能).
+
+
+### 12 闭包
+
+闭包(closure)是函数式编程的重要的语法结构。闭包也是一种组织代码的结构，它同样提高了代码的可重复使用性。
+
+当一个内嵌函数引用其外部作作用域的变量,我们就会得到一个闭包. 总结一下,创建一个闭包必须满足以下几点:
+
+必须有一个内嵌函数
+内嵌函数必须引用外部函数中的变量
+外部函数的返回值必须是内嵌函数
+感觉闭包还是有难度的,几句话是说不明白的,还是查查相关资料.
+
+重点是函数运行后并不会被撤销,就像16题的instance字典一样,当函数运行完后,instance并不被销毁,而是继续留在内存空间里.这个功能类似类里的类变量,只不过迁移到了函数上.
+
+闭包就像个空心球一样,你知道外面和里面,但你不知道中间是什么
+
+### 13  Python函数式编程
+
+推荐: [酷壳](http://coolshell.cn/articles/10822.html)
+
+python中函数式编程支持:
+
+filter 函数的功能相当于过滤器。调用一个布尔函数`bool_func`来迭代遍历每个seq中的元素；返回一个使`bool_seq`返回值为true的元素的序列。
+
+```python
+>>>a = [1,2,3,4,5,6,7]
+>>>b = filter(lambda x: x > 5, a)
+>>>print b
+>>>[6,7]
+```
+
+map函数是对一个序列的每个项依次执行函数，下面是对一个序列每个项都乘以2：
+
+```python
+>>> a = map(lambda x:x*2,[1,2,3])
+>>> list(a)
+[2, 4, 6]
+```
+
+reduce函数是对一个序列的每个项迭代调用函数，下面是求3的阶乘：
+
+```python
+>>> reduce(lambda x,y:x*y,range(1,4))
+6
+```
+### 14 read,readline和readlines
+
+read 读取整个文件
+
+readline 读取下一行,使用生成器方法
+
+readlines 读取整个文件到一个迭代器以供我们遍历
+
 
 
