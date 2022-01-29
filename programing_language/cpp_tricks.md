@@ -462,7 +462,13 @@ delete操作符、移动构造函数、移动赋值操作符、swap函数应该�
 
 对于cpp文件中不需要导出的变量、常量或函数，应使用匿名namespace封装或者用static修饰，推荐使用匿名namespace
 
+### 9 左值引用与数组引用
 
+void quick_sort(int q[], int &l, int r) {
+...
+}
+
+函数中直接修改q数组和l，相当于通过引用的方式修改了对应的值。
 
 
 
