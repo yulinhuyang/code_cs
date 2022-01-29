@@ -77,7 +77,7 @@
 
 如果一个进程在用户态需要使用内核态的功能，就进行系统调用从而陷入内核，由操作系统代为完成。
 
-<div align="center"> <img src="../../pics//tGPV0.png" width="600"/> </div><br>
+<div align="center"> <img src="../pics/tGPV0.png" width="600"/> </div><br>
 
 Linux 系统的系统调用有以下这些：
 
@@ -106,7 +106,7 @@ Linux 系统的系统调用有以下这些：
 
 因为需要频繁地在用户态和核心态之间进行切换，所以会有一定的性能损失。
 
-<div align="center"> <img src="../../pics//2_14_microkernelArchitecture.jpg"/> </div><br>
+<div align="center"> <img src="../pics/2_14_microkernelArchitecture.jpg"/> </div><br>
 
 ## 中断分类
 
@@ -134,7 +134,7 @@ Linux 系统的系统调用有以下这些：
 
 下图显示了 4 个程序创建了 4 个进程，这 4 个进程可以并发地执行。
 
-<div align="center"> <img src="../../pics//a6ac2b08-3861-4e85-baa8-382287bfee9f.png"/> </div><br>
+<div align="center"> <img src="../pics/a6ac2b08-3861-4e85-baa8-382287bfee9f.png"/> </div><br>
 
 ### 2. 线程
 
@@ -142,7 +142,7 @@ Linux 系统的系统调用有以下这些：
 
 一个进程中可以有多个线程，它们共享进程资源。
 
-<div align="center"> <img src="../../pics//3cd630ea-017c-488d-ad1d-732b4efeddf5.png"/> </div><br>
+<div align="center"> <img src="../pics/3cd630ea-017c-488d-ad1d-732b4efeddf5.png"/> </div><br>
 
 ### 3. 区别
 
@@ -158,7 +158,7 @@ Linux 系统的系统调用有以下这些：
 
 ## 进程状态的切换
 
-<div align="center"> <img src="../../pics//ProcessState.png" width="500"/> </div><br>
+<div align="center"> <img src="../pics/ProcessState.png" width="500"/> </div><br>
 
 - 就绪状态（ready）：等待被调度
 - 运行状态（running）
@@ -213,7 +213,7 @@ Linux 系统的系统调用有以下这些：
 
 #### 2.3 多级反馈队列
 
-<div align="center"> <img src="../../pics//042cf928-3c8e-4815-ae9c-f2780202c68f.png"/> </div><br>
+<div align="center"> <img src="../pics/042cf928-3c8e-4815-ae9c-f2780202c68f.png"/> </div><br>
 
 如果一个进程需要执行 100 个时间片，如果采用轮转调度算法，那么需要交换 100 次。多级队列是为这种需要连续执行多个时间片的进程考虑，它设置了多个队列，每个队列时间片大小都不同，例如 1,2,4,8,..。进程在第一个队列没执行完，就会被移到下一个队列。这种方式下，之前的进程只需要交换 7 次。
 
@@ -426,7 +426,7 @@ void writer() {
 
 ### 2. 哲学家进餐问题
 
-<div align="center"> <img src="../../pics//a9077f06-7584-4f2b-8c20-3a8e46928820.jpg"/> </div><br>
+<div align="center"> <img src="../pics/a9077f06-7584-4f2b-8c20-3a8e46928820.jpg"/> </div><br>
 
 五个哲学家围着一张圆桌，每个哲学家面前放着食物。哲学家的生活有两种交替活动：吃饭以及思考。当一个哲学家吃饭时，需要先拿起筷子左右的两根筷子，并且一次只能拿起一根筷子。
 
@@ -514,7 +514,7 @@ void test(i) {         // 尝试拿起两把筷子
 
 操作系统提供了用于通信的通道（Channel），进程可以通过读写这个通道进行通信。
 
-<div align="center"> <img src="../../pics//037c3a0b-332d-434d-a374-f343ef72c8e1.jpg" width="400"/> </div><br>
+<div align="center"> <img src="../pics/037c3a0b-332d-434d-a374-f343ef72c8e1.jpg" width="400"/> </div><br>
 
 <font size=3>  **（1）管道**  </font></br>
 
@@ -528,19 +528,19 @@ Linux 中管道通过空文件实现。
 2. 流管道：去除第一个限制，支持双向传输；
 3. 命名管道：去除第二个限制，可以在不相关进程之间进行通信。
 
-<div align="center"> <img src="../../pics//7f642a65-b167-4c8f-b382-8322c6322b2c.jpg" width="400"/> </div><br>
+<div align="center"> <img src="../pics/7f642a65-b167-4c8f-b382-8322c6322b2c.jpg" width="400"/> </div><br>
 
 <font size=3>  **（2）消息队列**  </font></br>
 
 消息队列克服了信号传递信息少、管道只能承载无格式字节流以及缓冲区大小受限等缺点。
 
-<div align="center"> <img src="../../pics//d49466db-fdd3-4d36-8a86-47dc45c07a1e.jpg" width="400"/> </div><br>
+<div align="center"> <img src="../pics/d49466db-fdd3-4d36-8a86-47dc45c07a1e.jpg" width="400"/> </div><br>
 
 <font size=3>  **（3）套接字**  </font></br>
 
 套接字也是一种进程间通信机制，与其它通信机制不同的是，它可用于不同机器间的进程通信。
 
-<div align="center"> <img src="../../pics//699b4f96-d63f-46ea-a581-2b3d95eceb6a.jpg" width="400"/> </div><br>
+<div align="center"> <img src="../pics/699b4f96-d63f-46ea-a581-2b3d95eceb6a.jpg" width="400"/> </div><br>
 
 #### 2.2 共享内存
 
@@ -548,13 +548,13 @@ Linux 中管道通过空文件实现。
 
 共享内存是最快的进程通信方式。
 
-<div align="center"> <img src="../../pics//7be0abf9-687c-4451-becd-626b0be7ec22.jpg" width="400"/> </div><br>
+<div align="center"> <img src="../pics/7be0abf9-687c-4451-becd-626b0be7ec22.jpg" width="400"/> </div><br>
 
 # 三、死锁
 
 ## 死锁的必要条件
 
-<div align="center"> <img src="../../pics//c037c901-7eae-4e31-a1e4-9d41329e5c3e.png"/> </div><br>
+<div align="center"> <img src="../pics/c037c901-7eae-4e31-a1e4-9d41329e5c3e.png"/> </div><br>
 
 1. 互斥：每个资源要么已经分配给了一个进程，要么就是可用的。
 2. 占有和等待：已经得到了某个资源的进程可以再请求新的资源。
@@ -577,7 +577,7 @@ Linux 中管道通过空文件实现。
 
 #### 2.1 每种类型一个资源的死锁检测
 
-<div align="center"> <img src="../../pics//b1fa0453-a4b0-4eae-a352-48acca8fff74.png"/> </div><br>
+<div align="center"> <img src="../pics/b1fa0453-a4b0-4eae-a352-48acca8fff74.png"/> </div><br>
 
 上图为资源分配图，其中方框表示资源，圆圈表示进程。资源指向进程表示该资源已经分配给该进程，进程指向资源表示进程请求获取该资源。
 
@@ -587,7 +587,7 @@ Linux 中管道通过空文件实现。
 
 #### 2.2 每种类型多个资源的死锁检测
 
-<div align="center"> <img src="../../pics//e1eda3d5-5ec8-4708-8e25-1a04c5e11f48.png"/> </div><br>
+<div align="center"> <img src="../pics/e1eda3d5-5ec8-4708-8e25-1a04c5e11f48.png"/> </div><br>
 
 上图中，有三个进程四个资源，每个数据代表的含义如下：
 
@@ -636,7 +636,7 @@ Linux 中管道通过空文件实现。
 
 #### 4.1 安全状态
 
-<div align="center"> <img src="../../pics//ed523051-608f-4c3f-b343-383e2d194470.png"/> </div><br>
+<div align="center"> <img src="../pics/ed523051-608f-4c3f-b343-383e2d194470.png"/> </div><br>
 
 图 a 的第二列 Has 表示已拥有的资源数，第三列 Max 表示总共需要的资源数，Free 表示还有可以使用的资源数。从图 a 开始出发，先让 B 拥有所需的所有资源（图 b），运行结束后释放 B，此时 Free 变为 5（图 c）；接着以同样的方式运行 C 和 A，使得所有进程都能成功运行，因此可以称图 a 所示的状态时安全的。
 
@@ -648,13 +648,13 @@ Linux 中管道通过空文件实现。
 
 一个小城镇的银行家，他向一群客户分别承诺了一定的贷款额度，算法要做的是判断对请求的满足是否会进入不安全状态，如果是，就拒绝请求；否则予以分配。
 
-<div align="center"> <img src="../../pics//d160ec2e-cfe2-4640-bda7-62f53e58b8c0.png"/> </div><br>
+<div align="center"> <img src="../pics/d160ec2e-cfe2-4640-bda7-62f53e58b8c0.png"/> </div><br>
 
 上图 c 为不安全状态，因此算法会拒绝之前的请求，从而避免进入图 c 中的状态。
 
 #### 4.3 多个资源的银行家算法
 
-<div align="center"> <img src="../../pics//62e0dd4f-44c3-43ee-bb6e-fedb9e068519.png"/> </div><br>
+<div align="center"> <img src="../pics/62e0dd4f-44c3-43ee-bb6e-fedb9e068519.png"/> </div><br>
 
 上图中有五个进程，四个资源。左边的图表示已经分配的资源，右边的图表示还需要分配的资源。最右边的 E、P 以及 A 分别表示：总资源、已分配资源以及可用资源，注意这三个为向量，而不是具体数值，例如 A=(1020)，表示 4 个资源分别还剩下 1/0/2/0。
 
@@ -678,7 +678,7 @@ Linux 中管道通过空文件实现。
 
 大部分虚拟内存系统都使用分页技术。把由程序产生的地址称为虚拟地址，它们构成了一个虚拟地址空间。例如有一台计算机可以产生 16 位地址，它的虚拟地址空间为 0\~64K，然而计算机只有 32KB 的物理内存，因此虽然可以编写 64KB 的程序，但它们不能被完全调入内存运行。
 
-<div align="center"> <img src="../../pics//7b281b1e-0595-402b-ae35-8c91084c33c1.png"/> </div><br>
+<div align="center"> <img src="../pics/7b281b1e-0595-402b-ae35-8c91084c33c1.png"/> </div><br>
 
 虚拟地址空间划分成固定大小的页，在物理内存中对应的单元称为页框，页和页框大小通常相同，它们之间通过页表进行映射。
 
@@ -686,11 +686,11 @@ Linux 中管道通过空文件实现。
 
 ### 2. 分段
 
-<div align="center"> <img src="../../pics//22de0538-7c6e-4365-bd3b-8ce3c5900216.png"/> </div><br>
+<div align="center"> <img src="../pics/22de0538-7c6e-4365-bd3b-8ce3c5900216.png"/> </div><br>
 
 上图为一个编译器在编译过程中建立的多个表，有 4 个表是动态增长的，如果使用分页系统的一维地址空间，动态增长的特点会导致覆盖问题的出现。
 
-<div align="center"> <img src="../../pics//e0900bb2-220a-43b7-9aa9-1d5cd55ff56e.png"/> </div><br>
+<div align="center"> <img src="../pics/e0900bb2-220a-43b7-9aa9-1d5cd55ff56e.png"/> </div><br>
 
 分段的做法是把每个表分成段，一个段构成一个独立的地址空间。每个段的长度可以不同，并且可以动态增长。
 
@@ -752,7 +752,7 @@ Linux 中管道通过空文件实现。
 
 <div align="center"><img src="https://latex.codecogs.com/gif.latex?4，7，0，7，1，0，1，2，1，2，6"/></div> <br>
 
-<div align="center"> <img src="../../pics//eb859228-c0f2-4bce-910d-d9f76929352b.png"/> </div><br>
+<div align="center"> <img src="../pics/eb859228-c0f2-4bce-910d-d9f76929352b.png"/> </div><br>
 
 ### 4. 时钟
 
@@ -762,7 +762,7 @@ Linux 中管道通过空文件实现。
 
 首先，将内存中的所有页面链接成一个循环队列，当缺页中断发生时，检查当前指针所指向页面的访问位，如果访问位为 0，就将该页面换出；否则将该页的访问位设置为 0，给该页面第二次的机会，移动指针继续检查。
 
-<div align="center"> <img src="../../pics//5f5ef0b6-98ea-497c-a007-f6c55288eab1.png"/> </div><br>
+<div align="center"> <img src="../pics/5f5ef0b6-98ea-497c-a007-f6c55288eab1.png"/> </div><br>
 
 # 五、设备管理
 
