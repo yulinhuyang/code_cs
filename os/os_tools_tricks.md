@@ -58,11 +58,6 @@
 [Linux/UNIX系统编程手册](https://zhuanlan.zhihu.com/p/70973666)
 
 
-**PDF 输出**
-
-[新CSDN文章一键打印、输出PDF](https://www.codenong.com/cs106602341)
-
-
 **bashrc与 profile区别**
 
 [~/.profile  ~/.bashrc和 ~./bash_profile的理解](https://www.jianshu.com/p/b39fd35e2360)
@@ -451,7 +446,11 @@ sudo ln -s /usr/local/cuda-8.0/ /usr/local/cuda/  #新建链接
 nvcc --version                                    #查看当前 cuda 版本
 ```
 
+### PDF 输出 
 
+[新CSDN文章一键打印、输出PDF](https://www.codenong.com/cs106602341)
+
+PDF-XChange Viewer Pro Portable: pdf导出jpg
 
 
 
