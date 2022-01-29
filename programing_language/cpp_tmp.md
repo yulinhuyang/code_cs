@@ -2,3 +2,4 @@
 
 do{statement(s);} while( condition );
 
+当循环的主体只包含一个语句时，可以省略括号
