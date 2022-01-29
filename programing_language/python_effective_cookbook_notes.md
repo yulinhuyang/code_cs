@@ -1,12 +1,10 @@
-# 1    effcitive  python
+# 1   effcitive  python
 
 ## 1.1 Pythonic Thinking
 
 ### pep8规范学习
 
 注意让写的代码尽量Pythonic和符合PEP8标准
-
-
 
 ### 基础结构
 
