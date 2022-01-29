@@ -103,7 +103,18 @@ virtualenv envRote
 source envRote/bin/activate
 ```
 
+### 6 format使用
 
+{} 和 : 来代替以前的 % 
+
+format 函数可以接受不限个参数，位置可以不按顺序。
+
+```python
+"{} {}".format("hello", "world")    # 不设置指定位置，按默认顺序
+->'hello world'
+"{1} {0} {1}".format("hello", "world")  # 设置指定位置
+->'world hello world'
+```
 
 
 
