@@ -69,6 +69,9 @@ re模块中research(pattern,string[,flags]),在string搜索pattern的第一个�
 print(re.match(‘super’, ‘superstition’).span()):  (0, 5)
 
 ### 5 Python如何实现单例模式？其他23种设计模式python如何实现？
+
+**方法1：**
+
 ```python
 #使用__metaclass__（元类）的高级python用法  
 class Singleton2(type):  
@@ -106,6 +109,71 @@ class MyClass4(object):
 one = MyClass4()  
 two = MyClass4()  
 ```
+
+**方法2**
+**1 使用`__new__`方法**
+
+```python
+class Singleton(object):
+    def __new__(cls, *args, **kw):
+        if not hasattr(cls, '_instance'):
+            orig = super(Singleton, cls)
+            cls._instance = orig.__new__(cls, *args, **kw)
+        return cls._instance
+
+class MyClass(Singleton):
+    a = 1
+```
+
+**2 共享属性**
+
+创建实例时把所有实例的`__dict__`指向同一个字典,这样它们具有相同的属性和方法.
+
+```python
+
+class Borg(object):
+    _state = {}
+    def __new__(cls, *args, **kw):
+        ob = super(Borg, cls).__new__(cls, *args, **kw)
+        ob.__dict__ = cls._state
+        return ob
+
+class MyClass2(Borg):
+    a = 1
+```
+
+**3 装饰器版本**
+
+```python
+def singleton(cls):
+    instances = {}
+    def getinstance(*args, **kw):
+        if cls not in instances:
+            instances[cls] = cls(*args, **kw)
+        return instances[cls]
+    return getinstance
+
+@singleton
+class MyClass:
+  ...
+```
+**4 import方法**
+
+作为python的模块是天然的单例模式
+
+```python
+# mysingleton.py
+class My_Singleton(object):
+    def foo(self):
+        pass
+my_singleton = My_Singleton()
+
+# to use
+from mysingleton import my_singleton
+my_singleton.foo()
+```
+
+
 ### 6 面向切面编程AOP和装饰器
 
 装饰器是一个很著名的设计模式，经常被用于有切面需求的场景，较为经典的有插入日志、性能测试、事务处理等。装饰器是解决这类问题的绝佳设计，有了装饰器，我们就可以抽离出大量函数中与函数功能本身无关的雷同代码并继续重用。概括的讲，**装饰器的作用就是为已经存在的对象添加额外的功能。**
