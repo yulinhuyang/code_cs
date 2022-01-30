@@ -49,3 +49,7 @@ for (int i = h[u]; i != -1; i = ne[i])
 idx = 0;
 memset(h, -1, sizeof h);
 ```
+**拓扑排序**
+
+
+
