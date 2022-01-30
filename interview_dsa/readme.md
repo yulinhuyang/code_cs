@@ -24,6 +24,8 @@ https://gitee.com/programmercarl/leetcode-master
 
 [算法竞赛知识合集](https://blog.csdn.net/weixin_45697774/article/details/105603064)
 
+https://blog.csdn.net/Annabel_CM?type=blog
+
 https://github.com/lydrainbowcat/tedukuri
 
 https://github.com/soulmachine/acm-cheat-sheet
