@@ -8,6 +8,8 @@ do{statement(s);} while( condition );
 
 全局变量默认初始化为0，而局部变量被初始化为随机数
 
+C++必须使用常量定义数组大小，不能使用变量,可以使用const int 定义大小，不能使用#define定义
+
 **char* 与string之间转换**
 
 char[]，char * ，string之间转换； https://blog.csdn.net/yzhang6_10/article/details/51164300
