@@ -34,6 +34,8 @@ tallest conv 区间操作转为左右端点操作,额外的辅助数组存储操
 
 整数域上的二分
 
+模板1：寻找左边界、模板2：寻找右边界
+
 实数域上的二分
 
 #### 0x05 排序
@@ -58,6 +60,8 @@ tallest conv 区间操作转为左右端点操作,额外的辅助数组存储操
 
 决策包容性、邻项交换
 
+区间合并：st end 延迟处理法
+
 ### 0x10 基本数据结构
 
 由数据范围反推算法复杂度以及算法内容: https://www.acwing.com/blog/content/32/
@@ -81,6 +85,17 @@ tallest conv 区间操作转为左右端点操作,额外的辅助数组存储操
 #### 0x12 队列
 
 单调队列：最大子序和，单调队列+前缀和，下标位置递增，对应的前缀和S的值也递增
+```cpp
+//hh--->tt之间的一段数组组成的队列，hh小，tt大
+//常见模型：找出滑动窗口中的最大值/最小值
+int hh = 0, tt = -1;
+for (int i = 0; i < n; i ++ )
+{
+    while (hh <= tt && check_out(q[hh])) hh ++ ;  // 判断队头是否滑出窗口
+    while (hh <= tt && check(q[tt], i)) tt -- ;
+    q[ ++ tt] = i;
+}
+```
 
 决策集合中及时排除不是最优解的选择
 
@@ -89,6 +104,48 @@ tallest conv 区间操作转为左右端点操作,额外的辅助数组存储操
 链表：head和tail哨兵
 
 数组模拟链表、下标模拟指针
+
+链表(数组模拟链表c++)：https://blog.csdn.net/Annabel_CM/article/details/107446710
+
+```cpp
+// head存储链表头，e[]存储节点的值，ne[]存储节点的next指针，idx表示当前用到了哪个节点
+//下标从零开始，第k 个数对应数组e[k - 1]；
+int head, e[N], ne[N], idx;
+
+// 在链表头插入一个数a, 先将x的指针指向原来head的位置，然后将head指向x
+void insert(int a)
+{
+    e[idx] = a, ne[idx] = head, head = idx ++ ;
+}
+
+// 将头结点删除，需要保证头结点存在;在删除节点时，要判断该节点是否为头节点，若为头节点，直接head指向该节点所指向的位置
+void remove()
+{
+    head = ne[head];
+}
+// 将x插到下标是k的点后面
+void add(int k, int x)
+{
+   e[idx] = x, ne[idx] = ne[k], ne[k] = idx ++ ;
+}
+
+// 将下标是k的点后面的点删掉
+void remove(int k)
+{
+    ne[k] = ne[ne[k]];
+}
+```
+
+```cpp
+//双向链表
+// 在节点a的右边插入一个数x
+void insert(int a, int x)
+{
+    e[idx] = x;
+    l[idx] = a, r[idx] = r[a];
+    l[r[a]] = idx, r[a] = idx ++ ; //先将要插入的数左右指针分别指向对应位置,然后先将原来第k个数右指针所指的位置的左指针指向x,即l[r[k]] = idx;
+}
+```
 
 hash表记录指针
 
