@@ -8,7 +8,7 @@ do{statement(s);} while( condition );
 
 全局变量默认初始化为0，而局部变量被初始化为随机数
 
-**char* ，string之间转换**
+**char* 与string之间转换**
 
 char[]，char * ，string之间转换； https://blog.csdn.net/yzhang6_10/article/details/51164300
 
