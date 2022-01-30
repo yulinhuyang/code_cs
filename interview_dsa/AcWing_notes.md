@@ -187,9 +187,12 @@ AcWing 831. KMP字符串: https://www.cnblogs.com/Inabameguru/p/14932861.html
 
 **字串最长相同前后缀**
 ```cpp
-假如A[]:abababf, 则其全部前缀为：a,ab,aba,abab,ababa,ababab,ababab, 全部后缀为： f,bf,abf,babf,ababf,bababf,bababf
+假如A[]:abababf, 
+则其全部前缀为：a,ab,aba,abab,ababa,ababab,ababab, 全部后缀为： f,bf,abf,babf,ababf,bababf,bababf
+
 ne[i]代表了以第i个字符结尾的字串最长相同前后缀大小,很明显"ne[1]=0"
 动态规划角度：用ne[i-1]推出ne[i]，当取到i时，也说明了前i个字符的字串也匹配成功，因此ne[0,i]有解。
+
 For()
 {
 
