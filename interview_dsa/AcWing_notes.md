@@ -183,6 +183,34 @@ f[i]：B中以i结尾的子串与A的前缀能够匹配的最长长度
 
 最小表示：循环同构中字典序最小的，可以复制一份接在后面比较
 
+AcWing 831. KMP字符串: https://www.cnblogs.com/Inabameguru/p/14932861.html
+
+**字串最长相同前后缀**
+```cpp
+//假如A[]:abababf, 则其全部前缀为：a,ab,aba,abab,ababa,ababab,ababab, 全部后缀为： f,bf,abf,babf,ababf,bababf,bababf
+//ne[n]为P中以第n位为结尾的字串最长相同前后缀大小,很明显"ne[1]=0"
+//动态规划角度：当取到i时，也说明了前i个字符的字串也匹配成功，因此ne[0,i]有解。
+For()
+{
+
+我们设立一个指针j，j指向与ne[i-1]匹配的左串末尾。
+
+因此我们也确保了有P[0,j]==P[i-1-j,i-1]。
+
+(1)当P[j+1]==P[i]时:
+
+　　有P[0,j+1]==P[i-j-1,i]，也就是ne[i]=j+1;
+
+　　break;
+
+(2)当P[j+1]!=P[i]时：
+
+　　也就没有P[0,j+1]==P[i-j-1],因此对于ne[i]的求解仍需要循环求解(此后j变为ne[ne[i-1]]匹配的左串末端)，直至答案求出
+
+(3)ne[i]=0;
+}
+
+```
 #### 0x16 Trie
 
 int trie[SIZE][26],tot = 1
