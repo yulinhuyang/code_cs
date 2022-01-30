@@ -31,4 +31,18 @@ void remove(int k)
     ne[k] = ne[ne[k]];
 }
 ```
+双向链表
+```cpp
+// 在节点a的右边插入一个数x
+void insert(int a, int x)
+{
+    e[idx] = x;
+    l[idx] = a, r[idx] = r[a];
+    l[r[a]] = idx, r[a] = idx ++ ; //先将要插入的数左右指针分别指向对应位置,然后先将原来第k个数右指针所指的位置的左指针指向x,即l[r[k]] = idx;
+}
+
+```
+
+
+
 
