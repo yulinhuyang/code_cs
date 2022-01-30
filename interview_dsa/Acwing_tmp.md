@@ -8,7 +8,7 @@ int son[N][26], cnt[N], idx;
 ```
 
 
-带距离的并查集的路径压缩方法
+**带距离的并查集的路径压缩方法**
 
 ```cpp
 // 返回x的祖宗节点
@@ -22,4 +22,23 @@ int find(int x)
     }
     return p[x];
 }
+```
+
+**邻接表**
+
+相当于链表的数组：head->展开成h[N]
+
+```cpp
+// 对于每个点k，开一个单链表，存储k所有可以走到的点。h[k]存储这个单链表的头结点
+int h[N], e[N], ne[N], idx;
+
+// 添加一条边a->b
+void add(int a, int b)
+{
+    e[idx] = b, ne[idx] = h[a], h[a] = idx ++ ;
+}
+
+// 初始化
+idx = 0;
+memset(h, -1, sizeof h);
 ```
