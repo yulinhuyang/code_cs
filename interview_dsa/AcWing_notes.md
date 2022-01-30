@@ -187,29 +187,42 @@ AcWing 831. KMP字符串: https://www.cnblogs.com/Inabameguru/p/14932861.html
 
 **字串最长相同前后缀**
 ```cpp
-//假如A[]:abababf, 则其全部前缀为：a,ab,aba,abab,ababa,ababab,ababab, 全部后缀为： f,bf,abf,babf,ababf,bababf,bababf
-//ne[n]为P中以第n位为结尾的字串最长相同前后缀大小,很明显"ne[1]=0"
-//动态规划角度：当取到i时，也说明了前i个字符的字串也匹配成功，因此ne[0,i]有解。
+假如A[]:abababf, 则其全部前缀为：a,ab,aba,abab,ababa,ababab,ababab, 全部后缀为： f,bf,abf,babf,ababf,bababf,bababf
+ne[i]代表了以第i个字符结尾的字串最长相同前后缀大小,很明显"ne[1]=0"
+动态规划角度：用ne[i-1]推出ne[i]，当取到i时，也说明了前i个字符的字串也匹配成功，因此ne[0,i]有解。
 For()
 {
 
 我们设立一个指针j，j指向与ne[i-1]匹配的左串末尾。
-
 因此我们也确保了有P[0,j]==P[i-1-j,i-1]。
-
 (1)当P[j+1]==P[i]时:
-
 　　有P[0,j+1]==P[i-j-1,i]，也就是ne[i]=j+1;
-
 　　break;
-
 (2)当P[j+1]!=P[i]时：
-
 　　也就没有P[0,j+1]==P[i-j-1],因此对于ne[i]的求解仍需要循环求解(此后j变为ne[ne[i-1]]匹配的左串末端)，直至答案求出
-
 (3)ne[i]=0;
+
 }
 
+//s、p数组从1 开始，长度M、N是数组的有效长度
+int sLen = 5;
+int pLen = 3;
+char p[] = {'\0','a','b','a'};
+char s[] = {'\0','a','b','a','b','a'};
+int ne[pLen];
+for(int i = 2,j = 0;i <= pLen ;i++){
+    if(j && p[i] != p[j+1]) j = ne[j];
+    if(p[i] == p[j+1]) j++;
+    ne[i] = j;
+}
+for(int i = 1,j = 0;i <=sLen;i++){
+    if(j && s[i] != p[j+1]) j = ne[j];
+    if(s[i] == p[j+1]) j++;
+    if(j == pLen){
+        cout << i - pLen << endl;
+        j = ne[j];
+    }
+}
 ```
 #### 0x16 Trie
 
