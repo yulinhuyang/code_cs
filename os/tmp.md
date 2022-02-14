@@ -8,3 +8,4 @@ grep -rn : grep -rn可以关键词查找符合条件的文件的行, grep进行�
 
 find进行文件名查找(递归,不适合查找modules)
 
+Windows有哪些神级软件？： https://www.zhihu.com/question/465494790/answer/1999417175
