@@ -32,14 +32,11 @@ tallest conv 区间操作转为左右端点操作,额外的辅助数组存储操
 二维数组的前缀和
 
 <div align="center"> <img src="../pics/qianzhuihe1.png" width="50%"/> </div><br>
-
 前缀和和差分是一对互逆运算。
 
 差分：将原序列上的区间操作转为差分序列上的单点操作。
 
 <div align="center"> <img src="../pics/chafen1.png" width="50%"/> </div><br>
-
-
 #### 0x04 二分
 
 二分求解转判定
@@ -81,7 +78,6 @@ tallest conv 区间操作转为左右端点操作,额外的辅助数组存储操
 由数据范围反推算法复杂度以及算法内容: https://www.acwing.com/blog/content/32/
 
 <div align="center"> <img src="../pics/fuzadu.png" width="80%"/> </div><br>
-
 ios::sync_with_stdio(false)详解： https://blog.csdn.net/L1558198727/article/details/81512350
 
 取消cin于stdin的同步。
@@ -134,6 +130,10 @@ for (int i = 0; i < n; i ++ )
 
 链表(数组模拟链表c++)：https://blog.csdn.net/Annabel_CM/article/details/107446710
 
+邻接表：
+
+<div align="center"> <img src="../pics/linjie.png" width="30%"/> </div><br>
+
 ```cpp
 // head存储链表头，e[]存储节点的值，ne[]存储节点的next指针，idx表示当前用到了哪个节点
 //下标从零开始，第k 个数对应数组e[k - 1]；
@@ -184,14 +184,16 @@ head + next + ver(终点) + edge
 
 #### 0x14 Hash
 
-hash：开散列方案，邻接表结构，hash的值域作为表头数组的head
+hash：拉链法（邻接表结构，hash的值域作为表头数组的head）;开放定址法
 
+<div align="center"> <img src="../pics/lalianfa.png" width="80%"/> </div><br>
 最简单的hash:数组计数
 
 H(x) = (x mod P) + 1
 
 字符串hash：字符串看成P进制数，分配一个大于0的数值，代表每种字符，P = 131或13331，
 
+<div align="center"> <img src="../pics/zifuchuanhash.png" width="80%"/> </div><br>
 H(S + c) = (H(S)*P + value[c]) mod M
 
 H(T) = (H(S + T) - H[S]*P^length(T)) mod M
@@ -316,6 +318,8 @@ BFS:d[x]是节点x的层次,两段性和单调性
 topsort：邻接表结构+ queue
 
 #### 0x22 深度优先捜索
+
+<div align="center"> <img src="../pics/dfsbfs.png" width="50%"/> </div><br>
 
 数独的优化:位运算进行常数优化，记录和可填性检查
 
@@ -511,6 +515,10 @@ Treap: tree + heap
 
 闫氏DP法，集合观点： https://www.cnblogs.com/IzayoiMiku/p/13635809.html
 
+属性：min max count
+
+<div align="center"> <img src="../pics/dp0.png" width="80%"/> </div><br>
+<div align="center"> <img src="../pics/dp1.png" width="80%"/> </div><br>
 三要素：状态、阶段、决策
 
 三个基本条件：重叠子问题、无后效性、最优子结构
@@ -525,10 +533,8 @@ dp对状态空间的遍历对应一张有向无环图：节点对应问题的状
 
 #### 0x51 线性DP
 
-![avatar](../pics/lcis1.png)
-
-![avatar](../pics/lcis2.png)
-
+<div align="center"> <img src="../pics/lcis1.png" width="50%"/> </div><br>
+<div align="center"> <img src="../pics/lcis2.png" width="50%"/> </div><br>
 LIS、LCS、数字三角形状态转移方程
 
 递推遍历方向
@@ -554,6 +560,8 @@ mobile service:求解线性dp问题，先确定阶段，若阶段不足以表示
 分组背包：i组有ci个物品，每组至多选一个。内循环加一层Ci的循环。i是阶段，i和j共同构成状态，k是决策
 
 #### 0x53 区间DP
+
+<div align="center"> <img src="../pics/qujiandp.png" width="80%"/> </div><br>
 
 初态：长度为1的元区间，一个状态由若干个更小的包含于它的区间转移而来
 
@@ -592,6 +600,8 @@ AcWing289 环路运输：环拆为链，复制一倍接在末尾
 Broken Robot：有后效性的状态转移；分阶段带环，DP和高斯消元相结合，整体dp，局部高斯消元；倒推
 
 #### 0x56 状态压缩DP
+
+<div align="center"> <img src="../pics/zhuangtaidp.png" width="80%"/> </div><br>
 
 求出最优解的状态和未求出最优解的状态在各个维度的分界点组成dp扩展的轮廓
 
@@ -645,6 +655,7 @@ val(i,j)分成两部分，第一部分仅与i有关，第二部分仅与j有关�
 
 稠密图：邻接矩阵；稀疏图：邻接表
 
+<div align="center"> <img src="../pics/tulun1.png" width="80%"/> </div><br>
 **SSSP问题**
 
 <div align="center"> <img src="../pics/dijkstra.png" width="80%"/> </div><br>
@@ -682,6 +693,7 @@ D[k,i,j] = min(D[k-1,i,j],D[k-1,i,k] + D[k-1,k,j])，k是阶段，在外循环�
 
 #### 0x62 最小生成树
 
+<div align="center"> <img src="../pics/tulun2.png" width="80%"/> </div><br>
 **Kruskal**
 
 维护无向图的最小生成森林，从剩余边中选择权重最小的，且两个端点不连通的边加入森林，
