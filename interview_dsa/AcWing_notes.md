@@ -16,9 +16,8 @@ int lowbit(int x)
     return x&(x^(x-1));
 }
 ```
-#### 0x02 枚举、模拟、递推
 
-前缀和：二维数组的前缀和
+#### 0x02 递推与递归
 
 tallest conv 区间操作转为左右端点操作,额外的辅助数组存储操作结果
 
@@ -26,7 +25,20 @@ tallest conv 区间操作转为左右端点操作,额外的辅助数组存储操
 
 分治法等比数列求和
 
-#### 0x03 递归
+#### 0x03 前缀和与差分
+
+前缀和：下标从1开始。
+
+二维数组的前缀和
+
+<div align="center"> <img src="../pics/qianzhuihe1.png" width="50%"/> </div><br>
+
+前缀和和差分是一对互逆运算。
+
+差分：将原序列上的区间操作转为差分序列上的单点操作。
+
+<div align="center"> <img src="../pics/chafen1.png" width="50%"/> </div><br>
+
 
 #### 0x04 二分
 
@@ -62,9 +74,21 @@ tallest conv 区间操作转为左右端点操作,额外的辅助数组存储操
 
 区间合并：st end 延迟处理法
 
+区间问题：按左端点、右端点、先左后右端点排序
+
 ### 0x10 基本数据结构
 
 由数据范围反推算法复杂度以及算法内容: https://www.acwing.com/blog/content/32/
+
+<div align="center"> <img src="../pics/fuzadu.png" width="80%"/> </div><br>
+
+ios::sync_with_stdio(false)详解： https://blog.csdn.net/L1558198727/article/details/81512350
+
+取消cin于stdin的同步。
+
+STL开o2优化，效率和数组差不多。
+
+scanf("%s%d%d"),s一般开p[2]
 
 回文子串的最大长度： 加#中心展开法
 
@@ -105,6 +129,8 @@ for (int i = 0; i < n; i ++ )
 链表：head和tail哨兵
 
 数组模拟链表、下标模拟指针
+
+写工程用动态链表，算法题用静态链表要快
 
 链表(数组模拟链表c++)：https://blog.csdn.net/Annabel_CM/article/details/107446710
 
@@ -185,6 +211,8 @@ f[i]：B中以i结尾的子串与A的前缀能够匹配的最长长度
 最小表示：循环同构中字典序最小的，可以复制一份接在后面比较
 
 AcWing 831. KMP字符串: https://www.cnblogs.com/Inabameguru/p/14932861.html
+
+ne退：直到退无可退，为了下一次分配，最少移动多少。
 
 **字串最长相同前后缀**
 ```cpp
@@ -412,7 +440,7 @@ NIM博弈：NIM博弈先手必胜，当且仅当 A1 xor A2 xor ... An !=0
 f[x]保存元素x所在集合的代表，fa[i] = i
 
 get + merge
- 
+
 路径优化、按秩合并
 
 **带距离的并查集的路径压缩方法**
@@ -497,6 +525,10 @@ dp对状态空间的遍历对应一张有向无环图：节点对应问题的状
 
 #### 0x51 线性DP
 
+![avatar](../pics/lcis1.png)
+
+![avatar](../pics/lcis2.png)
+
 LIS、LCS、数字三角形状态转移方程
 
 递推遍历方向
@@ -507,9 +539,13 @@ LCIS
 
 mobile service:求解线性dp问题，先确定阶段，若阶段不足以表示一个状态，则把所需要的附加信息作为状态的维度；确定dp状态时，选择最小的能覆盖整个状态空间的维度集合
 
+如果下标有i-1,则从1开始循环，否则从0开始循环。
+
 #### 0x52 背包
 
 0-1背包：使用滚动数组时为何要逆序枚举: https://blog.csdn.net/aidway/article/details/50726472
+
+如果用上一次状态，则从大到小枚举体积；如果用本次状态，则从小到大枚举体积。
 
 完全背包：内循环采用正序，对应着每种物品可以使用无限次
 
@@ -607,13 +643,25 @@ val(i,j)分成两部分，第一部分仅与i有关，第二部分仅与j有关�
 
 邻接表：head ver edge  next
 
+稠密图：邻接矩阵；稀疏图：邻接表
+
 **SSSP问题**
 
+<div align="center"> <img src="../pics/dijkstra.png" width="80%"/> </div><br>
 Dijkstra:非负权，每次选择未被标记的，dist[x]最小的节点x，标记x，扫描并更新x的所有出边。使用二叉堆优化基于贪心的Dijkstra算法。
 
-Bellman-ford：扫描所有边，如果dist[y] > dist[x] + z，则用dist[x] + z更新dist[y]，使其满足三角不等式。
+找点，循环基于点
 
-SPFA:队列优化Bellman-Ford算法，起初队列只有起点1，更新完dist[y]，如果y不在队列中，则y入队列。可以优先队列(二叉堆)优化基于BFS的SPFA算法。
+二叉堆优化的dijkstra:只能处理非负权的，priority_queue中存放的是<distance,index>。
+
+<div align="center"> <img src="../pics/bellmanford.png" width="80%"/> </div><br>
+Bellman-ford：扫描所有边，如果dist[y] > dist[x] + z，则用dist[x] + z更新dist[y]，使其满足三角不等式。需要备份，防止串联;找边，循环基于边
+
+SPFA: 队列优化Bellman-Ford算法，起初队列只有起点1，更新完dist[y]，如果y不在队列中，则y入队列。可以优先队列(二叉堆)优化基于BFS的SPFA算法。
+
+SPFA：可以处理负值，queue中存放的是index。
+
+二叉堆优化的dijkstra，SPFA都是基于邻接表结构的。
 
 AcWing341 最优贸易:正图D(x),反图F(x)，
 
@@ -639,6 +687,8 @@ D[k,i,j] = min(D[k-1,i,j],D[k-1,i,k] + D[k-1,k,j])，k是阶段，在外循环�
 维护无向图的最小生成森林，从剩余边中选择权重最小的，且两个端点不连通的边加入森林，
 
 用并查集f[x]维护
+
+Kruskal常用，效果好
 
 **Prim**
 
@@ -774,7 +824,7 @@ A、B是二分图的左部和右部
 
 匈牙利算法(增广路算法)：计算二分图的最大匹配
 
-过程：S =∅ 所有边都是非匹配边-->寻找增广路path,把路径上所有边的匹配状态取反，得到更大的匹配S' -->重复直至图中不存在增广路
+过程：S =∅所有边都是非匹配边-->寻找增广路path,把路径上所有边的匹配状态取反，得到更大的匹配S' -->重复直至图中不存在增广路
 
 特点：一个节点成为匹配点后，至多因为找到增广路而更换匹配对象，但绝不会再变回非匹配点。
 
@@ -788,6 +838,8 @@ AcWing372 棋盘覆盖： 0要素(两个集合，集合内部0条边)、1要素(
 多重匹配解决方案：拆点、左部节点Kli次dfs、网络流
 
 AcWing374 导弹防御塔：拆点法
+
+二分图当且仅当图中不含奇数环，由于图中不含奇数环，所以染色过程中一定没有矛盾。
 
 **二分图的带权匹配**
 
