@@ -656,7 +656,8 @@ val(i,j)分成两部分，第一部分仅与i有关，第二部分仅与j有关�
 稠密图：邻接矩阵；稀疏图：邻接表
 
 <div align="center"> <img src="../pics/tulun1.png" width="80%"/> </div><br>
-**SSSP问题**
+
+**SSSP(单源最短路)问题**
 
 <div align="center"> <img src="../pics/dijkstra.png" width="80%"/> </div><br>
 Dijkstra:非负权，每次选择未被标记的，dist[x]最小的节点x，标记x，扫描并更新x的所有出边。使用二叉堆优化基于贪心的Dijkstra算法。
@@ -694,6 +695,7 @@ D[k,i,j] = min(D[k-1,i,j],D[k-1,i,k] + D[k-1,k,j])，k是阶段，在外循环�
 #### 0x62 最小生成树
 
 <div align="center"> <img src="../pics/tulun2.png" width="80%"/> </div><br>
+
 **Kruskal**
 
 维护无向图的最小生成森林，从剩余边中选择权重最小的，且两个端点不连通的边加入森林，
