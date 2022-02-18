@@ -20,7 +20,7 @@ C++11的时间新特性之high_resolution_clock： https://blog.csdn.net/cw_hell
 
 system_clock 是启动自1970的时间，是启动自系统重启的时间，steady_clock、high_resolution_clock 系统启动时间
 ```
-//high_resolution_clock
+//high_resolution_clock  测试time point
 high_resolution_clock::time_point ht = high_resolution_clock::now();
 std::cout << ht.time_since_epoch().count() << std::endl;
 
