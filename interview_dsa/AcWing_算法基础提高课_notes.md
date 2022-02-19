@@ -545,7 +545,7 @@ for(int i=1;i*i<=x;i++)
   多个棋子 先手必胜 <=> SG(S1) ^ SG(S2) ^ ... ^ SG(Sk) != 0   
 - 二项式定理   
 
- <div align="center"> <img src="../pics/erxiangshi.jpg" width="80%"/> </div><br>
+ <div align="center"> <img src="../pics/erxiangshi.png" width="80%"/> </div><br>
 
 - s[i] 表示数字 i 出现的次数，再开一个 ss[i] 数组，数字 i 每出现一次，ss[i] 就加上 i ，然后对 s[i] 和 ss[i] 数组求一遍前缀和。利用前缀和ss[r] - ss[l]可以求出在 (l, r] 区间内所有数的和，用 s[r] - s[l] 可以求出在 (l, r] 区间内所有数的个数，ss[r] - ss[l] - (s[r] - s[l]) * l即可得到所有比 l 大的数都减去 l 得到的总和([AcWing 3993. 石子游戏](https://www.acwing.com/activity/content/problem/content/5658/))
 - [NOIP2014 提高组] 解方程   
