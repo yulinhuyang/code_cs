@@ -22,7 +22,7 @@ https://www.acwing.com/blog/content/8368/
 while (l < r)
 {
     int mid = l + r >> 1;
-    if (a[mid] >= x) r = mid;
+    if (a[mid] >= x) r = mid; 
     else l = mid + 1;
 }
 return l;
@@ -639,27 +639,27 @@ ios::sync_with_stdio(false) 需特别注意[无输出的错位输出的比赛常
 > long double 会保存二进制最高 64 位和指数  
 > double的这种存储方式也就意味着 2 的幂是不会对精度产生影响的   
 
-- double fmod(double x,double y) 返回x除以y的余数。   
-  fmod()用来对浮点数进行取模，设x=k*n+h，则返回值为h（h和x的符号相同）。   
-  %只用于整型的计算，后一个数不能为0;    
+- double fmod(double x,double y) 返回x除以y的余数。       
+  fmod()用来对浮点数进行取模，设x=k*n+h，则返回值为h（h和x的符号相同）。     
+  %只用于整型的计算，后一个数不能为0;      
   fmod()可以对浮点型数据进行取模运算，后一个数可以为0，返回NaN(NaN，是Not a Number的缩写,用于处理计算中出现的错误情况，比如 0.0 除以 0.0 或者求负数的平方根)。   
-- 对于超出unsigned long long范围不是很多的数，可以尝试用long double（取模可以用fmod，注意精度损失，cout默认只保留6位有效数字，应当使用printf("%LF")，F小写和大写没影响，但是 l 必须大写成L,如果"%LF"无输出，则只好强转double保留15位有效数字）或两个unsigned long long代替高精度    
-- lcm为防止溢出，不可先乘后除，而且为保证精度应尽量整除   
-- 四舍五入可以用``中的round函数（保留几位小数可以先乘10的幂再round再除以10的幂）也可以用%.0lf输出，若强转int的话小数部分会直接舍弃   
-- [通常取eps的值为：1e-10~1e-8，判断正数的条件改为x > -eps](https://blog.csdn.net/weixin_40693830/article/details/113196595)
+- 对于超出unsigned long long范围不是很多的数，可以尝试用long double（取模可以用fmod，注意精度损失，cout默认只保留6位有效数字，应当使用printf("%LF")，F小写和大写没影响，但是 l 必须大写成L,如果"%LF"无输出，则只好强转double保留15位有效数字）或两个unsigned long long代替高精度      
+- lcm为防止溢出，不可先乘后除，而且为保证精度应尽量整除     
+- 四舍五入可以用``中的round函数（保留几位小数可以先乘10的幂再round再除以10的幂）也可以用%.0lf输出，若强转int的话小数部分会直接舍弃     
+- [通常取eps的值为：1e-10~1e-8，判断正数的条件改为x > -eps](https://blog.csdn.net/weixin_40693830/article/details/113196595)  
 
 ### 2.7.4 STL
 
-- 非C++11可以用map，但是使用unordered_map（数据存储无序，不保证与插入顺序一致）需要`#include
-  unordered_multimap,unordered_set和unordered_multiset同理
-- set的insert不支持返回迭代器，需要二分查找，但multiset可以
+- 非C++11可以用map，但是使用unordered_map（数据存储无序，不保证与插入顺序一致）需要`#include  
+  unordered_multimap,unordered_set和unordered_multiset同理  
+- set的insert不支持返回迭代器，需要二分查找，但multiset可以  
 
 ```cpp
-typedef multiset<int>::iterator iter;
-iter it=s.insert(x);//插入x，并返回x在s中的位置（迭代器）
+typedef multiset<int>::iterator iter;  
+iter it=s.insert(x);//插入x，并返回x在s中的位置（迭代器）  
 ```
 
-- set专有的s.lower_bound(x)比lower_bound(s.begin(), s.end(), x)会更快
+- set专有的s.lower_bound(x)比lower_bound(s.begin(), s.end(), x)会更快  
 - 对于结构体/pair 赋值，a={x,y}是C++11开始才有的语法   
   旧版本可以这样写：   
   1.转化为pair类型   
@@ -668,127 +668,127 @@ iter it=s.insert(x);//插入x，并返回x在s中的位置（迭代器）
   a=pair<int,int>(x,y);   
   3.使用STL中的make_pair函数  
   a=make_pair(x,y);     
-- iostream包含`和`（可以使用pair类型）头文件，包含swap，max，min，getline（接收一行字符串，忽略回车符。），不包含freopen（只在库中）  
-- end()指向的是最后一个元素的下一个位置，back()返回的是最后一个元素.类比字符串，end( )返回的是’\0’，back( )返回的是字符串的最后一个字符   
+- iostream包含`和`（可以使用pair类型）头文件，包含swap，max，min，getline（接收一行字符串，忽略回车符。），不包含freopen（只在库中）    
+- end()指向的是最后一个元素的下一个位置，back()返回的是最后一个元素.类比字符串，end( )返回的是’\0’，back( )返回的是字符串的最后一个字符     
 
 ### 2.7.5 优化技巧
 
-- 越在内层循环的数组维度在定义数组时越靠后，能提高运行效率（在连续的存储空间内）（例如ST表的数组，倍增数组注意把指数的一维放在前面）
-- ST表建议预处理log函数省时间，for (int i = 2 ; i <= N ; i++) lg[i] = lg[i >> 1] + 1;   
-  对于st[i][j]=f(st[i][j-1],st[i+(1<<j-1)][j-1])，我们将i,j的顺序调换一下可以提高效率    
-- noip可以用exit(0)和goto，但是请谨慎使用。goto 语句可用于跳出深嵌套循环，可以往后跳，也可以往前跳，且一直往后执行。goto只能在函数体内跳转，不能跳到函数体外的函数。即goto有局部作用域，需要在同一个栈内。
+- 越在内层循环的数组维度在定义数组时越靠后，能提高运行效率（在连续的存储空间内）（例如ST表的数组，倍增数组注意把指数的一维放在前面）  
+- ST表建议预处理log函数省时间，for (int i = 2 ; i <= N ; i++) lg[i] = lg[i >> 1] + 1;       
+  对于st[i][j]=f(st[i][j-1],st[i+(1<<j-1)][j-1])，我们将i,j的顺序调换一下可以提高效率      
+- noip可以用exit(0)和goto，但是请谨慎使用。goto 语句可用于跳出深嵌套循环，可以往后跳，也可以往前跳，且一直往后执行。goto只能在函数体内跳转，不能跳到函数体外的函数。即goto有局部作用域，需要在同一个栈内。  
 - 万能头 `include<bits/stdc++.h>`（注意有些比赛可能不允许使用） 会增加编译时间，但是比赛评测程序的时间限制指的是运行时间限制，而不是编译时间限制，所以包含万能头文件不会影响到评分。
-- memset使用时要小心，在给char以外的数组赋值时，一般初始化为0或者-1或者0x3f或者-0x3f。   
-  memset -1其实是赋值为NaN，NaN在任何比较运算都返回false    
-- CLOCKS_PER_SEC可以返回1s内clock()对应值，注意clock()运算速度慢，可以每多少次循环执行一次clock()
-- iostream库中有rand()可以产生0~0x7fff(32367)的随机数，初始化种子srand((unsigned int)time(0))（使用time函数获取系统时间，得到的值是一个时间戳，即从1970年1月1日0点到现在时间的秒数，然后将得到的time_t类型数据转化为(unsigned int)的数
-- 建议一次性写好常用头文件，这样就不用写到一半再补加，打断思路）
-- 分配空间比较慢，用static可以防止每次重新分配空间
+- memset使用时要小心，在给char以外的数组赋值时，一般初始化为0或者-1或者0x3f或者-0x3f。     
+  memset -1其实是赋值为NaN，NaN在任何比较运算都返回false      
+- CLOCKS_PER_SEC可以返回1s内clock()对应值，注意clock()运算速度慢，可以每多少次循环执行一次clock()  
+- iostream库中有rand()可以产生0~0x7fff(32367)的随机数，初始化种子srand((unsigned int)time(0))（使用time函数获取系统时间，得到的值是一个时间戳，即从1970年1月1日0点到现在时间的秒数，然后将得到的time_t类型数据转化为(unsigned int)的数  
+- 建议一次性写好常用头文件，这样就不用写到一半再补加，打断思路）  
+- 分配空间比较慢，用static可以防止每次重新分配空间  
 
 ### 2.7.6 解题技巧
 
-- 编程：思维（数学），编程能力（实践，即手速【非常重要，需要自己练】+正确率）  
-- 解题注意尝试逆向思维
-- 别忘了打表也是一种颇有妙用的算法
-- noip一定要把暴力分部分分拿足
-- 看到题目可以先考虑暴力模拟的方法，理解题意，理清思路，然后再根据理想的时间复杂度找到复杂度的瓶颈，对代码各步不断进行优化直到满足要求，注意在空间足够的情况下最好不要为省空间而压缩数组减少变量，在时间复杂度足够的情况下不要使用太多不一定正确而又复杂的优化，码风应清晰，不要压行，尽可能防止自己出错
-- 考试注意事项：   
-  保持心态，可以带口香糖之类食物缓解压力，简单题要看清题意先做，很久没有思路就要想方设法写暴力
-- 在做题前把细节想清楚，怎么写比较简便  
-- 对于较大数据范围，如果自己的做法会超时，当数据比较随机时可以尝试trick：减少操作次数，比如人为限定循环执行的次数以保证不超时，期望能得到正确答案
-- 对于多个变量的数据范围，可以尝试从小的数据范围找突破口
-- 对于O(N ^ 2)优化为O(N)：尝试能不能从多层循环枚举多个变量 改为 （使用一些数组存储答案）只枚举一个变量   
-  例如要枚举左右边界，可以考虑通过记录前缀和、记录最后一个合法左边界的位置等方法，使得只需枚举右边界即可解出答案
-- 注意部分分，当题目有多个条件时可以考虑满足其中部分条件的做法，再尝试添加一个条件的做法应该如何改进
+- 编程：思维（数学），编程能力（实践，即手速【非常重要，需要自己练】+正确率）    
+- 解题注意尝试逆向思维  
+- 别忘了打表也是一种颇有妙用的算法  
+- noip一定要把暴力分部分分拿足  
+- 看到题目可以先考虑暴力模拟的方法，理解题意，理清思路，然后再根据理想的时间复杂度找到复杂度的瓶颈，对代码各步不断进行优化直到满足要求，注意在空间足够的情况下最好不要为省空间而压缩数组减少变量，在时间复杂度足够的情况下不要使用太多不一定正确而又复杂的优化，码风应清晰，不要压行，尽可能防止自己出错  
+- 考试注意事项：     
+  保持心态，可以带口香糖之类食物缓解压力，简单题要看清题意先做，很久没有思路就要想方设法写暴力  
+- 在做题前把细节想清楚，怎么写比较简便    
+- 对于较大数据范围，如果自己的做法会超时，当数据比较随机时可以尝试trick：减少操作次数，比如人为限定循环执行的次数以保证不超时，期望能得到正确答案  
+- 对于多个变量的数据范围，可以尝试从小的数据范围找突破口  
+- 对于O(N ^ 2)优化为O(N)：尝试能不能从多层循环枚举多个变量 改为 （使用一些数组存储答案）只枚举一个变量       
+  例如要枚举左右边界，可以考虑通过记录前缀和、记录最后一个合法左边界的位置等方法，使得只需枚举右边界即可解出答案  
+- 注意部分分，当题目有多个条件时可以考虑满足其中部分条件的做法，再尝试添加一个条件的做法应该如何改进  
 - 想学好算法，要提高打代码的速度   
   想学好数学，要提高写字速度，多练习多计算，提高计算能力与熟练度，尤其是高中生   
-  ——yxc
+  ——yxc  
   暴力强解很重要，与其去想很多技巧，不如去强解，因为强解很快，计算能力足够强就可以掩盖掉很多劣势，技巧跳跃性强，发挥不稳定，不容易想到，而暴力可以规避掉这些风险   
-  ——yxc
+  ——yxc  
 
 ### 2.7.7 其它
 
-- 在把数组作为参数传递给函数时，函数的数组参数相当于指向该数组第一个元素的指针，所以不可以通过sizeof运算符得到函数数组的大小，直接用数组大小 * 字节数即可。而对于全局变量和局部变量（如函数内新建的数组）可以直接用sizeof
-- strict weak ordering
-  stl的相关容器要求严格弱序。
-  即 a>b 和 b>a 不能同时为真。
-  stl判断等价用的是 !(a<b) && !(b<a)
-  所以重载<运算符的时候应判断<，不可判断<=
-- 矩阵乘法具有结合律不具有交换律
-  具有结合律的问题可以尝试倍增优化
-- y1, next, prev, has, hash在非c++11中可能会与保留字冲突
-- [NP问题常识](http://www.matrix67.com/blog/archives/105)
-- noip已将栈空间开至内存空间的大小，不需担心爆栈的问题
-- 对于二维数组数组名作为形参，函数形参声明一定要至少给出第二个维度的大小
+- 在把数组作为参数传递给函数时，函数的数组参数相当于指向该数组第一个元素的指针，所以不可以通过sizeof运算符得到函数数组的大小，直接用数组大小 * 字节数即可。而对于全局变量和局部变量（如函数内新建的数组）可以直接用sizeof  
+- strict weak ordering  
+  stl的相关容器要求严格弱序。 
+  即 a>b 和 b>a 不能同时为真。  
+  stl判断等价用的是 !(a<b) && !(b<a)  
+  所以重载<运算符的时候应判断<，不可判断<=  
+- 矩阵乘法具有结合律不具有交换律  
+  具有结合律的问题可以尝试倍增优化  
+- y1, next, prev, has, hash在非c++11中可能会与保留字冲突  
+- [NP问题常识](http://www.matrix67.com/blog/archives/105)  
+- noip已将栈空间开至内存空间的大小，不需担心爆栈的问题  
+- 对于二维数组数组名作为形参，函数形参声明一定要至少给出第二个维度的大小  
 
 ## 2.8 NOIP
 
-- ### [[洛谷日报#86\]OIer 必知的编程技巧](https://studyingfather.blog.luogu.org/some-coding-tips-for-oiers)
+- ### [[洛谷日报#86\]OIer 必知的编程技巧](https://studyingfather.blog.luogu.org/some-coding-tips-for-oiers)  
 
-- ### [OI选手常见作死错误列表](https://studyingfather.com/archives/521)
+- ### [OI选手常见作死错误列表](https://studyingfather.com/archives/521)  
 
-应特别注意ios::sync_with_stdio(false) 无输出的错位输出的比赛常见错误
+应特别注意ios::sync_with_stdio(false) 无输出的错位输出的比赛常见错误  
 
-- ### [（转）CSP前必须记住的30句话](https://www.acwing.com/blog/content/798/)
+- ### [（转）CSP前必须记住的30句话](https://www.acwing.com/blog/content/798/)  
 
-- [guide入门必看](https://www.goldenpotato.cn/其他/手把手带你入门guide/)[文章](https://www.luogu.com.cn/blog/GoldenPotato/Introduction-To-GUIDE#)
+- [guide入门必看](https://www.goldenpotato.cn/其他/手把手带你入门guide/)[文章](https://www.luogu.com.cn/blog/GoldenPotato/Introduction-To-GUIDE#)  
 
-- [由数据范围反推算法复杂度以及算法内容](https://www.acwing.com/file_system/file/content/whole/index/content/3074/)
-  guide推荐字体：Consolas
-  关闭自动补全，修改括号匹配、背景色、光标行高亮
+- [由数据范围反推算法复杂度以及算法内容](https://www.acwing.com/file_system/file/content/whole/index/content/3074/)    
+  guide推荐字体：Consolas  
+  关闭自动补全，修改括号匹配、背景色、光标行高亮    
 
-- [优化技巧](https://blog.csdn.net/dianning8393/article/details/101620547)
+- [优化技巧](https://blog.csdn.net/dianning8393/article/details/101620547)  
 
-> 普及组
-> 模拟1: 2004不高兴的津津, 2004花生采集，2005陶陶摘苹果, 2005校i ]外的树
-> 模拟2: 2010按水问题， 2012刀宝, 2016买铅笔, 2018标题统计
-> 枚举1: 2010数字统计, 2010导弹拦截2012质因数分解, 2013计数问题
-> 枚举2: 2014珠心算测验, 2014比例简化，2015扫雷游戏，2016回文日期
-> 字符串处理: 2003兵 乓球，2008ISBN号码，2008立体图，2009多项式输出
-> 排序: 2006明明的随机数, 2007奖学金, 2009分数线划定, 2011瑞土轮
-> 数学: 2003麦森数, 2005循环, 2006数列, 2016魔法阵
-> 贪心: 2004火星 人2007纪念品分组, 2008排座椅, 2015推销员
-> DP1:
-> 2003数字游戏，2006开心的金明，2007守望者的逃离，2014子矩阵
-> DP2:
-> 2008传球游戏，2009道路游戏, 2011表达式的值，2012摆花
-> 提高组
-> 模拟: 2003侦探推理, 20104机器翻译, 2015神奇的幻方，2017时间复杂度
-> 二分: 2010关押罪犯 201 1聪明的质检员2012借教室, 2015跳石头
-> 数学: 2009Hankson的计算题， 201 1计算系数, 2016组合数问题, 2017小凯的疑惑
-> 贪心: 2004合并果子， 201 1观光公交2012国王游戏, 2013积木大赛
-> DFS: 2003传染病控制， 2009靶形数独，201 1Mayan游戏, 2015斗地主
-> 树: 2007树网的核, 2014联合权值，2015运输计划, 2018旅行
-> 图论: 2003神经网络, 2008双栈排序, 2009最优贸易, 2015信息传递
-> DP1: 2003加分二叉树, 2004合唱队形, 2005过河，2006金明的预算方案
-> DP2: 2007矩阵取数游戏, 2008传纸条，2010乌龟棋2015子串
-> DP3: 2016愤怒的小鸟, 2016换教室, 2017宝藏2018保卫王国
+> 普及组    
+> 模拟1: 2004不高兴的津津, 2004花生采集，2005陶陶摘苹果, 2005校i ]外的树  
+> 模拟2: 2010按水问题， 2012刀宝, 2016买铅笔, 2018标题统计  
+> 枚举1: 2010数字统计, 2010导弹拦截2012质因数分解, 2013计数问题  
+> 枚举2: 2014珠心算测验, 2014比例简化，2015扫雷游戏，2016回文日期  
+> 字符串处理: 2003兵 乓球，2008ISBN号码，2008立体图，2009多项式输出  
+> 排序: 2006明明的随机数, 2007奖学金, 2009分数线划定, 2011瑞土轮  
+> 数学: 2003麦森数, 2005循环, 2006数列, 2016魔法阵  
+> 贪心: 2004火星 人2007纪念品分组, 2008排座椅, 2015推销员  
+> DP1:  
+> 2003数字游戏，2006开心的金明，2007守望者的逃离，2014子矩阵  
+> DP2:  
+> 2008传球游戏，2009道路游戏, 2011表达式的值，2012摆花  
+> 提高组  
+> 模拟: 2003侦探推理, 20104机器翻译, 2015神奇的幻方，2017时间复杂度  
+> 二分: 2010关押罪犯 201 1聪明的质检员2012借教室, 2015跳石头  
+> 数学: 2009Hankson的计算题， 201 1计算系数, 2016组合数问题, 2017小凯的疑惑  
+> 贪心: 2004合并果子， 201 1观光公交2012国王游戏, 2013积木大赛  
+> DFS: 2003传染病控制， 2009靶形数独，201 1Mayan游戏, 2015斗地主  
+> 树: 2007树网的核, 2014联合权值，2015运输计划, 2018旅行  
+> 图论: 2003神经网络, 2008双栈排序, 2009最优贸易, 2015信息传递  
+> DP1: 2003加分二叉树, 2004合唱队形, 2005过河，2006金明的预算方案  
+> DP2: 2007矩阵取数游戏, 2008传纸条，2010乌龟棋2015子串  
+> DP3: 2016愤怒的小鸟, 2016换教室, 2017宝藏2018保卫王国  
 
 ## 2.9 好东西：
 
 ### [♥ 我的QQ音乐宝藏歌单 ♥ （强烈安利qwq~](https://y.qq.com/portal/profile.html?uin=7ivqNK6P7K-k#sub=other&tab=create&)
 
-> [OIerDb选手成绩资料库](http://bytew.net/OIer/)
-> [mikutap音乐游戏](https://static.hfi.me/mikutap/)
-> [graph图论绘图工具](https://csacademy.com/app/graph_editor/)
-> [weavesilk对称之美](http://weavesilk.com/)
-> [euclidea尺规作图游戏](https://www.euclidea.xyz/)
-> [diep.io](https://diep.io/)
-> [florr.io](https://florr.io/)
-> [zombs.io](http://zombs.io/)
-> [nightz.io](https://nightz.io/)
-> [zombsroyale.io](https://zombsroyale.io/)
-> [iogames](https://iogames.space/)
-> [在线PS](http://ps.xunjiepdf.com/)
-> [标准指法练习TT（不一定适合打代码）](https://www.zhihu.com/question/27021761)及[安装包](https://link.zhihu.com/?target=http%3A//www.skywind.me/mw/images/e/eb/TT-Dosbox.7z)
-> （打代码按键方式建议根据个人习惯喜好）
-> [截屏转换Latex数学公式软件：Mathpix Snip](https://mathpix.com/)
-> excel转换markdown 表格制作软件：Typora
-> [markdown latex表格在线生成](https://tableconvert.com/)
-> [sm.ms在线图库](https://sm.ms/)
-> [geogebra数学绘图工具](https://www.geogebra.org/graphing)
-> [numberempire数学计算器](https://zh.numberempire.com/)
-> [oeis数列大全](http://oeis.org/)
+> [OIerDb选手成绩资料库](http://bytew.net/OIer/)  
+> [mikutap音乐游戏](https://static.hfi.me/mikutap/)  
+> [graph图论绘图工具](https://csacademy.com/app/graph_editor/)  
+> [weavesilk对称之美](http://weavesilk.com/)  
+> [euclidea尺规作图游戏](https://www.euclidea.xyz/)  
+> [diep.io](https://diep.io/)  
+> [florr.io](https://florr.io/)  
+> [zombs.io](http://zombs.io/)  
+> [nightz.io](https://nightz.io/)  
+> [zombsroyale.io](https://zombsroyale.io/)  
+> [iogames](https://iogames.space/)  
+> [在线PS](http://ps.xunjiepdf.com/)     
+> [标准指法练习TT（不一定适合打代码）](https://www.zhihu.com/question/27021761)及[安装包](https://link.zhihu.com/?target=http%3A//www.skywind.me/mw/images/e/eb/TT-Dosbox.7z)   
+> （打代码按键方式建议根据个人习惯喜好）      
+> [截屏转换Latex数学公式软件：Mathpix Snip](https://mathpix.com/)   
+> excel转换markdown 表格制作软件：Typora   
+> [markdown latex表格在线生成](https://tableconvert.com/)  
+> [sm.ms在线图库](https://sm.ms/)  
+> [geogebra数学绘图工具](https://www.geogebra.org/graphing)   
+> [numberempire数学计算器](https://zh.numberempire.com/)  
+> [oeis数列大全](http://oeis.org/)  
 
 ### 一些还未来的及整理也不会再回来整理的东西
 
