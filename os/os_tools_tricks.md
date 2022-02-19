@@ -147,6 +147,10 @@ echo "hello,world"|tee -a test.txt
 复制一行：yy
 复制N行：nyy
 ```
+	
+**代码搜索**
+	
+grep -rn : grep -rn可以关键词查找符合条件的文件的行, grep进行文件内容查找。
 
 **代码搜索ack：** 
 
@@ -220,6 +224,10 @@ apt-get锁定问题： sudo rm -rf /var/cache/apt/archives/lock
 找so:  locate libhello.so
 
 反汇编: objdump -S obj C
+
+**快捷键**
+	
+Linux中ctrl-c, ctrl-z, ctrl-d 区别: https://blog.csdn.net/mylizh/article/details/38385739
 
 ### markdown技巧
 
@@ -452,7 +460,25 @@ nvcc --version                                    #查看当前 cuda 版本
 
 PDF-XChange Viewer Pro Portable: pdf导出jpg
 
+### 时间测试
 
+使用C++ 11 chrono库处理时间： https://blog.csdn.net/mo4776/article/details/119835806
 
+Linux中时间戳和时间之间的转换: https://blog.csdn.net/Jerry_1126/article/details/81151928
 
+C++11的时间新特性之high_resolution_clock： https://blog.csdn.net/cw_hello1/article/details/66476290
+
+system_clock 是启动自1970的时间，是启动自系统重启的时间，steady_clock、high_resolution_clock 系统启动时间
+```
+//high_resolution_clock  测试time point
+high_resolution_clock::time_point ht = high_resolution_clock::now();
+std::cout << ht.time_since_epoch().count() << std::endl;
+
+//测试运行时间
+duration<double,std::ratio<1,1000>> duration_ms=duration_cast<duration<double,std::ratio<1,1000>>>(t2-t1);
+std::cout<<duration_ms.count()<<" milliseconds"<<std::endl;
+```
+### Windows软件技巧
+
+Windows有哪些神级软件？： https://www.zhihu.com/question/465494790/answer/1999417175
 
