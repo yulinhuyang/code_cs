@@ -1901,5 +1901,9 @@ class Solution:
         return max(dfs(root))
 ```
 
+## 0x60 图论
+
+Prim 算法，YYDS: https://blog.csdn.net/fdl123456/article/details/122375113
+
 
 
