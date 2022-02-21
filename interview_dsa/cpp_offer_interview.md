@@ -108,6 +108,38 @@ public:
     }
 };
 ```
+##### offer 09 用两个栈实现队列
+
+```cpp
+class CQueue {
+    stack<int> a;
+    stack<int> b;
+public:
+    CQueue() {
+    }
+
+    void appendTail(int value) {
+        a.emplace(value);
+    }
+
+    int deleteHead() {
+        if(b.size() == 0){
+            int m = a.size();
+            for (int i = 0; i < m; i++) {
+                b.emplace(a.top());
+                a.pop();
+            }
+        }
+        if(b.empty()){
+            return -1;
+        } else{
+            auto res = b.top();
+            b.pop();
+            return res;
+        }
+    }
+};
+```
 
 ##### Offer 13. 机器人的运动范围
 
