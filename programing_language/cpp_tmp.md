@@ -42,3 +42,14 @@ char ts1[] = "abcffffffffff";
 strncpy(ts1, ts.c_str(), ts.length() + 1);       // 注意，一定要加1，否则没有赋值'\0' 
 ```
 
+**scanf&printf**
+
+```cpp
+int res;
+scanf("%d",&res);
+printf(" output =  %d",res);
+
+printf 不支持string类型，string类型需要使用cout
+```
+
+
