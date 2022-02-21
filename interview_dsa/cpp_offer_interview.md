@@ -1,3 +1,90 @@
+##### 剑指 Offer 03. 数组中重复的数字
+
+```c++
+map/set计数法
+
+class Solution {
+public:
+    int findRepeatNumber(vector<int>& nums) {
+        set<int> numSet;
+        for(auto num:nums){
+            if(numSet.count(num)){
+                return num;
+            } else{
+                numSet.emplace(num);
+            }
+        }
+        return 0;
+    }
+};
+
+反复交换法：
+
+class Solution {
+public:
+    int findRepeatNumber(vector<int>& nums) {
+        int i = 0;
+        while(i < nums.size()){
+            if(nums[i] == i){
+                i++;
+                continue;
+            }
+            if(nums[nums[i]] == nums[i]){
+                return nums[i];
+            }
+            swap(nums[nums[i]],nums[i]);
+        }
+        return 0;
+    }
+};
+```
+
+##### Offer 04. 二维数组中的查找
+
+```c++
+class Solution {
+public:
+    bool findNumberIn2DArray(vector<vector<int>>& matrix, int target) {
+        if(matrix.size() == 0){
+            return 0;
+        }
+        int m = matrix.size();
+        int n = matrix[0].size();
+        int i = 0,j = n - 1;
+        while(i <= m - 1  && j >= 0){
+            if(matrix[i][j] == target){
+                return  true;
+            }else if(matrix[i][j] < target){
+                i++;
+            }else{
+                j--;
+            }
+        }
+        return  false;
+    }
+};
+```
+
+##### Offer 05 替换空格
+
+```C++
+class Solution {
+public:
+    string replaceSpace(string s) {
+        string output;
+        for(auto chr:s){
+            if(chr == ' '){
+                output += "%20";
+            } else{
+                output += string(1,chr);
+            }
+        }
+        return output;
+    }
+};
+
+```
+
 ##### Offer 13. 机器人的运动范围
 
 ```C++
@@ -44,6 +131,5 @@ public:
         return ans;
     }
 };
-
 
 ```
