@@ -1,4 +1,4 @@
-##### 剑指 Offer 03. 数组中重复的数字
+##### Offer 03 数组中重复的数字
 
 ```c++
 map/set计数法
@@ -83,6 +83,30 @@ public:
     }
 };
 
+```
+
+##### Offer 06  从尾到头打印链表
+
+递归法 -->也可以用栈缓存再弹出，递归的本质就是栈
+
+```c++
+//递归法
+
+class Solution {
+    vector<int> res;
+    void reverse(ListNode* head){
+        if(head == nullptr){
+            return;
+        }
+        reverse(head->next);
+        res.emplace_back(head->val);
+    }
+public:
+    vector<int> reversePrint(ListNode* head) {
+        reverse(head);
+        return res;
+    }
+};
 ```
 
 ##### Offer 13. 机器人的运动范围
