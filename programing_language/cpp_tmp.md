@@ -10,6 +10,8 @@ do{statement(s);} while( condition );
 
 C++必须使用常量定义数组大小，不能使用变量,可以使用const int 定义大小，不能使用#define定义
 
+C++可以一行定义多个变量，可以优化代码结构。
+
 **char* 与string之间转换**
 
 char[]，char * ，string之间转换； https://blog.csdn.net/yzhang6_10/article/details/51164300
