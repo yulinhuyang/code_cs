@@ -188,6 +188,57 @@ public:
 
 ```
 
+##### 12 矩阵中的路径
+
+修改回溯法
+
+不是floodfill
+
+```c++
+class Solution {
+    int rows,cols;
+    bool dfs(vector<vector<char>> &board, int i, int j, string word, int index) {
+        if(board[i][j] != word[index]){
+            return false;
+        }
+        if (index == word.size() - 1) {
+            return true;
+        }
+        //涂色法
+        board[i][j] = ',';
+        int dx[4] = {-1, 1, 0, 0},dy[4] = {0, 0, -1, 1};
+        for (int k = 0; k < 4; k++) {
+            int newI = i + dx[k];
+            int newJ = j + dy[k];
+            if (newI < 0 || newI >= rows || newJ < 0 || newJ >= cols) {
+                continue;
+            }
+            if (dfs(board, newI, newJ, word, index + 1)) {
+                return true;
+            }
+        }
+        //回溯复原
+        board[i][j] = word[index];
+        return false;
+    }
+public:
+    bool exist(vector<vector<char>>& board, string word) {
+        rows = board.size();
+        cols = board[0].size();
+        for(int i = 0;i < rows;i++){
+            for(int j = 0;j < cols;j++){
+                if(board[i][j] == word[0]){
+                    if(dfs(board,i,j,word,0)){
+                        return true;
+                    }
+                }
+            }
+        }
+        return false;
+    }
+};
+```
+
 ##### Offer 13. 机器人的运动范围
 
 ```C++
