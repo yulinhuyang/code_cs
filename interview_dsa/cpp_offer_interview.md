@@ -141,6 +141,26 @@ public:
 };
 ```
 
+##### Offer 10- I. 斐波那契数列
+
+```cpp
+class Solution {
+public:
+    int fib(int n) {
+        if(n == 0) return 0;
+        if(n == 1) return 1;
+        long fb0 = 0;
+        long fb1 = 1;
+        for (int i = 2; i <= n; i++) {
+            auto tmp = fb0 + fb1;
+            fb0 = fb1;
+            fb1 = tmp % 1000000007;
+        }
+        return fb1 % 1000000007;
+    }
+};
+```
+
 ##### offer 11 旋转数组的最小数字
 
 折线分析法
