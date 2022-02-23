@@ -188,7 +188,7 @@ public:
 
 ```
 
-##### 12 矩阵中的路径
+##### offer 12 矩阵中的路径
 
 回溯做选择（修改涂色变量相当于push_back）
 
@@ -283,6 +283,25 @@ public:
             }
         }
         return ans;
+    }
+};
+
+```
+##### offer 14- I. 剪绳子
+
+```c++
+class Solution {
+public:
+    int cuttingRope(int n) {
+        if(n <= 3){
+            return n - 1;
+        }
+        int a = n / 3;
+        int b = n % 3;
+        if(b == 0) return pow(3,a);
+        if(b == 1) return pow(3,a - 1)*4;
+        return pow(3,a)*2;
+
     }
 };
 
