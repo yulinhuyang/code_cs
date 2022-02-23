@@ -172,6 +172,8 @@ ack --python XXX 搜索所有python文件
 
 ```vim
 du -sm * | sort -nr   #排序
+du -sh *   查看文件夹下的所有文件大小
+du -sh --max-depth = 1
 ls -a      #查看隐藏文件
 ls -lh     #查看，用M显示
 ls -lht   #查看文件修改时间和大小
