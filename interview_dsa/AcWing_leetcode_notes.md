@@ -12,7 +12,7 @@
 模板1: L + r下取整。 找后一段的绿色的开始端点，左边界。   
 模板2：L + r + 1上取整,避免L = R - 1的时候，L < R 死循环。 找前一段的红色的结束段点，右边界。 
 
- <div align="center"> <img src="../pics/efen1.png" width="80%"/> </div><br>
+ <div align="center"> <img src="../pics/efen1.png" width="50%"/> </div><br>
 
 
 nums.back()的秒用。
@@ -21,5 +21,5 @@ nums.back()的秒用。
 
 链表画图看，添加虚拟头节点(涉及到头节点可能会变的情况下)
 
- <div align="center"> <img src="../pics/lianbiao1.png" width="80%"/> </div><br>
+ <div align="center"> <img src="../pics/lianbiao1.png" width="50%"/> </div><br>
 
