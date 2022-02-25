@@ -2164,9 +2164,10 @@ public:
 
 ##### 94. 二叉树的中序遍历
 
-树天然递归
+树天然递归，递归迭代都需要掌握
 
 ```C++
+//递归法
 class Solution {
 public:
     void inorder(TreeNode* root,vector<int> &ans){
@@ -2184,14 +2185,63 @@ public:
         return ans; 
     }
 };
-```
+//迭代法
+class Solution {
+public:
+    vector<int> inorderTraversal(TreeNode* root) {
+        stack<TreeNode*> stk;
+        vector<int> ans;
+        if(!root) return ans;
+        auto cur = root;
+        while(cur || stk.size()){
+            while(cur){
+                stk.emplace(cur);
+                cur = cur->left;
+            }
+            cur = stk.top();
+            stk.pop();
+            ans.emplace_back(cur->val);
+            cur = cur->right;
+        }
 
+        return ans;
+    }
+};	
+```
+##### 173 二叉搜索树迭代器
+	
+```
+class BSTIterator {
+    stack<TreeNode *> stk;
+public:
+    BSTIterator(TreeNode* root) {
+        while(root){
+            stk.emplace(root);
+            root = root->left;
+        }
+    }
+    
+    int next() {
+        auto cur = stk.top();
+        stk.pop();
+        auto right = cur->right;
+        while(right){
+            stk.emplace(right);
+            right = right->left;
+        }
+        return cur->val;
+    }
+    
+    bool hasNext() {
+        return !stk.empty();
+    }
+};	
+```
 ##### 96. 不同的二叉搜索树
 
 二叉搜索树形状递归，向上比较
 
 ```C++
-
 class Solution {
 public:
     int numTrees(int n) {
@@ -2210,9 +2260,7 @@ public:
         return G[n];
     }
 };
-
 ```
-
 ##### 98 验证二叉搜索树
 
 注意二叉搜索树，左子树所有节点都小于当前节点的值，右子树所有节点都大于当前节点的值。
@@ -2221,29 +2269,18 @@ public:
 class Solution {
 public:
     bool isValidBST(TreeNode* root) {
-        if(root == nullptr){
-            return true;
-        }
-        return isValidBST(root,LONG_MIN,LONG_MAX);
+        return dfs(root,LONG_MIN,LONG_MAX);
     }
 
-    bool isValidBST(TreeNode* root,long long minVal,long long maxVal){
-        if(root == nullptr){
-            return true;
-        }
-        if(root->val <= minVal){
-            return false;
-        }
-        if(root->val >= maxVal){
-            return false;
-        }
+    bool dfs(TreeNode* root,long long minVal,long long maxVal){
+        if(!root) return true;
+        if(root->val < minVal || root->val > maxVal)  return false;
 
-        return isValidBST(root->left,minVal,root->val) && isValidBST(root->right,root->val,maxVal);
+        return dfs(root->left,minVal,root->val - 1ll) && dfs(root->right,root->val + 1ll,maxVal);
     }
 };
 
 ```
-
 
 ##### 101. 对称二叉树
 
@@ -2252,28 +2289,16 @@ public:
 ```C++
 class Solution {
 public:
-    bool recur(TreeNode* left,TreeNode* right){
-        if(left == nullptr && right ==nullptr){
-            return true;
-        }
-        if(left == nullptr || right ==nullptr){
-            return false;
-        }
-        if(left->val != right->val){
-            return false;
-        }
-        return recur(left->right,right->left) && recur(left->left,right->right);
+    bool dfs(TreeNode* p,TreeNode* q){
+        if(!p || !q) return !p && !q;
+        return p->val == q->val && dfs(p->right,q->left) && dfs(p->left,q->right);
     }
     bool isSymmetric(TreeNode* root) {
-        if(root == nullptr){
-            return true;
-        }
-        return recur(root->left,root->right);
+        if(!root) return true;
+        return dfs(root->left,root->right);
     }
 };
 ```
-
-
 
 ##### 104. 二叉树的最大深度
 
@@ -2415,22 +2440,12 @@ public:
 class Solution {
 public:
     TreeNode* lowestCommonAncestor(TreeNode* root, TreeNode* p, TreeNode* q) {
-        if(root == nullptr){
-            return nullptr;
-        }
-        if(root->val == p->val || root->val == q->val){
-            return root;
-        }
+        if(!root || root == p || root == q) return root;
+        auto left = lowestCommonAncestor(root->left,p,q);
+        auto right = lowestCommonAncestor(root->right,p,q);
 
-        TreeNode* left = lowestCommonAncestor(root->left,p,q);
-        TreeNode* right = lowestCommonAncestor(root->right,p,q);
-        if(right == nullptr){
-            return left;
-        }
-        if(left == nullptr){
-            return right;
-        }
-        
+        if(!left) return right;
+        if(!right) return left;
         return root;
     }
 };
@@ -2493,28 +2508,22 @@ class Solution {
 public:
     vector<vector<int>> levelOrder(TreeNode *root) {
         vector<vector<int>> ans;
-        if (!root) {
-            return ans;
-        }
-        
+        if (!root) return ans;
+
         queue<TreeNode *> q;
         q.push(root);
         while (!q.empty()) {
             int len = q.size();
-            vector<int> oneLevel;
+            vector<int> level;
             for (int i = 0; i < len; i++) {
                 auto node = q.front();
                 q.pop();
                 
-                oneLevel.emplace_back(node->val);
-                if (node->left){
-                    q.push(node->left);
-                }
-                if (node->right) {
-                    q.push(node->right);
-                }
+                level.emplace_back(node->val);
+                if (node->left) q.push(node->left);
+                if (node->right) q.push(node->right);
             }
-            ans.emplace_back(oneLevel);
+            if(level.size()) ans.emplace_back(level);
         }
 
         return ans;
