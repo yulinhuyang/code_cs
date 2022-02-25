@@ -31,3 +31,11 @@ Offer 03 数组中重复的数字：反复交换法
 
  <div align="center"> <img src="../pics/lianbiao1.png" width="50%"/> </div><br>
 
+**树**
+
+栈的递归、迭代（stack中序）
+
+树的递归问题：枚举最高点 + 左右最大(当前)返回
+
+LCA:
+
