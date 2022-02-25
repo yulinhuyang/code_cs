@@ -118,34 +118,27 @@ public:
 ## 0x04  二分和三分
 
 ##### 33  搜索旋转排序数组
-
+先找最小值，去掉干扰条件
 ```c++
 class Solution {
 public:
     int search(vector<int>& nums, int target) {
-        int low = 0;
-        int high = nums.size() - 1;
-        int n = nums.size();
-        while(low <= high){
-            int mid = low + (high - low)/2;
-            if(nums[mid] == target){
-                return mid;
-            }
-            //搜索确定性的、基本有序的部分
-            if(nums[0] <= nums[mid]){
-                if((nums[0] <= target)&&(target < nums[mid])){
-                    high = mid - 1;
-                }else{
-                    low = mid + 1;
-                }
-            }else{
-                if((nums[mid] < target)&&(target <= nums[n - 1])){
-                    low = mid + 1;
-                }else{
-                    high = mid - 1;
-                }
-            }
+        int l = 0,r = nums.size() - 1;
+        while(l < r){
+            int mid = l + r >> 1;
+            if(nums[mid] < nums.back()) r = mid;
+            else l = mid + 1;
         }
+        if(target <= nums.back()) r = nums.size() - 1;
+        else l = 0,r--;
+        while(l < r){
+            int mid = l + r >> 1;
+            if(nums[mid] >= target) r = mid;
+            else l = mid + 1;
+        }
+
+        if(nums[l] == target) return l;
+        
         return -1;
     }
 };
