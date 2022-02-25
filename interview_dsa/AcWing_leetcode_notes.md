@@ -15,7 +15,15 @@
  <div align="center"> <img src="../pics/efen1.png" width="50%"/> </div><br>
 
 
-nums.back()的秒用。
+相关题目：
+
+Leetcode  153. 寻找旋转排序数组中的最小值：nums.back()的秒用。
+
+Leetcode 33. 搜索旋转排序数组:先找最小值，去掉干扰条件
+
+offer 11 旋转数组的最小数字：先去掉干扰条件。
+
+Offer 03 数组中重复的数字：反复交换法
 
 **链表**  
 
