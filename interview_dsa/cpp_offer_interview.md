@@ -163,24 +163,22 @@ public:
 
 ##### offer 11 旋转数组的最小数字
 
+先去掉干扰条件
+
 折线分析法
 
 ```c++
 class Solution {
 public:
     int minArray(vector<int>& numbers) {
-        int len = numbers.size();
-        int l = 0;
-        int h = len - 1;
-        while(l < h){
-            int mid = l + h >> 1;
-            if(numbers[mid] > numbers[h]){
-                l = mid + 1;
-            } else if(numbers[mid] == numbers[h]){
-                h = h - 1;
-            } else{
-                h = mid; //只剩两个数，那么mid 一定会指向下标靠前的数字
-            }
+        int n = numbers.size() - 1;
+        while(n > 0 && numbers[0] == numbers[n]) n--;
+        if(numbers[0] <= numbers[n]) return numbers[0];
+        int l = 0,r = n;
+        while(l < r){
+            int mid = l + r >> 1;
+            if(numbers[mid] <= numbers[n]) r = mid;
+            else l = mid + 1;
         }
         return numbers[l];
     }
