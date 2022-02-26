@@ -43,4 +43,14 @@ LCA: 236. 二叉树的最近公共祖先，树天然递归
 
 124 二叉树中的最大路径和：枚举最高点 + 左右最大(当前)返回
 
+**字符串**
+
+模式： while (k < s.size() && s[k] == s[j]) k ++ ;
+
+C++左闭右开区间的理解：https://blog.csdn.net/qq_35976351/article/details/83006550
+
+reverse、str.find、str.substr
+ 
+string substr (size_t pos = 0, size_t len = npos) 
+
 
