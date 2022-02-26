@@ -42,6 +42,39 @@ auto fast = dummy,slow = dummy;
 //链表循环模式
 while(cur->next && cur->val == cur->next->val) cur->next = cur->next->next;
 //判空是判断cur还是cur->next
+
+//链表反转迭代
+ ListNode* reverseList(ListNode* head) {
+     ListNode* temp; // 保存cur的下一个节点
+     ListNode* cur = head;
+     ListNode* pre = NULL;
+     while(cur) {
+         temp = cur->next;  // 保存一下 cur的下一个节点，因为接下来要改变cur->next
+         cur->next = pre; // 翻转操作
+         // 更新pre 和 cur指针
+         pre = cur;
+         cur = temp;
+     }
+     return pre;
+ }
+ 
+//链表反转递归 carl版
+class Solution {
+public:
+    ListNode* reverseList(ListNode* head) {
+        // 边缘条件判断
+        if(head == NULL) return NULL;
+        if (head->next == NULL) return head;
+        
+        // 递归调用，翻转第二个节点开始往后的链表
+        ListNode *last = reverseList(head->next);
+        // 翻转头节点与第二个节点的指向
+        head->next->next = head;
+        // 此时的 head 节点为尾节点，next 需要指向 NULL
+        head->next = NULL;
+        return last;
+    }
+}; 
 ```
 链表Cout调试
 
