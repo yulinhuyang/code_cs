@@ -45,7 +45,9 @@ LCA: 236. 二叉树的最近公共祖先，树天然递归
 
 **字符串**
 
-模式： while (k < s.size() && s[k] == s[j]) k ++ ;
+模式： 
+    while (k < s.size() && s[k] == s[j]) k ++ ;  
+    while (k < s.size() && s[k] == ' ') k ++ ;
 
 unordered_map<string,vector<string>> hash;
 
@@ -54,5 +56,13 @@ unordered_map<string,vector<string>> hash;
 reverse、str.find、str.substr
  
 string substr (size_t pos = 0, size_t len = npos) 
+ 
+to_string()
+
+stoi或 atoi(s1.substr(i, x - i).c_str())
+ 
+
+ 
+ 
 
 
