@@ -47,7 +47,7 @@ LCA: 236. 二叉树的最近公共祖先，树天然递归
 
 模式： while (k < s.size() && s[k] == s[j]) k ++ ;
 
-C++左闭右开区间的理解：https://blog.csdn.net/qq_35976351/article/details/83006550
+为什么 STL 中的容器和算法都是用的左闭右开区间？：https://www.zhihu.com/question/61054439
 
 reverse、str.find、str.substr
  
