@@ -41,6 +41,7 @@ auto fast = dummy,slow = dummy;
  
 //链表循环模式
 while(cur->next && cur->val == cur->next->val) cur->next = cur->next->next;
+//判空是判断cur还是cur->next
 ```
 
 **树**
