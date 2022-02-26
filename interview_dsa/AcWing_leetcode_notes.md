@@ -47,6 +47,8 @@ LCA: 236. 二叉树的最近公共祖先，树天然递归
 
 模式： while (k < s.size() && s[k] == s[j]) k ++ ;
 
+unordered_map<string,vector<string>> hash;
+
 为什么 STL 中的容器和算法都是用的左闭右开区间？：https://www.zhihu.com/question/61054439
 
 reverse、str.find、str.substr
