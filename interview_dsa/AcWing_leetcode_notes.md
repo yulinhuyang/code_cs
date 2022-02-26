@@ -53,13 +53,15 @@ unordered_map<string,vector<string>> hash;
 
 为什么 STL 中的容器和算法都是用的左闭右开区间？：https://www.zhihu.com/question/61054439
 
-reverse、str.find、str.substr
+reverse、str.find
  
-string substr (size_t pos = 0, size_t len = npos) 
+string substr (size_t pos = 0, size_t len = npos)  //如果没有n,默认到末尾，长度是len,包含pos + len位置的字符。
  
-to_string()
+to_string() 转字符串
 
 stoi或 atoi(s1.substr(i, x - i).c_str())
+ 
+
  
 
  
