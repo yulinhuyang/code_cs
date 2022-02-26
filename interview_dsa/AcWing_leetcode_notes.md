@@ -30,6 +30,15 @@ Offer 03 数组中重复的数字：反复交换法
 链表画图看，添加虚拟头节点(涉及到头节点可能会变的情况下)
 
  <div align="center"> <img src="../pics/lianbiao1.png" width="50%"/> </div><br>
+ 
+ 涉及到要修改头节点的时候，需要dummy,
+ 
+ 19 删除链表的倒数第N个节点：
+ ```
+ auto dummy = new ListNode(-1);
+ dummy->next = head;
+ auto fast = dummy,slow = dummy;
+```
 
 **树**
 
