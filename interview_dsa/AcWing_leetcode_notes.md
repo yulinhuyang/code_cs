@@ -34,10 +34,13 @@ Offer 03 数组中重复的数字：反复交换法
  涉及到要修改头节点的时候，需要dummy,
  
  19 删除链表的倒数第N个节点：
- ```
- auto dummy = new ListNode(-1);
- dummy->next = head;
- auto fast = dummy,slow = dummy;
+```
+auto dummy = new ListNode(-1);
+dummy->next = head;
+auto fast = dummy,slow = dummy;
+ 
+//链表循环模式
+while(cur->next && cur->val == cur->next->val) cur->next = cur->next->next;
 ```
 
 **树**
