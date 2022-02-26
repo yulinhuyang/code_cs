@@ -43,6 +43,7 @@ auto fast = dummy,slow = dummy;
 while(cur->next && cur->val == cur->next->val) cur->next = cur->next->next;
 //判空是判断cur还是cur->next
 ```
+链表Cout调试
 
 **树**
 
