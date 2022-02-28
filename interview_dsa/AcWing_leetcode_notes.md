@@ -110,7 +110,13 @@ stoi或 atoi(s1.substr(i, x - i).c_str())
  
 leetcode 3 无重复字符的最长字串: hash逐加逐减, ij双行简化滑窗。
 
-
+**DFS+回溯**
+ 
+两重循环简单代替dfs
+ 
+ 
+ 
+ 
  
  
 
