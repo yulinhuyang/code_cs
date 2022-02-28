@@ -141,8 +141,11 @@ leetcode 3 无重复字符的最长字串: hash逐加逐减, ij双变量循环�
 leetcode 17 电话号码的字母组合：三重简单循环代替dfs
  
 **DFS+回溯**
- 
- 
+
+leetcode 47 全排列II  遍历的时候跳过相同元素
+```
+while(i + 1 < nums.size() && nums[i] == nums[i+1]) i++;
+```
  
  
  
