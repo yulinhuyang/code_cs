@@ -147,9 +147,11 @@ leetcode 17 电话号码的字母组合：三重简单循环代替dfs
 **DFS+回溯**
 
 leetcode 47 全排列II  遍历的时候跳过相同元素
+ 
 ```
 while(i + 1 < nums.size() && nums[i] == nums[i+1]) i++;
 ```
+                         
 leetcode 78 子集  位运算+循环,简化子集问题, 递归结构相当于一层循环。
 
 leetcode 90 子集II  回溯去重
@@ -160,5 +162,13 @@ LeetCode 37. Sudoku Solver  dfs 逐行, col + row + cell 数组标记解法
                
 Leetcode 473. 火柴拼正方形   剪枝优化技巧
  
+**滑动窗口、双指针、单调队列、单调栈**
 
+                         
+                         
+                         
+                         
+                         
+                         
+                    
 
