@@ -108,7 +108,7 @@ to_string() 转字符串
 
 stoi或 atoi(s1.substr(i, x - i).c_str())
  
-leetcode 3 无重复字符的最长字串: hash逐加逐减, 简化滑窗。
+leetcode 3 无重复字符的最长字串: hash逐加逐减, ij双行简化滑窗。
 
 
  
