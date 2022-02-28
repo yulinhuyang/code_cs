@@ -138,7 +138,7 @@ stoi或 atoi(s1.substr(i, x - i).c_str())
  
 leetcode 3 无重复字符的最长字串: hash逐加逐减, ij双行简化滑窗。
 
-leetcode 17 电话号码的字母组合：两重循环简单代替dfs
+leetcode 17 电话号码的字母组合：三重简单循环代替dfs
  
 **DFS+回溯**
  
