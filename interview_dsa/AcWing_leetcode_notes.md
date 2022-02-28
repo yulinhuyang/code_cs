@@ -146,7 +146,7 @@ leetcode 47 全排列II  遍历的时候跳过相同元素
 ```
 while(i + 1 < nums.size() && nums[i] == nums[i+1]) i++;
 ```
-leetcode 78 子集  位运算+循环,简化子集问题
+leetcode 78 子集  位运算+循环,简化子集问题, 递归结构相当于一层循环。
 
 leetcode 90 子集II  回溯去重
  
