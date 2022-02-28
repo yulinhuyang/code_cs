@@ -156,7 +156,7 @@ leetcode 90 子集II  回溯去重
 
 LeetCode 52. N-Queens II    dfs代替行，col + d + ud 标记解法 
  
-LeetCode 37. Sudoku Solver  col + row + cell 标记解法
+LeetCode 37. Sudoku Solver  dfs 逐行,col + row + cell 标记解法
                
           
  
