@@ -1,3 +1,31 @@
+**代码简化方法**
+
+同类型变量定义，一句可以定义多个。
+
+for  while 单句的内循环不加括号。
+
+灵活利用for  while的循环判断条件，单个for内灵活运用多个变量同时循环。
+
+灵活使用三目运算符
+
+```c++
+int a = 0,b = 0;
+
+while (j < s.size() && s[j] != ' ') j ++ ;
+
+ for (auto c:hash[u - '2'])
+     for (auto path:res)
+         now.push_back(path + c);
+         
+for (int j = i, k = 2 * (n - 1) - i; j < s.size() || k < s.size(); j += 2 * (n - 1), k += 2 * (n - 1))
+{
+    if (j < s.size()) res += s[j];
+    if (k < s.size()) res += s[k];
+}
+
+int b = y == j ? 0 : atoi(s2.substr(j, y - j).c_str());
+```
+
 **二分**
 
 两段性和单调性，折线法，寻找分解条件
