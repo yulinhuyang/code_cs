@@ -8,6 +8,8 @@ for  while 单句的内循环不加括号。
 
 灵活使用三目运算符
 
+灵活使用连续等号
+
 ```c++
 int a = 0,b = 0;
 
@@ -24,6 +26,8 @@ for (int j = i, k = 2 * (n - 1) - i; j < s.size() || k < s.size(); j += 2 * (n -
 }
 
 int b = y == j ? 0 : atoi(s2.substr(j, y - j).c_str());
+
+st[i] = d[i + u] = ud[i - u + n] = 1;
 ```
 
 **二分**
