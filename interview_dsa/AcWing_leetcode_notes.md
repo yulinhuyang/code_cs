@@ -146,7 +146,9 @@ leetcode 17 电话号码的字母组合：三重简单循环代替dfs
  
 **DFS+回溯**
 
-leetcode 47 全排列II  遍历的时候跳过相同元素
+bfs一般求最小步数和最短距离，dfs状态数量非常大，但是解的数量很小。
+ 
+leetcode 47 全排列II  遍历的时候跳过相同元素，人为规定相同数字的相对顺序不变 
  
 ```
 while(i + 1 < nums.size() && nums[i] == nums[i+1]) i++;
@@ -158,7 +160,7 @@ leetcode 90 子集II  回溯去重
 
 LeetCode 52. N-Queens II    dfs代替行, col + d + ud 数组标记解法 
  
-LeetCode 37. Sudoku Solver  dfs 逐行, col + row + cell 数组标记解法
+LeetCode 37. Sudoku Solver  dfs 逐行, col + row + cell 数组标记解法，row[9][9]: 9行,0-9的数有了哪几个
                
 Leetcode 473. 火柴拼正方形   剪枝优化技巧
  
@@ -202,5 +204,9 @@ leetcode 918: 拆环为链 + 前缀和 +单调上升队列
  
 **基本数据结构**
  
- Leetcode 187. 重复的DNA序列: unordered_map(hash) 使用
+Leetcode 187. 重复的DNA序列: unordered_map(hash) 使用
+ 
+Leetcode 652. 寻找重复的子树: 中序遍历与后序或者中序遍历与前序遍历都可以唯一确定一棵树。两遍hash,第一遍树变成字符串，第二遍变成数。
+
+
  
