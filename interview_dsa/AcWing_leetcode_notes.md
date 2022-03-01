@@ -168,9 +168,9 @@ Leetcode 167. 两数之和 II - 输入有序数组： 首尾指针
                          
 Leetcode 88. 合并两个有序数组：双指针从后向前合并。                         
                          
-Leetcode 26. 删除有序数组中的重复项                
+Leetcode 26. 删除有序数组中的重复项：前后指针                
                          
-LeetCode 76. 最小覆盖字串:  单个hash + i(hash[key]--) j(hash[key]++)双指针 解决滑动窗口问题 
+LeetCode 76. 最小覆盖字串:  单个hash + i(hash[key]--)  j(hash[key]++) 双指针  简化滑动窗口问题 
                          
 Leetcode 32. 最长有效括号：起始加-1,栈底元素为当前已经遍历过的元素中「最后一个没有被匹配的右括号的下标]                
                     
@@ -178,3 +178,5 @@ Leetcode 42. 接雨水:两遍max, 左边一遍Left_max，右边一遍right_max�
 
 Leetcode 84. 柱状图中最大的矩形:两遍栈，左边一遍单调上升栈，右边一遍单独上升栈，height[i] * (right[i] - left[i] - 1)
                        
+Leetcode 239. 滑动窗口最大值:单调下降队列简化
+                         
