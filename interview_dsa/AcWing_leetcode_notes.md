@@ -174,4 +174,10 @@ LeetCode 76. 最小覆盖字串:  单个hash + i(hash[key]--) j(hash[key]++)双�
                          
 Leetcode 32. 最长有效括号：起始加-1,栈底元素为当前已经遍历过的元素中「最后一个没有被匹配的右括号的下标]                
                     
-Leetcode 42. 接雨水:左边一遍最大，右边一遍最大，min(left,right) - height[i]
+Leetcode 42. 接雨水:左边一遍Left_max，右边一遍right_max，min(left_max[i],right_max[i]) - height[i]
+
+Leetcode 84. 柱状图中最大的矩形:左边一遍单调上升栈，右边一遍单独上升栈，height[i] * (right[i] - left[i] - 1)
+                       
+                         
+                         
+\                        
