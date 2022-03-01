@@ -212,4 +212,4 @@ Leetcode 560. 和为 K 的子数组: 简化的前缀和。
  
 LeetCode 547. Friend Circles :并查集
  
-LeetCode 684. Redundant Connection: 并差集变形
+LeetCode 684. Redundant Connection: 并差集变形，1->n 下标从1开始。
