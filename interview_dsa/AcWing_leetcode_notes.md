@@ -177,8 +177,22 @@ Leetcode 32. 最长有效括号：起始加-1,栈底元素为当前已经遍历�
 Leetcode 42. 接雨水:两遍max, 左边一遍Left_max，右边一遍right_max，min(left_max[i],right_max[i]) - height[i]
 
 Leetcode 84. 柱状图中最大的矩形:两遍栈，左边一遍单调上升栈，右边一遍单独上升栈，height[i] * (right[i] - left[i] - 1)
-                       
+```C++
+//单调栈代码段
+while (stk.size() && heights[stk.top()] >= heights[i]) stk.pop();
+if (stk.empty()) left[i] = -1;
+else left[i] = stk.top();
+stk.push(i);
+```                       
 Leetcode 239. 滑动窗口最大值:单调下降队列简化
+                         
+```C++
+//单调队列代码段
+if (q.size() && i - k >= q.front()) q.pop_front();
+while (q.size() && nums[q.back()] <= nums[i]) q.pop_back();
+q.push_back(i);
+if (i >= k - 1) res.push_back(nums[q.front()]);
+```         
                         
 leetcode 918: 拆环为链 + 前缀和 +单调上升队列
 
