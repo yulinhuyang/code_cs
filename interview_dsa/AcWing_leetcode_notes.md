@@ -204,9 +204,9 @@ leetcode 918: 拆环为链 + 前缀和 +单调上升队列
  
 **基本数据结构**
  
-Leetcode 187. 重复的DNA序列: unordered_map(hash) 使用
+Leetcode 187. 重复的DNA序列: unordered_map(hash) 使用。
  
 Leetcode 652. 寻找重复的子树: 中序遍历与后序或者中序遍历与前序遍历都可以唯一确定一棵树。两遍hash,第一遍树变成字符串，第二遍变成数。
 
-
+Leetcode 560. 和为 K 的子数组: 简化的前缀和。
  
