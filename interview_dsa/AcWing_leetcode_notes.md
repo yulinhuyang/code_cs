@@ -222,7 +222,7 @@ pair 设置 --> make_pair或者 直接构造 PIS t(-word.second, word.first);
  
 LeetCode 295. Find Median from Data Stream：对顶堆，小上大下 --> 小右大左。动态流，图参考：https://blog.csdn.net/jiahonghao2002/article/details/114108760
  
-1 2 3 4 (大顶) | 5 6 7 8(小顶)
+1 2 3 4 (大顶) | 5 6 7 8(小顶) : right.size() > left.size(), right 比left至多多一个,添加时优先添加right, 先添加后调整。
 
  
  
