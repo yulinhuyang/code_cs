@@ -158,7 +158,7 @@ leetcode 78 子集  位运算+循环,简化子集问题, 递归结构相当于�
 
 leetcode 90 子集II  回溯去重
 
-LeetCode 52. N-Queens II    dfs代替行, col + d + ud 数组标记解法 
+LeetCode 52. N-Queens II    dfs代替行, col + d + ud 数组标记解法，精确覆盖问题。
  
 LeetCode 37. Sudoku Solver  dfs 逐行, col + row + cell 数组标记解法，row[9][9]: 9行,0-9的数有了哪几个
                
