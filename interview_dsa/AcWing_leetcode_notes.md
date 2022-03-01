@@ -213,3 +213,16 @@ Leetcode 560. 和为 K 的子数组: 简化的前缀和。
 LeetCode 547. Friend Circles :并查集
  
 LeetCode 684. Redundant Connection: 并差集变形，1->n 下标从1开始。
+ 
+Leetcode 692. 前K个高频单词:小顶堆(大顶key加负号)流过程,保证second的字典序排序，也可以自定义比较函数。
+ 
+pair 设置 --> make_pair或者 直接构造 PIS t(-word.second, word.first);
+ 
+优先队列默认大的在队首，字符串则为字典序由大到小。int，double，char，string类型都可以这样定义。
+ 
+LeetCode 295. Find Median from Data Stream：对顶堆，小上大小。图参考：https://blog.csdn.net/jiahonghao2002/article/details/114108760
+ 
+1 2 3 4 (大顶) | 5 6 7 8(小顶)
+
+ 
+ 
