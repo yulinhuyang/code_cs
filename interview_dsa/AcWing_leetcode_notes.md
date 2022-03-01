@@ -170,7 +170,7 @@ Leetcode 88. 合并两个有序数组：双指针从后向前合并。
                          
 Leetcode 26. 删除有序数组中的重复项                
                          
-LeetCode 76. Minimum Window Substrin:  单个hash + i j双指针 解决滑动窗口问题 
+LeetCode 76. Minimum Window Substring:  单个hash + i(hash[key]--) j(hash[key]++)双指针 解决滑动窗口问题 
                          
                          
                     
