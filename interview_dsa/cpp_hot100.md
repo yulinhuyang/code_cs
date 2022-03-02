@@ -83,31 +83,6 @@ public:
 
 ```
 
-前缀和简化为一个数
-
-```cpp
-class Solution {
-public:
-    int subarraySum(vector<int> &nums, int k) {
-        //前缀和简化，连续子数组
-        int m = nums.size();
-        int count = 0;
-        unordered_map<int, int> preMap;
-        preMap[0] = 1;
-        int pre = 0;
-        for (auto num:nums) {
-            pre = pre + num;
-            if (preMap.find(pre - k) != preMap.end()) {
-                count += preMap[pre - k];
-            }
-            preMap[pre]++;
-        }
-
-        return count;
-    }
-};
-```
-
 
 ## 0x04  二分和三分
 
