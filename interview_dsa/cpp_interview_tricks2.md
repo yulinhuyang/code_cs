@@ -22,28 +22,19 @@ n | (1<<k) 第k位赋值1
 ```
 ## 0x03 前缀和与差分
 
-一维前缀和： S[i]= S[i-1]  + A[i]
+一维前缀和： S[i]= S[i-1]  + A[i]   
+二维前缀和： S[i][j] = S[i-1][j] + S[i][j-1] – S[i-1][j-1] + A[i][j]  
+树上前缀和：从根到某节点的路径上点（或边）的值之和（上到下）；某节点及其所有子节点（或边）的值之和（下到上）  
 
-二维前缀和： S[i][j] = S[i-1][j] + S[i][j-1] – S[i-1][j-1] + A[i][j]
-
-树上前缀和：从根到某节点的路径上点（或边）的值之和（上到下）；某节点及其所有子节点（或边）的值之和（下到上）
-
-差分数组定义：
-
-真实数组a = {a[1]、a[2]、…、a[n]}          // 各点真实数据
-
-差分数组df = {df[1]、df[2]、…、df[n]}      // 各点数据的变更值 
-
-df[i] = a[i] - a[i-1]                      // 差分数组各点数据为真实数据的变更值
-
-a[i] = df[1] + df[2] …+ df[i]              // 差分数组的前缀和即为真实数组
-
+差分数组定义：   
+真实数组a = {a[1]、a[2]、…、a[n]}          // 各点真实数据   
+差分数组df = {df[1]、df[2]、…、df[n]}      // 各点数据的变更值    
+df[i] = a[i] - a[i-1]                      // 差分数组各点数据为真实数据的变更值   
+a[i] = df[1] + df[2] …+ df[i]              // 差分数组的前缀和即为真实数组   
 a[i] = a[i-1] + df[i]                      // 真实数据也可以从上一点数据+变更值求出
 
-差分算法题型特征：在一段区间内（例如时间/站点）给出数据变更点（例如上下车/占用释放等），需要感知变更后数据值。
-
-Ÿ   一维差分：主要用于对子数组（或区间）的元素整体加减固定值，特别是子数组较多时，可提高性能。
-
+差分算法题型特征：在一段区间内（例如时间/站点）给出数据变更点（例如上下车/占用释放等），需要感知变更后数据值。   
+Ÿ   一维差分：主要用于对子数组（或区间）的元素整体加减固定值，特别是子数组较多时，可提高性能。   
 Ÿ   二维差分：对子矩阵元素整体进行加减处理，在子矩阵较多时，为提高性能，可以考虑用差分数组来处理。
 	
 ## 0x04  二分和三分
@@ -95,12 +86,9 @@ int bsearch_2(int l, int r)
 
 相关题目：
 
-Leetcode  153. 寻找旋转排序数组中的最小值：nums.back()的秒用。
-
-Leetcode 33. 搜索旋转排序数组:先找最小值，去掉干扰条件
-
-offer 11 旋转数组的最小数字：先去掉干扰条件。
-
+Leetcode  153. 寻找旋转排序数组中的最小值：nums.back()的秒用。   
+Leetcode 33. 搜索旋转排序数组:先找最小值，去掉干扰条件   
+offer 11 旋转数组的最小数字：先去掉干扰条件。   
 Offer 03 数组中重复的数字：反复交换法
 
 ### 0x04.2 stl二分法
@@ -111,36 +99,28 @@ Offer 03 数组中重复的数字：反复交换法
 
 **升序序列**
 
-lower_bound：返回第一个 >= 目标值的迭代器，找不到则返回end()。
-
+lower_bound：返回第一个 >= 目标值的迭代器，找不到则返回end()。   
 upper_bound：返回第一个 > 目标值的迭代器，找不到则返回end()。
 
 **降序序列**
 
-需要重载或者目标比较器，例如greater<int >()
-
-lower_bound：返回第一个 <= 目标值的迭代器，找不到则返回end()。
-
+需要重载或者目标比较器，例如greater<int >()  
+lower_bound：返回第一个 <= 目标值的迭代器，找不到则返回end()。  
 upper_bound：返回第一个 < 目标值的迭代器，找不到则返回end()。
 
 eg: 
 ```C++
  // 返回第一个小于等于目标值的迭代器
-
  lower_bound(vec.begin(), vec.end(), 8, greater<int>());
-
+	
 // 返回第一个小于目标值的迭代器
-
  upper_bound(vec.begin(), vec.end(), 8, greater<int>());
-
  bool isFind = binary_search(vec.begin(), vec.end(), 7);
 
 // 返回第一个大于等于目标值的迭代器
-
  vector<int>::iterator iter1 = lower_bound(vec.begin(), vec.end(), 8);
 
  // 返回第一个大于目标值的迭代器
-
  vector<int>::iterator iter2 = upper_bound(vec.begin(), vec.end(), 8);
 ```
 
@@ -404,59 +384,66 @@ struct ListNode {
     ListNode(int x, ListNode *next) : val(x), next(next) {}
 }
 	
-ListNode *node = new ListNode(0,head);   #初始化节点
+ListNode *node = new ListNode(0,head);  #初始化 
+auto *node = new ListNode(0,head);      #初始化 
 ```
 
-	
-dummy的使用（注意new与delete）、head tail使用
+链表画图看，添加虚拟头节点(涉及到头节点可能会变的情况下)
+
+ <div align="center"> <img src="../pics/lianbiao1.png" width="50%"/> </div><br>
  
+涉及到要修改头节点的时候，需要dummy,     
+注意new与delete 、head tail使用    
+链表Cout调试   
 ListNode *new = nullptr和Listnode的默认值不一样，默认值val是0
 
 ```c++
-        //dummy定义与释放
+//dummy定义与释放
 
-        //1 删除倒数节点，slow dummy
-    	ListNode *dummy = new ListNode(0,head); 
-    	ListNode *fast = head;
-    	ListNode *slow = dummy; 
-    	
-    	ListNode *ans = dummy->next;
-    	delete dummy;
-    
-        //另外一种方式
-        ListNode dummy(-1);
-        ListNode* p = &dummy
-        
-        //2 链表合并，有效是dummy->next
-        ListNode *dummy = new ListNode(0);//过渡指针
-        ListNode *head = dummy;
-        head->next = l1;
-        
-        //3 two sum head tail使用
-        ListNode *head = nullptr;//便于操作head 
-        ListNode *tail = nullptr;
-        if(!head){
-            //理解new的返回类型
-            tail = head = new ListNode(sum%10);
-        }else{
-            tail->next = new ListNode(sum%10);
-            tail = tail->next;
-        }
+//1 删除倒数节点，slow dummy
+auto dummy = new ListNode(-1);
+dummy->next = head;
+auto fast = dummy,slow = dummy;
+	
+ListNode *ans = dummy->next;
+delete dummy;
 
-        //4 递归，中间截断
-        ListNode *fast = head->next;
-        ListNode *slow = head;
-        while (fast && fast->next) {
-            slow = slow->next;
-            fast = fast->next->next;
-        }        
+//另外一种方式
+ListNode dummy(-1);
+ListNode* p = &dummy
+
+//2 链表合并，有效是dummy->next
+ListNode *dummy = new ListNode(-1);//过渡指针
+ListNode *head = dummy;
+head->next = l1;
+
+//3 two sum head tail使用
+ListNode *head = nullptr;//便于操作head 
+ListNode *tail = nullptr;
+if(!head){
+    //理解new的返回类型
+    tail = head = new ListNode(sum%10);
+}else{
+    tail->next = new ListNode(sum%10);
+    tail = tail->next;
+}
+
+//4 递归，中间截断
+ListNode *fast = head->next;
+ListNode *slow = head;
+while (fast && fast->next) {
+    slow = slow->next;
+    fast = fast->next->next;
+}
+//5  链表循环模式,判空是判断cur还是cur->next
+while(cur->next && cur->val == cur->next->val) cur->next = cur->next->next;
+	
 ```
 
 ### 0x13.2 链表翻转
 
-迭代法：pre cur next使用，不需要额外空间
-
-递归法：防止成环
+迭代法：pre cur next使用，不需要额外空间  
+递归法：防止成环   
 
 ```C++
 // 206. 反转链表 
@@ -464,41 +451,38 @@ ListNode *new = nullptr和Listnode的默认值不一样，默认值val是0
 class Solution {
 public:
     ListNode* reverseList(ListNode* head) {
-        if(head == nullptr || head->next == nullptr){
-            return head;
-        }
-
-        ListNode* node = reverseList(head->next);
-        //反转且避免成环
+        // 边缘条件判断
+        if(head == NULL) return NULL;
+        if (head->next == NULL) return head;
+        
+        // 递归调用，翻转第二个节点开始往后的链表
+        ListNode *last = reverseList(head->next);
+        // 翻转头节点与第二个节点的指向
         head->next->next = head;
-        head->next = nullptr;
-        return node;
+        // 此时的 head 节点为尾节点，next 需要指向 NULL
+        head->next = NULL;
+        return last;
     }
-};
+}; 
 
 //迭代法：pre cur next
 class Solution {
-public:
-    ListNode* reverseList(ListNode* head) {
-        if(head == nullptr || head->next == nullptr){
-            return head;
-        }
-        ListNode* pre = nullptr;
-        ListNode* cur = head;
-        while(cur){
-            //pre cur next的使用
-            ListNode* next = cur->next;
-            cur->next = pre;
-            pre = cur;
-            cur = next;
-        }
-
-        return pre;
-    }
-};
-
+//链表反转迭代
+ ListNode* reverseList(ListNode* head) {
+     ListNode* next; // 保存cur的下一个节点
+     ListNode* cur = head;
+     ListNode* pre = NULL;
+     while(cur) {
+         next = cur->next;  // 保存一下 cur的下一个节点，因为接下来要改变cur->next
+         cur->next = pre; // 翻转操作
+         // 更新pre 和 cur指针
+         pre = cur;
+         cur = next;
+     }
+     return pre;
+ }
+ 
 ```
-
 
 ## 0x14  hash表(字符串hash)
 	
@@ -589,26 +573,19 @@ K个排好序的数组，用堆来高效顺序遍历，合并K个list, 和找第
 
 树天生为了递归左右子树而存在
 
-树的三种遍历：
-
-     两序恢复第三序（C++ 传递索引，代替切片），必须有中序，迭代、递归两个版本
-    
-平衡二叉树:
-
+树的三种遍历：   
+     两序恢复第三序（C++ 传递索引，代替切片），必须有中序，迭代、递归两个版本 
+	
+平衡二叉树:   
 	空树是平衡二叉树；非空的树，所有子树都满足左子树和右子树高度差不超过1。
 	
-二叉查找树（Binary Search Tree）：（二叉搜索树，二叉排序树）
-		
-	空树是二叉查找树;左子树上所有结点的值均小于它的根结点的值,右子树上所有结点的值均大于它的根结点的值。用min,max向下比较。
-	
-	搜索二叉树按照中序遍历得到的序列一定是从小到大排列的.
-	
+二叉查找树（Binary Search Tree）：（二叉搜索树，二叉排序树）   		
+	空树是二叉查找树;左子树上所有结点的值均小于它的根结点的值,右子树上所有结点的值均大于它的根结点的值。用min,max向下比较。   
+	搜索二叉树按照中序遍历得到的序列一定是从小到大排列的.   
 	红黑树.平衡搜索二叉树(AVL)树,都是搜索二叉树的不同实现
 	
-完全二叉树： 	
-	
-	除了最后一层之外,其他每一层的节点数都是满的,如果最后一层满了就是满二叉树。
-	
+完全二叉树： 	  
+	除了最后一层之外,其他每一层的节点数都是满的,如果最后一层满了就是满二叉树。   
 	如果最后一层不满,缺少的节点也全部集中在右边。
 
 树的 base code
@@ -628,64 +605,39 @@ TreeNode * t1 = new TreeNode(10);
 
 ### 0x21.2 树的DFS（Tree Depth First Search，stack）
 
-三种遍历，递归与迭代版本（stack）
+三种遍历，递归与迭代版本（stack），stack代替了递归的功能
+
+树的递归问题：枚举最高点 + 左右最大(当前)返回
+
+LCA: 236. 二叉树的最近公共祖先，树天然递归    
+94. 二叉树的中序遍历： 栈的递归、迭代（stack中序）    
+124 二叉树中的最大路径和：枚举最高点 + 左右最大(当前)返回     
+105 从前序与中序遍历序列构造二叉树：hash + 索引传递    
 
 ```C++
-//验证二叉搜索树
+//中序迭代遍历
 class Solution {
 public:
-    bool isValidBST(TreeNode* root) {
-        if(root == nullptr){
-            return true;
-        }
-        return isValidBST(root,LONG_MIN,LONG_MAX);
-    }
-
-    bool isValidBST(TreeNode* root,long long minVal,long long maxVal){
-        if(root == nullptr){
-            return true;
-        }
-        if(root->val <= minVal){
-            return false;
-        }
-        if(root->val >= maxVal){
-            return false;
+    vector<int> inorderTraversal(TreeNode* root) {
+        stack<TreeNode*> stk;
+        vector<int> ans;
+        if(!root) return ans;
+        auto cur = root;
+        while(cur || stk.size()){
+            while(cur){
+                stk.emplace(cur);
+                cur = cur->left;
+            }
+            cur = stk.top();
+            stk.pop();
+            ans.emplace_back(cur->val);
+            cur = cur->right;
         }
 
-        return isValidBST(root->left,minVal,root->val) && isValidBST(root->right,root->val,maxVal);
+        return ans;
     }
 };
 
-//索引传递代替切片
-class Solution {
-
-    //存储元素与索引
-    unordered_map<int,int> hashIndex;
-public:
-    TreeNode* buildTree(vector<int>& preOrder, vector<int>& inOrder,int preLeft,int preRight,int inLeft, int inRight){
-        if(preLeft > preRight){
-            return nullptr;
-        }
-
-        TreeNode *root = new TreeNode(preOrder[preLeft]);
-        //root 到left长度
-        int size_left = hashIndex[preOrder[preLeft]] - inLeft;
-        //注意index计算
-        root->left = buildTree(preOrder, inOrder, preLeft + 1, preLeft + size_left, inLeft, inLeft + size_left -1);
-        root->right = buildTree(preOrder, inOrder, preLeft + 1 + size_left, preRight, inLeft + 1 + size_left, inRight);
-        return  root;
-    }
-
-    TreeNode* buildTree(vector<int>& preOrder, vector<int>& inOrder) {
-
-        for(int i = 0;i < inOrder.size();i++){
-            hashIndex[inOrder[i]] = i;
-        }
-        int n = preOrder.size();
-        auto root = buildTree(preOrder,inOrder,0,n-1,0,n-1);
-        return root;
-    }
-};
 ```
 ### 0x21.3 树的BFS(Tree Breadth First Search，queue)
 
