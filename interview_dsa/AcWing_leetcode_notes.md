@@ -224,5 +224,22 @@ LeetCode 295. Find Median from Data Stream：对顶堆，小上大下 --> 小右
  
 1 2 3 4 (大顶) | 5 6 7 8(小顶) : right.size() > left.size(), right 比left至多多一个,添加时优先添加right, 先添加后调整。
 
+**动态规划**
+ 
+ LeetCode 120. Triangle：滚动数组优化版 + 普通二维数组版本
+ 
+```cpp
+vector<int> f[2];
+f[0] = f[1] = vector<int>(n);
+
+auto &a = f[i & 1], &b = f[i - 1 & 1];
+a[j] = INT_MAX;
+if (j) a[j] = b[j - 1] + triangle[i][j];
+if (j <= i - 1) a[j] = min(a[j], b[j] + triangle[i][j]);
+```
+ 
+ 
+ 
+ 
  
  
