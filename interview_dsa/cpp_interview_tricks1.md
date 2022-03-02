@@ -73,10 +73,9 @@ remove把不“符合”删除标准的元素搬移到容器的前部，并保�
 
  |=  重载了 vector<int>类型
  
- dp数组定义，可以用 vector<vector<int>> dp(m +1,vector<int>(n + 1, 0))，实际赋值采用true
+dp数组定义，可以用 vector<vector<int>> dp(m +1,vector<int>(n + 1, 0))，实际赋值采用true
 
 dp[i][j] |= dp[i][j-1]
-
 
 ##### for范围循环	
 
@@ -94,21 +93,16 @@ for(const int &num:nums)
 {
 }
 ```
-**引用与更新**
-	
-auto matrix_new = matrix;   // C++ 这里的 = 拷贝是值拷贝，会得到一个新的数组
-
-matrix = matrix_new;  //赋值拷贝
-
+**引用与更新**   	
+auto matrix_new = matrix;   // C++ 这里的 = 拷贝是值拷贝，会得到一个新的数组    
+matrix = matrix_new;  //赋值拷贝    
 merged.back()[1] = max(merged.back()[1],R);
 	
 ##### 排序
 
-比较函数模板:
-
-升序：sort(begin,end,less<data-type>());
-	
-降序：sort(begin,end,greater<data-type>()).
+比较函数模板:   
+升序：sort(begin,end,less<data-type>());    	
+降序：sort(begin,end,greater<data-type>()).   
 	
 cmp自定义比较: 
 
@@ -138,13 +132,9 @@ sort(vp.begin(), vp.end(), [](const ii &l, const ii &r) {   // 按第一个数�
 ##### C++ vector切片
 
 ```C++
-
-auto v2 = vector<int> (v1.begin(),v1.end());
-	
+auto v2 = vector<int> (v1.begin(),v1.end());	
 auto v2 = vector<int> (v1.begin(),v1.begin() + 4);
-
 ```
-
 #### 2 map（**unordered_map** ）
 	
 map基于红黑树，自动排序；unordered_map基于哈希表，无序更快，可以使用map来的代替vector,使用find 快速查找
@@ -255,8 +245,7 @@ public:
 
 比较函数模板(默认是less 升序)
 	
-map<string, int, greater<string> > name_score_map;
-
+map<string, int, greater<string> > name_score_map;   
 自定义cmp：带operator结构体、函数指针、lambda表达式
 	
 ```C++
@@ -424,12 +413,10 @@ autodir=path.substr(i,j-i);
 	
 ##### 字典序输出
 	
-1. 字符串比较：类似于C语言的strcmp函数，C++标准库string类重载了大于、等于、小于等运算符，可直接用于字符串的比较（基于字典序）。例如 "apple" < "banana", "9"> "10" 。
-
+1. 字符串比较：类似于C语言的strcmp函数，C++标准库string类重载了大于、等于、小于等运算符，可直接用于字符串的比较（基于字典序）。例如 "apple" < "banana", "9"> "10" 。  
 2. 字符串序列排序：同样的，类似于C语言的qsort函数，C++标准库还提供了 sort函数，可用于对字符串序列进行排序。sort 函数默认的排序方式是字典序升序，两个参数就可以了。sort函数原型如下：
 
-基于sort函数，可以采用不同形式的comp参数，来实现按字典序降序排序：
-
+基于sort函数，可以采用不同形式的comp参数，来实现按字典序降序排序：  
 1）lambda表达式（其中调用string类的比较运算符实现）；2）全局函数或者静态函数；3）greater模板类对象；
 
 也可以采用 sort 的默认形式完成升序排序，然后再调用 reverse 反转实现降序排序	
@@ -458,16 +445,11 @@ reverse(arr.begin(), arr.end());
 	
 [c++中的atoi()和stoi()函数的用法和区别](https://blog.csdn.net/qq_33221533/article/details/82119031)
 
-都是C++的字符处理函数，把数字字符串转换成int输出,
-
-atoi和stoi都是只转换字符串的数字部分，遇到其他字符则停止转换。
-
-atoi()的参数是 const char* ,因此对于一个字符串str我们必须调用 c_str()的方法把这个string转换成 const char*类型的,
-	
-stoi()的参数是const string*,不需要转化为 const char*；
-
-stoi()会做范围检查，默认范围是在int的范围内的，如果超出范围的话则会runtime error
-
+都是C++的字符处理函数，把数字字符串转换成int输出,  
+atoi和stoi都是只转换字符串的数字部分，遇到其他字符则停止转换。  
+atoi()的参数是 const char* ,因此对于一个字符串str我们必须调用 c_str()的方法把这个string转换成 const char*类型的,  	
+stoi()的参数是const string*,不需要转化为 const char*；   
+stoi()会做范围检查，默认范围是在int的范围内的，如果超出范围的话则会runtime error  
 atoi()不会做范围检查，如果超出范围的话，超出上界，则输出上界，超出下界，则输出下界;
 	
 ```C++
@@ -630,14 +612,10 @@ list_a.sort(compare); //排序操作；
 	
 [【c++】STL里的priority_queue用法总结](https://blog.csdn.net/xiaoquantouer/article/details/52015928)
 
-priority_queue<Type, Container, Functional>
-
-Type为数据类型， Container为保存数据的容器，Functional为元素比较方式。
-
-如果不写后两个参数，那么容器默认用的是vector，比较方式默认用operator<，也就是优先队列是大顶堆，队头元素最大。
-
-改成优先小顶堆： priority_queue<int, vector<int>, greater<int> > p;
-	
+priority_queue<Type, Container, Functional>   
+Type为数据类型， Container为保存数据的容器，Functional为元素比较方式。  
+如果不写后两个参数，那么容器默认用的是vector，比较方式默认用operator<，也就是优先队列是大顶堆，队头元素最大。  
+改成优先小顶堆： priority_queue<int, vector<int>, greater<int> > p;   
 排序：比较函数模板、带operator的结构体、函数指针、lambda表达式
 
 ```C++
@@ -667,14 +645,10 @@ while (!pq.empty())
 	
 [C++ STL中set/map 与 priority_queue 中greater、less 的用法区别](https://blog.csdn.net/liqinzhe11/article/details/79278235)
 	
-set和map：底层都是红黑树 less<> 最小堆，greater<>是最大堆。 默认是less，升序。
-
-make_heap:  less<>() 展现出来的是最大堆， greater<>()展现出来是最小堆。  默认是less。
-
-priority_queue:   底层是使用heap实现的，所以表现出来的特性和heap一致。 
-
-less<>() 展现出来的是最大堆， greater<>()展现出来是最小堆。  默认是less。
-
+set和map：底层都是红黑树 less<> 最小堆，greater<>是最大堆。 默认是less，升序。  
+make_heap:  less<>() 展现出来的是最大堆， greater<>()展现出来是最小堆。  默认是less。   
+priority_queue:   底层是使用heap实现的，所以表现出来的特性和heap一致。   
+less<>() 展现出来的是最大堆， greater<>()展现出来是最小堆。  默认是less。  
 greater: a > b  ,less: a < b
 			    
 ```
@@ -714,8 +688,7 @@ std::priority_queue<int, std::vector<int>, decltype(cmp)> q3(cmp);
 	
 #### 9 pair 
 
-template<class T1,class T2> struct pair
-	
+template<class T1,class T2> struct pair  
 支持比较运算，以first为第一关键字，以second为第二关键字（字典序）
 
 ```c++
@@ -784,23 +757,20 @@ bool binary_search (ForwardIterator first, ForwardIterator last,
 
 **升序序列**
 
-lower_bound：返回第一个 >= 目标值的迭代器，找不到则返回end()。
-
+lower_bound：返回第一个 >= 目标值的迭代器，找不到则返回end()。  
 upper_bound：返回第一个 > 目标值的迭代器，找不到则返回end()。
 
 **降序序列**
 
-需要重载或者目标比较器，例如greater()
-
-lower_bound：返回第一个 <= 目标值的迭代器，找不到则返回end()。
-
-upper_bound：返回第一个 < 目标值的迭代器，找不到则返回end()。
+需要重载或者目标比较器，例如greater()   
+lower_bound：返回第一个 <= 目标值的迭代器，找不到则返回end()。    
+upper_bound：返回第一个 < 目标值的迭代器，找不到则返回end()。  
 
 ```C++
 
  // 返回第一个小于等于目标值的迭代器
 lower_bound(vec.begin(), vec.end(), 8, greater<int>());
-
+	
 // 返回第一个小于目标值的迭代器
 upper_bound(vec.begin(), vec.end(), 8, greater<int>());
 
@@ -897,28 +867,22 @@ int *p = new int(87); //
 
 定义与声明：
 
-1）A  a；在栈(stack)上分配空间；
-
-2）A  *a；只是声明，还没有分配空间；
-
+1）A  a；在栈(stack)上分配空间；  
+2）A  *a；只是声明，还没有分配空间；   
 3）A  *a= new A；在堆(heap)上分配空间；
 
 栈上空间自动回收，堆空间需要程序员手动回收。
 
-
 #### 16 常规数据类型
 
-INT_MIN,INT_MAX
-
-LONG_MIN,LONG_MAX 
-
+INT_MIN,INT_MAX   
+LONG_MIN,LONG_MAX   
 long long： 属于int型，一般来讲，是longint型大小的两倍，int型的4倍。
 									 
 
 **初始化**
 
-内置类型变量（如 int ，double，bool等）： 定义于任何函数之外的变量被初始化为0, 定义于函数体内部的内置类型将不被初始化，一个未被初始化的内置类型变量的值是未定义的.
-
+内置类型变量（如 int ，double，bool等）： 定义于任何函数之外的变量被初始化为0, 定义于函数体内部的内置类型将不被初始化，一个未被初始化的内置类型变量的值是未定义的.  
 其他类型的变量（如 string 或 其他自定义类型）：不管定义于何处，都会执行默认构造函数。如果该类没有默认构造函数，则会引发错误。因此，建议为每个类都定义一个默认构造函数（=default）。
 
 #### 17 统计运行时间
@@ -944,19 +908,45 @@ ceil()：向上取整; floor():向下取整; round() 四舍五入
 	
 **cctype.h 字符处理库**
 
-isalnum: 检查字符是否为字母或数字
-
-isalpha:检查字符是否为字母	
-	
-isdigit:检查字符是否为数字	
-	
-tolower 转换字符为小写
+isalnum: 检查字符是否为字母或数字   
+isalpha:检查字符是否为字母   	
+isdigit:检查字符是否为数字    	
+tolower 转换字符为小写   
 	
 **numeric 数值算法**
 	
-accumulate：两个形参指定要累加的元素范围，第三个形参则是累加的初值
-
-int sum = accumulate(vec.begin() , vec.end() , 42);  
+accumulate：两个形参指定要累加的元素范围，第三个形参则是累加的初值  
+int sum = accumulate(vec.begin() , vec.end() , 42);    
 	
- 
+#### 19 代码简化方法 
+
+同类型变量定义，一句可以定义多个。
+
+for  while 单句的内循环不加括号。
+
+灵活利用for  while的循环判断条件，单个for内灵活运用多个变量同时循环。
+
+灵活使用三目运算符
+
+灵活使用连续等号
+
+```c++
+int a = 0,b = 0;
+
+while (j < s.size() && s[j] != ' ') j ++ ;
+
+ for (auto c:hash[u - '2'])
+     for (auto path:res)
+         now.push_back(path + c);
+         
+for (int j = i, k = 2 * (n - 1) - i; j < s.size() || k < s.size(); j += 2 * (n - 1), k += 2 * (n - 1))
+{
+    if (j < s.size()) res += s[j];
+    if (k < s.size()) res += s[k];
+}
+
+int b = y == j ? 0 : atoi(s2.substr(j, y - j).c_str());
+
+st[i] = d[i + u] = ud[i - u + n] = 1;
+```
 	
