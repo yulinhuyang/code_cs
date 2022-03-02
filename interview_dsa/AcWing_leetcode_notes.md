@@ -229,16 +229,19 @@ LeetCode 295. Find Median from Data Stream：对顶堆，小上大下 --> 小右
  LeetCode 120. Triangle：滚动数组优化版 + 普通二维数组版本
  
 ```cpp
+ //滚动数组优化
 vector<int> f[2];
 f[0] = f[1] = vector<int>(n);
 
 auto &a = f[i & 1], &b = f[i - 1 & 1];
 a[j] = INT_MAX;
+
+//i,j的0行0列填充，可以初始填好，也可以循环内进行条件判断
 if (j) a[j] = b[j - 1] + triangle[i][j];
 if (j <= i - 1) a[j] = min(a[j], b[j] + triangle[i][j]);
 ```
  
- 
+LeetCode 63. 不同路径 II：循环内处理好0行0列。
  
  
  
