@@ -3,6 +3,10 @@ https://soulmachine.gitbooks.io/algorithm-essentials/content/cpp/
 
 https://labuladong.gitee.io/algo/2/
 
+https://www.programmercarl.com/
+
+yxc leetcode全解(究极班)： https://www.acwing.com/activity/content/activity_person/content/29799/44/
+
 #### 1 vector
 
 使用* 解迭代器 a[0]和*a.begin()一样
