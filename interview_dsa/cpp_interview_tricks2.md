@@ -652,6 +652,44 @@ DFS防止死循环：
 memo缓存： floodfill变形慎重缓存，visited了部分情况下也需要更新
 
 ### 0x22.2 子集问题（排列、组合）
+	
+swap交换法、contain排除、visit[bool]法
+ 
+```C++
+for(int i = first;i < nums.size();i++){
+	swap(nums[i],nums[first]);
+	backtrack(ans,nums, first+1);
+	swap(nums[i],nums[first]);
+}
+// 排除不合法的选择
+if (track.contains(nums[i]))
+  continue;
+```
+
+多叉for选择与二叉选择(1 no/yes -- 2 no/yes -- 3 no/yes)
+
+```cpp
+void backtrack(vector<int>& nums,int index){
+	ans.emplace_back(path);
+	//多叉选择
+	for(int i = index;i < nums.size();i++){
+		path.emplace_back(nums[i]);
+		backtrack(nums,i + 1);
+		path.pop_back();
+	}
+}
+void backtrack(vector<int>& nums,int index){
+	if(index == nums.size()){
+		ans.emplace_back(path);
+		return;
+	}
+	backtrack(nums,index + 1);//不选
+	
+	path.emplace_back(nums[index]);//选
+	backtrack(nums,index + 1);
+	path.pop_back();
+}
+```
 
 leetcode 47 全排列II  遍历的时候跳过相同元素，人为规定相同数字的相对顺序不变 
  
