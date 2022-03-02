@@ -513,6 +513,23 @@ public:
 
 ## 0x15 字符串(KMP与最小表示法）
 
+模式：
+```
+    while (k < s.size() && s[k] == s[j]) k ++ ;  
+    while (k < s.size() && s[k] == ' ') k ++ ;
+    unordered_map<string,vector<string>> hash;
+```
+为什么 STL 中的容器和算法都是用的左闭右开区间？：https://www.zhihu.com/question/61054439
+	
+相关API:      
+reverse、str.find   
+string substr (size_t pos = 0, size_t len = npos)  //如果没有n,默认到末尾，长度是len,包含pos + len位置的字符。    
+to_string() 转字符串  
+stoi或 atoi(s1.substr(i, x - i).c_str())
+	
+题目：    
+leetcode 3 无重复字符的最长字串: hash逐加逐减, ij双变量循环代替滑窗。   
+leetcode 17 电话号码的字母组合：三重简单循环代替dfs
 
 ## 0x16  Trie树（字典树）
 
