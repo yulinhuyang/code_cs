@@ -1,3 +1,116 @@
+### 1 位运算 数学
+
+##### offer 14- I. 剪绳子
+
+```c++
+class Solution {
+public:
+    int cuttingRope(int n) {
+        if(n <= 3){
+            return n - 1;
+        }
+        int a = n / 3;
+        int b = n % 3;
+        if(b == 0) return pow(3,a);
+        if(b == 1) return pow(3,a - 1)*4;
+        return pow(3,a)*2;
+
+    }
+};
+
+```
+ 
+
+### 2 二分 
+
+##### Offer 04. 二维数组中的查找
+
+```c++
+class Solution {
+public:
+    bool findNumberIn2DArray(vector<vector<int>>& matrix, int target) {
+        if(matrix.size() == 0){
+            return 0;
+        }
+        int m = matrix.size();
+        int n = matrix[0].size();
+        int i = 0,j = n - 1;
+        while(i <= m - 1  && j >= 0){
+            if(matrix[i][j] == target){
+                return  true;
+            }else if(matrix[i][j] < target){
+                i++;
+            }else{
+                j--;
+            }
+        }
+        return  false;
+    }
+};
+```
+##### offer 11 旋转数组的最小数字
+
+先去掉干扰条件
+
+折线分析法
+
+```c++
+class Solution {
+public:
+    int minArray(vector<int>& numbers) {
+        int n = numbers.size() - 1;
+        while(n > 0 && numbers[0] == numbers[n]) n--;
+        if(numbers[0] <= numbers[n]) return numbers[0];
+        int l = 0,r = n;
+        while(l < r){
+            int mid = l + r >> 1;
+            if(numbers[mid] <= numbers[n]) r = mid;
+            else l = mid + 1;
+        }
+        return numbers[l];
+    }
+};
+
+```
+
+### 3 滑动窗口、双指针、单调队列、单调栈
+
+##### offer 09 用两个栈实现队列
+
+```cpp
+class CQueue {
+    stack<int> a;
+    stack<int> b;
+public:
+    CQueue() {
+    }
+
+    void appendTail(int value) {
+        a.emplace(value);
+    }
+
+    int deleteHead() {
+        if(b.size() == 0){
+            int m = a.size();
+            for (int i = 0; i < m; i++) {
+                b.emplace(a.top());
+                a.pop();
+            }
+        }
+        if(b.empty()){
+            return -1;
+        } else{
+            auto res = b.top();
+            b.pop();
+            return res;
+        }
+    }
+};
+```
+ 
+
+### 4 基本数据结构 
+
 ##### Offer 03 数组中重复的数字
 
 ```c++
@@ -39,51 +152,7 @@ public:
 };
 ```
 
-##### Offer 04. 二维数组中的查找
-
-```c++
-class Solution {
-public:
-    bool findNumberIn2DArray(vector<vector<int>>& matrix, int target) {
-        if(matrix.size() == 0){
-            return 0;
-        }
-        int m = matrix.size();
-        int n = matrix[0].size();
-        int i = 0,j = n - 1;
-        while(i <= m - 1  && j >= 0){
-            if(matrix[i][j] == target){
-                return  true;
-            }else if(matrix[i][j] < target){
-                i++;
-            }else{
-                j--;
-            }
-        }
-        return  false;
-    }
-};
-```
-
-##### Offer 05 替换空格
-
-```C++
-class Solution {
-public:
-    string replaceSpace(string s) {
-        string output;
-        for(auto chr:s){
-            if(chr == ' '){
-                output += "%20";
-            } else{
-                output += string(1,chr);
-            }
-        }
-        return output;
-    }
-};
-
-```
+### 5 链表 
 
 ##### Offer 06  从尾到头打印链表
 
@@ -108,83 +177,32 @@ public:
     }
 };
 ```
-##### offer 09 用两个栈实现队列
 
-```cpp
-class CQueue {
-    stack<int> a;
-    stack<int> b;
+### 6 字符串
+
+##### Offer 05 替换空格
+
+```C++
+class Solution {
 public:
-    CQueue() {
-    }
-
-    void appendTail(int value) {
-        a.emplace(value);
-    }
-
-    int deleteHead() {
-        if(b.size() == 0){
-            int m = a.size();
-            for (int i = 0; i < m; i++) {
-                b.emplace(a.top());
-                a.pop();
+    string replaceSpace(string s) {
+        string output;
+        for(auto chr:s){
+            if(chr == ' '){
+                output += "%20";
+            } else{
+                output += string(1,chr);
             }
         }
-        if(b.empty()){
-            return -1;
-        } else{
-            auto res = b.top();
-            b.pop();
-            return res;
-        }
-    }
-};
-```
-
-##### Offer 10- I. 斐波那契数列
-
-```cpp
-class Solution {
-public:
-    int fib(int n) {
-        if(n == 0) return 0;
-        if(n == 1) return 1;
-        long fb0 = 0;
-        long fb1 = 1;
-        for (int i = 2; i <= n; i++) {
-            auto tmp = fb0 + fb1;
-            fb0 = fb1;
-            fb1 = tmp % 1000000007;
-        }
-        return fb1 % 1000000007;
-    }
-};
-```
-
-##### offer 11 旋转数组的最小数字
-
-先去掉干扰条件
-
-折线分析法
-
-```c++
-class Solution {
-public:
-    int minArray(vector<int>& numbers) {
-        int n = numbers.size() - 1;
-        while(n > 0 && numbers[0] == numbers[n]) n--;
-        if(numbers[0] <= numbers[n]) return numbers[0];
-        int l = 0,r = n;
-        while(l < r){
-            int mid = l + r >> 1;
-            if(numbers[mid] <= numbers[n]) r = mid;
-            else l = mid + 1;
-        }
-        return numbers[l];
+        return output;
     }
 };
 
 ```
+
+### 6 树 
+
+### 7 DFS（回溯）+BFS
 
 ##### offer 12 矩阵中的路径
 
@@ -271,23 +289,28 @@ public:
     }
 };
 
-```
-##### offer 14- I. 剪绳子
+``` 
 
-```c++
+### 8 动态规划 
+
+##### Offer 10- I. 斐波那契数列
+
+```cpp
 class Solution {
 public:
-    int cuttingRope(int n) {
-        if(n <= 3){
-            return n - 1;
+    int fib(int n) {
+        if(n == 0) return 0;
+        if(n == 1) return 1;
+        long fb0 = 0;
+        long fb1 = 1;
+        for (int i = 2; i <= n; i++) {
+            auto tmp = fb0 + fb1;
+            fb0 = fb1;
+            fb1 = tmp % 1000000007;
         }
-        int a = n / 3;
-        int b = n % 3;
-        if(b == 0) return pow(3,a);
-        if(b == 1) return pow(3,a - 1)*4;
-        return pow(3,a)*2;
-
+        return fb1 % 1000000007;
     }
 };
-
 ```
+
+
