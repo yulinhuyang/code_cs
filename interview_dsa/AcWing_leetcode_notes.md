@@ -243,7 +243,7 @@ if (j <= i - 1) a[j] = min(a[j], b[j] + triangle[i][j]);
  
 LeetCode 63. 不同路径 II：循环内处理好0行0列。
 
-LeetCode 322. 零钱兑换 I: 0-1 背包的二维和一维解法。
+LeetCode 322. 零钱兑换 I: 完全背包的二维和一维解法。
          
 LeetCode 518. 零钱兑换 II: 完全背包的二维和一维解法。
  
