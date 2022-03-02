@@ -93,7 +93,8 @@ for(const int &num:nums)
 {
 }
 ```
-**引用与更新**   	
+**引用与更新**  
+	
 auto matrix_new = matrix;   // C++ 这里的 = 拷贝是值拷贝，会得到一个新的数组    
 matrix = matrix_new;  //赋值拷贝    
 merged.back()[1] = max(merged.back()[1],R);
