@@ -1,3 +1,6 @@
+
+yxc leetcode全解(究极班)： https://www.acwing.com/activity/content/activity_person/content/29799/44/
+
 **代码简化方法**
 
 同类型变量定义，一句可以定义多个。
