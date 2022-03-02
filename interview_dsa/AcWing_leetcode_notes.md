@@ -249,3 +249,4 @@ LeetCode 518. 零钱兑换 II: 完全背包的二维和一维解法。
  
 LeetCode 664. Strange Printer:s[l-1]=s[k-1],f[l][r] = min(f[l][r], f[l][k - 1] + f[k + 1][r]);
  
+区间dp: len -> 左端点 -> 决策
