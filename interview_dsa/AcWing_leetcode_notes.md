@@ -219,7 +219,11 @@ Leetcode 1000. 合并石头的最低成本: 石子合并变形。
 LeetCode 10. 正则表达式匹配: sp加' ',*提前判断
 
  
-### 2 究极班
+### 2 究极班题选
+ 
+腾讯精选练习 50 题: https://leetcode-cn.com/problem-list/ex0k24j/
+ 
+LeetCode 精选 TOP 面试题: https://leetcode-cn.com/problem-list/2ckc81c/
  
  
 ### 3 面试题
