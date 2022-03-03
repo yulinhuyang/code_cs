@@ -1,39 +1,11 @@
 
 yxc leetcode全解(究极班)： https://www.acwing.com/activity/content/activity_person/content/29799/44/
 
-**代码简化方法**
+### 1  2019刷题 +提高班
 
-同类型变量定义，一句可以定义多个。
+**1 位运算(数学)**
 
-for  while 单句的内循环不加括号。
-
-灵活利用for  while的循环判断条件，单个for内灵活运用多个变量同时循环。
-
-灵活使用三目运算符
-
-灵活使用连续等号
-
-```c++
-int a = 0,b = 0;
-
-while (j < s.size() && s[j] != ' ') j ++ ;
-
- for (auto c:hash[u - '2'])
-     for (auto path:res)
-         now.push_back(path + c);
-         
-for (int j = i, k = 2 * (n - 1) - i; j < s.size() || k < s.size(); j += 2 * (n - 1), k += 2 * (n - 1))
-{
-    if (j < s.size()) res += s[j];
-    if (k < s.size()) res += s[k];
-}
-
-int b = y == j ? 0 : atoi(s2.substr(j, y - j).c_str());
-
-st[i] = d[i + u] = ud[i - u + n] = 1;
-```
-
-**二分**
+**2 二分**
 
 两段性和单调性，折线法，寻找分解条件
 
@@ -52,15 +24,65 @@ st[i] = d[i + u] = ud[i - u + n] = 1;
 
 相关题目：
 
-Leetcode  153. 寻找旋转排序数组中的最小值：nums.back()的秒用。
-
-Leetcode 33. 搜索旋转排序数组:先找最小值，去掉干扰条件
-
-offer 11 旋转数组的最小数字：先去掉干扰条件。
-
+Leetcode  153. 寻找旋转排序数组中的最小值：nums.back()的秒用。     
+Leetcode 33. 搜索旋转排序数组:先找最小值，去掉干扰条件。  
+offer 11 旋转数组的最小数字：先去掉干扰条件。  
 Offer 03 数组中重复的数字：反复交换法
 
-**链表**  
+**3 贪心&哈希表**
+
+Leetcode 187. 重复的DNA序列: unordered_map(hash) 使用。 
+Leetcode 652. 寻找重复的子树: 中序遍历与后序或者中序遍历与前序遍历都可以唯一确定一棵树。两遍hash,第一遍树变成字符串，第二遍变成数。  
+Leetcode 560. 和为 K 的子数组: 简化的前缀和。  
+
+**4 单调队列/栈**
+
+Leetcode 167. 两数之和 II - 输入有序数组： 首尾指针              
+Leetcode 88. 合并两个有序数组：双指针从后向前合并。                                                    
+Leetcode 26. 删除有序数组中的重复项：前后指针                                        
+LeetCode 76. 最小覆盖字串:  单个hash + i(hash[key]--)  j(hash[key]++) 双指针  简化滑动窗口问题                           
+Leetcode 32. 最长有效括号：起始加-1,栈底元素为当前已经遍历过的元素中「最后一个没有被匹配的右括号的下标]                                      
+Leetcode 42. 接雨水:两遍max, 左边一遍Left_max，右边一遍right_max，min(left_max[i],right_max[i]) - height[i]  
+Leetcode 84. 柱状图中最大的矩形:两遍栈，左边一遍单调上升栈，右边一遍单独上升栈，height[i] * (right[i] - left[i] - 1)
+
+```C++
+//单调栈代码段
+while (stk.size() && heights[stk.top()] >= heights[i]) stk.pop();
+if (stk.empty()) left[i] = -1;
+else left[i] = stk.top();
+stk.push(i);
+```                       
+Leetcode 239. 滑动窗口最大值:单调下降队列简化
+                         
+```C++
+//单调队列代码段
+if (q.size() && i - k >= q.front()) q.pop_front();
+while (q.size() && nums[q.back()] <= nums[i]) q.pop_back();
+q.push_back(i);
+if (i >= k - 1) res.push_back(nums[q.front()]);
+```         
+                        
+leetcode 918: 拆环为链 + 前缀和 +单调上升队列
+
+前缀和：A从1开始,S从1开始,for从1开始,S[i] = S[i - 1] + A[i]。A从0开始,S从1开始(n+1),for从0开始,S[i+1] = S[i] + A[i]。默认S[0] = 0，S一定从1开始。
+
+单调队列：针对前缀和S的,所以i-k >= n 有等号。 
+
+**5 堆&并查集**
+
+LeetCode 547. Friend Circles :并查集  
+LeetCode 684. Redundant Connection: 并差集变形，1->n 下标从1开始。  
+Leetcode 692. 前K个高频单词:小顶堆(大顶key加负号)流过程,保证second的字典序排序，也可以自定义比较函数。  
+pair 设置 --> make_pair或者 直接构造 PIS t(-word.second, word.first);
+ 
+优先队列默认大的在队首，字符串则为字典序由大到小。int，double，char，string类型都可以这样定义。
+ 
+LeetCode 295. Find Median from Data Stream：对顶堆，小上大下 --> 小右大左。动态流，图参考：https://blog.csdn.net/jiahonghao2002/article/details/114108760
+ 
+1 2 3 4 (大顶) | 5 6 7 8(小顶) : right.size() > left.size(), right 比left至多多一个,添加时优先添加right, 先添加后调整。
+
+ 
+**6 链表专题**
 
 链表画图看，添加虚拟头节点(涉及到头节点可能会变的情况下)
 
@@ -113,19 +135,7 @@ public:
 ```
 链表Cout调试
 
-**树**
-
-栈的递归、迭代（stack中序）
-
-树的递归问题：枚举最高点 + 左右最大(当前)返回
-
-LCA: 236. 二叉树的最近公共祖先，树天然递归
-
-94. 二叉树的中序遍历： 栈的递归、迭代（stack中序）
-
-124 二叉树中的最大路径和：枚举最高点 + 左右最大(当前)返回
-
-**字符串**
+**7 字符串**
 
 模式： 
     while (k < s.size() && s[k] == s[j]) k ++ ;  
@@ -146,8 +156,20 @@ stoi或 atoi(s1.substr(i, x - i).c_str())
 leetcode 3 无重复字符的最长字串: hash逐加逐减, ij双变量循环代替滑窗。
 
 leetcode 17 电话号码的字母组合：三重简单循环代替dfs
- 
-**DFS+回溯**
+
+**8 树**
+
+栈的递归、迭代（stack中序）
+
+树的递归问题：枚举最高点 + 左右最大(当前)返回
+
+LCA: 236. 二叉树的最近公共祖先，树天然递归   
+94. 二叉树的中序遍历： 栈的递归、迭代（stack中序）   
+124 二叉树中的最大路径和：枚举最高点 + 左右最大(当前)返回
+
+
+**9 DFS+回溯专题**
+
 
 bfs一般求最小步数和最短距离，dfs状态数量非常大，但是解的数量很小。
  
@@ -157,78 +179,15 @@ leetcode 47 全排列II  遍历的时候跳过相同元素，人为规定相同�
 while(i + 1 < nums.size() && nums[i] == nums[i+1]) i++;
 ```
                          
-leetcode 78 子集  位运算+循环,简化子集问题, 递归结构相当于一层循环。
-
-leetcode 90 子集II  回溯去重
-
-LeetCode 52. N-Queens II    dfs代替行, col + d + ud 数组标记解法，精确覆盖问题。
- 
-LeetCode 37. Sudoku Solver  dfs 逐行, col + row + cell 数组标记解法，row[9][9]: 9行,0-9的数有了哪几个
-               
+leetcode 78 子集  位运算+循环,简化子集问题, 递归结构相当于一层循环。  
+leetcode 90 子集II  回溯去重  
+LeetCode 52. N-Queens II    dfs代替行, col + d + ud 数组标记解法，精确覆盖问题。   
+LeetCode 37. Sudoku Solver  dfs 逐行, col + row + cell 数组标记解法，row[9][9]: 9行,0-9的数有了哪几个                
 Leetcode 473. 火柴拼正方形   剪枝优化技巧
- 
-**滑动窗口、双指针、单调队列、单调栈**
+  
 
-Leetcode 167. 两数之和 II - 输入有序数组： 首尾指针
-                         
-Leetcode 88. 合并两个有序数组：双指针从后向前合并。                         
-                         
-Leetcode 26. 删除有序数组中的重复项：前后指针                
-                         
-LeetCode 76. 最小覆盖字串:  单个hash + i(hash[key]--)  j(hash[key]++) 双指针  简化滑动窗口问题 
-                         
-Leetcode 32. 最长有效括号：起始加-1,栈底元素为当前已经遍历过的元素中「最后一个没有被匹配的右括号的下标]                
-                    
-Leetcode 42. 接雨水:两遍max, 左边一遍Left_max，右边一遍right_max，min(left_max[i],right_max[i]) - height[i]
+**10 动态规划专题**
 
-Leetcode 84. 柱状图中最大的矩形:两遍栈，左边一遍单调上升栈，右边一遍单独上升栈，height[i] * (right[i] - left[i] - 1)
-```C++
-//单调栈代码段
-while (stk.size() && heights[stk.top()] >= heights[i]) stk.pop();
-if (stk.empty()) left[i] = -1;
-else left[i] = stk.top();
-stk.push(i);
-```                       
-Leetcode 239. 滑动窗口最大值:单调下降队列简化
-                         
-```C++
-//单调队列代码段
-if (q.size() && i - k >= q.front()) q.pop_front();
-while (q.size() && nums[q.back()] <= nums[i]) q.pop_back();
-q.push_back(i);
-if (i >= k - 1) res.push_back(nums[q.front()]);
-```         
-                        
-leetcode 918: 拆环为链 + 前缀和 +单调上升队列
-
-前缀和：A从1开始,S从1开始,for从1开始,S[i] = S[i - 1] + A[i]。A从0开始,S从1开始(n+1),for从0开始,S[i+1] = S[i] + A[i]。默认S[0] = 0，S一定从1开始。
-
-单调队列：针对前缀和S的,所以i-k >= n 有等号。 
- 
-**基本数据结构**
- 
-Leetcode 187. 重复的DNA序列: unordered_map(hash) 使用。
- 
-Leetcode 652. 寻找重复的子树: 中序遍历与后序或者中序遍历与前序遍历都可以唯一确定一棵树。两遍hash,第一遍树变成字符串，第二遍变成数。
-
-Leetcode 560. 和为 K 的子数组: 简化的前缀和。
- 
-LeetCode 547. Friend Circles :并查集
- 
-LeetCode 684. Redundant Connection: 并差集变形，1->n 下标从1开始。
- 
-Leetcode 692. 前K个高频单词:小顶堆(大顶key加负号)流过程,保证second的字典序排序，也可以自定义比较函数。
- 
-pair 设置 --> make_pair或者 直接构造 PIS t(-word.second, word.first);
- 
-优先队列默认大的在队首，字符串则为字典序由大到小。int，double，char，string类型都可以这样定义。
- 
-LeetCode 295. Find Median from Data Stream：对顶堆，小上大下 --> 小右大左。动态流，图参考：https://blog.csdn.net/jiahonghao2002/article/details/114108760
- 
-1 2 3 4 (大顶) | 5 6 7 8(小顶) : right.size() > left.size(), right 比left至多多一个,添加时优先添加right, 先添加后调整。
-
-**动态规划**
- 
  LeetCode 120. Triangle：滚动数组优化版 + 普通二维数组版本
  
 ```cpp
@@ -244,16 +203,53 @@ if (j) a[j] = b[j - 1] + triangle[i][j];
 if (j <= i - 1) a[j] = min(a[j], b[j] + triangle[i][j]);
 ```
  
-LeetCode 63. 不同路径 II：循环内处理好0行0列。
-
-LeetCode 322. 零钱兑换 I: 完全背包的二维和一维解法。
-         
-LeetCode 518. 零钱兑换 II: 完全背包的二维和一维解法。
- 
+LeetCode 63. 不同路径 II：循环内处理好0行0列。  
+LeetCode 322. 零钱兑换 I: 完全背包的二维和一维解法。        
+LeetCode 518. 零钱兑换 II: 完全背包的二维和一维解法。  
 LeetCode 664. Strange Printer:s[l-1]=s[k-1],f[l][r] = min(f[l][r], f[l][k - 1] + f[k + 1][r]);
  
 区间dp: len -> 左端点 -> 决策
  
-Leetcode 1000. 合并石头的最低成本: 石子合并变形。
- 
+Leetcode 1000. 合并石头的最低成本: 石子合并变形。  
 LeetCode 10. 正则表达式匹配: sp加' ',*提前判断
+
+ 
+### 2 究极班
+ 
+ 
+### 3 面试题
+ 
+**代码简化方法**
+
+同类型变量定义，一句可以定义多个。
+
+for  while 单句的内循环不加括号。
+
+灵活利用for  while的循环判断条件，单个for内灵活运用多个变量同时循环。
+
+灵活使用三目运算符
+
+灵活使用连续等号
+
+```c++
+int a = 0,b = 0;
+
+while (j < s.size() && s[j] != ' ') j ++ ;
+
+ for (auto c:hash[u - '2'])
+     for (auto path:res)
+         now.push_back(path + c);
+         
+for (int j = i, k = 2 * (n - 1) - i; j < s.size() || k < s.size(); j += 2 * (n - 1), k += 2 * (n - 1))
+{
+    if (j < s.size()) res += s[j];
+    if (k < s.size()) res += s[k];
+}
+
+int b = y == j ? 0 : atoi(s2.substr(j, y - j).c_str());
+
+st[i] = d[i + u] = ud[i - u + n] = 1;
+```
+  
+ 
+ 
