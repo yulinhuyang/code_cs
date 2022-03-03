@@ -5,7 +5,7 @@ yxc leetcode全解(究极班)： https://www.acwing.com/activity/content/activit
 
 **1 位运算(数学)**
 
-**2 二分**
+**2 二分与双指针**
 
 两段性和单调性，折线法，寻找分解条件
 
@@ -35,7 +35,7 @@ Leetcode 187. 重复的DNA序列: unordered_map(hash) 使用。
 Leetcode 652. 寻找重复的子树: 中序遍历与后序或者中序遍历与前序遍历都可以唯一确定一棵树。两遍hash,第一遍树变成字符串，第二遍变成数。  
 Leetcode 560. 和为 K 的子数组: 简化的前缀和。  
 
-**4 单调队列/栈**
+**4 栈/队列 单调栈/队列 **
 
 Leetcode 167. 两数之和 II - 输入有序数组： 首尾指针              
 Leetcode 88. 合并两个有序数组：双指针从后向前合并。                                                    
@@ -81,8 +81,29 @@ LeetCode 295. Find Median from Data Stream：对顶堆，小上大下 --> 小右
  
 1 2 3 4 (大顶) | 5 6 7 8(小顶) : right.size() > left.size(), right 比left至多多一个,添加时优先添加right, 先添加后调整。
 
+**6 字符串**
+
+模式： 
+    while (k < s.size() && s[k] == s[j]) k ++ ;  
+    while (k < s.size() && s[k] == ' ') k ++ ;
+
+unordered_map<string,vector<string>> hash;
+
+为什么 STL 中的容器和算法都是用的左闭右开区间？：https://www.zhihu.com/question/61054439
+
+reverse、str.find
  
-**6 链表专题**
+string substr (size_t pos = 0, size_t len = npos)  //如果没有n,默认到末尾，长度是len,包含pos + len位置的字符。
+ 
+to_string() 转字符串
+
+stoi或 atoi(s1.substr(i, x - i).c_str())
+ 
+leetcode 3 无重复字符的最长字串: hash逐加逐减, ij双变量循环代替滑窗。
+
+leetcode 17 电话号码的字母组合：三重简单循环代替dfs
+ 
+**7 链表**
 
 链表画图看，添加虚拟头节点(涉及到头节点可能会变的情况下)
 
@@ -135,29 +156,8 @@ public:
 ```
 链表Cout调试
 
-**7 字符串**
-
-模式： 
-    while (k < s.size() && s[k] == s[j]) k ++ ;  
-    while (k < s.size() && s[k] == ' ') k ++ ;
-
-unordered_map<string,vector<string>> hash;
-
-为什么 STL 中的容器和算法都是用的左闭右开区间？：https://www.zhihu.com/question/61054439
-
-reverse、str.find
  
-string substr (size_t pos = 0, size_t len = npos)  //如果没有n,默认到末尾，长度是len,包含pos + len位置的字符。
- 
-to_string() 转字符串
-
-stoi或 atoi(s1.substr(i, x - i).c_str())
- 
-leetcode 3 无重复字符的最长字串: hash逐加逐减, ij双变量循环代替滑窗。
-
-leetcode 17 电话号码的字母组合：三重简单循环代替dfs
-
-**8 树**
+**8 树与图**
 
 栈的递归、迭代（stack中序）
 
@@ -168,8 +168,7 @@ LCA: 236. 二叉树的最近公共祖先，树天然递归
 124 二叉树中的最大路径和：枚举最高点 + 左右最大(当前)返回
 
 
-**9 DFS+回溯专题**
-
+**9 DFS(回溯)与BFS**
 
 bfs一般求最小步数和最短距离，dfs状态数量非常大，但是解的数量很小。
  
