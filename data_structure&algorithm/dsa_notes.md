@@ -1,6 +1,6 @@
 数据结构精选
 
-**插入**
+**插入排序**
 
 ```C++
 void insertion_sort(int a[], const int start, const int end) {
