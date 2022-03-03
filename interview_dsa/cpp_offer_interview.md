@@ -20,8 +20,7 @@ public:
 
 ```
  
-
-### 2 二分 
+### 2 二分与双指针
 
 ##### Offer 04. 二维数组中的查找
 
@@ -72,8 +71,10 @@ public:
 };
 
 ```
+### 3 贪心
 
-### 3 滑动窗口、双指针、单调队列、单调栈
+
+### 4 栈与队列 单调栈与单调队列
 
 ##### offer 09 用两个栈实现队列
 
@@ -109,7 +110,9 @@ public:
 ```
  
 
-### 4 基本数据结构 
+### 5 堆&并查集
+
+基本数据结构
 
 ##### Offer 03 数组中重复的数字
 
@@ -152,7 +155,31 @@ public:
 };
 ```
 
-### 5 链表 
+
+### 6 字符串与hash表
+
+##### Offer 05 替换空格
+
+```C++
+class Solution {
+public:
+    string replaceSpace(string s) {
+        string output;
+        for(auto chr:s){
+            if(chr == ' '){
+                output += "%20";
+            } else{
+                output += string(1,chr);
+            }
+        }
+        return output;
+    }
+};
+
+```
+
+
+### 7 链表 
 
 ##### Offer 06  从尾到头打印链表
 
@@ -178,31 +205,9 @@ public:
 };
 ```
 
-### 6 字符串
+### 8 树与图
 
-##### Offer 05 替换空格
-
-```C++
-class Solution {
-public:
-    string replaceSpace(string s) {
-        string output;
-        for(auto chr:s){
-            if(chr == ' '){
-                output += "%20";
-            } else{
-                output += string(1,chr);
-            }
-        }
-        return output;
-    }
-};
-
-```
-
-### 6 树 
-
-### 7 DFS（回溯）+BFS
+### 9 DFS（回溯）+ BFS
 
 ##### offer 12 矩阵中的路径
 
@@ -291,7 +296,7 @@ public:
 
 ``` 
 
-### 8 动态规划 
+### 10 动态规划 
 
 ##### Offer 10- I. 斐波那契数列
 
