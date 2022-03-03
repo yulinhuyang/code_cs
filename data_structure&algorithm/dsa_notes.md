@@ -1,5 +1,21 @@
 数据结构精选
 
+**插入**
+
+```C++
+void insertion_sort(int a[], const int start, const int end) {
+    int tmp;
+    int i, j;
+    for (i = start + 1; i < end; i++) {
+        tmp = a[i];
+        for (j = i - 1; tmp < a[j] && j >= start; j--) {
+            a[j + 1] = a[j];
+        }
+        a[j + 1] = tmp;
+    }
+}
+```
+
 **冒泡排序优化版**
 
 ```C++
