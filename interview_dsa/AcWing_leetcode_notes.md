@@ -29,10 +29,8 @@ Leetcode 33. 搜索旋转排序数组:先找最小值，去掉干扰条件。
 offer 11 旋转数组的最小数字：先去掉干扰条件。  
 Offer 03 数组中重复的数字：反复交换法
 
-**3 贪心&哈希表**
+**3 贪心**
 
-Leetcode 187. 重复的DNA序列: unordered_map(hash) 使用。 
-Leetcode 652. 寻找重复的子树: 中序遍历与后序或者中序遍历与前序遍历都可以唯一确定一棵树。两遍hash,第一遍树变成字符串，第二遍变成数。  
 Leetcode 560. 和为 K 的子数组: 简化的前缀和。  
 
 **4 栈/队列 单调栈/队列 **
@@ -81,7 +79,7 @@ LeetCode 295. Find Median from Data Stream：对顶堆，小上大下 --> 小右
  
 1 2 3 4 (大顶) | 5 6 7 8(小顶) : right.size() > left.size(), right 比left至多多一个,添加时优先添加right, 先添加后调整。
 
-**6 字符串**
+**6 字符串与hash表**
 
 模式： 
     while (k < s.size() && s[k] == s[j]) k ++ ;  
@@ -100,8 +98,10 @@ to_string() 转字符串
 stoi或 atoi(s1.substr(i, x - i).c_str())
  
 leetcode 3 无重复字符的最长字串: hash逐加逐减, ij双变量循环代替滑窗。
-
 leetcode 17 电话号码的字母组合：三重简单循环代替dfs
+ 
+Leetcode 187. 重复的DNA序列: unordered_map(hash) 使用。 
+Leetcode 652. 寻找重复的子树: 中序遍历与后序或者中序遍历与前序遍历都可以唯一确定一棵树。两遍hash,第一遍树变成字符串，第二遍变成数。  
  
 **7 链表**
 
