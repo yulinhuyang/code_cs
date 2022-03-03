@@ -155,7 +155,13 @@ public:
 }; 
 ```
 链表Cout调试
+ 
 
+两个生成的都是指针
+```c++
+ListNode *dummy = new ListNode(-1);
+auto dummy2 = new ListNode(-1);
+```
  
 **8 树与图**
 
