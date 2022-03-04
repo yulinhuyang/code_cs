@@ -101,7 +101,19 @@ leetcode 3 无重复字符的最长字串: hash逐加逐减, ij双变量循环�
 leetcode 17 电话号码的字母组合：三重简单循环代替dfs
  
 Leetcode 187. 重复的DNA序列: unordered_map(hash) 使用。 
-Leetcode 652. 寻找重复的子树: 中序遍历与后序或者中序遍历与前序遍历都可以唯一确定一棵树。两遍hash,第一遍树变成字符串，第二遍变成数。  
+Leetcode 652. 寻找重复的子树: 中序遍历与后序或者中序遍历与前序遍历都可以唯一确定一棵树。两遍hash,第一遍树变成字符串，第二遍变成数。
+ 
+
+前缀和和+hash的时候，注意是否需要hash[0] = 1;
+ 
+Leetcode 454. 四数相加 II：分组hash      
+Leetcode 560. 和为 K 的子数组：简易前缀和，hash[0] = 1;       
+Leetcode 525. 连续数组: 简易前缀和，hash[0] = -1;     
+Leetcode 350. 两个数组的交集 II:mutliset删除一个元素 mulSet.erase(mulSet.find(num));      
+Leetcode 290. 单词规律：stringstream+ getline截断string,双hash      
+Leetcode 149. 直线上最多的点数：hash存储 long double slope，竖直线单独考虑   
+Leetcode 554. 砖墙：hash    
+
  
 **7 链表**
 
