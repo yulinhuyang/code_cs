@@ -301,12 +301,13 @@ for (auto word:wordDict) {
 //允许重复的集合
 multiset<int> ms1{ 1,2,2,2,3,4 };
 auto itp1 = ms1.find(2);  // No.2
-auto itp2 = ms1.lower_bound(2);  // No.2
-cout << (itp1 == itp2) << endl;  // True
-auto itp3 = ms1.upper_bound(2);  // No.5
+auto itp2 = ms1.lower_bound(2);   // No.2
+cout << (itp1 == itp2) << endl;   // True
+auto itp3 = ms1.upper_bound(2);   // No.5
+mulSet.erase(mulSet.find(num));   //值删除，会删掉所有
+mulSet.erase(mulSet.find(num));   //pos删除，只会删除pos的
 ```
-比较函数模板
-	
+比较函数模板     
 自定义：带operator的结构体、函数指针、lambda表达式
 	
 ```c++
