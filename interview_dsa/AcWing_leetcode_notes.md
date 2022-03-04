@@ -109,9 +109,9 @@ Leetcode 652. 寻找重复的子树: 中序遍历与后序或者中序遍历与�
 Leetcode 454. 四数相加 II：分组hash      
 Leetcode 560. 和为 K 的子数组：简易前缀和，hash[0] = 1;       
 Leetcode 525. 连续数组: 简易前缀和，hash[0] = -1;     
-Leetcode 350. 两个数组的交集 II:mutliset删除一个元素 mulSet.erase(mulSet.find(num));      
-Leetcode 290. 单词规律：stringstream+ getline截断string,双hash      
-Leetcode 149. 直线上最多的点数：hash存储 long double slope，竖直线单独考虑   
+Leetcode 350. 两个数组的交集 II:  multiset删除一个元素 mulSet.erase(mulSet.find(num));      
+Leetcode 290. 单词规律：stringstream 相当于sscanf和sprintf, getline截断string, 双hash      
+Leetcode 149. 直线上最多的点数： hash存储 long double slope，竖直线单独考虑   
 Leetcode 554. 砖墙：hash    
 
  
