@@ -876,10 +876,10 @@ int *p = new int(87); //
 
 #### 16 常规数据类型
 
-INT_MIN,INT_MAX   
-LONG_MIN,LONG_MAX   
-long long： 属于int型，一般来讲，是longint型大小的两倍，int型的4倍。
-									 
+INT_MIN,INT_MAX  					 
+LONG_MIN,LONG_MAX     							 
+long long： 整型，64位宽度。  								 
+long double：扩展精度浮点，精度不低于double。								 
 
 **初始化**
 
@@ -888,17 +888,18 @@ long long： 属于int型，一般来讲，是longint型大小的两倍，int型
 
 #### 17 统计运行时间
 
-C++ 11使用 chrono
+C++ 11使用 chrono：duration和time_point  
 
 ```C++
 #include <chrono>
 using namespace std::chrono;
 
-auto start = system_clock::now();
-auto end  = system_clock::now();
-
-std::chrono::duration<double> elapsed = end - start;
-std::cout << "Elapsed time: " << elapsed.count() << "s";
+auto now = std::chrono::high_resolution_clock::now();
+std::cout << "Elapsed time: " << now.time_since_epoch().count()) << "s"; //获取当前时间戳
+	
+auto t1 = high_resolution_clock::now();
+auto t2 = high_resolution_clock::now();
+std:cout << std::chrono::duration_cast<Ms>(since_epoch).count()<<"ms"<<endl; //运行时间
 
 ```
 #### 18 其他功能函数
