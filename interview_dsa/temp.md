@@ -1,4 +1,28 @@
 
+
+提高班：
+
+LeetCode 214. Shortest Palindrome
+
+ LeetCode 227. Basic Calculator II
+ 
+ LeetCode 131. Palindrome Partitioning
+ 
+
+LeetCode 496. Next Greater Element I 
+
+
+LeetCode 475. Heaters 
+
+LeetCode 4. Median of Two Sorted Arrays 
+
+LeetCode 456. 132 Pattern 
+
+
+
+
+
+
 LRU cache: https://www.acwing.com/activity/content/code/content/405014/
 
 
