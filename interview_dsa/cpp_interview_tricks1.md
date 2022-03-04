@@ -60,7 +60,8 @@ myvector.erase (myvector.begin(),myvector.begin()+3);
 //迭代器删除
 for(vector<int>::iterator iter = vecInt.begin(); iter != vecInt.end(); iter++){
 	if(*iter == 444){		
-		vecInt.erase(iter);			
+	    vecInt.erase(iter);			
+	    iter--;	
 	}
 }
 
