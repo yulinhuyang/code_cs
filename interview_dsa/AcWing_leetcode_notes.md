@@ -117,6 +117,8 @@ Leetcode 290. 单词规律：stringstream 相当于sscanf和sprintf, getline截�
 Leetcode 149. 直线上最多的点数： hash存储 long double slope，竖直线单独考虑   
 Leetcode 554. 砖墙：hash    
 
+LeetCode 131. 分割回文串：动态规划f + DFS回溯   
+LeetCode 214. Shortest Palindrome：字符串hash131或改进kmp    
  
 **7 链表**
 
