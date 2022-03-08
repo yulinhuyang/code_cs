@@ -3,9 +3,9 @@ yxc leetcode全解(究极班)： https://www.acwing.com/activity/content/activit
 
 ### 1  2019刷题 +提高班
 
-**1 位运算(数学)**
+#### 1 位运算(数学) 
 
-**2 二分与双指针**
+#### 2 二分与双指针 
 
 两段性和单调性，折线法，寻找分解条件
 
@@ -29,11 +29,11 @@ Leetcode 33. 搜索旋转排序数组:先找最小值，去掉干扰条件。
 offer 11 旋转数组的最小数字：先去掉干扰条件。  
 Offer 03 数组中重复的数字：反复交换法
 
-**3 贪心**
+#### 3 贪心 
 
 Leetcode 560. 和为 K 的子数组: 简化的前缀和。  
 
-**4 栈与队列 单调栈与单调队列**
+#### 4 栈与队列 单调栈与单调队列 
 
 Leetcode 167. 两数之和 II - 输入有序数组： 首尾指针              
 Leetcode 88. 合并两个有序数组：双指针从后向前合并。                                                    
@@ -69,7 +69,7 @@ leetcode 918: 拆环为链 + 前缀和 +单调上升队列
 
 单调队列：针对前缀和S的,所以i-k >= n 有等号。 
 
-**5 堆、并查集**
+#### 5 堆、并查集 
 
 LeetCode 547. Friend Circles :并查集  
 LeetCode 684. Redundant Connection: 并差集变形，1->n 下标从1开始。  
@@ -82,7 +82,7 @@ LeetCode 295. Find Median from Data Stream：对顶堆，小上大下 --> 小右
  
 1 2 3 4 (大顶) | 5 6 7 8(小顶) : right.size() > left.size(), right 比left至多多一个,添加时优先添加right, 先添加后调整。
 
-**6 字符串与hash表**
+#### 6 字符串与hash表 
 
 模式： 
     while (k < s.size() && s[k] == s[j]) k ++ ;  
@@ -210,21 +210,19 @@ LeetCode 37. Sudoku Solver  dfs 逐行, col + row + cell 数组标记解法，ro
 Leetcode 473. 火柴拼正方形   剪枝优化技巧
   
 
-**10 动态规划专题**
+#### 10 动态规划专题 
 
 LeetCode 120. Triangle：滚动数组优化版 + 普通二维数组版本
  
 **状态机问题**
                          
-股票问题：贪心法、dp状态机法(carl一维数组-->buy(0) + sell(1)简化，carl二维数组--> buy + sell数组简化)
-
-买入股票的状态不代表当天一定买入股票，是一种可能的状态
-
-LeetCode买卖股票问题——模版总结(简化dp)：https://www.acwing.com/blog/content/526/
-
+股票问题：贪心法、dp状态机法(carl一维数组-->buy(0) + sell(1)简化，carl二维数组--> buy + sell数组简化)    
+买入股票的状态不代表当天一定买入股票，是一种可能的状态      
+ 
+LeetCode买卖股票问题——模版总结(简化dp)：https://www.acwing.com/blog/content/526/  
 代码随想录股票问题(二维dp)：https://programmercarl.com
                          
-背包问题：
+**背包问题：**
                          
 ```cpp
  //滚动数组优化
@@ -245,7 +243,9 @@ LeetCode 518. 零钱兑换 II: 完全背包的二维和一维解法。
 LeetCode 664. Strange Printer:s[l-1]=s[k-1],f[l][r] = min(f[l][r], f[l][k - 1] + f[k + 1][r]);
          
  
-区间dp: len -> 左端点 -> 决策
+**区间dp:**
+       
+len -> 左端点 -> 决策
  
 Leetcode 1000. 合并石头的最低成本: 石子合并变形。  
 LeetCode 10. 正则表达式匹配: sp加' ',*提前判断
