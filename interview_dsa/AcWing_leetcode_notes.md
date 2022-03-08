@@ -258,6 +258,10 @@ for  while 单句的内循环不加括号。
 灵活使用三目运算符
 
 灵活使用连续等号
+ 
+灵活使用值的引用： auto &info = jun.back();
+ 
+for(auto& junction :junctionInfos) 或者 (const auto &p :points)
 
 ```c++
 int a = 0,b = 0;
