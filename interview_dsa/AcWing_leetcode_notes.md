@@ -262,6 +262,8 @@ for  while 单句的内循环不加括号。
 灵活使用值的引用： auto &info = jun.back();
  
 for(auto& junction :junctionInfos) 或者 (const auto &p :points)
+ 
+使用swap函数交换
 
 ```c++
 int a = 0,b = 0;
