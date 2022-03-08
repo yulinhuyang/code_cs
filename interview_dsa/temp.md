@@ -5,8 +5,6 @@
 
 LeetCode 140. Word Break II
 
-LeetCode 96. Unique Binary Search Trees
-
 LeetCode 312. Burst Balloons
 
 LeetCode 121. Best Time to Buy and Sell Stock
