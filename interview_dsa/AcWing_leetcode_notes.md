@@ -118,7 +118,9 @@ Leetcode 149. 直线上最多的点数： hash存储 long double slope，竖直�
 Leetcode 554. 砖墙：hash    
 
 LeetCode 131. 分割回文串：动态规划f + DFS回溯   
-LeetCode 214. Shortest Palindrome：字符串hash131或改进kmp    
+LeetCode 214. Shortest Palindrome：字符串hash131或改进kmp(最大前缀和最长后缀匹配) 
+ 
+哈希检索算法（Robin-Karp，RK 算法）
  
 **7 链表**
 
