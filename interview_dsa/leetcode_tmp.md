@@ -277,5 +277,35 @@ public:
 };                                          
                                           
 ```                                          
-                                          
-                                          
+##### LeetCode 312. 戳气球
+                             
+经典区间dp                           
+                             
+```C++
+class Solution {
+public:
+    int maxCoins(vector<int> &nums) {
+        int n = nums.size();
+        vector<int> p(n + 2, 0);
+        p[0] = 1, p[n + 1] = 1;
+        for (int i = 1; i < n + 1; i++) {
+            p[i] = nums[i - 1];
+        }
+        //区间dp
+        vector<vector<int>> f(n + 2, vector<int>(n + 2, 0));
+        for (int len = 3; len <= n + 2; len++) {
+            for (int l = 0; l + len - 1 < n + 2; l++) {
+                int r = l + len - 1;
+                for (int k = l + 1; k < r; k++) {
+                    f[l][r] = max(f[l][r], f[l][k] + f[k][r] + p[l] * p[k] * p[r]);
+                }
+            }
+        }
+        return f[0][n + 1];
+    }
+};
+
+```                             
+                             
+                             
+                             
