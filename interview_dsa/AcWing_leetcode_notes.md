@@ -43,8 +43,12 @@ Leetcode 32. 最长有效括号：起始加-1,栈底元素为当前已经遍历�
 Leetcode 42. 接雨水:两遍max, 左边一遍Left_max，右边一遍right_max，min(left_max[i],right_max[i]) - height[i]  
 Leetcode 84. 柱状图中最大的矩形:两遍栈，左边一遍单调上升栈，右边一遍单独上升栈，height[i] * (right[i] - left[i] - 1)
 
+单调栈注意是正向遍历还是反向遍历，是单调上升栈，还是下降栈。
+
 LeetCode 496. 下一个更大元素 I :反向遍历，单调栈，存值或者索引    
-LeetCode 503. 下一个更大元素 II：拆环为链反向循环法  / 环形%正向模拟    
+LeetCode 503. 下一个更大元素 II：拆环为链反向循环法  / 环形%正向模拟
+LeetCode 456. 132 模式:反向遍历单调栈。
+
 
 ```C++
 //单调栈代码段
