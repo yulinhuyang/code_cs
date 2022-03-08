@@ -351,5 +351,41 @@ public:
         return l;
     }
 };
-```                             
+```
+##### LeetCode 4. 寻找两个正序数组的中位数
+    
+```C++    
+class Solution {
+    int findKthNumbers(vector<int> &nums1, int i, vector<int> &nums2, int j, int k) {
+        //边界条件处理，根据数组大小换顺序
+        if (nums1.size() - i > nums2.size() - j) {
+            return findKthNumbers(nums2, j, nums1, i, k);
+        }
+        if (nums1.size() == i) return nums2[j + k - 1];
+        if (k == 1) return min(nums1[i], nums2[j]);
+        int m = nums1.size();
+        int s1 = min(m, i + k / 2);
+        int s2 = j + k / 2;
+        if (nums1[s1 - 1] > nums2[s2 - 1]) {
+            return findKthNumbers(nums1, i, nums2, j + k / 2, k - k / 2);
+        } else {
+            return findKthNumbers(nums1, s1, nums2, j, k - (s1 - i));
+        }
+    }
+
+public:
+    double findMedianSortedArrays(vector<int> &nums1, vector<int> &nums2) {
+        int total = nums1.size() + nums2.size();
+        if (total % 2 == 0) {
+            int left = findKthNumbers(nums1, 0, nums2, 0, total / 2);
+            int right = findKthNumbers(nums1, 0, nums2, 0, total / 2 + 1);
+            return (left + right) / 2.0;
+        } else {
+            return findKthNumbers(nums1, 0, nums2, 0, total / 2 + 1);
+        }
+    }
+};
+ 
+```    
+    
                              
