@@ -370,7 +370,6 @@ position = str.find_last_of('ab');
 //判等
 str1 == str2  
 
-
 //char和int转换 
 char c4 = i + '0';
 int ia = a - '0';
@@ -391,6 +390,8 @@ while (getline(ss, str, '.')) {
     outDstIP << bTMP.to_string();
 }
 string binDstIP = outDstIP.str();//转string
+
+string t(s.rbegin(), s.rend());//反转并初始化新字符串
 ```
 ##### 字符串截取
 	
