@@ -1,8 +1,25 @@
-1  554 砖墙开始
+##### LeetCode554 砖墙 
+
+##### LeetCode 149 直线上最多的点数	
 
 
+##### LeetCode 290 单词规律 
 
-##### 214 最短回文串
+##### LeetCode 350 两个数组的交集 
+
+
+##### LeetCode 525 连续数组	 
+
+
+##### LeetCode 454 四数相加 II	 
+
+
+##### LeetCode 496 下一个更大元素 I	
+
+##### LeetCode 503 下一个更大元素 II
+
+
+##### LeetCode 214 最短回文串
 
 ```cpp
 //RK字符串hash  哈希检索算法（Robin-Karp，简称 RK 算法）
