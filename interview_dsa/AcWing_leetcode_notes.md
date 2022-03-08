@@ -221,6 +221,8 @@ LeetCode 120. Triangle：滚动数组优化版 + 普通二维数组版本
  
 LeetCode买卖股票问题——模版总结(简化dp)：https://www.acwing.com/blog/content/526/  
 代码随想录股票问题(二维dp)：https://programmercarl.com
+ 
+LeetCode 213. 打家劫舍 II: 1. 选头不选尾  2. 选尾不选头 3. 头尾都不选(包含在1、2中), 双向dp (left->right, right->left)
                          
 **背包问题：**
                          
