@@ -484,3 +484,16 @@ std::cout<<duration_ms.count()<<" milliseconds"<<std::endl;
 
 Windows有哪些神级软件？： https://www.zhihu.com/question/465494790/answer/1999417175
 
+### 二维数组的访问
+	
+二维数组的访问 ： https://blog.csdn.net/Shuffle_Ts/article/details/89420651
+	
+按行遍历的效率大概是是按列遍历的0.5倍。在c语言中，数组在内存中是按行存储的，按行遍历时可以由指向数组第一个数的指针一直向后遍历，由于二维数组的内存地址是连续的，当前行的尾与下一行的头相邻，所以可以直接到下一行
+	
+缓存这个设定好机智，难怪按行访问矩阵比按列访问要快。
+	
+	
+	
+	
+	
+	
