@@ -212,8 +212,20 @@ Leetcode 473. 火柴拼正方形   剪枝优化技巧
 
 **10 动态规划专题**
 
- LeetCode 120. Triangle：滚动数组优化版 + 普通二维数组版本
+LeetCode 120. Triangle：滚动数组优化版 + 普通二维数组版本
  
+**状态机问题**
+                         
+股票问题：贪心法、dp状态机法(carl一维数组-->buy(0) + sell(1)简化，carl二维数组--> buy + sell数组简化)
+
+买入股票的状态不代表当天一定买入股票，是一种可能的状态
+
+LeetCode买卖股票问题——模版总结(简化dp)：https://www.acwing.com/blog/content/526/
+
+代码随想录股票问题(二维dp)：https://programmercarl.com
+                         
+背包问题：
+                         
 ```cpp
  //滚动数组优化
 vector<int> f[2];
@@ -231,11 +243,14 @@ LeetCode 63. 不同路径 II：循环内处理好0行0列。
 LeetCode 322. 零钱兑换 I: 完全背包的二维和一维解法。        
 LeetCode 518. 零钱兑换 II: 完全背包的二维和一维解法。  
 LeetCode 664. Strange Printer:s[l-1]=s[k-1],f[l][r] = min(f[l][r], f[l][k - 1] + f[k + 1][r]);
+         
  
 区间dp: len -> 左端点 -> 决策
  
 Leetcode 1000. 合并石头的最低成本: 石子合并变形。  
 LeetCode 10. 正则表达式匹配: sp加' ',*提前判断
+ 
+
 
  
 ### 2 究极班题选
