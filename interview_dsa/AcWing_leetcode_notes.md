@@ -250,6 +250,11 @@ LeetCode 664. Strange Printer:s[l-1]=s[k-1],f[l][r] = min(f[l][r], f[l][k - 1] +
 len -> 左端点 -> 决策
  
 Leetcode 1000. 合并石头的最低成本: 石子合并变形。  
+LeetCode 312. 戳气球：左右各加1，区间dp
+
+ 
+ 
+其他经典：
 LeetCode 10. 正则表达式匹配: sp加' ',*提前判断
  
 
