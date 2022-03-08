@@ -238,3 +238,44 @@ public:
     }
 };
 ```
+
+##### 213. 打家劫舍 II
+                                          
+```C++
+1. 选头不选尾 2. 选尾不选头 3. 头尾都不选(包含在1、2中), 双向dp (left->right, right->left)
+
+//双向(left、right)dp:头尾问题
+
+class Solution {
+public:
+    int rob(vector<int> &nums) {
+        int n = nums.size();
+        if (!n) return 0;
+        if (n == 1) return nums[0];
+        //f抢，g不抢
+        vector<int> f(n + 1, 0), g(n + 1, 0);
+
+        //选头不选尾
+        f[1] = nums[0],g[1] = INT_MIN;
+        for (int i = 2; i < n + 1; i++) {
+            f[i] = g[i - 1] + nums[i - 1];
+            g[i] = max(f[i - 1], g[i - 1]);
+        }
+        int res = g[n];
+
+        //选尾不选头
+        f = vector<int>(n + 1, 0);
+        g = vector<int>(n + 1, 0);
+        for (int i = 2; i < n + 1; i++) {
+            f[i] = g[i - 1] + nums[i - 1];
+            g[i] = max(f[i - 1], g[i - 1]);
+        }
+        res = max(f[n],max(res, g[n]));
+
+        return res;
+    }
+};                                          
+                                          
+```                                          
+                                          
+                                          
