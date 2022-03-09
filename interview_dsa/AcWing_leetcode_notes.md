@@ -227,7 +227,7 @@ LeetCode 354. 俄罗斯套娃信封问题: 二维子序列问题，先排序，�
 
 动归不一定只有f数组的，dp的递归型也是动归。                      
                          
-股票问题：贪心法、dp状态机法(carl一维数组-->buy(0) + sell(1)简化，carl二维数组--> buy + sell数组简化)    
+股票问题：贪心法、dp状态机法(carl一维数组-->buy(0) + sell(1)简化，carl二维数组（K次交易，冷冻期）--> buy + sell数组简化)    
 买入股票的状态不代表当天一定买入股票，是一种可能的状态      
  
 LeetCode买卖股票问题——模版总结(简化dp)：https://www.acwing.com/blog/content/526/  
