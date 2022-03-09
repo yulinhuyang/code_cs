@@ -217,6 +217,8 @@ Leetcode 329. 矩阵中的最长递增路径： 记忆化dfs,memo,既当visit又
                          
 #### 10 动态规划专题
                          
+LeetCode 115. 不同的子序列: 字符串的dp，求方案数要加在一起。                        
+                         
 **数字三角形模型**   
                          
 LeetCode 120. Triangle：滚动数组优化版 + 普通二维数组版本     
@@ -246,8 +248,9 @@ LeetCode 714. 买卖股票的最佳时机含手续费
 LeetCode买卖股票问题——模版总结(简化dp)：https://www.acwing.com/blog/content/526/  
 代码随想录股票问题(二维dp)：https://programmercarl.com
  
-LeetCode 213. 打家劫舍 II: 1. 选头不选尾  2. 选尾不选头 3. 头尾都不选(包含在1、2中), 双向dp (left->right, right->left)
-                         
+LeetCode 213. 打家劫舍 II: 1. 选头不选尾  2. 选尾不选头 3. 头尾都不选(包含在1、2中), 双向dp (left->right, right->left)。   
+LeetCode 264. Ugly Number II: 状态机模型,三指针动态规划。    
+
 **背包问题：**
                          
 ```cpp
