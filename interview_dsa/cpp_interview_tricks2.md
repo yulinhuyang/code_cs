@@ -942,11 +942,11 @@ if (j <= i - 1) a[j] = min(a[j], b[j] + triangle[i][j]);
 LeetCode 120. Triangle：滚动数组优化版 + 普通二维数组版本。 
 	 
 **子序列模型**
-	 
-LeetCode 354 俄罗斯套娃信封问题。 
+	  
 LeetCode 128 最长连续序列 LCS: set中心展开法。  
 LeetCode 300  最长递增子序列 LIS: insertsort dp()   
 LeetCode 1143 最长公共子序列 LCS :二维dp。 
+LeetCode 354 俄罗斯套娃信封问题: 二维子序列，先排序，一维dp。
 	 
 **状态机模型**
 	 
