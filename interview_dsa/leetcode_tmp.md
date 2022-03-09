@@ -553,3 +553,47 @@ public:
 };
 ```    
                              
+##### Leetcode 329. 矩阵中的最长递增路径
+
+滑雪：记忆化dfs,memo,既当visit又存储值
+
+```cpp
+class Solution {
+    int m, n;
+    vector<vector<int>> memo;
+    int dx[4] = {-1, 0, 1, 0}, dy[4] = {0, 1, 0, -1};
+public:
+    int longestIncreasingPath(vector<vector<int>> &matrix) {
+        m = matrix.size(), n = matrix[0].size();
+        memo = vector<vector<int>>(m, vector<int>(n, -1));
+        int res = 0;
+        for (int i = 0; i < m; i++) {
+            for (int j = 0; j < n; j++) {
+                res = max(res, dp(i, j, matrix));
+            }
+        }
+        return res;
+    }
+
+    int dp(int i, int j, vector<vector<int>> &matrix) {
+        //记忆化dfs,memo,既当visit又存储值
+        if (memo[i][j] != -1) return memo[i][j];
+        memo[i][j] = 1;
+        for (int k = 0; k < 4; k++) {
+            int newI = i + dx[k], newJ = j + dy[k];
+            if (newI >= 0 && newI < m && newJ >= 0 && newJ < n && matrix[newI][newJ] < matrix[i][j]) {
+                memo[i][j] = max(memo[i][j], dp(newI, newJ, matrix) + 1);
+            }
+        }
+        return memo[i][j];
+    }
+}; 
+```    
+    
+    
+    
+    
+    
+    
+    
+    
