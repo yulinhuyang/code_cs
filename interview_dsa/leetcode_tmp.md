@@ -410,7 +410,112 @@ public:
 }; 
 ```    
     
-    
+ ##### 300. 最长递增子序列
+
+```cpp
+//双循环dp
+class Solution {
+public:
+    int lengthOfLIS(vector<int> &nums) {
+        int n = nums.size();
+        vector<int> f(n,0);
+        int res = 0;
+        for(int i = 0;i < n;i++){
+            f[i] = 1;
+            for(int j = 0;j < i;j++){
+                if(nums[i] > nums[j]){
+                    f[i] = max(f[i],f[j] + 1);
+                }
+            }
+            res = max(res,f[i]);
+        }
+        return res;
+    }
+};
+
+//贪心+ 二分查找
+class Solution {
+public:
+    int lengthOfLIS(vector<int> &nums) {
+        int n = nums.size();
+        vector<int> f = {nums[0]};
+        int res = 0;
+        for (int i = 0; i < n; i++) {
+            if (nums[i] > f.back()) {
+                f.emplace_back(nums[i]);
+            } else {
+                int l = 0, r = f.size();
+                while (l < r) {
+                    int mid = l + r >> 1;
+                    if (f[mid] >= nums[i]) r = mid;
+                    else l = mid + 1;
+                }
+                f[l] = nums[i];
+            }
+        }
+        return f.size();
+    }
+};
+
+```
+
+##### 354. 俄罗斯套娃信封问题
+
+二维排序 + 一维双循环LIS/二分查找LIS
+
+```cpp
+//二维排序，一维双循环dp,超时
+class Solution {
+    static bool cmp(vector<int> &a, vector<int> &b) {
+        if (a[0] < b[0]) return true;
+        else if (a[0] == b[0] && a[1] > b[1]) return true;
+        return false;
+    }
+
+public:
+    int maxEnvelopes(vector<vector<int>> &envelopes) {
+        sort(envelopes.begin(), envelopes.end(), cmp);
+        int n = envelopes.size();
+        vector<int> f(n, 1);
+        int res = 0;
+        for (int i = 0; i < envelopes.size(); i++) {
+            for (int j = 0; j < i; j++) {
+                if (envelopes[i][1] > envelopes[j][1]) {
+                    f[i] = max(f[i], f[j] + 1);
+                }
+                res = max(res, f[i]);
+            }
+        }
+        return res;
+    }
+};
+
+//贪心+二分查找(LIS)
+class Solution {
+    static bool cmp(vector<int> &a, vector<int> &b) {
+        if (a[0] < b[0]) return true;
+        else if (a[0] == b[0] && a[1] > b[1]) return true;
+        return false;
+    }
+
+public:
+    int maxEnvelopes(vector<vector<int>> &envelopes) {
+        sort(envelopes.begin(), envelopes.end(), cmp);
+        int n = envelopes.size();
+        vector<int> f = {envelopes[0][1]};
+        for (int i = 1; i < envelopes.size(); i++) {
+            if (envelopes[i][1] > f.back()) {
+                f.emplace_back(envelopes[i][1]);
+            } else {
+                auto it = lower_bound(f.begin(), f.end(), envelopes[i][1]);
+                *it = envelopes[i][1];
+            }
+        }
+        return f.size();
+    }
+};
+
+```   
     
     
                              
