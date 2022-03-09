@@ -517,5 +517,39 @@ public:
 
 ```   
     
-    
+##### LeetCode 338. 比特位计数
+
+Brian Kernighan 算法: Brian Kernighan 算法的原理是：对于任意整数x，令 x=x & (x−1)该运算将 x 的二进制表示的最后一个 1 变成 0。   
+位操作符的总结 Brian Kernighan算法: https://blog.csdn.net/weixin_43688483/article/details/106349982
+
+```cpp
+//BK算法
+class Solution {
+public:
+    vector<int> countBits(int n) {
+        vector<int> res;
+        for (int i = 0; i <= n; i++) {
+            int sum = 0,num = i;
+            while (num) {
+                num = num & (num - 1);
+                sum += 1;
+            }
+            res.emplace_back(sum);
+        }
+        return res;
+    }
+};
+
+//dp算法
+class Solution {
+public:
+    vector<int> countBits(int n) {
+        vector<int> f(n + 1, 0);
+        for (int i = 1; i <= n; i++) {
+            f[i] = f[i >> 1] + (i & 1);
+        }
+        return f;
+    }
+};
+```    
                              
