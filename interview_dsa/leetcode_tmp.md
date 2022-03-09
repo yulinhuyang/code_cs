@@ -590,8 +590,53 @@ public:
 }; 
 ```    
     
-    
-    
+##### LeetCode 264. Ugly Number II
+
+```cpp
+class Solution {
+public:
+    int nthUglyNumber(int n) {
+        vector<int> num;
+        num.emplace_back(1);
+        int a = 0, b = 0, c = 0;
+        for (int i = 2; i < n + 1; i++) {
+            int two = num[a] * 2, three = num[b] * 3, five = num[c] * 5;
+            int next = min(two, min(three, five));
+            if (next == two) a++;
+            if (next == three) b++;
+            if (next == five) c++;
+            num.emplace_back(next);
+        }
+        return num.back();
+    }
+};
+```
+
+##### LeetCode 115. 不同的子序列
+
+```cpp
+class Solution {
+public:
+    int numDistinct(string s, string t) {
+        int m = s.size(), n = t.size();
+        if(m < n) return 0;
+        vector<vector<unsigned long long>> f(m + 1, vector<unsigned long long>(n + 1, 0));
+        for (int i = 0; i < m + 1; i++) {
+            f[i][0] = 1;
+        }
+        for (int i = 1; i < m + 1; i++) {
+            for (int j = 1; j < n + 1; j++) {
+                f[i][j] = f[i - 1][j];
+                if (s[i - 1] == t[j - 1]) {
+                    f[i][j] += f[i - 1][j - 1];
+                }
+            }
+        }
+
+        return f[m][n];
+    }
+};
+```    
     
     
     
