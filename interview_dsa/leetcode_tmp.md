@@ -637,8 +637,40 @@ public:
     }
 };
 ```    
-    
-    
-    
-    
-    
+##### 132. 分割回文串 II
+
+ 回文dp + LIS DP
+                                 
+```cpp    
+class Solution {
+public:
+    int minCut(string s) {
+        int m = s.size();
+        s = " " + s;
+        vector<vector<int>> g(m + 1,vector<int>(m + 1, false));
+        for (int i = 1; i < m + 1; i++) {
+            for (int j = 1; j <= i; j++) {
+                if (i == j) g[j][i] = true;
+                else if (s[i] == s[j]) {
+                    //j + 1 > i - 1 表示i和j之间间隔一个字母
+                    if (j + 1 > i - 1 || g[j + 1][i - 1]) {
+                        g[j][i] = true;
+                    }
+                }
+            }
+        }
+
+        vector<int> f(m + 1,INT_MAX);
+        f[0] = 0;
+        //LIS结构
+        for (int i = 1; i < m + 1; i++) {
+            for (int j = 1; j <= i; j++) {
+                if (g[j][i]) {
+                    f[i] = min(f[i],f[j - 1] + 1);
+                }
+            }
+        }
+        return f[m] - 1;
+    }
+};    
+```    
