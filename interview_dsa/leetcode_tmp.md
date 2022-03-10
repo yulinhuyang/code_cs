@@ -674,3 +674,46 @@ public:
     }
 };    
 ```    
+    
+##### LeetCode 576. 出界的路径数
+
+三维dp    
+static constexpr int MOD = 1e9 + 7;
+ 
+```cpp
+class Solution {
+public:
+    int findPaths(int m, int n, int maxMove, int startRow, int startColumn) {
+        if (!maxMove) return 0;
+        static constexpr int MOD = 1e9 + 7;
+        //f[i][j][k]:移动k次到达i和j的路径总数
+        vector<vector<vector<int>>> f(m, vector<vector<int>>(n, vector<int>(maxMove + 1, 0)));
+
+        f[startRow][startColumn][0] = 1;
+        int dx[4] = {-1, 0, 1, 0}, dy[4] = {0, 1, 0, -1};
+        int res = 0;
+        for (int k = 0; k < maxMove; k++) {
+            for (int i = 0; i < m; i++) {
+                for (int j = 0; j < n; j++) {
+                    int count = f[i][j][k];
+                    if (count > 0) {
+                        for (int d = 0; d < 4; d++) {
+                            int newX = i + dx[d], newY = j + dy[d];
+                            if (newX >= 0 && newX < m && newY >= 0 && newY < n) {
+                                f[newX][newY][k + 1] = (f[newX][newY][k + 1] + count) % MOD;
+                            } else {
+                                res = (res + count) % MOD;
+                            }
+                        }
+                    }
+                }
+            }
+        }
+        return res;
+    }
+};
+    
+    
+```    
+    
+    
