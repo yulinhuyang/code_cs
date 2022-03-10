@@ -715,5 +715,33 @@ public:
     
     
 ```    
-    
+
+##### 526. 优美的排列
+
+状态压缩dp,f[i]代表选法是i的时候的方案数，i的每一位代表是否选择当前的数
+                                                                              
+```c++
+class Solution {
+public:
+    int countArrangement(int n) {
+        vector<int> f(1 << n, 0);
+        f[0] = 1;
+        //状态压缩dp,f[i]代表选法是i的时候的方案数，i的每一位代表是否选择当前的数
+        for (int mask = 0; mask < 1 << n; mask++) {
+            int num = 1;
+            for (int j = 0; j < n; j++) {
+                if (mask & (1 << j)) num++;
+            }
+            for (int k = 0; k < n; k++) {
+                if (!(mask & (1 << k)) && ((num % (k + 1) == 0) || ((k + 1) % num == 0))) {
+                    f[mask | (1 << k)] += f[mask];
+                }
+            }
+        }
+
+        return f[(1 << n) - 1];
+    }
+};                                                                            
+```                                                                               
+                                                                             
     
