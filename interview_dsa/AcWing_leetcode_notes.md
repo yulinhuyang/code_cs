@@ -223,6 +223,9 @@ LeetCode 115. 不同的子序列: 字符串的dp，求方案数要加在一起�
                          
 LeetCode 120. Triangle：滚动数组优化版 + 普通二维数组版本     
 LeetCode 221. 最大正方形：理解推导 f[i][j] = min(f[i - 1][j - 1], min(f[i - 1][j], f[i][j - 1])) + 1 
+Leetcode 376. 出界的路径数      
+三维DP: f[i][j][k]:移动k次到达i和j的路径总数         
+static constexpr int MOD = 1e9 + 7;                         
                          
 **子序列问题**
                          
