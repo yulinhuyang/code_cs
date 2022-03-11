@@ -768,3 +768,24 @@ public:
     }
 };                        
 ```                        
+##### 279 完全平方数
+
+完全背包
+    
+```C++
+class Solution {
+public:
+    int numSquares(int n) {
+        vector<int> f(n + 1, INT_MAX);
+        f[0] = 0;
+        for (int i = 0; i < n + 1; i++) {
+            for (int j = 1; j * j <= i; j++) {
+                f[i] = min(f[i], f[i - j * j] + 1);
+            }
+        }
+        return f[n];
+    }
+};
+```    
+    
+    
