@@ -745,4 +745,26 @@ public:
 };                                                                            
 ```                                                                               
                                                                              
-    
+##### 486 预测赢家
+                        
+区间dp
+                        
+```C++
+class Solution {
+public:
+    bool PredictTheWinner(vector<int> &nums) {
+        int m = nums.size();
+        vector<vector<int>> f(m, vector<int>(m, 0));
+        for (int len = 1; len <= m; len++) {
+            for (int l = 0; l + len - 1 < m; l++) {
+                int r = l + len - 1;
+                if (len == 1) f[l][r] = nums[l];
+                else {
+                    f[l][r] = max(nums[l] - f[l + 1][r], nums[r] - f[l][r - 1]);
+                }
+            }
+        }
+        return f[0][m - 1] >= 0;
+    }
+};                        
+```                        
