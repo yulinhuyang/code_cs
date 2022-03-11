@@ -213,7 +213,9 @@ LeetCode 52. N-Queens II    dfs代替行, col + d + ud 数组标记解法，精�
 LeetCode 37. Sudoku Solver  dfs 逐行, col + row + cell 数组标记解法，row[9][9]: 9行,0-9的数有了哪几个                
 Leetcode 473. 火柴拼正方形   剪枝优化技巧
   
-Leetcode 329. 矩阵中的最长递增路径： 记忆化dfs,memo,既当visit又存储值
+Leetcode 329. 矩阵中的最长递增路径： 记忆化dfs,memo,既当visit又存储值     
+Leetcode 130 被围绕的区域：四边dfs + 涂色法
+
                          
 #### 10 动态规划专题
                          
