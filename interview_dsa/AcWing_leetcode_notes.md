@@ -280,8 +280,10 @@ LeetCode 664. Strange Printer:s[l-1]=s[k-1],f[l][r] = min(f[l][r], f[l][k - 1] +
        
 len -> 左端点 -> 决策
  
-Leetcode 1000. 合并石头的最低成本: 石子合并变形。  
-LeetCode 312. 戳气球：左右各加1，区间dp
+Leetcode 1000. 合并石头的最低成本: 石子合并变形。      
+LeetCode 312. 戳气球：左右各加1，区间dp。         
+LeetCode 486. 预测赢家。f[i,j] 表示当前玩家与另一个玩家分数之差的最大值，可能是先手，也可能是后手,     
+注意转移方程f[l][r] = max(nums[l] - f[l + 1][r], nums[r] - f[l][r - 1]),f[l + 1][r]或者f[l][r - 1]是另外一个玩家的。结果返回是f[0,n-1]表示先手的赢的情况。  
  
 **状态压缩dp**
  
