@@ -212,7 +212,10 @@ leetcode 90 子集II  回溯去重
 LeetCode 52. N-Queens II    dfs代替行, col + d + ud 数组标记解法，精确覆盖问题。   
 LeetCode 37. Sudoku Solver  dfs 逐行, col + row + cell 数组标记解法，row[9][9]: 9行,0-9的数有了哪几个                
 Leetcode 473. 火柴拼正方形   剪枝优化技巧
-  
+ 
+bfs 空间大，最短最小性，不会有爆栈风险。    
+dfs空间和递归深度成正比，有爆栈风险，比如树的深度最坏可能有1000层，不能搜最短最小。    
+                         
 Leetcode 329. 矩阵中的最长递增路径： 记忆化dfs,memo,既当visit又存储值     
 Leetcode 130 被围绕的区域：四边dfs + 涂色法
 
