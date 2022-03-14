@@ -388,3 +388,40 @@ public:
     }
 };
 ```
+
+##### LeetCode 201. 数字范围按位与
+
+寻找公共前缀
+
+```C++
+class Solution {
+public:
+    int rangeBitwiseAnd(int m, int n) {
+        int shift = 0;
+        while (m < n) {
+            m >>= 1;
+            n >>= 1;
+            shift++;
+        }
+        return m << shift;
+    }
+};
+```
+##### Leetcode 477 汉明距离总和
+
+```C++
+class Solution {
+public:
+    int totalHammingDistance(vector<int> &nums) {
+        int ans = 0, n = nums.size();
+        for (int i = 0; i < 32; i++) {
+            int total = 0;
+            for (auto &num:nums) {
+                total += (num >> i) & 1;
+            }
+            ans += total * (n - total);
+        }
+        return ans;
+    }
+};
+```
