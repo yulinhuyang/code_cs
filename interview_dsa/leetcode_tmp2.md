@@ -243,3 +243,43 @@ public:
     }
 };
 ```
+
+#####  LeetCode 542. 01 Matrix
+
+矩形多源头的bfs，类比入度为0的拓扑排序.
+
+```C++
+class Solution {
+public:
+    vector<vector<int>> updateMatrix(vector<vector<int>> &mat) {
+        int m = mat.size(), n = mat[0].size();
+        queue<pair<int, int>> q;
+        vector<vector<int>> dist(m, vector<int>(n, -1));
+        for (int i = 0; i < m; i++) {
+            for (int j = 0; j < n; j++) {
+                if (mat[i][j] == 0) {
+                    dist[i][j] = 0;
+                    q.emplace(make_pair(i, j));
+                }
+            }
+        }
+
+        int dx[4] = {-1, 0, 1, 0}, dy[4] = {0, 1, 0, -1};
+        while (q.size()) {
+            auto top = q.front();
+            q.pop();
+            for (int k = 0; k < 4; k++) {
+                int x = top.first + dx[k], y = top.second + dy[k];
+                if (0 <= x && x < m && 0 <= y && y < n && dist[x][y] == -1) {
+                    dist[x][y] = dist[top.first][top.second] + 1;
+                    q.emplace(make_pair(x,y));
+                }
+            }
+        }
+        return dist;
+    }
+};
+
+
+```
+
