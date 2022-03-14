@@ -283,3 +283,93 @@ public:
 
 ```
 
+
+##### LeetCode 231. 2的幂
+
+```C++
+class Solution {
+public:
+    bool isPowerOfTwo(int n) {
+        return n > 0 && (n & -n) == n;
+    }
+};
+
+class Solution {
+public:
+    bool isPowerOfTwo(int n) {
+        return n > 0 && (n & (n - 1)) == 0;
+    }
+};
+```
+
+##### 762. 二进制表示中质数个计算置位
+
+```C++
+class Solution {
+public:
+    int countPrimeSetBits(int left, int right) {
+        vector<int> nums = {2, 3, 5, 7, 11, 13, 17, 19};
+        unordered_set<int> primes;
+        for (auto &num:nums) {
+            primes.emplace(num);
+        }
+        int ans = 0;
+        for (int i = left; i <= right; i++) {
+            int sum = 0;
+            for (int k = i; k;) {
+                sum += k & 1;
+                k >>= 1;
+            }
+            if (primes.count(sum)) ans++;
+        }
+        return ans;
+    }
+};
+```
+
+##### 137. 只出现一次的数字 II
+
+```C++
+class Solution {
+public:
+    int singleNumber(vector<int> &nums) {
+        int ans = 0;
+        for (int i = 0; i < 32; i++) {
+            int sum = 0;
+            for (auto &num: nums) {
+                sum += (num >> i) & 1;
+            }
+            if (sum % 3) ans |= 1 << i;
+        }
+        return ans;
+    }
+};
+```
+
+##### 260. 只出现一次的数字 II
+
+```C++
+class Solution {
+public:
+    vector<int> singleNumber(vector<int> &nums) {
+        int n = 0;
+        for (auto &num:nums) {
+            n ^= num;
+        }
+
+        //lowbit 运算
+        int k = n == INT_MIN ? INT_MIN : n & (-n);
+        int res1 = 0, res2 = 0;
+        for (auto &num:nums) {
+            if (num & k) {
+                res1 ^= num;
+            } else {
+                res2 ^= num;
+            }
+        }
+        return {res1, res2};
+    }
+};
+
+```
+
