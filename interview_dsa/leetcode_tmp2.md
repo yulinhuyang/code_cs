@@ -221,4 +221,25 @@ public:
 
 ```
 
+##### LeetCode 733. Flood Fill 图像渲染
 
+```c++
+class Solution {
+    int m, n;
+    int dx[4] = {-1, 0, 1, 0}, dy[4] = {0, 1, 0, -1};
+public:
+    vector<vector<int>> floodFill(vector<vector<int>> &image, int sr, int sc, int newColor) {
+        if (image[sr][sc] == newColor) return image;
+        m = image.size(), n = image[0].size();
+        int color = image[sr][sc];
+        image[sr][sc] = newColor;
+        for (int k = 0; k < 4; k++) {
+            int newI = sr + dx[k], newJ = sc + dy[k];
+            if (0 <= newI && newI < m && 0 <= newJ && newJ < n && (image[newI][newJ] == color)) {
+                floodFill(image, newI, newJ, newColor);
+            }
+        }
+        return image;
+    }
+};
+```
