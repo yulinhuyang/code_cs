@@ -149,3 +149,76 @@ public:
 };
 
 ```
+
+##### Leetcode 207 课程表
+
+拓扑排序
+
+```cpp
+class Solution {
+public:
+    bool canFinish(int numCourses, vector<vector<int>> &prerequisites) {
+        //inDegree表 + 邻接表(边)
+        vector<vector<int>> edges(numCourses);
+        vector<int> inDeg(numCourses, 0);
+        for (auto &edge:prerequisites) {
+            edges[edge[1]].emplace_back(edge[0]);
+            inDeg[edge[0]]++;
+        }
+
+        queue<int> q;
+        for (int i = 0; i < numCourses; i++) {
+            if (inDeg[i] == 0) q.emplace(i);
+        }
+        int cnt = 0;
+        while (q.size()) {
+            auto top = q.front();
+            q.pop();
+            cnt++;
+            for (auto ver:edges[top]) {
+                inDeg[ver]--;
+                if (inDeg[ver] == 0) q.emplace(ver);
+            }
+        }
+        return cnt == numCourses;
+    }
+};
+```
+
+#####  Leetcode 210 课程表2
+
+拓扑排序求序列
+
+```C++
+class Solution {
+public:
+    vector<int> findOrder(int numCourses, vector<vector<int>> &prerequisites) {
+        vector<int> res;
+        vector<int> inDeg(numCourses, 0);
+        vector<vector<int>> edges(numCourses);
+        for (auto &edge: prerequisites) {
+            edges[edge[1]].emplace_back(edge[0]);
+            inDeg[edge[0]]++;
+        }
+        queue<int> q;
+        for (int i = 0; i < numCourses; i++) {
+            if (inDeg[i] == 0) q.emplace(i);
+        }
+        while (q.size()) {
+            int top = q.front();
+            q.pop();
+            res.emplace_back(top);
+            for (auto &ver:edges[top]) {
+                inDeg[ver]--;
+                if (inDeg[ver] == 0) q.emplace(ver);
+            }
+        }
+
+        if (res.size() < numCourses) return {};
+        return res;
+    }
+};
+
+```
+
+
