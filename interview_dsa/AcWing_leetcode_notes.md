@@ -225,7 +225,7 @@ Leetcode 126 单词接龙 II：BFS(26扩展) + DFS(反向搜索)
 Leetcode 207 课程表：拓扑排序(模板)，比较点数和入度为0的点数量。   
 Leetcode 210 课程表2：拓扑排序，保存序列。  
                          
-LeetCode 733. Flood Fill：dfs的flood fill方法。
+LeetCode 733. Flood Fill：dfs的flood fill方法，搜索连通块。        
 LeetCode 542. 01 Matrix：矩形多源头的bfs，类比入度为0的拓扑排序。BFS有两种，一种内循环需要先取size，如树的层序遍历,另外一种不需要，如四方向遍历，有dist记录。
         
 #### 10 动态规划专题
