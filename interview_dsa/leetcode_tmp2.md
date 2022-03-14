@@ -373,3 +373,18 @@ public:
 
 ```
 
+##### Leetcode 371 两整数之和
+
+```
+class Solution {
+public:
+    int getSum(int a, int b) {
+        while (b) {
+            auto carry = (unsigned int) (a & b) << 1;
+            a = a ^b;
+            b = carry;
+        }
+        return a;
+    }
+};
+```
