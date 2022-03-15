@@ -475,3 +475,73 @@ public:
     }
 };
 ```
+
+##### Leetcode 455. 分发饼干
+
+贪心排序
+
+```C++
+class Solution {
+public:
+    int findContentChildren(vector<int> &g, vector<int> &s) {
+        sort(g.begin(), g.end()); //小孩需要
+        sort(s.begin(), s.end());
+        int i = 0, j = 0;
+        while (i < g.size() && j < s.size()) {
+            while (j < s.size() && s[j] < g[i]) j++;
+            if (j < s.size()) {
+                i++;
+                j++;
+            }
+        }
+        return i;
+    }
+};
+
+```
+
+##### Leetcode 55. 跳跃游戏
+
+```C++
+class Solution {
+public:
+    bool canJump(vector<int> &nums) {
+        int res = 0;
+        for (int i = 0; i < nums.size(); i++) {
+            if (i > res) {
+                return false;
+            }
+            res = max(res, i + nums[i]);
+            if (res >= nums.size() - 1) {
+                return true;
+            }
+        }
+        return false;
+    }
+};
+```
+
+##### Leetcode 45. 跳跃游戏 II
+
+贪心区间问题
+
+```C++
+class Solution {
+public:
+    int jump(vector<int> &nums) {
+        int step = 0;
+        int n = nums.size();
+        int end = 0, maxR = 0;
+        for (int i = 0; i < n - 1; i++) {
+            maxR = max(maxR, i + nums[i]);
+            if (i == end) {
+                end = maxR;
+                step++;
+            }
+        }
+
+        return step;
+    }
+};
+
+```
