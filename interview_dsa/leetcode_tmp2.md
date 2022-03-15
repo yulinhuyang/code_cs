@@ -425,3 +425,53 @@ public:
     }
 };
 ```
+
+##### 860. 柠檬水找零
+
+贪心，优先用10块的。 
+
+```C++
+class Solution {
+public:
+    bool lemonadeChange(vector<int> &bills) {
+        int fives = 0, tens = 0;
+        for (auto bill:bills) {
+            if (bill == 5) {
+                fives++;
+            } else if (bill == 10) {
+                if (!fives) return false;
+                fives--;
+                tens++;
+            } else {
+                if (tens && fives) {
+                    fives--;
+                    tens--;
+                } else if (fives >= 3) {
+                    fives -= 3;
+                } else {
+                    return false;
+                }
+            }
+        }
+        return true;
+    }
+};
+```
+
+##### 392 判断子序列
+
+双指针单for 取代双循环的技巧
+
+```C++
+class Solution {
+public:
+    bool isSubsequence(string s, string t) {
+        if (s.empty()) return true;
+        for (int i = 0, j = 0; i < t.size(); i++) {
+            if (t[i] == s[j]) j++;
+            if (j == s.size()) return true;
+        }
+        return false;
+    }
+};
+```
