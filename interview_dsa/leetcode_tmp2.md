@@ -618,4 +618,58 @@ public:
 ```
 
 
+##### LeetCode 402. 移掉 K 位数字
+
+```C++
+class Solution {
+public:
+    string removeKdigits(string num, int k) {
+        stack<char> stk;
+        for (auto &n:num) {
+            while (stk.size() && stk.top() > n && k) {
+                stk.pop();
+                k--;
+            }
+            stk.push(n);
+        }
+
+        while (k--) stk.pop();
+        string res;
+        while (stk.size()) {
+            res += stk.top();
+            stk.pop();
+        }
+        reverse(res.begin(), res.end());
+        int i = 0;
+        while (i < res.size() && res[i] == '0') i++;
+        if (i == res.size()) return "0";
+        return res.substr(i);
+    }
+};
+```
+
+##### LeetCode 134  加油站
+
+```C++
+class Solution {
+public:
+    int canCompleteCircuit(vector<int> &gas, vector<int> &cost) {
+        int m = gas.size();
+        for (int i = 0, j = 0; i < m;) {
+            int gas_left = 0;
+            for (j = 0; j < m; j++) {
+                int k = (i + j) % m;
+                gas_left += gas[k] - cost[k];
+                if (gas_left < 0) break;
+            }
+            if (j == m) {
+                return i;
+            } else {
+                i += j + 1;
+            }
+        }
+        return -1;
+    }
+};
+```
 
