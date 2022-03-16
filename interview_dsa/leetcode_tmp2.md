@@ -589,3 +589,31 @@ public:
     }
 };
 ```
+##### 452 用最少数量的箭引爆气球
+
+贪心区间问题，模板题，区间问题，按起点或终点排序。
+
+```C++
+class Solution {
+    static bool cmp(vector<int> &a, vector<int> &b) {
+        return a[1] < b[1];
+    }
+
+public:
+    int findMinArrowShots(vector<vector<int>> &points) {
+        sort(points.begin(), points.end(), cmp);
+        int end = points[0][1], res = 1;
+        for (auto &point:points) {
+            if (point[0] > end) {
+                end = point[1];
+                res++;
+            }
+        }
+        return res;
+    }
+};
+
+```
+
+
+
