@@ -548,6 +548,8 @@ public:
 
 ##### LeetCode 376. 摆动序列
  
+可以先nums.erase(unique(nums.begin(), nums.end()), nums.end()); 预处理下。
+
 ```C++ 
 class Solution {
 public:
