@@ -46,9 +46,8 @@ Offer 03 数组中重复的数字：反复交换法
 
 #### 3 前缀和 差分 贪心 
 
-区间问题，按起点或终点排序。   
-
-信封/身高重建队列问题：按两个维度排序。    
+区间问题，按起点或终点排序。信封/身高重建队列问题：按两个维度排序。    
+nums.erase(unique(nums.begin(), nums.end()), nums.end());
 
 Leetcode 560. 和为 K 的子数组: 简化的前缀和。      
 Leetcode 860. 柠檬水找零:贪心，优先使用10块的。          
@@ -57,7 +56,7 @@ Leetcode 392 判断子序列: 双指针单for 取代双循环。
 Leetcode 455. 分发饼干：贪心+排序。   
 Leetcode 55. 跳跃游戏：    
 Leetcode 45. 跳跃游戏 II：正向查找可到达的最大位置。    
-LeetCode 376. 摆动序列：贪心模拟，统计峰和谷。   
+LeetCode 376. 摆动序列：贪心模拟，统计峰和谷，erase+unique预处理。  
 LeetCode 406 根据身高重建队列： 类信封问题，vector两维度排序再insert。    
 LeetCode 452 用最少数量的箭引爆气球：贪心+排序，区间问题，按终点排序。   
 
