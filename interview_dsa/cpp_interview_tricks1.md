@@ -821,6 +821,12 @@ words.erase(end_unique, words.end());  //删掉重复元素
 //max_element  min_element
 min = *min_element(v.begin(),v.end());
 ```
+**nth_element**
+nth_element(first, nth, last, compare):nth_element仅排序第n个元素，将位置n（从0开始）的元素放在第n大的位置，处理之后，排在它前面的元素都不比它大，排在它后面的元素都不比它小。
+```C++
+nth_element(array, array+6, array+len);  //排序第6个元素 
+nth_element(nums.begin(),nums.begin() + k/2,nums.end());
+```
 #### 12  bitsets
 
 [c++ bitset类用法](https://blog.csdn.net/qll125596718/article/details/6901935)
@@ -910,7 +916,7 @@ std:cout << std::chrono::duration_cast<Ms>(since_epoch).count()<<"ms"<<endl; //�
 	
 **cmath.h 数学函数**
 	
-ceil()：向上取整; floor():向下取整; round() 四舍五入
+ceil()：向上取整, (n + k - 1)/k ; floor():向下取整; round() 四舍五入
 	
 **cctype.h 字符处理库**
 
