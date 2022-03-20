@@ -155,7 +155,6 @@ leetcode 17 电话号码的字母组合：三重简单循环代替dfs
 Leetcode 187. 重复的DNA序列: unordered_map(hash) 使用。 
 Leetcode 652. 寻找重复的子树: 中序遍历与后序或者中序遍历与前序遍历都可以唯一确定一棵树。两遍hash,第一遍树变成字符串，第二遍变成数。
  
-
 前缀和和+hash的时候，注意是否需要hash[0] = 1;
  
 Leetcode 454. 四数相加 II：分组hash      
@@ -164,20 +163,26 @@ Leetcode 525. 连续数组: 简易前缀和，hash[0] = -1;
 Leetcode 350. 两个数组的交集 II:  multiset删除一个元素 mulSet.erase(mulSet.find(num));      
 Leetcode 290. 单词规律：stringstream 相当于sscanf和sprintf, getline截断string, 双hash      
 Leetcode 149. 直线上最多的点数： hash存储 long double slope，竖直线单独考虑   
-Leetcode 554. 砖墙：hash    
-
+Leetcode 554. 砖墙：hash   
+	
+**回文串**
+	
 LeetCode 131. 分割回文串：动态规划f + DFS回溯   
 LeetCode 214. Shortest Palindrome：字符串hash131或改进kmp(最大前缀和最长后缀匹配) 。
  
 long long使用：最终结果是int,中间可能是long long。
  
 哈希检索算法（Robin-Karp，RK 算法）
- 
+	
+**字符模拟**
+	
 LeetCode 67 二进制求和：string的两数之和，模拟。        
 LeetCode 299 猜数字游戏：简单模拟。      
 LeetCode 12 整数转罗马数字:字符串模拟。      
 LeetCode 68 文本左右对齐：   
- 
+
+**子序列判断**
+	
 LeetCode 522 子序列判断：模板题，判断子序列1。
 LeetCode 523 连续的子数组和：前缀和+hash+ 间隔2 insert。
 LeetCode 524 通过删除字母匹配到字典里最长单词:判断子序列2，字母序最小。
