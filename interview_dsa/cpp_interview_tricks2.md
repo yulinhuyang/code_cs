@@ -323,10 +323,10 @@ while (q.size() && nums[q.back()] <= nums[i]) q.pop_back();
 q.push_back(i);
 if (i >= k - 1) res.push_back(nums[q.front()]);
 ```  
-Leetcode 239. 滑动窗口最大值:单调下降队列简化
-leetcode 918: 拆环为链 + 前缀和 +单调上升队列：
+Leetcode 239. 滑动窗口最大值:单调下降队列简化     
+leetcode 918: 拆环为链 + 前缀和 +单调上升队列：    
 前缀和：A从1开始,S从1开始,for从1开始,S[i] = S[i - 1] + A[i]。A从0开始,S从1开始(n+1),for从0开始,S[i+1] = S[i] + A[i]。默认S[0] = 0，S一定从1开始。  
-单调队列：针对前缀和S的,所以i-k >= n 有等号。  
+单调队列：针对前缀和S的,所以i-k >= n 有等号。      
 
 ## 0x13 链表与邻接表
 
