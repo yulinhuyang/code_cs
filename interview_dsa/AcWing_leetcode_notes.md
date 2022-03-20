@@ -20,6 +20,21 @@ LeetCode 371. 两整数之和：位运算计算加法：拆分无进位加法和
 LeetCode 201. 数字范围按位与：寻找公共前缀。    
 Leetcode 477 汉明距离总和：n x (n - c) 
 
+**数学**
+
+Leetcode 268 丢失的数字:求和公式 n * (n + 1)/2        
+Leetcode 462 最少移动次数使数组元素相等 II:邮局问题，nth_element求中位数。   
+Leetcode 458 可怜的小猪：ToTes/ToDie的k进制数，累积。   
+Leetcode 319 灯泡开关: sqrt(n)。 
+上取整： (n + k - 1)/k  
+Leetcode 223 矩形面积：计算几何，矩阵并集面积,+0ll转longlong。
+
+**rand**
+
+Leetcode 528 按权重随机选择:前缀和 + rand()。   
+
+
+
 #### 2 二分与双指针 
 
 二分的两段性和单调性，折线法，寻找分界条件
@@ -158,7 +173,16 @@ long long使用：最终结果是int,中间可能是long long。
  
 哈希检索算法（Robin-Karp，RK 算法）
  
-**7 链表**
+LeetCode 67 二进制求和：string的两数之和，模拟。        
+LeetCode 299 猜数字游戏：简单模拟。      
+LeetCode 12 整数转罗马数字:字符串模拟。      
+LeetCode 68 文本左右对齐：   
+ 
+LeetCode 522 子序列判断：模板题，判断子序列1。
+LeetCode 523 连续的子数组和：前缀和+hash+ 间隔2 insert。
+LeetCode 524 通过删除字母匹配到字典里最长单词:判断子序列2，字母序最小。
+ 
+#### 7 链表 
 
 链表画图看，添加虚拟头节点(涉及到头节点可能会变的情况下)
 
@@ -218,7 +242,7 @@ ListNode *dummy = new ListNode(-1);
 auto dummy2 = new ListNode(-1);
 ```
  
-**8 树与图**
+#### 8 树与图 
 
 栈的递归、迭代（stack中序）
 
@@ -229,7 +253,7 @@ LCA: 236. 二叉树的最近公共祖先，树天然递归
 124 二叉树中的最大路径和：枚举最高点 + 左右最大(当前)返回
 
 
-**9 DFS(回溯)与BFS**
+#### 9 DFS(回溯)与BFS 
 
 bfs一般求最小步数和最短距离，dfs状态数量非常大，但是解的数量很小。
  
@@ -244,6 +268,22 @@ leetcode 90 子集II  回溯去重
 LeetCode 52. N-Queens II    dfs代替行, col + d + ud 数组标记解法，精确覆盖问题。   
 LeetCode 37. Sudoku Solver  dfs 逐行, col + row + cell 数组标记解法，row[9][9]: 9行,0-9的数有了哪几个                
 Leetcode 473. 火柴拼正方形   剪枝优化技巧
+                         
+LeetCode 54 螺旋矩阵：右下左上-> dx[4] = {0, 1, 0, -1}, dy[4] = {1, 0, -1, 0}，d取索引。    
+LeetCode 93 复原IP地址:dfs + u/k两个截止条件，类似木棍问题。   
+LeetCode 95 不同的二叉搜索树 II：dfs区间l-r，枚举根节点。    
+LeetCode 394 字符串解码:栈解法/DFS递归括号[]解法(j是[的下一个,k暂存和统计)。   
+LeetCode 464 我能赢吗: 状态压缩dfs。       
+LeetCode 695 岛屿最大面积：dfs。      
+LeetCode 529 扫雷游戏：dfs 8连通遍历，两个截止条件dfs。   
+```C++
+for (int i = max(x - 1, 0); i <= min(n - 1, x + 1); i ++ )
+	for (int j = max(y - 1, 0); j <= min(m - 1, y + 1); j ++ )
+```
+
+LeetCode 784 字母大小写全排列：dfs+选/不选，大小写切换^32。
+
+ 
  
 bfs 空间大，最短最小性，不会有爆栈风险。    
 dfs空间和递归深度成正比，有爆栈风险，比如树的深度最坏可能有1000层，不能搜最短最小。    
@@ -259,6 +299,7 @@ Leetcode 210 课程表2：拓扑排序，保存序列。
                          
 LeetCode 733. Flood Fill：dfs的flood fill方法，搜索连通块。        
 LeetCode 542. 01 Matrix：矩形多源头的bfs，类比入度为0的拓扑排序。BFS有两种，一种内循环需要先取size，如树的层序遍历,另外一种不需要，如四方向遍历，有dist记录。
+                      
         
 #### 10 动态规划专题
                          
