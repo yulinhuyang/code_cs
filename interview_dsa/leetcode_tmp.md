@@ -1708,6 +1708,534 @@ public:
     }
 };
 ```
+##### 67. 二进制求和
+
+```C++
+class Solution {
+public:
+    string addBinary(string a, string b) {
+        reverse(a.begin(),a.end());
+        reverse(b.begin(),b.end());
+        int m = max(a.size(),b.size());
+        int carry = 0;
+        string ans;
+        for(int i = 0;i < m;i++){
+            carry += i < a.size()? a[i] - '0':0; 
+            carry += i < b.size()? b[i] - '0':0;
+            ans.push_back(carry % 2 ? '1':'0');
+            carry /= 2;
+        }
+        if(carry) ans.push_back('1');
+        reverse(ans.begin(),ans.end());
+        return ans;
+    }
+};
+```
+
+##### 54. 螺旋矩阵
+
+```C++
+class Solution
+{
+public:
+    vector<int> spiralOrder(vector<vector<int>> &matrix)
+    {
+        int m = matrix.size(), n = matrix[0].size();
+        int dx[4] = {0, 1, 0, -1}, dy[4] = {1, 0, -1, 0};
+        vector<vector<int>> st(m, vector<int>(n, 0));
+        vector<int> ans;
+        int i = 0, j = 0, d = 0;
+        for (int k = 0; k < m * n; k++)
+        {
+            int a = i + dx[d], b = j + dy[d];
+            if (a < 0 || a >= m || b < 0 || b >= n || st[a][b])
+            {
+                d = (d + 1) % 4;
+                a = i + dx[d], b = j + dy[d];
+            }
+            st[i][j] = true;
+            ans.emplace_back(matrix[i][j]);
+            i = a, j = b;
+        }
+        return ans;
+    }
+};
+```
+##### 299. 猜数字游戏
+
+```C++
+class Solution {
+public:
+    string getHint(string secret, string guess) {
+        int a = 0,b = 0,n = secret.size();
+        vector<int> ds(10,0), dg(10,0);
+        for(int i = 0;i < n;i++){
+            auto s = secret[i] - '0',g = guess[i] - '0';
+            a += s == g?1:0;
+            ds[s]++;
+            dg[g]++;
+        }
+        for(int i = 0;i < 10;i++) b += min(ds[i],dg[i]);
+        return to_string(a) + "A" + to_string(b - a) + "B";
+
+    }
+};
+```
+
+##### 12. 整数转罗马数字
+
+```C++
+class Solution{
+public:
+    string intToRoman(int num)
+    {
+        int values[] = {1000, 900, 500, 400, 100, 90, 50, 40, 10, 9, 5, 4, 1};
+        string reps[] = {"M", "CM", "D", "CD", "C", "XC", "L", "XL", "X", "IX", "V", "IV", "I"};
+        string ans;
+        for (int i = 0; i < 13; i++)
+        {
+            while (num >= values[i])
+            {
+                num -= values[i];
+                ans += reps[i];
+            }
+        }
+        return ans;
+    }
+};
+```
+
+##### 784 字母大小写全排列
+
+```C++
+class Solution{
+    int m = 0;
+    vector<string> ans;
+
+public:
+    vector<string> letterCasePermutation(string s){
+        m = s.size();
+        string path;
+        dfs(s, path,0);
+        return ans;
+    }
+
+    void dfs(string &s, string &path, int u){
+        if (u == m)
+        {
+            ans.emplace_back(path);
+            return;
+        }
+
+        path.push_back(s[u]);
+        dfs(s, path, u + 1);
+        path.pop_back();
+
+        if ('a' <= s[u] && s[u] <= 'z' || 'A' <= s[u] && s[u] <= 'Z')
+        {
+            path.push_back(s[u] ^ 32);
+            dfs(s, path, u + 1);
+            path.pop_back();
+        }
+        return;
+    }
+};
+```
+
+#####  93. 复原 IP 地址
+
+dfs + u/k两个截止条件，类似木棍问题。   
+
+```C++
+class Solution {
+    vector<string> ans;
+    vector<int> path;
+public:
+    vector<string> restoreIpAddresses(string s){
+        dfs(s,0,0);
+        return ans;
+    }
+    void dfs(string s,int u,int k){
+        if(u == s.size()){
+            if(k == 4){
+                string ip = to_string(path[0]);
+                for(int i = 1;i < 4;i++){
+                    ip += "." + to_string(path[i]);
+                }
+                ans.emplace_back(ip);
+            }
+            return;
+        }
+        if(k > 4) return;
+        int t = 0;
+        for(int i = u;i < s.size();i++){
+            t = t * 10 + s[i] - '0';
+            if(0 <= t && t <= 255){
+                path.emplace_back(t);
+                dfs(s,i + 1,k + 1);
+                path.pop_back();
+            }else break;
+            if(!t) break;
+        }
+    }
+};
+```
+
+##### 95. 不同的二叉搜索树 II
+
+dfs区间l-r，枚举根节点。  
+
+```C++
+class Solution {
+public:
+    vector<TreeNode*> generateTrees(int n) {
+        if(!n) return vector<TreeNode*>();
+        return dfs(1,n);
+    }
+
+    vector<TreeNode*> dfs(int l,int r){
+        vector<TreeNode*> res;
+        if(l > r){
+            res.emplace_back(nullptr);
+            return res;
+        }
+        for(int i = l;i <= r;i++){
+            vector<TreeNode*> left = dfs(l,i - 1),right = dfs(i + 1,r);
+            for(auto lc:left){
+                for(auto rc:right){
+                    TreeNode * root = new TreeNode(i);
+                    root->left = lc;
+                    root->right = rc;
+                    res.emplace_back(root);
+                }
+            }
+        }
+        return res;
+    }
+};
+```
+##### 394. 字符串解码
+
+栈解法/DFS递归括号[]解法(j是[的下一个,k暂存和统计)。
+
+```C++
+class Solution {
+public:
+    string decodeString(string s) {
+        string res;
+        for(int i = 0;i < s.size();){
+            if(!isdigit(s[i])) res += s[i++];
+            else{
+                int j = i;
+                while(isdigit(s[j])) j++;
+                int t = atoi(s.substr(i,j - i).c_str());
+                int k = j + 1;
+                int sum = 0;
+                while(sum >= 0){
+                    if(s[k] == '[') sum++;
+                    if(s[k] == ']') sum--;
+                    k++;
+                }
+                string resstr = decodeString(s.substr(j + 1,k - j - 2));
+                while (t--) res += resstr;
+                i = k;
+            }
+        }
+        return res;
+    }
+};
+```
+
+##### 464. 我能赢吗
+
+状态压缩dfs
+
+```C++
+class Solution {
+    vector<int> dp;
+    int maxn = 0;
+public:
+    bool canIWin(int maxChoosableInteger, int desiredTotal) {
+        if(!desiredTotal) return true;
+        if((maxChoosableInteger * (maxChoosableInteger + 1))/2 < desiredTotal) return false;
+
+        dp = vector<int> (1<<(maxChoosableInteger + 1),-1);
+        maxn = maxChoosableInteger;
+        return dfs(0,desiredTotal);
+    }
+
+    bool dfs(int status,int t){
+        if(dp[status] != -1) return dp[status];
+        if(t <= 0) return dp[status] = false;//赋值并返回false;
+        for(int i = 1;i <= maxn;i++){
+            if(!(status & (1 << i))){
+                if(!dfs(status + (1 << i),t - i)){
+                    return dp[status] = true;
+                }
+            }
+        }
+        return dp[status] = false;
+    }
+};
+```
+
+##### 695 岛屿的最大面积
+```C++
+class Solution {
+    int m,n;
+public:
+    int maxAreaOfIsland(vector<vector<int>>& grid) {
+        m = grid.size(),n = grid[0].size();
+        int res = 0;
+        for(int i = 0;i < m;i++){
+            for(int j = 0;j < n;j++){
+                if(grid[i][j] == 1){
+                    res = max(res,dfs(grid,i,j));
+                }
+            }
+        }
+        return res;
+    }
+
+    int dfs(vector<vector<int>>& grid,int i,int j){
+        if(i < 0 || i >= m || j < 0 || j >=n || !grid[i][j]){
+            return 0;
+        }
+
+        grid[i][j] = 0;
+        int dx[4] = {-1,0,1,0},dy[4] = {0,1,0,-1};
+        int ans = 1;
+        for(int k = 0;k < 4;k++){
+            int x  = i + dx[k],y = j + dy[k];
+            ans += dfs(grid,x,y);
+        }
+        return ans;
+    }
+};
+```
+
+##### 268 丢失的数字
+
+```C++
+class Solution {
+public:
+    int missingNumber(vector<int>& nums) {
+        int sum = 0;
+        int n = nums.size();
+        for(int i = 0;i < nums.size();i++){
+            sum += nums[i];
+        }
+        int total = n * (n + 1)/2;
+        return total - sum;
+    }
+};
+```
+##### 462. 最少移动次数使数组元素相等 II
+
+```C++
+class Solution {
+public:
+    int minMoves2(vector<int>& nums) {
+        int n = nums.size();
+        nth_element(nums.begin(),nums.begin() + n/2,nums.end());
+        int k = nums[n/2];
+        int sum = 0;
+        for(auto num:nums){
+            sum += abs(num - k);
+        }
+        return sum;
+    }
+};
+```
+
+##### 458. 可怜的小猪
+
+```C++
+class Solution {
+public:
+    int poorPigs(int buckets, int minutesToDie, int minutesToTest) {
+        int k = minutesToTest/minutesToDie + 1;
+        int res = 0,t = 1;
+        while(t < buckets) t *= k,res++;
+        return res;
+    }
+};
+```
+
+##### 319 灯泡开关
+```C++
+class Solution {
+public:
+    int bulbSwitch(int n) {
+        return sqrt(n);
+    }
+};
+```
+
+##### 223. 矩形面积
+
+```C++
+class Solution {
+public:
+    int computeArea(int ax1, int ay1, int ax2, int ay2, int bx1, int by1, int bx2, int by2) {
+        long long x = min(ax2,bx2) + 0ll - max(ax1,bx1);
+        long long y = min(ay2,by2) + 0ll - max(ay1,by1);
+        return (ax2 - ax1) *(ay2 - ay1) + (bx2 - bx1) *(by2 - by1)  - max(0ll,x)*max(0ll,y);
+    }
+};
+```
+
+##### 522. 最长特殊序列 II
+
+模板题: 判断子序列
+
+```C++
+class Solution
+{
+    bool check(string a, string b)
+    {
+        int k = 0;
+        for (auto ch : b)
+        {
+            if (ch == a[k])
+            {
+                k++;
+            }
+        }
+        return k == a.size();
+    }
+
+public:
+    int findLUSlength(vector<string> &strs)
+    {
+        int res = -1;
+        for (int i = 0; i < strs.size(); i++)
+        {
+            bool is_sub = false;
+            for (int j = 0; j < strs.size(); j++)
+            {
+                if (i != j && check(strs[i], strs[j]))
+                {
+                    is_sub = true;
+                    break;
+                }
+            }
+            if (!is_sub)
+                res = max(res, (int)(strs[i].size()));
+        }
+        return res;
+    }
+};
+```
+
+##### 523. 连续的子数组和
+
+```C++
+class Solution {
+public:
+    bool checkSubarraySum(vector<int>& nums, int k) {
+        if(!k){
+            for(int i = 1;i < nums.size();i++){
+                if(!nums[i - 1] && !nums[i]){
+                    return true;
+                }
+            }
+            return false;
+        }
+        int n = nums.size();
+        if(n < 2) return false;
+        vector<int> s(n + 1);
+        for(int i = 1;i < n + 1;i++) {
+            s[i] = s[i - 1] + nums[i - 1];
+        } 
+        unordered_set<int> hash;
+        for(int i = 2; i < n + 1;i++){
+            hash.insert(s[i - 2] % k); //间隔2存入
+            if(hash.count(s[i] % k)){
+                return true;
+            }
+        }
+        return false;
+    }
+};
+```
+##### 524. 通过删除字母匹配到字典里最长单词
+
+```C++
+class Solution {
+    bool check(string a,string b){
+        int i = 0,j = 0;
+        while(i < a.size() && j < b.size()){
+            if(a[i] == b[j]) i++;
+            j++;
+        }
+        return i == a.size();
+    }
+public:
+    string findLongestWord(string s, vector<string>& dictionary) {
+        string res;
+        for(auto str:dictionary){
+            if(check(str,s)){
+                if(res.empty() || res.size() < str.size() || res.size() == str.size()&& str < res){
+                    res = str;
+                }
+            }
+        }
+        return res;
+    }
+};
+```
+
+##### 529. 扫雷游戏
+
+```C++
+class Solution {
+    int m,n;
+public:
+    vector<vector<char>> updateBoard(vector<vector<char>>& board, vector<int>& click) {
+        int x = click[0],y = click[1];
+        m = board.size(),n = board[0].size();
+        if(board[x][y] == 'M'){
+            board[x][y] = 'X';
+            return board;
+        }
+
+        dfs(board,x,y);
+        return board;
+    }
+
+    void dfs(vector<vector<char>>& board,int x,int y){
+        if(board[x][y] != 'E') return;
+        int s = 0;
+        for(int i = max(x - 1,0);i <= min(x + 1,m - 1);i++){
+            for(int j = max(y - 1,0);j <= min(y + 1,n - 1);j++){
+                if(i != x || j != y){      
+                    if(board[i][j] == 'M' || board[i][j] == 'X'){
+                        s++;
+                    }
+                }
+            }
+        }
+        if(s){
+            board[x][y] = '0' + s;
+            return;
+        }
+        board[x][y] = 'B';
+        for(int i = max(x - 1,0);i <= min(x + 1,m - 1);i++){
+            for(int j = max(y - 1,0);j <= min(y + 1,n - 1);j++){
+                if(i != x || j != y){     
+                    dfs(board,i,j);
+                }
+            }
+        }
+    }
+};
+```
+
+
+
+
+
 
 
 
