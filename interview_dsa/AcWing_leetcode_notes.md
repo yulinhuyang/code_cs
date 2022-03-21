@@ -59,7 +59,7 @@ Leetcode 33. 搜索旋转排序数组:先找最小值，去掉干扰条件。
 offer 11 旋转数组的最小数字：先去掉干扰条件。  
 Offer 03 数组中重复的数字：反复交换法
 
-#### 3 前缀和 差分 贪心 
+#### 3 前缀和 差分 贪心 树状数组
 
 区间问题，按起点或终点排序。信封/身高重建队列问题：按两个维度排序。    
 nums.erase(unique(nums.begin(), nums.end()), nums.end());
@@ -77,6 +77,28 @@ LeetCode 452 用最少数量的箭引爆气球：贪心+排序，区间问题，
 
 LeetCode 402. 移掉 K 位数字：单调上升栈。    
 LeetCode 134 加油站：枚举点，下次从枚举失败+1处开始：i += j + 1。
+
+树状数组模板：
+
+```C++
+//建立树状数组
+for(i = 1; i <= n; i++) add(i, a[i]); ，
+
+// lowbit(x)是取出x的最低位1
+public int lowbit(int x) {
+	return x & -x;
+}
+// 更新
+public void add(int x, int u) {
+	for (int i = x; i <= n; i += lowbit(i)) tree[i] += u;
+}
+// 查询,1~x之和
+public int query(int x) {
+	int res = 0;
+	for (int i = x; i > 0; i -= lowbit(i)) res += tree[i];
+	return res;
+}
+```
 
 #### 4 栈与队列 单调栈与单调队列 
 
