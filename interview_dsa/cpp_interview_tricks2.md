@@ -38,7 +38,7 @@ a[i] = a[i-1] + df[i]                      // 真实数据也�
 Ÿ   一维差分：主要用于对子数组（或区间）的元素整体加减固定值，特别是子数组较多时，可提高性能。   
 Ÿ   二维差分：对子矩阵元素整体进行加减处理，在子矩阵较多时，为提高性能，可以考虑用差分数组来处理。
 
-Leetcode 560. 和为 K 的子数组: 简化的前缀和。
+- Leetcode 560. 和为 K 的子数组: 简化的前缀和。
 	
 ## 0x04  二分和三分
 
@@ -89,10 +89,10 @@ int bsearch_2(int l, int r)
 
 模板题：
 
-Leetcode  153. 寻找旋转排序数组中的最小值：nums.back()的秒用。   
-Leetcode 33. 搜索旋转排序数组:先找最小值，去掉干扰条件   
-offer 11 旋转数组的最小数字：先去掉干扰条件。   
-Offer 03 数组中重复的数字：反复交换法
+- Leetcode  153. 寻找旋转排序数组中的最小值：nums.back()的秒用。   
+- Leetcode 33. 搜索旋转排序数组:先找最小值，去掉干扰条件   
+- offer 11 旋转数组的最小数字：先去掉干扰条件。   
+- Offer 03 数组中重复的数字：反复交换法
 
 ### 0x04.2 stl二分法
 
@@ -176,9 +176,9 @@ void merge_sort(int q[], int l, int r)
 ```
 Merge K Sorted Lists
 
-Leetcode 167. 两数之和 II - 输入有序数组： 首尾指针。                        
-Leetcode 88. 合并两个有序数组：首尾指针，双指针从后向前合并。                        
-Leetcode 26. 删除有序数组中的重复项：前后指针。
+- Leetcode 167. 两数之和 II - 输入有序数组： 首尾指针。                        
+- Leetcode 88. 合并两个有序数组：首尾指针，双指针从后向前合并。                        
+- Leetcode 26. 删除有序数组中的重复项：前后指针。
 	
 ### 0x05.2 滑动窗口 base code
 	
@@ -267,8 +267,8 @@ LeetCode 76. 最小覆盖字串:  单个hash + i(hash[key]--)  j(hash[key]++) �
 
 双向遍历：柱形面积、接雨水，左边一遍，右边一遍
 
-Leetcode 42. 接雨水:两遍max, 左边一遍Left_max，右边一遍right_max，min(left_max[i],right_max[i]) - height[i]    
-Leetcode 84. 柱状图中最大的矩形:两遍栈，左边一遍单调上升栈，右边一遍单独上升栈，height[i] * (right[i] - left[i] - 1)     
+- Leetcode 42. 接雨水:两遍max, 左边一遍Left_max，右边一遍right_max，min(left_max[i],right_max[i]) - height[i]    
+- Leetcode 84. 柱状图中最大的矩形:两遍栈，左边一遍单调上升栈，右边一遍单独上升栈，height[i] * (right[i] - left[i] - 1)     
 
 ### 0x05.4 回文问题 
 ### 0x05.5 Cyclic Sort，循环排序
@@ -326,8 +326,8 @@ if (stk.empty()) left[i] = -1;
 else left[i] = stk.top();
 stk.push(i);
 ```      
-Leetcode 84. 柱状图中最大的矩形:两遍栈，左边一遍单调上升栈，右边一遍单独上升栈，height[i] * (right[i] - left[i] - 1)   
-Leetcode 32. 最长有效括号：起始加-1,栈底元素为当前已经遍历过的元素中「最后一个没有被匹配的右括号的下标]                   
+- Leetcode 84. 柱状图中最大的矩形:两遍栈，左边一遍单调上升栈，右边一遍单独上升栈，height[i] * (right[i] - left[i] - 1)   
+- Leetcode 32. 最长有效括号：起始加-1,栈底元素为当前已经遍历过的元素中「最后一个没有被匹配的右括号的下标]                   
 
 ## 0x12 队列/单调队列
 
@@ -341,8 +341,8 @@ while (q.size() && nums[q.back()] <= nums[i]) q.pop_back();
 q.push_back(i);
 if (i >= k - 1) res.push_back(nums[q.front()]);
 ```  
-Leetcode 239. 滑动窗口最大值:单调下降队列简化     
-leetcode 918: 拆环为链 + 前缀和 +单调上升队列：    
+- Leetcode 239. 滑动窗口最大值:单调下降队列简化     
+- leetcode 918: 拆环为链 + 前缀和 +单调上升队列：    
 前缀和：A从1开始,S从1开始,for从1开始,S[i] = S[i - 1] + A[i]。A从0开始,S从1开始(n+1),for从0开始,S[i+1] = S[i] + A[i]。默认S[0] = 0，S一定从1开始。  
 单调队列：针对前缀和S的,所以i-k >= n 有等号。      
 
@@ -487,8 +487,8 @@ public:
 ```
 高级结构设计 LRU/LFU 
 	
-Leetcode 187. 重复的DNA序列: unordered_map(hash) 使用。  
-Leetcode 652. 寻找重复的子树: 中序遍历与后序或者中序遍历与前序遍历都可以唯一确定一棵树。两遍hash,第一遍树变成字符串，第二遍变成数。  
+- Leetcode 187. 重复的DNA序列: unordered_map(hash) 使用。  
+- Leetcode 652. 寻找重复的子树: 中序遍历与后序或者中序遍历与前序遍历都可以唯一确定一棵树。两遍hash,第一遍树变成字符串，第二遍变成数。  
 
 ## 0x15 字符串(字符串hash 、KMP与最小表示法）
 
@@ -507,8 +507,8 @@ to_string() 转字符串
 stoi或 atoi(s1.substr(i, x - i).c_str())
 	
 题目：    
-leetcode 3 无重复字符的最长字串: hash逐加逐减, ij双变量循环代替滑窗。   
-leetcode 17 电话号码的字母组合：三重简单循环代替dfs
+- Leetcode 3 无重复字符的最长字串: hash逐加逐减, ij双变量循环代替滑窗。   
+- Leetcode 17 电话号码的字母组合：三重简单循环代替dfs
 
 ## 0x16  Trie树（字典树）
 
@@ -533,13 +533,13 @@ priority_queue<Type, Container, Functional>
 Type为数据类型， Container为保存数据的容器，Functional为元素比较方式。  
 如果不写后两个参数，那么容器默认用的是vector，比较方式默认用operator<，也就是优先队列是大顶堆，队头元素最大。
 
-Leetcode 692. 前K个高频单词:小顶堆(大顶key加负号)流过程,保证second的字典序排序，也可以自定义比较函数。    
+- Leetcode 692. 前K个高频单词:小顶堆(大顶key加负号)流过程,保证second的字典序排序，也可以自定义比较函数。    
 pair 设置 --> make_pair或者 直接构造 PIS t(-word.second, word.first);    
 优先队列默认大的在队首，字符串则为字典序由大到小。int，double，char，string类型都可以这样定义。  
 	
 ### 0x17.2 对顶堆（Two Heaps） 
 
-LeetCode 295. Find Median from Data Stream：对顶堆，小上大下 --> 小右大左。动态流，图参考：https://blog.csdn.net/jiahonghao2002/article/details/114108760   
+- LeetCode 295. Find Median from Data Stream：对顶堆，小上大下 --> 小右大左。动态流，图参考：https://blog.csdn.net/jiahonghao2002/article/details/114108760   
 1 2 3 4 (大顶) | 5 6 7 8(小顶) : right.size() > left.size(), right 比left至多多一个,添加时优先添加right, 先添加后调整。
 
 Merge K Sorted Lists, Kth Smallest Number in M Sorted Lists  
@@ -591,10 +591,10 @@ TreeNode * t1 = new TreeNode(10);
 
 树的递归问题：枚举最高点 + 左右最大(当前)返回
 
-LCA: 236. 二叉树的最近公共祖先，树天然递归    
-94. 二叉树的中序遍历： 栈的递归、迭代（stack中序）    
-124 二叉树中的最大路径和：枚举最高点 + 左右最大(当前)返回     
-105 从前序与中序遍历序列构造二叉树：hash + 索引传递    
+- Leetcode LCA: 236. 二叉树的最近公共祖先，树天然递归    
+- Leetcode 94. 二叉树的中序遍历： 栈的递归、迭代（stack中序）    
+- Leetcode 124 二叉树中的最大路径和：枚举最高点 + 左右最大(当前)返回     
+- Leetcode 105 从前序与中序遍历序列构造二叉树：hash + 索引传递    
 
 ```C++
 //中序迭代遍历
@@ -698,17 +698,17 @@ void backtrack(vector<int>& nums,int index){
 }
 ```
 
-leetcode 47 全排列II  遍历的时候跳过相同元素，人为规定相同数字的相对顺序不变 
+- Leetcode 47 全排列II  遍历的时候跳过相同元素，人为规定相同数字的相对顺序不变 
  
 ```
 while(i + 1 < nums.size() && nums[i] == nums[i+1]) i++;
 ```
                          
-leetcode 78 子集  位运算+循环,简化子集问题, 递归结构相当于一层循环。  
-leetcode 90 子集II  回溯去重  
-LeetCode 52. N-Queens II    dfs代替行, col + d + ud 数组标记解法，精确覆盖问题。  
-LeetCode 37. Sudoku Solver  dfs 逐行, col + row + cell 数组标记解法，row[9][9]: 9行,0-9的数有了哪几个。       
-Leetcode 473. 火柴拼正方形   剪枝优化技巧，模板题
+- Leetcode 78 子集  位运算+循环,简化子集问题, 递归结构相当于一层循环。  
+- Leetcode 90 子集II  回溯去重  
+- LeetCode 52. N-Queens II    dfs代替行, col + d + ud 数组标记解法，精确覆盖问题。  
+- LeetCode 37. Sudoku Solver  dfs 逐行, col + row + cell 数组标记解法，row[9][9]: 9行,0-9的数有了哪几个。       
+- Leetcode 473. 火柴拼正方形   剪枝优化技巧，模板题
 
 ###  0x22.3 flood fill问题(DFS)
 
@@ -835,9 +835,9 @@ public:
 ```
 
 模板题：
-LeetCode 547 省份数量(Number Of Provinces)	
-LeetCode 127 单词接龙: 双向BFS搜索（26子母扩展）
-LeetCode 542 01 Matrix：矩形多源头的bfs
+- LeetCode 547 省份数量(Number Of Provinces)	
+- LeetCode 127 单词接龙: 双向BFS搜索（26子母扩展）
+- LeetCode 542 01 Matrix：矩形多源头的bfs
 
 ## 0x30 数学知识
 	
@@ -864,8 +864,8 @@ n项求和公式、摩尔投票法、卡特兰数
     p[find(a)] = find(b);
 ```
 			  
-LeetCode 547. Friend Circles 省份问题 :并查集   
-LeetCode 684. Redundant Connection: 并差集变形，1->n 下标从1开始。   
+- LeetCode 547. Friend Circles 省份问题 :并查集   
+- LeetCode 684. Redundant Connection: 并差集变形，1->n 下标从1开始。   
 
 ## 0x42 树状数组
 	
@@ -898,8 +898,8 @@ for (状态1  in 状态1的所有取值)
 3. 常见的遍历方向：正向、反向、斜着。  
 状态转移所依赖的状态必须被提前计算出来，需要根据 base case 和最终状态进行推导，合理安排i,j的遍历顺序。  
 
-LeetCode 63. 不同路径 II：循环内处理好0行0列。  
-LeetCode 10. 正则表达式匹配: sp加' ',*提前判断。    
+- LeetCode 63. 不同路径 II：循环内处理好0行0列。  
+- LeetCode 10. 正则表达式匹配: sp加' ',*提前判断。    
 
 **数字三角形模型**
 	
@@ -915,19 +915,19 @@ a[j] = INT_MAX;
 if (j) a[j] = b[j - 1] + triangle[i][j];
 if (j <= i - 1) a[j] = min(a[j], b[j] + triangle[i][j]);
 ```
-LeetCode 120. Triangle：滚动数组优化版 + 普通二维数组版本。 
+- LeetCode 120. Triangle：滚动数组优化版 + 普通二维数组版本。 
 	 
 **子序列模型**
 	  
-LeetCode 128 最长连续序列 LCS: set中心展开法。  
-LeetCode 300  最长递增子序列 LIS: insertsort dp()   
-LeetCode 1143 最长公共子序列 LCS :二维dp。 
-LeetCode 354 俄罗斯套娃信封问题: 二维子序列，先排序，一维dp。
+- LeetCode 128 最长连续序列 LCS: set中心展开法。  
+- LeetCode 300  最长递增子序列 LIS: insertsort dp()   
+- LeetCode 1143 最长公共子序列 LCS :二维dp。 
+- LeetCode 354 俄罗斯套娃信封问题: 二维子序列，先排序，一维dp。
 	 
 **状态机模型**
 	 
-LeetCode 121 买卖股票的最佳时机:贪心/状态机	 
-LeetCode 198 打家劫舍
+- LeetCode 121 买卖股票的最佳时机:贪心/状态机	 
+- LeetCode 198 打家劫舍
 
 ### 0x50.2 背包问题
 
@@ -965,21 +965,21 @@ for i in range(n + 1):
         else:
             dp[i][j] = dp[i - 1][j]
 ```
-LeetCode 322. 零钱兑换 I: 完全背包的二维和一维解法。      
-LeetCode 518. 零钱兑换 II: 完全背包的二维和一维解法。  
+- LeetCode 322. 零钱兑换 I: 完全背包的二维和一维解法。      
+- LeetCode 518. 零钱兑换 II: 完全背包的二维和一维解法。  
 
 ### 0x50.3 区间dp
 
 区间dp: len -> 左端点 -> 决策
 
-Leetcode 312 戳气球问题
-LeetCode 664. Strange Printer:s[l-1]=s[k-1],f[l][r] = min(f[l][r], f[l][k - 1] + f[k + 1][r]);  
-Leetcode 1000. 合并石头的最低成本: 石子合并变形。
+- Leetcode 312 戳气球问题
+- LeetCode 664. Strange Printer:s[l-1]=s[k-1],f[l][r] = min(f[l][r], f[l][k - 1] + f[k + 1][r]);  
+- Leetcode 1000. 合并石头的最低成本: 石子合并变形。
 
 ### 0x50.4 状态压缩dp
 	
-Leetcode 464 我能赢吗: 状态压缩dfs + 记忆化搜索。    
-Leetcode 526 优美的排列：状态压缩dp,f[i]代表选法是i的时候的方案数，i的每一位代表是否选择当前的数    	
+- Leetcode 464 我能赢吗: 状态压缩dfs + 记忆化搜索。    
+- Leetcode 526 优美的排列：状态压缩dp,f[i]代表选法是i的时候的方案数，i的每一位代表是否选择当前的数    	
 
 ## 0x60 图论
 	
