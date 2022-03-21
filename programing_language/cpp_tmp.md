@@ -61,6 +61,27 @@ boost/geometry：计算几何库
 boost/property_tree: 解析json
 
 boost/filesystem: 文件系统操作
+```C++
+#include <boost/filesystem.hpp> 
+#include <iostream> 
+
+int main() 
+{ 
+  boost::filesystem::path p("C:\\Test"); 
+  try 
+  { 
+    if (boost::filesystem::create_directory(p)) 
+    { 
+      boost::filesystem::rename(p, "C:\\Test2"); 
+      boost::filesystem::remove("C:\\Test2"); 
+    } 
+  } 
+  catch (boost::filesystem::filesystem_error &e) 
+  { 
+    std::cerr << e.what() << std::endl; 
+  } 
+} 
+```
 
 
 
