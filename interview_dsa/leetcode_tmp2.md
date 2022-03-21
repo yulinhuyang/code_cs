@@ -1,7 +1,7 @@
 
 背包9讲代码模板：https://blog.csdn.net/yandaoqiusheng/article/details/84782655
 
-0-1背包问题模板
+AcWing 2 0-1背包问题模板
 
 https://www.acwing.com/solution/content/1374/
 
@@ -28,7 +28,7 @@ for (int i = 1; i <= n; i++) {
 
 ```
 
-完全背包问题模板
+AcWing 3 完全背包问题模板
 
 https://www.acwing.com/solution/content/5345/
 
@@ -50,7 +50,7 @@ for (int i = 1; i <= n; i++) {
 }
 ```
 
-多重背包问题模板
+AcWing 4 多重背包问题模板
 
 ```C++
 for (int i = 1; i <= n; i ++ )
@@ -59,7 +59,7 @@ for (int i = 1; i <= n; i ++ )
             f[i][j] = max(f[i][j], f[i - 1][j - v[i] * k] + w[i] * k);
 ```
 
-混合背包问题模板
+AcWing 7 混合背包问题模板
 
 ```C++
 for (int i = 0; i < n; i ++ )
@@ -91,7 +91,7 @@ for (int i = 0; i < n; i ++ )
 
 ```
 
-分组背包问题模板
+AcWing 9 分组背包问题模板
 
 ```C++
 for (int i = 1; i <= n; i ++ )
@@ -103,7 +103,7 @@ for (int i = 1; i <= n; i ++ )
 
 ```
 
-二维费用的背包问题模板
+AcWing 8 二维费用的背包问题模板
 
 ```C++
 for (int i = 0; i < n; i++) {
