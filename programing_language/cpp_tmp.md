@@ -54,4 +54,15 @@ printf(" output =  %d",res);
 printf 不支持string类型，string类型需要使用cout
 ```
 
+**boost**
+
+boost/geometry：计算几何库
+
+boost/property_tree: 解析json
+
+boost/filesystem: 文件系统操作
+
+
+
+
 
