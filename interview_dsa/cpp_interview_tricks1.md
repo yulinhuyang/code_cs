@@ -962,3 +962,5 @@ int b = y == j ? 0 : atoi(s2.substr(j, y - j).c_str());
 st[i] = d[i + u] = ud[i - u + n] = 1;
 ```
 	
+
+	
