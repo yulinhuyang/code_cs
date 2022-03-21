@@ -67,7 +67,24 @@ for (int i = 1; i <= n; i++) {//枚举背包
 混合背包问题模板
 
 ```C++
-
+for (int i = 1; i <= n; i++) {
+    cin >> c >> w >> p;
+    if (p == 0) //完全背包
+        for (int j = c; j <= V; j++)
+            f[j] = max(f[j], f[j - c] + w);
+    else if (p == -1) //01背包
+        for (int j = V; j >= c; j--)
+            f[j] = max(f[j], f[j - c] + w);
+    else { //多重背包二进制优化
+        int num = min(p, V / c);
+        for (int k = 1; num > 0; k <<= 1) {
+            if (k > num) k = num;
+            num -= k;
+            for (int j = V; j >= c * k; j--)
+                f[j] = max(f[j], f[j - c * k] + w * k);
+        }
+    }
+}
 
 ```
 
