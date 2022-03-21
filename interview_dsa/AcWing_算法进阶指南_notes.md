@@ -19,19 +19,93 @@ int lowbit(int x)
 
 #### 0x02 递推与递归
 
-tallest conv 区间操作转为左右端点操作,额外的辅助数组存储操作结果
-
-缩小问题空间：自身调用自身，回溯时还原现场
-
+tallest conv 区间操作转为左右端点操作,额外的辅助数组存储操作结果。    
+缩小问题空间：自身调用自身，回溯时还原现场。    
 分治法等比数列求和
+
+- AcWing92 递归实现指数型枚举
+```C++
+void dfs(int u, int state)
+{
+    if (u == n)
+    {
+        for (int i = 0; i < n; i ++ )
+            if (state >> i & 1)
+                cout << i + 1 << ' ';
+        cout << endl;
+        return;
+    }
+
+    dfs(u + 1, state);
+    dfs(u + 1, state + (1 << u));
+}
+```
+- AcWing93 递归实现组合型枚举
+
+```C++
+void dfs(int u, int s, int state)
+{
+    if (s == m)
+    {
+        for (int i = 0; i < n; i ++ )
+            if (state >> i & 1)
+                cout << i + 1 << ' ';
+        cout << endl;
+        return;
+    }
+    if (u == n) return;
+
+    for (int i = u; i < n; i ++ )
+    {
+        dfs(i + 1, s + 1, state + (1 << i));
+    }
+}
+```
+- AcWing94 递归实现排列型枚举
+
+```C++
+void dfs(int u, int state)
+{
+    if (u == n)
+    {
+        for (auto x : path) cout << x << ' ';
+        cout << endl;
+        return;
+    }
+
+    for (int i = 0; i < n; i ++ )
+        if (!(state >> i & 1))
+        {
+            path.push_back(i + 1);
+            dfs(u + 1, state + (1 << i));
+            path.pop_back();
+        }
+}
+```
 
 #### 0x03 前缀和与差分
 
 前缀和：下标从1开始。
-
-二维数组的前缀和
+二维数组的前缀和：
 
 <div align="center"> <img src="../pics/qianzhuihe1.png" width="50%"/> </div><br>
+
+- AcWing99 激光炸弹
+- 
+```C++
+// 预处理前缀和
+for (int i = 1; i <= n; i ++ )
+    for (int j = 1; j <= m; j ++ )
+        s[i][j] += s[i - 1][j] + s[i][j - 1] - s[i - 1][j - 1];
+
+int res = 0;
+
+// 枚举所有边长是R的矩形，枚举(i, j)为右下角
+for (int i = R; i <= n; i ++ )
+    for (int j = R; j <= m; j ++ )
+        res = max(res, s[i][j] - s[i - R][j] - s[i][j - R] + s[i - R][j - R]);
+```
+
 前缀和和差分是一对互逆运算。
 
 差分：将原序列上的区间操作转为差分序列上的单点操作。
@@ -42,11 +116,37 @@ tallest conv 区间操作转为左右端点操作,额外的辅助数组存储操
 
 二分求解转判定
 
-整数域上的二分
+整数域上的二分：
 
 模板1：寻找左边界、模板2：寻找右边界
 
-实数域上的二分
+实数域上的二分：
+
+- AcWing102	最佳牛围栏:二分转判定。
+```C++
+bool check(double avg)
+{
+    for (int i = 1; i <= n; i ++ )
+        sum[i] = sum[i - 1] + cows[i] - avg;
+
+    double mins = 0;
+    for (int i = m, j = 0; i <= n; i ++, j ++ )
+    {
+        mins = min(mins, sum[j]);
+        if (sum[i] - mins >= 0) return true;
+    }
+
+    return false;
+}
+
+
+while (r - l > 1e-5)
+{
+    double mid = (l + r) / 2;
+    if (check(mid)) l = mid;
+    else r = mid;
+}
+```
 
 #### 0x05 排序
 
@@ -55,6 +155,9 @@ tallest conv 区间操作转为左右端点操作,额外的辅助数组存储操
 离散化：a数组排序并去重之后得到b数组，b的下标i与b[i]建立映射关系，在b中二分查找a即可
 
 中位数：对顶堆(在线)、链表+ hash(离线)
+
+- AcWing106 动态中位数
+- AcWing104 货仓选址：中位数
 
 第k大的数：快排划分
 
@@ -66,13 +169,16 @@ tallest conv 区间操作转为左右端点操作,额外的辅助数组存储操
 
 #### 0x07 贪心
 
-一般先排序
+一般先排序    
+决策包容性、邻项交换    
 
-决策包容性、邻项交换
-
-区间合并：st end 延迟处理法
-
+区间合并：st end 延迟处理法    
 区间问题：按左端点、右端点、先左后右端点排序
+
+- AcWing 110 防晒: 排序+二分
+- AcWing 111 畜栏预定:区间起点排序。
+- AcWing 112 雷达设备：
+- AcWing 114 国王游戏:交换求最优
 
 ### 0x10 基本数据结构
 
@@ -87,9 +193,6 @@ STL开o2优化，效率和数组差不多。
 
 scanf("%s%d%d"),s一般开p[2]
 
-回文子串的最大长度： 加#中心展开法
-
-超市：归并排序变形
 
 #### 0x11 栈
 
@@ -103,10 +206,46 @@ scanf("%s%d%d"),s一般开p[2]
 
 单调栈：求直方图的矩形面积
 
+- AcWing 131 直方图中最大的矩形：单调栈，模板题。
+
+```C++
+void get(int *last)
+{
+    stack<int> stk;
+    h[0] = -1;
+    stk.push(0);
+    for (int i = 1; i <= n; i ++ )
+    {
+        while (h[stk.top()] >= h[i]) stk.pop();
+        last[i] = stk.top() + 1;
+        stk.push(i);
+    }
+}
+
+int main()
+{
+    while (cin >> n, n)
+    {
+        for (int i = 1; i <= n; i ++ ) scanf("%d", &h[i]);
+
+        get(l);
+        reverse(h + 1, h + 1 + n);
+        get(r);
+
+        LL res = 0;
+        for (int i = 1, j = n; i <= n; i ++, j -- )
+            res = max(res, (LL)h[i] * (n - l[j] + 1 - r[i] + 1));
+        printf("%lld\n", res);
+    }
+    return 0;
+}
+```
+
 #### 0x12 队列
 
-单调队列：最大子序和，单调队列+前缀和，下标位置递增，对应的前缀和S的值也递增
-```cpp
+单调队列：最大子序和，单调队列+前缀和，下标位置递增，对应的前缀和S的值也递增。 
+
+```C++
 //hh--->tt之间的一段数组组成的队列，hh小，tt大
 //常见模型：找出滑动窗口中的最大值/最小值
 //hh++ 队头出，++tt队尾入，tt-- 队尾出
@@ -121,19 +260,28 @@ for (int i = 0; i < n; i ++ )
 
 决策集合中及时排除不是最优解的选择
 
+- AcWing 135 最大子序和：单调队列
+
+```C++
+int res = -INF;
+int hh = 0, tt = 0;
+for (int i = 1; i <= n; i ++ )
+{
+    if (q[hh] < i - m) hh ++ ;
+    res = max(res, s[i] - s[q[hh]]);
+    while (hh <= tt && s[q[tt]] >= s[i]) tt -- ;
+    q[ ++ tt] = i;
+}
+```
+
 #### 0x13 链表与邻接表
 
-链表：head和tail哨兵
+链表:
 
-数组模拟链表、下标模拟指针
-
-写工程用动态链表，算法题用静态链表要快
-
+head和tail哨兵   
+数组模拟链表、下标模拟指针    
+写工程用动态链表，算法题用静态链表要快  
 链表(数组模拟链表c++)：https://blog.csdn.net/Annabel_CM/article/details/107446710
-
-邻接表：
-
-<div align="center"> <img src="../pics/linjie.png" width="30%"/> </div><br>
 
 ```cpp
 // head存储链表头，e[]存储节点的值，ne[]存储节点的next指针，idx表示当前用到了哪个节点
@@ -175,12 +323,13 @@ void insert(int a, int x)
 }
 ```
 
-hash表记录指针
+**邻接表**
 
-邻接表：带有索引数组的多个数据链表构成的结构集合，可以看成n类，head是入口，新数据在表头插入
+<div align="center"> <img src="../pics/linjie.png" width="30%"/> </div><br>
 
-head + next + ver(终点) + edge
-
+hash表记录指针    
+邻接表：带有索引数组的多个数据链表构成的结构集合，可以看成n类，head是入口，新数据在表头插入   
+head + next + ver(终点) + edge   
 无向边的存储：成对变换，xor 1定位反向边
 
 #### 0x14 Hash
@@ -188,11 +337,14 @@ head + next + ver(终点) + edge
 hash：拉链法（邻接表结构，hash的值域作为表头数组的head）;开放定址法
 
 <div align="center"> <img src="../pics/lalianfa.png" width="80%"/> </div><br>
+
 最简单的hash:数组计数
 
 H(x) = (x mod P) + 1
 
-字符串hash：字符串看成P进制数，分配一个大于0的数值，代表每种字符，P = 131或13331，
+**字符串hash**
+
+字符串看成P进制数，分配一个大于0的数值，代表每种字符，P = 131或13331，
 
 <div align="center"> <img src="../pics/zifuchuanhash.png" width="80%"/> </div><br>
 H(S + c) = (H(S)*P + value[c]) mod M
@@ -201,9 +353,8 @@ H(T) = (H(S + T) - H[S]*P^length(T)) mod M
 
 字符串前缀hash
 
-回文子串：枚举中心点，奇偶前缀hash比较
-
-后缀数组：
+- AcWing 139 回文子串的最大长度：枚举中心点，奇偶前缀hash比较;加#中心展开法。
+- AcWing 140 后缀数组：
 
 #### 0x15 字符串
 
@@ -211,13 +362,14 @@ H(T) = (H(S + T) - H[S]*P^length(T)) mod M
 
 f[i]：B中以i结尾的子串与A的前缀能够匹配的最长长度
 
-最小表示：循环同构中字典序最小的，可以复制一份接在后面比较
+最小表示：循环同构中字典序最小的，可以复制一份接在后面比较。
 
 - AcWing 831. KMP字符串: https://www.cnblogs.com/Inabameguru/p/14932861.html
 
 ne退：直到退无可退，为了下一次分配，最少移动多少。
 
 **字串最长相同前后缀**
+
 ```cpp
 假如A[]:abababf, 
 则其全部前缀为：a,ab,aba,abab,ababa,ababab,ababab, 全部后缀为： f,bf,abf,babf,ababf,bababf,bababf
@@ -277,6 +429,8 @@ sequence问题：多个序列，求前n小的组合
 Huffman树：权值大的叶子节点的深度尽量小
 
 K叉的huffman树求解，先补加一些额外的权值为0的叶子节点，使叶子节点个数n满足（n-1) mod(k-1)= 0,每次从堆中取出最小的k个值
+
+- AcWing 145 超市：归并排序变形
 
 ### 0x20 搜索
 
