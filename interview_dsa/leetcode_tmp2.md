@@ -53,67 +53,114 @@ for (int i = 1; i <= n; i++) {
 多重背包问题模板
 
 ```C++
-for (int i = 1; i <= n; i++) {//枚举背包
-    for (int j = 1; j <= m; j++) {//枚举体积
-        for (int k = 0; k <= s[i]; k++) {
-            if (j >= k * v[i]) {
-                f[i][j] = max(f[i][j], f[i - 1][j - k * v[i]] + k * w[i]);
-            }
-        }
-    }
-}
+for (int i = 1; i <= n; i ++ )
+    for (int j = 0; j <= m; j ++ )
+        for (int k = 0; k <= s[i] && k * v[i] <= j; k ++ )
+            f[i][j] = max(f[i][j], f[i - 1][j - v[i] * k] + w[i] * k);
 ```
 
 混合背包问题模板
 
 ```C++
-for (int i = 1; i <= n; i++) {
-    cin >> c >> w >> p;
-    if (p == 0) //完全背包
-        for (int j = c; j <= V; j++)
-            f[j] = max(f[j], f[j - c] + w);
-    else if (p == -1) //01背包
-        for (int j = V; j >= c; j--)
-            f[j] = max(f[j], f[j - c] + w);
-    else { //多重背包二进制优化
-        int num = min(p, V / c);
-        for (int k = 1; num > 0; k <<= 1) {
-            if (k > num) k = num;
-            num -= k;
-            for (int j = V; j >= c * k; j--)
-                f[j] = max(f[j], f[j - c * k] + w * k);
+for (int i = 0; i < n; i ++ )
+{
+    int v, w, s;
+    cin >> v >> w >> s;
+    if (!s) //完全背包
+    {
+        for (int j = v; j <= m; j ++ )
+            f[j] = max(f[j], f[j - v] + w);
+    }
+    else
+    {
+        if (s == -1) s = 1; //01背包
+        for (int k = 1; k <= s; k *= 2)
+        {
+            for (int j = m; j >= k * v; j -- )
+                f[j] = max(f[j], f[j - k * v] + k * w);
+            s -= k;
+        }
+        if (s) //多重背包二进制优化
+        {
+            for (int j = m; j >= s * v; j -- )
+                f[j] = max(f[j], f[j - s * v] + s * w);
         }
     }
 }
+
 
 ```
 
 分组背包问题模板
 
 ```C++
-for (int i = 1; i < = n; i++) {
-for (int j = 0; j <= m; j++) {
-    f[i][j] = f[i - 1][j];  //不选
-    for (int k = 0; k < s[i]; k++) {
-	if (j >= v[i][k]) {
-	    f[i][j] = max(f[i][j], f[i - 1][j - v[i][k]] + w[i][k]);
-	}
-    }
-}
-}
+for (int i = 1; i <= n; i ++ )
+    for (int j = m; j >= 0; j -- )
+        for (int k = 0; k < s[i]; k ++ )
+            if (v[i][k] <= j)
+                f[j] = max(f[j], f[j - v[i][k]] + w[i][k]);
+
 
 ```
 
 二维费用的背包问题模板
 
 ```C++
-    for (int i = 1; i <= n; i++) {
-        cin >> v[i] >> m[i] >> w[i];//体积，重量，价值
-    }
-    for (int i = 1; i <= n; i++)
-        for (int j = V; j >= v[i]; j--)
-            for (int k = M; k >= m[i]; k--)
-                f[j][k] = max(f[j - v[i]][k - m[i]] + w[i], f[j][k]);//动态转移方程，01 背包的思路
+for (int i = 0; i < n; i++) {
+    int v, m, w;
+    cin >> v >> m >> w;
+    for (int j = V; j >= v; j--)
+        for (int k = M; k >= m; k--)
+            f[j][k] = max(f[j][k], f[j - v][k - m] + w);
+}
 
 ```
 
+AcWing 10. 有依赖的背包问题
+
+```c++
+void add(int a, int b)
+{
+    e[idx] = b, ne[idx] = h[a], h[a] = idx ++ ;
+}
+
+void dfs(int u)
+{
+    for (int i = h[u]; ~i; i = ne[i])   // 循环物品组
+    {
+        int son = e[i];
+        dfs(e[i]);
+
+        // 分组背包
+        for (int j = m - v[u]; j >= 0; j -- )  // 循环体积
+            for (int k = 0; k <= j; k ++ )  // 循环决策
+                f[u][j] = max(f[u][j], f[u][j - k] + f[son][k]);
+    }
+
+    // 将物品u加进去
+    for (int i = m; i >= v[u]; i -- ) f[u][i] = f[u][i - v[u]] + w[u];
+    for (int i = 0; i < v[u]; i ++ ) f[u][i] = 0;
+}
+
+int main()
+{
+    cin >> n >> m;
+
+    memset(h, -1, sizeof h);
+    int root;
+    for (int i = 1; i <= n; i ++ )
+    {
+        int p;
+        cin >> v[i] >> w[i] >> p;
+        if (p == -1) root = i;
+        else add(p, i);
+    }
+
+    dfs(root);
+
+    cout << f[root][m] << endl;
+
+    return 0;
+}
+
+```
