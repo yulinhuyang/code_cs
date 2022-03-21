@@ -50,7 +50,15 @@ for (int i = 1; i <= n; i++) {
 多重背包问题模板
 
 ```C++
-
+for (int i = 1; i <= n; i++) {//枚举背包
+    for (int j = 1; j <= m; j++) {//枚举体积
+        for (int k = 0; k <= s[i]; k++) {
+            if (j >= k * v[i]) {
+                f[i][j] = max(f[i][j], f[i - 1][j - k * v[i]] + k * w[i]);
+            }
+        }
+    }
+}
 ```
 
 混合背包问题模板
