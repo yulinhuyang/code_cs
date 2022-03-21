@@ -37,7 +37,8 @@ tallest conv 区间操作转为左右端点操作,额外的辅助数组存储操
 差分：将原序列上的区间操作转为差分序列上的单点操作。
 
 <div align="center"> <img src="../pics/chafen1.png" width="50%"/> </div><br>
-#### 0x04 二分
+
+####  0x04 二分
 
 二分求解转判定
 
