@@ -472,3 +472,59 @@ void quick_sort(int q[], int &l, int r) {
 
 
 
+
+### 10 char* 与string之间转换 
+
+char[]，char * ，string之间转换； https://blog.csdn.net/yzhang6_10/article/details/51164300
+
+涉及到char[]字符数组与其它类型转换，一般需要进行拷贝，不能直接赋值实现。char []和char * 都可以通过构造新的string完成其对string的转换。
+涉及到到char * 转换，需要注意类型一致，同时注意const的使用。
+```cpp
+//char 数组初始化
+const int N = 11;
+char s[N] = "abcdabcdef";
+char s[] = "abcdabcdef";
+
+char str[] = "lala";
+char *str1 = str; //char[] 转char *
+strncpy(st1, st, strlen(st) + 1);    //char *转char[],字符拷贝，注意加1操作
+
+//char *转char[]
+const char *st = "hehe";
+char st1[] = "lalalala";
+strncpy(st1, st, strlen(st) + 1);    // 注意加1操作 
+
+//char[]与string之间转换: 1）直接赋值；2）构造转换实现
+char st[] = "hello";   
+string st1 = st;  //直接赋值实现 
+string st2(st, st + strlen(st)); //构造实现 
+
+//string转char[]: 拷贝实现，不能直接赋值
+string s1 = "abcdabcdef";
+char ts1[] = "abcffffffffff";
+strncpy(ts1, ts.c_str(), ts.length() + 1);       // 注意，一定要加1，否则没有赋值'\0' 
+```
+
+**scanf&printf**
+
+```cpp
+int res;
+scanf("%d",&res);
+printf(" output =  %d",res);
+
+printf 不支持string类型，string类型需要使用cout
+```
+
+### 11 boost 使用
+
+Boost C++ 库 中文指南 ： http://zh.highscore.de/cpp/boost/frontpage.html
+
+boost/geometry：计算几何库
+
+boost/property_tree: 解析json
+
+boost/filesystem: 文件系统操作
+
+
+
+
