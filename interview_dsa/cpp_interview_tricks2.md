@@ -87,7 +87,7 @@ int bsearch_2(int l, int r)
 
  <div align="center"> <img src="../pics/efen1.png" width="50%"/> </div><br>
 
-相关题目：
+模板题：
 
 Leetcode  153. 寻找旋转排序数组中的最小值：nums.back()的秒用。   
 Leetcode 33. 搜索旋转排序数组:先找最小值，去掉干扰条件   
@@ -270,14 +270,10 @@ LeetCode 76. 最小覆盖字串:  单个hash + i(hash[key]--)  j(hash[key]++) �
 Leetcode 42. 接雨水:两遍max, 左边一遍Left_max，右边一遍right_max，min(left_max[i],right_max[i]) - height[i]    
 Leetcode 84. 柱状图中最大的矩形:两遍栈，左边一遍单调上升栈，右边一遍单独上升栈，height[i] * (right[i] - left[i] - 1)     
 
-### 0x05.4 回文问题
-
-
+### 0x05.4 回文问题 
 ### 0x05.5 Cyclic Sort，循环排序
 
 在排好序/翻转过的数组中，寻找丢失的/重复的/最小的元素
-
-
 
 ## 0x06 贪心
 
@@ -286,6 +282,28 @@ Leetcode 84. 柱状图中最大的矩形:两遍栈，左边一遍单调上升栈
 打点标记法、区间合并法
 	
 会议室安排问题
+	
+```C++
+// 将所有存在交集的区间合并
+void merge(vector<PII> &segs)
+{
+    vector<PII> res;
+    sort(segs.begin(), segs.end());
+
+    int st = -2e9, ed = -2e9;
+    for (auto seg : segs)
+        if (ed < seg.first)
+        {
+            if (st != -2e9) res.push_back({st, ed});
+            st = seg.first, ed = seg.second;
+        }
+        else ed = max(ed, seg.second);
+
+    if (st != -2e9) res.push_back({st, ed});
+
+    segs = res;
+}
+```
 	
 # 0x10 基本数据结构
 
@@ -442,7 +460,7 @@ class Solution {
  }
  ```
 
-## 0x14  hash表(字符串hash)
+## 0x14  hash表
 	
 hash: map -> vector简化-> 原地修改简化为自己
 
@@ -472,7 +490,7 @@ public:
 Leetcode 187. 重复的DNA序列: unordered_map(hash) 使用。  
 Leetcode 652. 寻找重复的子树: 中序遍历与后序或者中序遍历与前序遍历都可以唯一确定一棵树。两遍hash,第一遍树变成字符串，第二遍变成数。  
 
-## 0x15 字符串(KMP与最小表示法）
+## 0x15 字符串(字符串hash 、KMP与最小表示法）
 
 模式：
 ```
@@ -519,14 +537,13 @@ Leetcode 692. 前K个高频单词:小顶堆(大顶key加负号)流过程,保证s
 pair 设置 --> make_pair或者 直接构造 PIS t(-word.second, word.first);    
 优先队列默认大的在队首，字符串则为字典序由大到小。int，double，char，string类型都可以这样定义。  
 	
-### 0x17.2 双堆（Two Heaps） 
+### 0x17.2 对顶堆（Two Heaps） 
 
 LeetCode 295. Find Median from Data Stream：对顶堆，小上大下 --> 小右大左。动态流，图参考：https://blog.csdn.net/jiahonghao2002/article/details/114108760   
 1 2 3 4 (大顶) | 5 6 7 8(小顶) : right.size() > left.size(), right 比left至多多一个,添加时优先添加right, 先添加后调整。
 
 Merge K Sorted Lists, Kth Smallest Number in M Sorted Lists  
 K个排好序的数组，用堆来高效顺序遍历，合并K个list, 和找第K小元素、
-
 
 # 0x20  搜索
 
@@ -608,16 +625,6 @@ public:
 
 层序遍历(queue)： 把根节点加到队列中，不断遍历直到队列为空。每一次循环中，我们都会把队头结点拿出来（remove）
 
-
-### 0x21.4 图的遍历-拓扑排序 
-
-依赖元素之间的线性顺序
-
-BFS:degree入度表、adjacency邻接表、queue(deque)遍历
-	
-Tasks Scheduling
-
-
 ## 0x22 DFS(递归、回溯)
 
 递归(自顶向下)：暴力递归---> memo 解法   
@@ -651,7 +658,7 @@ DFS防止死循环：
 2 visited数组法, unDiscovered  0，Discovered 1， visited  2 ，表示不同状态，注意是否能兼顾memo功能，有时会有更新循环问题。   
 memo缓存： floodfill变形慎重缓存，visited了部分情况下也需要更新
 
-### 0x22.2 子集问题（排列、组合）
+### 0x22.2 组合\子集\排列
 	
 swap交换法、contain排除、visit[bool]法
  
@@ -701,9 +708,9 @@ leetcode 78 子集  位运算+循环,简化子集问题, 递归结构相当于�
 leetcode 90 子集II  回溯去重  
 LeetCode 52. N-Queens II    dfs代替行, col + d + ud 数组标记解法，精确覆盖问题。  
 LeetCode 37. Sudoku Solver  dfs 逐行, col + row + cell 数组标记解法，row[9][9]: 9行,0-9的数有了哪几个。       
-Leetcode 473. 火柴拼正方形   剪枝优化技巧
+Leetcode 473. 火柴拼正方形   剪枝优化技巧，模板题
 
-###  0x22.3 flood fill问题(DFS、BFS)
+###  0x22.3 flood fill问题(DFS)
 
 四方向回溯(pair/dxdy)  +  visited去重/涂色
 
@@ -732,35 +739,6 @@ void fill(int[][] image, int x, int y,
     // unchoose：将标记替换为 newColor
     image[x][y] = newColor;
 }
-```
-### 0x22.4 省份问题（DFS版） 岛屿问题
-
-```cpp
-class Solution {
-    void dfs(vector<vector<int>> &isConnected,vector<int> &visited, int index){
-        for(int j = 0;j < isConnected.size();j++){
-            if(isConnected[index][j] && !visited[j]){
-                visited[j] = 1;
-                dfs(isConnected,visited,j);
-            }
-        }
-    }
-
-public:
-    int findCircleNum(vector<vector<int>> &isConnected) {
-        int provinces = isConnected.size();
-        int circles = 0;
-        vector<int> visited(provinces, 0);
-        for (int i = 0; i < provinces; i++) {
-            if (!visited[i]) {
-                visited[i] = 1;
-                dfs(isConnected,visited,i);
-                circles++;
-            }
-        }
-        return circles;
-    }
-};
 ```
 
 ## 0x23 BFS
@@ -804,9 +782,9 @@ public:
 };
 
 ```
-### 0x23.2 迷宫问题
+### 0x23.2 BFS应用
 
-路径障碍、迷宫问题
+迷宫问题、双向bfs(单词接龙)、0-1矩阵问题(多源头bfs)、bfs floodfil
 
 一 W 双 F，判空，for size, for选择 + visited数组
 
@@ -855,45 +833,42 @@ public:
     }
 };
 ```
-### 0x23.3 省份问题（简化BFS）
 
-一个while 一个for
+模板题：
+LeetCode 547 省份数量(Number Of Provinces)	
+LeetCode 127 单词接龙: 双向BFS搜索（26子母扩展）
+LeetCode 542 01 Matrix：矩形多源头的bfs
 
-```cpp
-简化的bfs
-class Solution {
-public:
-    int findCircleNum(vector<vector<int>> &isConnected) {
-        int provinces = isConnected.size();
-        int circles = 0;
-        vector<int> visited(provinces, 0);
-        for (int i = 0; i < provinces; i++) {
-            if (!visited[i]) {
-                queue<int> queue;
-                queue.push(i);
-                while (!queue.empty()) {
-                    auto top = queue.front();
-                    queue.pop();
-                    visited[top] = 1;
-                    for (int j = 0; j < provinces; j++) {
-                        if (visited[j] == 0 && isConnected[top][j]) {
-                            queue.emplace(j);
-                        }
-                    }
-                }
-                circles++;
-            }
-        }
-        return circles;
+## 0x30 数学知识
+	
+n项求和公式、摩尔投票法、卡特兰数
+	
+## 0x40  数据结构进阶 
+	
+## 0x41 并查集
+	
+```C++
+    int p[N]; //存储每个点的祖宗节点
+
+    // 返回x的祖宗节点
+    int find(int x)
+    {
+        if (p[x] != x) p[x] = find(p[x]);
+        return p[x];
     }
-};
+
+    // 初始化，假定节点编号是1~n
+    for (int i = 1; i <= n; i ++ ) p[i] = i;
+
+    // 合并a和b所在的两个集合：
+    p[find(a)] = find(b);
 ```
-
-## 0x41  数据结构进阶 - 并查集
-
+			  
 LeetCode 547. Friend Circles 省份问题 :并查集   
 LeetCode 684. Redundant Connection: 并差集变形，1->n 下标从1开始。   
 
+## 0x42 树状数组
+	
 ## 0x50 动态规划
  
 重叠子问题，最优子结构，无后效性 + 状态、决策、转移方程
@@ -927,6 +902,7 @@ LeetCode 63. 不同路径 II：循环内处理好0行0列。
 LeetCode 10. 正则表达式匹配: sp加' ',*提前判断。    
 
 **数字三角形模型**
+	
 ```cpp
  //滚动数组优化
 vector<int> f[2];
@@ -998,11 +974,16 @@ LeetCode 518. 零钱兑换 II: 完全背包的二维和一维解法。
 
 Leetcode 312 戳气球问题
 LeetCode 664. Strange Printer:s[l-1]=s[k-1],f[l][r] = min(f[l][r], f[l][k - 1] + f[k + 1][r]);  
-Leetcode 1000. 合并石头的最低成本: 石子合并变形。    
+Leetcode 1000. 合并石头的最低成本: 石子合并变形。
+
+### 0x50.4 状态压缩dp
+	
+Leetcode 464 我能赢吗: 状态压缩dfs + 记忆化搜索。    
+Leetcode 526 优美的排列：状态压缩dp,f[i]代表选法是i的时候的方案数，i的每一位代表是否选择当前的数    	
 
 ## 0x60 图论
 	
 ### 图遍历--拓扑排序
 	
-207 课程表：拓扑排序(模板)，比较点数和入度为0的点数量。	   
-399 除法求值：Floyd求最短路。
+Leetcode 207 课程表：拓扑排序(模板)，比较点数和入度为0的点数量，模板题  
+Leetcode 399 除法求值：Floyd求最短路。
