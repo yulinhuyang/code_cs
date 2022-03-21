@@ -1,8 +1,8 @@
 # hot题单 + labuladong/随想录扩展 + acwing
 
-参考：https://www.acwing.com/file_system/file/content/whole/index/content/1448335/
+【题型整理】LeetCode题型总结(持续更新)：https://www.acwing.com/file_system/file/content/whole/index/content/1448335/
 
-https://leetcode-cncom/problem-list/2cktkvj/
+hot100: https://leetcode-cncom/problem-list/2cktkvj/
 
 https://www.acwing.com/activity/content/activity_person/content/29799/1/
 
