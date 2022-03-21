@@ -4,7 +4,7 @@
 
 hot100: https://leetcode-cn.com/problem-list/2cktkvj/
 
-https://www.acwing.com/activity/content/activity_person/content/29799/1/
+LeetCode究极班: https://www.acwing.com/activity/content/activity_person/content/29799/1/
 
 # 0x00 基本算法
 
