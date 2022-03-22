@@ -24,13 +24,6 @@ LRU cache: https://www.acwing.com/activity/content/code/content/405014/
 1135  最低成本联通所有城市
 
 	
-前缀和 + 哈希表：
-
-304    二维区域和检索--矩阵不可变
-
-560    和为K的子数组
-
-523    连续的子数组和
 
 ##### 739. 每日温度
 ```C++
