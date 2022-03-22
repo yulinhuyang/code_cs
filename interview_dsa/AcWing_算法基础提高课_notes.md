@@ -43,6 +43,49 @@ return l;
 
 - 离散化：1.保序：排序判重二分    2.不需保序：map/hash表
 
+排序模板题：
+- AcWing 785 快速排序
+- AcWing 786 第k个数
+- AcWing 789 数的范围
+- AcWing 790 数的三次方根
+- AcWing 787 归并排序
+- AcWing 788 逆序对的数量
+
+高精度模板题：
+- AcWing 791 高精度加法
+- AcWing 792 高精度减法
+- AcWing 793 高精度乘法
+- AcWing 794 高精度除法
+
+前缀和与差分模板题：
+- AcWing 795 前缀和
+- AcWing 796 子矩阵的和：二维前缀和
+- AcWing 797 差分
+- AcWing 798 差分矩阵
+
+双指针算法模板题：
+
+- AcWing 799 最长连续不重复子序列
+- AcWing 800 数组元素的目标和
+
+- AcWing 801 二进制中1的个数:位运算
+
+离散化模板题：
+- AcWing 802 区间和
+
+贪心：
+- AcWing 803 区间合并:模板题。
+- AcWing 908 最大不相交区间数量
+- AcWing 906 区间分组
+- AcWing 907 区间覆盖
+- AcWing 148 合并果子
+- AcWing 913 排队打水
+- AcWing 104 货仓选址：中位数
+- AcWing 125 耍杂技的牛
+- AcWing 2816 判断子序列
+- AcWing 3302 表达式求值
+- AcWing 905 区间选点
+
 > N×N的棋盘，N为奇数时，与八数码问题相同。逆序奇偶同性可互达
 > N为偶数时，空格每上下移动一次，奇偶性改变。称空格位置所在的行到目标空格所在的行步数为空格的距离（不计左右距离），若两个状态的可相互到达，则有，两个状态的逆序
 
@@ -68,7 +111,41 @@ return l;
   3.必须指定数组第二个维的大小。  
   4.函数原型的定义必须与函数头相同。  
 
-## 1.2 搜索
+## 1.2 数据结构
+
+链表模板题：
+- AcWing 826 单链表
+- AcWing 827 双链表
+
+栈与队列模板题：
+- AcWing 828 模拟栈
+- AcWing 829 模拟队列
+- AcWing 830 单调栈
+- AcWing 154 滑动窗口
+
+字符串模板题：
+- AcWing 831 KMP字符串
+
+Trie树模板题：
+- AcWing 835 Trie字符串统计
+- AcWing 143 最大异或对
+- AcWing 836 合并集合
+- AcWing 837 连通块中点的数量
+
+堆模板题：
+- AcWing 838 堆排序
+- AcWing 839 模拟堆
+
+hash模板题:
+- AcWing 840 模拟散列表
+- AcWing 841 字符串哈希
+
+并查集模板题：
+- AcWing 240 食物链
+
+## 1.3 搜索与图论
+
+### 1.3.1 搜索
 
 - dfs使用stack，空间为O(h)  
   bfs使用queue空间为O(2^h)  
@@ -78,9 +155,18 @@ return l;
 当状态空间很大时，bfs的优化（双向bfs和A* )才有效果  
 除朴素bfs每个点只入队一次之外，deque+bfs，A*，dijkstra都可能入队多次  
 
-- 一个图是二分图当且仅当图中不含奇数边的环  
+- 一个图是二分图当且仅当图中不含奇数边的环 
 
-## 1.3 图论
+DFS:
+- AcWing 842 排列数字
+- AcWing 843 n-皇后问题
+- AcWing 846 树的重心
+- AcWing 845 八数码 
+
+BFS:
+- AcWing 844 走迷宫
+
+### 1.3.2 图论
 
 - 树的重心  
   定义：一棵具有n个节点的无向树，若以某个节点为整棵树的根，他的每个儿子节点的大小（即子树的节点数）都<=n/2 ，则这个节点即为该树的重心  
@@ -108,6 +194,27 @@ return l;
 |            |              | Kruskal                                |                | O(M log M)          | 适用于稀疏图，可以合并少于N - 1条边，求最小生成“森林”，也可以在已有连通块的基础上继续求最小生成树。循环到第i条边时可以求出由前i条边（边权<=d[i].w的边）所构成的所有连通块, 每次加边都是将两个连通块进行连通，且此边为新连通块中的最大边 |
 
 - 图上限制次数的操作可以尝试考虑分层图
+
+- AcWing 847 图中点的层次:BFS遍历图
+- AcWing 848 有向图的拓扑序列：拓扑排序模板题
+
+单源最短路：
+- AcWing 849 Dijkstra求最短
+- AcWing 850 Dijkstra求最短
+- AcWing 851 spfa求最短路
+- AcWing 852 spfa判断负环
+- AcWing 853 有边数限制的最短路
+
+多源最短路：
+- AcWing 854 Floyd求最短路
+
+最小生成树：
+- AcWing 858 Prim算法求最小生成树
+- AcWing 859 Kruskal算法求最小生成树
+
+二分图：
+- AcWing 860 染色法判定二分图
+- AcWing 861 二分图的最大匹配
 
 ## 1.4 数学
 
@@ -149,7 +256,40 @@ return l;
   多个独立局面的SG值，等于这些局面SG的异或和  
 - 求多个元素两两乘积之和 = 所有元素和的平方 - 平方和，如2ab+2bc+2ac=(a+b+c)2-(a2+b2+c2)  
 
-## 1.5 其它
+## 1.5 DP 动态规划
+
+数字三角形模型：
+- AcWing 898 数字三角形:模板题
+- AcWing 899 编辑距离
+- AcWing 901 滑雪
+- AcWing 902 最短编辑距离
+
+最长上升子序列模型：
+- AcWing 895 最长上升子序列:模板题
+- AcWing 897 最长公共子序列:模板题
+- AcWing 896 最长上升子序列
+
+背包DP：
+- AcWing 2 01背包问题:模板题
+- AcWing 3 完全背包问题:模板题
+- AcWing 4 多重背包问题:模板题
+- AcWing 9 分组背包问题:模板题
+- AcWing 5 多重背包问题:模板题
+- AcWing 900 整数划分
+
+区间dp:
+- AcWing 282 石子合并
+
+树形dp:
+- AcWing 285 没有上司的舞会
+- AcWing 91 最短Hamilton路径
+
+状态压缩dp:
+- AcWing 291 蒙德里安的梦想
+- AcWing 338 计数问题
+
+
+## 1.6 其它
 
 - 系统为某一程序分配空间时，所需时间与空间大小无关，与申请次数有关  
   stl常见用法 见 “算法基础课 第二章 数据结构（三）”
@@ -237,8 +377,8 @@ inline void solve_print(int i)
 
 ### 最长上升子序列模型
 
-双向LIS：AcWing1017 怪盗基德滑翔翼  
-折线LIS：AcWing1014 登山问题  
+- AcWing1017 怪盗基德滑翔翼:双向LIS
+- AcWing1014 登山问题:折线LIS  
 - AcWing 1010 拦截导弹：最长LIS + LIS数目  
 
 最长上升子序列 II --子序列数目：贪心  
@@ -374,25 +514,22 @@ for (int i = 0; i < n; i++) {
 }
 ```
 
-- AcWing 10. 有依赖的背包问题:https://www.acwing.com/activity/content/code/content/118840/          
-- AcWing 11. 背包问题求方案数: https://www.acwing.com/activity/content/code/content/120228/       
-- AcWing 12. 背包问题求具体方案: https://www.acwing.com/activity/content/code/content/119629/      
 
 拓展：https://blog.csdn.net/qq_35577488/article/details/108932689    
       https://blog.csdn.net/qq_35577488/article/details/108937340     
 
-- Acwing6 多重背包问题3：
+- Acwing 6 多重背包问题3：
 
 dp[i][j] = max(dp[i-1][j], dp[i-1][j-v] + w, dp[i-1][j-2*v] + 2*w,..., dp[i-1][j-k*v] + k*w)
 
 多重背包问题3单调队列优化： https://www.acwing.com/solution/content/6500/
 
-二维费用问题：AcWing8 二维背包
-
-- AcWing 12 背包问题求具体方案： 相当于图论最短路径,反向回推(求最大n->1,再求方案1->n)  
-- AcWing 11 背包问题求方案数：记录法   
-- AcWing 10 有依赖的背包：树形dp + 分组背包  
+- AcWing 8 二维背包:二维费用问题
 - AcWing 7 混合背包：完全+0-1背包  
+- AcWing 10. 有依赖的背包问题:树形dp + 分组背包 , https://www.acwing.com/activity/content/code/content/118840/          
+- AcWing 11. 背包问题求方案数: 记录法 , https://www.acwing.com/activity/content/code/content/120228/       
+- AcWing 12. 背包问题求具体方案:相当于图论最短路径,反向回推(求最大n->1,再求方案1->n) ,  https://www.acwing.com/activity/content/code/content/119629/      
+
 - AcWing 532 货币系统：凑零钱问题，F[i]表示ai~ai-1可以凑出来ai
 
 > 背包问题：for物品 for体积 for决策   
@@ -1572,6 +1709,9 @@ if(clock() - start >= CLOCKS_PER_SEC * 0.9)
 - 没时间打高精度，可以尝试用取模判断尾数的方法期望一定的正确性
 
 ------
+
+
+
 
 
 
