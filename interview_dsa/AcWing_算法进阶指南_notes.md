@@ -180,6 +180,21 @@ while (r - l > 1e-5)
 - AcWing 112 雷达设备：
 - AcWing 114 国王游戏:交换求最优
 
+#### 练习
+
+- AcWing 116 飞行员兄弟:枚举/位运算
+- AcWing 117 占卜DIY：模拟
+- AcWing 118 分形：递归/分形
+- AcWing 119 袭击:分治/平面最近点时
+- AcWing 120 防线：二分
+- AcWing 121 赶牛入圈：二分/离散化/前缀和
+- AcWing 122 糖果传递：排序/中位数/环形均分纸牌
+- AcWing 123 士兵：排序/中位数/货仓选址问题扩展
+- AcWing 124 数的进制转换：高精度运算/进制转换
+- AcWing 125 耍杂技的牛：贪心/邻项交换
+- AcWing 126 最大的和：贪心
+- AcWing 127 任务：贪心
+
 ### 0x10 基本数据结构
 
 由数据范围反推算法复杂度以及算法内容: https://www.acwing.com/blog/content/32/
@@ -447,7 +462,26 @@ K叉的huffman树求解，先补加一些额外的权值为0的叶子节点，�
 - AcWing 145 超市：小顶堆。  
 - AcWing 146 序列：多个序列，求前n小的组合，模板题。  
 - AcWing 148 合并果子：Huffman树
-- AcWing149	荷马史诗：Huffman树 
+- AcWing149 荷马史诗：Huffman树 
+
+#### 练习
+
+- AcWing 150 括号画家：栈
+- AcWing 151 表达式计算：栈/中缀表达式计算
+- AcWing 152 城市游戏：单调栈
+- AcWing 153 双栈排序：栈
+- AcWing 154 滑动窗口：单调队列
+- AcWing 155 内存分配：链表/二叉堆
+- AcWing 156 矩阵：字符串hash
+- AcWing 157 树形地铁系统:hash/树的最小表示
+- AcWing 158 项链：字符串/最小表示法
+- AcWing 159 奶牛矩阵：字符串/kmp模式匹配
+- AcWing 160 匹配统计：字符串hash或kmp模式匹配
+- AcWing 161 电话列表：Trie
+- AcWing 162 黑盒子:二叉堆/对顶堆
+- AcWing 163 生日礼物：等价于数据备份，二叉堆+链表+贪心
+
+
 
 ### 0x20 搜索
 
@@ -630,6 +664,22 @@ IDA*：迭代加深的A*算法
 
 若当前深度+未来估价步数 > 深度限制，则立即从当前分支回溯
 
+#### 练习
+
+- AcWing 183 靶形数独：DFS/剪枝/位运算优化
+- AcWing 184 虫食算：DFS/剪枝
+- AcWing 185 玛雅游戏：DFS
+- AcWing 186 巴士：DFS/迭代加深
+- AcWing 187 导弹防御系统：DFS/迭代加深
+- AcWing 188 武士风度的牛：BFS
+- AcWing 189 乳草的入侵：BFS
+- AcWing 190 字串变换：BFS/双向广搜
+- AcWing 191 天气预报：BFS
+- AcWing 192 立体推箱子：BFS/分情况讨论。
+- AcWing 193 算乘方的牛：A*
+- AcWing 194 涂满它：IDA*
+- AcWing 195 骑士精神：IDA*
+
 ### 0x30 数学知识
 
 #### 0x31 质数
@@ -796,6 +846,14 @@ BST查找、插入、删除、前驱后继(右子树一直向左)
 
 Treap: tree + heap
 
+#### 练习
+
+- AcWing 257 关押罪犯：并查集/扩展域或边带权
+- AcWing 258 石头剪子布：并查集/扩展域或边带权
+- AcWing 259 真正的骗子：并查集+背包
+- AcWing 260 买票：树状数组
+
+
 ### 0x50 动态规划
 
 闫氏DP法，集合观点： https://www.cnblogs.com/IzayoiMiku/p/13635809.html
@@ -958,6 +1016,31 @@ val(i,j)分成两部分，第一部分仅与i有关，第二部分仅与j有关�
 #### 0x5D 数位统计DP
 
 先预处理，再拼凑，试填
+
+#### 练习
+
+- AcWing 312 乌龟棋：线性DP
+- AcWing 313 花店橱窗：线性DP/输出方案
+- AcWing 314 低买：线性DP/统计LIS方案数
+- AcWing 315 旅行：线性DP/统计LCS方案数并输出
+- AcWing 316 减操作：线性DP
+- AcWing 318 划分大理石：背包/多重背包
+- AcWing 319 折叠序列：区间DP
+- AcWing 320 能量项链：区间DP/环拆链并复制一份
+- AcWing 321 棋盘分割：区间DP/二维平面上的区间DP
+- AcWing 322 消木块：区间DP
+- AcWing 323 战略游戏:树形DP
+- AcWing 324 贿赂FIPA:树形DP/背包类树形DP
+- AcWing 325 计算机:树形DP/二次扫描与换根法
+- AcWing 326 XOR和路径：有后效性/高斯消元/数学期望
+- AcWing 1194 岛和桥：状态压缩DP
+- AcWing 327 玉米田：状态压缩DP/填充网格图形
+- AcWing 328 芯片：状态压缩DP/填充网格图形
+- AcWing 330 估算：堆优化DP/中位数
+- AcWing 331 干草堆：单调队列优化DP/贪心
+- AcWing 332 股票交易：单调队列优化DP
+- AcWing 333 最大子矩阵：单调队列优化DP
+- AcWing 334 K匿名序列：单调队列优化DP
 
 ### 0x60 图论
 
@@ -1248,3 +1331,4 @@ Dinic算法：残量网，不断重复 1 残量网络上BFS求节点的层次，
 点边转化，拆点拆边
 
 费用流：容量限制c(x,y)，单位费用w(x,y),当(x,y)流量是f(x,y)时，要花费f(x,y)*w(x,y),最小最大费用流
+
