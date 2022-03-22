@@ -31,4 +31,21 @@ LRU cache: https://www.acwing.com/activity/content/code/content/405014/
 560    和为K的子数组
 
 523    连续的子数组和
- 
+
+##### 739. 每日温度
+```C++
+class Solution {
+public:
+    vector<int> dailyTemperatures(vector<int>& temperatures) {
+        stack<int> stk;
+        int n = temperatures.size();
+        vector<int> res(n,0);
+        for(int i = n - 1;i >= 0;i--){
+            while(stk.size() && temperatures[stk.top()] <= temperatures[i]) stk.pop();
+            if(stk.size()) res[i] = stk.top() - i;
+            stk.push(i);
+        }
+        return res;
+    }
+};
+```
