@@ -1,3 +1,149 @@
+# 目录
+
+
+#### 第一讲 基础算法
+
+| 序号 | 题目 |
+|:-----|:-----|
+| AcWing785 | 快速排序 |
+| AcWing786 | 第k个数 |
+| AcWing789 | 数的范围 |
+| AcWing790 | 数的三次方根 |
+| AcWing787 | 归并排序 |
+| AcWing788 | 逆序对的数量 |
+| AcWing791 | 高精度加法 |
+| AcWing792 | 高精度减法 |
+| AcWing793 | 高精度乘法 |
+| AcWing794 | 高精度除法 |
+| AcWing795 | 前缀和 |
+| AcWing796 | 子矩阵的和 |
+| AcWing797 | 差分 |
+| AcWing798 | 差分矩阵 |
+| AcWing799 | 最长连续不重复子序列 |
+| AcWing800 | 数组元素的目标和 |
+| AcWing801 | 二进制中1的个数 |
+| AcWing802 | 区间和 |
+| AcWing803 | 区间合并 |
+
+
+#### 第二讲 数据结构
+
+| 序号 | 题目 |
+|:-----|:-----|
+| AcWing826 | 单链表 |
+| AcWing827 | 双链表 |
+| AcWing828 | 模拟栈 |
+| AcWing829 | 模拟队列 |
+| AcWing830 | 单调栈 |
+| AcWing154 | 滑动窗口 |
+| AcWing831 | KMP字符串 |
+| AcWing835 | Trie字符串统计 |
+| AcWing143 | 最大异或对 |
+| AcWing836 | 合并集合 |
+| AcWing837 | 连通块中点的数量 |
+| AcWing838 | 堆排序 |
+| AcWing839 | 模拟堆 |
+| AcWing840 | 模拟散列表 |
+| AcWing841 | 字符串哈希 |
+| AcWing240 | 食物链 |
+
+
+#### 第三讲 搜索与图论
+
+| 序号 | 题目 |
+|:-----|:-----|
+| AcWing842 | 排列数字 |
+| AcWing843 | n-皇后问题 |
+| AcWing844 | 走迷宫 |
+| AcWing847 | 图中点的层次 |
+| AcWing846 | 树的重心 |
+| AcWing848 | 有向图的拓扑序列 |
+| AcWing845 | 八数码 |
+| AcWing849 | Dijkstra求最短 |
+| AcWing850 | Dijkstra求最短 |
+| AcWing851 | spfa求最短路 |
+| AcWing852 | spfa判断负环 |
+| AcWing853 | 有边数限制的最短路 |
+| AcWing854 | Floyd求最短路 |
+| AcWing858 | Prim算法求最小生成树 |
+| AcWing859 | Kruskal算法求最小生成树 |
+| AcWing860 | 染色法判定二分图 |
+| AcWing861 | 二分图的最大匹配 |
+
+#### 第四讲 数学知识
+
+| 序号 | 题目 |
+|:-----|:-----|
+| AcWing866 | 试除法判定质数 |
+| AcWing867 | 分解质因数 |
+| AcWing868 | 筛质数 |
+| AcWing869 | 试除法求约数 |
+| AcWing870 | 约数个数 |
+| AcWing871 | 约数之和 |
+| AcWing872 | 最大公约数 |
+| AcWing873 | 欧拉函数 |
+| AcWing874 | 筛法求欧拉函数 |
+| AcWing875 | 快速幂 |
+| AcWing876 | 快速幂求逆元 |
+| AcWing877 | 扩展欧几里得算法 |
+| AcWing878 | 线性同余方程 |
+| AcWing204 | 表达整数的奇怪方式 |
+| AcWing883 | 高斯消元解线性方程组 |
+| AcWing884 | 高斯消元解异或线性方程组 |
+| AcWing885 | 求组合 |
+| AcWing886 | 求组合 |
+| AcWing887 | 求组合 |
+| AcWing888 | 求组合 |
+| AcWing889 | 满足条件的01序列 |
+| AcWing890 | 能被整除的数 |
+| AcWing891 | Nim游戏 |
+| AcWing892 | 台阶-Nim游戏 |
+| AcWing893 | 集合-Nim游戏 |
+| AcWing894 | 拆分-Nim游戏 |
+
+
+#### 第五讲 动态规划
+
+| 序号 | 题目 |
+|:-----|:-----|
+| AcWing2 | 01背包问题 |
+| AcWing3 | 完全背包问题 |
+| AcWing4 | 多重背包问题 |
+| AcWing9 | 分组背包问题 |
+| AcWing5 | 多重背包问 |
+| AcWing895 | 最长上升子序列 |
+| AcWing897 | 最长公共子序列 |
+| AcWing898 | 数字三角形 |
+| AcWing282 | 石子合并 |
+| AcWing896 | 最长上升子序 |
+| AcWing899 | 编辑距离 |
+| AcWing900 | 整数划分 |
+| AcWing901 | 滑雪 |
+| AcWing902 | 最短编辑距离 |
+| AcWing285 | 没有上司的舞会 |
+| AcWing91 | 最短Hamilton路径 |
+| AcWing291 | 蒙德里安的梦想 |
+| AcWing338 | 计数问题 |
+| AcWing905 | 区间选点 |
+
+
+#### 第六讲 贪心
+
+
+| 序号 | 题目 |
+|:-----|:-----|
+| AcWing908 | 最大不相交区间数量 |
+| AcWing906 | 区间分组 |
+| AcWing907 | 区间覆盖 |
+| AcWing148 | 合并果子 |
+| AcWing913 | 排队打水 |
+| AcWing104 | 货仓选址 |
+| AcWing125 | 耍杂技的牛 |
+| AcWing2816 | 判断子序列 |
+| AcWing3302 | 表达式求值 |
+
+
+
 # 第一讲 基础算法
 
 ## 基础课模板
