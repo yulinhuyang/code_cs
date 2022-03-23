@@ -55,6 +55,50 @@ S[x2, y2] - S[x1 - 1, y2] - S[x2, y1 - 1] + S[x1 - 1, y1 - 1]
 
 这里A数组都是1开始的，时间从0开始的，因此需要减去1。
 
+##### 303. 区域和检索 - 数组不可变
 
+
+```C++
+class NumArray {
+    vector<int> sum;
+public:
+    NumArray(vector<int>& nums) {
+        int n = nums.size();
+        sum = vector<int> (n + 1,0);
+        for(int i = 1;i < n + 1;i++){
+            sum[i] = sum[i - 1] + nums[i - 1];
+        }
+    }
+
+    int sumRange(int left, int right) {
+        left++,right++;
+        return sum[right] - sum[left-1];
+    }
+};
+```
+
+##### 304. 二维区域和检索 - 矩阵不可变
+
+```C++
+class NumMatrix {
+    vector<vector<int>> sum;
+public:
+    NumMatrix(vector<vector<int>> &matrix) {
+        int m = matrix.size(), n = matrix[0].size();
+        sum = vector<vector<int>>(m + 1, vector<int>(n + 1, 0));
+        for (int i = 1; i < m + 1; i++) {
+            for (int j = 1; j < n + 1; j++) {
+                sum[i][j] = sum[i - 1][j] + sum[i][j - 1] - sum[i - 1][j - 1] + matrix[i - 1][j - 1];
+            }
+        }
+    }
+
+    int sumRegion(int row1, int col1, int row2, int col2) {
+        row1++, col1++, row2++, col2++;
+        int res = sum[row2][col2] - sum[row1 - 1][col2] - sum[row2][col1 - 1] + sum[row1 - 1][col1 - 1];
+        return res;
+    }
+};
+```
 
 
