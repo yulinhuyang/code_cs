@@ -347,6 +347,58 @@ public:
 };
 ```
 
+##### 1094. 拼车
+
+差分 标记变化量 -->  求和最大值
+ 
+```C++
+class Solution {
+public:
+    bool carPooling(vector<vector<int>>& trips, int capacity) {
+        int n = trips.size();
+        vector<int> nums(1002,0);
+        for(auto & trip:trips){
+            int l = trip[1],r = trip[2];
+            int c = trip[0];
+            nums[l] += c;
+            nums[r] -= c;
+        }
+
+        int sum = 0;
+        for(int i = 0;i < 1002;i++){
+            sum += nums[i];
+            if(sum > capacity) return false;
+        }
+        return true;
+    }
+};
+```
+
+#### 1109. 航班预订统计
+
+差分模板题，数组索引从1开始的，要转换。
+
+```C++
+class Solution {
+public:
+    vector<int> corpFlightBookings(vector<vector<int>>& bookings, int n) {
+        vector<int> nums(n,0);
+        for(auto & book:bookings){
+            int l = book[0] - 1,r = book[1] - 1;
+            int c = book[2];
+            nums[l] += c;
+            if(r + 1 < n) nums[r + 1] -= c;
+        }
+
+        for(int i = 1;i < n;i++){
+            nums[i] += nums[i - 1];
+        }
+        return nums;
+    }
+};
+```
+
+
 
 ## 0x04  二分和三分
 
@@ -6659,37 +6711,50 @@ public:
 
 ### 最短路
 
-#####  399. 除法求值
+##### 399. 除法求值
+
+flyord 
+
+边的存储方式:  unordered_map<string, unordered_map<string, double>> edges;
+
+或者类似课程表：vector<vector<int>> edges
+
+迭代顶点： for (auto & k:vers)
+
 ```C++
 class Solution {
 public:
-    vector<double> calcEquation(vector<vector<string>>& equations, vector<double>& values, vector<vector<string>>& queries) {
+    vector<double> calcEquation(vector<vector<string>> &equations, vector<double> &values, vector<vector<string>> &queries) {
+        //二维hash
         unordered_set<string> vers;
-        unordered_map<string, unordered_map<string, double>> d;
-        for (int i = 0; i < equations.size(); i ++ ) {
-            auto a = equations[i][0], b = equations[i][1];
-            auto c = values[i];
-            d[a][b] = c, d[b][a] = 1 / c;
-            vers.insert(a), vers.insert(b);
+        unordered_map<string, unordered_map<string, double>> edges;
+        for (int i = 0; i < equations.size(); i++) {
+            string a = equations[i][0], b = equations[i][1];
+            double c = values[i];
+            vers.insert(a);
+            vers.insert(b);
+            edges[a][b] = c;
+            edges[b][a] = 1/c;
         }
 
-        for (auto k: vers)
-            for (auto i: vers)
-                for (auto j: vers)
-                    if (d[i][k] && d[j][k])
-                        d[i][j] = d[i][k] * d[k][j];
+        //floyd
+        for (auto & k:vers) {
+            for (auto & i:vers) {
+                for (auto & j:vers) {
+                    if(edges[i][k] &&  edges[k][j])
+                    edges[i][j] = edges[i][k] * edges[k][j];
+                }
+            }
+        }
 
         vector<double> res;
-        for (auto q: queries) {
-            auto a = q[0], b = q[1];
-            if (d[a][b]) res.push_back(d[a][b]);
-            else res.push_back(-1);
+        for (auto &query:queries) {
+            string q0 = query[0], q1 = query[1];
+            if (edges[q0][q1]) res.emplace_back(edges[q0][q1]);
+            else res.emplace_back(-1);
         }
-
         return res;
     }
 };
 
 ```
-
-
