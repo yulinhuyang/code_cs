@@ -16,7 +16,7 @@ https://leetcode-cn.com/problems/network-delay-time/solution/gong-shui-san-xie-y
 
 785. 判断二分图:DFS
 
-787. K 站中转内最便宜的航班:bellman-ford
+787. K 站中转内最便宜的航班:Bellman Ford/SPFA 都是基于动态规划。解有边数限制的最短路问题。
 
 797. 所有可能的路径:DFS
 
