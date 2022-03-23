@@ -113,4 +113,51 @@ public:
 };
 ```
 
+#####  307. 区域和检索 - 数组可修改
 
+reserve函数用来给vector预分配存储区大小，即capacity的值 ，但是没有给这段内存进行初始化。
+
+resize函数重新分配大小，改变容器的大小，并且创建对象。
+
+```C++
+class NumArray {
+    int n;
+    vector<int> tree;
+    vector<int> nums;
+public:
+    NumArray(vector<int>& _nums) {
+        nums = _nums;
+        n = nums.size();
+        tree.resize(n + 1);
+        for(int i = 0;i < nums.size();i++){
+            add(i + 1,nums[i]);
+        }
+    }
+
+    int lowbit(int x){
+        return x & -x;
+    }
+    int query(int x){
+        int res = 0;
+        for(int i = x;i;i -= lowbit(i)){
+            res += tree[i];
+        }
+        return res;
+    }
+    
+    void add(int index, int val) {
+        for(int i = index;i < n + 1;i += lowbit(i)){
+            tree[i] += val;
+        }
+    }
+
+    void update(int index, int val) {
+        add(index + 1,val - nums[index]);
+        nums[index] = val;
+    }
+    
+    int sumRange(int left, int right) {
+        return query(right + 1) - query(left);
+    }
+};
+```
