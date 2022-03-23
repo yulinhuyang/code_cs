@@ -1,7 +1,18 @@
 
 LRU cache: https://www.acwing.com/activity/content/code/content/405014/
 
+
+
 743. 网络延迟时间：dijkstra
+
+
+【宫水三叶】涵盖所有的「存图方式」与「最短路算法（详尽注释）」
+
+Floyd  朴素 Dijkstra  堆优化 Dijkstra  Bellman Ford（类 & 邻接表）
+   SPFA（邻接表）
+
+https://leetcode-cn.com/problems/network-delay-time/solution/gong-shui-san-xie-yi-ti-wu-jie-wu-chong-oghpz/
+
 
 785. 判断二分图:DFS
 
@@ -10,6 +21,7 @@ LRU cache: https://www.acwing.com/activity/content/code/content/405014/
 797. 所有可能的路径:DFS
 
 332. 重新安排行程:欧拉通路.
+
 
 给定一个 nnn 个点 mmm 条边的图，要求从指定的顶点出发，经过所有的边恰好一次（可以理解为给定起点的「一笔画」问题），使得路径的字典序最小。
 
