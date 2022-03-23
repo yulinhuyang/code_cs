@@ -161,3 +161,45 @@ public:
 ```
 
 
+##### 399. 除法求值
+
+flyord 边的存储方式
+
+```C++
+class Solution {
+public:
+    vector<double> calcEquation(vector<vector<string>> &equations, vector<double> &values, vector<vector<string>> &queries) {
+        //二维hash
+        unordered_set<string> vers;
+        unordered_map<string, unordered_map<string, double>> edges;
+        for (int i = 0; i < equations.size(); i++) {
+            string a = equations[i][0], b = equations[i][1];
+            double c = values[i];
+            vers.insert(a);
+            vers.insert(b);
+            edges[a][b] = c;
+            edges[b][a] = 1/c;
+        }
+
+        //floyd
+        for (auto & k:vers) {
+            for (auto & i:vers) {
+                for (auto & j:vers) {
+                    if(edges[i][k] &&  edges[k][j])
+                    edges[i][j] = edges[i][k] * edges[k][j];
+                }
+            }
+        }
+
+        vector<double> res;
+        for (auto &query:queries) {
+            string q0 = query[0], q1 = query[1];
+            if (edges[q0][q1]) res.emplace_back(edges[q0][q1]);
+            else res.emplace_back(-1);
+        }
+        return res;
+    }
+};
+
+```
+
