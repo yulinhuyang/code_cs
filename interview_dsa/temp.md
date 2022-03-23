@@ -14,11 +14,7 @@ LRU cache: https://www.acwing.com/activity/content/code/content/405014/
 
 1094   标记变化量 -->  求和最大值
 
-1109  航班预订统计
    
-
-
-
 
 一维前缀和   
 S[i] = a[1] + a[2] + ... a[i]   
@@ -43,6 +39,31 @@ S[x1, y1] += c, S[x2 + 1, y1] -= c, S[x1, y2 + 1] -= c, S[x2 + 1, y2 + 1] += c
 
 这里A数组都是1开始的，时间从0开始的，因此需要减去1。
 
-https://www.acwing.com/blog/content/80/
+树状数组学习笔记：https://www.acwing.com/blog/content/80/
 
 树状数组的下标从 1 开始计数
+
+
+#### 1109. 航班预订统计
+
+差分模板题，数组索引从1开始的，要转换。
+
+```C++
+class Solution {
+public:
+    vector<int> corpFlightBookings(vector<vector<int>>& bookings, int n) {
+        vector<int> nums(n,0);
+        for(auto & book:bookings){
+            int l = book[0] - 1,r = book[1] - 1;
+            int c = book[2];
+            nums[l] += c;
+            if(r + 1 < n) nums[r + 1] -= c;
+        }
+
+        for(int i = 1;i < n;i++){
+            nums[i] += nums[i - 1];
+        }
+        return nums;
+    }
+};
+```
