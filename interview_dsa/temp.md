@@ -9,11 +9,6 @@ LRU cache: https://www.acwing.com/activity/content/code/content/405014/
 
 306  累加数： 字符的分割  
 
-
-差分：        
-
-1094   标记变化量 -->  求和最大值
-
    
 
 一维前缀和   
@@ -43,6 +38,32 @@ S[x1, y1] += c, S[x2 + 1, y1] -= c, S[x1, y2 + 1] -= c, S[x2 + 1, y2 + 1] += c
 
 树状数组的下标从 1 开始计数
 
+##### 1094. 拼车
+
+差分 标记变化量 -->  求和最大值
+ 
+```C++
+class Solution {
+public:
+    bool carPooling(vector<vector<int>>& trips, int capacity) {
+        int n = trips.size();
+        vector<int> nums(1002,0);
+        for(auto & trip:trips){
+            int l = trip[1],r = trip[2];
+            int c = trip[0];
+            nums[l] += c;
+            nums[r] -= c;
+        }
+
+        int sum = 0;
+        for(int i = 0;i < 1002;i++){
+            sum += nums[i];
+            if(sum > capacity) return false;
+        }
+        return true;
+    }
+};
+```
 
 #### 1109. 航班预订统计
 
