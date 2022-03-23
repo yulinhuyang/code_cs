@@ -301,6 +301,53 @@ public:
 
 ```
 
+##### 303. 区域和检索 - 数组不可变
+
+
+```C++
+class NumArray {
+    vector<int> sum;
+public:
+    NumArray(vector<int>& nums) {
+        int n = nums.size();
+        sum = vector<int> (n + 1,0);
+        for(int i = 1;i < n + 1;i++){
+            sum[i] = sum[i - 1] + nums[i - 1];
+        }
+    }
+
+    int sumRange(int left, int right) {
+        left++,right++;
+        return sum[right] - sum[left-1];
+    }
+};
+```
+
+##### 304. 二维区域和检索 - 矩阵不可变
+
+```C++
+class NumMatrix {
+    vector<vector<int>> sum;
+public:
+    NumMatrix(vector<vector<int>> &matrix) {
+        int m = matrix.size(), n = matrix[0].size();
+        sum = vector<vector<int>>(m + 1, vector<int>(n + 1, 0));
+        for (int i = 1; i < m + 1; i++) {
+            for (int j = 1; j < n + 1; j++) {
+                sum[i][j] = sum[i - 1][j] + sum[i][j - 1] - sum[i - 1][j - 1] + matrix[i - 1][j - 1];
+            }
+        }
+    }
+
+    int sumRegion(int row1, int col1, int row2, int col2) {
+        row1++, col1++, row2++, col2++;
+        int res = sum[row2][col2] - sum[row1 - 1][col2] - sum[row2][col1 - 1] + sum[row1 - 1][col1 - 1];
+        return res;
+    }
+};
+```
+
+
 ## 0x04  二分和三分
 
 ### 索引二分
@@ -1901,6 +1948,24 @@ public:
 };
 
 ```
+	
+##### 739. 每日温度
+```C++
+class Solution {
+public:
+    vector<int> dailyTemperatures(vector<int>& temperatures) {
+        stack<int> stk;
+        int n = temperatures.size();
+        vector<int> res(n,0);
+        for(int i = n - 1;i >= 0;i--){
+            while(stk.size() && temperatures[stk.top()] <= temperatures[i]) stk.pop();
+            if(stk.size()) res[i] = stk.top() - i;
+            stk.push(i);
+        }
+        return res;
+    }
+};
+```	
 
 ## 0x12 队列/单调队列
 
@@ -5139,6 +5204,92 @@ public:
 ### 0x42 树状数组
 
 
+#####  307. 区域和检索 - 数组可修改
+
+reserve函数用来给vector预分配存储区大小，即capacity的值 ，但是没有给这段内存进行初始化。
+
+resize函数重新分配大小，改变容器的大小，并且创建对象。
+
+```C++
+class NumArray {
+    int n;
+    vector<int> tree;
+    vector<int> nums;
+public:
+    NumArray(vector<int>& _nums) {
+        nums = _nums;
+        n = nums.size();
+        tree.resize(n + 1);
+        for(int i = 0;i < nums.size();i++){
+            add(i + 1,nums[i]);
+        }
+    }
+
+    int lowbit(int x){
+        return x & -x;
+    }
+    int query(int x){
+        int res = 0;
+        for(int i = x;i;i -= lowbit(i)){
+            res += tree[i];
+        }
+        return res;
+    }
+    
+    void add(int index, int val) {
+        for(int i = index;i < n + 1;i += lowbit(i)){
+            tree[i] += val;
+        }
+    }
+
+    void update(int index, int val) {
+        add(index + 1,val - nums[index]);
+        nums[index] = val;
+    }
+    
+    int sumRange(int left, int right) {
+        return query(right + 1) - query(left);
+    }
+};
+```
+
+##### LeetCode 315. 计算右侧小于当前元素的个数
+
+```
+class Solution {
+    int N = 20001;
+    vector<int> tr;
+public:
+
+    int lowbit(int x){
+        return x & -x;
+    }
+    void add(int x,int val){
+        for(int i = x;i <= N;i += lowbit(i)){
+            tr[i] += val;
+        }
+    }
+    int query(int x){
+        int res = 0;
+        //索引从1开始
+        for(int i = x;i;i -= lowbit(i)){
+            res += tr[i];
+        }
+        return res;
+    }
+
+    vector<int> countSmaller(vector<int>& nums) {
+        tr.resize(N + 1);
+        vector<int> res(nums.size());
+        for(int i = nums.size() - 1;i >= 0;i--){
+            int tmp = nums[i] + 10001;
+            res[i] = query(tmp - 1);
+            add(tmp,1);
+        }
+        return res;
+    }
+};
+```	
 
 ## 0x50 动态规划
 
