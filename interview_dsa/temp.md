@@ -80,3 +80,66 @@ public:
     }
 };
 ```
+
+##### 934. 最短的桥
+
+先深度搜索，确度一座岛的边界,再广度搜索，查找路径。 DFS + 多源BFS最短路径。
+
+```C++
+class Solution {
+    vector<vector<int>> g;
+    vector<vector<int>> dist;
+    queue<pair<int, int>> q;
+    int dx[4] = {-1, 0, 1, 0}, dy[4] = {0, 1, 0, -1};
+    int m, n;
+public:
+    int shortestBridge(vector<vector<int>> &grid) {
+        g = grid;
+        m = g.size(), n = g[0].size();
+        dist = vector<vector<int>>(m, (vector<int>(n, 1e4)));
+        for (int i = 0; i < m; i++) {
+            for (int j = 0; j < n; j++) {
+                if (g[i][j] == 1) {
+                    dfs(i, j);
+                    return bfs();
+                }
+            }
+        }
+        return 0;
+    }
+
+    void dfs(int i, int j) {
+
+        dist[i][j] = 0;
+        q.emplace(make_pair(i, j));
+        for (int k = 0; k < 4; k++) {
+            int x = i + dx[k], y = j + dy[k];
+            if (x >= 0 && x < m && y >= 0 && y < n && g[x][y] && dist[x][y]) {
+                dfs(x, y);
+            }
+        }
+    }
+
+    int bfs() {
+        while (q.size()) {
+            auto top = q.front();
+            q.pop();
+            int i = top.first, j = top.second;
+            for (int k = 0; k < 4; k++) {
+                int x = i + dx[k], y = j + dy[k];
+                if (x >= 0 && x < m && y >= 0 && y < n && dist[x][y] > dist[i][j] + 1) {
+                    dist[x][y] = dist[i][j] + 1;
+                    if (g[x][y]) {
+                        return dist[i][j];
+                    }
+                    q.emplace(make_pair(x, y));
+                }
+            }
+        }
+        return 0;
+    }
+};
+
+```
+
+
