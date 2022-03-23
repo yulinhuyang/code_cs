@@ -163,7 +163,9 @@ public:
 
 ##### 399. 除法求值
 
-flyord 边的存储方式
+flyord 
+
+边的存储方式:  unordered_map<string, unordered_map<string, double>> edges;
 
 ```C++
 class Solution {
