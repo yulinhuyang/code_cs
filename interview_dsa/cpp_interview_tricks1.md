@@ -138,6 +138,12 @@ sort(vp.begin(), vp.end(), [](const ii &l, const ii &r) {   // 按第一个数�
 auto v2 = vector<int> (v1.begin(),v1.end());	
 auto v2 = vector<int> (v1.begin(),v1.begin() + 4);
 ```
+	
+**reserve与resize**
+	
+reserve函数用来给vector预分配存储区大小，即capacity的值 ，但是没有给这段内存进行初始化。   
+resize函数重新分配大小，改变容器的大小，并且创建对象。	
+	
 #### 2 map（**unordered_map** ）
 	
 map基于红黑树，自动排序；unordered_map基于哈希表，无序更快，可以使用map来的代替vector,使用find 快速查找
