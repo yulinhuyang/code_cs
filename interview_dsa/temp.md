@@ -167,6 +167,8 @@ flyord
 
 边的存储方式:  unordered_map<string, unordered_map<string, double>> edges;
 
+迭代顶点： for (auto & k:vers)
+
 ```C++
 class Solution {
 public:
