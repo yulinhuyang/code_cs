@@ -161,3 +161,41 @@ public:
     }
 };
 ```
+
+##### LeetCode 315. 计算右侧小于当前元素的个数
+
+```
+class Solution {
+    int N = 20001;
+    vector<int> tr;
+public:
+
+    int lowbit(int x){
+        return x & -x;
+    }
+    void add(int x,int val){
+        for(int i = x;i <= N;i += lowbit(i)){
+            tr[i] += val;
+        }
+    }
+    int query(int x){
+        int res = 0;
+        //索引从1开始
+        for(int i = x;i;i -= lowbit(i)){
+            res += tr[i];
+        }
+        return res;
+    }
+
+    vector<int> countSmaller(vector<int>& nums) {
+        tr.resize(N + 1);
+        vector<int> res(nums.size());
+        for(int i = nums.size() - 1;i >= 0;i--){
+            int tmp = nums[i] + 10001;
+            res[i] = query(tmp - 1);
+            add(tmp,1);
+        }
+        return res;
+    }
+};
+```	
