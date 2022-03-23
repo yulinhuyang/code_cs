@@ -1,7 +1,7 @@
 
 LRU cache: https://www.acwing.com/activity/content/code/content/405014/
 
-  743. 网络延迟时间：dijkstra
+743. 网络延迟时间：dijkstra
 785. 判断二分图:DFS
 787. K 站中转内最便宜的航班:bellman-ford
 797. 所有可能的路径:DFS
