@@ -1122,31 +1122,39 @@ val(i,j)分成两部分，第一部分仅与i有关，第二部分仅与j有关�
 
 稠密图：邻接矩阵；稀疏图：邻接表
 
+邻接表模板（算法竞赛进阶指南）： https://www.acwing.com/blog/content/4689/  
+
 <div align="center"> <img src="../pics/tulun1.png" width="80%"/> </div><br>
 
 **SSSP(单源最短路)问题**
 
 <div align="center"> <img src="../pics/dijkstra.png" width="80%"/> </div><br>
-Dijkstra:非负权，每次选择未被标记的，dist[x]最小的节点x，标记x，扫描并更新x的所有出边。使用二叉堆优化基于贪心的Dijkstra算法。
 
-找点，循环基于点
+- Dijkstra: 邻接矩阵 + 贪心，非负权，每次选择未被标记的，dist[x]最小的节点x，标记x，扫描并更新x的所有出边。
 
-二叉堆优化的dijkstra:只能处理非负权的，priority_queue中存放的是<distance,index>。
+找点，循环基于点。
+
+- 二叉堆优化的dijkstra: 邻接表 + 小顶堆，只能处理非负权的，priority_queue中存放的是<distance,index>。
 
 <div align="center"> <img src="../pics/bellmanford.png" width="80%"/> </div><br>
-Bellman-ford：扫描所有边，如果dist[y] > dist[x] + z，则用dist[x] + z更新dist[y]，使其满足三角不等式。需要备份，防止串联;找边，循环基于边
 
-SPFA: 队列优化Bellman-Ford算法，起初队列只有起点1，更新完dist[y]，如果y不在队列中，则y入队列。可以优先队列(二叉堆)优化基于BFS的SPFA算法。
+- Bellman-ford：邻接矩阵，动态规划算法，n次松弛操作，先backup备份数组，然后直接对边集合进行遍历。 
+可以处理负权，扫描所有边，如果dist[y] > dist[x] + z，则用dist[x] + z更新dist[y]，使其满足三角不等式。需要备份，防止串联;找边，循环基于边。
 
+- SPFA: 邻接表 + 队列，队列优化Bellman-Ford算法，起初队列只有起点1，更新完dist[y]，如果y不在队列中，则y入队列。可以优先队列(二叉堆)优化基于BFS的SPFA算法。
 SPFA：可以处理负值，queue中存放的是index。
+
+Bellman Ford/SPFA都是基于动态规划，其原始的状态定义为f[i][k]代表从起点到i点，且经过最多k条边的最短路径。这样的状态定义引导我们能够使用 Bellman Ford 来解决有边数限制的最短路问题。
 
 二叉堆优化的dijkstra，SPFA都是基于邻接表结构的。
 
-- AcWing341 最优贸易:正图D(x),反图F(x)，
-
-- AcWing342 道路与航线:先处理双向边形成连通块，把连通块缩成点，再处理单向边，拓扑序求ssp
+- AcWing341 最优贸易:正图D(x),反图F(x)。
+- AcWing342 道路与航线:先处理双向边形成连通块，把连通块缩成点，再处理单向边，拓扑序求ssp。
+- AcWing 853. 有边数限制的最短路:https://www.acwing.com/solution/content/14088/
 
 **floyd算法(Floyd-Warshall 插点法)**
+
+多源汇最短路算法 Floyd也是基于动态规划，其原始的三维状态定义为f[i][j][k] 代表从点i到点j，且经过的所有点编号不会超过k（即可使用点编号范围为[1,k]）的最短路径。这样的状态定义引导我们能够使用 Floyd 求最小环或者求“重心点”（即删除该点后，最短路值会变大）。
 
 利用dp的思想寻找给定的加权图中APSP(多源最短路径)，通过一个图的权值矩阵求出它的每两点间的最短路径矩阵，边权可正可负
 
@@ -1157,6 +1165,8 @@ D[k,i,j] = min(D[k-1,i,j],D[k-1,i,k] + D[k-1,k,j])，k是阶段，在外循环�
 省略一维：D[i,j] = min(D[i,j],D[i,k] + D[k,j])
 
 传递闭包：通过传递性退出尽可能多元素之间的关系
+
+多源最短路，任意起点到任意终点的最短距离。三层循环:枚举中转点-->枚举起点-->枚举终点-->松弛操作。 
 
 - AcWing343 排序:传递闭包，floyd算法。
 
