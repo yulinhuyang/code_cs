@@ -22,17 +22,28 @@ n | (1<<k) 第k位赋值1
 ```
 ## 0x03 前缀和与差分
 
-一维前缀和： S[i]= S[i-1]  + A[i]   
-二维前缀和： S[i][j] = S[i-1][j] + S[i][j-1] – S[i-1][j-1] + A[i][j]  
-树上前缀和：从根到某节点的路径上点（或边）的值之和（上到下）；某节点及其所有子节点（或边）的值之和（下到上）  
-前缀和：A从1开始,S从1开始,for从1开始,S[i] = S[i - 1] + A[i]。A从0开始,S从1开始(n+1),for从0开始,S[i+1] = S[i] + A[i]。默认S[0] = 0，S一定从1开始。  
+前缀和定义：     
+A从1开始,S从1开始,for从1开始,S[i] = S[i - 1] + A[i]。A从0开始,S从1开始(n+1),for从0开始,S[i+1] = S[i] + A[i]。默认S[0] = 0，S一定从1开始。  
 
-差分数组定义：   
-真实数组a = {a[1]、a[2]、…、a[n]}          // 各点真实数据   
+一维前缀和： S[i]= S[i-1]  + A[i]      
+二维前缀和： S[i][j] = S[i-1][j] + S[i][j-1] – S[i-1][j-1] + A[i][j]     
+S[i, j] = 第i行j列格子左上部分所有元素的和。          
+以(x1, y1)为左上角，(x2, y2)为右下角的子矩阵的和为：             
+S[x2, y2] - S[x1 - 1, y2] - S[x2, y1 - 1] + S[x1 - 1, y1 - 1]         
+
+树上前缀和：从根到某节点的路径上点（或边）的值之和（上到下）；某节点及其所有子节点（或边）的值之和（下到上）  
+
+差分数组定义：     
+真实数组a = {a[1]、a[2]、…、a[n]}          //   
 差分数组df = {df[1]、df[2]、…、df[n]}      // 各点数据的变更值    
 df[i] = a[i] - a[i-1]                      // 差分数组各点数据为真实数据的变更值   
 a[i] = df[1] + df[2] …+ df[i]              // 差分数组的前缀和即为真实数组   
 a[i] = a[i-1] + df[i]                      // 真实数据也可以从上一点数据+变更值求出
+
+一维差分：给区间[l, r]中的每个数加上c ，B[l] += c, B[r + 1] -= c  
+
+二维差分： 给以(x1, y1)为左上角，(x2, y2)为右下角的子矩阵中的所有元素加上c：      
+S[x1, y1] += c, S[x2 + 1, y1] -= c, S[x1, y2 + 1] -= c, S[x2 + 1, y2 + 1] += c   
 
 差分算法题型特征：在一段区间内（例如时间/站点）给出数据变更点（例如上下车/占用释放等），需要感知变更后数据值。   
 Ÿ   一维差分：主要用于对子数组（或区间）的元素整体加减固定值，特别是子数组较多时，可提高性能。   
@@ -869,6 +880,33 @@ n项求和公式、摩尔投票法、卡特兰数
 
 ## 0x42 树状数组
 	
+```C++
+    int lowbit(int x){
+        return x & -x;
+    }
+    int query(int x){
+        int res = 0;
+        for(int i = x;i;i -= lowbit(i)){
+            res += tree[i];
+        }
+        return res;
+    }
+    
+    void add(int index, int val) {
+        for(int i = index;i < n + 1;i += lowbit(i)){
+            tree[i] += val;
+        }
+    }
+	
+```
+			       
+树状数组的下标从 1 开始计数
+			       
+- 307 区域和检索 - 数组可修改：模板题。
+- 315 计算右侧小于当前元素的个数：统计元素个数转化为树状数组。		       
+	
+树状数组学习笔记：https://www.acwing.com/blog/content/80/
+			       
 ## 0x50 动态规划
  
 重叠子问题，最优子结构，无后效性 + 状态、决策、转移方程
@@ -986,4 +1024,78 @@ for i in range(n + 1):
 ### 图遍历--拓扑排序
 	
 - Leetcode 207 课程表：拓扑排序(模板)，比较点数和入度为0的点数量，模板题  
+	
+#### 最短路径
+	
+【宫水三叶】涵盖所有的「存图方式」与「最短路算法（详尽注释）」：https://leetcode-cn.com/problems/network-delay-time/solution/gong-shui-san-xie-yi-ti-wu-jie-wu-chong-oghpz/
+	
+边与点的存储方式:      
+n 为点数，m 为边数   
+- 1 邻接矩阵：flyord和朴素dijkstra   
+稠密图：m ≈ nxn  
+```C++
+// 邻接矩阵数组：w[a][b] = c 代表从 a 到 b 有权重为 c 的边
+int w[N][N];
+// 加边操作
+void add(int a, int b, int c) {
+    w[a][b] = c;
+}
+```
+- 2 邻接表：堆优化dijkstra、SPFA       
+稀疏图：m ≈ n，链式前向星存图。   
+```C++
+const int N = 110, M = 6010, INF = 0x3f3f3f3f;
+int h[N], e[M], w[M], ne[M], idx;
+
+//e w n h,头插法，head初始化为-1
+void add(int a, int b, int c) {
+	e[idx] = b, w[idx] = c, ne[idx] = h[a], h[a] = idx ++ ;
+}
+```
+- 3 结构体:bellman-ford  
+Bellman-ford算法是一种动态规划算法，而Dijkstra算法是一种贪心算法。
+Bellman-ford解边数限制的问题。  
+```C++
+struct Edge {
+	int a, b, c;
+} edges[M];
+```         
+- 4 vector数组
+```C++   
+vector<vector> edges;
+vector<vector<int>> edges(numCourses);
+vector<int> inDeg(numCourses, 0);
+```
+- 5 map存储
+```C++
+unordered_map<string, unordered_map<string, double>> edges;
+unordered_set<string> vers;
+```
+  
+inf用0x3f3f3f3f或者INT_MAX/2;     
+idx 从0开始，停止条件i != -1;idx 从1开始，停止条件~i       
+迭代顶点： for (auto & k:vers)    
+邻接表模板（算法竞赛进阶指南）： https://www.acwing.com/blog/content/4689/
+
 - Leetcode 399 除法求值：Floyd求最短路。
+- Leetcode 743 网络延迟时间：Floyd  + 朴素 Dijkstra  + 堆优化 Dijkstra  + Bellman Ford（类 & 邻接表） +  SPFA（邻接表）模板题。
+- Leetcode 785 判断二分图:DFS。
+- Leetcode 787 K 站中转内最便宜的航班:Bellman Ford/SPFA 都是基于动态规划。解有边数限制的最短路问题。
+- Leetcode 797 所有可能的路径:DFS。
+	
+### 欧拉路
+	
+给定一个 nnn 个点 mmm 条边的图，要求从指定的顶点出发，经过所有的边恰好一次（可以理解为给定起点的「一笔画」问题），使得路径的字典序最小。这种「一笔画」问题与欧拉图或者半欧拉图有着紧密的联系，下面给出定义：        
+通过图中所有边恰好一次且行遍所有顶点的通路称为欧拉通路。            
+通过图中所有边恰好一次且行遍所有顶点的回路称为欧拉回路。           
+具有欧拉回路的无向图称为欧拉图。          
+具有欧拉通路但不具有欧拉回路的无向图称为半欧拉图。        
+
+- Leetcode 332 重新安排行程:欧拉通路。    
+
+	
+
+	
+	
+	
+	
