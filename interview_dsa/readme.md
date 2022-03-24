@@ -24,6 +24,8 @@ https://gitee.com/programmercarl/leetcode-master
 
 yxc leetcode全解(究极班)： https://www.acwing.com/activity/content/activity_person/content/29799/44/
 
+宫水三叶： https://github.com/SharingSource/LogicStack-LeetCode
+
 **ACM系列**
 
 https://github.com/soulmachine/acm-cheat-sheet
