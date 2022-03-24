@@ -1077,25 +1077,23 @@ unordered_set<string> vers;
 ```
  
 Bellman Ford/SPFA都是基于动态规划，其原始的状态定义为f[i][k]代表从起点到i点，且经过最多k条边的最短路径。这样的状态定义引导我们能够使用 Bellman Ford 来解决有边数限制的最短路问题。
+
 同样多源汇最短路算法 Floyd也是基于动态规划，其原始的三维状态定义为f[i][j][k] 代表从点i到点j，且经过的所有点编号不会超过k（即可使用点编号范围为[1,k]）的最短路径。这样的状态定义引导我们能够使用 Floyd 求最小环或者求“重心点”（即删除该点后，最短路值会变大）。
 
-Dijkstra：邻接矩阵，贪心算法。
-堆优化Dijkstra：邻接表，小顶堆。   
-Bellman-ford：邻接矩阵，动态规划算法，n次松弛操作，先backup备份数组，然后直接对边集合进行遍历。 
-SPFA: 邻接表，队列。
-Floyd：多源最短路，任意起点到任意终点的最短距离。三层循环:枚举中转点-->枚举起点-->枚举终点-->松弛操作。  
+Dijkstra：邻接矩阵，贪心算法。          
+堆优化Dijkstra：邻接表，小顶堆。            
+Bellman-ford：邻接矩阵，动态规划算法，n次松弛操作，先backup备份数组，然后直接对边集合进行遍历。         
+SPFA: 邻接表，队列。        
+Floyd：多源最短路，任意起点到任意终点的最短距离。三层循环:枚举中转点-->枚举起点-->枚举终点-->松弛操作。      
 
-inf用0x3f3f3f3f或者INT_MAX/2;     
-idx 从0开始，停止条件i != -1;idx 从1开始，停止条件~i       
-迭代顶点： for (auto & k:vers)    
+inf用0x3f3f3f3f或者INT_MAX/2;        
+idx 从0开始，停止条件i != -1;idx 从1开始，停止条件~i。          
+迭代顶点： for (auto & k:vers)       
 	
-- 787 k站中转内最便宜的航班：经过不超过k个点，限制最多不超过k+1条边，使用Bellman-ford。
-
-
 - Leetcode 399 除法求值：Floyd求最短路。
 - Leetcode 743 网络延迟时间：Floyd  + 朴素 Dijkstra  + 堆优化 Dijkstra  + Bellman Ford（类 & 邻接表） +  SPFA（邻接表）模板题。
 - Leetcode 785 判断二分图:DFS。
-- Leetcode 787 K 站中转内最便宜的航班:Bellman Ford/SPFA 都是基于动态规划。解有边数限制的最短路问题。
+- Leetcode 787 K 站中转内最便宜的航班:经过不超过k个点，限制最多不超过k+1条边，Bellman Ford/SPFA 都是基于动态规划。解有边数限制的最短路问题。
 - Leetcode 797 所有可能的路径:DFS。
 	
 ### 欧拉路
