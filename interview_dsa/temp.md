@@ -174,3 +174,51 @@ public:
 
 ```
 
+边与点的存储方式: 
+
+方式1 邻接矩阵：flyord和朴素dijkstra
+```C++
+// 邻接矩阵数组：w[a][b] = c 代表从 a 到 b 有权重为 c 的边
+int w[N][N];
+
+// 加边操作
+void add(int a, int b, int c) {
+    w[a][b] = c;
+}
+```
+
+
+方式2 邻接表：堆优化dijkstra、SPFA
+
+稀疏图,链式前向星存图.
+
+e  w  n  h,头插法。
+
+```C++
+const int N = 110, M = 6010, INF = 0x3f3f3f3f;
+int h[N], e[M], w[M], ne[M], idx;
+
+void add(int a, int b, int c) {
+	e[idx] = b, w[idx] = c, ne[idx] = h[a], h[a] = idx ++ ;
+}
+```
+
+方式3 结构体
+
+C++中结构体的4种定义： https://blog.csdn.net/xiaoqi44325234/article/details/85323787
+
+Bellman-ford算法是一种动态规划算法，而Dijkstra算法是一种贪心算法
+
+
+方式4：   
+vector<vector> edges;
+vector<vector<int>> edges(numCourses);
+vector<int> inDeg(numCourses, 0);
+
+方式5：
+unordered_map<string, unordered_map<string, double>> edges;
+unordered_set<string> vers;
+  
+  
+  inf用0x3f3f3f3f或者INT_MAX/2;
+
