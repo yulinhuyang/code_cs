@@ -2747,105 +2747,82 @@ public:
 
     }
 };
-
+```
 
 //Dlist 定义版
 
-申请与释放
-
-DListNode *head = new DListNode();
-
+申请与释放:    
+DListNode *head = new DListNode();    
 delete(head):
 
-正常删除节点,都要delete node释放内存，但这里如果后面addhead,则不用释放
-
+正常删除节点,都要delete node释放内存，但这里如果后面add head,则不用释放    
 delete tail的时候，需要释放内存
-
-
-struct DListNode {
+	
+```C++
+struct Node {
     int key;
     int val;
-    DListNode *prev;
-    DListNode *next;
+    Node *prev, *next;
 
-    DListNode() : key(0), val(0), prev(NULL), next(NULL) {};
-
-    DListNode(int key, int val) : key(key), val(val), prev(NULL), next(NULL) {};
+    Node(int _key, int _val) : key(_key), val(_val), prev(nullptr), next(nullptr) {}
 };
 
-
 class LRUCache {
-private:
-    //Dlist定义
-    DListNode *head = new DListNode();
-    DListNode *tail = new DListNode();
-    int size;
-    //类相关定义，list 和cache map同步变化
-    unordered_map<int, DListNode *> cacheMap;
-    int capacity;
+    Node *head, *tail;
+    unordered_map<int, Node *> hash;
+    int n, cur;
 
 public:
     LRUCache(int capacity) {
-        //伪头 伪尾
+        n = capacity;
+        cur = 0;
+        head = new Node(-1, -1);
+        tail = new Node(-1, -1);
         head->next = tail;
         tail->prev = head;
-        this->size = 0;
-        this->capacity = capacity;
     }
 
-    void addHead(DListNode *node) {
-        //先插后断
+    void remove(Node *node) {
+        node->prev->next = node->next;
+        node->next->prev = node->prev;
+    }
+
+    //头插删尾，尾插删头
+    void add_to_head(Node *node) {
         node->next = head->next;
         node->prev = head;
         head->next->prev = node;
         head->next = node;
     }
 
-    //正常删除节点,都要delete释放内存，但这里如果后面addhead,则不用释放
-    void deleteNode(DListNode *node) {
-        node->next->prev = node->prev;
-        node->prev->next = node->next;
-    }
-
-    //delete tail的时候，先断关系，再释放内存
-    DListNode *deleteTail() {
-        DListNode *node = tail->prev;
-        deleteNode(node);
-        return node;
-    }
-
     int get(int key) {
-        if (!cacheMap.count(key)) {
+        if (hash.count(key)) {
+            Node *node = hash[key];
+            remove(node);
+            add_to_head(node);
+            return node->val;
+        } else {
             return -1;
         }
-        //*取值迭代器
-        DListNode *node = cacheMap[key];
-        //删除迭代器
-        deleteNode(node);
-        addHead(node);
-        //cacheMap[key] = node;
-        return node->val;
     }
 
     void put(int key, int value) {
-        //已存在
-        if (cacheMap.count(key)) {
-            DListNode *node = cacheMap[key];
-            deleteNode(node);
+        if (hash.count(key)) {
+            Node *node = hash[key];
             node->val = value;
-            addHead(node);
-            //cacheMap[key] = node;
+            remove(node);
+            add_to_head(node);
         } else {
-            DListNode *node = new DListNode(key, value);
-            addHead(node);
-            cacheMap[key] = node;
-            size++;
-            if (size > capacity) {
-                DListNode *tail = deleteTail();
-                cacheMap.erase(tail->key);
-                delete tail;
-                size--;
+            if (hash.size() == n) {
+                Node *node = tail->prev;
+                remove(node);
+                hash.erase(node->key);
+                //要释放内存
+                delete node;
             }
+            Node *new_node = new Node(key, value);
+            hash[key] = new_node;
+            add_to_head(new_node);
         }
     }
 };
