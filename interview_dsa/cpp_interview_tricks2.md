@@ -1035,7 +1035,7 @@ for i in range(n + 1):
 	
 边与点的存储方式:      
 n 为点数，m 为边数   
-- 1 邻接矩阵：flyord和朴素dijkstra   
+- 1 邻接矩阵：flyod和朴素dijkstra   
 稠密图：m ≈ nxn  
 ```C++
 // 邻接矩阵数组：w[a][b] = c 代表从 a 到 b 有权重为 c 的边
