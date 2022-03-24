@@ -1075,8 +1075,8 @@ vector<int> inDeg(numCourses, 0);
 unordered_map<string, unordered_map<string, double>> edges;
 unordered_set<string> vers;
 ```
- 
-Bellman Ford/SPFA都是基于动态规划，其原始的状态定义为f[i][k]代表从起点到i点，且经过最多k条边的最短路径。这样的状态定义引导我们能够使用 Bellman Ford 来解决有边数限制的最短路问题。
+Dijkstra基于贪心，只松弛最小权值点的所有出边，复杂度O(NxN)。     
+Bellman Ford/SPFA都是基于动态规划，其原始的状态定义为f[i][k]代表从起点到i点，且经过最多k条边的最短路径。这样的状态定义引导我们能够使用 Bellman Ford 来解决有边数限制的最短路问题。bellman是动态规划创始人，bf算法对所有出边进行松弛，dijkstra只对最小权值点的出边进行松弛。bf复杂度O(NXM)。
 
 同样多源汇最短路算法 Floyd也是基于动态规划，其原始的三维状态定义为f[i][j][k] 代表从点i到点j，且经过的所有点编号不会超过k（即可使用点编号范围为[1,k]）的最短路径。这样的状态定义引导我们能够使用 Floyd 求最小环或者求“重心点”（即删除该点后，最短路值会变大）。
 
