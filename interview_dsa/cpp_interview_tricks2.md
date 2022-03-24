@@ -1102,8 +1102,6 @@ for (int i = 0; i < equations.size(); i++) {
     edges[a][b] = c;
     edges[b][a] = 1/c;
 }
-
-//floyd
 for (auto & k:vers) {
     for (auto & i:vers) {
 	for (auto & j:vers) {
@@ -1113,7 +1111,63 @@ for (auto & k:vers) {
     }
 }	
 ```
-	
+				     
+```C++
+//SPFA				    
+class Solution {
+    const static int N = 110, M = 6010;
+    int edge[M], w[M], next[M], head[N];
+    int dist[N];
+    int n, k, idx;
+    const int inf = INT_MAX / 2;
+public:
+    int networkDelayTime(vector<vector<int>> &times, int _n, int _k) {
+        n = _n, k = _k;
+        idx = 0;
+        memset(edge, 0, sizeof(edge));
+        memset(w, 0, sizeof(w));
+        memset(next, 0, sizeof(next));
+        memset(head, -1, sizeof(head));
+
+        for (auto &time:times) {
+            int a = time[0], b = time[1], val = time[2];
+            add(a, b, val);
+        }
+
+        SPFA();
+        int res = 0;
+        for (int i = 1; i <= n; i++) {
+            res = max(res, dist[i]);
+        }
+        return res >= inf ? -1 : res;
+    }
+
+    void add(int a, int b, int val) {
+        edge[idx] = b, w[idx] = val, next[idx] = head[a], head[a] = idx;
+        idx++;
+    }
+
+    void SPFA() {
+        for (int i = 1; i <= n; i++) {
+            dist[i] = inf;
+        }
+        dist[k] = 0;
+        queue<int> q;
+        q.emplace(k);
+        while (q.size()) {
+            auto x = q.front();
+            q.pop();
+            for (int i = head[x]; i != -1; i = next[i]) {
+                int y = edge[i], val = w[i];
+                if (dist[y] > dist[x] + val) {
+                    dist[y] = dist[x] + val;
+                    q.push(y);
+                }
+            }
+        }
+    }
+};			     
+```	
 - Leetcode 399 除法求值：Floyd求最短路。
 - Leetcode 743 网络延迟时间：Floyd  + 朴素 Dijkstra  + 堆优化 Dijkstra  + Bellman Ford（类 & 邻接表） +  SPFA（邻接表）模板题。
 - Leetcode 785 判断二分图:DFS。
