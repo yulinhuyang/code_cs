@@ -1088,7 +1088,31 @@ Floyd：多源最短路，任意起点到任意终点的最短距离。三层循
 
 inf用0x3f3f3f3f或者INT_MAX/2;        
 idx 从0开始，停止条件i != -1;idx 从1开始，停止条件~i。          
-迭代顶点： for (auto & k:vers)       
+迭代顶点： for (auto & k:vers) 
+
+```C++
+//flyod
+unordered_set<string> vers;
+unordered_map<string, unordered_map<string, double>> edges;
+for (int i = 0; i < equations.size(); i++) {
+    string a = equations[i][0], b = equations[i][1];
+    double c = values[i];
+    vers.insert(a);
+    vers.insert(b);
+    edges[a][b] = c;
+    edges[b][a] = 1/c;
+}
+
+//floyd
+for (auto & k:vers) {
+    for (auto & i:vers) {
+	for (auto & j:vers) {
+	    if(edges[i][k] &&  edges[k][j])
+	    edges[i][j] = edges[i][k] * edges[k][j];
+	}
+    }
+}	
+```
 	
 - Leetcode 399 除法求值：Floyd求最短路。
 - Leetcode 743 网络延迟时间：Floyd  + 朴素 Dijkstra  + 堆优化 Dijkstra  + Bellman Ford（类 & 邻接表） +  SPFA（邻接表）模板题。
