@@ -206,8 +206,8 @@ LeetCode究极班: https://www.acwing.com/activity/content/activity_person/conte
 
 ### 数据结构设计 LRU/LFU
 
-- 146 LRU Cache（LRU缓存机制）   
-- 460 LFU Cache   
+- 146 LRU Cache（LRU缓存机制）: hash + 双向链表，头插尾删，delete  
+- 460 LFU Cache: 桶排序 + 双向链表
 
 
 ## 0x15 字符串(字符串hash、KMP与最小表示法）
