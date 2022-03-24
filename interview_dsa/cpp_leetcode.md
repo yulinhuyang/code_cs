@@ -6758,3 +6758,268 @@ public:
 };
 
 ```
+	
+##### 743. 网络延迟时间
+
+朴素dijsktra、堆优化dijkstra、bellman-ford、SPFA、flyord
+
+```C++
+//朴素dijsktra 初始化INT_MAX/2
+class Solution {
+    const static int N = 110, M = 6010;
+    int edge[N][N], dist[N];
+    bool vis[N];
+    int n, k;
+    const int inf = INT_MAX / 2;
+public:
+    int networkDelayTime(vector<vector<int>> &times, int _n, int _k) {
+        //二维数组的初始化
+        n = _n, k = _k;
+        for (int i = 1; i <= n; i++) {
+            for (int j = 1; j <= n; j++) {
+                edge[i][j] = i == j ? 0 : inf;
+            }
+        }
+        for (auto &time:times) {
+            int a = time[0], b = time[1], val = time[2];
+            edge[a][b] = min(edge[a][b], val);
+        }
+
+        dijkstra();
+        int res = 0;
+        for (int i = 1; i <= n; i++) {
+            res = max(res, dist[i]);
+        }
+        return res >= inf ? -1 : res;
+    }
+
+    void dijkstra() {
+        for (int i = 1; i <= n; i++) {
+            dist[i] = inf;
+            vis[i] = false;
+        }
+        dist[k] = 0;
+        //一个大循环，两个小循环(找最小点 + 更新其他出边)
+        for (int i = 1; i <= n; i++) {
+            int x = 0;
+            for (int j = 1; j <= n; j++) {
+                if (!vis[j] && (x == 0 || dist[j] < dist[x])) {
+                    x = j;
+                }
+            }
+            vis[x] = true;
+            for (int j = 1; j <= n; j++) {
+                dist[j] = min(dist[j], dist[x] + edge[x][j]);
+            }
+        }
+    }
+};
+//堆优化dijkstra
+class Solution {
+    const static int N = 110, M = 6010;
+    int edge[M], w[M], next[M], head[N], dist[N];
+    int n, k, idx;
+    const int inf = INT_MAX / 2;
+public:
+    int networkDelayTime(vector<vector<int>> &times, int _n, int _k) {
+        n = _n, k = _k;
+        idx = 0;
+        memset(edge, 0, sizeof(edge));
+        memset(w, 0, sizeof(w));
+        memset(next, 0, sizeof(next));
+        memset(head, -1, sizeof(head));
+
+        for (auto &time:times) {
+            int a = time[0], b = time[1], val = time[2];
+            add(a, b, val);
+        }
+
+        dijkstra();
+        int res = 0;
+        for (int i = 1; i <= n; i++) {
+            res = max(res, dist[i]);
+        }
+        return res >= inf ? -1 : res;
+    }
+
+    //头插法,e  w  n  h
+    //idx 从0开始,截止条件！=-1
+    void add(int a, int b, int val) {
+        edge[idx] = b, w[idx] = val, next[idx] = head[a], head[a] = idx;
+        idx++;
+    }
+
+    void dijkstra() {
+        for (int i = 1; i <= n; i++) {
+            dist[i] = inf;
+        }
+        priority_queue<pair<int, int>> q;
+        //当小顶堆使用
+        q.emplace(make_pair(0, k));
+        dist[k] = 0;
+        while (q.size()) {
+            auto top = q.top();
+            int z = top.first, x = top.second;
+            q.pop();
+            for (int i = head[x]; i != -1; i = next[i]) {
+                int b = edge[i], val = w[i];
+                if (dist[b] > dist[x] + val) {
+                    dist[b] = dist[x] + val;
+                    q.emplace(make_pair(-dist[b], b));
+                }
+            }
+        }
+    }
+};
+```
+
+```C++
+//bellman-ford 结构体、邻接表
+class Solution {
+    const static int N = 110, M = 6010;
+    int dist[N],prev[N];
+    int n, k, m;
+    const int inf = INT_MAX / 2;
+    struct Edge {
+        int a, b, c;
+    } edges[M];
+public:
+    int networkDelayTime(vector<vector<int>> &times, int _n, int _k) {
+        n = _n, k = _k;
+        m = times.size();
+
+        for (int i = 0; i < times.size(); i++) {
+            int a = times[i][0], b = times[i][1], val = times[i][2];
+            edges[i] = {a, b, val};
+        }
+
+        bf();
+        int res = 0;
+        for (int i = 1; i <= n; i++) {
+            res = max(res, dist[i]);
+        }
+        return res >= inf ? -1 : res;
+    }
+
+    void bf() {
+        for (int i = 1; i <= n; i++) {
+            dist[i] = inf;
+        }
+        dist[k] = 0;
+        //K代表最短路径最多包含n条边
+        for (int i = 1; i <= n; i++) {
+            //迭代所有边
+            for (int j = 0; j <= m; j++) {
+                auto prev = dist;
+                memcpy(prev,dist,sizeof(dist));
+                int a = edges[j].a, b = edges[j].b, val = edges[j].c;
+                dist[b] = min(dist[b], prev[a] + val);
+            }
+        }
+    }
+};
+
+//SPFA
+class Solution {
+    const static int N = 110, M = 6010;
+    int edge[M], w[M], next[M], head[N];
+    int dist[N];
+    int n, k, idx;
+    const int inf = INT_MAX / 2;
+public:
+    int networkDelayTime(vector<vector<int>> &times, int _n, int _k) {
+        n = _n, k = _k;
+        idx = 0;
+        memset(edge, 0, sizeof(edge));
+        memset(w, 0, sizeof(w));
+        memset(next, 0, sizeof(next));
+        memset(head, -1, sizeof(head));
+
+        for (auto &time:times) {
+            int a = time[0], b = time[1], val = time[2];
+            add(a, b, val);
+        }
+
+        SPFA();
+        int res = 0;
+        for (int i = 1; i <= n; i++) {
+            res = max(res, dist[i]);
+        }
+        return res >= inf ? -1 : res;
+    }
+
+    void add(int a, int b, int val) {
+        edge[idx] = b, w[idx] = val, next[idx] = head[a], head[a] = idx;
+        idx++;
+    }
+
+    void SPFA() {
+        for (int i = 1; i <= n; i++) {
+            dist[i] = inf;
+        }
+        dist[k] = 0;
+        queue<int> q;
+        q.emplace(k);
+        while (q.size()) {
+            auto x = q.front();
+            q.pop();
+            for (int i = head[x]; i != -1; i = next[i]) {
+                int y = edge[i], val = w[i];
+                if (dist[y] > dist[x] + val) {
+                    dist[y] = dist[x] + val;
+                    q.push(y);
+                }
+            }
+        }
+    }
+};
+```
+
+```c++
+//flyord 三层循环
+class Solution {
+    const static int N = 110, M = 6010;
+    int edge[N][N];
+    int n, k;
+    const int inf = INT_MAX / 2;
+public:
+    int networkDelayTime(vector<vector<int>> &times, int _n, int _k) {
+        n = _n, k = _k;
+        for (int i = 0; i <= n; i++) {
+            for (int j = 0; j <= n; j++) {
+                edge[i][j] = i == j ? 0 : inf;
+            }
+        }
+
+        for (auto &time:times) {
+            int a = time[0], b = time[1], val = time[2];
+            edge[a][b] = val;
+        }
+
+        flyord();
+        int res = 0;
+        for (int i = 1; i <= n; i++) {
+            res = max(res, edge[k][i]);
+        }
+        return res >= inf ? -1 : res;
+    }
+
+
+    void flyord() {
+        //三层循环:
+        //枚举中转点-->枚举起点-->枚举终点-->松弛操作
+        for (int k = 1; k <= n; k++) {
+            for (int i = 1; i <= n; i++) {
+                for (int j = 1; j <= n; j++) {
+                    edge[i][j] = min(edge[i][j], edge[i][k] + edge[k][j]);
+                }
+            }
+        }
+    }
+};
+```
+
+
+	
+	
+	
