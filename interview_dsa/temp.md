@@ -2,9 +2,9 @@ LFU： https://leetcode-cn.com/problems/lfu-cache/solution/gong-shui-san-xie-yun
 
 https://www.acwing.com/activity/content/code/content/555766/
 
- 1  map<key,node> + set<node>(代替堆)，因为C++中堆pq的值不能改，Node是自定义排序的结构体。    
+ 1  key_table(unordered_map<key,Node) + set<Node>(代替堆)，因为C++中堆pq的值不能改，Node是自定义排序的结构体。    
  
- 2  key_table(unordered_map<int, list<Node>::iterator>) + freq_table(unordered_map<int, list<Node>>) ：链接法。    
+ 2  key_table(unordered_map<key, list<Node>::iterator>) + freq_table(unordered_map<freq, list<Node>>) ：链接法。    
  散列冲突解决：链接法、开发定址法。类似邻接表结构，展开的list链表。类似图的存储结构map + map。
  
  map存储结构体，需要insert或emplace后使用make_pair,不能直接赋值
