@@ -50,3 +50,6 @@ https://github.com/Bryce1010/bryce1010-ACM-Template
 
 ACM 的正确入门方式是什么？：https://www.zhihu.com/question/51727516/answer/127265733
 
+ACM 怎么样零基础到入门？:https://www.zhihu.com/question/26823471/answer/933437241
+
+
