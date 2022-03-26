@@ -1,20 +1,26 @@
-### 平台开源
+### 刷题平台
 
-[力扣](https://leetcode-cn.com/problemset/all/)
+算法竞赛刷题网站汇总：https://blog.csdn.net/qq_43428310/article/details/106684497
 
-[leetcode食用指南](https://github.com/azl397985856/leetcode)
+力扣:https://leetcode-cn.com/problemset/all/
 
-[牛客网](https://www.nowcoder.com/)
+leetcode食用指南:https://github.com/azl397985856/leetcode
 
-[Comet OJ](https://www.cometoj.com/contests)
+牛客网:https://www.nowcoder.com/
 
-[HDU](http://acm.hdu.edu.cn/)
+Comet OJ:https://www.cometoj.com/contests
 
-[HihoCoder](https://hihocoder.com/)
+HDU: http://acm.hdu.edu.cn/
 
-[洛谷](https://www.luogu.org/)
+HihoCoder:https://hihocoder.com/
 
-[LibreOJ(算法竞赛一本通——提高篇)](https://loj.ac)
+洛谷：https://www.luogu.org/
+
+LibreOJ(算法竞赛一本通——提高篇) ：https://loj.ac
+
+vjudge: https://vjudge.net/contest
+
+CF: https://codeforces.com/  
 
 **OI wiki**
 
@@ -30,22 +36,15 @@ Just Code [[github]](https://github.com/YaxeZhang/Just-Code)
 
 ### ACM模板：
 
-https://github.com/Bryce1010/bryce1010-ACM-Template
+KuangBin的ACM模板:https://github.com/kuangbin/ACM-ICPC
 
-KuangBin的ACM模板 [[github]](https://github.com/kuangbin/ACM-ICPC)  
+kuangbin带你飞 专题1-23： https://vjudge.csgrandeur.cn/article/187
 
-f-zyj/ACM 模板 [[github]](https://github.com/f-zyj/ACM)
-
-f-zyj/ACM 在线模板：https://blog.csdn.net/f_zyj/article/details/51594851
+f-zyj/ACM 模板:https://github.com/f-zyj/ACM
 
 https://github.com/soulmachine/acm-cheat-sheet
 
-### 博客
-
-https://kuangbin.github.io/
-
-https://codeforces.com/  
-
-[kuangbin带你飞]专题1-23： https://vjudge.csgrandeur.cn/article/187
+https://github.com/Bryce1010/bryce1010-ACM-Template
 
 ACM 的正确入门方式是什么？：https://www.zhihu.com/question/51727516/answer/127265733
+
