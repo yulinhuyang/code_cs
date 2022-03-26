@@ -40,6 +40,8 @@ KuangBin的ACM模板:https://github.com/kuangbin/ACM-ICPC
 
 kuangbin带你飞 专题1-23： https://vjudge.csgrandeur.cn/article/187
 
+kuangbin题单整理：https://vjudge.csgrandeur.cn/article/752
+
 f-zyj/ACM 模板:https://github.com/f-zyj/ACM
 
 https://github.com/soulmachine/acm-cheat-sheet
