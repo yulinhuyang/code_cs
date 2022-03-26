@@ -39,3 +39,13 @@ f-zyj/ACM 模板 [[github]](https://github.com/f-zyj/ACM)
 f-zyj/ACM 在线模板：https://blog.csdn.net/f_zyj/article/details/51594851
 
 https://github.com/soulmachine/acm-cheat-sheet
+
+### 博客
+
+https://kuangbin.github.io/
+
+https://codeforces.com/  
+
+[kuangbin带你飞]专题1-23： https://vjudge.csgrandeur.cn/article/187
+
+ACM 的正确入门方式是什么？：https://www.zhihu.com/question/51727516/answer/127265733
