@@ -1,4 +1,5 @@
 
+
 # 0x00 基本算法(40)
 
 包括位运算、递推、递归、二分、排序、倍增、贪心等算法。
@@ -28,8 +29,10 @@
 
 ## 0x03 前缀和与差分
 
+前缀和:
 - AcWing 795 前缀和
 - AcWing 796 子矩阵的和
+差分:
 - AcWing 797 差分
 - AcWing 798 差分矩阵
  
@@ -40,24 +43,32 @@
 
 ## 0x04  二分和三分
 
+- AcWing 789 数的范围 
+- AcWing 790 数的三次方根 
 - AcWing 102 最佳牛围栏
 - AcWing 113 特殊排序
 - AcWing 120 防线：二分
 
 ## 0x05 双指针与排序
 
+快速排序：
 - AcWing 785 快速排序
 - AcWing 786 第k个数
-- AcWing 789 数的范围 
-- AcWing 790 数的三次方根 
+
+归并排序：
 - AcWing 787 归并排序
 - AcWing 788 逆序对的数量
+
+高精度：
 - AcWing 791 高精度加法 
 - AcWing 792 高精度减法 
 - AcWing 793 高精度乘法 
 - AcWing 794 高精度除法
+
+双指针：
 - AcWing 799 最长连续不重复子序列
 - AcWing 800 数组元素的目标和
+- AcWing 2816 判断子序列
  
 - AcWing 103 电影
 - AcWing 104 货仓选址
@@ -75,16 +86,23 @@
 
 ## 0x07 贪心
 
+离散化：
 - AcWing 802 区间和
+
+区间问题：
 - AcWing 803 区间合并
 - AcWing 908 最大不相交区间数量  
 - AcWing 906 区间分组  
-- AcWing 907 区间覆盖  
-- AcWing 148 合并果子  
-- AcWing 913 排队打水  
+- AcWing 907 区间覆盖 
+
+huffman树： 
+- AcWing 148 合并果子
+排序不等式： 
+- AcWing 913 排队打水
+
+绝对值不等式：
 - AcWing 104 货仓选址   
 - AcWing 2816 判断子序列  
-- AcWing 3302 表达式求值  
 
 - AcWing 110 防晒
 - AcWing 111 畜栏预定
@@ -103,7 +121,11 @@
 
 ## 0x11 栈/单调栈
 
-- AcWing 828 模拟栈  
+栈：
+- AcWing 828 模拟栈
+- AcWing 3302 表达式求值
+
+单调栈：    
 - AcWing 830 单调栈
 
 - AcWing 41 包含min函数的栈
@@ -118,7 +140,9 @@
 
 ## 0x12 队列/单调队列
 
-- AcWing 829 模拟队列  
+队列：
+- AcWing 829 模拟队列
+单调队列:  
 - AcWing 154 滑动窗口 
   
 - AcWing 132 小组队列
@@ -148,7 +172,8 @@
 
 ## 0x15 字符串(KMP与最小表示法）
 
-- AcWing 831 KMP字符串  
+- AcWing 831 KMP字符串
+  
 - AcWing 141 周期
 - AcWing 158 项链：字符串/最小表示法
 - AcWing 159 奶牛矩阵：字符串/kmp模式匹配
@@ -156,9 +181,9 @@
 
 ## 0x16  Trie树（字典树）
 
-- AcWing 835 Trie字符串统计  
+- AcWing 835 Trie字符串统计
+- AcWing 143 最大异或对  
 - AcWing 142 前缀统计
-- AcWing 143 最大异或对
 - AcWing 144 最长异或值路径
 - AcWing 161 电话列表：Trie
 
@@ -782,6 +807,9 @@ Xb - Xa >= D --> Xa <= Xb - D
 - AcWing 381 有线电视网络
 - AcWing 382 K取方格数
 - AcWing 412 排水沟:最大流
+
+
+
 
 
 
