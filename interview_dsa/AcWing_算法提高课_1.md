@@ -1,274 +1,362 @@
 # 目录
 
-### 第一章 动态规划
+#### 第一章 动态规划
+ 
+数字三角形模型:
+- AcWing 1015 摘花生
+- AcWing 1018 最低通行费
+- AcWing 1027 方格取数
+- AcWing 275 传纸条
 
-| 序号 | 题目 |
-|---|---|
-| AcWing1015 | 摘花生 |
-| AcWing1018 | 最低通行费 |
-| AcWing1027 | 方格取数 |
-| AcWing1017 | 怪盗基德的滑翔翼 |
-| AcWing1014 | 登山 |
-| AcWing482 | 合唱队形 |
-| AcWing1012 | 友好城市 |
-| AcWing1016 | 最大上升子序列和 |
-| AcWing1010 | 拦截导弹 |
-| AcWing187 | 导弹防御系统 |
-| AcWing272 | 最长公共上升子序列 |
-| AcWing423 | 采药 |
-| AcWing1024 | 装箱问题 |
-| AcWing1022 | 宠物小精灵之收服 |
-| AcWing278 | 数字组合 |
-| AcWing1023 | 买书 |
-| AcWing1021 | 货币系统 |
-| AcWing6 | 多重背包问题III |
-| AcWing1019 | 庆功会 |
-| AcWing7 | 混合背包问题 |
-| AcWing1020 | 潜水员 |
-| AcWing8 | 二维费用的背包问题 |
-| AcWing1013 | 机器分配 |
-| AcWing426 | 开心的金明 |
-| AcWing10 | 有依赖的背包问题 |
-| AcWing487 | 金明的预算方案 |
-| AcWing12 | 背包问题求具体方案 |
-| AcWing275 | 传纸条 |
-| AcWing532 | 货币系统 |
-| AcWing11 | 背包问题求方案数 |
-| AcWing734 | 能量石 |
-| AcWing1049 | 大盗阿福 |
-| AcWing1057 | 股票买卖IV |
-| AcWing1058 | 股票买卖V |
-| AcWing1052 | 设计密码 |
-| AcWing1064 | 小国王 |
-| AcWing327 | 玉米田 |
-| AcWing1053 | 修复DNA |
-| AcWing292 | 炮兵阵地 |
-| AcWing524 | 愤怒的小鸟 |
-| AcWing529 | 宝藏 |
-| AcWing321 | 棋盘分割 |
-| AcWing1069 | 凸多边形的划分 |
-| AcWing479 | 加分二叉树 |
-| AcWing320 | 能量项链 |
-| AcWing1068 | 环形石子合并 |
-| AcWing323 | 战略游戏 |
-| AcWing1074 | 二叉苹果树 |
-| AcWing1075 | 数字转换 |
-| AcWing1072 | 树的最长路径 |
-| AcWing1073 | 树的中心 |
-| AcWing1077 | 皇宫看守 |
-| AcWing1086 | 恨7不成妻 |
-| AcWing1085 | 不要62 |
-| AcWing1084 | 数字游戏II |
-| AcWing1083 | Windy数 |
-| AcWing1082 | 数字游戏 |
-| AcWing1081 | 度的数量 |
-| AcWing135 | 最大子序和 |
-| AcWing1088 | 旅行问题 |
-| AcWing1089 | 烽火传递 |
-| AcWing1090 | 绿色通道 |
-| AcWing1087 | 修剪草坪 |
-| AcWing1091 | 理想的正方形 |
-| AcWing303 | 运输小猫 |
-| AcWing300 | 任务安排1 |
-| AcWing301 | 任务安排2 |
-| AcWing302 | 任务安排3 |
+最长上升子序列模型：
+- AcWing 1017 怪盗基德的滑翔翼
+- AcWing 1014 登山
+- AcWing 482 合唱队形
+- AcWing 1012 友好城市
+- AcWing 1016 最大上升子序列和
+- AcWing 1010 拦截导弹
+- AcWing 187 导弹防御系统
+- AcWing 272 最长公共上升子序列
 
-### 第二章 搜索
+背包模型：
+- AcWing 423 采药
+- AcWing 1024 装箱问题
+- AcWing 1022 宠物小精灵之收服
+- AcWing 278 数字组合
+- AcWing 1023 买书
+- AcWing 1021 货币系统
+- AcWing 6 多重背包问题III
+- AcWing 1019 庆功会
+- AcWing 7 混合背包问题
+- AcWing 1020 潜水员
+- AcWing 8 二维费用的背包问题
+- AcWing 1013 机器分配
+- AcWing 426 开心的金明
+- AcWing 10 有依赖的背包问题
+- AcWing 12 背包问题求具体方案
+- AcWing 532 货币系统
+- AcWing 11 背包问题求方案数
+- AcWing 734 能量石
+- AcWing 487 金明的预算方案
 
+状态机模型：
+- AcWing 1049 大盗阿福
+- AcWing 1057 股票买卖IV
+- AcWing 1058 股票买卖V
+- AcWing 1052 设计密码
 
-| 序号 | 题目 |
-|---|---|
-| AcWing1097 | 池塘计数 |
-| AcWing1098 | 城堡问题 |
-| AcWing1106 | 山峰和山谷 |
-| AcWing1100 | 抓住那头牛 |
-| AcWing1076 | 迷宫问题 |
-| AcWing188 | 武士风度的牛 |
-| AcWing173 | 矩阵距离 |
-| AcWing1107 | 魔板 |
-| AcWing175 | 电路维修 |
-| AcWing190 | 字串变换 |
-| AcWing178 | 第K短路 |
-| AcWing179 | 八数码 |
-| AcWing1112 | 迷宫 |
-| AcWing1113 | 红与黑 |
-| AcWing1116 | 马走日 |
-| AcWing1117 | 单词接龙 |
-| AcWing1118 | 分成互质组 |
-| AcWing165 | 小猫爬山 |
-| AcWing166 | 数独 |
-| AcWing167 | 木棒 |
-| AcWing168 | 生日蛋糕 |
-| AcWing170 | 加成序列 |
-| AcWing171 | 送礼物 |
-| AcWing180 | 排书 |
-| AcWing181 | 回转游戏 |
+状态压缩DP：
+- AcWing 1064 小国王
+- AcWing 327 玉米田
+- AcWing 1053 修复DNA
+- AcWing 292 炮兵阵地
+- AcWing 524 愤怒的小鸟
+- AcWing 529 宝藏
 
-### 第三章 图论 
+区间DP:
+- AcWing 1068 环形石子合并
+- AcWing 320 能量项链
+- AcWing 479 加分二叉树
+- AcWing 1069 凸多边形的划分
+- AcWing 321 棋盘分割
 
-| 序号 | 题目 |
-|---|---|
-| AcWing1129 | 热浪 |
-| AcWing1128 | 信使 |
-| AcWing1127 | 香甜的黄油 |
-| AcWing1126 | 最小花费 |
-| AcWing920 | 最优乘车 |
-| AcWing903 | 昂贵的聘礼 |
-| AcWing1135 | 新年好 |
-| AcWing340 | 通信线路 |
-| AcWing342 | 道路与航线 |
-| AcWing341 | 最优贸易 |
-| AcWing383 | 观光 |
-| AcWing1134 | 最短路计数 |
-| AcWing1131 | 拯救大兵瑞恩 |
-| AcWing1137 | 选择最佳线路 |
-| AcWing343 | 排序 |
-| AcWing1125 | 牛的旅行 |
-| AcWing344 | 观光之旅 |
-| AcWing345 | 牛站 |
-| AcWing1140 | 最短网络 |
-| AcWing1141 | 局域网 |
-| AcWing1142 | 繁忙的都市 |
-| AcWing1143 | 联络员 |
-| AcWing1143 | 联络员 |
-| AcWing1144 | 连接格点 |
-| AcWing1146 | 新的开始 |
-| AcWing1145 | 北极通讯网络 |
-| AcWing346 | 走廊泼水节 |
-| AcWing1148 | 秘密的牛奶运输 |
-| AcWing1165 | 单词环 |
-| AcWing904 | 虫洞 |
-| AcWing361 | 观光奶牛 |
-| AcWing1169 | 糖果 |
-| AcWing362 | 区间 |
-| AcWing1170 | 排队布局 |
-| AcWing393 | 雇佣收银员 |
-| AcWing1172 | 祖孙询问 |
-| AcWing1171 | 距离 |
-| AcWing356 | 次小生成树 |
-| AcWing352 | 闇の連鎖 |
-| AcWing1174 | 受欢迎的牛 |
-| AcWing367 | 学校网络 |
-| AcWing1175 | 最大半连通子图 |
-| AcWing368 | 银河 |
-| AcWing395 | 冗余路径 |
-| AcWing1183 | 电力 |
-| AcWing396 | 矿场搭建 |
-| AcWing257 | 关押罪犯 |
-| AcWing372 | 棋盘覆盖 |
-| AcWing376 | 机器任务 |
-| AcWing378 | 骑士放置 |
-| AcWing379 | 捉迷藏 |
-| AcWing1123 | 铲雪车 |
-| AcWing1184 | 欧拉回路 |
-| AcWing1124 | 骑马修栅栏 |
-| AcWing1185 | 单词游戏 |
-| AcWing1191 | 家谱树 |
-| AcWing1192 | 奖金 |
-| AcWing164 | 可达性统计 |
-| AcWing456 | 车站分级 |
-| AcWing372 | 棋盘覆盖 |
-| AcWing376 | 机器任务 |
-| AcWing378 | 骑士放置 |
-| AcWing379 | 捉迷藏 |
-| AcWing1123 | 铲雪车 |
-| AcWing1184 | 欧拉回路 |
-| AcWing1124 | 骑马修栅栏 |
-| AcWing1185 | 单词游戏 |
-| AcWing1191 | 家谱树 |
-| AcWing1192 | 奖金 |
-| AcWing164 | 可达性统计 |
-| AcWing456 | 车站分级 |
+树形DP:
+- AcWing 1072 树的最长路径
+- AcWing 1073 树的中心
+- AcWing 1075 数字转换
+- AcWing 1074 二叉苹果树
+- AcWing 323 战略游戏
+- AcWing 1077 皇宫看守
 
+数位DP:
+- AcWing 1081 度的数量
+- AcWing 1082 数字游戏
+- AcWing 1083 Windy数
+- AcWing 1084 数字游戏II
+- AcWing 1085 不要62
+- AcWing 1086 恨7不成妻
 
+单调队列优化：
+- AcWing 135 最大子序和
+- AcWing 1087 修剪草坪
+- AcWing 1088 旅行问题
+- AcWing 1089 烽火传递
+- AcWing 1090 绿色通道
+- AcWing 1091 理想的正方形
 
-### 第四章 高级数据结构 
+斜率优化DP:
+- AcWing 303 运输小猫
+- AcWing 300 任务安排1
+- AcWing 301 任务安排2
+- AcWing 302 任务安排3
 
-| 序号 | 题目 |
-|---|---|
-| AcWing1250 | 格子游戏 |
-| AcWing1252 | 搭配购买 |
-| AcWing237 | 程序自动分析 |
-| AcWing238 | 银河英雄传说 |
-| AcWing239 | 奇偶游戏 |
-| AcWing241 | 楼兰图腾 |
-| AcWing242 | 一个简单的整数问题 |
-| AcWing243 | 一个简单的整数问题2 |
-| AcWing244 | 谜一样的牛 |
-| AcWing1275 | 最大数 |
-| AcWing245 | 你能回答这些问题吗 |
-| AcWing246 | 区间最大公约数 |
-| AcWing243 | 一个简单的整数问题2 |
-| AcWing247 | 亚特兰蒂斯 |
-| AcWing1277 | 维护序列 |
-| AcWing256 | 最大异或和 |
-| AcWing255 | 第K小数 |
-| AcWing253 | 普通平衡树 |
-| AcWing265 | 营业额统计 |
-| AcWing1282 | 搜索关键词 |
-| AcWing1285 | 单词 |
+#### 第二章 搜索
 
+Flood Fill：
+- AcWing 1097 池塘计数
+- AcWing 1098 城堡问题
+- AcWing 1106 山峰和山谷
 
+最短路模型；
+- AcWing 1076 迷宫问题
+- AcWing 188 武士风度的牛
+- AcWing 1100 抓住那头牛
 
-### 第五章  数学知识 
+多源BFS:
+- AcWing 173 矩阵距离
 
+最小步数模型：
+- AcWing 1107 魔板
 
-| 序号 | 题目 |
-|---|---|
-| AcWing1292 | 哥德巴赫猜想 |
-| AcWing1293 | 夏洛克和他的女朋友 |
-| AcWing196 | 质数距离 |
-| AcWing197 | 阶乘分解 |
-| AcWing1289 | 序列的第k个数 |
-| AcWing1290 | 越狱 |
-| AcWing1291 | 轻拍牛头 |
-| AcWing1294 | 樱花 |
-| AcWing198 | 反素数 |
-| AcWing200 | Hankson的趣味题 |
-| AcWing201 | 可见的点 |
-| AcWing220 | 最大公约数 |
-| AcWing203 | 同余方程 |
-| AcWing222 | 青蛙的约会 |
-| AcWing202 | 最幸运的数字 |
-| AcWing1298 | 曹冲养猪 |
-| AcWing1303 | 斐波那契前n项和 |
-| AcWing1304 | 佳佳的斐波那契 |
-| AcWing1305 | GT考试 |
-| AcWing1307 | 牡牛和牝牛 |
-| AcWing1308 | 方程的解 |
-| AcWing1309 | 车的放置 |
-| AcWing1310 | 数三角形 |
-| AcWing1312 | 序列统计 |
-| AcWing1315 | 网格 |
-| AcWing1316 | 有趣的数列 |
-| AcWing207 | 球形空间产生器 |
-| AcWing208 | 开关问题 |
-| AcWing214 | Devu和鲜花 |
-| AcWing215 | 破译密码 |
-| AcWing217 | 绿豆蛙的归宿 |
-| AcWing218 | 扑克牌 |
-| AcWing1319 | 移棋子游戏 |
-| AcWing1321 | 取石子 |
-| AcWing1322 | 取石子游戏 |
+双端队列广搜：
+- AcWing 175 电路维修
+
+双向广搜：
+- AcWing 190 字串变换
+
+A*：
+- AcWing 178 第K短路
+- AcWing 179 八数码
+
+DFS之连通性模型：
+- AcWing 1112 迷宫
+- AcWing 1113 红与黑
+
+DFS之搜索顺序：
+- AcWing 1116 马走日
+- AcWing 1117 单词接龙
+- AcWing 1118 分成互质组
+
+DFS之剪枝与优化：
+- AcWing 165 小猫爬山
+- AcWing 166 数独
+- AcWing 167 木棒
+- AcWing 168 生日蛋糕
+
+迭代加深：
+- AcWing 170 加成序列
+
+双向DFS:
+- AcWing 171 送礼物
+
+IDA*：
+- AcWing 180 排书
+- AcWing 181 回转游戏
+
+#### 第三章 图论
+
+单源最短路的建图方式：
+- AcWing 1129 热浪
+- AcWing 1128 信使
+- AcWing 1127 香甜的黄油
+- AcWing 1126 最小花费
+- AcWing 920 最优乘车
+- AcWing 903 昂贵的聘礼
+
+单源最短路的综合应用：
+- AcWing 1135 新年好
+- AcWing 340 通信线路
+- AcWing 342 道路与航线
+- AcWing 341 最优贸易
+
+单源最短路的扩展应用：
+- AcWing 383 观光
+- AcWing 1134 最短路计数
+- AcWing 1131 拯救大兵瑞恩
+- AcWing 1137 选择最佳线路
+
+floyd算法：
+- AcWing 1125 牛的旅行
+- AcWing 343 排序
+- AcWing 344 观光之旅
+- AcWing 345 牛站
+
+最小生成树：
+- AcWing 1140 最短网络
+- AcWing 1141 局域网
+- AcWing 1142 繁忙的都市
+- AcWing 1143 联络员
+- AcWing 1144 连接格点
+
+最小生成树的扩展应用：
+- AcWing 1146 新的开始
+- AcWing 1145 北极通讯网络
+- AcWing 346 走廊泼水节
+- AcWing 1148 秘密的牛奶运输
+
+负环：
+- AcWing 904 虫洞
+- AcWing 361 观光奶牛
+- AcWing 1165 单词环
+
+差分约束：
+- AcWing 1169 糖果
+- AcWing 362 区间
+- AcWing 1170 排队布局
+- AcWing 393 雇佣收银员
+
+最近公共祖先：
+- AcWing 1172 祖孙询问
+- AcWing 1171 距离
+- AcWing 356 次小生成树
+- AcWing 352 闇の連鎖
+
+有向图的强连通分量：
+- AcWing 1174 受欢迎的牛
+- AcWing 367 学校网络
+- AcWing 1175 最大半连通子图
+- AcWing 368 银河
+
+无向图的双连通分量：
+- AcWing 395 冗余路径
+- AcWing 1183 电力
+- AcWing 396 矿场搭建
+
+二分图：
+- AcWing 257 关押罪犯
+- AcWing 372 棋盘覆盖
+- AcWing 376 机器任务
+- AcWing 378 骑士放置
+- AcWing 379 捉迷藏
+
+欧拉回路和欧拉路径：
+- AcWing 1123 铲雪车
+- AcWing 1184 欧拉回路
+- AcWing 1124 骑马修栅栏
+- AcWing 1185 单词游戏
+
+拓扑排序：
+- AcWing 1191 家谱树
+- AcWing 1192 奖金
+- AcWing 164 可达性统计
+- AcWing 456 车站分级
 
 
-### 第六章 基础算法
+#### 第四章 高级数据结构
+
+并查集：
+- AcWing 1250 格子游戏
+- AcWing 1252 搭配购买
+- AcWing 237 程序自动分析
+- AcWing 238 银河英雄传说
+
+树状数组：
+- AcWing 239 奇偶游戏
+- AcWing 241 楼兰图腾
+- AcWing 242 一个简单的整数问题
+- AcWing 243 一个简单的整数问题2
+- AcWing 244 谜一样的牛
+
+线段树：
+- AcWing 1275 最大数
+- AcWing 245 你能回答这些问题吗
+- AcWing 246 区间最大公约数
+- AcWing 243 一个简单的整数问题2
+- AcWing 247 亚特兰蒂斯
+- AcWing 1277 维护序列
+
+可持久化数据结构：
+- AcWing 256 最大异或和
+- AcWing 255 第K小数
+
+平衡树：
+- AcWing 253 普通平衡树
+- AcWing 265 营业额统计
+
+AC自动机：
+- AcWing 1282 搜索关键词
+- AcWing 1285 单词
+
+#### 第五章 数学知识
+
+筛质数：
+- AcWing 1292 哥德巴赫猜想
+- AcWing 1293 夏洛克和他的女朋友
+- AcWing 196 质数距离
+
+分解质因数：
+- AcWing 197 阶乘分解
+
+快速幂：
+- AcWing 1289 序列的第k个数
+- AcWing 1290 越狱
+
+约数个数：
+- AcWing 1291 轻拍牛头
+- AcWing 1294 樱花
+- AcWing 198 反素数
+- AcWing 200 Hankson的趣味题
+
+欧拉函数：
+- AcWing 201 可见的点
+- AcWing 220 最大公约数
+
+同余：
+- AcWing 203 同余方程
+- AcWing 222 青蛙的约会
+- AcWing 202 最幸运的数字
+- AcWing 1298 曹冲养猪
+
+矩阵乘法：
+- AcWing 1303 斐波那契前n项和
+- AcWing 1304 佳佳的斐波那契
+- AcWing 1305 GT考试
+
+组合计数：
+- AcWing 1307 牡牛和牝牛
+- AcWing 1308 方程的解
+- AcWing 1309 车的放置
+- AcWing 1310 数三角形
+- AcWing 1312 序列统计
+- AcWing 1315 网格
+- AcWing 1316 有趣的数列
+
+高斯消元：
+- AcWing 207 球形空间产生器
+- AcWing 208 开关问题
+
+容斥原理：
+- AcWing 214 Devu和鲜花
+- AcWing 215 破译密码
+
+概率与数学期望：
+- AcWing 217 绿豆蛙的归宿
+- AcWing 218 扑克牌
+
+博弈论：
+- AcWing 1319 移棋子游戏
+- AcWing 1321 取石子
+- AcWing 1322 取石子游戏
+
+#### 第六章 基础算法
+ 
+
+位运算：
+- AcWing 90 64位整数乘法
+
+递推与递归：
+- AcWing 95 费解的开关
+- AcWing 97 约数之和
+- AcWing 98 分形之城
+
+前缀和与差分：
+- AcWing 99 激光炸弹
+- AcWing 100 增减序列
+
+二分：
+- AcWing 102 最佳牛围栏
+- AcWing 113 特殊排序
+
+排序：
+- AcWing 105 七夕祭
+- AcWing 106 动态中位数
+- AcWing 107 超快速排序
+
+RMQ:
+- AcWing 1273 天才的记忆
 
 
-| 序号 | 题目 |
-|---|---|
-| AcWing90 | 64位整数乘法 |
-| AcWing95 | 费解的开关 |
-| AcWing97 | 约数之和 |
-| AcWing98 | 分形之城 |
-| AcWing99 | 激光炸弹 |
-| AcWing100 | 增减序列 |
-| AcWing102 | 最佳牛围栏 |
-| AcWing113 | 特殊排序 |
-| AcWing105 | 七夕祭 |
-| AcWing106 | 动态中位数 |
-| AcWing107 | 超快速排序 |
-| AcWing1273 | 天才的记忆 |
+
 
 # 第一章 动态规划
  
