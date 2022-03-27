@@ -745,7 +745,7 @@ CDQ分治：
 - AcWing 734 能量石
 - AcWing 1053 修复DNA
 
-
+**线性DP**
 - AcWing 271 杨老师的照相排列
 - AcWing 313 花店橱窗：线性DP/输出方案
 - AcWing 312 乌龟棋：线性DP
