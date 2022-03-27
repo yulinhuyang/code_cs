@@ -52,13 +52,9 @@ https://github.com/soulmachine/acm-cheat-sheet
 
 https://github.com/Bryce1010/bryce1010-ACM-Template
 
-ACM 的正确入门方式是什么？：https://www.zhihu.com/question/51727516/answer/127265733
+###  ACM 学习资源
 
-ACM 怎么样零基础到入门？:https://www.zhihu.com/question/26823471/answer/933437241
-
-### 
-
-
+#### 参考： 
 
 ACM 的正确入门方式是什么？数学lover: https://www.zhihu.com/question/51727516/answer/127265733
 
@@ -68,7 +64,7 @@ ACM 怎么样零基础到入门？xinhao : https://www.zhihu.com/question/268234
 
 算法学习笔记（目录）：https://zhuanlan.zhihu.com/p/105467597
 
-习题：
+#### 习题：
 
 1. 一些基本算法和数据结构(队列 栈 树 图 并查集 堆 DFS BFS 最短路 最小生成树 拓扑排序 动态规划 贪心 搜索 KMP 哈希 Trie AC自动机 快速幂 逆元 费马小定理 欧拉函数 素数筛 分解质因数)
 
@@ -108,7 +104,7 @@ ACM 怎么样零基础到入门？xinhao : https://www.zhihu.com/question/268234
 
 3.更高深的技巧，更复杂的数据结构（树链剖分，动态树，可持久化线段树，DLX，后缀自动机，回文树，斜率优化/单调队列优化/四边形优化DP，插头dp，莫比乌斯反演......）
 
-视频：
+#### 视频：
 
 https://space.bilibili.com/611212/ @qscqesze 当时是看卿学姐的视频入门了主席树
 
@@ -121,7 +117,7 @@ https://space.bilibili.com/133821921/@开开心心233
 https://space.bilibili.com/7711573/ @AutSky JadeK
 
 
-博客：
+#### 博客：
 
 https://oi-wiki.org/：有很多算法的入门教程和总结，非常喜欢网站的风格
 
