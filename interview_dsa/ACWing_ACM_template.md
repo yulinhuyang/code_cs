@@ -22,18 +22,6 @@ vjudge: https://vjudge.net/contest
 
 CF: https://codeforces.com/  
 
-**OI wiki**
-
-[学习资源](https://oi-wiki.org/intro/resources/)  
-
-[OI wiki](https://oi-wiki.org/)
-
-[OI & ACM 课件分享](https://github.com/hzwer/shareOI)  
-
-Just Code [[github]](https://github.com/YaxeZhang/Just-Code) 
-  
-写在20年初的校招面试心得与自学CS经验及找工作分享 [github](https://github.com/conanhujinming/tips_for_interview/blob/master/README-zh_CN.md)   
-
 ### ACM模板：
 
 KuangBin的ACM模板:https://github.com/kuangbin/ACM-ICPC
@@ -63,6 +51,8 @@ ACM 怎么样零基础到入门？xinhao : https://www.zhihu.com/question/268234
 备战ACM，想问下有什么算法网课推荐吗?： https://www.zhihu.com/question/354261300/answer/884948907
 
 算法学习笔记（目录）：https://zhuanlan.zhihu.com/p/105467597
+
+写在20年初的校招面试心得与自学CS经验及找工作分享 [github](https://github.com/conanhujinming/tips_for_interview/blob/master/README-zh_CN.md)  
 
 #### 习题：
 
@@ -106,44 +96,48 @@ ACM 怎么样零基础到入门？xinhao : https://www.zhihu.com/question/268234
 
 #### 视频：
 
-https://space.bilibili.com/611212/   qscqesze 当时是看卿学姐的视频入门了主席树
+qscqesze卿学姐: https://space.bilibili.com/611212/ 
 
-https://space.bilibili.com/8198319/   a兵长 
+a兵长: https://space.bilibili.com/8198319/    
 
-https://space.bilibili.com/120174936/  不分解的AgOH
+不分解的AgOH: https://space.bilibili.com/120174936/  
 
-https://space.bilibili.com/133821921/  开开心心233
+开开心心233: https://space.bilibili.com/133821921/  
 
-https://space.bilibili.com/7711573/  AutSky JadeK
+AutSky JadeK: https://space.bilibili.com/7711573/  
 
 
 #### 博客：
 
-https://oi-wiki.org/：有很多算法的入门教程和总结，非常喜欢网站的风格
+https://oi-wiki.org/   
 
-http://blog.watashi.ws/：  watashi 
+https://oi-wiki.org/intro/resources
 
-https://www.cnblogs.com/kuangbin： kuangbin
+OI & ACM 课件分享： https://github.com/hzwer/shareOI  
 
-https://www.cnblogs.com/qscqesze：  qscqesze 
+watashi：http://blog.watashi.ws/    
 
-http://hzwer.com/：  hzwer 
+kuangbin： https://www.cnblogs.com/kuangbin 
 
-https://www.cnblogs.com/clrs97/：  clrs97 
+qscqesze：https://www.cnblogs.com/qscqesze   
 
-https://blog.csdn.net/u013368721：  陈鹏 同校很佩服的学长，大学零基础开始进了final
+hzwer：http://hzwer.com/ 
 
-https://blog.csdn.net/snowy_smile：  snowy smile 
+clrs97： https://www.cnblogs.com/clrs97/ 
 
-https://blog.csdn.net/skywalkert： skywalkert 唐老师数论相关的博文写得非常赞！
+陈鹏： https://blog.csdn.net/u013368721：   
 
-https://blog.csdn.net/acdreamers： ACdreamer
+snowy smile ： https://blog.csdn.net/snowy_smile 
 
-https://ruanx.pw/：  阮行止 
+skywalkert 唐老师数论相关的博文写得非常赞！：https://blog.csdn.net/skywalkert
 
-https://blog.csdn.net/PoPoQQQ：  PoPo QQQ 
+ACdreamer：https://blog.csdn.net/acdreamers 
 
-https://blog.csdn.net/WuBaizhe： Xinhao
+阮行止：https://ruanx.pw/ 
+
+PoPo QQQ ：https://blog.csdn.net/PoPoQQQ 
+
+Xinhao： https://blog.csdn.net/WuBaizhe
 
  
 
