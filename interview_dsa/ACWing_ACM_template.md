@@ -111,7 +111,7 @@ AutSky JadeK: https://space.bilibili.com/7711573/
 
 https://oi-wiki.org/   
 
-https://oi-wiki.org/intro/resources
+算法竞赛学习资源：https://oi-wiki.org/intro/resources
 
 OI & ACM 课件分享： https://github.com/hzwer/shareOI  
 
