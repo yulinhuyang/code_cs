@@ -601,7 +601,7 @@ burnside引理与polya定理：
 - AcWing 256 最大异或和
 - AcWing 255 第K小数
 
-## 0x49 其他补充
+## 0x49 数据结构补充
 
 AC自动机：
 - AcWing 1282 搜索关键词
