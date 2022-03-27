@@ -66,7 +66,7 @@ ACM 怎么样零基础到入门？xinhao : https://www.zhihu.com/question/268234
 
 #### 习题：
 
-1. 一些基本算法和数据结构(队列 栈 树 图 并查集 堆 DFS BFS 最短路 最小生成树 拓扑排序 动态规划 贪心 搜索 KMP 哈希 Trie AC自动机 快速幂 逆元 费马小定理 欧拉函数 素数筛 分解质因数)
+- 1  一些基本算法和数据结构(队列 栈 树 图 并查集 堆 DFS BFS 最短路 最小生成树 拓扑排序 动态规划 贪心 搜索 KMP 哈希 Trie AC自动机 快速幂 逆元 费马小定理 欧拉函数 素数筛 分解质因数)
 
 [kuangbin带你飞]专题一 简单搜索: https://vjudge.net/contest/65959#overview
 
@@ -84,7 +84,7 @@ ACM 怎么样零基础到入门？xinhao : https://www.zhihu.com/question/268234
 
 [kuangbin带你飞]专题十七 AC自动机:http://vjudge.net/contest/70326#overview
 
-2. 一些进阶的算法以及复杂一些的数据结构（树状数组 线段树 平衡树 后缀数组 二分图匹配 网络流 费用流 割点 桥 强联通 双联通 最近公共祖先 四大DP(数位dp 区间dp 状压dp 概率dp) 博弈论SG函数 ）
+- 2  一些进阶的算法以及复杂一些的数据结构（树状数组 线段树 平衡树 后缀数组 二分图匹配 网络流 费用流 割点 桥 强联通 双联通 最近公共祖先 四大DP(数位dp 区间dp 状压dp 概率dp) 博弈论SG函数 ）
 
 [kuangbin带你飞]专题七 线段树:http://vjudge.net/contest/66989#overview
 
@@ -102,7 +102,7 @@ ACM 怎么样零基础到入门？xinhao : https://www.zhihu.com/question/268234
 
 [kuangbin带你飞]专题二十二 区间DP:http://vjudge.net/contest/77874#overview
 
-3.更高深的技巧，更复杂的数据结构（树链剖分，动态树，可持久化线段树，DLX，后缀自动机，回文树，斜率优化/单调队列优化/四边形优化DP，插头dp，莫比乌斯反演......）
+- 3 更高深的技巧，更复杂的数据结构（树链剖分，动态树，可持久化线段树，DLX，后缀自动机，回文树，斜率优化/单调队列优化/四边形优化DP，插头dp，莫比乌斯反演）
 
 #### 视频：
 
