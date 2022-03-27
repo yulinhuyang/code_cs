@@ -207,8 +207,49 @@ LeetCode究极班: https://www.acwing.com/activity/content/activity_person/conte
 ### 数据结构设计 LRU/LFU
 
 - 146 LRU Cache（LRU缓存机制）: hash + 双向链表，头插尾删，delete  
-- 460 LFU Cache: 桶排序 + 双向链表
+- 460 LFU Cache: 
 
+LFU： https://leetcode-cn.com/problems/lfu-cache/solution/gong-shui-san-xie-yun-yong-tong-pai-xu-s-53m3/
+
+https://www.acwing.com/activity/content/code/content/555766/
+
+ 1  key_table(unordered_map<key,Node) + set<Node>(代替堆)，因为C++中堆pq的值不能改，Node是自定义排序的结构体。       
+ 2  key_table(unordered_map<key, list<Node>::iterator>) + freq_table(unordered_map<freq, list<Node>>) ：链接法。       
+ 散列冲突解决：链接法、开发定址法。类似邻接表结构，展开的list链表。类似图的存储结构map + map。   
+ 
+ map存储结构体，需要insert或emplace后使用make_pair,不能直接赋值   
+ 
+ ```C++
+ struct ABC{
+    int x,y;
+    ABC(int _x,int _y):x(_x),y(_y){};
+};
+ 
+unordered_map<int,ABC> hash;
+ABC abc(1,1);
+hash.insert(make_pair(1,abc));//正确插入
+//hash[1] = abc;//错误插入
+ABC ac(1,2);
+auto it = hash.find(1);
+it->second = ac;//正确更新
+
+```
+ 
+结构体定义初始化列表和自定义排序结构
+ 
+```C++
+ struct Node {
+    int freq, time;
+    int key, val;
+
+    Node(int _freq, int _time, int _key, int _val) : freq(_freq), time(_time), key(_key), val(_val) {}
+
+    bool operator< (const Node &rhs) const {
+        return freq == rhs.freq ? time < rhs.time : freq < rhs.freq;
+    }
+}; 
+ 
+```
 
 ## 0x15 字符串(字符串hash、KMP与最小表示法）
 
