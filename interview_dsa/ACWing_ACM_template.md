@@ -106,44 +106,44 @@ ACM 怎么样零基础到入门？xinhao : https://www.zhihu.com/question/268234
 
 #### 视频：
 
-https://space.bilibili.com/611212/ @qscqesze 当时是看卿学姐的视频入门了主席树
+https://space.bilibili.com/611212/   qscqesze 当时是看卿学姐的视频入门了主席树
 
-https://space.bilibili.com/8198319/ @a兵长 
+https://space.bilibili.com/8198319/   a兵长 
 
-https://space.bilibili.com/120174936/@不分解的AgOH
+https://space.bilibili.com/120174936/  不分解的AgOH
 
-https://space.bilibili.com/133821921/@开开心心233
+https://space.bilibili.com/133821921/  开开心心233
 
-https://space.bilibili.com/7711573/ @AutSky JadeK
+https://space.bilibili.com/7711573/  AutSky JadeK
 
 
 #### 博客：
 
 https://oi-wiki.org/：有很多算法的入门教程和总结，非常喜欢网站的风格
 
-http://blog.watashi.ws/： @watashi 
+http://blog.watashi.ws/：  watashi 
 
-https://www.cnblogs.com/kuangbin：@kuangbin
+https://www.cnblogs.com/kuangbin： kuangbin
 
-https://www.cnblogs.com/qscqesze： @qscqesze 
+https://www.cnblogs.com/qscqesze：  qscqesze 
 
-http://hzwer.com/： @hzwer 
+http://hzwer.com/：  hzwer 
 
-https://www.cnblogs.com/clrs97/： @clrs97 
+https://www.cnblogs.com/clrs97/：  clrs97 
 
-https://blog.csdn.net/u013368721： @陈鹏 同校很佩服的学长，大学零基础开始进了final
+https://blog.csdn.net/u013368721：  陈鹏 同校很佩服的学长，大学零基础开始进了final
 
-https://blog.csdn.net/snowy_smile： @snowy smile 
+https://blog.csdn.net/snowy_smile：  snowy smile 
 
-https://blog.csdn.net/skywalkert：@skywalkert 唐老师数论相关的博文写得非常赞！
+https://blog.csdn.net/skywalkert： skywalkert 唐老师数论相关的博文写得非常赞！
 
-https://blog.csdn.net/acdreamers： @ACdreamer
+https://blog.csdn.net/acdreamers： ACdreamer
 
-https://ruanx.pw/： @阮行止 
+https://ruanx.pw/：  阮行止 
 
-https://blog.csdn.net/PoPoQQQ： @PoPo QQQ 
+https://blog.csdn.net/PoPoQQQ：  PoPo QQQ 
 
-https://blog.csdn.net/WuBaizhe： @Xinhao
+https://blog.csdn.net/WuBaizhe： Xinhao
 
  
 
