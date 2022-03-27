@@ -44,6 +44,8 @@ kuangbin题单整理：https://vjudge.csgrandeur.cn/article/752
 
 f-zyj/ACM 模板:https://github.com/f-zyj/ACM
 
+https://github.com/F0RE1GNERS/template
+
 https://github.com/soulmachine/acm-cheat-sheet
 
 https://github.com/Bryce1010/bryce1010-ACM-Template
