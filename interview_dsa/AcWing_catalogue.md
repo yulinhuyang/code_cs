@@ -496,6 +496,40 @@ AcWing 1118 分成互质组：如果ai和组内数都互质，将ai加入当前�
 
 - AcWing 219 剪纸游戏
   
+## 0x3B 数学补充
+
+莫比乌斯反演：
+- AcWing 2702. problem b
+- AcWing 1358. 约数个数和
+
+积性函数：
+- AcWing 221. 龙哥的问题
+
+BSGS：
+- AcWing 3124. BSGS
+- AcWing 3125. 扩展BSGS
+- AcWing 2526. 随机数生成器
+
+FFT:
+- AcWing 3122. 多项式乘法
+- AcWing 3123. 高精度乘法II
+
+生成函数：
+- AcWing 3132. 食物
+
+burnside引理与polya定理：
+- AcWing 3133. 串珠子
+- AcWing 3134. 魔法手链
+
+斯特林数：
+- AcWing 3165. 第一类斯特林数
+- AcWing 3166. 第二类斯特林数
+- AcWing 3020. 建筑师
+
+线性基：
+- AcWing 3164. 线性基
+- AcWing 210. 异或运算
+
 
 # 0x40 数据结构进阶(34)
 
@@ -1228,41 +1262,6 @@ prufer编码
 自适应辛普森积分：
 - AcWing 3074. 自适应辛普森积分
 - AcWing 3069. 圆的面积并
-
-#### 第五章 数学
-
-莫比乌斯反演：
-- AcWing 2702. problem b
-- AcWing 1358. 约数个数和
-
-积性函数：
-- AcWing 221. 龙哥的问题
-
-BSGS：
-- AcWing 3124. BSGS
-- AcWing 3125. 扩展BSGS
-- AcWing 2526. 随机数生成器
-
-FFT:
-- AcWing 3122. 多项式乘法
-- AcWing 3123. 高精度乘法II
-
-生成函数：
-- AcWing 3132. 食物
-
-burnside引理与polya定理：
-- AcWing 3133. 串珠子
-- AcWing 3134. 魔法手链
-
-斯特林数：
-- AcWing 3165. 第一类斯特林数
-- AcWing 3166. 第二类斯特林数
-- AcWing 3020. 建筑师
-
-线性基：
-- AcWing 3164. 线性基
-- AcWing 210. 异或运算
-
 
 
 
