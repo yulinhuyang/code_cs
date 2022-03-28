@@ -17,6 +17,7 @@ public:
     int reverse(int x) {
         int res = 0;
         while (x) {
+            //因为INT_MAX 最高为是2，x <= INT_MAX, 所以不用判等于
             if (res < INT_MIN / 10 || res > INT_MAX / 10) {
                 return 0;
             }
