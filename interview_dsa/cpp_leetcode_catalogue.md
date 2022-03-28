@@ -90,7 +90,7 @@ LeetCode究极班: https://www.acwing.com/activity/content/activity_person/conte
 
 多路归并(K-way merge)、逆序对问题
     
-- 4 寻找两个正序数组的中位数     
+- 4 寻找两个正序数组的中位数：递归。     
 - 23 合并K个排序链表(多路归并)
 - 313 超级丑数(多路归并)
 - 147 对链表进行插入排序
@@ -104,7 +104,7 @@ LeetCode究极班: https://www.acwing.com/activity/content/activity_person/conte
 
 ### 回文问题
     
-- 5 最长回文子串：中心扩展法    
+- 5 最长回文子串：奇偶两边双指针，中心扩展法    
 - 647 回文子串     
 - 234 回文链表     
 
