@@ -73,5 +73,17 @@ git rebase   [startpoint]   [endpoint]  --onto  [branchName]: [startpoint] [endp
 	
 	git rebase –onto 1 3^ 4  相对于cherry pick
 	
-[rebase用法小结](https://www.jianshu.com/p/4a8f4af4e803)
+git rebase dev，作用也一样是在当前分支合并Dev分支，如果git rebase遇到冲突，第一步当然是解决冲突，然后 git add，之后并不需要git commit，而是直接运行git rebase --continue，这样git 就会继续应用剩下的补丁了，//假如你不想解决冲突且不再进行合并，那么可以使用git rebase --abort
+	
+**git fetch与merge**
+	
+git fetch        →→ 这将更新git remote 中所有的远程repo 所包含分支的最新commit-id, 将其记录到.git/FETCH_HEAD文件中
+	
+FETCH_HEAD： 是一个版本链接，记录在本地的一个文件中，指向着目前已经从远程仓库取下来的分支的末端版本。
 
+git pull : 首先，基于本地的FETCH_HEAD记录，比对本地的FETCH_HEAD记录与远程仓库的版本号，然后git fetch 获得当前指向的远程分支的后续版本的数据，然后再利用git merge将其与本地的当前分支合并。	
+
+git merge Dev // Dev表示某分支，表示在当前分支合并Dev分支
+	
+
+	
