@@ -26,7 +26,8 @@ LeetCode究极班: https://www.acwing.com/activity/content/activity_person/conte
 
 - 67 二进制求和：string的两数之和，字符模拟。
 - 299 猜数字游戏：字符模拟。
-- 12 整数转罗马数字:字符模拟。
+- 12 整数转罗马数字：字符模拟。
+- 13 罗马数字转整数：hash模拟。
 
 
 ## 0x03 前缀和与差分
