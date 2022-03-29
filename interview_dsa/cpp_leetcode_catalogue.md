@@ -22,7 +22,7 @@ LeetCode究极班: https://www.acwing.com/activity/content/activity_person/conte
 - 461 汉明距离
 - 477 汉明距离总和：n x (n - c)
 
-## 0x02 枚举、模拟、递推与递归
+## 0x02 递推与递归、模拟
 
 - 67 二进制求和：string的两数之和，字符模拟。
 - 299 猜数字游戏：字符模拟。
