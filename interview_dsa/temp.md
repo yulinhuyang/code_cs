@@ -147,5 +147,42 @@ public:
 
 ```
 
+##### 14 最长公共前缀
+```C++
+class Solution {
+public:
+    string longestCommonPrefix(vector<string> &strs) {
+        if (strs.size() == 0)
+            return "";
+        string prefix;
+        for (int i = 0; i < strs[0].size(); i++) {
+            char c = strs[0][i];
+            for (auto &str:strs) {
+                if (str[i] != c) {
+                    return prefix;
+                }
+            }
+            prefix += c;
+        }
+        return prefix;
+    }
+};
+
+```
+##### 15 三数之和
+
+双指针的含义:  当需要枚举数组中的两个元素时，如果我们发现随着一个元素的递增，第二个元素是递减的，那可以使用双指针方法，将枚举的时间复杂度从o(n x n)优化到O(n),因为每次左指针右移一个位置，右指针会向左移动若干个位置，均摊下来，每次向左移动一个位置。
+
+双指针移动回填法。
+
+
+##### 16 最接近的三数之和
+
+##### 18  四数之和
+
+
+
+
+
 
 
