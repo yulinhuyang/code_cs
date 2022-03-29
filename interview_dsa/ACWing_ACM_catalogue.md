@@ -52,6 +52,8 @@ ACM 怎么样零基础到入门？xinhao : https://www.zhihu.com/question/268234
 
 算法学习笔记（目录）：https://zhuanlan.zhihu.com/p/105467597
 
+ACM 中常用的算法有哪些？https://www.zhihu.com/question/19719698/answer/12752031
+
 写在20年初的校招面试心得与自学CS经验及找工作分享 [github](https://github.com/conanhujinming/tips_for_interview/blob/master/README-zh_CN.md)  
 
 #### 习题：
