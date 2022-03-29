@@ -64,6 +64,31 @@ public:
 };
 ```
 
-AC 自动机
+AC 自动机解法
+
+```C++
+
+```
+
+##### 9 回文数
+
+中心扩展法--->翻转一半法
+
+```C++
+class Solution {
+public:
+    bool isPalindrome(int x) {
+        //中心扩展法-->翻转一半法
+        if (x < 0 || (x % 10 == 0 && x != 0)) return false;
+        int rev_num = 0;
+        while (rev_num < x) {
+            rev_num = rev_num * 10 + x % 10;
+            x /= 10;
+        }
+        return rev_num == x || rev_num / 10 == x;
+    }
+};
+```
+
 
 
