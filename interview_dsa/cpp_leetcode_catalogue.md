@@ -112,7 +112,8 @@ LeetCode究极班: https://www.acwing.com/activity/content/activity_person/conte
 
 ### 回文问题
     
-- 5 最长回文子串：二分+hash / 奇偶两边双指针，中心扩展法    
+- 5 最长回文子串：二分+hash / 奇偶两边双指针，中心扩展法。
+- 9 回文数：翻转一半法。    
 - 647 回文子串     
 - 234 回文链表     
 
