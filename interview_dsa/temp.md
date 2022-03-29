@@ -90,5 +90,62 @@ public:
 };
 ```
 
+##### 13 罗马数字转整数
+
+模拟
+```C++
+//hash 模拟法
+class Solution {
+public:
+    int romanToInt(string s) {
+        unordered_map<char, int> hash = {
+                {'I', 1},
+                {'V', 5},
+                {'X', 10},
+                {'L', 50},
+                {'C', 100},
+                {'D', 500},
+                {'M', 1000}
+        };
+        int res = 0;
+        for (int i = 0; i < s.size(); i++) {
+            if (i + 1 < s.size() && hash[s[i]] < hash[s[i + 1]]) {
+                res -= hash[s[i]];
+            } else {
+                res += hash[s[i]];
+            }
+        }
+        return res;
+    }
+};
+
+//传统模拟法
+class Solution {
+public:
+    int romanToInt(string s) {
+        int nums[] = {1000,900,500,400,100,90,50,40,10,9,5,4,1};
+        string reps[] = {"M","CM","D","CD","C","XC","L","XL","X","IX","V","IV","I"};
+        int i = 0,j = 0;
+        int res = 0;
+        while(i < s.size() && j < 13){
+            if(reps[j].size() == 2){
+                while(i + 1 < s.size() && string(1,s[i]) + string(1,s[i+ 1]) == reps[j]){
+                    res += nums[j];
+                    i += 2;
+                }
+            }else{
+                while(i < s.size() && string(1,s[i]) == reps[j]) {
+                    res += nums[j];
+                    i++;
+                }
+            }
+            j++;
+        }
+        return res;
+    }
+};
+
+```
+
 
 
