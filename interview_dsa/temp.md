@@ -177,12 +177,66 @@ public:
 
 双指针移动回填法。
 
-
+排序+ 双指针
+```C++
+class Solution {
+public:
+    vector<vector<int>> threeSum(vector<int> &nums) {
+        vector<vector<int>> res;
+        sort(nums.begin(), nums.end());
+        int m = nums.size();
+        for (int i = 0; i < m; i++) {
+            //i跳过重复的
+            if (i && nums[i] == nums[i - 1]) continue;
+            //双指针，i和j在一层循环
+            for (int j = i + 1, k = m - 1; j < k; j++) {
+                //i和j间隔>=1，j和k间隔 >= 1
+                if (j > i + 1 && nums[j] == nums[j - 1]) continue;
+                while (j < k - 1 && nums[i] + nums[j] + nums[k - 1] >= 0) k--;
+                if (nums[i] + nums[j] + nums[k] == 0) {
+                    res.emplace_back(vector<int>{nums[i], nums[j], nums[k]});
+                }
+            }
+        }
+        return res;
+    }
+};
+```
 ##### 16 最接近的三数之和
+
+最解决的两个和是相邻的
+
+```C++
+class Solution {
+public:
+    int threeSumClosest(vector<int> &nums, int target) {
+        pair<int, int> res = {INT_MAX, INT_MAX};
+        int m = nums.size();
+        sort(nums.begin(), nums.end());
+        for (int i = 0; i < m; i++) {
+            for (int j = i + 1, k = m - 1; j < k; j++) {
+                //单边缩进
+                while (j < k - 1 && (nums[i] + nums[j] + nums[k - 1] >= target)) k--;
+                int sum = nums[i] + nums[j] + nums[k];
+                res = min(res, make_pair(abs(sum - target), sum));
+                //最接近的和左右相邻
+                if (k - 1 > j) {
+                    sum = nums[i] + nums[j] + nums[k - 1];
+                    res = min(res, make_pair(target - sum, sum));
+                }
+            }
+        }
+        return res.second;
+    }
+};
+
+```
 
 ##### 18  四数之和
 
+```C++
 
+```
 
 
 
