@@ -85,8 +85,13 @@ LeetCode究极班: https://www.acwing.com/activity/content/activity_person/conte
 ### 反向（首尾）指针
 
 - 11 盛最多水的容器 
-- 15 三数之和
-- 16 3Sum Closest 
+- 15 三数之和: 排序+ 双指针 + 跳重 + 单边缩，双指针利用了数组有序的特征，将枚举的时间复杂度从o(n x n)优化到O(n)，因为左指针右移一个位置，右指针会向左移动若干个位置，均摊下来，每次向左移动一个位。 
+```C++
+if (j > i + 1 && nums[j] == nums[j - 1]) continue;
+while (j < k - 1 && nums[i] + nums[j] + nums[k - 1] >= 0) k--;
+```
+- 16 3Sum Closest: 排序+ 双指针 + 单边缩，最接近的和肯定左右相邻
+- 18 四数之和：排序 + 双指针 + 跳重 + 单边缩
 - 167 两数之和 II - 输入有序数组：
 
 ### 滑动窗口
