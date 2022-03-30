@@ -338,6 +338,91 @@ public:
     }
 };
 ```
+##### 29  两数相除
+
+方法1：二分+快速乘法(位运算，参考快速幂模板)
+
+方法2：预处理倍增数组 或逐步倍增法，放到负数范围，因为表示范围更大
+
+```C++
+//二分+快速乘法
+class Solution {
+public:
+    int divide(int dividend, int divisor) {
+        if (dividend == INT_MIN) {
+            if (divisor == 1) return INT_MIN;
+            if (divisor == -1) return INT_MAX;
+        }
+        if (divisor == INT_MIN)
+            return dividend == INT_MIN ? 1 : 0;
+        if (dividend == 0)
+            return 0;
+
+        long a = dividend, b = divisor;
+        int sign = 1;
+        if (a < 0 && b > 0 || a > 0 && b < 0) sign = -1;
+        if (a < 0) a = -a;
+        if (b < 0) b = -b;
+        long l = 0, r = a;
+        while (l < r) {
+            long mid = l + r + 1 >> 1;
+            if (mul(b, mid) <= a) l = mid;
+            else r = mid - 1;
+        }
+        return sign == -1 ? -l : l;
+    }
+
+    //倍增快速幂
+    long mul(long b, long k) {
+        long result = 0;
+        while (k) {
+            if (k & 1) result += b;
+            k >>= 1;
+            b += b;
+        }
+        return result;
+    }
+};
+
+
+//倍增数组法
+class Solution {
+public:
+    int divide(int dividend, int divisor) {
+        int LIMIT = INT_MIN / 2;
+        if (dividend == INT_MIN) {
+            if (divisor == 1) return INT_MIN;
+            if (divisor == -1) return INT_MAX;
+        }
+        if (divisor == INT_MIN)
+            return dividend == INT_MIN ? 1 : 0;
+        if (dividend == 0)
+            return 0;
+
+        int a = dividend, b = divisor;
+        int sign = 1;
+        if (a < 0 && b > 0 || a > 0 && b < 0) sign = -1;
+        //映射到负数范围，因为负数表示范围更大
+        if (a > 0) a = -a;
+        if (b > 0) b = -b;
+        int ans = 0;
+        while (a <= b) {
+            int c = b, d = -1;
+            while (c >= LIMIT && d >= LIMIT && c >= (a - c)) {
+                c += c;
+                d += d;
+            }
+            a -= c;
+            ans += d;
+        }
+        return sign == -1 ? ans : -ans;
+    }
+};
+
+
+```
+
+
 
 
 
