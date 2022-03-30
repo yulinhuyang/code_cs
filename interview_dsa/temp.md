@@ -263,7 +263,7 @@ public:
 };
 ```
 
-#####  27. 移除元素
+#####  27 移除元素
 
 ```C++
 class Solution {
@@ -281,6 +281,63 @@ public:
 };
 ```
 
+##### 28 实现 strStr()
+
+BF 方法
+
+KMP模板法
+
+```C++
+//BF算法
+class Solution {
+public:
+    int strStr(string haystack, string needle) {
+        int m = haystack.size(),n = needle.size();
+        for (int i = 0; i + n <= m; i++) {
+            //考虑全空的情况
+            bool flag = true;
+            for(int j = 0;j < n;j++){
+                if(haystack[i + j] != needle[j]){
+                    flag = false;
+                    break;
+                }
+            }
+            if(flag) return i;
+        }
+        return -1;
+    }
+};
+
+
+//KMP模板
+class Solution {
+public:
+    int strStr(string s, string p) {
+        if (p.empty()) return 0;
+        int m = s.size(), n = p.size();
+        s = " " + s;
+        p = " " + p;
+        vector<int> next(n + 1, 0);
+        //next[0] = next[1] = 0;
+        //构建next数组
+        for (int i = 2, j = 0; i <= n; i++) {
+            while (j && p[i] != p[j + 1]) j = next[j];
+            if (p[i] == p[j + 1]) j++;
+            next[i] = j;
+        }
+        //匹配过程
+        for (int i = 1, j = 0; i <= m; i++) {
+            while (j && s[i] != p[j + 1]) j = next[j];
+            if (s[i] == p[j + 1]) j++;
+            if (j == n) {
+                j = next[j];
+                return i - n;
+            }
+        }
+        return -1;
+    }
+};
+```
 
 
 
