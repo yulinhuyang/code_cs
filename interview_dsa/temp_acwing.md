@@ -50,3 +50,6 @@ int main()
     return 0;
 }
 ```
+
+AcWing 1282. 搜索关键词----AC自动机模板题(KMP + trie) ： https://www.acwing.com/solution/content/50169/
+
