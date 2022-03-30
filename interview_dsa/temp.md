@@ -263,6 +263,24 @@ public:
 };
 ```
 
+#####  27. 移除元素
+
+```C++
+class Solution {
+public:
+    int removeElement(vector<int>& nums, int val) {
+        int left = 0,right = nums.size() - 1;
+        //双指针优化，避免多余交换
+        while(left <= right)
+            if(nums[left] == val) {
+                nums[left] = nums[right--];
+            }
+            else left++;
+        return left;
+    }
+};
+```
+
 
 
 
