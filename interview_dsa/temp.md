@@ -236,8 +236,31 @@ public:
 
 ##### 18  四数之和
 
-```C++
+排序 +  双指针 + 跳重 + 单边缩 
 
+```C++
+class Solution {
+public:
+    vector<vector<int>> fourSum(vector<int> &nums, int target) {
+        sort(nums.begin(), nums.end());
+        vector<vector<int>> res;
+        int m = nums.size();
+        for (int i = 0; i < m; i++) {
+            if (i && nums[i] == nums[i - 1]) continue;
+            for (int j = i + 1; j < m; j++) {
+                if (j > i + 1 && (nums[j] == nums[j - 1])) continue;
+                for (int k = j + 1, u = m - 1; k < u; k++) {
+                    if (k > j + 1 && (nums[k] == nums[k - 1])) continue;
+                    while (k < u - 1 && (0ll + nums[i] + nums[j] + nums[k] + nums[u - 1] >= target)) u--;
+                    if (0ll + nums[i] + nums[j] + nums[k] + nums[u] == target) {
+                        res.emplace_back(vector<int>{nums[i], nums[j], nums[k], nums[u]});
+                    }
+                }
+            }
+        }
+        return res;
+    }
+};
 ```
 
 
