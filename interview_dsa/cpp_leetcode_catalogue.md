@@ -275,6 +275,7 @@ it->second = ac;//正确更新
 ## 0x15 字符串(字符串hash、KMP与最小表示法）
 
 - 6 Z 字形变换：找规律，首尾行，中间行。
+- 14 最长公共前缀                                                                    
 - 28 实现 strStr()：BF暴力求解；KMP模板法
 - 71  Simplify Path  
 - 165 比较版本号：string基本使用  
