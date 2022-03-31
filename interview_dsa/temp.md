@@ -116,6 +116,26 @@ public:
 };
 ```
 
+##### 50. Pow(x, n)
+
+```C++
+class Solution {
+public:
+    double myPow(double x, int n) {
+        double res = 1.0;
+        long long t = n;
+        if (t < 0) {
+            t = -t;
+        }
+        while (t) {
+            if (t & 1) res *= x;
+            t >>= 1;
+            x *= x;
+        }
+        return n < 0 ? 1 / res : res;
+    }
+};
+```
 
 
 
