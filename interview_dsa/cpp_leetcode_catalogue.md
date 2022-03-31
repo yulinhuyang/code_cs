@@ -364,7 +364,8 @@ memo记忆化搜索、剪枝优化
 
 - 17  Letter Combinations of a Phone Number（电话号码的字母组合）    
 - 22  括号生成    
-- 39  组合总和(Combination Sum)
+- 39  组合总和(Combination Sum)：dfs + 排除等效冗余+ 可行性剪枝
+- 40  组合总和 II：dfs + 排除等效冗余+ 可行性剪枝
 - 301 删除无效的括号     
   
 - 46 全排列(Permutations)    
