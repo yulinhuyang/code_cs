@@ -58,9 +58,6 @@ public:
 
 ##### LeetCode 40  组合总和 II
 
-全排列：每次dfs,每个点都要遍历做一次选择(选/不选)。    
-组合/子集：每次dfs，只需要在某个或者某些(相同元素剪枝)点做一次选择(选/不选)。   
-
 ```C++
 class Solution {
     vector<vector<int>> res;
