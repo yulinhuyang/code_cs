@@ -22,7 +22,7 @@ vjudge: https://vjudge.net/contest
 
 CF: https://codeforces.com/  
 
-### ACM模板：
+### ACM-ICPC模板：
 
 KuangBin的ACM模板:https://github.com/kuangbin/ACM-ICPC
 
@@ -40,7 +40,7 @@ https://github.com/soulmachine/acm-cheat-sheet
 
 https://github.com/Bryce1010/bryce1010-ACM-Template
 
-###  ACM 学习资源
+###  ACM-ICPC 学习资源
 
 #### 参考： 
 
