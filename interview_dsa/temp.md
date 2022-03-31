@@ -94,7 +94,7 @@ public:
 
 ##### Leetcode 41  缺失的第一个正数
 
-hash空间简化，数组索引记录做hash
+hash空间简化，数组索引记录做hash，可以对比448题
 
 ```C++
 class Solution {
