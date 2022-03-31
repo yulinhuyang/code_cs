@@ -25,6 +25,41 @@ public:
 };
 ```
 
+#### LeetCode 40  组合总和 II
+
+全排列：每次dfs,每个点都要遍历做一次选择(选/不选)。    
+组合/子集：每次dfs，只需要在某个或者某些(相同元素剪枝)点做一次选择(选/不选)。   
+
+```C++
+class Solution {
+    vector<vector<int>> res;
+    vector<int> path;
+public:
+    vector<vector<int>> combinationSum2(vector<int> &candidates, int target) {
+        sort(candidates.begin(), candidates.end());
+        dfs(candidates, 0, target);
+        return res;
+    }
+
+    void dfs(vector<int> &can, int u, int target) {
+        if (target == 0) {
+            res.emplace_back(path);
+            return;
+        }
+        if (u == can.size()) return;
+        int k = u + 1;
+        while (k < can.size() && can[k] == can[u]) k++;
+        for (int i = 0; can[u] * i <= target && u + i <= k; i++) {
+            dfs(can, k, target - can[u] * i);
+            path.emplace_back(can[u]);
+        }
+        for (int i = 0; can[u] * i <= target && u + i <= k; i++) {
+            path.pop_back();
+        }
+    }
+};
+
+```
 
 
 
