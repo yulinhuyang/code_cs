@@ -26,7 +26,7 @@ yxc leetcode全解(究极班)： https://www.acwing.com/activity/content/activit
 
 宫水三叶： https://github.com/SharingSource/LogicStack-LeetCode
 
-**ICPC_OI**
+**ACM_OI**
 
 https://github.com/soulmachine/acm-cheat-sheet
 
