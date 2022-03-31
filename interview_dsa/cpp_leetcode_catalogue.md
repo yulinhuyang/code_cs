@@ -129,7 +129,6 @@ while (j < k - 1 && nums[i] + nums[j] + nums[k - 1] >= 0) k--;
 
 在排好序/翻转过的数组中，寻找丢失的/重复的/最小的元素
     
-- 448 找到所有数组中消失的数字    
 - 48 旋转图像：二维数组原地旋转  
 
 
@@ -215,7 +214,8 @@ while (j < k - 1 && nums[i] + nums[j] + nums[k - 1] >= 0) k--;
 
 - 1 两数之和     
 - 3 无重复字符的最长字串: hash逐加逐减, ij双变量循环代替滑窗。 
-- 17 电话号码的字母组合：三重简单循环代替dfs
+- 17 电话号码的字母组合：三重简单循环代替dfs。
+- 41 缺失的第一个正数: hash空间简化，数组索引记录做hash。
 - 49 字母异位词分组(Group Anagrams)
 - 187 重复的DNA序列: unordered_map(hash) 使用。 
 - 350 两个数组的交集 II: multiset删除一个元素 mulSeterase(mulSetfind(num));
@@ -223,6 +223,7 @@ while (j < k - 1 && nums[i] + nums[j] + nums[k - 1] >= 0) k--;
 - 149 直线上最多的点数： hash存储 long double slope，竖直线单独考虑
 - 454 四数相加 II：分组hash
 - 554 砖墙：hash+贪心
+- 448 找到所有数组中消失的数字: map ->vector 简化->原地修改简化为自己    
 
 
 ### 数据结构设计 LRU/LFU
