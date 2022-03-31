@@ -25,7 +25,38 @@ public:
 };
 ```
 
-#### LeetCode 40  组合总和 II
+##### 39. 组合总和
+
+dfs + 排除等效冗余+ 可行性剪枝
+
+```C++
+class Solution {
+    vector<vector<int>> res;
+    vector<int> path;
+public:
+    vector<vector<int>> combinationSum(vector<int> &candidates, int target) {
+        dfs(candidates, 0, target);
+        return res;
+    }
+
+    void dfs(vector<int> &can, int u, int target) {
+        if (target == 0) {
+            res.emplace_back(path);
+            return;
+        }
+        if (u == can.size()) return;
+        for (int i = 0; can[u] * i <= target; i++) {
+            dfs(can, u + 1, target - can[u] * i);
+            path.emplace_back(can[u]);
+        }
+        for (int i = 0; can[u] * i <= target; i++) {
+            path.pop_back();
+        }
+    }
+};
+```
+
+##### LeetCode 40  组合总和 II
 
 全排列：每次dfs,每个点都要遍历做一次选择(选/不选)。    
 组合/子集：每次dfs，只需要在某个或者某些(相同元素剪枝)点做一次选择(选/不选)。   
