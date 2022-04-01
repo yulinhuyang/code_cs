@@ -26,6 +26,8 @@ dp.size();
 dp.emplace_back(2);
 dp.back();
 dp.pop_back();
+dp.push_back({1,2}) //二维数组push_back
+dp.emplace_back(vector<int>{1,2})//二维数组emplace_back
 
 // 查找
 it = find(v2.begin(), v2.end(), 5);
