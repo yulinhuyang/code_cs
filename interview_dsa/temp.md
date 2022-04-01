@@ -272,4 +272,42 @@ public:
 };
 ```
 
+##### 60. 排列序列
+
+康托展开是一个全排列到一个自然数的双射，常用于构建哈希表时的空间压缩。 康托展开的实质是计算当前排列在所有由小到大全排列中的顺序，因此是可逆的。  
+康托展开的逆运算：可以通过康托展开值求出原排列，即可以求出n的全排列中第x大排列。   
+
+https://oi-wiki.org/math/combinatorics/cantor/
+
+对于n个数来说，每个组有(n-1)!个全排列，n-1个数，每个组就有(n-2)!个全排列。   
+对于特定数字，k/(n-1)!可以得到当前数字的下标，剩下的n-1个数，则用k%(n-1)来计算，只到n个0，得到了第k个。  
+
+```C++
+class Solution {
+public:
+    string getPermutation(int n, int k) {
+        string res;
+        string tmp = "";
+        for (int i = 1; i <= n; i++) {
+            tmp += to_string(i);
+        }
+        vector<int> fac(n, 0);
+        fac[0] = 1;
+        for (int i = 1; i < n; i++) {
+            fac[i] = fac[i - 1] * i;
+        }
+        k--;
+
+        for (int i = n; i > 0; i--) {
+            int idx = k / fac[i - 1];
+            k %= fac[i - 1];
+            res.push_back(tmp[idx]);
+            tmp.erase(tmp.begin() + idx);
+        }
+        return res;
+    }
+};
+
+```
+
 
