@@ -281,8 +281,6 @@ X=a[n]\*(n-1)!+a[n-1]\*(n-2)!+...+a[i]\*(i-1)!+...+a[1]\*0!
 
 康托展开和逆康托展开： https://blog.csdn.net/wbin233/article/details/72998375
 
-康托展开： https://oi-wiki.org/math/combinatorics/cantor/
-
 对于n个数来说，每个组有(n-1)!个全排列，n-1个数，每个组就有(n-2)!个全排列。   
 对于特定数字，k/(n-1)!可以得到当前数字的下标，剩下的n-1个数，则用k%(n-1)来计算，只到n个0，得到了第k个。  
 
