@@ -169,7 +169,33 @@ public:
     }
 };
 ```
+##### Leetcode 57  插入区间
 
+三段式：寻左边界 + 处理交集 + 右边界
+
+```C++
+class Solution {
+public:
+    vector<vector<int>> insert(vector<vector<int>> &intervals, vector<int> &newInterval) {
+        int k = 0;
+        vector<vector<int>> res;
+        int start = newInterval[0], end = newInterval[1];
+        //寻左边界
+        while (k < intervals.size() && intervals[k][1] < start) res.emplace_back(intervals[k++]);
+
+        //处理交集
+        if (k < intervals.size()) {
+            start = min(start, intervals[k][0]);
+            while (k < intervals.size() && intervals[k][0] <= end) end = max(end, intervals[k++][1]);
+        }
+        res.emplace_back(vector<int>{start, end});
+
+        //处理右边界
+        while (k < intervals.size()) res.emplace_back(intervals[k++]);
+        return res;
+    }
+};
+```
 
 
 
