@@ -171,9 +171,12 @@ public:
 ```
 ##### Leetcode 57  插入区间
 
-三段式：寻左边界 + 处理交集 + 右边界
+方法1：模拟，三段式：寻左边界 + 处理交集 + 右边界
+
+方法2：模拟，三种情况讨论 + flag
 
 ```C++
+//模拟，三段式：寻左边界 + 处理交集 + 右边界
 class Solution {
 public:
     vector<vector<int>> insert(vector<vector<int>> &intervals, vector<int> &newInterval) {
@@ -192,6 +195,35 @@ public:
 
         //处理右边界
         while (k < intervals.size()) res.emplace_back(intervals[k++]);
+        return res;
+    }
+};
+
+//模拟，三种情况讨论 + flag
+class Solution {
+public:
+    vector<vector<int>> insert(vector<vector<int>> &intervals, vector<int> &newInterval) {
+        int k = 0;
+        vector<vector<int>> res;
+        int start = newInterval[0], end = newInterval[1];
+        bool flag = false;
+        for (auto &interval:intervals) {
+            if (interval[1] < start) {
+                res.emplace_back(interval);
+            } else if (interval[0] > end) {
+                if (!flag) {
+                    res.push_back({start, end});
+                    flag = true;
+                }
+                res.emplace_back(interval);
+            } else {
+                start = min(start, interval[0]);
+                end = max(end, interval[1]);
+            }
+        }
+        if (!flag) {
+            res.push_back({start, end});//push_back可以直接{}构造vector
+        }
         return res;
     }
 };
