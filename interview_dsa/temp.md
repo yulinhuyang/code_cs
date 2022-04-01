@@ -229,7 +229,24 @@ public:
 };
 ```
 
+##### 58 最后一个单词的长度
 
+```C++
+class Solution {
+public:
+    int lengthOfLastWord(string s) {
+        int n = s.size();
+        int k = n - 1, res = 0;
+        while (k >= 0 && s[k] == ' ') k--;
+        while (k >= 0 && s[k] != ' ') {
+            k--;
+            res++;
+        }
+        return res;
+    }
+};
+
+```
 
 
 
