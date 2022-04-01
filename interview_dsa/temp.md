@@ -118,6 +118,8 @@ public:
 
 ##### Leetcode 50. Pow(x, n)
 
+快速幂模板
+
 ```C++
 class Solution {
 public:
