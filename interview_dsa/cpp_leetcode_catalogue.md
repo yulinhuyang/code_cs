@@ -446,8 +446,8 @@ dfs空间和递归深度成正比，有爆栈风险，比如树的深度最坏�
 
 ### 线性DP(经典dp)
    
-- 10 正则表达式匹配(Regular Expression Matching)：sp加" ",下个为*,跳过当前的，if (j + 1 <= m && p[j + 1] == '*') continue;
-- 44 通配符匹配：简化10,匹配当前的。
+- 10 正则表达式匹配(Regular Expression Matching)：sp加" ",提前判断:下个为*,跳过当前的，if (j + 1 <= m && p[j + 1] == '*') continue;
+- 44 通配符匹配：当前判p[j] == '*'。
 - 72 编辑距离(Edit Distance)   
 - 139 单词拆分(Word Break)    
 - 70 爬楼梯(Climbing Stairs)     
