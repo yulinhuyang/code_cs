@@ -105,4 +105,44 @@ public:
 };
 ```
 
+##### Leetcode 81 搜索旋转排序数组 II
 
+跳结尾重复 ————> 二分右边界搜索寻找旋转点————> 二分左边界搜索
+
+二分查找：寻找满足check条件的左边界或者右边界。
+
+
+```C++
+class Solution {
+public:
+    bool search(vector<int> &nums, int target) {
+        int m = nums.size() - 1, n = 0;
+        //跳过重复
+        while (m >= 0 && nums[m] == nums[0]) m--;
+        //剪枝
+        if (m < 0) return nums[0] == target;
+        //寻找旋转点
+        int l = 0, r = m;
+        while (l < r) {
+            int mid = l + r + 1 >> 1;
+            //满足条件的右边界
+            if (nums[mid] >= nums[0]) l = mid;
+            else r = mid - 1;
+        }
+        if (nums[l] == target) return true;
+        if (target >= nums[0]) {
+            r = l, l = 0;
+        } else {
+            r = m, l++;
+        }
+        //l和r可能相等
+        while (l < r) {
+            int mid = l + r >> 1;
+            if (nums[mid] >= target) r = mid;
+            else l = mid + 1;
+        }
+        return nums[r] == target;
+    }
+};
+
+```
