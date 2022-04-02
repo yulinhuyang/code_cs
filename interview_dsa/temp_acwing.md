@@ -115,7 +115,7 @@ int query(int u,int l,int r){
 - AcWing 247 亚特兰蒂斯
 - AcWing 1277 维护序列
 
-##### 欧几里得算法
+#### 欧几里得算法
 
 ```C++
 int gcd(int a, int b)
@@ -123,5 +123,8 @@ int gcd(int a, int b)
     return b ? gcd(b, a % b) : a;
 }
 ```
+#### 卡特兰数
+
+给定n个0和n个1，它们按照某种顺序排成长度为2n的序列，满足任意前缀中0的个数都不少于1的个数的序列的数量为： Cat(n) = C(2n, n) / (n + 1)
 
 
