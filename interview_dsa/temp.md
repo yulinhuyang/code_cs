@@ -67,3 +67,42 @@ public:
 
 ```
 
+#####  80. 删除有序数组中的重复项 II
+
+模拟：跳重范式：while(i + 1 < nums.size() && nums[i] == nums[i+1]) i++;
+
+```C++
+//class Solution {
+public:
+    int removeDuplicates(vector<int> &nums) {
+
+        int j = 0;
+        for (int i = 0; i < nums.size();) {
+            if (i + 1 < nums.size() && nums[i] == nums[i + 1]) {
+                nums[j++] = nums[i++];
+                nums[j++] = nums[i++];
+                while (i < nums.size() && nums[j - 1] == nums[i]) i++;
+            } else {
+                nums[j++] = nums[i++];
+            }
+        }
+        return j;
+    }
+};
+
+//极简
+class Solution {
+public:
+    int removeDuplicates(vector<int> &nums) {
+        int k = 0;
+        for (auto &x:nums) {
+            if (k < 2 || nums[k - 1] != x || nums[k - 2] != x) {
+                nums[k++] = x;
+            }
+        }
+        return k;
+    }
+};
+```
+
+
