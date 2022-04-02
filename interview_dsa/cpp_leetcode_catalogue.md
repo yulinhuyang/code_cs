@@ -32,6 +32,7 @@ LeetCode究极班: https://www.acwing.com/activity/content/activity_person/conte
 - 66 加一：高精度加法。
 - 67 二进制求和：string的两数之和，字符模拟。
 - 73 矩阵置零：标记数组法、标记变量+自标记法
+- 80 删除有序数组中的重复项 II: 跳重范式：while(i + 1 < nums.size() && nums[i] == nums[i+1]) i++;极简模拟
 - 299 猜数字游戏：字符模拟。
 
 
