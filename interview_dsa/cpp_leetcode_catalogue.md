@@ -30,7 +30,7 @@ LeetCode究极班: https://www.acwing.com/activity/content/activity_person/conte
 - 12 整数转罗马数字：字符模拟。
 - 13 罗马数字转整数：hash模拟。
 - 67 二进制求和：string的两数之和，字符模拟。
-- 73 矩阵置零：标记数组法
+- 73 矩阵置零：标记数组法、标记变量+自标记法
 - 299 猜数字游戏：字符模拟。
 
 
