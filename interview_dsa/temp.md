@@ -67,7 +67,7 @@ public:
 
 ```
 
-#####  80. 删除有序数组中的重复项 II
+#####  Leetcode 80 删除有序数组中的重复项 II
 
 模拟：跳重范式：while(i + 1 < nums.size() && nums[i] == nums[i+1]) i++;
 
