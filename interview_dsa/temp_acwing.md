@@ -115,9 +115,13 @@ int query(int u,int l,int r){
 - AcWing 247 亚特兰蒂斯
 - AcWing 1277 维护序列
 
+##### 欧几里得算法
 
-
-
-
+```C++
+int gcd(int a, int b)
+{
+    return b ? gcd(b, a % b) : a;
+}
+```
 
 
