@@ -47,7 +47,7 @@ int sum(int x)
 #### 线段树
 
 线段树总结: https://www.acwing.com/blog/content/3369/
-走近Zkw线段树（一）：https://zhuanlan.zhihu.com/p/29876526
+走近ZWK(张昆玮) 线段树（一）：https://zhuanlan.zhihu.com/p/29876526
 
 树状数组只能维护前缀“操作和”(前缀和，前缀积，前缀最大最小)，而线段树可以维护区间操作和。  
 线段树直接维护的就是区间信息，所以一切满足结合律的操作都能维护区间和，并且lazy标记的存在还能使线段树能够支持区间修改。
