@@ -146,3 +146,34 @@ public:
 };
 
 ```
+
+##### Leetcode 82  删除排序链表中的重复元素 II
+
+把链表当数组看到，特殊处理(提前取)取索引的方式。
+
+```C++
+class Solution {
+public:
+    ListNode *deleteDuplicates(ListNode *head) {
+        if (!head) return head;
+        auto dummy = new ListNode(-1);
+        dummy->next = head;
+        ListNode *cur = dummy;
+        while (cur->next && cur->next->next) {
+            if (cur->next->val == cur->next->next->val) {
+                int val = cur->next->val;
+                while (cur->next && cur->next->val == val) {
+                    cur->next = cur->next->next;
+                }
+            } else {
+                cur = cur->next;
+            }
+        }
+        return dummy->next;
+    }
+};
+
+
+```
+
+
