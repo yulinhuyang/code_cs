@@ -288,4 +288,40 @@ public:
 };
 
 ```
+##### Leetcode 103  二叉树的锯齿形层序遍历
 
+BFS + flag
+
+```C++
+class Solution {
+public:
+    vector<vector<int>> zigzagLevelOrder(TreeNode *root) {
+        vector<vector<int>> res;
+        queue<TreeNode *> q;
+        bool flag = true;
+        if(root) q.emplace(root);
+        
+        while (!q.empty()) {
+            int size = q.size();
+            vector<int> path;
+            for (int i = 0; i < size; i++) {
+                auto top = q.front();
+                q.pop();
+
+                path.emplace_back(top->val);
+                if (top->left) q.emplace(top->left);
+                if (top->right) q.emplace(top->right);
+            }
+            if (flag) res.emplace_back(path);
+            else {
+                reverse(path.begin(), path.end());
+                res.emplace_back(path);
+            }
+            flag = !flag;
+        }
+
+        return res;
+    }
+};
+
+```
