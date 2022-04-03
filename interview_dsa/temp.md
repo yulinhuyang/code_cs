@@ -536,3 +536,31 @@ public:
 };
 
 ```
+
+##### 113 路径总和 II
+
+```C++
+class Solution {
+    vector<vector<int>> res;
+    vector<int> path;
+public:
+    vector<vector<int>> pathSum(TreeNode *root, int targetSum) {
+        if (root) dfs(root, targetSum);
+        return res;
+    }
+
+    void dfs(TreeNode *root, int sum) {
+        sum -= root->val;
+        path.emplace_back(root->val);
+        if (sum == 0 && root->left == nullptr && root->right == nullptr) {
+            res.emplace_back(path);
+        } else {
+            //选择
+            if (root->left) dfs(root->left, sum);
+            if (root->right) dfs(root->right, sum);
+        }
+        path.pop_back();
+    }
+};
+
+```
