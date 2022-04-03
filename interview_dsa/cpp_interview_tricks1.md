@@ -67,8 +67,10 @@ for(vector<int>::iterator iter = vecInt.begin(); iter != vecInt.end(); iter++){
 	}
 }
 
-// Erase–remove惯用法
+// erase–remove惯用法: 删除
 v.erase(std::remove(v.begin(), v.end(), 5), v.end());
+// erase-unique惯用法:去重
+v.erase(unique(v.begin(),v.end()),v.end());
 ```
 erase 把被删除元素后的所有元素都向前移动以避免产生空位，开销比较大。   
 remove把不“符合”删除标准的元素搬移到容器的前部，并保持这些元素的相对次序;
