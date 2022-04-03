@@ -434,6 +434,41 @@ public:
 
 ```
 
+##### 109 有序链表转换二叉搜索树
+
+占位节点，计数用
+
+```C++
+class Solution {
+public:
+    TreeNode *sortedListToBST(ListNode *head) {
+        int len = getLen(head);
+        return sortedListToBST(head, 0, len - 1);
+    }
+
+    int getLen(ListNode *head) {
+        int res = 0;
+        while (head) {
+            head = head->next;
+            res++;
+        }
+        return res;
+    }
+
+    TreeNode *sortedListToBST(ListNode *&head, int l, int r) {
+        if (l > r) {
+            return nullptr;
+        }
+        int mid = l + r >> 1;
+        TreeNode *root = new TreeNode(-1);
+        root->left = sortedListToBST(head, l, mid - 1);
+        root->val = head->val;
+        head = head->next;
+        root->right = sortedListToBST(head, mid + 1, r);
+        return root;
+    }
+};
+```
 
 
 
