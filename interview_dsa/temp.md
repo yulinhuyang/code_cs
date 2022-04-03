@@ -253,4 +253,39 @@ public:
 };
 
 ```
+##### Leetcode  99 恢复二叉搜索树
+
+迭代中序遍历，默认升序 -> 找逆序元素
+
+```C++
+class Solution {
+public:
+    void recoverTree(TreeNode *root) {
+        TreeNode *x = nullptr;
+        TreeNode *y = nullptr;
+        TreeNode *pred = nullptr;
+        stack<TreeNode *> stk;
+        while (!stk.empty() || root != nullptr) {
+            while (root) {
+                stk.emplace(root);
+                root = root->left;
+            }
+            root = stk.top();
+            stk.pop();
+            if (pred != nullptr && root->val < pred->val) {
+                y = root;
+                if (x == nullptr) {
+                    x = pred;
+                } else break;
+            }
+
+            pred = root;
+            root = root->right;
+        }
+        swap(x->val, y->val);
+    }
+
+};
+
+```
 
