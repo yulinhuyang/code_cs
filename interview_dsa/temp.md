@@ -220,5 +220,37 @@ public:
     }
 };
 ```
+##### Leetcode 97 交错字符串
 
+字符串dp
+
+```C++
+class Solution {
+
+public:
+    bool isInterleave(string s1, string s2, string s3) {
+        if (s1.size() + s2.size() != s3.size()) {
+            return false;
+        }
+        int m = s1.size(), n = s2.size();
+        vector<vector<int>> f(m + 1, vector<int>(n + 1, 0));
+        s1 = " " + s1, s2 = " " + s2, s3 = " " + s3;
+        f[0][0] = true;
+        for (int i = 1; i < m + 1; i++) {
+            if (s1[i] == s3[i]) f[i][0] = f[i][0] || f[i - 1][0];
+        }
+        for (int j = 1; j < n + 1; j++) {
+            if (s2[j] == s3[j]) f[0][j] = f[0][j] || f[0][j - 1];
+        }
+        for (int i = 1; i < m + 1; i++) {
+            for (int j = 1; j < n + 1; j++) {
+                if (s1[i] == s3[i + j]) f[i][j] = f[i][j] || f[i - 1][j];
+                if (s2[j] == s3[i + j]) f[i][j] = f[i][j] || f[i][j - 1];
+            }
+        }
+        return f[m][n];
+    }
+};
+
+```
 
