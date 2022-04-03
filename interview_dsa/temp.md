@@ -382,5 +382,34 @@ public:
 
 ```
 
+##### LeetCode 107 二叉树的层序遍历II
+
+```C++
+class Solution {
+public:
+    vector<vector<int>> levelOrderBottom(TreeNode *root) {
+        vector<vector<int>> res;
+        queue<TreeNode *> q;
+        if (root) q.emplace(root);
+        while (!q.empty()) {
+            int size = q.size();
+            vector<int> level;
+            for (int i = 0; i < size; i++) {
+                auto top = q.front();
+                q.pop();
+                level.emplace_back(top->val);
+                if (top->left) q.emplace(top->left);
+                if (top->right) q.emplace(top->right);
+            }
+            res.emplace_back(level);
+        }
+
+        reverse(res.begin(), res.end());
+        return res;
+    }
+};
+
+```
+
 
 
