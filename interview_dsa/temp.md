@@ -470,7 +470,41 @@ public:
 };
 ```
 
+##### 110  平衡二叉树
+```C++
+//递归定义
+class Solution {
+public:
+    bool isBalanced(TreeNode *root) {
+        if (!root) return true;
+        return (abs(height(root->left) - height(root->right)) <= 1) && isBalanced(root->left) && isBalanced(root->right);
+    }
 
+    int height(TreeNode *root) {
+        if (!root) return 0;
+        return max(height(root->left), height(root->right)) + 1;
+    }
+};
 
+//下沉判断
+class Solution {
+    bool ans;
+public:
+    bool isBalanced(TreeNode *root) {
+        if (!root) return true;
+        ans = true;
+        dfs(root);
+        return ans;
+    }
+
+    int dfs(TreeNode *root) {
+        if (!root) return 0;
+        int lh = dfs(root->left);
+        int rh = dfs(root->right);
+        if(abs(lh - rh) > 1) ans = false;
+        return max(lh, rh) + 1;
+    }
+};
+```
 
 
