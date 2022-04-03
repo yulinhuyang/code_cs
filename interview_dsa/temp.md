@@ -173,7 +173,37 @@ public:
     }
 };
 
-
 ```
+
+##### Leetcode 86  分隔链表
+
+大小链表存储，再链接，截断
+
+```C++
+class Solution {
+public:
+    ListNode* partition(ListNode* head, int x) {
+        auto small = new ListNode(-1);
+        auto large = new ListNode(-1);
+        auto sh = small,lh = large;
+        for(auto p = head;p;p = p->next){
+            if(p->val < x) {
+                small->next = p;
+                small = small->next;
+            }
+            else {
+                large->next = p;
+                large = large->next;
+            }
+        }
+        small->next = lh->next;
+        //链表截断
+        large->next = nullptr;
+        return sh->next;
+    }
+};
+```
+
+
 
 
