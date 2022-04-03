@@ -411,5 +411,31 @@ public:
 
 ```
 
+#####  108. 将有序数组转换为二叉搜索树
+
+切索引建树，建树模板函数设计要实现合理复用代码
+
+```C++
+class Solution {
+public:
+    TreeNode *sortedArrayToBST(vector<int> &nums) {
+        return sortedArrayToBST(nums, 0, nums.size() - 1);
+    }
+
+    TreeNode *sortedArrayToBST(vector<int> &nums, int l, int r) {
+        if (l > r) return nullptr;
+        int k = l + r >> 1;
+        TreeNode *root = new TreeNode(nums[k]);
+        root->left = sortedArrayToBST(nums, l, k - 1);
+        root->right = sortedArrayToBST(nums, k + 1, r);
+        return root;
+    }
+};
+
+```
+
+
+
+
 
 
