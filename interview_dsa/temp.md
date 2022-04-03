@@ -507,4 +507,19 @@ public:
 };
 ```
 
+#####  111. 二叉树的最小深度
+
+```C++
+class Solution {
+public:
+    int minDepth(TreeNode *root) {
+        if (!root) return 0;
+        int left = minDepth(root->left);
+        int right = minDepth(root->right);
+        if(!left) return right + 1;
+        if(!right) return left + 1;
+        return min(left, right) + 1;
+    }
+};
+```
 
