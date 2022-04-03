@@ -322,3 +322,65 @@ public:
     }
 };
 ```
+
+##### Leetcode 105 从前序与中序遍历序列构造二叉树
+
+hash中序索引 + 切索引
+
+```C++
+class Solution {
+    //存储中序遍历的元素与索引
+    unordered_map<int, int> hash;
+public:
+    TreeNode *buildTree(vector<int> &preOrder, vector<int> &inOrder) {
+        for (int i = 0; i < inOrder.size(); i++) {
+            hash[inOrder[i]] = i;
+        }
+        return buildTree(preOrder, inOrder, 0, preOrder.size() - 1, 0, inOrder.size() - 1);
+    }
+
+    TreeNode *buildTree(vector<int> &preOrder, vector<int> &inOrder, int pl, int pr, int il, int ir) {
+        if (pl > pr) return nullptr;
+
+        int val = preOrder[pl];
+        int pos = hash[val];
+        //new 方式
+        TreeNode *root = new TreeNode(val);
+        root->left = buildTree(preOrder, inOrder, pl + 1, pl + pos - il, il, pos - 1);
+        root->right = buildTree(preOrder, inOrder, pl + pos - il + 1, pr, pos + 1, ir);
+        return root;
+    }
+};
+
+```
+
+##### Leetcode 106  从中序与后序遍历序列构造二叉树
+
+hash中序索引 + 切索引
+
+```C++
+class Solution {
+    unordered_map<int,int> hash;
+public:
+    TreeNode* buildTree(vector<int>& inorder, vector<int>& postorder) {
+        for(int i = 0;i < inorder.size();i++){
+            hash[inorder[i]] = i;
+        }
+        return buildTree(inorder,postorder,0,inorder.size() - 1,0,postorder.size() - 1);
+    }
+
+    TreeNode* buildTree(vector<int>& inorder, vector<int>& postorder,int il,int ir,int pl,int pr){
+        if(il > ir) return nullptr;
+        int val = postorder[pr];
+        int pos = hash[val];
+        TreeNode *root = new TreeNode(val);
+        root->left  = buildTree(inorder,postorder,il,pos - 1,pl, pl + pos - il - 1);
+        root->right = buildTree(inorder,postorder,pos + 1,ir,pl + pos - il,pr - 1);
+        return root;
+    }
+};
+
+```
+
+
+
