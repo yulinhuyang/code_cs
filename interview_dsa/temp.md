@@ -299,8 +299,8 @@ public:
         vector<vector<int>> res;
         queue<TreeNode *> q;
         bool flag = true;
-        if(root) q.emplace(root);
-        
+        if (root) q.emplace(root);
+
         while (!q.empty()) {
             int size = q.size();
             vector<int> path;
@@ -312,16 +312,13 @@ public:
                 if (top->left) q.emplace(top->left);
                 if (top->right) q.emplace(top->right);
             }
-            if (flag) res.emplace_back(path);
-            else {
-                reverse(path.begin(), path.end());
-                res.emplace_back(path);
-            }
+
+            if (!flag) reverse(path.begin(), path.end());
+            res.emplace_back(path);
             flag = !flag;
         }
 
         return res;
     }
 };
-
 ```
