@@ -164,3 +164,33 @@ public:
     }
 };
 ```
+#### Leetcode 138 复制带随机指针的链表
+
+```C++
+class Solution {
+public:
+    Node *copyRandomList(Node *head) {
+        for (auto p = head; p; p = p->next->next) {
+            Node *node = new Node(p->val);
+            node->next = p->next;
+            p->next = node;
+        }
+
+        for (auto p = head; p; p = p->next->next) {
+            if (p->random) p->next->random = p->random->next;
+        }
+
+        Node *dummy = new Node(-1);
+        auto cur = dummy;
+        for (auto p = head; p; p = p->next) {
+            cur->next = p->next;
+            cur = cur->next;
+            p->next = p->next->next;
+        }
+
+        return dummy->next;
+    }
+};
+
+```
+
