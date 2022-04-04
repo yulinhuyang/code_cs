@@ -146,12 +146,11 @@ manacher算法：
 栈：
 - AcWing 828 模拟栈
 - AcWing 3302 表达式求值
+- AcWing 41 包含min函数的栈
+- AcWing 128 编辑器
 
 单调栈：    
 - AcWing 830 单调栈
-
-- AcWing 41 包含min函数的栈
-- AcWing 128 编辑器
 - AcWing 129 火车进栈
 - AcWing 130 火车进出栈问题
 - AcWing 131 直方图中最大的矩形
