@@ -222,7 +222,100 @@ public:
 };
 
 ```
+##### 144 二叉树的前序遍历
 
+循环一侧走，出栈切方向
+
+```C++
+//递归
+class Solution {
+    vector<int> ans;
+public:
+    vector<int> preorderTraversal(TreeNode *root) {
+        if (root) dfs(root);
+        return ans;
+    }
+
+    void dfs(TreeNode *root) {
+        ans.emplace_back(root->val);
+        if (root->left) dfs(root->left);
+        if (root->right) dfs(root->right);
+    }
+};
+
+//迭代
+class Solution {
+
+public:
+    vector<int> preorderTraversal(TreeNode *root) {
+        vector<int> ans;
+        stack<TreeNode *> stk;
+        if (!root) return ans;
+
+        while (root || !stk.empty()) {
+            //循环一侧走
+            while (root) {
+                ans.emplace_back(root->val);
+                stk.push(root);
+                root = root->left;
+            }
+            //出栈切方向
+            root = stk.top();
+            stk.pop();
+            root = root->right;
+        }
+
+        return ans;
+    }
+};
+
+```
+
+##### 145 二叉树的后序遍历
+
+迭代：左右根 reverse 根右左。
+
+```C++
+//递归
+class Solution {
+    vector<int> ans;
+public:
+    vector<int> postorderTraversal(TreeNode *root) {
+        if (root) dfs(root);
+        return ans;
+    }
+
+    void dfs(TreeNode *root) {
+        if (root->left) dfs(root->left);
+        if (root->right) dfs(root->right);
+        ans.emplace_back(root->val);
+    }
+};
+
+
+//迭代
+class Solution {
+public:
+    vector<int> postorderTraversal(TreeNode *root) {
+        vector<int> ans;
+        stack<TreeNode *> stk;
+        if(!root) return ans;
+        
+        while(root || !stk.empty()){
+            while(root){
+                ans.emplace_back(root->val);
+                stk.push(root);
+                root = root->right;
+            }
+            root = stk.top();
+            stk.pop();
+            root = root->left;
+        }
+        reverse(ans.begin(),ans.end());
+        return ans;
+    }
+};
+```
 
 
 
