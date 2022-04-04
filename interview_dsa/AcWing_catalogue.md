@@ -102,8 +102,9 @@ huffman树：
 
 绝对值不等式：
 - AcWing 104 货仓选址   
-- AcWing 2816 判断子序列  
-
+- AcWing 2816 判断子序列 
+ 
+其他：
 - AcWing 110 防晒
 - AcWing 111 畜栏预定
 - AcWing 112 雷达设备
