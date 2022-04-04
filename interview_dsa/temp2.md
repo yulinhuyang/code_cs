@@ -135,4 +135,32 @@ public:
 
 ```
 
+##### Leetcode 133 克隆图
 
+```C++
+class Solution {
+    unordered_map<Node *, Node *> hash;
+public:
+    Node *cloneGraph(Node *node) {
+        dfs(node);
+
+        for (auto[s, d]:hash) {
+            for (auto ver:s->neighbors) {
+                d->neighbors.push_back(hash[ver]);
+            }
+        }
+
+        return hash[node];
+    }
+
+    void dfs(Node *node) {
+        hash[node] = new Node(node->val);
+
+        for (auto ver:node->neighbors) {
+            if (!hash.count(ver)) {
+                dfs(ver);
+            }
+        }
+    }
+};
+```
