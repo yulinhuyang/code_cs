@@ -884,6 +884,28 @@ public:
     }
 };
 ```
+
+#### 154  寻找旋转排序数组中的最小值 II
+
+折线法二分寻找最小值
+
+```C++
+class Solution {
+public:
+    int findMin(vector<int> &nums) {
+        int l = 0, r = nums.size() - 1;
+        while (l < r && nums[r] == nums[0]) r--;
+        if (nums[0] < nums[r]) return nums[0];
+        while (l < r) {
+            int mid = l + r >> 1;
+            if (nums[mid] < nums[0]) r = mid;
+            else l = mid + 1;
+        }
+        return nums[l];
+    }
+};
+
+```
 ##### 162. 寻找峰值
 ```c++
 class Solution {
@@ -1556,6 +1578,26 @@ public:
             x /= 10;
         }
         return rev_num == x || rev_num / 10 == x;
+    }
+};
+```
+##### 125 验证回文串
+
+```C++
+class Solution {
+    bool check(char c) {
+        return c >= 'a' && c <= 'z' || c >= 'A' && c <= 'Z' || c >= '0' && c <= '9';
+    }
+
+public:
+    bool isPalindrome(string s) {
+        int n = s.size();
+        for (int i = 0, j = n - 1; i < j; i++, j--) {
+            while (i < j && !check(s[i])) i++;
+            while (i < j && !check(s[j])) j--;
+            if (i < j && tolower(s[i]) != tolower(s[j])) return false;
+        }
+        return true;
     }
 };
 ```
@@ -2886,7 +2928,34 @@ public:
     }
 };
 ```
+##### 92. 反转链表 II
+```c++
+class Solution {
+public:
+    ListNode* reverseBetween(ListNode* head, int left, int right) {
+        if(left == right) return head;
+        int m = left,n = right;
 
+        auto dummy = new ListNode(-1);
+        dummy->next = head;
+        auto a = dummy,d = dummy;
+        for(int i = 0 ;i < m - 1;i++) a = a->next;
+        for(int i = 0 ;i < n;i++) d = d->next;
+        auto b = a->next,c = d->next;
+        // a（m-1） b d c（n+1)
+        for(auto p = b,q = b-> next; q != c; )
+        {
+            auto tmp = q->next;
+            q->next = p;
+            p = q;
+            q = tmp;
+        };
+        a->next = d;
+        b->next = c;
+        return dummy->next;
+    }
+};
+```
 ##### 148. 排序链表
 
 复杂问题，设计拆解
@@ -2980,17 +3049,36 @@ public:
 };
 
 ```
-##### 237. 删除链表中的节点
+
+#### Leetcode 138 复制带随机指针的链表
+
 ```C++
 class Solution {
 public:
-    void deleteNode(ListNode* node) {
-        node->val = node->next->val;
-        node->next = node->next->next;
+    Node *copyRandomList(Node *head) {
+        for (auto p = head; p; p = p->next->next) {
+            Node *node = new Node(p->val);
+            node->next = p->next;
+            p->next = node;
+        }
+
+        for (auto p = head; p; p = p->next->next) {
+            if (p->random) p->next->random = p->random->next;
+        }
+
+        Node *dummy = new Node(-1);
+        auto cur = dummy;
+        for (auto p = head; p; p = p->next) {
+            cur->next = p->next;
+            cur = cur->next;
+            p->next = p->next->next;
+        }
+
+        return dummy->next;
     }
 };
-```
 
+```
 
 ##### 141 环形链表
 
@@ -3096,34 +3184,19 @@ public:
     }
 };
 ```
-##### 92. 反转链表 II
-```c++
+	
+##### 237. 删除链表中的节点
+```C++
 class Solution {
 public:
-    ListNode* reverseBetween(ListNode* head, int left, int right) {
-        if(left == right) return head;
-        int m = left,n = right;
-
-        auto dummy = new ListNode(-1);
-        dummy->next = head;
-        auto a = dummy,d = dummy;
-        for(int i = 0 ;i < m - 1;i++) a = a->next;
-        for(int i = 0 ;i < n;i++) d = d->next;
-        auto b = a->next,c = d->next;
-        // a（m-1） b d c（n+1)
-        for(auto p = b,q = b-> next; q != c; )
-        {
-            auto tmp = q->next;
-            q->next = p;
-            p = q;
-            q = tmp;
-        };
-        a->next = d;
-        b->next = c;
-        return dummy->next;
+    void deleteNode(ListNode* node) {
+        node->val = node->next->val;
+        node->next = node->next->next;
     }
 };
 ```
+	
+
 
 ## 0x14  hash表
 
@@ -3145,29 +3218,6 @@ public:
             hash[nums[i]] = i;
         }
         return {-1,-1};
-    }
-};
-```
-##### 49 字母异位词分组
-
-map --value --list结构
-
-```c++
-class Solution {
-public:
-    vector<vector<string>> groupAnagrams(vector<string>& strs) {
-        unordered_map<string,vector<string>> hash;
-        for(auto &str:strs){
-            auto key = str;  //赋值
-            sort(key.begin(),key.end());
-            hash[key].emplace_back(str);
-        }
-
-        vector<vector<string>> res;
-        for(auto item:hash){
-            res.emplace_back(item.second);
-        }
-        return res;
     }
 };
 ```
@@ -3194,6 +3244,59 @@ public:
             if (nums[i] > 0) return i + 1;
         }
         return n + 1;
+    }
+};
+```					  
+##### 49 字母异位词分组
+
+map --value --list结构
+
+```c++
+class Solution {
+public:
+    vector<vector<string>> groupAnagrams(vector<string>& strs) {
+        unordered_map<string,vector<string>> hash;
+        for(auto &str:strs){
+            auto key = str;  //赋值
+            sort(key.begin(),key.end());
+            hash[key].emplace_back(str);
+        }
+
+        vector<vector<string>> res;
+        for(auto item:hash){
+            res.emplace_back(item.second);
+        }
+        return res;
+    }
+};
+```
+	
+##### Leetcode 133 克隆图
+
+```C++
+class Solution {
+    unordered_map<Node *, Node *> hash;
+public:
+    Node *cloneGraph(Node *node) {
+        dfs(node);
+
+        for (auto[s, d]:hash) {
+            for (auto ver:s->neighbors) {
+                d->neighbors.push_back(hash[ver]);
+            }
+        }
+
+        return hash[node];
+    }
+
+    void dfs(Node *node) {
+        hash[node] = new Node(node->val);
+
+        for (auto ver:node->neighbors) {
+            if (!hash.count(ver)) {
+                dfs(ver);
+            }
+        }
     }
 };
 ```
@@ -4480,22 +4583,123 @@ public:
         stack<TreeNode*> stk;
         vector<int> ans;
         if(!root) return ans;
-        auto cur = root;
-        while(cur || stk.size()){
-            while(cur){
-                stk.emplace(cur);
-                cur = cur->left;
+
+        while(root || stk.size()){
+            //循环一侧走
+            while(root){
+                stk.push(root);
+                root = root->left;
             }
-            cur = stk.top();
+            //出栈切方向
+            root = stk.top();
             stk.pop();
-            ans.emplace_back(cur->val);
-            cur = cur->right;
+            ans.emplace_back(root->val);
+            root = root->right;
         }
 
         return ans;
     }
-};	
+};
 ```
+	
+##### 144 二叉树的前序遍历
+
+循环一侧走，出栈切方向
+
+```C++
+//递归
+class Solution {
+    vector<int> ans;
+public:
+    vector<int> preorderTraversal(TreeNode *root) {
+        if (root) dfs(root);
+        return ans;
+    }
+
+    void dfs(TreeNode *root) {
+        ans.emplace_back(root->val);
+        if (root->left) dfs(root->left);
+        if (root->right) dfs(root->right);
+    }
+};
+
+//迭代
+class Solution {
+
+public:
+    vector<int> preorderTraversal(TreeNode *root) {
+        vector<int> ans;
+        stack<TreeNode *> stk;
+        if (!root) return ans;
+
+        while (root || !stk.empty()) {
+            //循环一侧走
+            while (root) {
+                ans.emplace_back(root->val);
+                stk.push(root);
+                root = root->left;
+            }
+            //出栈切方向
+            root = stk.top();
+            stk.pop();
+            root = root->right;
+        }
+
+        return ans;
+    }
+};
+
+```
+
+##### 145 二叉树的后序遍历
+
+迭代：左右根 reverse 根右左。
+
+```C++
+//递归
+class Solution {
+    vector<int> ans;
+public:
+    vector<int> postorderTraversal(TreeNode *root) {
+        if (root) dfs(root);
+        return ans;
+    }
+
+    void dfs(TreeNode *root) {
+        if (root->left) dfs(root->left);
+        if (root->right) dfs(root->right);
+        ans.emplace_back(root->val);
+    }
+};
+
+
+//迭代
+class Solution {
+public:
+    vector<int> postorderTraversal(TreeNode *root) {
+        vector<int> ans;
+        stack<TreeNode *> stk;
+        if(!root) return ans;
+        
+        while(root || !stk.empty()){
+            while(root){
+                ans.emplace_back(root->val);
+                stk.push(root);
+                root = root->right;
+            }
+            root = stk.top();
+            stk.pop();
+            root = root->left;
+        }
+        reverse(ans.begin(),ans.end());
+        return ans;
+    }
+};
+```
+	
+	
+	
+	
 ##### 173 二叉搜索树迭代器
 	
 ```c++
@@ -4880,8 +5084,61 @@ public:
 };
 
 ```
+##### Leetcode 116 填充每个节点的下一个右侧节点指针
 
-##### 124  二叉树中的最大路径和
+使用已建立的next 指针，位于第N层时为第N+1层建立next 指针
+
+局部变量不会初始化的，是随机值；全局变量才会初始化成默认的，比如指针类型会初始化为空
+
+```C++
+class Solution {
+public:
+    Node *connect(Node *root) {
+        if (!root) return nullptr;
+
+        auto res = root;
+        while (root->left) {
+            //遍历一层
+            for (auto p = root; p; p = p->next) {
+                p->left->next = p->right;
+                if(p->next) p->right->next = p->next->left;
+            }
+            //挪到下一层最左
+            root = root->left;
+        }
+        return res;
+    }
+};
+
+```
+
+#### Leetcode 117  填充每个节点的下一个右侧节点指针 II
+
+位于第N层时为第N+1层建立next 指针
+
+```C++
+class Solution {
+public:
+    Node *connect(Node *root) {
+        if (!root) return nullptr;
+        auto cur = root;
+        while (cur) {
+            Node *head = new Node(-1);
+            auto tail = head;
+            //遍历一层,建立下一层
+            for (auto p = cur; p; p = p->next) {
+                if (p->left) tail = tail->next = p->left;
+                if (p->right) tail = tail->next = p->right;
+            }
+            //挪到下一层最左
+            cur = head->next;
+        }
+        return root;
+    }
+};
+```
+	
+#####  Leetcode 124  二叉树中的最大路径和
 
 壳 + recur
 
@@ -4906,6 +5163,28 @@ public:
         (void)recur(root);
         return maxnum;
 
+    }
+};
+
+```
+##### Leetcode 129  求根节点到叶节点数字之和
+
+前判空好于后判空
+
+```C++
+class Solution {
+    int ans;
+public:
+    int sumNumbers(TreeNode *root) {
+        if (root) dfs(root, 0);
+        return ans;
+    }
+
+    void dfs(TreeNode *root, int num) {
+        num = num * 10 + root->val;
+        if (!root->left && !root->right) ans += num;
+        if (root->left) dfs(root->left, num);
+        if (root->right) dfs(root->right, num);
     }
 };
 
@@ -7103,6 +7382,46 @@ public:
 
 
 ### 数字三角形模型
+	
+##### Leetcode 118  杨辉三角 I
+
+```C+++
+class Solution {
+public:
+    vector<vector<int>> generate(int numRows) {
+        vector<vector<int>> res;
+        for (int i = 0; i < numRows; i++) {
+            vector<int> line(i + 1, 0);
+            line[0] = line[i] = 1;
+            for (int j = 1; j < i; j++) {
+                line[j] = res[i - 1][j - 1] + res[i - 1][j];
+            }
+            res.emplace_back(line);
+        }
+        return res;
+    }
+};
+
+```
+
+##### Leetcode 119  杨辉三角 II
+
+```C++
+class Solution {
+public:
+    vector<int> getRow(int rowIndex) {
+        vector<vector<int>> f(2, vector<int>(rowIndex + 1, 0));
+        for (int i = 0; i <= rowIndex; i++) {
+            f[i & 1][0] = f[i & 1][i] = 1;
+            for (int j = 1; j < i; j++) {
+                f[i & 1][j] = f[i - 1 & 1][j - 1] + f[i - 1 & 1][j];
+            }
+        }
+        return f[rowIndex & 1];
+    }
+};
+
+```
 
 ##### 120. 三角形最小路径和
 ```c++
