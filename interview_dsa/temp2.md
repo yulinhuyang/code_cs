@@ -52,3 +52,26 @@ public:
 };
 ```
 
+##### 118  杨辉三角 I
+
+```C+++
+class Solution {
+public:
+    vector<vector<int>> generate(int numRows) {
+        vector<vector<int>> res;
+        for (int i = 0; i < numRows; i++) {
+            vector<int> line(i + 1, 0);
+            line[0] = line[i] = 1;
+            for (int j = 1; j < i; j++) {
+                line[j] = res[i - 1][j - 1] + res[i - 1][j];
+            }
+            res.emplace_back(line);
+        }
+        return res;
+    }
+};
+
+```
+
+
+
