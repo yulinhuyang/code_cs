@@ -1,5 +1,7 @@
 ##### Leetcode 116 填充每个节点的下一个右侧节点指针
 
+使用已建立的next 指针，位于第N层时为第N+1层建立next 指针
+
 ```C++
 class Solution {
 public:
