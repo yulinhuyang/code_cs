@@ -194,3 +194,35 @@ public:
 
 ```
 
+##### 94  中序遍历
+
+```C++
+class Solution {
+public:
+    vector<int> inorderTraversal(TreeNode* root) {
+        stack<TreeNode*> stk;
+        vector<int> ans;
+        if(!root) return ans;
+
+        while(root || stk.size()){
+            //循环一侧走
+            while(root){
+                stk.push(root);
+                root = root->left;
+            }
+            //出栈切方向
+            root = stk.top();
+            stk.pop();
+            ans.emplace_back(root->val);
+            root = root->right;
+        }
+
+        return ans;
+    }
+};
+
+```
+
+
+
+
