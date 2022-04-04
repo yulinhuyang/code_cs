@@ -112,6 +112,27 @@ public:
 };
 ```
 
+##### Leetcode 129  求根节点到叶节点数字之和
 
+前判空好于后判空
+
+```C++
+class Solution {
+    int ans;
+public:
+    int sumNumbers(TreeNode *root) {
+        if (root) dfs(root, 0);
+        return ans;
+    }
+
+    void dfs(TreeNode *root, int num) {
+        num = num * 10 + root->val;
+        if (!root->left && !root->right) ans += num;
+        if (root->left) dfs(root->left, num);
+        if (root->right) dfs(root->right, num);
+    }
+};
+
+```
 
 
