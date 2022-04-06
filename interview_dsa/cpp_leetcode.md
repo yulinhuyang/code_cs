@@ -1364,6 +1364,25 @@ public:
     }
 };
 ```
+##### 75 颜色分类
+
+三指针，类比三数之和
+    
+```C++
+class Solution {
+public:
+    void sortColors(vector<int> &nums) {
+        //j指向0开始，i指向1开始，k指向2开始
+        for (int i = 0, j = 0, k = nums.size() - 1; i <= k;) {
+            if (nums[i] == 0) swap(nums[i++], nums[j++]);
+            else if (nums[i] == 2) swap(nums[i], nums[k--]);
+            else i++;
+        }
+    }
+};
+ 
+```
+
 ##### 88. 合并两个有序数组
 ```c++
 class Solution {
@@ -1498,6 +1517,39 @@ public:
 };
 
 ```
+
+##### 135 分发糖果
+
+双向遍历
+
+```C++
+class Solution {
+public:
+    int candy(vector<int> &ratings) {
+        int res = 0;
+        int n = ratings.size();
+        vector<int> left(n, 1);
+        for (int i = 1; i < n; i++) {
+            if (ratings[i] > ratings[i - 1]) {
+                left[i] = left[i - 1] + 1;
+            }
+        }
+
+        int right = 0;
+        for (int i = n - 1; i >= 0; i--) {
+            if (i < n - 1 && ratings[i] > ratings[i + 1]) {
+                right++; //记递增序列
+            } else {
+                right = 1;
+            }
+            res += max(left[i], right);
+        }
+
+        return res;
+    }
+};
+```
+
 ##### 238. 除自身以外数组的乘积
 
 ```C++
@@ -2445,7 +2497,35 @@ public:
 };
 
 ```
+##### Leetcode 150 逆波兰表达式求值
 
+逆波兰记法,后缀表示法
+
+```C++
+class Solution {
+public:
+    int evalRPN(vector<string> &tokens) {
+        stack<int> stk;
+        for (auto &token:tokens) {
+            if (token == "+" || token == "-" || token == "*" || token == "/") {
+                auto b = stk.top();
+                stk.pop();
+                auto a = stk.top();
+                stk.pop();
+                if (token == "+") a += b;
+                else if (token == "-") a -= b;
+                else if (token == "*") a *= b;
+                else a /= b;
+                stk.push(a);
+            } else {
+                stk.push(stoi(token));
+            }
+        }
+        return stk.top();
+    }
+};
+```
+	
 ### 单调栈
 
 ##### 84 柱状图中最大的矩形
@@ -3137,6 +3217,62 @@ public:
         return fast;
     }
 };
+```
+##### Leetcode 143  重排链表
+
+模板题：寻找中点+ 逆序右半段 + 合并
+
+```C++
+class Solution {
+public:
+    void reorderList(ListNode *head) {
+        if (!head) return;
+        ListNode *mid = middle(head);
+        ListNode *L1 = head;
+        ListNode *L2 = mid->next;
+        mid->next = nullptr;
+        L2 = reverseList(L2);
+        mergeList(L1, L2);
+    }
+
+    ListNode *middle(ListNode *head) {
+        auto fast = head;
+        auto slow = head;
+        while (fast->next && fast->next->next) {
+            fast = fast->next->next;
+            slow = slow->next;
+        }
+        return slow;
+    }
+
+    ListNode *reverseList(ListNode *head) {
+        ListNode *prev = nullptr;
+        ListNode *cur = head;
+        while (cur) {
+            auto nextTmp = cur->next;
+            cur->next = prev;
+            prev = cur;
+            cur = nextTmp;
+        }
+        return prev;
+    }
+
+    void mergeList(ListNode *L1, ListNode *L2) {
+        ListNode *L1_next_tmp;
+        ListNode *L2_next_tmp;
+        while (L1 && L2) {
+            L1_next_tmp = L1->next;
+            L2_next_tmp = L2->next;
+
+            L1->next = L2;
+            L1 = L1_next_tmp;
+
+            L2->next = L1_next_tmp;
+            L2 = L2_next_tmp;
+        }
+    }
+};
+
 ```
 
 
@@ -4810,7 +4946,21 @@ public:
 };
 
 ```
-	
+
+##### 100  相同的树
+
+```C++
+class Solution {
+public:
+    bool isSameTree(TreeNode *p, TreeNode *q) {
+        if (!p && !q) return true;
+        if (!p && q) return false;
+        if (p && !q) return false;
+        if (p->val != q->val) return false;
+        return isSameTree(p->left, q->left) && isSameTree(p->right, q->right);
+    }
+};
+```	
 ##### Leetcode 101. 对称二叉树
 
 壳 + 递归函数 
@@ -5057,9 +5207,10 @@ public:
 
 ##### Leetcode 114. 二叉树展开为链表
 
-树天然递归
+
 
 ```C++
+//递归：树天然递归
 class Solution {
 public:
     void flatten(TreeNode* root) {
@@ -5084,6 +5235,28 @@ public:
 };
 
 ```
+
+寻找前驱节点：左子树的最右节点连接右子树，左子树连接到root->right,置空root->left。继续处理链表的下一个节点。
+                                                          
+```C++
+//迭代                                                         
+class Solution {
+public:
+    void flatten(TreeNode *root) {
+        while (root) {
+            auto p = root->left;
+            if (p) {
+                while (p->right) p = p->right;
+                p->right = root->right;
+                root->right = root->left;
+                root->left = nullptr;
+            }
+            root = root->right;
+        }
+    }
+};                                                           
+                                                           
+```   
 ##### Leetcode 116 填充每个节点的下一个右侧节点指针
 
 使用已建立的next 指针，位于第N层时为第N+1层建立next 指针
@@ -5696,7 +5869,38 @@ public:
 };
 
 ```
+							  
+##### 77 组合
 
+k - 1 逆向统计数
+
+对比acwing  state + (1 << i)  用法
+
+```C++
+class Solution {
+    vector<vector<int>> ans;
+    vector<int> path;
+public:
+    vector<vector<int>> combine(int n, int k) {
+        dfs(1, k, n);
+        return ans;
+    }
+
+    void dfs(int start, int k, int n) {
+        if (!k) {
+            ans.emplace_back(path);
+            return;
+        }
+        for (int i = start; i <= n; i++) {
+            path.emplace_back(i);
+            dfs(i + 1, k - 1, n);
+            path.pop_back();
+        }
+    }
+};
+
+```
+				  
 ##### 216. 组合总和 III
 
 ```c++
@@ -7200,60 +7404,88 @@ public:
 ```
 
 
-##### 139 单词拆分
+##### Leetcode 139 单词拆分
 
-字典类动归
+单词问题：双指针dp
 
-两层迭代：i 外层，j内层/字典层
+双指针正向dp解法
 
-```c++
+双指针逆向dp解法
 
+```C++
 class Solution {
+    unordered_set<string> hash;
+    vector<int> f;
+    int n;
 public:
-    bool wordBreak(string s, vector<string>& wordDict) {
-
-        unordered_set<string> set;
-        for (auto word:wordDict) {
-            set.emplace(word);
+    bool wordBreak(string s, vector<string> &wordDict) {
+        for (auto &word:wordDict) {
+            hash.insert(word);
         }
-
-        vector<int> dp(s.size() + 1, 0);
-        dp[0] = true;
-        for (int i = 0; i < s.size() + 1; i++) {
-            //j用set迭代
-            for (int j = 0; j < i; j++) {
-                if (dp[j] && set.count(s.substr(j, i - j))) {
-                    dp[i] = true;
+        n = s.size();
+        //f[i]对应s的i-1
+        f.resize(n + 1, 0);
+        f[n] = true;
+        for (int i = n - 1; i >= 0; i--) {
+            for (int j = i; j < n; j++) {
+                if (f[j + 1] && hash.count(s.substr(i, j - i + 1))) {
+                    f[i] = 1;
                 }
             }
         }
 
-        return dp[s.size()];
+        return f[0];
     }
 };
+```
+##### Leetcode 140 单词拆分 II
 
+dp方向和dfs方向相反，反向递推方案
+
+```C++
 class Solution {
+    unordered_set<string> hash;
+    vector<string> ans;
+    vector<int> f;
+    int n;
 public:
-    bool wordBreak(string s, vector<string>& wordDict) {
-
-        vector<int> dp(s.size() + 1, 0);
-        dp[0] = true;
-        for (int i = 0; i < s.size() +1; i++) {
-            //字典迭代
-            for(auto word:wordDict){
-                if(word.size() <= i && dp[i-word.size()]){
-                    if(s.substr(i-word.size(),word.size()) == word){
-                        dp[i] = true;    
-                    }
+    vector<string> wordBreak(string s, vector<string> &wordDict) {
+        for (auto &word:wordDict) {
+            hash.insert(word);
+        }
+        n = s.size();
+        //f[i]对应s的i-1
+        f.resize(n + 1, 0);
+        f[n] = true;
+        for (int i = n - 1; i >= 0; i--) {
+            for (int j = i; j < n; j++) {
+                if (f[j + 1] && hash.count(s.substr(i, j - i + 1))) {
+                    f[i] = 1;
                 }
             }
         }
 
-        return dp[s.size()];
+        //dfs方向与dp相反，反向递推
+        if (f[0]) dfs(s, 0, "");
+        return ans;
+    }
+
+    //u是len,i是索引
+    void dfs(string s, int u, string path) {
+        if (u == n) {
+            path.pop_back();
+            ans.emplace_back(path);
+        }
+        for (int i = u; i < n; i++) {
+            if (f[i + 1] && hash.count(s.substr(u, i - u + 1))) {
+                dfs(s, i + 1, path + s.substr(u, i - u + 1) + " ");
+            }
+        }
     }
 };
 
 ```
+
 
 ##### 91 解码方法
 ```
