@@ -478,7 +478,8 @@ dfs空间和递归深度成正比，有爆栈风险，比如树的深度最坏�
 - 44 通配符匹配：当前判p[j] == '*'。
 - 97 交错字符串：字符串dp。                                                                              
 - 72 编辑距离(Edit Distance)   
-- 139 单词拆分(Word Break)    
+- 139 单词拆分(Word Break I): 单词问题双指针dp，双指针正向dp解法/双指针逆向dp解法。
+- 140 单词拆分 II(Word Break II): dp逆向 + dfs正向，dp方向和dfs方向相反，反向递推方案 。                                                                         
 - 70 爬楼梯(Climbing Stairs)     
 - 62 不同路径(Unique Paths)    
 - 63 不同路径 II    
