@@ -1,3 +1,68 @@
+### 平台开源
+
+[力扣](https://leetcode-cn.com/problemset/all/)
+
+[leetcode食用指南](https://github.com/azl397985856/leetcode)
+
+[牛客网](https://www.nowcoder.com/)
+
+[Comet OJ](https://www.cometoj.com/contests)
+
+[HDU](http://acm.hdu.edu.cn/)
+
+[HihoCoder](https://hihocoder.com/)
+
+[洛谷](https://www.luogu.org/)
+
+[LibreOJ(算法竞赛一本通——提高篇)](https://loj.ac)
+
+**OI wiki**
+
+[学习资源](https://oi-wiki.org/intro/resources/)  
+
+[OI wiki](https://oi-wiki.org/)
+
+[OI & ACM 课件分享](https://github.com/hzwer/shareOI)  
+
+Just Code [[github]](https://github.com/YaxeZhang/Just-Code) 
+  
+写在20年初的校招面试心得与自学CS经验及找工作分享 [github](https://github.com/conanhujinming/tips_for_interview/blob/master/README-zh_CN.md)   
+
+### ACM模板：
+
+https://github.com/Bryce1010/bryce1010-ACM-Template
+
+KuangBin的ACM模板 [[github]](https://github.com/kuangbin/ACM-ICPC)  
+
+f-zyj/ACM 模板 [[github]](https://github.com/f-zyj/ACM)
+
+f-zyj/ACM 在线模板：https://blog.csdn.net/f_zyj/article/details/51594851
+
+https://github.com/soulmachine/acm-cheat-sheet
+
+### 进阶指南
+
+https://github.com/livrth/algorithm-competition-advanced-guide
+
+[算法竞赛进阶指南 题目练习](https://ac.nowcoder.com/acm/archive/oi-advance/problem)
+
+[算法竞赛知识合集 目录](https://blog.csdn.net/weixin_45697774/article/details/105603064)
+
+算法竞赛进阶指南 杂谈 https://blog.nowcoder.net/zhxu98/2671
+
+算法竞赛进阶指南题解笔记 秦淮岸： https://www.acwing.com/blog/content/89/
+
+大雪菜：https://blog.csdn.net/GarfieldEr007
+
+### 课程代码
+
+算法基础课：https://www.acwing.com/activity/content/activity_person/content/4102/1/
+
+算法进阶指南：https://www.acwing.com/activity/content/activity_person/content/1349/9/
+
+算法提高课：https://www.acwing.com/activity/content/activity_person/content/9226/1/
+
+LeetCode究极班: https://www.acwing.com/activity/content/activity_person/content/29799/1/
 
 https://github.com/lydrainbowcat/tedukuri
 
