@@ -149,9 +149,29 @@ int gcd(int a, int b)
 insert/query:线段树可以在树上做二分。 cnt > k 递归左边，否则递归右边。         
 
 ```C++
+sort(nums.begin(), nums.end());
+nums.erase(unique(nums.begin(), nums.end()), nums.end());
+
 //找离散化的映射值
 int find(int x)
 {
     return lower_bound(nums.begin(), nums.end(), x) - nums.begin();
+}
+
+int build(int l, int r)
+{
+    int p = ++ idx;
+    if (l == r) return p;
+    int mid = l + r >> 1;
+    tr[p].l = build(l, mid), tr[p].r = build(mid + 1, r);
+    return p;
+}
+int query(int q, int p, int l, int r, int k)
+{
+    if (l == r) return r;
+    int cnt = tr[tr[q].l].cnt - tr[tr[p].l].cnt;
+    int mid = l + r >> 1;
+    if (k <= cnt) return query(tr[q].l, tr[p].l, l, mid, k);
+    else return query(tr[q].r, tr[p].r, mid + 1, r, k - cnt);
 }
 ```
