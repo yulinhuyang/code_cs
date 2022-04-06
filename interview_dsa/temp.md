@@ -289,7 +289,30 @@ public:
  
 ```
 
-25 43 51   114   
+##### 114 二叉树展开为链表
+                                                           
+寻找前驱节点：左子树的最右节点连接右子树，左子树连接到root->right,置空root->left。继续处理链表的下一个节点。
+                                                          
+```C++
+//迭代                                                         
+class Solution {
+public:
+    void flatten(TreeNode *root) {
+        while (root) {
+            auto p = root->left;
+            if (p) {
+                while (p->right) p = p->right;
+                p->right = root->right;
+                root->right = root->left;
+                root->left = nullptr;
+            }
+            root = root->right;
+        }
+    }
+};                                                           
+                                                           
+```                                                           
+25 43 51       
 
 
 
