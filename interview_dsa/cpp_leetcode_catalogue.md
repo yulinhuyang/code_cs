@@ -121,6 +121,7 @@ while (j < k - 1 && nums[i] + nums[j] + nums[k - 1] >= 0) k--;
 ### 双向遍历
 
 - 42 接雨水:两遍max, 左边一遍Left_max，右边一遍right_max，min(left_max[i],right_max[i]) - height[i]
+- 135 分发糖果：双向遍历，ratings[i] > ratings[i + 1] , 则right++
 - 238 除自身以外数组的乘积(Product of Array Except Self)     
 - 581 最短无序连续子数组  
 
@@ -173,7 +174,7 @@ while (j < k - 1 && nums[i] + nums[j] + nums[k - 1] >= 0) k--;
 
 - 20 有效的括号(Parentheses)     
 - 32 最长有效括号
-- 150 逆波兰表达式求值:逆波兰表达式/计算器    
+- 150 逆波兰表达式求值:先弹出的是b,后弹出的是a,操作顺序 a -= b，逆波兰表达式/计算器。   
 
 ### 单调栈
 
