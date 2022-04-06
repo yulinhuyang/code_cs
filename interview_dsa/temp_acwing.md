@@ -175,3 +175,37 @@ int query(int q, int p, int l, int r, int k)
     else return query(tr[q].r, tr[p].r, mid + 1, r, k - cnt);
 }
 ```
+#### 平衡树
+
+平衡树treap：tree + heap(大根堆)   
+
+红黑树、splay(用的多)、sbt、avl
+
+**bst**
+二叉搜索树
+
+当前节点的左子树任何节点的值都 < 当前节点的值，右子树任何节点的值都 > 当前节点的值。可以动态维护一个有序序列。
+
+set(红黑树实现)支持的操作：insert、erase、get_prev(前驱，左子树最右节点)、get_next(后继，右子树最左节点)、getMin、getMax。
+set不支持的操作：get_rank_by_value、getKthNum、求比某个数小的最大值、比某个数大的最小值。
+
+bst会退化成一条链
+
+**treap**
+
+核心：让bst尽量随机。在插入每个新节点时，给节点一个随机生成的额外的权值，然后就像二叉树的插入过程一样。自底向上依次检查，当某个节点不满足大根堆的性质时，将该点与父节点交换。    
+treap通过适当的单旋转，在维持节点关键码满足bst性质的同时，还使每个节点上随机生成的额外权值满足大根堆的性质，各种操作时间复杂度都是O(logn)。    
+
+加两个哨兵，-inf,inf。    
+作用对象：旋转前处于父节点位置的节点作为左右旋的对象。    
+左旋zag，右旋zig不影响中序的遍历顺序。
+左儿子大则右旋，右儿子大则左旋，把大的儿子旋转上去。
+
+基本函数：get_node、build、zig、zag、insert、get_prev、get_next
+
+AcWing253 普通平衡树：get_prev、get_next、get_rank_by_val、get_val_by_rank,size记录以该节点为根的子树的副本数之和。
+AcWing265 营业额统计：a[1]~a[i-1]中找到与a[i]相差最小的数a[j]。1 插入一个数；2 找到>=a[i]的最小的，get_next，也可以set的low_bound; 3 <=a[i]的最大的，get_prev，也可以用set是upper_bound。
+
+ 
+
+
