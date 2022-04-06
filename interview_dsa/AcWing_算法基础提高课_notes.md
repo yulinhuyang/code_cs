@@ -1578,7 +1578,7 @@ treap通过适当的单旋转，在维持节点关键码满足bst性质的同时
 基本函数：get_node、build、zig、zag、insert、get_prev、get_next
 
 - AcWing 253 普通平衡树：get_prev、get_next、get_rank_by_val、get_val_by_rank,size记录以该节点为根的子树的副本数之和。     
-= AcWing 265 营业额统计：a[1]~a[i-1]中找到与a[i]相差最小的数a[j]。1 插入一个数；2 找到>=a[i]的最小的，get_next，也可以set的low_bound; 3 <=a[i]的最大的，get_prev，也可以用set是upper_bound。类似136临值查找。
+- AcWing 265 营业额统计：a[1]~a[i-1]中找到与a[i]相差最小的数a[j]。1 插入一个数；2 找到>=a[i]的最小的，get_next，也可以set的low_bound; 3 <=a[i]的最大的，get_prev，也可以用set是upper_bound。类似136临值查找。
 
 ```C++
 set<int> s; 
