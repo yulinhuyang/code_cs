@@ -230,9 +230,36 @@ public:
     }
 };
 ```
+##### 77 组合
 
+k - 1 逆向统计数
 
- 25 43 51  75  77  114   
+```C++
+class Solution {
+    vector<vector<int>> ans;
+    vector<int> path;
+public:
+    vector<vector<int>> combine(int n, int k) {
+        dfs(1, k, n);
+        return ans;
+    }
+
+    void dfs(int start, int k, int n) {
+        if (!k) {
+            ans.emplace_back(path);
+            return;
+        }
+        for (int i = start; i <= n; i++) {
+            path.emplace_back(i);
+            dfs(i + 1, k - 1, n);
+            path.pop_back();
+        }
+    }
+};
+
+```
+
+ 25 43 51  75    114   
 
 
 
