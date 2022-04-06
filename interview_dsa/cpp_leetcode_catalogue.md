@@ -323,14 +323,12 @@ long long使用：最终结果是int,中间可能是long long。
 树的DFS（Tree Depth First Search，stack）     
 树的BFS(Tree Breadth First Search，queue)     
 
-### 树的DFS（Tree Depth First Search，stack）
-
+### 树的DFS（Tree Depth First Search，stack）  
 - 94 二叉树的中序遍历：递归、迭代(循环一侧走，出栈切方向)。
 - 144 二叉树的前序遍历：循环一侧走，出栈切方向。
 - 145 二叉树的后序遍历：迭代法，左右根 reverse 根右左。
 - 98  验证二叉搜索树：左子树所有节点都小于当前节点的值，右子树所有节点都大于当前节点的值。
 - 99 恢复二叉搜索树:迭代中序遍历，默认升序 -> 找逆序元素。
- 
 - 101 对称二叉树(Symmetric Tree):     
 - 104 二叉树的最大深度(Maximum Depth of Binary Tree)    
 - 105 从前序与中序遍历序列构造二叉树(Preorder/Inorder):恢复必须要有一个是中序才行，建树模板题，hash中序索引 + 切索引。
@@ -354,8 +352,7 @@ long long使用：最终结果是int,中间可能是long long。
 - 652 寻找重复的子树: 中序遍历与后序或者中序遍历与前序遍历都可以唯一确定一棵树。两遍hash,第一遍树变成字符串，第二遍变成数。
  
   
-### 树的BFS(Tree Breadth First Search，queue)
-
+### 树的BFS(Tree Breadth First Search，queue)   
 - 102 二叉树的层序遍历：BFS
 - 103 二叉树的锯齿形层次遍历(zigzag): BFS + flag
 - 107 二叉树的层序遍历II：BFS + reverse
@@ -369,16 +366,16 @@ bfs一般求最小步数和最短距离，dfs状态数量非常大，但是解�
 memo记忆化搜索、剪枝优化
 
 ### 组合\子集\排列
-
+组合：
 - 17  Letter Combinations of a Phone Number（电话号码的字母组合）    
 - 22  括号生成    
 - 39  组合总和(Combination Sum)：dfs + 排除等效冗余+ 可行性剪枝
 - 40  组合总和 II：dfs + 排除等效冗余+ 可行性剪枝
-- 301 删除无效的括号     
-  
+- 301 删除无效的括号
+排列：
 - 46 全排列(Permutations)    
 - 47 全排列II 遍历的时候跳过相同元素，人为规定相同数字的相对顺序不变
-
+子集：
 - 78 子集 位运算+循环,简化子集问题, 递归结构相当于一层循环。
 - 90 子集II 回溯去重
 
