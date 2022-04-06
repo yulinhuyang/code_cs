@@ -201,7 +201,23 @@ public:
 
 ```
 
- 25 43 51  75  77 100 114 136 
+##### 136 只出现一次的数字
+
+```C++
+class Solution {
+public:
+    int singleNumber(vector<int> &nums) {
+        //要自己初始化，否则one的值随机的
+        int one = 0;
+        for(auto num:nums) {
+            one ^= num;
+        }
+        return one;
+    }
+};
+```
+
+ 25 43 51  75  77 100 114   
 
 
 
