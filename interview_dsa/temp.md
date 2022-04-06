@@ -234,6 +234,8 @@ public:
 
 k - 1 逆向统计数
 
+对比acwing  state + (1 << i)  用法
+
 ```C++
 class Solution {
     vector<vector<int>> ans;
@@ -258,6 +260,16 @@ public:
 };
 
 ```
+
+位运算操作：
+
+置1： x| = 1<<i    
+置0： x& = ~(1<<i)    
+取反：x^ =  1 << i   
+取某一位： (x >> i) &1   
+ 
+ 
+
 
  25 43 51  75    114   
 
