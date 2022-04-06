@@ -144,8 +144,62 @@ public:
 
 
 
+##### Leetcode 143  重排链表
 
+模板题：寻找中点+ 逆序右半段 + 合并
 
+```C++
+class Solution {
+public:
+    void reorderList(ListNode *head) {
+        if (!head) return;
+        ListNode *mid = middle(head);
+        ListNode *L1 = head;
+        ListNode *L2 = mid->next;
+        mid->next = nullptr;
+        L2 = reverseList(L2);
+        mergeList(L1, L2);
+    }
+
+    ListNode *middle(ListNode *head) {
+        auto fast = head;
+        auto slow = head;
+        while (fast->next && fast->next->next) {
+            fast = fast->next->next;
+            slow = slow->next;
+        }
+        return slow;
+    }
+
+    ListNode *reverseList(ListNode *head) {
+        ListNode *prev = nullptr;
+        ListNode *cur = head;
+        while (cur) {
+            auto nextTmp = cur->next;
+            cur->next = prev;
+            prev = cur;
+            cur = nextTmp;
+        }
+        return prev;
+    }
+
+    void mergeList(ListNode *L1, ListNode *L2) {
+        ListNode *L1_next_tmp;
+        ListNode *L2_next_tmp;
+        while (L1 && L2) {
+            L1_next_tmp = L1->next;
+            L2_next_tmp = L2->next;
+
+            L1->next = L2;
+            L1 = L1_next_tmp;
+
+            L2->next = L1_next_tmp;
+            L2 = L2_next_tmp;
+        }
+    }
+};
+
+```
 
 
 
