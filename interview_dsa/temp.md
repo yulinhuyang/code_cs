@@ -270,8 +270,24 @@ public:
  
  
 
+##### 75 颜色分类
+    
+```C++
+class Solution {
+public:
+    void sortColors(vector<int> &nums) {
+        //j指向0开始，i指向1开始，k指向2开始
+        for (int i = 0, j = 0, k = nums.size() - 1; i <= k;) {
+            if (nums[i] == 0) swap(nums[i++], nums[j++]);
+            else if (nums[i] == 2) swap(nums[i], nums[k--]);
+            else i++;
+        }
+    }
+};
+ 
+```
 
- 25 43 51  75    114   
+25 43 51   114   
 
 
 
