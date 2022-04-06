@@ -206,6 +206,14 @@ treap通过适当的单旋转，在维持节点关键码满足bst性质的同时
 AcWing253 普通平衡树：get_prev、get_next、get_rank_by_val、get_val_by_rank,size记录以该节点为根的子树的副本数之和。     
 AcWing265 营业额统计：a[1]~a[i-1]中找到与a[i]相差最小的数a[j]。1 插入一个数；2 找到>=a[i]的最小的，get_next，也可以set的low_bound; 3 <=a[i]的最大的，get_prev，也可以用set是upper_bound。   
 
+```C++
+set<int> s; 
+s.insert(1); 
+s.insert(4);
+
+auto it = s.lower_bound(2); 
+auto it = s.upper_bound(2); 
+```
  
 
 
