@@ -12,7 +12,7 @@ https://leetcode-cn.com/problem-list/xb9nqhhg/
 
 https://leetcode-cn.com/problem-list/e8X3pBZi/
 
-https://gitee.com/Doocs/leetcode/blob/main/lcof2/README.md
+https://github.com/doocs/leetcode
 
 labuladong: 
 
