@@ -39,14 +39,51 @@ public:
 
 ```
 ##### 51  N皇后
- 
-```C++
 
+遍历行，col + dg + udg 标记数组     
+
+主对角线满足行下标减去列下标之差相等，即row - col，方便处理row -col + n。         
+副对角线满足行下标和列下标之和相等，即row + col。    
+
+```C++
+class Solution {
+    vector<int> col, dg, udg;//列、正副对角线做标记数组，遍历行
+    vector<vector<string>> ans;
+    vector<string> path;
+    int n;
+public:
+    vector<vector<string>> solveNQueens(int _n) {
+        n = _n;
+        col = vector<int>(n, 0);
+        dg = udg = vector<int>(2 * n, 0);
+        path = vector<string>(n, string(n, '.'));
+        dfs(0);
+        return ans;
+    }
+
+    void dfs(int row) {
+        if (row == n) {
+            ans.emplace_back(path);
+            return;
+        }
+
+        //逐行填充
+        for (int i = 0; i < n; i++) {
+            //主对角线满足行下标减去列下标之差相等，即row - col，方便处理row -col + n。
+            //副对角线满足行下标和列下标之和相等，即row + col
+            if (!col[i] && !dg[row - i + n] && !udg[row + i]) {
+                col[i] = dg[row - i + n] = udg[row + i] = 1;
+                path[row][i] = 'Q';
+                dfs(row + 1);
+                path[row][i] = '.';
+                col[i] = dg[row - i + n] = udg[row + i] = 0;
+            }
+        }
+    }
+};
 
 ```
-  
-25   
-
+ 
 
 
 
