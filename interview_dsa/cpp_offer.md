@@ -3,7 +3,6 @@
 # 0x00 基本算法
 
 ### 0x01 位运算
-
 - 15 二进制中 1 的个数 
 - 56 数组中只出现一次的数字
 - 39 数组中出现次数超过一半的数字 
@@ -14,7 +13,6 @@
 - Offer II 005 单词长度的最大乘积(318 maximum-product-of-word-lengths)
 
 ## 0x04  二分和三分
-
 - 4 二维数组中的查找: 先去掉干扰条件相等的数,折线分析法。
 - 11  旋转数组的最小数字 
 - 53 数字在排序数组中出现的次数 
@@ -84,7 +82,6 @@ public:
 
 
 ### 滑动窗口
-
 - Offer II 009  乘积小于 K 的子数组(713 subarray-product-less-than-k)
 - Offer II 014 字符串中的变位词(567 permutation-in-string)
 - Offer II 015 字符串中的所有变位词(438 find-all-anagrams-in-a-string)
@@ -92,7 +89,6 @@ public:
 - Offer II 017 含有所有字符的最短字符串(76 minimum-window-substring)
 
 ### Cycle Sort
-
 - 3 数组中重复的数字:圈排序
 - 29 顺时针打印矩阵 
 - 50 第一个只出现一次的字符位置 
@@ -148,7 +144,6 @@ public:
 # 0x10 基本数据结构
 
 ## 0x11 栈/单调栈
-
 - 9 用两个栈实现队列
 - 30 包含 min 函数的栈
 - 31 栈的压入、弹出序列
@@ -247,7 +242,6 @@ public:
 ```
 
 ## 0x16  Trie树（字典树）
-
 - Offer II 063  替换单词(648 replace-words)   
 - Offer II 064  神奇的字典(676 implement-magic-dictionary)   
 - Offer II 065  最短的单词编码(820 short-encoding-of-words)   
@@ -281,13 +275,11 @@ public:
 
 
 ### 图遍历--拓扑排序
-
 - Offer II 113 课程顺序(210 course-schedule-ii)
 - Offer II 115 重建序列(444 sequence-reconstruction)
 
 
 ## 0x22 DFS(递归、回溯)
-
 - 12 矩阵中的路径: dfs四方向遍历，回溯做选择（修改涂色变量相当于push_back）
 - 38 字符串的排列 
 
@@ -330,7 +322,6 @@ public:
 ## 0x23 BFS
 
 - 13 机器人的运动范围
-
 - Offer II 106 二分图(785 is-graph-bipartite)  
 - Offer II 107 矩阵中的距离(542 01-matrix)  
 - Offer II 109 开密码锁(752 open-the-lock)  
@@ -417,7 +408,6 @@ public:
 - Offer II 117  相似的字符串(839 similar-string-groups)
 
 ## 0x50 动态规划
-
 - 10_1 斐波那契数列 
 - 10_2 矩形覆盖 
 - 10_3 跳台阶 
@@ -451,7 +441,6 @@ public:
 ```
 
 ## 其它
-
 17  打印从 1 到最大的 n 位数 
 44  数字序列中的某一位数字 
 61  扑克牌顺子 
