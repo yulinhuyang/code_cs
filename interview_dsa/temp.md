@@ -121,7 +121,7 @@ public:
 ```
 ##### 31 下一个排列
 
-两遍逆向扫描：1扫描找尽量靠右的不满足降序的数i，2扫描找比i大的尽量靠右的数j,swap(num[i],num[j]), reverse(nums.begin() + i + 1, nums.end())。
+两遍逆向扫描：1 扫描找尽量靠右的不满足降序的数i，2 扫描找比i大的尽量靠右的数j,swap(num[i],num[j]), 3 reverse(nums.begin() + i + 1, nums.end())。
 
 ```C++
 class Solution {
