@@ -26,9 +26,11 @@ yxc leetcode全解(究极班)： https://www.acwing.com/activity/content/activit
 
 https://github.com/soulmachine/acm-cheat-sheet
 
-算法竞赛进阶指南: https://github.com/lydrainbowcat/tedukuri
+算法竞赛进阶指南: 
 
-算法竞赛知识合集：进阶指南 + 入门经典 + 挑战竞赛: https://blog.csdn.net/weixin_45697774/article/details/105603064
+https://github.com/lydrainbowcat/tedukuri
+
+算法竞赛知识合集: https://blog.csdn.net/weixin_45697774/article/details/105603064
 
 牛蛙点点提高课题解：https://www.acwing.com/user/myspace/activity/52559/
 
