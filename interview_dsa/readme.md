@@ -2,7 +2,7 @@
 
 hot100:
 
-https://leetcode-cn.com/problem-list/2cktkvj/
+https://github.com/doocs/leetcode
 
 https://soulmachine.gitbooks.io/algorithm-essentials/content/cpp/
 
@@ -10,17 +10,13 @@ https://soulmachine.gitbooks.io/algorithm-essentials/content/cpp/
 
 https://leetcode-cn.com/problem-list/xb9nqhhg/
 
-https://leetcode-cn.com/problem-list/e8X3pBZi/
+https://github.com/doocs/leetcode/blob/main/lcof/README.md
 
-https://github.com/doocs/leetcode
+https://github.com/doocs/leetcode/blob/main/lcof2/README.md
 
-labuladong: 
+labuladong:  https://labuladong.gitee.io/algo/
 
-https://labuladong.gitee.io/algo/
-
-代码随想：
-
-https://gitee.com/programmercarl/leetcode-master
+代码随想录： https://gitee.com/programmercarl/leetcode-master
 
 yxc leetcode全解(究极班)： https://www.acwing.com/activity/content/activity_person/content/29799/44/
 
