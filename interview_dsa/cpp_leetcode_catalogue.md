@@ -143,6 +143,7 @@ while (j < k - 1 && nums[i] + nums[j] + nums[k - 1] >= 0) k--;
 ## 0x06 倍增
 
 - 29 两数相除：方法1：二分+快速乘法(位运算，参考快速幂模板)； 方法2：预处理倍增数组 或逐步倍增法，放到负数范围，因为表示范围更大
+https://leetcode-cn.com/problems/divide-two-integers/solution/gong-shui-san-xie-dui-xian-zhi-tiao-jian-utb9/
 
 ## 0x07 贪心
 - 860 柠檬水找零:贪心，优先使用10块的。
@@ -449,8 +450,9 @@ dfs空间和递归深度成正比，有爆栈风险，比如树的深度最坏�
 
 ### 0x42 树状数组
 
-- 307 区域和检索-数组可修改（树状数组模板题）
-- 315 计算右侧小于当前元素的个数
+- 307 区域和检索-数组可修改：树状数组模板题，能用树状数组用树状数组，代码段速度快，不行再用线段树。
+关于各类「区间和」问题如何选择解决方案（含模板）：https://leetcode-cn.com/problems/range-sum-query-mutable/solution/guan-yu-ge-lei-qu-jian-he-wen-ti-ru-he-x-41hv/
+- 315 计算右侧小于当前元素的个数:树状数组，动态维护前缀和问题，转化为统计为1的前缀和，nums[i] + 10001。
 - 327 区间和的个数
 - 493 翻转对
 
