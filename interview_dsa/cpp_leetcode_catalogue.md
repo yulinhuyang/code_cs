@@ -142,8 +142,8 @@ while (j < k - 1 && nums[i] + nums[j] + nums[k - 1] >= 0) k--;
 
 ## 0x06 倍增
 
-- 29 两数相除：方法1：二分+快速乘法(位运算，参考快速幂模板)； 方法2：预处理倍增数组 或逐步倍增法，放到负数范围，因为表示范围更大
-https://leetcode-cn.com/problems/divide-two-integers/solution/gong-shui-san-xie-dui-xian-zhi-tiao-jian-utb9/
+- 29 两数相除：方法1：二分+快速乘法(位运算，参考快速幂模板)； 方法2：预处理倍增数组 或逐步倍增法，放到负数范围，因为表示范围更大。   
+对限制条件的两种理解，以及两种倍增实现：https://leetcode-cn.com/problems/divide-two-integers/solution/gong-shui-san-xie-dui-xian-zhi-tiao-jian-utb9/
 
 ## 0x07 贪心
 - 860 柠檬水找零:贪心，优先使用10块的。
