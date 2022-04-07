@@ -33,7 +33,9 @@
 ## 0x04  二分和三分
 - 4 二维数组中的查找: 先去掉干扰条件相等的数,折线分析法。
 - 11  旋转数组的最小数字 
-- 53 数字在排序数组中出现的次数 
+- 53 数字在排序数组中出现的次数
+- Offer II 68 查找插入位置(35 搜索插入位置)
+- Offer II 69 山峰数组的顶部(852 山脉数组的峰顶索引)
 - Offer II 73 狒狒吃香蕉(875 爱吃香蕉的珂珂)
 
 ##### 4. 二维数组中的查找 
@@ -98,12 +100,11 @@ public:
 - 45 把数组排成最小的数 
 - 51 数组中的逆序对 
 
-### 滑动窗口  
-- Offer II 009  乘积小于 K 的子数组(713 subarray-product-less-than-k)
-- Offer II 014 字符串中的变位词(567 permutation-in-string)
-- Offer II 015 字符串中的所有变位词(438 find-all-anagrams-in-a-string)
-- Offer II 016 不含重复字符的最长子字符串(3 longest-substring-without-repeating-characters)
-- Offer II 017 含有所有字符的最短字符串(76 minimum-window-substring)
+### 滑动窗口
+- Offer II 14 字符串中的变位词(567 字符串的排列)
+- Offer II 15 字符串中的所有变位词(438 找到字符串中所有字母异位词)
+- Offer II 16 不含重复字符的最长子字符串(3 无重复字符的最长子串)
+- Offer II 17 含有所有字符的最短字符串(76 最小覆盖子串)
 
 ### 回文串
 - Offer II 18 有效的回文(125 验证回文串)
@@ -162,7 +163,7 @@ public:
 
 - 14 剪绳子 
 - 63 股票的最大利润 
-
+- Offer II 74 合并区间(56 合并区间)
 
 # 0x10 基本数据结构
 
@@ -257,6 +258,10 @@ public:
     }
 };
 ```
+## 0x14 hash
+- Offer II 30 插入、删除和随机访问都是 O(1) 的容器(380 O(1) 时间插入、删除和获取随机元素)
+- Offer II 31 最近最少使用缓存(146 LRU 缓存)
+
 
 ## 0x15 字符串(KMP与最小表示法）   
 - 5 替换空格 
@@ -283,10 +288,12 @@ public:
 ```
 
 ## 0x16  Trie树（字典树）
-- Offer II 063  替换单词(648 replace-words)   
-- Offer II 064  神奇的字典(676 implement-magic-dictionary)   
-- Offer II 065  最短的单词编码(820 short-encoding-of-words)   
-- Offer II 066  单词之和(677 map-sum-pairs)
+- Offer II 62 实现前缀树(208 实现 Trie (前缀树))
+- Offer II 63 替换单词(648 单词替换)
+- Offer II 64 神奇的字典(676 实现一个魔法字典)
+- Offer II 65 最短的单词编码(820 单词的压缩编码)
+- Offer II 66 单词之和(677 键值映射)
+- Offer II 67 最大的异或(421 数组中两个数的最大异或值)
 
 ## 0x17 二叉堆 
 - 40 最小的 K 个数
