@@ -286,6 +286,12 @@ public:
 - 12 矩阵中的路径: dfs四方向遍历，回溯做选择（修改涂色变量相当于push_back）
 - 38 字符串的排列 
 
+- Offer II 79 所有子集(78 子集)
+- Offer II 80 含有 k 个元素的组合(77 组合)
+- Offer II 81 允许重复选择元素的组合(39 组合总和)
+- Offer II 82 含有重复元素集合的组合(40 组合总和 II)
+- Offer II 83 没有重复元素集合的全排列(46 全排列)
+- Offer II 84 含有重复元素集合的全排列(47 全排列 II)
 ##### offer 12 矩阵中的路径
 
 回溯做选择（修改涂色变量相当于push_back），不是floodfill
@@ -407,9 +413,9 @@ public:
 
 ## 0x41  数据结构进阶 - 并查集
 
-- Offer II 116  省份数量(547 number-of-provinces)  
-- Offer II 118  多余的边(684 redundant-connection)
-- Offer II 117  相似的字符串(839 similar-string-groups)
+- Offer II 116 省份数量(547 省份数量)
+- Offer II 118 多余的边(684 冗余连接)
+- Offer II 117 相似的字符串(839 相似字符串组)
 
 ## 0x50 动态规划
 - 10_1 斐波那契数列 
@@ -446,6 +452,7 @@ public:
 
 ##  图论
 
+- Offer II 106 二分图(785 判断二分图)
 
 
 17  打印从 1 到最大的 n 位数 
