@@ -1,4 +1,4 @@
-##### 43. 字符串相乘
+##### Leetcode 43  字符串相乘
 
 ```C++
 class Solution {
@@ -38,7 +38,7 @@ public:
 };
 
 ```
-##### 51  N皇后
+##### Leetcode 51  N皇后
 
 遍历行，col + dg + udg 标记数组     
 
@@ -84,7 +84,41 @@ public:
 
 ```
  
+##### Leetcode 25  K 个一组翻转链表
 
+```C++
+class Solution {
+public:
+    ListNode *reverseKGroup(ListNode *head, int k) {
+        ListNode *dummy = new ListNode(-1);
+        dummy->next = head;
+        auto cur = dummy;
+        while (cur) {
+            auto first = cur->next;
+            auto end = cur;
+
+            for (int i = 0; i < k && end; i++) {
+                end = end->next;
+            }
+            if (!end) break;
+
+            auto p1 = first;
+            auto p2 = first->next;
+            while (p1 != end) {
+                auto p2_tmp = p2->next;
+                p2->next = p1;
+                p1 = p2;
+                p2 = p2_tmp;
+            }
+
+            first->next = p2;//当前段结束指向下一段开始
+            cur->next = end;//上一段的结束指向当前段的开始(旋转前的真末尾)
+            cur = first;
+        }
+        return dummy->next;
+    }
+};
+```
 
 
 
