@@ -119,7 +119,30 @@ public:
     }
 };
 ```
+##### 31 下一个排列
 
+两遍反向扫描：1 扫描找尽量靠右的不满足降序的数i，2 扫描 找比i大的尽量靠右的数j,swap(num[i],num[j]), reverse(nums.begin() + i + 1, nums.end())。
+
+```C++
+class Solution {
+public:
+    void nextPermutation(vector<int> &nums) {
+        int m = nums.size();
+        int i = m - 2;
+        //找尽量靠右的不满足降序的数
+        while (i >= 0 && nums[i] >= nums[i + 1]) i--;
+        if (i < 0) {
+            reverse(nums.begin(), nums.end());
+            return;
+        }
+        int j = m - 1;
+        //找右侧第一个比i大的数
+        while (j >= i && nums[i] >= nums[j]) j--;
+        swap(nums[i], nums[j]);
+        reverse(nums.begin() + i + 1, nums.end());
+    }
+};
+```
 
 
 
