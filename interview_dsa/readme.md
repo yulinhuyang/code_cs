@@ -14,7 +14,7 @@ https://github.com/doocs/leetcode/blob/main/lcof/README.md
 
 https://github.com/doocs/leetcode/blob/main/lcof2/README.md
 
-labuladong:  https://labuladong.gitee.io/algo/
+labuladong:    https://labuladong.gitee.io/algo/
 
 代码随想录： https://gitee.com/programmercarl/leetcode-master
 
