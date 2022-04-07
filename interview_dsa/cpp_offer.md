@@ -2,7 +2,8 @@
 
 # 0x00 基本算法
 
-### 0x01 位运算
+### 0x01 位运算与数学
+- 14 不修改数组找出重复的数：抽屉原理
 - 15 二进制中 1 的个数 
 - 56 数组中只出现一次的数字
 - 39 数组中出现次数超过一半的数字 
@@ -63,8 +64,7 @@ public:
 };
 ```
 
-## 0x05 双指针与排序
-
+## 0x05 双指针与排序  
 - 57_1 和为 S 的两个数字
 - 57_2 和为 S 的连续正数序列
 - 58_1 翻转单词顺序列
@@ -74,21 +74,20 @@ public:
 - Offer II 018  有效的回文(125 valid-palindrome)
 - Offer II 020 回文子字符串的个数(647 palindromic-substrings)
 
-### 排序
-
+### 排序  
 - 21 调整数组顺序使奇数位于偶数前面 
 - 45 把数组排成最小的数 
 - 51 数组中的逆序对 
 
 
-### 滑动窗口
+### 滑动窗口  
 - Offer II 009  乘积小于 K 的子数组(713 subarray-product-less-than-k)
 - Offer II 014 字符串中的变位词(567 permutation-in-string)
 - Offer II 015 字符串中的所有变位词(438 find-all-anagrams-in-a-string)
 - Offer II 016 不含重复字符的最长子字符串(3 longest-substring-without-repeating-characters)
 - Offer II 017 含有所有字符的最短字符串(76 minimum-window-substring)
 
-### Cycle Sort
+### Cycle Sort  
 - 3 数组中重复的数字:圈排序
 - 29 顺时针打印矩阵 
 - 50 第一个只出现一次的字符位置 
@@ -216,8 +215,7 @@ public:
 };
 ```
 
-## 0x15 字符串(KMP与最小表示法）
-
+## 0x15 字符串(KMP与最小表示法）   
 - 5 替换空格 
 - 20 表示数值的字符串 
 - 46 把数字翻译成字符串 
@@ -247,16 +245,14 @@ public:
 - Offer II 065  最短的单词编码(820 short-encoding-of-words)   
 - Offer II 066  单词之和(677 map-sum-pairs)
 
-## 0x17 二叉堆
-
+## 0x17 二叉堆 
 - 40 最小的 K 个数
-- 41_1 数据流中的中位数
+- 41_1 数据流中的中位数(295 数据流的中位数)
 - 41_2 字符流中第一个不重复的字符
 
 ## 0x21 树与图的遍历
 
-### 树的遍历
-
+### 树的遍历   
 - 7 重建二叉树 
 - 8 二叉树的下一个结点
 - 26  树的子结构 
