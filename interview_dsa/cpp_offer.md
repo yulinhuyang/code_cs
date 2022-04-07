@@ -11,7 +11,7 @@
 - 43 从 1 到 n 整数中 1 出现的次数 
 - 65 不用加减乘除做加法 
 
-- Offer II 005. 单词长度的最大乘积(318 maximum-product-of-word-lengths)
+- Offer II 005 单词长度的最大乘积(318 maximum-product-of-word-lengths)
 
 ## 0x04  二分和三分
 
@@ -21,6 +21,7 @@
 - Offer II 073 狒狒吃香蕉(875 koko-eating-bananas)
 
 ##### 4. 二维数组中的查找 
+
 ```C++
 class Solution {
 public:
@@ -44,7 +45,7 @@ public:
     }
 };
 ```
-##### 11. 旋转数组的最小数字
+##### 11 旋转数组的最小数字
 
 ```C++
 class Solution {
@@ -66,14 +67,14 @@ public:
 
 ## 0x05 双指针与排序
 
-- 57.1 和为 S 的两个数字
-- 57.2 和为 S 的连续正数序列
-- 58.1 翻转单词顺序列
-- 58.2 左旋转字符串
+- 57_1 和为 S 的两个数字
+- 57_2 和为 S 的连续正数序列
+- 58_1 翻转单词顺序列
+- 58_2 左旋转字符串
 
-- Offer II 007. 数组中和为 0 的三个数(15 3sum)
-- Offer II 018. 有效的回文(125 valid-palindrome)
-- Offer II 020. 回文子字符串的个数(647 palindromic-substrings)
+- Offer II 007  数组中和为 0 的三个数(15 3sum)
+- Offer II 018  有效的回文(125 valid-palindrome)
+- Offer II 020 回文子字符串的个数(647 palindromic-substrings)
 
 ### 排序
 
@@ -222,10 +223,10 @@ public:
 
 ## 0x15 字符串(KMP与最小表示法）
 
-- 5. 替换空格 
-- 20. 表示数值的字符串 
-- 46. 把数字翻译成字符串 
-- 67. 把字符串转换成整数 
+- 5 替换空格 
+- 20 表示数值的字符串 
+- 46 把数字翻译成字符串 
+- 67 把字符串转换成整数 
 
 ##### Offer 05 替换空格
 ```C++
@@ -247,52 +248,53 @@ public:
 
 ## 0x16  Trie树（字典树）
 
-- Offer II 063. 替换单词(648 replace-words)   
-- Offer II 064. 神奇的字典(676 implement-magic-dictionary)   
-- Offer II 065. 最短的单词编码(820 short-encoding-of-words)   
-- Offer II 066. 单词之和(677 map-sum-pairs)
+- Offer II 063  替换单词(648 replace-words)   
+- Offer II 064  神奇的字典(676 implement-magic-dictionary)   
+- Offer II 065  最短的单词编码(820 short-encoding-of-words)   
+- Offer II 066  单词之和(677 map-sum-pairs)
 
 ## 0x17 二叉堆
 
-- 40. 最小的 K 个数
-- 41.1 数据流中的中位数
-- 41.2 字符流中第一个不重复的字符
+- 40 最小的 K 个数
+- 41_1 数据流中的中位数
+- 41_2 字符流中第一个不重复的字符
 
 ## 0x21 树与图的遍历
 
 ### 树的遍历
 
-- 7. 重建二叉树 
-- 8. 二叉树的下一个结点
-- 26. 树的子结构 
-- 27. 二叉树的镜像 
-- 28. 对称的二叉树 
-- 32.1 从上往下打印二叉树 
-- 32.2 把二叉树打印成多行 
-- 32.3 按之字形顺序打印二叉树 
-- 33. 二叉搜索树的后序遍历序列 
-- 34. 二叉树中和为某一值的路径 
-- 36. 二叉搜索树与双向链表 
-- 37. 序列化二叉树 
-- 54. 二叉查找树的第 K 个结点 
-- 55.2 平衡二叉树 
-- 68. 树中两个节点的最低公共祖先 
+- 7 重建二叉树 
+- 8 二叉树的下一个结点
+- 26  树的子结构 
+- 27  二叉树的镜像 
+- 28  对称的二叉树 
+- 32_1 从上往下打印二叉树 
+- 32_2 把二叉树打印成多行 
+- 32_3 按之字形顺序打印二叉树 
+- 33  二叉搜索树的后序遍历序列 
+- 34  二叉树中和为某一值的路径 
+- 36  二叉搜索树与双向链表 
+- 37  序列化二叉树 
+- 54  二叉查找树的第 K 个结点 
+- 55_2 平衡二叉树 
+- 68  树中两个节点的最低公共祖先 
 
 
 ### 图遍历--拓扑排序
 
-- Offer II 113. 课程顺序(210 course-schedule-ii)
-- Offer II 115. 重建序列(444 sequence-reconstruction)
+- Offer II 113 课程顺序(210 course-schedule-ii)
+- Offer II 115 重建序列(444 sequence-reconstruction)
 
 
 ## 0x22 DFS(递归、回溯)
 
-- 12. 矩阵中的路径: dfs四方向遍历，回溯做选择（修改涂色变量相当于push_back）
-- 38. 字符串的排列 
+- 12 矩阵中的路径: dfs四方向遍历，回溯做选择（修改涂色变量相当于push_back）
+- 38 字符串的排列 
 
 ##### offer 12 矩阵中的路径
 
 回溯做选择（修改涂色变量相当于push_back），不是floodfill
+
 ```C++
 class Solution {
 public:
@@ -327,17 +329,17 @@ public:
 
 ## 0x23 BFS
 
-- 13. 机器人的运动范围
+- 13 机器人的运动范围
 
-- Offer II 106. 二分图(785 is-graph-bipartite)  
-- Offer II 107. 矩阵中的距离(542 01-matrix)  
-- Offer II 109. 开密码锁(752 open-the-lock)  
-- Offer II 116. 省份数量(547 number-of-provinces)  
-- Offer II 114. 外星文字典(269 alien-dictionary)  
-- Offer II 112. 最长递增路径(329 longest-increasing-path-in-a-matrix)
+- Offer II 106 二分图(785 is-graph-bipartite)  
+- Offer II 107 矩阵中的距离(542 01-matrix)  
+- Offer II 109 开密码锁(752 open-the-lock)  
+- Offer II 116 省份数量(547 number-of-provinces)  
+- Offer II 114 外星文字典(269 alien-dictionary)  
+- Offer II 112 最长递增路径(329 longest-increasing-path-in-a-matrix)
 
 
-##### Offer 13. 机器人的运动范围
+##### Offer 13 机器人的运动范围
 ```C++
 class Solution {
     int get(int x) {
@@ -388,7 +390,7 @@ public:
 
 - 14-I. 剪绳子
 
-##### 14-I. 剪绳子
+##### 14-I  剪绳子
 
 ```C++
 class Solution {
