@@ -149,3 +149,5 @@ int lca(int a, int b)
 Tarjan 关于图的连通性 & 连通分量: https://www.acwing.com/blog/content/159/   
 有向图求强联通分量算法模板: https://www.acwing.com/blog/content/42/
 
+模板级补全——唤醒词列表： https://www.acwing.com/blog/content/5224/    
+
