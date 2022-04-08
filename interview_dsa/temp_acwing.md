@@ -143,6 +143,6 @@ int lca(int a, int b)
 ```
 - AcWing 1171 距离：离线做法，tarjan利用并查集合并节点到各自的根节点，根节点就是代表元素，也是LCA,然后离线处理某个点时，相关查询是否已经算出来。并查集的时间复杂度O(1)。
 
-#### 
+#### Tarjan算法
 
 60 分钟搞定图论中的 Tarjan 算法: https://zhuanlan.zhihu.com/p/101923309
