@@ -147,5 +147,5 @@ int lca(int a, int b)
 
 60 分钟搞定图论中的 Tarjan 算法: https://zhuanlan.zhihu.com/p/101923309     
 Tarjan 关于图的连通性 & 连通分量: https://www.acwing.com/blog/content/159/   
-
+有向图求强联通分量算法模板: https://www.acwing.com/blog/content/42/
 
