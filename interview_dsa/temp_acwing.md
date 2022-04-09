@@ -151,6 +151,9 @@ dfs计算depth + tarjan +并查集
 定理：对于一张无向图，如果存在最小生成树和（严格）次小生成树，那么对于任何一棵最小生成树，都存在一棵(严格)次小生成树，使得这两棵树只有一条边不同。
 https://www.acwing.com/solution/content/2884/   
 - AcWing 352 暗之连锁：
+https://www.acwing.com/solution/content/2830/
+
+
 
 #### Tarjan算法
 
