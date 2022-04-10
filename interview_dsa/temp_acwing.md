@@ -12,3 +12,7 @@ wzc1995: https://www.acwing.com/user/myspace/index/21/
 
 AcWing 395 冗余路径(tarjan无向图边双连通分量 桥)： https://www.acwing.com/solution/content/20697/
 
+
+####  欧拉回路和欧拉路径
+
+#### 单调队列优化的DP问题
