@@ -145,7 +145,9 @@ int lca(int a, int b)
     return fa[a][0];
 }
 ```
-- AcWing 1171 距离：离线做法，tarjan利用并查集合并节点到各自的根节点，根节点就是代表元素，也是LCA,然后离线处理某个点时，相关查询是否已经算出来。并查集的时间复杂度O(1)。
+- AcWing 1171 距离：
+AcWing 1171 距离(tarjan求lca)： https://www.acwing.com/solution/content/24569/
+离线做法，tarjan利用并查集合并节点到各自的根节点，根节点就是代表元素，也是LCA,然后离线处理某个点时，相关查询是否已经算出来。并查集的时间复杂度O(1)。
 dfs计算depth + tarjan +并查集 
 ```C++
 int anc = find(y);
@@ -154,8 +156,8 @@ res[id] = dist[u] + dist[y] - dist[anc] * 2;
 
 基于RMQ的做法：dfs遍历区间最小值问题。
 - AcWing 356 次小生成树：kruskal建图，然后枚举所有边，kruskal + BFS + LCA。
+AcWing 356 次小生成树(kruskal+lca+证明)：https://www.acwing.com/solution/content/24609/
 定理：对于一张无向图，如果存在最小生成树和（严格）次小生成树，那么对于任何一棵最小生成树，都存在一棵(严格)次小生成树，使得这两棵树只有一条边不同。
-参考： https://www.acwing.com/solution/content/2884/  
 ans = 最小生成树边权之和。
 生成候选生成树：   
 将多余边替换掉最大权值边：  W = ans + z − Val1，即W = 最小生成边权之和 + 加上多余边 − 最大权值边    
@@ -164,7 +166,7 @@ ans = 最小生成树边权之和。
 Lca倍增数组：f[x][k]=f[fa[x][k−1]][k−1]
 
 - AcWing 352 暗之连锁：
-参考： https://www.acwing.com/solution/content/2830/    
+AcWing 352  闇の連鎖(lca倍增+树上差分)： https://www.acwing.com/solution/content/24653/  
 只能删除一条主要边,一条附加边,一种边叫做主要边,一种边叫做附加边。   
 附加边(x,y):就是将树上x,y之间的路径上的每条主要边,都覆盖了一次。当(x,y)路径上的任意一条主要边消失后,他都可以成为主要边,去维护连通性.   
 问题转化：给定一个n−1条边的树,求每一条树边(主要边),被非树边(附加边)覆盖了多少次。   
