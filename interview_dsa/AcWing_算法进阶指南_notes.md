@@ -54,6 +54,8 @@ https://github.com/livrth/algorithm-competition-advanced-guide
 
 大雪菜：https://blog.csdn.net/GarfieldEr007
 
+模板级补全——唤醒词列表： https://www.acwing.com/blog/content/5224/  
+
 ### 课程代码
 
 算法基础课：https://www.acwing.com/activity/content/activity_person/content/4102/1/
@@ -1248,7 +1250,12 @@ LCA的tarjan算法:并查集优化向上标记法。
 
 #### 0x66 Tarjan算法与无向图连通性
 
-60 分钟搞定图论中的 Tarjan 算法（一）:https://zhuanlan.zhihu.com/p/101923309
+60 分钟搞定图论中的 Tarjan 算法: https://zhuanlan.zhihu.com/p/101923309  
+  
+Tarjan 关于图的连通性 & 连通分量: https://www.acwing.com/blog/content/159/
+  
+有向图求强联通分量算法模板: https://www.acwing.com/blog/content/42/
+
 
 无向图割点：删除x和与x关联的边之后，G分裂成两个以上的不相连子图
 
