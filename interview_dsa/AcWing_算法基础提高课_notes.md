@@ -1593,9 +1593,9 @@ dfs(u)
 - AcWing 1123 铲雪车(欧拉回路)：https://www.acwing.com/solution/content/21113/
 每条路是双向道 -> 每条边都要铲两次:
 双向道:每个点的出度==入度 <=> 必然存在欧拉回路 <=> 必然存在一笔画法
-- AcWing 1184:欧拉回路，模板题。https://www.acwing.com/solution/content/25516/
+- AcWing 1184 欧拉回路: 模板题。https://www.acwing.com/solution/content/25516/
 - AcWing1124 骑马修栅栏：无向图欧拉路径输出字典序最小的一条路径。
-- AcWing 1185. 单词游戏(欧拉回路+边点互换)    
+- AcWing 1185 单词游戏: 欧拉回路 + 边点互换    
 
 ### 拓扑排序
 
