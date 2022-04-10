@@ -267,6 +267,62 @@ for(int u = 1; u <= n; u++)
 	}
 
 ```
+- AcWing 367 学校网络 
+AcWing 367 学校网络(tarjan+加边缩点证明):https://www.acwing.com/file_system/file/content/whole/index/content/1437715/ 
+p个起点(入度=0) q个终点(出度=0)，则初始起码每个起点都要发(因为起点不能被其他点传递到)>=p
+最少加max(p,q)个边得到强连通分量
+- AcWing 1175 最大半连通子图：
+AcWing 1175 最大半连通子图(tarjan缩点拓扑序dp+解释为什么tarjan是逆dfs序) :https://www.acwing.com/solution/content/24796/
+半连通 u -> v 或 v -> u，强连通分量必然是半连通。
+先把所有强连通求出来并缩点后得到拓扑图：
+1 tarjan求scc 
+2 缩点 建图 给边判重。对于选中的两点,他们之间的边要么全选,要么一条都不选。建图时要给边判重。
+3 按拓扑序递推：求最大半连通子图  <=>  求最长无分叉链(有分叉时scc3不能走到scc6 scc6也不能走到scc3)   
+链上权重是连通分量里节点数量
+4 统计最长链方案数：统计最长链方案数  <=> 拓扑图求最长路(权重是结点数,权重越大,结点数越多)
+
+```C++
+权重最大值         f[i]
+让f[i]最大的方案数 g[i]
+强连通分量i结点数  s[i]
+j ↘
+o  → i  if f[j]+s[i] > f[i]:
+o ↗         更新路径权重f[i]=f[j]+s[i]
+             更新方案数g[i]=g[j]
+        if f[j]+s[i] == f[i]:
+            不用更新路径权重
+            只更新方案数g[i]+=g[j]
+			
+unordered_set<LL> S;// 边是(u,v) hash后 u*1000000+v
+// 边判重
+LL hash = a*1000000ll+b;
+// 如果a和b不在一个强连通分量 且 边(a,b)没被加过
+if(a!=b && !S.count(hash))
+```
+- AcWing368 银河：
+AcWing 368 银河(tarjan+topo图 做差分约束问题)： https://www.acwing.com/solution/content/24811/
+N 颗恒星的亮度值总和至少有多大;求最小->求所有下界的最大->最长路 √;求最大->求所有上界的最小->最短路
+
+```C++
+spfa最长路 - 做完后每个点的距离就是最小值    
+1 边是正的 - 存在正环 => 无解       
+2 有解:必须有绝对值;超级源点(能到所有边);x[i]≥x[0]+1
+不同于糖果用栈保证spfa的时间复杂度O(n),这里用强连通分量保证时间复杂度 
+
+1 首先用tarjan求scc,一个正环一定是某一个scc当中的,对于一个scc中的所有边,只要一个边的权重是严格>0,
+如 u + w → v,w>0   
+又u和v 在一个scc中,则v也一定能到u(且w[v][u]>=0(因为我们的不等式约束得到的)), 即只要scc中有一个边>=0 就必然存在正环
+则 scc中无正环 <=> scc中的边==0 <=> scc中所有点相同(由不等式知双向边==0时 A==B )  <=> 可近似看成一个点
+那么当没有正环时,经过tarjan后的图就是topo图
+x[i]最小 <=> 求 x[i]下界最大 <=> 求最长路dist[i]
+1 tarjan   
+2 缩点+建图    
+3 topo序dp最长路   
+
+// 结果 = 新图里每个scc的距离 * scc里的点数 = dist[scc] * cnt[scc] 
+for(int i=1;i<=scc_cnt;i++) res+=(LL)dist[i]*scc_size[i];
+```
+
 
 #### 无向图的强连通分量
 
