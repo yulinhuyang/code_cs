@@ -1148,6 +1148,7 @@ if (dist[j] < dist[t] + w[i] - mid)
 SPFA判断负环：尝试队列换成栈，其他问题用栈会慢。
 
 - AcWing1169 糖果：转化为 >= 符号的不等式组。SPFA（用栈 cnt判断负环） + 反推dist加一遍。
+AcWing 1169 糖果(spfa负环做差分约束问题) ： https://www.acwing.com/solution/content/20514/
 
 - AcWing362 区间：S[i]表1~i中被选出的数的个数，求S[50001]的最小值。
 
