@@ -5,59 +5,89 @@ wzc1995: https://www.acwing.com/user/myspace/index/21/
 
 仅存老实人题解：https://www.acwing.com/user/myspace/solution/index/39715/
 
-
-
-### DP模板
-
 提高课题单 + 题解(71/220)：https://www.acwing.com/blog/content/7459/
 
-### 单调队列优化的DP问题
 
-- AcWing 154. 滑动窗口: 模板题，https://www.acwing.com/solution/content/104115/
-- AcWing 1088 旅行问题：模板题，顺时针(pi-di前缀和)-> 单调队列(min上升队列) ->逆时针(pi-d(i-1)的后缀和)->单调队列
-https://www.acwing.com/solution/content/104816/
+### 数学知识基础课
 
-- AcWing 135 最大子序和：     
-- AcWing 1087 修剪草坪：       
-- AcWing 1089 烽火传递：单调队列优化DP + 目标状态小优化，https://www.acwing.com/solution/content/67778/     
-- AcWing 1090 绿色通道：   
-- AcWing 1091 理想的正方形：二维滑动窗口模型，https://www.acwing.com/solution/content/68010/  
+### 数学知识 基础课
 
-### 斜率优化DP 
- 
-- AcWing 300 任务安排1：线性DP + 费用提前计算思想 https://www.acwing.com/file_system/file/content/whole/index/content/2972413/
+#### 质数：
+
+- AcWing 866 试除法判定质数      
+- AcWing 867 分解质因数      
+- AcWing 868 筛质数      
+
+#### 约数：
+
+- AcWing 869 试除法求约数      
+- AcWing 870 约数个数      
+- AcWing 871 约数之和      
+- AcWing 872 最大公约数      
+
+#### 欧拉函数：
+
+素数一般指质数，gcd(a,b) = gcd(b,a mod b)     
+
+欧拉函数：是小于或等于n的正整数中与n互质的数的数目。       
+
+- AcWing 873 欧拉函数：https://www.acwing.com/solution/content/81875/   
+- AcWing 874 筛法求欧拉函数: 
+
+#### 快速幂：
+
+- AcWing 875 快速幂      
+- AcWing 876 快速幂求逆元      
+
+#### 扩展欧几里得算法：
+
+- AcWing 877 扩展欧几里得算法 :https://www.acwing.com/solution/content/1393/      
+- AcWing 878 线性同余方程      
+
+#### 中国剩余定理：
+
+- AcWing 204 表达整数的奇怪方式      
+
+#### 高斯消元：
+
+- AcWing 883 高斯消元解线性方程组      
+- AcWing 884 高斯消元解异或线性方程组      
+
+#### 求组合数：
+
+- AcWing 885 求组合数I: 从j个里面选i个物品的选法 = 不选i个物品的选法 + 必选i个物品的选法：C[i][j] = C[i-1][j-1]+C[i-1][j]
+- AcWing 886 求组合数II: 快速幂 + 乘法逆元 + 组合数
+https://www.acwing.com/file_system/file/content/whole/index/content/1726143/     
+AcWing 887 求组合数III:  Lucas定理
 ```C++
-S * (sc[n] - sc[j]) ：费用提前计算
-f[i] = min(f[i], f[j] + st[i] * (sc[i] - sc[j]) + S * (sc[n] - sc[j]));
+若p是质数，则对于任意整数 1 <= m <= n，有：
+    C(n, m) = C(n % p, m % p) * C(n / p, m / p) (mod p)
 ```
-- AcWing 301 任务安排2：https://www.acwing.com/solution/content/35208/
+- AcWing 888 求组合数IV： 
 ```C++
-fi = sti × sci + S × scn + min(fj − S × scj − sti × scj)
-这里 fj − scj × (S + sti) = 变量1 − 变量2 × (常量S+常量i)，有i x j的项
+1. 筛法求出范围内的所有质数
+2. 通过 C(a, b) = a! / b! / (a - b)! 这个公式求出每个质因子的次数。 n! 中p的次数是 n / p + n / p^2 + n / p^3 + ...
+3. 用高精度乘法将所有质因子相乘
+```
+- AcWing 889 满足条件的01序列      
 
-Andrew 算法求凸包:https://oi-wiki.org/geometry/convex-hull/     
-单调栈来维护上下凸壳。     
-因为从左向右看，上下凸壳所旋转的方向不同，为了让单调栈起作用，我们首先升序枚举求出下凸壳，然后降序求出上凸壳。
-求凸壳时，一旦发现即将进栈的点（P）和栈顶的两个点（S1,S2，其中S1为栈顶）行进的方向向右旋转，即叉积小于S2S1 X S1P < 0，则弹出栈顶，回到上一步，继续检测，直到S2S1 X S1P >= 0或者栈内仅剩一个元素为止。    
+#### 容斥原理：
 
-去寻找下凸壳上的点构成直线的最小截距即可。单调队列中相邻两点之间构成的直线斜率单增，也就是有效下凸壳点集。    
+- AcWing 890 能被整除的数      
 
-斜率优化DP模板：  
-1 将初始状态入队。   
-2 每次使用一条和i相关的直线fi去切维护的凸包，找到最优决策，更新dpi。  
-3 加入状态dpi，如果一个状态（即凸包上的一个点）在dpi加入后不再是凸包上的点，需要在dpi加入之前剔除。   
-把点插入队列前，先要队列中至少有两个点，新加入的点，必须和原点集构成下凸壳，无效点要先删去。   
-```   
-- AcWing 302 任务安排3：二分优化斜率优化DP，https://www.acwing.com/solution/content/68118/
-任务的执行时间 tt 可能是负数，那么斜率不具有单调性，应该维护整个凸壳。
-利用上单调性，用队列维护一个下凸壳的点集。   
-则对于ki，找到大于他的最小值就可以二分。   
-- AcWing 303 运输小猫：斜率优化DP, https://www.acwing.com/solution/content/68473/    
-预处理前缀和：min{f[i−1][k] + a[j] ×(j−k)−(s[j] − s[k])}        
-f[i][j]提出常量：f[i][j]= j×a[j] − s[j]+min{f[i-1][k]+s[k]−a[j]×k}        
-维护下凸壳的点集，求第一个出现在直线上的点    
+#### 博弈论：
 
-### 数学知识
+- AcWing 891 Nim游戏
+
+- AcWing 892 台阶-Nim游戏
+
+- AcWing 893 集合-Nim游戏
+
+- AcWing 894 拆分-Nim游戏
+
+
+
+### 数学知识提高课
 
 #### 筛质数：
 
