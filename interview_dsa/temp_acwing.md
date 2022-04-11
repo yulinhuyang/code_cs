@@ -26,8 +26,32 @@ https://www.acwing.com/solution/content/104816/
 ### 斜率优化DP 
  
 - AcWing 300 任务安排1：线性DP + 费用提前计算思想 https://www.acwing.com/file_system/file/content/whole/index/content/2972413/
-- AcWing 301 任务安排2：https://www.acwing.com/solution/content/35208/    
+```C++
+S * (sc[n] - sc[j]) ：费用提前计算
+f[i] = min(f[i], f[j] + st[i] * (sc[i] - sc[j]) + S * (sc[n] - sc[j]));
+```
+- AcWing 301 任务安排2：https://www.acwing.com/solution/content/35208/
+```C++
+fi = sti × sci + S × scn + min(fj − S × scj − sti × scj)
+这里 fj − scj × (S + sti) = 变量1 − 变量2 × (常量S+常量i)，有i x j的项
+
+Andrew 算法求凸包:https://oi-wiki.org/geometry/convex-hull/     
+单调栈来维护上下凸壳。     
+因为从左向右看，上下凸壳所旋转的方向不同，为了让单调栈起作用，我们首先升序枚举求出下凸壳，然后降序求出上凸壳。
+求凸壳时，一旦发现即将进栈的点（P）和栈顶的两个点（S1,S2，其中S1为栈顶）行进的方向向右旋转，即叉积小于S2S1 X S1P < 0，则弹出栈顶，回到上一步，继续检测，直到S2S1 X S1P >= 0或者栈内仅剩一个元素为止。    
+
+去寻找下凸壳上的点构成直线的最小截距即可。单调队列中相邻两点之间构成的直线斜率单增，也就是有效下凸壳点集。    
+
+斜率优化DP模板：  
+1 将初始状态入队。   
+2 每次使用一条和i相关的直线fi去切维护的凸包，找到最优决策，更新dpi。  
+3 加入状态dpi，如果一个状态（即凸包上的一个点）在dpi加入后不再是凸包上的点，需要在dpi加入之前剔除。   
+把点插入队列前，先要队列中至少有两个点，新加入的点，必须和原点集构成下凸壳，无效点要先删去。   
+```   
 - AcWing 302 任务安排3：二分优化斜率优化DP，https://www.acwing.com/solution/content/68118/
+任务的执行时间 tt 可能是负数，那么斜率不具有单调性，应该维护整个凸壳。
+利用上单调性，用队列维护一个下凸壳的点集。   
+则对于ki，找到大于他的最小值就可以二分。   
 - AcWing 303 运输小猫：斜率优化DP, https://www.acwing.com/solution/content/68473/
 
 
