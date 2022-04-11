@@ -798,7 +798,7 @@ https://www.acwing.com/solution/content/23723/
 
 - 数位dp：分成贴合上界和不贴合上界两种情况，不贴合上界情况可以用数学方法直接算或是用f记忆化存储答案（有时可以预处理），贴合上界的情况对下一位继续进行分类   
 
-### 单调队列DP
+### 单调队列优化的DP问题
 
 单调队列辅助进行序列的窗口中F[i]单调值的存储
 
@@ -817,7 +817,7 @@ https://www.acwing.com/solution/content/104816/
   head=0,tail=0或tail=-1皆可    
   某些题目里队列中的第一个元素很特殊，会取0，那么此时head = tail = 0会表示定义了一个队列，且队列中已经有一个元素0了，而不是定义了一个空队列。
   
-### 斜率优化dp
+### 斜率优化的DP问题
 
 - AcWing 300 任务安排1：线性DP + 费用提前计算思想 https://www.acwing.com/file_system/file/content/whole/index/content/2972413/
 ```C++
