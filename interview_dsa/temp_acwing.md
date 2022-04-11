@@ -9,12 +9,20 @@ wzc1995: https://www.acwing.com/user/myspace/index/21/
 
 ### DP模板
 
+算法提高课(坚持更新中...)： https://www.acwing.com/blog/content/11018/
 
 ### 单调队列优化的DP问题
 
+- AcWing 154. 滑动窗口: 模板题，https://www.acwing.com/solution/content/104115/
+- AcWing 1088 旅行问题：模板题
+
+顺时针(pi-di前缀和)-> 单调队列(min上升队列) ->逆时针(pi-d(i-1)的后缀和)->单调队列
+
+https://www.acwing.com/solution/content/104816/
+
+
 AcWing 135 最大子序和     
-AcWing 1087 修剪草坪     
-AcWing 1088 旅行问题     
+AcWing 1087 修剪草坪       
 AcWing 1089 烽火传递     
 AcWing 1090 绿色通道     
 AcWing 1091 理想的正方形     
