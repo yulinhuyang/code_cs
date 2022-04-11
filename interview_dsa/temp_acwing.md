@@ -10,7 +10,6 @@ wzc1995: https://www.acwing.com/user/myspace/index/21/
 
 ### 数学知识基础课
 
-### 数学知识 基础课
 
 #### 质数：
 
