@@ -151,7 +151,7 @@ AcWing 884 高斯消元解异或线性方程组
 
 #### 求组合数：
 
-AcWing 885 求组合数I      
+AcWing 885 求组合数I: 从j个里面选i个物品的选法 = 不选i个物品的选法 + 必选i个物品的选法：C[i][j] = C[i-1][j-1]+C[i-1][j]
 AcWing 886 求组合数II      
 AcWing 887 求组合数III      
 AcWing 888 求组合数IV      
