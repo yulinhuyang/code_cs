@@ -9,30 +9,27 @@ wzc1995: https://www.acwing.com/user/myspace/index/21/
 
 ### DP模板
 
-算法提高课(坚持更新中...)： https://www.acwing.com/blog/content/11018/
+提高课题单 + 题解(71/220)：https://www.acwing.com/blog/content/7459/
 
 ### 单调队列优化的DP问题
 
 - AcWing 154. 滑动窗口: 模板题，https://www.acwing.com/solution/content/104115/
-- AcWing 1088 旅行问题：模板题
-
-顺时针(pi-di前缀和)-> 单调队列(min上升队列) ->逆时针(pi-d(i-1)的后缀和)->单调队列
-
+- AcWing 1088 旅行问题：模板题，顺时针(pi-di前缀和)-> 单调队列(min上升队列) ->逆时针(pi-d(i-1)的后缀和)->单调队列
 https://www.acwing.com/solution/content/104816/
 
-
-AcWing 135 最大子序和     
-AcWing 1087 修剪草坪       
-AcWing 1089 烽火传递     
-AcWing 1090 绿色通道     
-AcWing 1091 理想的正方形     
+- AcWing 135 最大子序和：     
+- AcWing 1087 修剪草坪：       
+- AcWing 1089 烽火传递：单调队列优化DP + 目标状态小优化，https://www.acwing.com/solution/content/67778/     
+- AcWing 1090 绿色通道：   
+- AcWing 1091 理想的正方形：二维滑动窗口模型，https://www.acwing.com/solution/content/68010/  
 
 ### 斜率优化DP 
  
-AcWing 303 运输小猫     
-AcWing 300 任务安排1    
-AcWing 301 任务安排2    
-AcWing 302 任务安排3    
+- AcWing 300 任务安排1：线性DP + 费用提前计算思想 https://www.acwing.com/file_system/file/content/whole/index/content/2972413/
+- AcWing 301 任务安排2：https://www.acwing.com/solution/content/35208/    
+- AcWing 302 任务安排3：二分优化斜率优化DP，https://www.acwing.com/solution/content/68118/
+- AcWing 303 运输小猫：斜率优化DP, https://www.acwing.com/solution/content/68473/
+
 
 ### 数学知识
 
