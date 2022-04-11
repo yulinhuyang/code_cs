@@ -85,7 +85,7 @@ LeetCode究极班: https://www.acwing.com/activity/content/activity_person/conte
 
 ### 同向（快慢）指针
    
-- 31 下一个排列    
+- 31 下一个排列：两遍逆向扫描：1 扫描找尽量靠右的不满足降序的数i，2 扫描找比i大的尽量靠右的数j,swap(num[i],num[j]), 3 reverse(nums.begin() + i + 1, nums.end())。    
 - 88 合并两个有序数组：双指针从后向前合并。
 - 26 删除有序数组中的重复项：前后指针
 - 75 颜色分类（三指针）：三指针，类比三数之和    
