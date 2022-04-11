@@ -123,11 +123,12 @@ AcWing 872 最大公约数
 
 #### 欧拉函数：
 
-素数一般指质数，gcd(a,b) = gcd(b,a mod b)    
-欧拉函数：是小于或等于n的正整数中与n互质的数的数目。    
+素数一般指质数，gcd(a,b) = gcd(b,a mod b)     
 
-AcWing 873 欧拉函数      
-AcWing 874 筛法求欧拉函数      
+欧拉函数：是小于或等于n的正整数中与n互质的数的数目。       
+
+AcWing 873 欧拉函数：https://www.acwing.com/solution/content/81875/   
+AcWing 874 筛法求欧拉函数: 
 
 #### 快速幂：
 
