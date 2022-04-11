@@ -137,7 +137,7 @@ AcWing 876 快速幂求逆元
 
 #### 扩展欧几里得算法：
 
-AcWing 877 扩展欧几里得算法      
+AcWing 877 扩展欧几里得算法 :https://www.acwing.com/solution/content/1393/      
 AcWing 878 线性同余方程      
 
 #### 中国剩余定理：
