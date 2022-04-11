@@ -52,8 +52,10 @@ Andrew 算法求凸包:https://oi-wiki.org/geometry/convex-hull/
 任务的执行时间 tt 可能是负数，那么斜率不具有单调性，应该维护整个凸壳。
 利用上单调性，用队列维护一个下凸壳的点集。   
 则对于ki，找到大于他的最小值就可以二分。   
-- AcWing 303 运输小猫：斜率优化DP, https://www.acwing.com/solution/content/68473/
-
+- AcWing 303 运输小猫：斜率优化DP, https://www.acwing.com/solution/content/68473/    
+预处理前缀和：min{fi−1,k + aj ×(j−k)−(sj−sk)}            
+f[i][j]提出常量：f[i][j]= j×a[j] − s[j]+min{f[i-1][k]+s[k]−a[j]×k}        
+维护下凸壳的点集，求第一个出现在直线上的点     
 
 ### 数学知识
 
