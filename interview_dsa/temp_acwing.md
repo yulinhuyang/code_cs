@@ -12,7 +12,12 @@ wzc1995: https://www.acwing.com/user/myspace/index/21/
 
 ### 单调队列优化的DP问题
 
-
+AcWing 135 最大子序和     
+AcWing 1087 修剪草坪     
+AcWing 1088 旅行问题     
+AcWing 1089 烽火传递     
+AcWing 1090 绿色通道     
+AcWing 1091 理想的正方形     
 
 ### 斜率优化DP 
 
