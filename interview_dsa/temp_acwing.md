@@ -13,16 +13,59 @@ wzc1995: https://www.acwing.com/user/myspace/index/21/
 
 #### 质数：
 
-- AcWing 866 试除法判定质数      
-- AcWing 867 分解质因数      
-- AcWing 868 筛质数      
+- AcWing 866 试除法判定质数: 质数，在大于1的整数中，如果只包含1和本身这两个约数，就被称为质数，也叫素数。 for (int i = 2; i <= x / i; i ++ )
+- AcWing 867 分解质因数：while (x % i == 0) x /= i, s ++ ;     
+- AcWing 868 筛质数：朴素筛法 + 线性筛法
+
+朴素筛:O(nlg(n))   
+
+质数:不能是别的数的倍数--从2开始往上遍历每个数的倍数--标记为不能是质数    
+primes先把1-1e7的所有质数筛出来[3,5,7...]    
+```C++
+void get_primes(int n)
+{
+    for (int i = 2; i <= n; i ++ )
+    {
+        if (st[i]) continue;
+        primes[cnt ++ ] = i;
+        for (int j = i + i; j <= n; j += i)
+            st[j] = true;
+    }
+}
+```
+
+线性筛: n只会被最小质因子筛掉 
+
+```C++
+bool st[N];//st[i]==true代表i这个数是其他数的倍数--即i不是质数
+void get_primes(int n)
+{
+    for (int i = 2; i <= n; i ++ )
+    {
+        if (!st[i]) primes[cnt ++ ] = i;//如果当前数没被筛过 则把i这个数加进质数列表primes里 
+        for (int j = 0; primes[j]*i<=n;j++)//从小到大枚举所有质数
+        {
+            st[primes[j] * i] = true;
+            if (i % primes[j] == 0) break;
+		//1 i%primes[j]==0 primes[j]一定是i的最小质因子 -- (因为从小到大遍历j)primes[j]一定是primes[j]*i的最小质因子
+		//2 i%primes[j]!=0 则primes[j]一定小于i的所有质因子 -- primes[j]也一定是primes[j]*i的最小质因子
+		//对于一个合数x 假设primes[j] 是x的最小质因子 当i枚举到x/primes[j]时,则后面的合数给后面的质数去筛
+        }
+    }
+}
+```
+
+每个合数必有一个最大因子（不包括它本身），用这个因子把合数筛掉。          
+对于每一个数i，乘上小于等于i的最小素因数的素数，就得到以i为最大因数的合数。设有一个数t，只要将所有以比t小的数为最大因数的合数筛去，那么比t小的数里剩下的就只有素数了。    
+欧拉线性筛的关键在于：每个合数只被它最大的非自身的因数筛掉。      
+当前数i能整除当前primes[j]时 则对于L > j的i/*primes[L]一定能由更大的i/*primes[j]来表示    
 
 #### 约数：
 
-- AcWing 869 试除法求约数      
-- AcWing 870 约数个数      
-- AcWing 871 约数之和      
-- AcWing 872 最大公约数      
+- AcWing 869 试除法求约数： if (i != x / i) res.push_back(x / i);      
+- AcWing 870 约数个数: unordered_map<int, int> primes 存储      
+- AcWing 871 约数之和:      
+- AcWing 872 最大公约数:    
 
 #### 欧拉函数：
 
@@ -90,52 +133,7 @@ AcWing 887 求组合数III:  Lucas定理
 
 #### 筛质数：
 
-- AcWing 1292 哥德巴赫猜想:线性筛质数
-https://www.acwing.com/solution/content/22512/
-朴素筛:O(nlg(n))   
-
-质数:不能是别的数的倍数--从2开始往上遍历每个数的倍数--标记为不能是质数    
-primes先把1-1e7的所有质数筛出来[3,5,7...]    
-```C++
-void get_primes(int n)
-{
-    for (int i = 2; i <= n; i ++ )
-    {
-        if (st[i]) continue;
-        primes[cnt ++ ] = i;
-        for (int j = i + i; j <= n; j += i)
-            st[j] = true;
-    }
-}
-```
-
-线性筛:
-   
-n只会被最小质因子筛掉    
-```C++
-bool st[N];//st[i]==true代表i这个数是其他数的倍数--即i不是质数
-void get_primes(int n)
-{
-    for (int i = 2; i <= n; i ++ )
-    {
-        if (!st[i]) primes[cnt ++ ] = i;//如果当前数没被筛过 则把i这个数加进质数列表primes里 
-        for (int j = 0; primes[j]*i<=n;j++)//从小到大枚举所有质数
-        {
-            st[primes[j] * i] = true;
-            if (i % primes[j] == 0) break;
-			//1 i%primes[j]==0 primes[j]一定是i的最小质因子 -- (因为从小到大遍历j)primes[j]一定是primes[j]*i的最小质因子
-			//2 i%primes[j]!=0 则primes[j]一定小于i的所有质因子 -- primes[j]也一定是primes[j]*i的最小质因子
-			//对于一个合数x 假设primes[j] 是x的最小质因子 当i枚举到x/primes[j]时,则后面的合数给后面的质数去筛
-        }
-    }
-}
-```
-
-每个合数必有一个最大因子（不包括它本身），用这个因子把合数筛掉。          
-对于每一个数i，乘上小于等于i的最小素因数的素数，就得到以i为最大因数的合数。设有一个数t，只要将所有以比t小的数为最大因数的合数筛去，那么比t小的数里剩下的就只有素数了。    
-欧拉线性筛的关键在于：每个合数只被它最大的非自身的因数筛掉。      
-当前数i能整除当前primes[j]时 则对于L > j的i/*primes[L]一定能由更大的i/*primes[j]来表示    
-
+- AcWing 1292 哥德巴赫猜想:线性筛质数  https://www.acwing.com/solution/content/22512/
 - AcWing 1293 夏洛克和他的女朋友     
 - AcWing 196 质数距离     
 
