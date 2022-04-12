@@ -214,15 +214,15 @@ sg(x)= mex(){sg(y)| x-> y}, x可以一次操作到y, sg(x)=0的x为必败态。
 
 #### 约数个数：
 
-- AcWing 1291 轻拍牛头     
-- AcWing 1294 樱花     
-- AcWing 198 反素数     
-- AcWing 200 Hankson的趣味题     
+- AcWing 1291 轻拍牛头: https://www.acwing.com/solution/content/31266/     
+- AcWing 1294 樱花: https://www.acwing.com/solution/content/7562/     
+- AcWing 198 反素数: https://www.acwing.com/solution/content/44900/     
+- AcWing 200 Hankson的趣味题:https://www.acwing.com/solution/content/3101/     
 
 #### 欧拉函数：
 
 - AcWing 201 可见的点: https://www.acwing.com/solution/content/25745/     
-- AcWing 220 最大公约数     
+- AcWing 220 最大公约数:https://www.acwing.com/solution/content/3325/     
 
 #### 同余：
 
