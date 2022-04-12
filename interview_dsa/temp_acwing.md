@@ -133,8 +133,8 @@ x ≡ a1(mod m1),x ≡ a2(mod m2),...x ≡ an(mod mn)
 
 #### 求组合数：
 
-- AcWing 885 求组合数I: 从j个里面选i个物品的选法 = 不选i个物品的选法 + 必选i个物品的选法：C[i][j] = C[i-1][j-1]+C[i-1][j]
-- AcWing 886 求组合数II: 快速幂 + 乘法逆元 + 组合数
+- AcWing 885 求组合数I: 从j个里面选i个物品的选法 = 不选i个物品的选法 + 必选i个物品的选法：C[i][j] = C[i-1][j-1]+C[i-1][j]    
+- AcWing 886 求组合数II: 快速幂 + 乘法逆元 + 组合数     
 https://www.acwing.com/file_system/file/content/whole/index/content/1726143/     
 AcWing 887 求组合数III:  Lucas定理
 ```C++
@@ -147,20 +147,18 @@ AcWing 887 求组合数III:  Lucas定理
 2. 通过 C(a, b) = a! / b! / (a - b)! 这个公式求出每个质因子的次数。 n! 中p的次数是 n / p + n / p^2 + n / p^3 + ...
 3. 用高精度乘法将所有质因子相乘
 ```
-- AcWing 889 满足条件的01序列      
+- AcWing 889 满足条件的01序列：卡特兰数    
+https://www.acwing.com/solution/content/8907/      
 
 #### 容斥原理：
 
-- AcWing 890 能被整除的数      
+- AcWing 890 能被整除的数:https://www.acwing.com/solution/content/29702/      
 
 #### 博弈论：
 
-- AcWing 891 Nim游戏
-
-- AcWing 892 台阶-Nim游戏
-
-- AcWing 893 集合-Nim游戏
-
+- AcWing 891 Nim游戏： https://www.acwing.com/solution/content/14269/
+- AcWing 892 台阶-Nim游戏:https://www.acwing.com/solution/content/13187/    
+- AcWing 893 集合-Nim游戏:https://www.acwing.com/solution/content/23435/
 - AcWing 894 拆分-Nim游戏
 
 
