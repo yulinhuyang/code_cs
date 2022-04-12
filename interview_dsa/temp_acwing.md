@@ -63,9 +63,18 @@ void get_primes(int n)
 #### 约数：
 
 - AcWing 869 试除法求约数： if (i != x / i) res.push_back(x / i);      
-- AcWing 870 约数个数: unordered_map<int, int> primes 存储      
-- AcWing 871 约数之和:      
-- AcWing 872 最大公约数:    
+- AcWing 870 约数个数: unordered_map<int, int> primes 存储  
+约数个数定理：
+```C++
+任何一个整数N都可以写成N = p1^α1 * p2^α2 * p3^α3 *...... * pk^αk
+约数个数就是(α1 + 1) * (α2 + 1) * (α3 + 1) * ...... * (αk + 1)
+约数之和就是(p1^0 + p1^1 + ... + p1^α1) * ... * (pk^0 + pk^1 + ... + pk^αk)  
+
+N的每个约数d都可以写成d = p1^β1 * p2^β2 * p3^β3 *...... * pk^βk    0 <= βi <= αi    
+```
+- AcWing 871 约数之和:  https://www.acwing.com/file_system/file/content/whole/index/content/3847584/     
+- AcWing 872 最大公约数: d | a, d |b，则d | ax + by , b ? gcd(b, a % b) : a;   
+
 
 #### 欧拉函数：
 
