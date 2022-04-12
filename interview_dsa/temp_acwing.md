@@ -197,7 +197,7 @@ sg(x)= mex(){sg(y)| x-> y}, x可以一次操作到y, sg(x)=0的x为必败态。
 #### 筛质数：
 
 - AcWing 1292 哥德巴赫猜想:线性筛质数  https://www.acwing.com/solution/content/22512/
-- AcWing 1293 夏洛克和他的女朋友     
+- AcWing 1293 夏洛克和他的女朋友:即从一个质数向合数连一条边，最后会构成二分图即从一个质数向合数连一条边，最后会构成二分图。https://www.acwing.com/solution/content/7602/     
 - AcWing 196 质数距离：https://www.acwing.com/solution/content/11586/     
 
 #### 分解质因数：
@@ -206,8 +206,8 @@ sg(x)= mex(){sg(y)| x-> y}, x可以一次操作到y, sg(x)=0的x为必败态。
 
 #### 快速幂：
 
-- AcWing 1289 序列的第k个数     
-- AcWing 1290 越狱     
+- AcWing 1289 序列的第k个数：https://www.acwing.com/solution/content/11635/     
+- AcWing 1290 越狱：容斥原理补集，https://www.acwing.com/solution/content/47738/      
 
 #### 约数个数：
 
