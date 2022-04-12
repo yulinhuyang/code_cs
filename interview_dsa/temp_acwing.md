@@ -157,8 +157,33 @@ https://www.acwing.com/solution/content/8907/
 #### 博弈论：
 
 - AcWing 891 Nim游戏： https://www.acwing.com/solution/content/14269/
+```C++
+公平组合游戏(ICG):
+- 两名选手
+- 两名选手轮流行动，每一次行动可以在有限合法操作集合中选择一个
+- 游戏的任何一种可能的局面(position)，合法操作集合只取决于这个局面本身，不取决于轮到哪名选手操作、以前的任何操作、骰子的点数或者其它因素；局面的改变称为“移动”(move)
+- 如果轮到某名选手移动，且这个局面的合法的移动集合为空（也就是说此时无法进行移动），则这名选手负
+
+P-position：在当前的局面下，先手必败；N-position：在当前的局面下，先手必胜。
+```
+假设n堆石子，石子数目分别是a1,a2,…,an，如果a1 xor a2 xor … xor an≠0，先手必胜；否则先手必败。   
+
 - AcWing 892 台阶-Nim游戏:https://www.acwing.com/solution/content/13187/    
+如果先手时奇数台阶上的值的异或值为非0，则先手必胜，反之必败！       
 - AcWing 893 集合-Nim游戏:https://www.acwing.com/solution/content/23435/
+
+SG函数：
+```C++
+SG函数是用于解决博弈论中公平组合游戏IGG问题的。
+
+Mex运算:mex(S)为求出不属于集合S的最小非负整数运算。
+
+SG函数：在有向图游戏中,对于每个节点x,设从x出发共有k条有向边,分别到达节点y1,y2,····yk,定义SG(x)的后记节点y1,y2,···yk的SG函数值构成的集合在执行mex运算的结果,即:
+SG(x) = mex({SG(y1),SG(y2)····SG(yk)})，整个有向图游戏G的SG函数值被定义为有向图游戏起点s的SG函数值,即 SG(G)=SG(s).
+sg(x)= mex(){sg(y)| x-> y}, x可以一次操作到y, sg(x)=0的x为必败态。
+
+有向图游戏的和：有向图游戏的和的SG函数值等于它包含的各个子游戏SG函数的异或和,即: SG(G)=SG(G1) xor SG(G2) xor···xor SG(Gm)
+```
 - AcWing 894 拆分-Nim游戏
 
 
