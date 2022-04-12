@@ -240,13 +240,12 @@ sg(x)= mex(){sg(y)| x-> y}, x可以一次操作到y, sg(x)=0的x为必败态。
 
 #### 组合计数：
 
-- AcWing 1307 牡牛和牝牛：https://www.acwing.com/solution/content/25950/
-     
+- AcWing 1307 牡牛和牝牛：https://www.acwing.com/solution/content/10366/
 - AcWing 1308 方程的解:https://www.acwing.com/solution/content/48085/     
 - AcWing 1309 车的放置:https://www.acwing.com/solution/content/24436/     
 - AcWing 1310 数三角形:https://www.acwing.com/solution/content/24442/     
-- AcWing 1312 序列统计     
-- AcWing 1315 网格     
+- AcWing 1312 序列统计:https://www.acwing.com/solution/content/8867/     
+- AcWing 1315 网格:卡特兰数，https://www.acwing.com/solution/content/46130/     
 - AcWing 1316 有趣的数列:https://www.acwing.com/solution/content/26267/   
 
 #### 高斯消元：
