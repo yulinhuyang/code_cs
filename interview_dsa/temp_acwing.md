@@ -136,8 +136,11 @@ x ≡ a1(mod m1),x ≡ a2(mod m2),...x ≡ an(mod mn)
 
 - AcWing 885 求组合数I: 从j个里面选i个物品的选法 = 不选i个物品的选法 + 必选i个物品的选法：C[i][j] = C[i-1][j-1]+C[i-1][j]    
 - AcWing 886 求组合数II: 快速幂 + 乘法逆元 + 组合数     
-https://www.acwing.com/file_system/file/content/whole/index/content/1726143/     
-AcWing 887 求组合数III:  Lucas定理
+https://www.acwing.com/file_system/file/content/whole/index/content/1726143/ 
+
+AcWing 887 求组合数III:  https://www.acwing.com/solution/content/26553/
+
+Lucas定理
 ```C++
 若p是质数，则对于任意整数 1 <= m <= n，有：
     C(n, m) = C(n % p, m % p) * C(n / p, m / p) (mod p)
@@ -264,6 +267,6 @@ sg(x)= mex(){sg(y)| x-> y}, x可以一次操作到y, sg(x)=0的x为必败态。
 
 #### 博弈论：
 
-- AcWing 1319 移棋子游戏     
-- AcWing 1321 取石子     
-- AcWing 1322 取石子游戏     
+- AcWing 1319 移棋子游戏:https://www.acwing.com/solution/content/15279/     
+- AcWing 1321 取石子:https://www.acwing.com/solution/content/26214/     
+- AcWing 1322 取石子游戏:https://www.acwing.com/solution/content/26286/     
