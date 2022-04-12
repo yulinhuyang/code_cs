@@ -83,7 +83,14 @@ N的每个约数d都可以写成d = p1^β1 * p2^β2 * p3^β3 *...... * pk^βk   
 欧拉函数：是小于或等于n的正整数中与n互质的数的数目。       
 
 - AcWing 873 欧拉函数：https://www.acwing.com/solution/content/81875/   
-- AcWing 874 筛法求欧拉函数: 
+1 ∼ N 中与N互质的数的个数被称为欧拉函数，记为φ(n)。    
+若在算数基本定理中，N=p1^α1/∗p2^α2/∗p3^α3…/∗pm^αm，则：φ(n)= N(1−1/p1)(1−1/p2)(1−1/p3)…(1−1/pm)    
+- AcWing 874 筛法求欧拉函数: https://www.acwing.com/solution/content/3952/
+质数i的欧拉函数即为phi[i] = i - 1
+phi[primes[j] * i]分为两种情况：
+① i % primes[j] == 0时：primes[j]是i的最小质因子，也是primes[j] * i的最小质因子，因此1-1 / primes[j]这一项在phi[i]中计算过了，只需将基数N修正为primes[j]倍，最终结果为phi[i] * primes[j]。
+② i % primes[j] != 0：primes[j]不是i的质因子，只是primes[j] * i的最小质因子，因此不仅需要将基数N修正为primes[j]倍，还需要补上1 - 1 / primes[j]这一项，因此最终结果phi[i] * (primes[j] - 1)
+ 
 
 #### 快速幂：
 
