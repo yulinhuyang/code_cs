@@ -99,15 +99,16 @@ phi[primes[j] * i]分为两种情况：
 
 #### 扩展欧几里得算法：
 
-- AcWing 877 扩展欧几里得算法 :https://www.acwing.com/solution/content/1393/  
-同余：https://fanfansann.blog.csdn.net/article/details/109341636
-扩展欧几里得算法+线性同余方程+中国剩余定理： https://blog.csdn.net/qq_42815188/article/details/88092422
-Bezout定理：对于任意整数a,b，存在一对整数x,y，满足ax+by=gcd(a,b)       
-扩展欧几里得算法给定两个非零整数a和b,求一组整数解(x,y),使得ax+by = gcd(a,b),其中gcd(a,b)是a和b的最大公约数。           
+- AcWing 877 扩展欧几里得算法 :https://www.acwing.com/solution/content/1393/       
+同余：https://fanfansann.blog.csdn.net/article/details/109341636      
+扩展欧几里得算法+线性同余方程+中国剩余定理： https://blog.csdn.net/qq_42815188/article/details/88092422      
+Bezout定理：对于任意整数a,b，存在一对整数x,y，满足ax+by=gcd(a,b)             
+扩展欧几里得算法给定两个非零整数a和b,求一组整数解(x,y),使得ax+by = gcd(a,b),其中gcd(a,b)是a和b的最大公约数。                 
 有两个数a,b，对它们进行辗转相除法，可得它们的最大公约数,收集辗转相除法中产生的式子，倒回去，可以得到ax+by=gcd(a,b)的整数解。       
+
 - AcWing 878 线性同余方程:
-给定整数a,c,m ，求一个整数x满足 a/∗ x ≡ c(mod m)，或者给出无解。因为未知数的指数为1，称之为一次同余方程，也称线性同余方程。
-若方程 ax + my = c 有整数解，则共有gcd(a,m) 个解，其全部解的公式为：x = cx0/gcd(a,m) + m/gcd(a,m)/*K，y = cy0/gcd(a,m) - a/gcd(a,m)/*K
+给定整数a,c,m ，求一个整数x满足 a/∗ x ≡ c(mod m)，或者给出无解。因为未知数的指数为1，称之为一次同余方程，也称线性同余方程。      
+若方程 ax + my = c 有整数解，则共有gcd(a,m) 个解，其全部解的公式为：x = cx0/gcd(a,m) + m / gcd(a,m) /* K，y = cy0/gcd(a,m) - a/gcd(a,m) /* K      
 
 #### 中国剩余定理：
 
