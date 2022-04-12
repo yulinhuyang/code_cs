@@ -221,12 +221,12 @@ sg(x)= mex(){sg(y)| x-> y}, x可以一次操作到y, sg(x)=0的x为必败态。
 
 #### 欧拉函数：
 
-- AcWing 201 可见的点     
+- AcWing 201 可见的点: https://www.acwing.com/solution/content/25745/     
 - AcWing 220 最大公约数     
 
 #### 同余：
 
-- AcWing 203 同余方程     
+- AcWing 203 同余方程:https://www.acwing.com/solution/content/25756/    
 - AcWing 222 青蛙的约会     
 - AcWing 202 最幸运的数字     
 - AcWing 1298 曹冲养猪     
@@ -247,7 +247,7 @@ sg(x)= mex(){sg(y)| x-> y}, x可以一次操作到y, sg(x)=0的x为必败态。
 - AcWing 1310 数三角形     
 - AcWing 1312 序列统计     
 - AcWing 1315 网格     
-- AcWing 1316 有趣的数列   
+- AcWing 1316 有趣的数列:https://www.acwing.com/solution/content/26267/   
 
 #### 高斯消元：
 
@@ -263,7 +263,7 @@ sg(x)= mex(){sg(y)| x-> y}, x可以一次操作到y, sg(x)=0的x为必败态。
 #### 概率与数学期望：
 
 - AcWing 217 绿豆蛙的归宿     
-- AcWing 218 扑克牌     
+- AcWing 218 扑克牌:https://www.acwing.com/solution/content/26204/     
 
 #### 博弈论：
 
