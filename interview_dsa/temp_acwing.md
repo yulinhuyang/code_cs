@@ -227,14 +227,14 @@ sg(x)= mex(){sg(y)| x-> y}, x可以一次操作到y, sg(x)=0的x为必败态。
 #### 同余：
 
 - AcWing 203 同余方程:https://www.acwing.com/solution/content/25756/    
-- AcWing 222 青蛙的约会     
-- AcWing 202 最幸运的数字     
-- AcWing 1298 曹冲养猪     
+- AcWing 222 青蛙的约会:https://www.acwing.com/solution/content/24456/     
+- AcWing 202 最幸运的数字:https://www.acwing.com/solution/content/47979/     
+- AcWing 1298 曹冲养猪:中国剩余定理，https://www.acwing.com/solution/content/45967/    
 
 #### 矩阵乘法：
      
-- AcWing 1303 斐波那契前n项和     
-- AcWing 1304 佳佳的斐波那契     
+- AcWing 1303 斐波那契前n项和:https://www.acwing.com/solution/content/15121/     
+- AcWing 1304 佳佳的斐波那契:https://www.acwing.com/solution/content/15132/     
 - AcWing 1305 GT考试：https://www.acwing.com/solution/content/25887/
      
 
@@ -242,9 +242,9 @@ sg(x)= mex(){sg(y)| x-> y}, x可以一次操作到y, sg(x)=0的x为必败态。
 
 - AcWing 1307 牡牛和牝牛：https://www.acwing.com/solution/content/25950/
      
-- AcWing 1308 方程的解     
-- AcWing 1309 车的放置     
-- AcWing 1310 数三角形     
+- AcWing 1308 方程的解:https://www.acwing.com/solution/content/48085/     
+- AcWing 1309 车的放置:https://www.acwing.com/solution/content/24436/     
+- AcWing 1310 数三角形:https://www.acwing.com/solution/content/24442/     
 - AcWing 1312 序列统计     
 - AcWing 1315 网格     
 - AcWing 1316 有趣的数列:https://www.acwing.com/solution/content/26267/   
@@ -252,17 +252,16 @@ sg(x)= mex(){sg(y)| x-> y}, x可以一次操作到y, sg(x)=0的x为必败态。
 #### 高斯消元：
 
 - AcWing 207 球形空间产生器:https://www.acwing.com/solution/content/25960/
-          
-- AcWing 208 开关问题     
+- AcWing 208 开关问题: https://www.acwing.com/solution/content/1087/    
 
 #### 容斥原理：
 
-- AcWing 214 Devu和鲜花     
-- AcWing 215 破译密码     
+- AcWing 214 Devu和鲜花:https://www.acwing.com/solution/content/13666/     
+- AcWing 215 破译密码:https://www.acwing.com/solution/content/17858/    
 
 #### 概率与数学期望：
 
-- AcWing 217 绿豆蛙的归宿     
+- AcWing 217 绿豆蛙的归宿:https://www.acwing.com/solution/content/17868/     
 - AcWing 218 扑克牌:https://www.acwing.com/solution/content/26204/     
 
 #### 博弈论：
