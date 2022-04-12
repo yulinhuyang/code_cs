@@ -84,7 +84,8 @@ N的每个约数d都可以写成d = p1^β1 * p2^β2 * p3^β3 *...... * pk^βk   
 
 - AcWing 873 欧拉函数：https://www.acwing.com/solution/content/81875/   
 1 ∼ N 中与N互质的数的个数被称为欧拉函数，记为φ(n)。    
-若在算数基本定理中，N=p1^α1/∗p2^α2/∗p3^α3…/∗pm^αm，则：φ(n)= N(1−1/p1)(1−1/p2)(1−1/p3)…(1−1/pm)    
+若在算数基本定理中，N=p1^α1/∗p2^α2/∗p3^α3…/∗pm^αm，则：φ(n)= N(1−1/p1)(1−1/p2)(1−1/p3)…(1−1/pm)     
+容斥原理证明。   
 - AcWing 874 筛法求欧拉函数: https://www.acwing.com/solution/content/3952/       
 质数i的欧拉函数即为phi[i] = i - 1        
 phi[primes[j] * i]分为两种情况：               
@@ -151,6 +152,9 @@ AcWing 887 求组合数III:  Lucas定理
 https://www.acwing.com/solution/content/8907/      
 
 #### 容斥原理：
+
+容斥原理：先不考虑重叠的情况，把包含于某内容中的所有对象的数目先计算出来，然后再把计数时重复计算的数目排斥出去，使得计算的结果既无遗漏又无重复。         
+|A∪B∪C| = |A|+|B|+|C| - |A∩B| - |B∩C| - |C∩A| + |A∩B∩C|，每一项前面的正负号取决于集合的个数 – 奇数个集合为正,偶数个集合为负。         
 
 - AcWing 890 能被整除的数:https://www.acwing.com/solution/content/29702/      
 
