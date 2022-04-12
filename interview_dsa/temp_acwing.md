@@ -194,7 +194,7 @@ sg(x)= mex(){sg(y)| x-> y}, x可以一次操作到y, sg(x)=0的x为必败态。
 
 - AcWing 1292 哥德巴赫猜想:线性筛质数  https://www.acwing.com/solution/content/22512/
 - AcWing 1293 夏洛克和他的女朋友     
-- AcWing 196 质数距离     
+- AcWing 196 质数距离：https://www.acwing.com/solution/content/11586/     
 
 #### 分解质因数：
 
