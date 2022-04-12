@@ -198,7 +198,7 @@ sg(x)= mex(){sg(y)| x-> y}, x可以一次操作到y, sg(x)=0的x为必败态。
 
 #### 分解质因数：
 
-- AcWing 197 阶乘分解     
+- AcWing 197 阶乘分解：https://www.acwing.com/solution/content/4960/     
 
 #### 快速幂：
 
