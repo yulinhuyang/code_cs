@@ -95,7 +95,11 @@ phi[primes[j] * i]分为两种情况：
 #### 快速幂：
 
 - AcWing 875 快速幂      
-- AcWing 876 快速幂求逆元      
+- AcWing 876 快速幂求逆元
+https://www.acwing.com/solution/content/83550/
+若整数 b，m互质，并且对于任意的整数 a，如果满足 b|a，则存在一个整数 x，使得 a/b ≡ a×x (mod m)，则称 x 为 b 的模 m 乘法逆元，记为 b−1 (mod m)。
+b存在乘法逆元的充要条件是b与模数 m 互质。当模数 m 为质数时，b× m−2 即为b的乘法逆元。
+除以一个数，就等于乘以这个数的逆元。
 
 #### 扩展欧几里得算法：
 
