@@ -163,8 +163,9 @@ Lucas定理
 若p是质数，则对于任意整数 1 <= m <= n，有：
     C(n, m) = C(n % p, m % p) * C(n / p, m / p) (mod p)
 ```
-- AcWing 888 求组合数IV： 
+- AcWing 888 求组合数IV：https://www.acwing.com/solution/content/26559/ 
 ```C++
+#pragma GCC optimize(2)   C++开o2优化
 1. 筛法求出范围内的所有质数
 2. 通过 C(a, b) = a! / b! / (a - b)! 这个公式求出每个质因子的次数。 n! 中p的次数是 n / p + n / p^2 + n / p^3 + ...
 3. 用高精度乘法将所有质因子相乘
