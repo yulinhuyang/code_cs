@@ -127,7 +127,7 @@ https://www.acwing.com/solution/content/1393/
 https://www.acwing.com/solution/content/3539/          
 线性同余方程组是由若干个线性同余方程构成的线性方程组，中国剩余定理给出了模数两两互质的线性同余方程组的一个特解。     
 x ≡ a1(mod m1),x ≡ a2(mod m2),...x ≡ an(mod mn)       
-设自然数 m1,m2,mn两两互质，m = m1 /* m2.../* mn,Mi = m/mi，ti是Mi模mi的逆，则解为x = a1 M1 t1 + a2 M2 t2 +..+ an Mn tn。     
+设自然数 m1,m2,mn两两互质，m = m1 * m2...* mn,Mi = m/mi，ti是Mi模mi的逆，则解为x = a1 *  M1 * t1 + a2 * M2 * t2 +..+ an * Mn * tn。     
 
 
 
