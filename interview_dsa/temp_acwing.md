@@ -293,3 +293,12 @@ sg(x)= mex(){sg(y)| x-> y}, x可以一次操作到y, sg(x)=0的x为必败态。
 - AcWing 1319 移棋子游戏:https://www.acwing.com/solution/content/15279/     
 - AcWing 1321 取石子:https://www.acwing.com/solution/content/26214/     
 - AcWing 1322 取石子游戏:https://www.acwing.com/solution/content/26286/     
+
+
+
+### 补充数据结构
+
+RMQ/ST表/区间最值查询 ---- 模板： https://www.acwing.com/blog/content/7942/     
+算法学习笔记(12): ST表： https://zhuanlan.zhihu.com/p/105439034     
+
+
