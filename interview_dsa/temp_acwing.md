@@ -226,16 +226,28 @@ sg(x)= mex(){sg(y)| x-> y}, x可以一次操作到y, sg(x)=0的x为必败态。
 
 - AcWing 1292 哥德巴赫猜想:线性筛质数  https://www.acwing.com/solution/content/22512/
 - AcWing 1293 夏洛克和他的女朋友:即从一个质数向合数连一条边，最后会构成二分图即从一个质数向合数连一条边，最后会构成二分图。https://www.acwing.com/solution/content/7602/     
-- AcWing 196 质数距离：https://www.acwing.com/solution/content/11586/     
+- AcWing 196 质数距离：https://www.acwing.com/solution/content/11586/      
+性质1：若一个数n是一个合数，必然存在2个因子d,n/d，假设d <= n/d，则d <= sqrt(n)，因此必然存在一个小于等于 sqrt(n)的因子。                  
+性质2：若x∈[L,R],且x是合数，则一定存在P <= sqrt(2^31−1) (< 50000)，使得P能整除x，其中P < x。             
+ 
+1 找出1 ~ sqrt(2^31−1) (< 50000)中的所有质因子。               
+2 对于1 ~ 50000中每个质数P，将[L,R]中所有P的倍数筛掉(至少2倍)。找到大于等于L的最小的P的倍数P0，找下一个倍数时只需要+=P即可。                
 
 #### 分解质因数：
 
 - AcWing 197 阶乘分解：https://www.acwing.com/solution/content/4960/     
+先枚举1~10^6中所有质数，再求1~n中p的次数、P^2的次数...的和。           
+先把质数表打好，for 循环把小于n的每个质数进行一次运算，用数组记录。              
+cnt(x) = [n/(x^1)] + [n/(x^2)] + [n/(x^3)] +...(直到x的n次方大于n)。            
 
 #### 快速幂：
 
-- AcWing 1289 序列的第k个数：https://www.acwing.com/solution/content/11635/     
-- AcWing 1290 越狱：容斥原理补集，https://www.acwing.com/solution/content/47738/      
+- AcWing 1289 序列的第k个数：https://www.acwing.com/solution/content/11635/ 
+当且仅当a == b == c时，它既是一个公差为0的等差数列也是一个公比为1的等比数列，因此它的第k项用等差数列和等比数列求出来的结果是一样的           
+情况1：若a,b,c是一个等差数列，则第k项是a + (c - b) * (k - 1)      
+情况2：若a,b,c是一个等比数列，则第k项是a * (b / a)^(k - 1)，其中b / a一定是一个整数，用快速幂qmi求解。     
+    
+- AcWing 1290 越狱：容斥原理补集：不会导致犯罪的： m⋅(m−1)^(n-1),会犯罪的是 m^n-m⋅(m−1)^(n-1), https://www.acwing.com/solution/content/47738/      
 
 #### 约数个数：
 
