@@ -7,8 +7,11 @@ RMQ/ST表/区间最值查询 ---- 模板： https://www.acwing.com/blog/content/
 
 快速排序：
 - AcWing 786 第k个数：快排划分
-
-
+```C++
+1 找到分界点，q[L],q[(L+R)/2],q[R]
+2 左边所有数left <=x，右边所有数right>=x
+3 sL = k - L + 1, k <=sL 递归排序left, k > sL 递归排序right,k - SL 
+```
 **TOP K问题总结**
 
 面试官最喜爱的TopK问题算法详解：https://zhuanlan.zhihu.com/p/76734219      
@@ -18,7 +21,6 @@ RMQ/ST表/区间最值查询 ---- 模板： https://www.acwing.com/blog/content/
 最大（小） K 个数：堆     
 前 K 个高频元素：堆,pair 频率，lt 347     
 中位数：两个数组中位数，归并lt4；数据流，对顶堆    
-
 
 归并排序：
 - AcWing 787 归并排序
