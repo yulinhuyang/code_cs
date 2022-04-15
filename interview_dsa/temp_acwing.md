@@ -11,6 +11,9 @@ RMQ/ST表/区间最值查询 ---- 模板： https://www.acwing.com/blog/content/
 
 **TOP K问题总结**
 
+面试官最喜爱的TopK问题算法详解：https://zhuanlan.zhihu.com/p/76734219      
+前端进阶算法10：别再说你不懂topk问题了： https://github.com/sisterAn/JavaScript-Algorithms/issues/73     
+
 第 K 个最大（小）元素： 数组中，快排划分；数据流中，最小堆堆顶。    
 最大（小） K 个数：堆     
 前 K 个高频元素：堆,pair 频率，lt 347     
