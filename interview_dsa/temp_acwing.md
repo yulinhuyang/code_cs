@@ -6,22 +6,12 @@ RMQ/ST表/区间最值查询 ---- 模板： https://www.acwing.com/blog/content/
 ####  第一讲 基础算法
 
 快速排序：
-- AcWing 785 快速排序
 - AcWing 786 第k个数
 
 归并排序：
 - AcWing 787 归并排序
 - AcWing 788 逆序对的数量
 
-二分：
-- AcWing 789 数的范围
-- AcWing 790 数的三次方根
-
-高精度：
-- AcWing 791 高精度加法
-- AcWing 792 高精度减法
-- AcWing 793 高精度乘法
-- AcWing 794 高精度除法
 
 前缀和与差分：
 - AcWing 795 前缀和
