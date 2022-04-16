@@ -49,8 +49,8 @@ AcWing 790 数的三次方根：浮点数二分模板：while(r - l> 1e-8)，边
 
 - AcWing 795 前缀和
 ```C++
-一维前缀和 Si=a1+a2+...+ai     
-sum(L,R) = aL + aL+1 + ...+ aR，等于S[R] - S[L - 1] 
+一维前缀和 Si=a[1]+a[2]+...+a[i]     
+sum(L,R) = a[L] + a[L+1] + ...+ a[R]，等于S[R] - S[L - 1] 
 ```
 - AcWing 796 子矩阵的和
 ```C++
