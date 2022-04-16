@@ -28,6 +28,16 @@ RMQ/ST表/区间最值查询 ---- 模板： https://www.acwing.com/blog/content/
 - AcWing 787 归并排序
 - AcWing 788 逆序对的数量
 
+```C++
+//归并排序
+1 [L,R] ->[L,mid],[mid + 1,R]
+2 递归排序[L,mid]和[mid + 1,R]
+3 归并，将左右两个有序序列合并成一个序列。 
+//逆序对
+1 左半边内部逆序对的数量，mergesort(L,mid)
+2 右半边内部逆序对的数量，mergesort(mid + 1,R)
+3 比归并排序多一句：if(q[i] > q[j]) res += mid - i + 1
+```
 
 前缀和与差分：
 - AcWing 795 前缀和
