@@ -40,12 +40,12 @@ RMQ/ST表/区间最值查询 ---- 模板： https://www.acwing.com/blog/content/
 ```
 
 
-##### 二分：
+#####  二分：
 
 AcWing 789 数的范围
 AcWing 790 数的三次方根：浮点数二分模板：while(r - l> 1e-8)，边界处理 r = mid，l=mid
 
-#####前缀和与差分：
+##### 前缀和与差分：
 
 - AcWing 795 前缀和
 ```C++
