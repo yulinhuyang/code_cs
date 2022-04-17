@@ -259,3 +259,47 @@ Kruskal:
 #### 数学知识
 
 - AcWing 204 表达整数的奇怪方式：https://www.acwing.com/solution/content/3539/
+
+- AcWing 896 最长上升子序列II：理解闫氏DP，分类依据，倒数第二个数是哪个数，考虑最后一步操作，据此划分集合。
+f[i] = max(f(k) + 1)     
+暴力->优化，数组q[]来存每个长度下的最长上升子序列的最后一个数的最小值是几。     
+二分查找接到哪个数后面。     
+```C++
+int l = 0, r = len;
+while (l < r)
+{
+	int mid = l + r + 1 >> 1;//寻找右边界
+	if (q[mid] < a[i]) l = mid;
+	else r = mid - 1;
+}
+len = max(len, r + 1);
+q[r + 1] = a[i];
+```
+
+- AcWing 899 编辑距离：    
+下标从1开始，先初始化0行0列   
+```C++
+状态表示：
+	集合：所有将a[1~i]变成b[1~j]的操作方式。
+	属性：min
+
+状态计算：考虑最后一步
+	删a[i]:要a[i-1]已经和b[j]匹配了，f[i-1][j] + 1
+	a[i]后增:要a[i]已经和b[j-1]匹配了，f[i][j-1] + 1
+	改a[i]:要a[i-1]已经和b[j-1]匹配了，f[i-1][j-1] + 1
+```
+
+- AcWing 900 整数划分：     
+完全背包问题，https://www.acwing.com/activity/content/code/content/62496/
+容量n,物品体积1~n。
+```C++
+状态表示：
+	f[i][j]集合：只从1~i中选，选法总和j。
+	属性：数量
+	
+状态计算：
+f[i][j] = f[i-1][j] + f[i][j-i]
+f[j] = f[j] + f[j - i]
+```
+
+
