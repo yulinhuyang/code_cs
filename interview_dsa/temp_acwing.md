@@ -195,7 +195,7 @@ DFS:
 
 BFS：
 - AcWing 844 走迷宫
-- AcWing 845 八数码:BFS 最短路，最小步数，最小生成树，第一次搜到的，一定是最短路过去的。
+- AcWing 845 八数码:BFS 最短路，最小步数，最小生成树，第一次搜到的，一定是最短路过去的。     
 状态表示：
 ```C++
 queue<string> q;
@@ -255,3 +255,7 @@ Kruskal:
 
 匈牙利算法：
 - AcWing 861 二分图的最大匹配
+
+#### 数学知识
+
+- AcWing 204 表达整数的奇怪方式：https://www.acwing.com/solution/content/3539/
