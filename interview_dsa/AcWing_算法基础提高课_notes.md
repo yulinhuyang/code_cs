@@ -432,7 +432,7 @@ for (int i = 0; i < 4; i ++ )
 
 ## 4 数学知识
 
-#### 质数：
+### 质数：
 
 - AcWing 866 试除法判定质数: 质数，在大于1的整数中，如果只包含1和本身这两个约数，就被称为质数，也叫素数。 for (int i = 2; i <= x / i; i ++ )
 - AcWing 867 分解质因数：while (x % i == 0) x /= i, s ++ ;     
@@ -481,7 +481,7 @@ void get_primes(int n)
 欧拉线性筛的关键在于：每个合数只被它最大的非自身的因数筛掉。      
 当前数i能整除当前primes[j]时 则对于L > j的i/*primes[L]一定能由更大的i/*primes[j]来表示    
 
-#### 约数：
+### 约数：
 
 - AcWing 869 试除法求约数： if (i != x / i) res.push_back(x / i);      
 - AcWing 870 约数个数: unordered_map<int, int> primes 存储  
@@ -497,7 +497,7 @@ N的每个约数d都可以写成d = p1^β1 * p2^β2 * p3^β3 *...... * pk^βk   
 - AcWing 872 最大公约数: d | a, d |b，则d | ax + by , b ? gcd(b, a % b) : a;   
 
 
-#### 欧拉函数：
+### 欧拉函数：
 
 
 欧拉函数：是小于或等于n的正整数中与n互质的数的数目。       
@@ -513,8 +513,7 @@ phi[primes[j] * i]分为两种情况：
 ① i % primes[j] == 0时：primes[j]是i的最小质因子，也是primes[j] * i的最小质因子，因此1-1 / primes[j]这一项在phi[i]中计算过了，只需将基数N修正为primes[j]倍，最终结果为phi[i] * primes[j]。       
 ② i % primes[j] != 0：primes[j]不是i的质因子，只是primes[j] * i的最小质因子，因此不仅需要将基数N修正为primes[j]倍，还需要补上1 - 1 / primes[j]这一项，因此最终结果phi[i] * (primes[j] - 1)       
  
-
-#### 快速幂：
+### 快速幂：
 
 - AcWing 875 快速幂           
 - AcWing 876 快速幂求逆元     
@@ -526,7 +525,7 @@ https://www.acwing.com/solution/content/83550/
 除以一个数，就等于乘以这个数的逆元。     
 b存在乘法逆元的充要条件是b与模数 m 互质。当模数 m 为质数时，结合乘法逆元公式和费马小定理，可得b × m−2 即为b的乘法逆元。
 
-#### 扩展欧几里得算法：
+### 扩展欧几里得算法：
 
 同余：https://fanfansann.blog.csdn.net/article/details/109341636      
 扩展欧几里得算法+线性同余方程+中国剩余定理： https://blog.csdn.net/qq_42815188/article/details/88092422      
@@ -542,7 +541,7 @@ https://www.acwing.com/solution/content/1393/
 给定整数a,c,m ，求一个整数x满足 a * x ≡ c(mod m)，或者给出无解。因为未知数的指数为1，称之为一次同余方程，也称线性同余方程。      
 若方程 ax + my = c 有整数解，则共有gcd(a,m) 个解，其全部解的公式为：x = cx0 / gcd(a,m) + m / gcd(a,m)  * K，y = cy0 / gcd(a,m) - a/gcd(a,m) * K      
 
-#### 中国剩余定理：
+### 中国剩余定理：
 
 - AcWing 204 表达整数的奇怪方式         
 https://www.acwing.com/solution/content/3539/          
@@ -552,7 +551,7 @@ x ≡ a1(mod m1),x ≡ a2(mod m2),...x ≡ an(mod mn)
 
 
 
-#### 高斯消元：
+### 高斯消元：
 
 - AcWing 883 高斯消元解线性方程组: https://www.acwing.com/solution/content/5151/      
 ```C++
@@ -571,7 +570,7 @@ x ≡ a1(mod m1),x ≡ a2(mod m2),...x ≡ an(mod mn)
 ```
 - AcWing 884 高斯消元解异或线性方程组: https://www.acwing.com/solution/content/26544/      
 
-#### 求组合数：
+### 求组合数：
 
 - AcWing 885 求组合数I: 从j个里面选i个物品的选法 = 不选i个物品的选法 + 必选i个物品的选法：C[i][j] = C[i-1][j-1]+C[i-1][j]    
 - AcWing 886 求组合数II: 快速幂 + 乘法逆元 + 组合数     
@@ -600,14 +599,14 @@ Lucas定理
 ```
 https://www.acwing.com/solution/content/8907/      
 
-#### 容斥原理：
+### 容斥原理：
 
 容斥原理：先不考虑重叠的情况，把包含于某内容中的所有对象的数目先计算出来，然后再把计数时重复计算的数目排斥出去，使得计算的结果既无遗漏又无重复。         
 |A∪B∪C| = |A|+|B|+|C| - |A∩B| - |B∩C| - |C∩A| + |A∩B∩C|，每一项前面的正负号取决于集合的个数 – 奇数个集合为正,偶数个集合为负。         
 
 - AcWing 890 能被整除的数:https://www.acwing.com/solution/content/29702/      
 
-#### 博弈论：
+### 博弈论：
 
 - AcWing 891 Nim游戏： https://www.acwing.com/solution/content/14269/
 ```C++
