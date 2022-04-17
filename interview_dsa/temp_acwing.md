@@ -144,15 +144,44 @@ KMP下标从1开始。
 ##### Trie：
 - AcWing 835 Trie字符串统计
 - AcWing 143 最大异或对
+边插入，边查找；先插入，再查询，避免空集。
+```C++
+//query
+if(son[p][!u]){
+	p = son[p][u]
+	res = res * 2 + !u;
+}
+else {
+	p = son[p][u];
+	res = res * 2 + u;
+}
+```
 
 ##### 并查集：
 - AcWing 836 合并集合
 - AcWing 837 连通块中点的数量
-- AcWing 240 食物链
+- AcWing 240 食物链：维护距离信息
+mod 2: 余1，可以吃根节点；余2，可以被根节点吃；余0，与根节点同类。 p[x] - P[y] = 1,则x吃Y。
+```C++
+//路径压缩并查集
+int find(int x)
+{
+    if (p[x] != x)
+    {
+        int t = find(p[x]);
+        d[x] += d[p[x]];
+        p[x] = t;
+    }
+    return p[x];
+}
+//d[p[x]]用？推导
+d[x] + d[px] = d[py]] x和y同类
+d[x] + d[px] = d[py] + 1 x吃y
+```
 
 ##### 堆：
 - AcWing 838 堆排序
-- AcWing 839 模拟堆
+- AcWing 839 模拟堆:删除时和堆顶交换。
 
 ##### 哈希表：
 - AcWing 840 模拟散列表
@@ -166,7 +195,30 @@ DFS:
 
 BFS：
 - AcWing 844 走迷宫
-- AcWing 845 八数码
+- AcWing 845 八数码:BFS 最短路，最小步数，最小生成树，第一次搜到的，一定是最短路过去的。
+状态表示：
+```C++
+queue<string> q;
+unordered_map<string, int> d;
+```
+状态转移：恢复3x3-->转移-->转成一串
+```C++
+int x = k / 3, y = k % 3;
+for (int i = 0; i < 4; i ++ )
+{
+	int a = x + dx[i], b = y + dy[i];
+	if (a >= 0 && a < 3 && b >= 0 && b < 3)
+	{
+		swap(t[a * 3 + b], t[k]);
+		if (!d.count(t))
+		{
+			d[t] = distance + 1;
+			q.push(t);
+		}
+		swap(t[a * 3 + b], t[k]);
+	}
+}
+```
 
 树与图的深度优先遍历：
 - AcWing 846 树的重心
