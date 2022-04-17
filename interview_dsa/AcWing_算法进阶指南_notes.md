@@ -246,6 +246,10 @@ while (r - l > 1e-5)
 #### 0x06 倍增
 
 倍增 + 二进制划分结合（RMQ区间最值、LCA最近公共祖先）
+  
+RMQ/ST表/区间最值查询 ---- 模板： https://www.acwing.com/blog/content/7942/    
+
+算法学习笔记(12): ST表： https://zhuanlan.zhihu.com/p/105439034 
 
 #### 0x07 贪心
 
