@@ -60,7 +60,7 @@ F(i,j)
 	第一个子集：不选，F(i−1,j)
 	剩下的子集: 选k个第i种物品,F(i,j) = max(F(i−1,j− k*Vi)+k*Wi
 	转移方程：F(i,j)=max(F(i−1,j) , F(i−1,j−Vi)+Wi , F(i−1,j−2Vi)+2Wi , …)
-	转移依据：F(i,j−Vi)=max(F(i−1,j−Vi),F(i−1,j−2Vi)+Wi, F(i−1,j−3Vi)+2Wi , …)
+	简化依据：F(i,j−Vi)=max(F(i−1,j−Vi),F(i−1,j−2Vi)+Wi, F(i−1,j−3Vi)+2Wi , …)
 	转换成两项形式：F(i,j)=max(F(i−1,j) , F(i,j−Vi)+Wi)
 
 滚动优化：
