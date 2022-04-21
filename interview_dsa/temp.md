@@ -254,6 +254,14 @@ public:
 
 ```
 
+闫氏dp分析法总结：
+
+https://www.acwing.com/file_system/file/content/whole/index/content/406072/
+
+https://www.acwing.com/blog/content/19060/
+
+https://www.cnblogs.com/IzayoiMiku/p/13635809.html
+
 
 318  875   647  713  567   438  528  648  676 820 677 210 444  785  542 752 547 269 329  547 684 839  695 
 
