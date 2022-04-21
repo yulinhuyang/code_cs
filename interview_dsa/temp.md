@@ -228,6 +228,32 @@ public:
 };
 ```
 
+##### Offer 46 把数字翻译成字符串
+
+求方案数count: +
+
+```C++
+class Solution {
+public:
+    int translateNum(int num) {
+        string s = to_string(num);
+        int n = s.size();
+        vector<int> f(n + 1, 0);
+        f[0] = 1;
+        f[1] = 1;
+        for (int i = 2; i < n + 1; i++) {
+            f[i] = f[i - 1];
+            int t = 10 * (s[i - 2] - '0') + s[i - 1] - '0';
+            if (t >= 10 && t <= 25) {
+                f[i] = f[i - 1] + f[i - 2];
+            }
+        }
+        return f[n];
+    }
+};
+
+```
+
 
 318  875   647  713  567   438  528  648  676 820 677 210 444  785  542 752 547 269 329  547 684 839  695 
 
