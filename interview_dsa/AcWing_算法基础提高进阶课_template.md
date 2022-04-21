@@ -19,7 +19,7 @@ Acwing 技术分享： https://www.acwing.com/blog/
 - mul - 高精度乘低精度
 - div - 高精度除以低精度
 - 整数二分/浮点数二分
-- 快速排序
+- 快速排序/快选
 - void merge_sort - 归并排序
 - 区间合并
 - void manacher - 马拉车算法
@@ -320,7 +320,7 @@ AcWing 800. 数组元素的目标和
 
 #### 排序
 
-**快速排序算法模板** 
+**快速排序(快选)算法模板** 
 
 模板题 AcWing 785. 快速排序
 
@@ -339,6 +339,29 @@ void quick_sort(int q[], int l, int r)
     quick_sort(q, l, j), quick_sort(q, j + 1, r);
 }
 ```
+
+```C++
+//快选模板
+int quick_select(int q[], int l, int r, int k) {
+    // 当数组为空时，quick_sort(q, 0, len(q) - 1)中l = 0, r = -1, 会出现 l > r的情况
+    // 除了 一开始 需要判断 l > r, 以后 只需要 判断 l == r 即可
+    // 因为 快速选择 传进来的 序列 最少有一个元素, 所以 一般 len(q) >= 1, 不用判断 l > r 也可以
+    // 除了 len(q) == 0 会造成 一开始 l > r 之外，以后return 的时候 肯定有 l == r
+    if (l >= r) return q[l];
+
+    int i = l - 1, j = r + 1, x = q[l + r >> 1];
+    while (i < j) // i,j 两指针相遇后，只有两种情况，(1) i == j; (2) i > j
+    {
+        do i ++ ; while (q[i] < x);
+        do j -- ; while (q[j] > x);
+        if (i < j) swap(q[i], q[j]);
+    }
+
+    if (j - l + 1 >= k) return quick_select(q, l, j, k);
+    else return quick_select(q, j + 1, r, k - (j - l + 1));
+}
+```
+
 
 **归并排序算法模板**
 
