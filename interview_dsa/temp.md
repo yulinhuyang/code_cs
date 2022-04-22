@@ -263,5 +263,44 @@ https://www.acwing.com/blog/content/19060/
 https://www.cnblogs.com/IzayoiMiku/p/13635809.html
 
 
+##### offer 51 数组中的逆序对
+
+归并排序模板， res += (mid - i + 1);
+
+```C++
+class Solution {
+    int res;
+public:
+    int reversePairs(vector<int> &nums) {
+        int m = nums.size();
+        int l = 0, r = m - 1;
+        mergeSort(nums, l, r);
+        return res;
+    }
+
+    void mergeSort(vector<int> &nums, int l, int r) {
+        if (l >= r) return;
+        int mid = l + r >> 1;
+        mergeSort(nums, l, mid);
+        mergeSort(nums, mid + 1, r);
+
+        vector<int> tmp(r - l + 1, 0);
+        int k = 0, i = l, j = mid + 1;
+        while (i <= mid && j <= r) {
+            if (nums[i] <= nums[j]) tmp[k++] = nums[i++];
+            else {
+                res += (mid - i + 1);
+                tmp[k++] = nums[j++];
+            }
+        }
+        while (i <= mid) tmp[k++] = nums[i++];
+        while (j <= r) tmp[k++] = nums[j++];
+        for (int i = l, j = 0; i <= r; i++, j++) nums[i] = tmp[j];
+    }
+};
+```
+
+
+
 318  875   647  713  567   438  528  648  676 820 677 210 444  785  542 752 547 269 329  547 684 839  695 
 
