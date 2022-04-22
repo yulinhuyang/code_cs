@@ -299,8 +299,29 @@ public:
     }
 };
 ```
+#### offer 54 二叉搜索树的第k大节点
 
+```C++
+class Solution {
+    int res;
+public:
+    int kthLargest(TreeNode *root, int k) {
+        dfs(root, k);
+        return res;
+    }
 
+    void dfs(TreeNode *root, int &k) {
+        if (!root || k == 0) return;
+        dfs(root->right, k);
+        k--;
+        if (k == 0) {
+            res = root->val;
+            return;
+        }
+        dfs(root->left, k);
+    }
+};
+```
 
 318  875   647  713  567   438  528  648  676 820 677 210 444  785  542 752 547 269 329  547 684 839  695 
 
