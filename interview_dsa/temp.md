@@ -370,7 +370,7 @@ public:
     }
 };
 ```
-##### Offer 57 和为s的两个数字
+##### Offer 57  和为s的两个数字
 
 典型双指针算法
 
@@ -385,6 +385,34 @@ public:
             if (nums[i] + nums[j] == target) return {nums[i],nums[j]};
         }
         return {0,0};
+    }
+};
+```
+
+##### Offer 57 - II  和为s的连续正数序列
+
+双指针可变滑窗
+
+```C++
+class Solution {
+public:
+    vector<vector<int>> findContinuousSequence(int target) {
+        vector<vector<int>> res;
+        int i = 1, j = 2;
+        int sum = i + j;
+        while (i < j && j < target) {
+            while (sum < target) sum += ++j;
+            
+            if (sum == target) {
+                vector<int> tmp;
+                for (int k = i; k <= j; k++) {
+                    tmp.emplace_back(k);
+                }
+                res.emplace_back(tmp);
+            }
+            sum -= i++;
+        }
+        return res;
     }
 };
 ```
