@@ -500,6 +500,30 @@ public:
 
 ```
 
+##### Offer 66. 构建乘积数组
+
+```C++
+class Solution {
+public:
+    vector<int> constructArr(vector<int>& a) {
+        if(a.empty()) return {};
+        int n = a.size();
+        vector<int> res(n,0);
+        res[0] = 1;
+        for(int i = 1, p = a[0];i < n;i++){
+            res[i] = p;
+            p *= a[i];
+        }
+        
+        for(int i = n - 2,p = a[n - 1];i > -1;i--){
+            res[i] *= p;
+            p *= a[i];
+        }
+        return res;
+    }
+};
+```
+
 
 
 
