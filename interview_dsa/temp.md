@@ -433,5 +433,38 @@ public:
 };
 ```
 
+#####  Offer 60. n个骰子的点数
+
+分组背包问题模板
+
+````C++
+class Solution {
+public:
+    vector<double> dicesProbability(int n) {
+        //前i次投总和是j的方式
+        vector<vector<int>> f(n + 1, vector<int>(6 * n + 1, 0));
+        //分组背包
+        f[0][0] = 1;
+        for (int i = 1; i < n + 1; i++)//物品组
+        {
+            for (int j = 1; j < 6 * n + 1; j++)//体积
+            {
+                for (int k = 1; k <= 6; k++) {//选择 1-6
+                    if (j >= k) f[i][j] += f[i - 1][j - k];
+                }
+            }
+        }
+
+        vector<int> tmp(f[n].begin() + n, f[n].end());
+        int sum = accumulate(tmp.begin(), tmp.end(), 0);
+        vector<double> res;
+        for (int i = 0; i < tmp.size(); i++) {
+            res.emplace_back((double) tmp[i] / (double) sum);
+        }
+        return res;
+    }
+};
+```
+
 318  875   647  713  567   438  528  648  676 820 677 210 444  785  542 752 547 269 329  547 684 839  695 
 
