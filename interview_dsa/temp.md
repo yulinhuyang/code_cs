@@ -466,5 +466,25 @@ public:
 };
 ```
 
+##### Offer 62 圆圈中最后剩下的数字
+
+f(n, m) = (f(n−1, m) + m) % n     
+f(n, m)表示，n个人报数，每报到m时杀掉那个人，返回最终胜利者的编号
+
+```C++
+class Solution {
+public:
+    int lastRemaining(int n, int m) {
+        if(n == 1) return 0;
+        //f(n, m)表示，n个人报数，每报到m时杀掉那个人，返回最终胜利者的编号
+        return (lastRemaining(n - 1,m) + m) % n;
+    }
+};
+
+```
+
+
+
+
 318  875   647  713  567   438  528  648  676 820 677 210 444  785  542 752 547 269 329  547 684 839  695 
 
