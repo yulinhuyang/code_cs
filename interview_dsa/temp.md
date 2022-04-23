@@ -417,7 +417,21 @@ public:
 };
 ```
 
+##### Offer 58 - II. 左旋转字符串
 
+```C++
+class Solution {
+public:
+    string reverseLeftWords(string s, int n) {
+        int len = s.size();
+        string res;
+        for(int i = n;i < len + n;i++){
+            res.push_back(s[i % len]);
+        }
+        return res;
+    }
+};
+```
 
 318  875   647  713  567   438  528  648  676 820 677 210 444  785  542 752 547 269 329  547 684 839  695 
 
