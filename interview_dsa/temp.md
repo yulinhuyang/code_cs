@@ -437,7 +437,7 @@ public:
 
 分组背包问题模板
 
-````C++
+```C++
 class Solution {
 public:
     vector<double> dicesProbability(int n) {
