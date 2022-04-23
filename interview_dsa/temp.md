@@ -370,6 +370,26 @@ public:
     }
 };
 ```
+##### Offer 57 和为s的两个数字
+
+典型双指针算法
+
+```C++
+class Solution {
+public:
+    vector<int> twoSum(vector<int> &nums, int target) {
+        int m = nums.size();
+        for (int i = 0, j = m - 1; i < j;) {
+            while (nums[i] + nums[j] > target) j--;
+            while (nums[i] + nums[j] < target) i++;
+            if (nums[i] + nums[j] == target) return {nums[i],nums[j]};
+        }
+        return {0,0};
+    }
+};
+```
+
+
 
 318  875   647  713  567   438  528  648  676 820 677 210 444  785  542 752 547 269 329  547 684 839  695 
 
