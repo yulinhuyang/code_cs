@@ -299,7 +299,7 @@ public:
     }
 };
 ```
-#### offer 54 二叉搜索树的第k大节点
+##### offer 54 二叉搜索树的第k大节点
 
 ```C++
 class Solution {
@@ -319,6 +319,54 @@ public:
             return;
         }
         dfs(root->left, k);
+    }
+};
+```
+##### Offer 56 - I. 数组中数字出现的次数
+
+```C++
+class Solution {
+public:
+    vector<int> singleNumbers(vector<int> &nums) {
+        int one = 0;
+        for (auto &num:nums) {
+            one ^= num;
+        }
+        int index = 1;
+        while ((one & index) == 0) {
+            index <<= 1;
+        }
+        int first = 0, second = 0;
+        for (auto &num:nums) {
+            if (num & index) first ^= num;
+            else second ^= num;
+        }
+        return {first, second};
+    }
+};
+```
+#####  Offer 56 - II. 数组中数字出现的次数 II
+
+```C++
+class Solution {
+public:
+    int singleNumber(vector<int> &nums) {
+        vector<int> bit(32, 0);
+        for (auto &num:nums) {
+            int pos = 0;
+            while (num) {
+                if (num & 1) bit[pos]++;
+                num = num >> 1;
+                pos++;
+            }
+        }
+        int res = 0;
+        for (int i = 0; i < 32; i++) {
+            if (bit[i] %= 3) {
+                res |= 1 << i;
+            }
+        }
+        return res;
     }
 };
 ```
