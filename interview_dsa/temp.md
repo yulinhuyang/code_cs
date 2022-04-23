@@ -482,6 +482,23 @@ public:
 };
 
 ```
+##### Offer 65. 不用加减乘除做加法
+
+```C++
+class Solution {
+public:
+    int add(int a, int b) {
+        while(b){
+            int sum = a ^ b;//所有不进位和
+            int carry = (unsigned int)(a & b) << 1;//所有进位
+            a = sum;
+            b = carry;
+        }
+        return a;
+    }
+};
+
+```
 
 
 
