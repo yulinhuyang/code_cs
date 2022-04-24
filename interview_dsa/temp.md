@@ -562,6 +562,37 @@ public:
 };
 ```
 
+##### offer II 318 最大单词长度乘积
 
-318  875   647  713  567   438  528  648  676 820 677 210 444  785  542 752 547 269 329  547 684 839  695 
+位运算预处理 + 模拟
+
+```C++
+class Solution {
+public:
+    int maxProduct(vector<string> &words) {
+        int m = words.size();
+        unordered_map<int, int> hash;
+        for (auto &word:words) {
+            int t = 0, n = word.size();
+            for (int i = 0; i < n; i++) {
+                int pos = word[i] - 'a';
+                t |= 1 << pos;
+            }
+            if (!hash.count(t) || hash[t] < n) hash[t] = n;
+        }
+        int res = 0;
+        for (auto &w1:hash) {
+            for (auto &w2:hash) {
+                if (!(w1.first & w2.first)) {
+                    res = max(res, w1.second * w2.second);
+                }
+            }
+        }
+        return res;
+    }
+};
+
+```
+
+875   647  713  567   438  528  648  676 820 677 210 444  785  542 752 547 269 329  547 684 839  695 
 
