@@ -523,8 +523,44 @@ public:
     }
 };
 ```
+##### Offer 68 - I  二叉搜索树的最近公共祖先LCA
 
+```C++
+class Solution {
+public:
+    TreeNode* lowestCommonAncestor(TreeNode* root, TreeNode* p, TreeNode* q) {
+        if(!root || root == p || root == q) return root;
+        auto left = lowestCommonAncestor(root->left,p,q);
+        auto right = lowestCommonAncestor(root->right,p,q);
 
+        if(!left) return right;
+        if(!right) return left;
+        return root;
+    }
+};
+
+```
+##### Offer 68 - II. 二叉树的最近公共祖先LCA
+
+```C++
+class Solution {
+public:
+    TreeNode *lowestCommonAncestor(TreeNode *root, TreeNode *p, TreeNode *q) {
+        auto ancestor = root;
+        while (ancestor) {
+            if (ancestor->val < p->val && ancestor->val < q->val) {
+                ancestor = lowestCommonAncestor(root->right, p, q);
+            } else if (ancestor->val > p->val && ancestor->val > q->val) {
+                ancestor = lowestCommonAncestor(root->left, p, q);
+            } else {
+                break;
+            }
+        }
+
+        return ancestor;
+    }
+};
+```
 
 
 318  875   647  713  567   438  528  648  676 820 677 210 444  785  542 752 547 269 329  547 684 839  695 
