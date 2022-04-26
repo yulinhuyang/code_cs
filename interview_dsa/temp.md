@@ -1,21 +1,25 @@
 
 #####  Offer II 008 和大于等于 target的最短子数组
 
+先扩j后缩i，外扩j内缩i
+
+前缀和+二分(后找)
+
 ```C++
 //双指针 可变滑窗法
 class Solution {
 public:
     int minSubArrayLen(int target, vector<int> &nums) {
+        if (target < 1) return 0;
         int m = nums.size();
-
-        int sum = nums[0];
-        int ans = INT_MAX;
-        for (int i = 0, j = 1; i < j; i++) {
-            while (sum < target && j < m) {
-                sum += nums[j++];
+        int sum = 0, ans = INT_MAX;
+        for (int i = 0, j = 0; j < m; j++) {
+            sum += nums[j];
+            while (sum >= target && i <= j) {
+                sum -= nums[i];
+                ans = min(ans, j - i + 1);
+                i++;
             }
-            if(sum >= target) ans = min(ans, j - i);
-            sum -= nums[i];
         }
         return ans == INT_MAX ? 0 : ans;
     }
@@ -53,6 +57,25 @@ public:
     }
 };
 ```
+##### LeetCode 713  乘积小于K的子数组
+
+```C++
+class Solution {
+public:
+    int numSubarrayProductLessThanK(vector<int> &nums, int k) {
+        if (k < 1) return 0;
+        int m = nums.size();
+        int mul = 1, res = 0;
+        for (int i = 0, j = 0; j < m; j++) {
+            mul *= nums[j];
+            while (mul >= k && i <= j) mul /= nums[i++];
+            res += j - i + 1;
+        }
+        return res;
+    }
+};
+```
+
 
 
 875   647  713  567   438  528  648  676 820 677 210 444  785  542 752 547 269 329  547 684 839  695 
