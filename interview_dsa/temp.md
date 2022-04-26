@@ -1,9 +1,7 @@
 
 #####  Offer II 008 和大于等于 target的最短子数组
 
-先扩j后缩i，外扩j内缩i
-
-前缀和+二分(后找)
+滑窗和/积 满足某种条件问题的两类解法：双指针 可变滑窗：先扩j后缩i，外扩j内缩i ； 前缀和+二分(后找)      
 
 ```C++
 //双指针 可变滑窗法
@@ -76,6 +74,26 @@ public:
 };
 ```
 
+##### leetcode  724. 寻找数组的中心下标
+
+前缀和
+
+```C++
+class Solution {
+public:
+    int pivotIndex(vector<int> &nums) {
+        int total = accumulate(nums.begin(), nums.end(), 0);
+        int sum = 0;
+        for (int i = 0; i < nums.size(); i++) {
+            if (2 * sum + nums[i] == total) {
+                return i;
+            }
+            sum += nums[i];
+        }
+        return -1;
+    }
+};
+```
 
 
 875   647  713  567   438  528  648  676 820 677 210 444  785  542 752 547 269 329  547 684 839  695 
