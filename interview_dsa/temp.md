@@ -57,7 +57,41 @@ public:
 ```
 ##### LeetCode 713  乘积小于K的子数组
 
+log前缀和 + 二分
+
 ```C++
+class Solution {
+    int binaryRight(vector<double> &nums, double target, int start) {
+        int l = start, r = nums.size() - 1;
+        while (l < r) {
+            int mid = l + r + 1 >> 1;
+            if ((nums[mid] - target) <= 0) l = mid;
+            else r = mid - 1;
+        }
+        return l;
+    }
+
+public:
+    int numSubarrayProductLessThanK(vector<int> &nums, int k) {
+        int m = nums.size();
+        vector<double> sum(m + 1, 0);
+        double target = log(k);
+        int res = 0;
+        for (int i = 1; i < m + 1; i++) {
+            sum[i] = sum[i - 1] + log(nums[i - 1]);
+        }
+        for (int i = 0; i < m + 1; i++) {
+            double s = sum[i] + target;
+            int right = binaryRight(sum, s - 1e-9, i);
+            res += right - i;
+        }
+        return res;
+    }
+};
+```
+
+```C++
+//双指针模板
 class Solution {
 public:
     int numSubarrayProductLessThanK(vector<int> &nums, int k) {
