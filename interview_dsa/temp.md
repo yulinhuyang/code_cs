@@ -237,6 +237,41 @@ public:
 };    
     
 ```    
+#####  647 回文子串
+ 
+枚举+ 中心展开 
+    
+```C++
+class Solution {
+public:
+    int countSubstrings(string s) {
+        int n = s.size();
+        int ans = 0;
+        for (int i = 0; i < n; i++) {
+            ans += extend(s, i, i);
+            ans += extend(s, i, i + 1);
+        }
+        return ans;
+    }
+
+    int extend(string s, int l, int r) {
+        int ans = 0;
+        int i = l, j = r;
+        while (i >= 0 && j < s.size() && s[i] == s[j]) {
+            i--;
+            j++;
+            ans++;
+        }
+        return ans;
+    }
+};
+    
+```
+回文数问题总结：
+                                     
+1 中心扩展法：
+2 动态规划：
+3 字符串Hash(反转拷贝) ：                                                          
  
 
 875   647   567   438  528  648  676 820 677 210 444  785  542 752 547 269 329  547 684 839  695 
