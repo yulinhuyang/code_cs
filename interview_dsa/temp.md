@@ -162,6 +162,40 @@ public:
 };
 ```
     
+#####  76. 最小覆盖子串
+    
+双hash 双指针简化版  
+  
+```C++
+class Solution {
+public:
+    string minWindow(string s, string t) {
+        unordered_map<char, int> ht, hw;
+        for (auto c:t) {
+            ht[c]++;
+        }
+        int cnt = 0;
+        string res;
+        for (int i = 0, j = 0; i < s.size(); i++) {
+            hw[s[i]]++;
+            // hw[s[i]] <= ht[s[i]] 说明s[i]是个有效字符
+            if (hw[s[i]] <= ht[s[i]]) cnt++;
+
+            // hw[s[j]] > ht[s[j]] 说明s[j]是多余字符
+            while(cnt == t.size() && hw[s[j]] > ht[s[j]]) hw[s[j++]]--;
+            if (cnt == t.size()) {
+                if (res.empty() || (i - j + 1) < res.size()) {
+                    res = s.substr(j, i - j + 1);
+                }
+            }
+        }
+        return res;
+    }
+}; 
+    
+```
+
+    
 字符串统计滑窗法总结：
     
 1 双指针不固定长度滑窗 + 双hash(单hash)：      
