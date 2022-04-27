@@ -240,6 +240,7 @@ for (int i = n - 1; i >= 0; i--) { //注意循环顺序
 - 148 排序链表(Sort List):归并排序链表，快慢指针拆分链表 + merge合并两个链表   
 - 160 相交链表(Intersection)     
 - 206 反转链表(Reverse Linked List)：递归/pre+cur+next     
+- 445  两数相加 II:stack + 双指针链表     
 
 ## 0x14  hash表
 
