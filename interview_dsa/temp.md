@@ -129,6 +129,29 @@ public:
 };
 ```
 
+##### 567. 字符串的排列
+
+滑窗：vector<int> window(26,0)
+```
+class Solution {
+public:
+    bool checkInclusion(string s1, string s2) {
+        vector<int> need(26, 0);
+        int m = s1.size(), n = s2.size();
+        for (auto c:s1) {
+            need[c - 'a']++;
+        }
+
+        vector<int> window(26, 0);
+        for (int i = 0, j = 0; j < n;) {
+            while (j < n && j - i < m) window[s2[j++] - 'a']++;
+            if (window == need) return true;
+            window[s2[i++] - 'a']--;
+        }
+        return false;
+    }
+};
+```
 
 875   647   567   438  528  648  676 820 677 210 444  785  542 752 547 269 329  547 684 839  695 
 
