@@ -105,7 +105,19 @@ while (j < k - 1 && nums[i] + nums[j] + nums[k - 1] >= 0) k--;
 
 ### 滑动窗口
 
-字符串统计滑窗法总结：    
+- 713 乘积小于K的子数组：双指针 可变滑窗    
+**滑窗和/积满足某种条件区间的两类解法：**
+
+1 双指针 可变滑窗：先扩j后缩i，外扩j内缩i ；     
+2 前缀和+二分(向后搜索)     
+
+
+- 3 无重复字符的最长子串: 单hash双指针滑窗    
+- 76 最小覆盖子串(Minimum Window Substring)：单个hash(补欠法) : 双hash(计有效字符法) 
+- 438 找到字符串中所有字母异位词(Anagrams)：固定len滑窗 + vector (26,0)   
+- 567 字符串排列(Permutation)：固定len滑窗 + vector (26,0)     
+**字符串统计滑窗法总结：**  
+
 1 双指针不固定长度滑窗 + 双hash(单hash)：     
 单hash(补欠法)：https://www.acwing.com/solution/LeetCode/content/160/
 hash[c]表示的是当前c这个字母还缺多少个，hash[s[j]] == 0 表示 s[j] 这个字母已经足够了
@@ -114,10 +126,6 @@ hash[c]表示的是当前c这个字母还缺多少个，hash[s[j]] == 0 表示 s
 
 2 固定len滑窗 + vector (26,0)   
 
-- 3 无重复字符的最长子串: 单hash双指针滑窗    
-- 76 最小覆盖子串(Minimum Window Substring)：单个hash(补欠法) : 双hash(计有效字符法) 
-- 438 找到字符串中所有字母异位词(Anagrams)：固定len滑窗 + vector (26,0)   
-- 567 字符串排列(Permutation)：固定len滑窗 + vector (26,0) 
    
 ### 基础排序
 
