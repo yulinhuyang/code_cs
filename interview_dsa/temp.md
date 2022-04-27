@@ -206,6 +206,38 @@ hash[c]表示的是当前c这个字母还缺多少个，hash[s[j]] == 0 表示 s
 双hash(计有效字符法)：https://www.acwing.com/solution/content/63190/     
 
 2 固定len滑窗 + vector<int> (26,0):       
+    
+    
+#####  680. 验证回文字符串 Ⅱ
+ 
+ 左右双指针判断回文数
+    
+```C++
+class Solution {
+public:
+    bool validPalindrome(string s) {
+        int n = s.size();
+        for (int i = 0, j = n - 1; i < j;) {
+            if (s[i] == s[j]) {
+                i++;
+                j--;
+            } else {
+                return isPalindrome(s, i + 1, j) || isPalindrome(s, i, j - 1);
+            }
+        }
+        return true;
+    }
+
+    bool isPalindrome(string s, int l, int r) {
+        for (int i = l, j = r; i < j;i++,j--) {
+            if (s[i] != s[j]) return false;
+        }
+        return true;
+    }
+};    
+    
+```    
+ 
 
 875   647   567   438  528  648  676 820 677 210 444  785  542 752 547 269 329  547 684 839  695 
 
