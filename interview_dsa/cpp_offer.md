@@ -386,6 +386,7 @@ public:
 
 
 ### 滑动窗口
+- Offer II 008 和大于等于 target的最短子数组
 - Offer II 14 字符串中的变位词(567 字符串的排列)
 - Offer II 15 字符串中的所有变位词(438 找到字符串中所有字母异位词)
 - Offer II 16 不含重复字符的最长子字符串(3 无重复字符的最长子串)
@@ -416,6 +417,88 @@ public:
             sum -= i++;
         }
         return res;
+    }
+};
+```
+
+#####  Offer II 008 和大于等于 target的最短子数组
+
+滑窗和/积满足某种条件区间的两类解法：
+
+1  双指针 可变滑窗：先扩j后缩i，外扩j内缩i ；          
+2  前缀和+二分(向后搜索)                 
+
+```C++
+//双指针 可变滑窗法
+class Solution {
+public:
+    int minSubArrayLen(int target, vector<int> &nums) {
+        if (target < 1) return 0;
+        int m = nums.size();
+        int sum = 0, ans = INT_MAX;
+        for (int i = 0, j = 0; j < m; j++) {
+            sum += nums[j];
+            while (sum >= target && i <= j) {
+                sum -= nums[i];
+                ans = min(ans, j - i + 1);
+                i++;
+            }
+        }
+        return ans == INT_MAX ? 0 : ans;
+    }
+};
+```
+
+
+```C++
+//前缀和+二分
+class Solution {
+    int binaryLeft(int target, vector<int> &nums, int l, int r) {
+        while (l < r) {
+            int mid = l + r >> 1;
+            if (nums[mid] >= target) r = mid;
+            else l = mid + 1;
+        }
+        return l;
+    }
+
+public:
+    int minSubArrayLen(int target, vector<int> &nums) {
+        int m = nums.size();
+        vector<int> sum(m + 1, 0);
+        for (int i = 1; i < m + 1; i++) {
+            sum[i] = sum[i - 1] + nums[i - 1];
+        }
+        int ans = INT_MAX;
+        for (int i = 1; i < m + 1; i++) {
+            int tmp = target + sum[i - 1];
+            int j = binaryLeft(tmp, sum, i, m);
+            if (sum[j] >= tmp) ans = min(ans, j - i + 1);
+        }
+
+        return ans == INT_MAX ? 0 : ans;
+    }
+};
+```
+
+
+##### leetcode  724. 寻找数组的中心下标
+
+前缀和
+
+```C++
+class Solution {
+public:
+    int pivotIndex(vector<int> &nums) {
+        int total = accumulate(nums.begin(), nums.end(), 0);
+        int sum = 0;
+        for (int i = 0; i < nums.size(); i++) {
+            if (2 * sum + nums[i] == total) {
+                return i;
+            }
+            sum += nums[i];
+        }
+        return -1;
     }
 };
 ```
