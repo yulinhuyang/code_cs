@@ -120,12 +120,10 @@ while (j < k - 1 && nums[i] + nums[j] + nums[k - 1] >= 0) k--;
 
 1 双指针不固定长度滑窗 + 双hash(单hash)：     
 单hash(补欠法)：https://www.acwing.com/solution/LeetCode/content/160/
-hash[c]表示的是当前c这个字母还缺多少个，hash[s[j]] == 0 表示 s[j] 这个字母已经足够了
+hash[c]表示的是当前c这个字母还缺多少个，hash[s[j]] == 0 表示 s[j] 这个字母已经足够了。   
+双hash(计有效字符法)：https://www.acwing.com/solution/content/63190/ 。   
 
-双hash(计有效字符法)：https://www.acwing.com/solution/content/63190/
-
-2 固定len滑窗 + vector (26,0)   
-
+2 固定len滑窗 + vector (26,0)       
    
 ### 基础排序
 
