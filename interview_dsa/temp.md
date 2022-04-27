@@ -131,27 +131,46 @@ public:
 
 ##### 567. 字符串的排列
 
-滑窗：vector<int> window(26,0)
+固定len滑窗：vector<int> window(26,0)
+    
 ```
 class Solution {
 public:
-    bool checkInclusion(string s1, string s2) {
-        vector<int> need(26, 0);
-        int m = s1.size(), n = s2.size();
-        for (auto c:s1) {
-            need[c - 'a']++;
+    bool checkInclusion(string p, string s) {
+        if (s.size() < p.size()) return false;
+        vector<int> pcnt(26, 0);
+        vector<int> scnt(26, 0);
+        int m = s.size(), len = p.size();
+        for (int i = 0; i < len; i++) {
+            pcnt[p[i] - 'a']++;
+            scnt[s[i] - 'a']++;
         }
 
-        vector<int> window(26, 0);
-        for (int i = 0, j = 0; j < n;) {
-            while (j < n && j - i < m) window[s2[j++] - 'a']++;
-            if (window == need) return true;
-            window[s2[i++] - 'a']--;
+        if (pcnt == scnt) return true;
+        for (int i = 0; i + len < m; i++) {
+            scnt[s[i] - 'a']--;
+            scnt[s[i + len] - 'a']++;
+            if (scnt == pcnt) {
+                return true;
+            }
         }
         return false;
     }
 };
 ```
+    
+滑窗法总结：
+    
+1 双指针不固定长度滑窗 + 双hash(单hash)：      
+
+单hash(补欠法)：https://www.acwing.com/solution/LeetCode/content/160/          
+hash[c]表示的是当前c这个字母还缺多少个，hash[s[j]] == 0 表示 s[j] 这个字母已经足够了     
+
+双hash(计有效字符法)：https://www.acwing.com/solution/content/63190/     
+
+2 固定len滑窗 + vector<int> (26,0):       
+
+
 
 875   647   567   438  528  648  676 820 677 210 444  785  542 752 547 269 329  547 684 839  695 
 
