@@ -29,10 +29,13 @@ public:
     
 ```    
 #####  647 回文子串
+
+https://leetcode-cn.com/problems/palindromic-substrings/solution/dai-ma-sui-xiang-lu-dai-ni-xue-tou-dpzi-vidge/
  
 枚举+ 中心展开 
     
 ```C++
+//枚举+中心展开
 class Solution {
 public:
     int countSubstrings(string s) {
@@ -58,6 +61,36 @@ public:
 };
     
 ```
+
+```C++
+//dp解法
+class Solution
+{
+public:
+    int countSubstrings(string s)
+    {
+        int n = s.size();
+        vector<vector<int>> f(n, vector<int>(n, 0));
+        int ans = 0;
+        //从状态转移方程，推导i和j的遍历顺序
+        // f[i + 1][j - 1])  ---> f[i][j]
+        for (int i = s.size() - 1; i >= 0; i--)
+        {
+            for (int j = i; j < s.size(); j++)
+            {
+                if ((s[i] == s[j]) && (j - i <= 1 || f[i + 1][j - 1]))
+                {
+                    f[i][j] = true;
+                    ans++;
+                }
+            }
+        }
+        return ans;
+    }
+};
+
+```
+
 回文数问题总结：
                                      
 1 中心扩展法：
