@@ -69,5 +69,28 @@ public:
 };
 ```
 
+##### Leetcode 735 行星碰撞
+
+vector 当栈使用
+
+```C++
+class Solution {
+public:
+    vector<int> asteroidCollision(vector<int> &asteroids) {
+        vector<int> res;//栈
+        for (auto &x:asteroids) {
+            if (x > 0) {
+                res.emplace_back(x);
+            } else {
+                while (!res.empty() && res.back() > 0 && res.back() < -x) res.pop_back();
+                if (!res.empty() && res.back() == -x) res.pop_back();
+                else if (res.empty() || res.back() < 0) res.emplace_back(x);
+            }
+        }
+        return res;
+    }
+};
+
+```
 
 875   567   438  528  648  676 820 677 210 444  785  542 752 547 269 329  547 684 839  695 
