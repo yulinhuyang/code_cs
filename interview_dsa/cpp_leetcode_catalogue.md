@@ -387,12 +387,25 @@ long long使用：最终结果是int,中间可能是long long。
 - 538 把二叉搜索树转换为累加树 
 - 543 二叉树的直径   
 - 652 寻找重复的子树: 中序遍历与后序或者中序遍历与前序遍历都可以唯一确定一棵树。两遍hash,第一遍树变成字符串，第二遍变成数。
- 
+- 814 二叉树剪枝:dfs
+- 897 递增顺序搜索树: 中序遍历
+- 919 完全二叉树插入器：
+完全二叉树：     
+
+序号为0的节点是根；             
+对于i > 0，其父节点的编号为(i-1)/2。          
+若2 * i + 1 < n，其左子节点的序号为2 * i + 1，否则没有左子节点。          
+若2 * i + 2 < n，其右子节点的序号为2 * i + 2，否则没有右子节点。          
+
   
 ### 树的BFS(Tree Breadth First Search，queue)   
 - 102 二叉树的层序遍历：BFS
 - 103 二叉树的锯齿形层次遍历(zigzag): BFS + flag
 - 107 二叉树的层序遍历II：BFS + reverse
+- 199  二叉树的右视图:BFS层序遍历
+- 515 在每个树行中找最大值:BFS层序遍历
+https://leetcode-cn.com/problems/find-largest-value-in-each-tree-row/solution/er-cha-shu-ceng-xu-bian-li-deng-chang-wo-yao-da--3/
+- 513  找树左下角的值
    
 ## 0x22 DFS(递归、回溯)
 
