@@ -850,7 +850,7 @@ public:
 - Offer II 50 向下的路径节点之和(437 路径总和 III)
 - Offer II 51 节点之和最大的路径(124 二叉树中的最大路径和)
 - Offer II 52 展平二叉搜索树(897 递增顺序搜索树)
-- Offer II 53 二叉搜索树中的中序后继(285 plus)
+- Offer II 53 二叉搜索树中的中序后继(285 plus)：比p大的最小的数
 - Offer II 54 所有大于等于节点的值之和(538 把二叉搜索树转换为累加树)
 - Offer II 55 二叉搜索树迭代器(173 二叉搜索树迭代器)
 - Offer II 56 二叉搜索树中两个节点之和(653 两数之和 IV - 输入 BST)
@@ -972,6 +972,27 @@ public:
     }
 };
 ```
+##### Offer II 053 二叉搜索树中的中序后继
+
+```C++
+class Solution {
+public:
+    TreeNode *inorderSuccessor(TreeNode *root, TreeNode *p) {
+        TreeNode *ans = NULL;
+        while (root) {
+            //比p大的最小的数
+            if (root->val > p->val) {
+                ans = root;
+                root = root->left;
+            } else {
+                root = root->right;
+            }
+        }
+        return ans;
+    }
+};
+```
+
 
 ## 0x22 DFS(递归、回溯)
 - 12 矩阵中的路径(79 单词搜索): dfs四方向遍历，回溯做选择（修改涂色变量相当于push_back）
