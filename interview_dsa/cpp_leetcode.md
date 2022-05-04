@@ -584,6 +584,33 @@ public:
     }
 };
 ```
+##### Leetcode 539 最小时间差
+
+```C++
+class Solution {
+    int getMinute(string time) {
+        int minute = ((time[0] - '0') * 10 + (time[1] - '0')) * 60 + (time[3] - '0') * 10 + (time[4] - '0');
+        return minute;
+    }
+
+public:
+    int findMinDifference(vector<string> &timePoints) {
+        if (timePoints.size() > 1440) return 0;  //抽屉原理,24x60
+        sort(timePoints.begin(), timePoints.end());
+        int t0Minute = getMinute(timePoints[0]);
+        int preMinute = t0Minute;
+        int minGap = 1440;
+        for (int i = 1; i < timePoints.size(); i++) {
+            int minute = getMinute(timePoints[i]);
+            if ((abs(minute - preMinute)) < minGap) minGap = abs(minute - preMinute);
+            preMinute = minute;
+        }
+
+        minGap = min(minGap, t0Minute - preMinute + 1440);
+        return minGap;
+    }
+};
+```
 
 ## 0x03 前缀和与差分
 
@@ -2786,6 +2813,29 @@ public:
 };
 ```
 	
+##### Leetcode 735 行星碰撞
+
+vector 当栈使用
+
+```C++
+class Solution {
+public:
+    vector<int> asteroidCollision(vector<int> &asteroids) {
+        vector<int> res;//栈
+        for (auto &x:asteroids) {
+            if (x > 0) {
+                res.emplace_back(x);
+            } else {
+                while (!res.empty() && res.back() > 0 && res.back() < -x) res.pop_back();
+                if (!res.empty() && res.back() == -x) res.pop_back();
+                else if (res.empty() || res.back() < 0) res.emplace_back(x);
+            }
+        }
+        return res;
+    }
+};
+
+```	
 ### 单调栈
 
 ##### 84 柱状图中最大的矩形
@@ -4256,7 +4306,48 @@ public:
 };
 
  ```								    
-								    
+
+##### Leetcode 380  O(1) 时间插入、删除和获取随机元素
+
+变长数组+ hash, back交换法删除法
+
+```C++
+class RandomizedSet {
+    vector<int> nums;
+    unordered_map<int, int> hash;
+public:
+    RandomizedSet() {
+        nums.clear();
+        hash.clear();
+    }
+
+    bool insert(int val) {
+        if (hash.find(val) != hash.end()) return false;
+        nums.emplace_back(val);
+        hash[val] = nums.size() - 1;
+        return true;
+    }
+
+    bool remove(int val) {
+        if (hash.find(val) == hash.end()) return false;
+        int last = nums.back();
+        int index = hash[val];
+        //last替换index
+        nums[index] = last;
+        hash[last] = index;
+        //删除last
+        nums.pop_back();
+        hash.erase(val);
+        return true;
+    }
+
+    int getRandom() {
+        return nums[rand() % nums.size()];
+    }
+};
+
+```
+	
 	
 ##### 652. 寻找重复的子树
 
@@ -5873,7 +5964,20 @@ public:
 };
 ```
 
+##### Leetcode 653 两数之和 IV - 输入 BST
 
+```C++
+class Solution {
+    unordered_map<int, int> hash;
+public:
+    bool findTarget(TreeNode *root, int k) {
+        if (!root) return false;
+        if (hash.find(k - root->val) != hash.end()) return true;
+        hash[root->val]++;
+        return findTarget(root->left, k) || findTarget(root->right, k);
+    }
+};
+```
 	
 ### 树的BFS(Tree Breadth First Search，queue)
 
