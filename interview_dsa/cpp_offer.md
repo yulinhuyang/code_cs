@@ -571,6 +571,7 @@ public:
 - Offer II 39 直方图最大矩形面积(84 柱状图中最大的矩形)
 - Offer II 40 矩阵中最大的矩形(85 最大矩形)
 
+
 ##### 9. 用两个栈实现队列
 ```C++
 class CQueue {
@@ -625,12 +626,59 @@ public:
 };
 ```
 
-## 0x12 单调队列
+
+## 0x12 队列/单调队列
 
 - 59_I 滑动窗口的最大值(239 滑动窗口最大值)
 - 59_II 队列的最大值
 - Offer II 41 滑动窗口的平均值(346 plus)
 - Offer II 42 最近请求次数(933 最近的请求次数)
+
+#####  Offer II 041 滑动窗口的平均值
+
+队列
+
+```C++
+class MovingAverage {
+    deque<int> q;
+    int capacity;
+    double sum = 0;
+public:
+    /** Initialize your data structure here. */
+    MovingAverage(int size) {
+        capacity = size;
+    }
+
+    double next(int val) {
+        q.emplace_back(val);
+        sum += val;
+        if (q.size() > capacity) {
+            sum -= q.front();
+            q.pop_front();
+        }
+        return sum / q.size();
+    }
+};
+```
+##### Offer II 42 最近的请求次数
+
+队列应用
+
+```C++
+class RecentCounter {
+    deque<int> q;
+public:
+    RecentCounter() {
+    }
+
+    int ping(int t) {
+        q.emplace_back(t);
+        while (q.front() < t - 3000) q.pop_front();
+        return q.size();
+    }
+};
+
+```
 
 ## 0x13 链表与邻接表
 
