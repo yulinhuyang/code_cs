@@ -37,7 +37,7 @@ LeetCode究极班: https://www.acwing.com/activity/content/activity_person/conte
 - 80 删除有序数组中的重复项 II: 跳重范式：while(i + 1 < nums.size() && nums[i] == nums[i+1]) i++;极简模拟
 - 89 格雷编码：对称构造 + 1
 - 299 猜数字游戏：字符模拟。
-
+- 539 最小时间差：模拟
 
 ## 0x03 前缀和与差分
    
@@ -204,6 +204,7 @@ for (int i = n - 1; i >= 0; i--) { //注意循环顺序
 - 32 最长有效括号：start插入-1
 - 150 逆波兰表达式求值:先弹出的是b,后弹出的是a,操作顺序 a -= b，逆波兰表达式/计算器。  
 - 155 最小栈(Min Stack)：同步双栈, 存储非升序，minStack.emplace_back(min(val,minStack.back()));
+- 735 行星碰撞:vector 当栈使用。
   
 ### 单调栈
 - 32 最长有效括号：起始加-1,栈底元素为当前已经遍历过的元素中「最后一个没有被匹配的右括号的下标]
@@ -307,6 +308,8 @@ it->second = ac;//正确更新
 }; 
  
 ```
+- 380  O(1) 时间插入、删除和获取随机元素: 变长数组+ hash, back交换法删除法     
+leetcode 设计题 数据结构设计整理: https://www.acwing.com/blog/content/3778/                                                                    
 
 ## 0x15 字符串(字符串hash、KMP与最小表示法）
 - 6 Z 字形变换：找规律，首尾行，中间行。
@@ -390,22 +393,22 @@ long long使用：最终结果是int,中间可能是long long。
 - 814 二叉树剪枝:dfs
 - 897 递增顺序搜索树: 中序遍历
 - 919 完全二叉树插入器：
-完全二叉树：     
-
+完全二叉树：         
 序号为0的节点是根；             
 对于i > 0，其父节点的编号为(i-1)/2。          
 若2 * i + 1 < n，其左子节点的序号为2 * i + 1，否则没有左子节点。          
 若2 * i + 2 < n，其右子节点的序号为2 * i + 2，否则没有右子节点。          
-
+- 653 两数之和 IV - 输入 BST：hash + dfs
   
 ### 树的BFS(Tree Breadth First Search，queue)   
 - 102 二叉树的层序遍历：BFS
 - 103 二叉树的锯齿形层次遍历(zigzag): BFS + flag
 - 107 二叉树的层序遍历II：BFS + reverse
 - 199  二叉树的右视图:BFS层序遍历
-- 515 在每个树行中找最大值:BFS层序遍历
+- 513  找树左下角的值     
+- 515  在每个树行中找最大值:BFS层序遍历
 https://leetcode-cn.com/problems/find-largest-value-in-each-tree-row/solution/er-cha-shu-ceng-xu-bian-li-deng-chang-wo-yao-da--3/
-- 513  找树左下角的值
+
    
 ## 0x22 DFS(递归、回溯)
 
