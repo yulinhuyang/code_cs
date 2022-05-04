@@ -5778,6 +5778,101 @@ public:
 };
 ```
 
+##### LeetCode 919  完全二叉树插入器
+
+完全二叉树：
+
+序号为0的节点是根；        
+对于i > 0，其父节点的编号为(i-1)/2。     
+若2 * i + 1 < n，其左子节点的序号为2 * i + 1，否则没有左子节点。     
+若2 * i + 2 < n，其右子节点的序号为2 * i + 2，否则没有右子节点。     
+
+使用二叉树可以方便的存入表或者数组，直接根据元素下标就可以找到一个节点的子节点或者父节点(也就是可以完全确定二叉树的结构)，无须用额外的形式记录树结构信息。
+
+```C++
+class CBTInserter {
+    vector<TreeNode *> h;
+public:
+    CBTInserter(TreeNode *root) {
+        queue<TreeNode *> q;
+        q.push(root);
+        //bfs
+        while (!q.empty()) {
+            auto top = q.front();
+            q.pop();
+            h.emplace_back(top);
+            if (top->left) q.push(top->left);
+            if (top->right) q.push(top->right);
+        }
+    }
+
+    int insert(int val) {
+        //数组存p
+        TreeNode *node = new TreeNode(val);
+        int k = h.size() - 1;
+        int p = k / 2;
+        if (!h[p]->left) h[p]->left = node;
+        else h[p]->right = node;
+        h.emplace_back(node);
+        return h[p]->val;
+    }
+
+    TreeNode *get_root() {
+        return h[0];
+    }
+};
+```
+
+##### Leetcode 814 二叉树剪枝
+
+树的dfs遍历
+
+```C++
+class Solution {
+    bool containOne(TreeNode *root) {
+        if (!root) return false;
+        if (!containOne(root->left)) root->left = nullptr;
+        if (!containOne(root->right)) root->right = nullptr;
+        return root->val || root->left || root->right;
+    }
+
+public:
+    TreeNode *pruneTree(TreeNode *root) {
+        if (!containOne(root)) return nullptr;
+        return root;
+    }
+};
+
+```
+
+##### Leetcode 897  递增顺序搜索树
+
+递归inorder遍历
+
+```C++
+class Solution {
+    TreeNode *resNode;
+public:
+    TreeNode *increasingBST(TreeNode *root) {
+        TreeNode *dummy = new TreeNode(-1);
+        resNode = dummy;
+        inorder(root);
+        return dummy->right;
+    }
+
+    void inorder(TreeNode *node) {
+        if (!node) return;
+        inorder(node->left);
+
+        resNode->right = node;
+        node->left = nullptr;
+        resNode = node;
+
+        inorder(node->right);
+    }
+};
+```
+
 
 	
 ### 树的BFS(Tree Breadth First Search，queue)
@@ -5875,7 +5970,91 @@ public:
 };
 
 ```
+##### Leetcode 515 在每个树行中找最大值
 
+BFS层序遍历
+
+https://leetcode-cn.com/problems/find-largest-value-in-each-tree-row/solution/er-cha-shu-ceng-xu-bian-li-deng-chang-wo-yao-da--3/
+
+```C++
+class Solution {
+public:
+    vector<int> largestValues(TreeNode *root) {
+        vector<int> res;
+        queue<TreeNode *> q;
+        q.push(root);
+        while (!q.empty()) {
+            int size = q.size();
+            int maxVal = INT_MIN;
+            for (int i = 0; i < size; i++) {
+                auto t = q.front();
+                q.pop();
+                maxVal = max(maxVal, t->val);
+                if (t->left) q.push(t->left);
+                if (t->right) q.push(t->right);
+            }
+            res.emplace_back(maxVal);
+        }
+        return res;
+    }
+};
+
+```
+
+##### Leetcode 513  找树左下角的值
+
+BFS层序遍历
+
+```C++
+class Solution {
+public:
+    int findBottomLeftValue(TreeNode *root) {
+        int res;
+        queue<TreeNode *> q;
+        q.push(root);
+        while (!q.empty()) {
+            int size = q.size();
+            for (int i = 0; i < size; i++) {
+                auto t = q.front();
+                if (i == 0) res = t->val;
+                q.pop();
+                if (t->left) q.push(t->left);
+                if (t->right) q.push(t->right);
+            }
+        }
+        return res;
+    }
+};
+```
+
+##### Leetcode 199  二叉树的右视图
+
+BFS层序遍历 
+
+```C++
+class Solution {
+public:
+    vector<int> rightSideView(TreeNode *root) {
+        if(!root) return {};
+        vector<int> res;
+        queue<TreeNode *> q;
+        q.push(root);
+        while (!q.empty()) {
+            int size = q.size();
+            for (int i = 0; i < size; i++) {
+                auto t = q.front();
+                if (i == size - 1) {
+                    res.emplace_back(t->val);
+                }
+                q.pop();
+                if (t->left) q.push(t->left);
+                if (t->right) q.push(t->right);
+            }
+        }
+        return res;
+    }
+};
+```
 
 ## 0x22 DFS(递归、回溯)
 
