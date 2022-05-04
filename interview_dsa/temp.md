@@ -138,6 +138,41 @@ public:
 };
 
 ```
+##### LeetCode 919  完全二叉树插入器
+
+```C++
+class CBTInserter {
+    vector<TreeNode *> h;
+public:
+    CBTInserter(TreeNode *root) {
+        queue<TreeNode *> q;
+        q.push(root);
+        //bfs
+        while (!q.empty()) {
+            auto top = q.front();
+            q.pop();
+            h.emplace_back(top);
+            if (top->left) q.push(top->left);
+            if (top->right) q.push(top->right);
+        }
+    }
+
+    int insert(int val) {
+        //数组存p
+        TreeNode *node = new TreeNode(val);
+        int k = h.size() - 1;
+        int p = k / 2;
+        if (!h[p]->left) h[p]->left = node;
+        else h[p]->right = node;
+        h.emplace_back(node);
+        return h[p]->val;
+    }
+
+    TreeNode *get_root() {
+        return h[0];
+    }
+};
+```
 
 
 875   567   438  528  648  676 820 677 210 444  785  542 752 547 269 329  547 684 839  695 
