@@ -269,4 +269,55 @@ public:
 };
 ```
 
+##### Leetcode 814 二叉树剪枝
+
+树的dfs遍历
+
+```C++
+class Solution {
+    bool containOne(TreeNode *root) {
+        if (!root) return false;
+        if (!containOne(root->left)) root->left = nullptr;
+        if (!containOne(root->right)) root->right = nullptr;
+        return root->val || root->left || root->right;
+    }
+
+public:
+    TreeNode *pruneTree(TreeNode *root) {
+        if (!containOne(root)) return nullptr;
+        return root;
+    }
+};
+
+```
+
+##### 897  递增顺序搜索树
+
+递归inorder遍历
+
+```C++
+class Solution {
+    TreeNode *resNode;
+public:
+    TreeNode *increasingBST(TreeNode *root) {
+        TreeNode *dummy = new TreeNode(-1);
+        resNode = dummy;
+        inorder(root);
+        return dummy->right;
+    }
+
+    void inorder(TreeNode *node) {
+        if (!node) return;
+        inorder(node->left);
+
+        resNode->right = node;
+        node->left = nullptr;
+        resNode = node;
+
+        inorder(node->right);
+    }
+};
+```
+
+
 875   567   438  528  648  676 820 677 210 444  785  542 752 547 269 329  547 684 839  695 
