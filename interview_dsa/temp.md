@@ -183,5 +183,90 @@ public:
 };
 ```
 
+##### Leetcode 515 在每个树行中找最大值
+
+BFS层序遍历
+
+https://leetcode-cn.com/problems/find-largest-value-in-each-tree-row/solution/er-cha-shu-ceng-xu-bian-li-deng-chang-wo-yao-da--3/
+
+```C++
+class Solution {
+public:
+    vector<int> largestValues(TreeNode *root) {
+        vector<int> res;
+        queue<TreeNode *> q;
+        q.push(root);
+        while (!q.empty()) {
+            int size = q.size();
+            int maxVal = INT_MIN;
+            for (int i = 0; i < size; i++) {
+                auto t = q.front();
+                q.pop();
+                maxVal = max(maxVal, t->val);
+                if (t->left) q.push(t->left);
+                if (t->right) q.push(t->right);
+            }
+            res.emplace_back(maxVal);
+        }
+        return res;
+    }
+};
+
+```
+
+##### Leetcode 513  找树左下角的值
+
+BFS层序遍历
+
+```C++
+class Solution {
+public:
+    int findBottomLeftValue(TreeNode *root) {
+        int res;
+        queue<TreeNode *> q;
+        q.push(root);
+        while (!q.empty()) {
+            int size = q.size();
+            for (int i = 0; i < size; i++) {
+                auto t = q.front();
+                if (i == 0) res = t->val;
+                q.pop();
+                if (t->left) q.push(t->left);
+                if (t->right) q.push(t->right);
+            }
+        }
+        return res;
+    }
+};
+```
+
+##### Leetcode 199  二叉树的右视图
+
+BFS层序遍历 
+
+```C++
+class Solution {
+public:
+    vector<int> rightSideView(TreeNode *root) {
+        if(!root) return {};
+        vector<int> res;
+        queue<TreeNode *> q;
+        q.push(root);
+        while (!q.empty()) {
+            int size = q.size();
+            for (int i = 0; i < size; i++) {
+                auto t = q.front();
+                if (i == size - 1) {
+                    res.emplace_back(t->val);
+                }
+                q.pop();
+                if (t->left) q.push(t->left);
+                if (t->right) q.push(t->right);
+            }
+        }
+        return res;
+    }
+};
+```
 
 875   567   438  528  648  676 820 677 210 444  785  542 752 547 269 329  547 684 839  695 
