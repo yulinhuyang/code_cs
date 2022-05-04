@@ -319,5 +319,40 @@ public:
 };
 ```
 
+##### Offer II 053 二叉搜索树中的中序后继
+
+```C++
+class Solution {
+public:
+    TreeNode *inorderSuccessor(TreeNode *root, TreeNode *p) {
+        TreeNode *ans = NULL;
+        while (root) {
+            //比p大的最小的数
+            if (root->val > p->val) {
+                ans = root;
+                root = root->left;
+            } else {
+                root = root->right;
+            }
+        }
+        return ans;
+    }
+};
+```
+
+##### Leetcode 653 两数之和 IV - 输入 BST
+
+```C++
+class Solution {
+    unordered_map<int, int> hash;
+public:
+    bool findTarget(TreeNode *root, int k) {
+        if (!root) return false;
+        if (hash.find(k - root->val) != hash.end()) return true;
+        hash[root->val]++;
+        return findTarget(root->left, k) || findTarget(root->right, k);
+    }
+};
+```
 
 875   567   438  528  648  676 820 677 210 444  785  542 752 547 269 329  547 684 839  695 
