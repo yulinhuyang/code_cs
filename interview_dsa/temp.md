@@ -106,5 +106,32 @@ public:
 
 ```
 
+#####  Leetcode 703 数据流中的第 K 大元素
+
+TOP K问题 优先队列
+
+```C++
+class KthLargest {
+    priority_queue<int, vector<int>, greater<int>> heap;
+    int size = 0;
+public:
+    KthLargest(int k, vector<int> &nums) {
+        size = k;
+        for (auto &num:nums) {
+            add(num);
+        }
+    }
+
+    int add(int val) {
+        heap.emplace(val);
+        if (heap.size() > size) heap.pop();
+        return heap.top();
+    }
+};
+
+```
+
+
+
 
 875   567   438  528  648  676 820 677 210 444  785  542 752 547 269 329  547 684 839  695 
