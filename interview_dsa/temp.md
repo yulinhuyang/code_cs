@@ -1,6 +1,6 @@
 ##### Leetcode 220  存在重复元素 III
 
-滑窗 + 有序集合二分: [x − t,x + t]
+滑窗[x − t,x + t] + 有序集合二分(set 平衡树lower_bound)
 
 ```C++
 class Solution {
@@ -64,6 +64,41 @@ public:
 
     LL getIdx(LL num) {
         return num >= 0 ? num / size : (num + 1) / size - 1;
+    }
+};
+
+```
+
+#####  729. 我的日程安排表 I
+
+set 平衡树low_bound，处理区间问题
+
+```C++
+using PII = pair<int, int>;
+
+class MyCalendar {
+    set<PII> calender;
+public:
+    MyCalendar() {
+        calender.emplace(INT_MIN, INT_MIN);
+        calender.emplace(INT_MAX, INT_MAX);
+    }
+
+    bool book(int start, int end) {
+        auto i = calender.lower_bound({start, INT_MAX});
+        auto j = i;
+        j--;
+        PII t{start, end};
+        //*i 左边左端点最靠近start的区间，floorKey
+        //*j 右边左端点最靠近start的区间，ceilingKey
+        if (check(*i, t) || check(*j, t)) return false;
+        calender.emplace(t);
+        return true;
+    }
+
+    bool check(PII a, PII b) {
+        if (a.second <= b.first || b.second <= a.first) return false;
+        return true;
     }
 };
 
