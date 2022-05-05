@@ -75,6 +75,8 @@ set 平衡树low_bound，处理区间Pair问题
 
 Use std::pair as a key in std::set in C++: https://www.techiedelight.com/use-std_pair-as-key-std_set-cpp/
 
+set, multiset, map, multimap：有序集合，内部采用的就是一种非常高效的平衡检索二叉树：红黑树。
+
 ```C++
 using PII = pair<int, int>;
 
