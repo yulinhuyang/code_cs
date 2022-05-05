@@ -309,7 +309,7 @@ it->second = ac;//正确更新
  
 ```
 - 380  O(1) 时间插入、删除和获取随机元素: 变长数组+ hash, back交换法删除法     
-leetcode 设计题 数据结构设计整理: https://www.acwing.com/blog/content/3778/                                                                    
+leetcode 设计题 数据结构设计整理: https://www.acwing.com/blog/content/3778/
 
 ## 0x15 字符串(字符串hash、KMP与最小表示法）
 - 6 Z 字形变换：找规律，首尾行，中间行。
@@ -347,11 +347,18 @@ long long使用：最终结果是int,中间可能是long long。
 动态流，图参考：https://blogcsdnnet/jiahonghao2002/article/details/114108760    
 1 2 3 4 (大顶) | 5 6 7 8(小顶) : rightsize() > leftsize(), right 比left至多多一个,添加时优先添加right, 先添加后调整。    
 - 480 滑动窗口中位数:对顶堆 
-- 347 前K个高频元素(Top K)
-- 373 查找和最小的K对数字(TopK)
+- 347 前K个高频元素(Top K)：
+- 373 查找和最小的K对数字(TopK)：pq + 贪心思想，类比acwing 146序列     
+pq自定义排序：https://blog.csdn.net/Strengthennn/article/details/119078911     
+自定义类型；lambda表达式(理解捕获 & 函数中的外部环境的变量的引用) 
+```C++
+auto cmp = [&](PII &a, PII &b) {
+   return nums1[a.first] + nums2[a.second] > nums1[b.first] + nums2[b.second];
+};   
+```   
 - 451 根据字符出现频率排序(Top K)   
 - 692 前K个高频单词:小顶堆(大顶key加负号)流过程,保证second的字典序排序，也可以自定义比较函数。 pair 设置 --> make_pair或者 直接构造 PIS t(-wordsecond, wordfirst);   
-
+- 703 数据流中的第 K 大元素：小顶堆
 
 # 0x20  搜索
 
