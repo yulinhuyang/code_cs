@@ -71,7 +71,9 @@ public:
 
 #####  Leetcode 729. 我的日程安排表 I
 
-set 平衡树low_bound，处理区间问题
+set 平衡树low_bound，处理区间Pair问题
+
+Use std::pair as a key in std::set in C++: https://www.techiedelight.com/use-std_pair-as-key-std_set-cpp/
 
 ```C++
 using PII = pair<int, int>;
