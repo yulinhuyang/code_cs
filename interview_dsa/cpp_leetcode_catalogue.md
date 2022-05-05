@@ -75,7 +75,9 @@ LeetCode究极班: https://www.acwing.com/activity/content/activity_person/conte
 - 374 猜数字大小
 - 287 寻找重复数（鸽巢原理+二分）
 - 378 有序矩阵中第K小的元素
-- 410 分割数组的最大值  
+- 410 分割数组的最大值 
+- 220 存在重复元素 III: 滑窗[x − t,x + t] + 有序集合二分(set 平衡树lower_bound) ; 桶排序
+- 729 我的日程安排表 I: set 平衡树low_bound，处理区间Pair问题
 
 ## 0x05 双指针与排序
 
