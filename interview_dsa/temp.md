@@ -350,6 +350,61 @@ public:
     }
 };
 ```
+##### leetcode 676 实现一个魔法字典
+
+Trie + dfs
+
+```C++
+struct Trie_Node {
+    bool is_end;
+    Trie_Node *son[26];
+
+    Trie_Node() {
+        is_end = false;
+        for (int i = 0; i < 26; i++) son[i] = nullptr;
+    }
+};
+
+class MagicDictionary {
+    Trie_Node *root = new Trie_Node();
+public:
+    MagicDictionary() {
+    }
+
+    void insert(string word) {
+        Trie_Node *p = root;
+        for (auto c:word) {
+            int u = c - 'a';
+            if (!p->son[u]) p->son[u] = new Trie_Node();
+            p = p->son[u];
+        }
+        p->is_end = true;
+    }
+
+    void buildDict(vector<string> dictionary) {
+        for (auto &word:dictionary) {
+            insert(word);
+        }
+    }
+
+    bool search(string searchWord) {
+        return dfs(searchWord, root, 0, 0);
+    }
+
+    bool dfs(string s, Trie_Node *p, int u, int c) {
+        if (c == 1 && u == s.size() && p->is_end) return true;
+        if (c > 1 || u == s.size()) return false;
+        for (int i = 0; i < 26; i++) {
+            if (!p->son[i]) continue;
+            if (dfs(s, p->son[i], u + 1, c + (s[u] - 'a' != i))) {
+                return true;
+            }
+        }
+        return false;
+    }
+};
+
+```
 
 
 875   567   438  528  648  676 820 677 210 444  785  542 752 547 269 329  547 684 839  695 
