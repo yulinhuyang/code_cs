@@ -179,47 +179,51 @@ https://leetcode-cn.com/problems/implement-trie-prefix-tree/solution/gong-shui-s
 
 https://www.acwing.com/solution/content/39521/
 
+son + cnt
 
 ```C++
 //TrieNode 模板
-class Trie {
-public:
-    struct Node {
-        bool is_end;
-        Node *son[26];
+struct TrieNode {
+    int cnt;//cnt以trie_node结尾的单词数量
+    TrieNode *son[26];
 
-        Node() {
-            is_end = false;
-            for (int i = 0; i < 26; i++) son[i] = nullptr;
-        }
-    } *root;
+    TrieNode() {
+        cnt = 0;
+        for (int i = 0; i < 26; i++) son[i] = nullptr;
+    }
+};
+
+//TrieNode 模板
+class Trie {
+    TrieNode *root;
+public:
 
     Trie() {
-        root = new Node();
+        root = new TrieNode();
     }
 
     void insert(string word) {
-        Node* p = root;
+        TrieNode* p = root;
         for (auto c : word) {
             int u = c - 'a';
-            if (!p->son[u]) p->son[u] = new Node();
+            if (!p->son[u]) p->son[u] = new TrieNode();
             p = p->son[u];
         }
-        p->is_end = true;
+        p->cnt++;
     }
 
     bool search(string word) {
-        Node* p = root;
+        TrieNode* p = root;
         for (auto c : word) {
             int u = c - 'a';
             if (!p->son[u]) return false;
             p = p->son[u];
         }
-        return p->is_end;
+        return p->cnt;
     }
 
     bool startsWith(string prefix) {
-        Node* p = root;
+        TrieNode* p = root;
         for (auto c : prefix) {
             int u = c - 'a';
             if (!p->son[u]) return false;
@@ -240,7 +244,7 @@ private:
     const static int N = 40000;
     int son[N][26]{0};
     int idx = 0;
-    bool is_end[N]{false};
+    int cnt[N]{0};
 public:
     Trie() {
     }
@@ -252,7 +256,7 @@ public:
             if (!son[p][u]) son[p][u] = ++idx;
             p = son[p][u];
         }
-        is_end[p] = true;
+        cnt[p]++;
     }
 
     bool search(string word) {
@@ -262,7 +266,7 @@ public:
             if (!son[p][u]) return false;
             p = son[p][u];
         }
-        return is_end[p];
+        return cnt[p];
     }
 
     bool startsWith(string prefix) {
@@ -355,27 +359,27 @@ public:
 Trie + dfs
 
 ```C++
-struct Trie_Node {
+struct TrieNode {
     int cnt;//cnt 表示trie_node是is_end的单词数量
-    Trie_Node *son[26];
+    TrieNode *son[26];
 
-    Trie_Node() {
+    TrieNode() {
         cnt = 0;
         for (int i = 0; i < 26; i++) son[i] = nullptr;
     }
 };
 
 class MagicDictionary {
-    Trie_Node *root = new Trie_Node();
+    TrieNode *root = new TrieNode();
 public:
     MagicDictionary() {
     }
 
     void insert(string word) {
-        Trie_Node *p = root;
+        TrieNode *p = root;
         for (auto c:word) {
             int u = c - 'a';
-            if (!p->son[u]) p->son[u] = new Trie_Node();
+            if (!p->son[u]) p->son[u] = new TrieNode();
             p = p->son[u];
         }
         p->cnt++;
@@ -391,7 +395,7 @@ public:
         return dfs(searchWord, root, 0, 0);
     }
 
-    bool dfs(string s, Trie_Node *p, int u, int c) {
+    bool dfs(string s, TrieNode *p, int u, int c) {
         if (c == 1 && u == s.size() && p->cnt) return true;
         if (c > 1 || u == s.size()) return false;
         for (int i = 0; i < 26; i++) {
@@ -408,6 +412,7 @@ public:
 
 ##### Leetcode 820 单词的压缩编码
 
+son + cnt  + len
 ```C++
 struct TrieNode {
     int cnt;
