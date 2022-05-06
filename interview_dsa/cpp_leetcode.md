@@ -4909,62 +4909,400 @@ public:
 
 ## 0x16  Trie树（字典树）
 
-##### 208. 实现 Trie (前缀树)
+##### Leetcode 208 实现 Trie (前缀树)
 
-Python，实例对象调用函数时，自动将对象本身传入函数的第一个变量是self，显示写出来
+【宫水三叶】一题双解 :「二维数组」&「TrieNode」:
+   
+https://leetcode-cn.com/problems/implement-trie-prefix-tree/solution/gong-shui-san-xie-yi-ti-shuang-jie-er-we-esm9/
 
-C++，系统也会将实例对象传入函数，对象的这个参数都是隐藏的，在函数内部才可以显性的使用它this
+https://www.acwing.com/solution/content/39521/
 
-类与对象的使用
+son + cnt
 
 ```C++
-class Trie {
-public:
-    struct Node {
-        bool is_end;
-        Node *son[26];
+//TrieNode 模板
+struct TrieNode {
+    int cnt;//cnt以trie_node结尾的单词数量
+    TrieNode *son[26];
 
-        Node() {
-            is_end = false;
-            for (int i = 0; i < 26; i++) son[i] = nullptr;
-        }
-    } *root;
+    TrieNode() {
+        cnt = 0;
+        for (int i = 0; i < 26; i++) son[i] = nullptr;
+    }
+};
+
+//TrieNode 模板
+class Trie {
+    TrieNode *root;
+public:
 
     Trie() {
-        root = new Node();
+        root = new TrieNode();
     }
 
     void insert(string word) {
-        auto node = root;
+        TrieNode* p = root;
         for (auto c : word) {
             int u = c - 'a';
-            if (!node->son[u]) node->son[u] = new Node();
-            node = node->son[u];
+            if (!p->son[u]) p->son[u] = new TrieNode();
+            p = p->son[u];
         }
-        node->is_end = true;
+        p->cnt++;
     }
 
     bool search(string word) {
-        auto node = root;
+        TrieNode* p = root;
         for (auto c : word) {
             int u = c - 'a';
-            if (!node->son[u]) return false;
-            node = node->son[u];
+            if (!p->son[u]) return false;
+            p = p->son[u];
         }
-        return node->is_end;
+        return p->cnt;
     }
 
     bool startsWith(string prefix) {
-        auto node = root;
+        TrieNode* p = root;
         for (auto c : prefix) {
             int u = c - 'a';
-            if (!node->son[u]) return false;
-            node = node->son[u];
+            if (!p->son[u]) return false;
+            p = p->son[u];
         }
         return true;
     }
 };
+
+```
+
+```C++
+//二维数组Tries模板
+// 0号点既是根节点，又是空节点
+// son[][]存储树中每个节点的子节点
+class Trie {
+private:
+    const static int N = 40000;
+    int son[N][26]{0};
+    int idx = 0;
+    int cnt[N]{0};
+public:
+    Trie() {
+    }
+
+    void insert(string word) {
+        int p = 0;
+        for (auto c : word) {
+            int u = c - 'a';
+            if (!son[p][u]) son[p][u] = ++idx;
+            p = son[p][u];
+        }
+        cnt[p]++;
+    }
+
+    bool search(string word) {
+        int p = 0;
+        for (auto c : word) {
+            int u = c - 'a';
+            if (!son[p][u]) return false;
+            p = son[p][u];
+        }
+        return cnt[p];
+    }
+
+    bool startsWith(string prefix) {
+        int p = 0;
+        for (auto c : prefix) {
+            int u = c - 'a';
+            if (!son[p][u]) return false;
+            p = son[p][u];
+        }
+        return true;
+    }
+};
+```
+##### Leetcode 648 单词替换
+
+TrieNode + Solution
+
+```C++
+struct TrieNode {
+    int cnt;//cnt以trie_node结尾的单词数量
+    TrieNode *son[26];
+
+    TrieNode() {
+        cnt = 0;
+        for (int i = 0; i < 26; i++) son[i] = nullptr;
+    }
+};
+
+class Trie {
+public:
+    TrieNode *root;
+
+    Trie() {
+        root = new TrieNode();
+    }
+
+    void insert(string word) {
+        TrieNode *p = root;
+        for (auto c : word) {
+            int u = c - 'a';
+            if (!p->son[u]) p->son[u] = new TrieNode();
+            p = p->son[u];
+        }
+        p->cnt++;
+    }
+
+    string searchRoot(string word) {
+        TrieNode *p = root;
+        string res;
+        for (auto c : word) {
+            int u = c - 'a';
+            res += c;
+            if (!p->son[u]) return word;
+            p = p->son[u];
+            if (p->cnt) return res;
+        }
+        return word;
+    }
+};
+
+class Solution {
+    vector<string> split(string s) {
+        vector<string> res;
+        stringstream ss(s);
+        string word;
+        while (getline(ss, word, ' ')) {
+            res.emplace_back(word);
+        }
+        return res;
+    }
+
+public:
+    string replaceWords(vector<string> &dictionary, string sentence) {
+        Trie *root = new Trie();
+        for (auto &word:dictionary) {
+            root->insert(word);
+        }
+        string res = "";
+        auto senArray = split(sentence);
+        for (auto sen:senArray) {
+            res += root->searchRoot(sen) + ' ';
+        }
+        res.pop_back();
+        return res;
+    }
+};
+```
+##### leetcode 676 实现一个魔法字典
+
+Trie + dfs
+
+```C++
+struct TrieNode {
+    int cnt;//cnt 表示trie_node是is_end的单词数量
+    TrieNode *son[26];
+
+    TrieNode() {
+        cnt = 0;
+        for (int i = 0; i < 26; i++) son[i] = nullptr;
+    }
+};
+
+class MagicDictionary {
+    TrieNode *root = new TrieNode();
+public:
+    MagicDictionary() {
+    }
+
+    void insert(string word) {
+        TrieNode *p = root;
+        for (auto c:word) {
+            int u = c - 'a';
+            if (!p->son[u]) p->son[u] = new TrieNode();
+            p = p->son[u];
+        }
+        p->cnt++;
+    }
+
+    void buildDict(vector<string> dictionary) {
+        for (auto &word:dictionary) {
+            insert(word);
+        }
+    }
+
+    bool search(string searchWord) {
+        return dfs(searchWord, root, 0, 0);
+    }
+
+    bool dfs(string s, TrieNode *p, int u, int c) {
+        if (c == 1 && u == s.size() && p->cnt) return true;
+        if (c > 1 || u == s.size()) return false;
+        for (int i = 0; i < 26; i++) {
+            if (!p->son[i]) continue;
+            if (dfs(s, p->son[i], u + 1, c + (s[u] - 'a' != i))) {
+                return true;
+            }
+        }
+        return false;
+    }
+};
+
+```
+
+##### Leetcode 820 单词的压缩编码
+
+son + cnt  + len
+```C++
+struct TrieNode {
+    int cnt;
+    TrieNode *son[26];
+
+    TrieNode() {
+        cnt = 0;
+        for (int i = 0; i < 26; i++) son[i] = nullptr;
+    }
+};
+
+class Solution {
+    TrieNode * root = new TrieNode();
+    unordered_map<TrieNode*,int> len;//类似cnt
+
+    void insert(string word) {
+        auto p = root;
+        int i = word.size() - 1;
+        for (; i >= 0; i--) {
+            int u = word[i] - 'a';
+            if (!p->son[u]) p->son[u] = new TrieNode();
+            p->cnt++;
+            p = p->son[u];
+        }
+        len[p] = word.size() - i;
+    }
+public:
+    int minimumLengthEncoding(vector<string>& words) {
+        for(auto word:words){
+            insert(word);
+        }
+
+        int ans = 0;
+        for (auto[k, v] :len) {
+            if(!k->cnt){
+                ans += len[k];
+            }
+        }
+        return ans;
+    }
+};
+
+```
+	
+##### Leetcode 677 键值映射
+
+map + TrieNode + son + cnt
+
+```C++
+struct TrieNode
+{
+    TrieNode* son[26];
+    int cnt;
+    TrieNode(){
+        for(int i = 0;i < 26;i++){
+            son[i] = nullptr;
+        }
+        cnt = 0;
+    }
+};
+
+class MapSum {
+    TrieNode* root;
+public:
+    MapSum() {
+        root = new TrieNode();
+    }
+    
+    void insert(string key, int val) {
+        auto p = root;
+        for (auto c : key){
+            int u = c - 'a';
+            if(!p->son[u]) p->son[u] = new TrieNode();
+            p->cnt += val;
+            p = p->son[u];
+        }
+        p->cnt += val;
+    }
+    
+    int sum(string prefix) {
+        auto p = root;
+        int res = 0;
+        for (auto c : prefix){
+            int u = c - 'a';
+            if(!p->son[u]) p->son[u] = new TrieNode();
+            p = p->son[u];
+        }
+        res += p->cnt;
+        return res;
+    }
+};
+```
+
+##### Leetcode 421  数组中两个数的最大异或值
+
+TrieNode + son + cnt
+
+```C++
+struct TrieNode
+{
+    TrieNode* son[2];
+    int cnt;
+    TrieNode(){
+        for(int i = 0;i < 2;i++){
+            son[i] = nullptr;
+        }
+        cnt = 0;
+    }
+};
+
+class Solution {
+    TrieNode* root = new TrieNode();
+public:
+    void insert(int num){
+        auto p = root;
+        for(int i = 30;i >= 0;i--){
+            int u = num >> i & 1;
+            if(!p->son[u]) p->son[u] = new TrieNode();
+            p = p->son[u];
+        }
+        p->cnt++;
+    }
+
+    int XOR(int num){
+        int res = 0;
+        auto p = root;
+        for(int i = 30;i >= 0;i--){
+            int u = num >> i & 1;
+            if(p->son[1-u]) {
+                p = p->son[1-u];
+                res = res * 2 + 1-u;
+            }
+            else {
+                p = p->son[u];
+                res = res * 2 + u;
+            }
+        }
+        return res ^ num;
+    }
+
+    int findMaximumXOR(vector<int>& nums) {
+        int ans = 0;
+        insert(nums[0]);
+        for(auto &num:nums){
+            ans = max(ans,XOR(num));
+            insert(num);
+        }
+        return ans;
+    }
+};
 ```	
+	
 ## 0x17  二叉堆
 
 ### ToP k问题
