@@ -356,11 +356,11 @@ Trie + dfs
 
 ```C++
 struct Trie_Node {
-    bool is_end;
+    int cnt;//cnt 表示trie_node是is_end的单词数量
     Trie_Node *son[26];
 
     Trie_Node() {
-        is_end = false;
+        cnt = 0;
         for (int i = 0; i < 26; i++) son[i] = nullptr;
     }
 };
@@ -378,7 +378,7 @@ public:
             if (!p->son[u]) p->son[u] = new Trie_Node();
             p = p->son[u];
         }
-        p->is_end = true;
+        p->cnt++;
     }
 
     void buildDict(vector<string> dictionary) {
@@ -392,7 +392,7 @@ public:
     }
 
     bool dfs(string s, Trie_Node *p, int u, int c) {
-        if (c == 1 && u == s.size() && p->is_end) return true;
+        if (c == 1 && u == s.size() && p->cnt) return true;
         if (c > 1 || u == s.size()) return false;
         for (int i = 0; i < 26; i++) {
             if (!p->son[i]) continue;
