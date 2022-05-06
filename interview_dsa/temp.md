@@ -406,5 +406,50 @@ public:
 
 ```
 
+##### Leetcode 820 单词的压缩编码
+
+```C++
+struct Trie_Node {
+    int cnt;
+    Trie_Node *son[26];
+
+    Trie_Node() {
+        cnt = 0;
+        for (int i = 0; i < 26; i++) son[i] = nullptr;
+    }
+};
+
+class Solution {
+    Trie_Node * root = new Trie_Node();
+    unordered_map<Trie_Node*,int> len;//类似cnt
+
+    void insert(string word) {
+        auto p = root;
+        int i = word.size() - 1;
+        for (; i >= 0; i--) {
+            int u = word[i] - 'a';
+            if (!p->son[u]) p->son[u] = new Trie_Node();
+            p->cnt++;
+            p = p->son[u];
+        }
+        len[p] = word.size() - i;
+    }
+public:
+    int minimumLengthEncoding(vector<string>& words) {
+        for(auto word:words){
+            insert(word);
+        }
+
+        int ans = 0;
+        for (auto[k, v] :len) {
+            if(!k->cnt){
+                ans += len[k];
+            }
+        }
+        return ans;
+    }
+};
+
+```
 
 875   567   438  528  648  676 820 677 210 444  785  542 752 547 269 329  547 684 839  695 
