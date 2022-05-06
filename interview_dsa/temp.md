@@ -409,26 +409,26 @@ public:
 ##### Leetcode 820 单词的压缩编码
 
 ```C++
-struct Trie_Node {
+struct TrieNode {
     int cnt;
-    Trie_Node *son[26];
+    TrieNode *son[26];
 
-    Trie_Node() {
+    TrieNode() {
         cnt = 0;
         for (int i = 0; i < 26; i++) son[i] = nullptr;
     }
 };
 
 class Solution {
-    Trie_Node * root = new Trie_Node();
-    unordered_map<Trie_Node*,int> len;//类似cnt
+    TrieNode * root = new TrieNode();
+    unordered_map<TrieNode*,int> len;//类似cnt
 
     void insert(string word) {
         auto p = root;
         int i = word.size() - 1;
         for (; i >= 0; i--) {
             int u = word[i] - 'a';
-            if (!p->son[u]) p->son[u] = new Trie_Node();
+            if (!p->son[u]) p->son[u] = new TrieNode();
             p->cnt++;
             p = p->son[u];
         }
