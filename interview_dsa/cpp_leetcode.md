@@ -5411,6 +5411,45 @@ public:
 };
 ```
 
+
+##### LeetCode 373  查找和最小的K对数字
+
+pq + 贪心思想，类比acwing 146序列
+
+pq自定义排序：https://blog.csdn.net/Strengthennn/article/details/119078911
+
+自定义类型；lambda表达式(理解捕获 & 函数中的外部环境的变量的引用)
+
+```C++
+using PII = pair<int, int>;
+
+class Solution {
+public:
+    vector<vector<int>> kSmallestPairs(vector<int> &nums1, vector<int> &nums2, int k) {
+        auto cmp = [&](PII &a, PII &b) {
+            return nums1[a.first] + nums2[a.second] > nums1[b.first] + nums2[b.second];
+        };
+        vector<vector<int>> res;
+        priority_queue<PII, vector<PII>, decltype(cmp)> heap(cmp);
+        int m = nums1.size(), n = nums2.size();
+        //a0 + bi
+        for (int i = 0; i < min(n, k); i++) {
+            heap.emplace(0, i);
+        }
+        while (k && !heap.empty()) {
+            auto[v1, v2] = heap.top();
+            heap.pop();
+            res.push_back({nums1[v1], nums2[v2]});
+            k--;
+            if (v1 + 1 < m) {
+                //ai + bi
+                heap.emplace(v1 + 1, v2);
+            }
+        }
+        return res;
+    }
+};
+```
 ##### 692. 前K个高频单词
 
 ```C++
@@ -5441,6 +5480,32 @@ public:
 
 ```
 
+#####  Leetcode 703 数据流中的第 K 大元素
+
+TOP K问题 优先队列
+
+```C++
+class KthLargest {
+    priority_queue<int, vector<int>, greater<int>> heap;
+    int size = 0;
+public:
+    KthLargest(int k, vector<int> &nums) {
+        size = k;
+        for (auto &num:nums) {
+            add(num);
+        }
+    }
+
+    int add(int val) {
+        heap.emplace(val);
+        if (heap.size() > size) heap.pop();
+        return heap.top();
+    }
+};
+
+```
+
+	
 # 0x20  搜索
 
 树遍历、DFS、BFS、动态规划
