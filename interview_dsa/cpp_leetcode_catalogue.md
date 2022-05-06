@@ -335,11 +335,18 @@ long long使用：最终结果是int,中间可能是long long。
 
 ## 0x16  Trie树（字典树）
 文件目录问题
-- 208 实现 Trie (前缀树)：   
+- 208 实现 Trie (前缀树)：二维数组模板、TrieNode模板     
+ 【宫水三叶】一题双解 :「二维数组」&「TrieNode」:          
+https://leetcode-cn.com/problems/implement-trie-prefix-tree/solution/gong-shui-san-xie-yi-ti-shuang-jie-er-we-esm9/          
+https://www.acwing.com/solution/content/39521/                                                                         
 - 211 添加与搜索单词-数据结构设计
 - 212 单词搜索Ⅱ：DFS+Trie优化 
-- 421 数组中两个数的最大异或值：
-
+- 421 数组中两个数的最大异或值：TrieNode + son + cnt 
+- 648 单词替换:  TrieNode + 字符串                                                                  
+- 676 实现一个魔法字典:Trie + dfs                                                                        
+- 677 键值映射:map + TrieNode + son + cnt        
+- 820 单词的压缩编码:son + cnt + len    
+                                                                    
 ## 0x17  二叉堆
 
 ### ToP k问题
