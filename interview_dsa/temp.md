@@ -276,6 +276,80 @@ public:
     }
 };
 ```
+##### Leetcode 648 单词替换
+
+TrieNode + Solution
+
+```C++
+struct Node {
+    bool is_end;
+    Node *son[26];
+
+    Node() {
+        is_end = false;
+        for (int i = 0; i < 26; i++) son[i] = nullptr;
+    }
+};
+
+class Trie {
+public:
+    Node *root;
+
+    Trie() {
+        root = new Node();
+    }
+
+    void insert(string word) {
+        Node *p = root;
+        for (auto c : word) {
+            int u = c - 'a';
+            if (!p->son[u]) p->son[u] = new Node();
+            p = p->son[u];
+        }
+        p->is_end = true;
+    }
+
+    string searchRoot(string word) {
+        Node *p = root;
+        string res;
+        for (auto c : word) {
+            int u = c - 'a';
+            res += c;
+            if (!p->son[u]) return word;
+            p = p->son[u];
+            if (p->is_end) return res;
+        }
+        return word;
+    }
+};
+
+class Solution {
+    vector<string> split(string s) {
+        vector<string> res;
+        stringstream ss(s);
+        string word;
+        while (getline(ss, word, ' ')) {
+            res.emplace_back(word);
+        }
+        return res;
+    }
+
+public:
+    string replaceWords(vector<string> &dictionary, string sentence) {
+        Trie *root = new Trie();
+        for (auto &word:dictionary) {
+            root->insert(word);
+        }
+        string res = "";
+        auto senArray = split(sentence);
+        for (auto sen:senArray) {
+            res += root->searchRoot(sen) + ' ';
+        }
+        res.pop_back();
+        return res;
+    }
+};
+```
 
 
 875   567   438  528  648  676 820 677 210 444  785  542 752 547 269 329  547 684 839  695 
