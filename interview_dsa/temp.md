@@ -171,7 +171,111 @@ public:
     }
 };
 ```
+##### 208 实现 Trie (前缀树)
 
+【宫水三叶】一题双解 :「二维数组」&「TrieNode」:
+   
+https://leetcode-cn.com/problems/implement-trie-prefix-tree/solution/gong-shui-san-xie-yi-ti-shuang-jie-er-we-esm9/
+
+https://www.acwing.com/solution/content/39521/
+
+
+```C++
+//TrieNode 模板
+class Trie {
+public:
+    struct Node {
+        bool is_end;
+        Node *son[26];
+
+        Node() {
+            is_end = false;
+            for (int i = 0; i < 26; i++) son[i] = nullptr;
+        }
+    } *root;
+
+    Trie() {
+        root = new Node();
+    }
+
+    void insert(string word) {
+        Node* p = root;
+        for (auto c : word) {
+            int u = c - 'a';
+            if (!p->son[u]) p->son[u] = new Node();
+            p = p->son[u];
+        }
+        p->is_end = true;
+    }
+
+    bool search(string word) {
+        Node* p = root;
+        for (auto c : word) {
+            int u = c - 'a';
+            if (!p->son[u]) return false;
+            p = p->son[u];
+        }
+        return p->is_end;
+    }
+
+    bool startsWith(string prefix) {
+        Node* p = root;
+        for (auto c : prefix) {
+            int u = c - 'a';
+            if (!p->son[u]) return false;
+            p = p->son[u];
+        }
+        return true;
+    }
+};
+
+```
+
+```C++
+//二维数组Tries模板
+// 0号点既是根节点，又是空节点
+// son[][]存储树中每个节点的子节点
+class Trie {
+private:
+    const static int N = 40000;
+    int son[N][26]{0};
+    int idx = 0;
+    bool is_end[N]{false};
+public:
+    Trie() {
+    }
+
+    void insert(string word) {
+        int p = 0;
+        for (auto c : word) {
+            int u = c - 'a';
+            if (!son[p][u]) son[p][u] = ++idx;
+            p = son[p][u];
+        }
+        is_end[p] = true;
+    }
+
+    bool search(string word) {
+        int p = 0;
+        for (auto c : word) {
+            int u = c - 'a';
+            if (!son[p][u]) return false;
+            p = son[p][u];
+        }
+        return is_end[p];
+    }
+
+    bool startsWith(string prefix) {
+        int p = 0;
+        for (auto c : prefix) {
+            int u = c - 'a';
+            if (!son[p][u]) return false;
+            p = son[p][u];
+        }
+        return true;
+    }
+};
+```
 
 
 875   567   438  528  648  676 820 677 210 444  785  542 752 547 269 329  547 684 839  695 
