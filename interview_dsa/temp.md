@@ -281,43 +281,43 @@ public:
 TrieNode + Solution
 
 ```C++
-struct Node {
-    bool is_end;
-    Node *son[26];
+struct TrieNode {
+    int cnt;//cnt以trie_node结尾的单词数量
+    TrieNode *son[26];
 
-    Node() {
-        is_end = false;
+    TrieNode() {
+        cnt = 0;
         for (int i = 0; i < 26; i++) son[i] = nullptr;
     }
 };
 
 class Trie {
 public:
-    Node *root;
+    TrieNode *root;
 
     Trie() {
-        root = new Node();
+        root = new TrieNode();
     }
 
     void insert(string word) {
-        Node *p = root;
+        TrieNode *p = root;
         for (auto c : word) {
             int u = c - 'a';
-            if (!p->son[u]) p->son[u] = new Node();
+            if (!p->son[u]) p->son[u] = new TrieNode();
             p = p->son[u];
         }
-        p->is_end = true;
+        p->cnt++;
     }
 
     string searchRoot(string word) {
-        Node *p = root;
+        TrieNode *p = root;
         string res;
         for (auto c : word) {
             int u = c - 'a';
             res += c;
             if (!p->son[u]) return word;
             p = p->son[u];
-            if (p->is_end) return res;
+            if (p->cnt) return res;
         }
         return word;
     }
