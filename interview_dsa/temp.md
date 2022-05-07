@@ -101,4 +101,31 @@ public:
 
 ```
 
+##### LeetCode 56 合并区间
+
+区间合并模板题
+
+```C++
+class Solution {
+public:
+    vector<vector<int>> merge(vector<vector<int>> &intervals) {
+        vector<vector<int>> res;
+        //起点升序
+        sort(intervals.begin(),intervals.end());
+        int l = intervals[0][0], r = intervals[0][1];
+        for (int i = 1; i < intervals.size(); i++) {
+            if (r < intervals[i][0]) {
+                res.push_back({l, r});
+                l = intervals[i][0];
+                r = intervals[i][1];
+            } else {
+                r = max(r, intervals[i][1]);
+            }
+        }
+        res.push_back({l, r});
+        return res;
+    }
+};
+```
+
  567   438  528  648  676 820 677 210 444  785  542 752 547 269 329  547 684 839  695 
