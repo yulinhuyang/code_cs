@@ -45,6 +45,10 @@ https://leetcode-cn.com/problems/single-element-in-a-sorted-array/solution/gong-
 
 使用邻接表（链式向前星）存无向图时，直接访问「当前边 e」所对应的「反向边 e′」。这也是为什么在「链式向前星」中我们只需要使用「单链表」并设定 idx 从0 开始进行存图即可：能够满足遍历所有出边，同时如果有访问相应反向边的需求，只需要通过 e[i^1] 访问。
 
+链式前向星：         
+最通俗易懂的讲解：https://blog.csdn.net/sugarbliss/article/details/86495945      
+https://www.bilibili.com/read/cv13449207     
+
 ```C++
 class Solution {
 public:
