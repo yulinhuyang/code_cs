@@ -304,5 +304,37 @@ public:
 };
 ```
 
+##### Leetcode 873 最长的斐波那契子序列的长度
+
+```C++
+class Solution {
+public:
+    int lenLongestFibSubseq(vector<int> &arr) {
+        int m = arr.size();
+        unordered_map<int, int> hash;
+        for (int i = 0; i < m; i++) {
+            hash[arr[i]] = i;
+        }
+
+        vector<vector<int>> f(m, vector<int>(m, 0));
+        int res = 0;
+        for (int i = 0; i < m; i++) {
+            for (int j = 0; j < i; j++) {
+                f[i][j] = 2;
+                int x = arr[i] - arr[j];
+                if (x < arr[j] && hash.count(x)) {
+                    int k = hash[x];
+                    //A[i] + A[j] == A[k] 时，两结点 (i, j) 和 (j, k) 才是连通的
+                    f[i][j] = max(f[i][j], f[j][k] + 1);
+                }
+                res = max(res, f[i][j]);
+            }
+        }
+        return res >= 3 ? res : 0;
+    }
+};
+
+```
+
 
  567   438  528  648  676 820 677 210 444  785  542 752 547 269 329  547 684 839  695 
