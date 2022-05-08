@@ -128,4 +128,61 @@ public:
 };
 ```
 
+
+##### Leetcode 1122 数组的相对排序
+
+自定义排序，返回true是升序，false是降序,T升F降。
+
+```C++
+class Solution {
+public:
+    vector<int> relativeSortArray(vector<int> &arr1, vector<int> &arr2) {
+        //自定义排序
+        unordered_map<int, int> hash;
+        for (int i = 0; i < arr2.size(); i++) {
+            hash[arr2[i]] = i;
+        }
+        sort(arr1.begin(), arr1.end(), [&](int a, int b) {
+            if (hash.count(a)) {
+                return hash.count(b) ? hash[a] < hash[b] : true;
+            } else {
+                return hash.count(b) ? false : a < b;
+            }
+        });
+
+        return arr1;
+    }
+};
+
+```
+
+计数排序
+
+```C++
+class Solution {
+public:
+    vector<int> relativeSortArray(vector<int> &arr1, vector<int> &arr2) {
+        //CountingSort
+        int upper = *max_element(arr1.begin(), arr1.end());
+        vector<int> counting(upper + 1, 0);
+        vector<int> res;
+        for (auto &num:arr1) {
+            counting[num]++;
+        }
+        for (auto &num:arr2) {
+            for (int i = 0; i < counting[num]; i++) {
+                res.emplace_back(num);
+            }
+            counting[num] = 0;
+        }
+        for (int i = 1; i < upper + 1; i++) {
+            for (int j = 0; j < counting[i]; j++) {
+                res.emplace_back(i);
+            }
+        }
+        return res;
+    }
+};
+```
+
  567   438  528  648  676 820 677 210 444  785  542 752 547 269 329  547 684 839  695 
