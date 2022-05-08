@@ -233,5 +233,23 @@ public:
 };
 ```
 
+##### Leetcode 746 使用最小花费爬楼梯
+
+```C++
+class Solution {
+public:
+    int minCostClimbingStairs(vector<int> &cost) {
+        int m = cost.size();
+        //楼顶是下标n
+        vector<int> f(m + 1, 0);
+        f[0] = 0, f[1] = 0;
+        for (int i = 2; i < m + 1; i++) {
+            f[i] = min(f[i - 1] + cost[i - 1], f[i - 2] + cost[i - 2]);
+        }
+        return f[m];
+    }
+};
+```
+
 
  567   438  528  648  676 820 677 210 444  785  542 752 547 269 329  547 684 839  695 
