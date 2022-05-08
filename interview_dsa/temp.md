@@ -212,5 +212,26 @@ public:
 };
 ```
 
+##### Leetcode 22 括号生成
+
+```C++
+class Solution {
+    vector<string> ans;
+public:
+    vector<string> generateParenthesis(int n) {
+        string path;
+        dfs(path,0, 0, n);
+        return ans;
+    }
+
+    void dfs(string path, int lc, int rc, int n) {
+        //string 回溯传值不用pop_back()
+        if (lc == n && rc == n) ans.emplace_back(path);
+        if (lc < n) dfs(path + '(', lc + 1, rc, n);
+        if (rc < lc && rc < n) dfs(path + ')', lc, rc + 1, n);
+    }
+};
+```
+
 
  567   438  528  648  676 820 677 210 444  785  542 752 547 269 329  547 684 839  695 
