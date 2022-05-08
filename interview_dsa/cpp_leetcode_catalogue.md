@@ -64,9 +64,14 @@ LeetCode究极班: https://www.acwing.com/activity/content/activity_person/conte
 - 162 寻找峰值 
 - 240 搜索二维矩阵 II: %m
 - 274 H指数（排序）
-- 540 有序数组中的单一元素（trick：x^1的奇偶性）
+- 540 有序数组中的单一元素 ：二分 + x^1的奇偶性     
+使用邻接表（链式向前星）存无向图时，直接访问「当前边 e」所对应的「反向边 e′」。这也是为什么在「链式向前星」中我们只需要使用「单链表」并设定 idx 从0 开始进行存图即可：能够满足遍历所有出边，同时如果有访问相应反向边的需求，只需要通过 e[i^1] 访问。     
+【宫水三叶】二段性分析运用题:     
+https://leetcode-cn.com/problems/single-element-in-a-sorted-array/solution/gong-shui-san-xie-er-duan-xing-fen-xi-yu-17nv/     
 - 704 二分查找（二分模板题）
 - 475 供暖器:判定转二分
+- 852 山脉数组的峰顶索引：二段性、单调性，左侧递增，寻找右边界，右侧递增，寻找左边界
+- 875 爱吃香蕉的珂珂：二分求解转判定，向上取整：(a+b-1)/b, ceil(a/b)
 
 ### 值域二分
 
