@@ -185,4 +185,32 @@ public:
 };
 ```
 
+##### Leetcode 215  数组中的第K个最大元素
+
+快选模板
+
+```C++
+class Solution {
+public:
+    int findKthLargest(vector<int> &nums, int k) {
+        return quick_select(nums, 0, nums.size() - 1, nums.size() - k + 1);
+    }
+
+    //选第k小的数
+    int quick_select(vector<int> &nums, int l, int r, int k) {
+        if (l >= r) return nums[l];
+        int i = l - 1, j = r + 1, x = nums[i + j >> 1];
+        while (i < j) {
+            do { j--; } while (nums[j] > x);
+            do { i++; } while (nums[i] < x);
+            if (i < j) swap(nums[i], nums[j]);
+        }
+
+        if (j - l + 1 >= k) return quick_select(nums, l, j, k);
+        else return quick_select(nums, j + 1, r, k - (j - l + 1));
+    }
+};
+```
+
+
  567   438  528  648  676 820 677 210 444  785  542 752 547 269 329  547 684 839  695 
