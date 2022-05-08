@@ -251,5 +251,34 @@ public:
 };
 ```
 
+##### Leetcode 213 打家劫舍 II
+
+```C++
+class Solution {
+public:
+    int rob(vector<int> &nums) {
+        int m = nums.size();
+        if (!m) return 0;
+        if (m == 1) return nums[0];
+        //f抢,j不抢
+        vector<int> f(m + 1, 0);
+        vector<int> g(m + 1, 0);
+        //不抢第一间
+        for (int i = 2; i < m + 1; i++) {
+            f[i] = g[i - 1] + nums[i - 1];
+            g[i] = max(f[i - 1], g[i - 1]);
+        }
+        int ans = max(f[m], g[m]);
+        //抢第一间
+        f[1] = nums[0];
+        g[1] = INT_MIN;
+        for (int i = 2; i < m + 1; i++) {
+            f[i] = g[i - 1] + nums[i - 1];
+            g[i] = max(f[i - 1], g[i - 1]);
+        }
+        return max(ans, g[m]);
+    }
+};
+```
 
  567   438  528  648  676 820 677 210 444  785  542 752 547 269 329  547 684 839  695 
