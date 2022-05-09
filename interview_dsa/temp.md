@@ -25,6 +25,63 @@ public:
 };
 ```
 
+##### 416. 分割等和子集
+
+0-1背包模板题
+
+	for 物品：   
+		for 体积：  
+			(for)决策：
+```C++
+//二维数组模板
+class Solution {
+public:
+    bool canPartition(vector<int> &nums) {
+        int sum = 0;
+        int m = nums.size();
+        for (auto &x:nums) sum += x;
+        if (sum & 1) return false;
+        sum /= 2;
+        vector<vector<int>> f(m + 1, vector<int>(sum + 1, 0));
+        for (int i = 0; i < m + 1; i++) {
+            f[i][0] = true;
+        }
+
+        for (int i = 1; i < m + 1; i++) {
+            for (int j = 1; j < sum + 1; j++) {
+                f[i][j] = f[i - 1][j];
+                if (j >= nums[i - 1]) {
+                    f[i][j] |= f[i - 1][j - nums[i - 1]];
+                }
+            }
+        }
+        return f[m][sum];
+    }
+};
+```
+
+```C++
+//一维简化，j逆序循环
+class Solution {
+public:
+    bool canPartition(vector<int> &nums) {
+        int sum = 0;
+        int m = nums.size();
+        for (auto &x:nums) sum += x;
+        if (sum & 1) return false;
+        sum /= 2;
+        vector<int> f(sum + 1, 0);
+        f[0] = 1;
+        for (int i = 0; i < m; i++) {
+            for (int j = sum; j >= nums[i]; j--) {
+                f[j] |= f[j - nums[i]];
+            }
+        }
+        return f[sum];
+    }
+};
+```
+
 
 AcWing 1064. 小国王【线性状压DP+滚动数组优化+目标状态优化】:https://www.acwing.com/solution/content/56348/
 
