@@ -25,7 +25,7 @@ public:
 };
 ```
 
-##### 416. 分割等和子集
+##### Leetcode 416 分割等和子集
 
 0-1背包模板题
 
@@ -48,7 +48,7 @@ public:
         }
 
         for (int i = 1; i < m + 1; i++) {
-            for (int j = 1; j < sum + 1; j++) {
+            for (int j = 1; j < sum + 1; j++) { //j从0或1开始都可以，但不能从nums[i-1]开始
                 f[i][j] = f[i - 1][j];
                 if (j >= nums[i - 1]) {
                     f[i][j] |= f[i - 1][j - nums[i - 1]];
@@ -80,6 +80,55 @@ public:
         return f[sum];
     }
 };
+```
+
+##### Leetcode 494  目标和
+```C++
+//0-1背包  二维数组模板
+class Solution {
+public:
+    int findTargetSumWays(vector<int> &nums, int target) {
+        int sum = 0;
+        for (auto &num:nums) sum += num;
+        int diff = sum - target;
+        if (diff < 0 || diff & 1) return false;
+        int m = nums.size();
+        diff /= 2;
+        vector<vector<int>> f(m + 1, vector<int>(diff + 1));
+        f[0][0] = 1;
+        for (int i = 1; i < m + 1; i++) {
+            for (int j = 0; j < diff + 1; j++) {//j从0或1开始都可以，但不能从nums[i-1]开始
+                f[i][j] = f[i - 1][j];
+                if (j >= nums[i - 1]) f[i][j] += f[i - 1][j - nums[i - 1]];
+            }
+        }
+        return f[m][diff];
+    }
+};
+```
+
+```C++
+//0-1背包  一维模板
+class Solution {
+public:
+    int findTargetSumWays(vector<int> &nums, int target) {
+        int sum = 0;
+        for (auto &num:nums) sum += num;
+        int diff = sum - target;
+        if (diff < 0 || diff & 1) return false;
+        int m = nums.size();
+        diff /= 2;
+        vector<int> f(diff + 1, 0);
+        f[0] = 1;
+        for (int i = 1; i < m + 1; i++) {
+            for (int j = diff; j >= nums[i - 1]; j--) {
+                f[j] = f[j] + f[j - nums[i - 1]];
+            }
+        }
+        return f[diff];
+    }
+};
+
 ```
 
 
