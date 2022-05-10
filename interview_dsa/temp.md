@@ -130,7 +130,7 @@ public:
 };
 
 ```
-##### 377  组合总和 Ⅳ
+##### Leetcode 377  组合总和 Ⅳ
 
 AcWing 3. 完全背包问题:https://www.acwing.com/solution/content/5345/     
 【宫水三叶】本题与完全背包的区别: https://leetcode.cn/problems/combination-sum-iv/solution/gong-shui-san-xie-yu-wan-quan-bei-bao-we-x0kn/     
