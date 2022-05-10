@@ -2113,9 +2113,10 @@ void extend(char c)
 
 #### 背包DP
 
-0-1背包
+0-1 背包:  
+
 ```C++
-//二维
+//二循环二维
 for (int i = 1; i <= n; i++) {
     for (int j = 1; j <= m; j++) {
         // 当前背包容量装不进第i个物品，则价值等于前i-1个物品
@@ -2128,7 +2129,7 @@ for (int i = 1; i <= n; i++) {
         }
     }
 }
-//一维优化
+//二循环一维优化
 for (int i = 1; i <= n; i++) {
     for (int j = m; j >= v[i]; j--) {
         f[j] = max(f[j], f[j - v[i]] + w[i]);
@@ -2136,16 +2137,28 @@ for (int i = 1; i <= n; i++) {
 }
 ```
 
-完全背包
+完全背包： 
+
+完全背包优化：三循环二维数组--> 二循环二维数组--> 二循环一维数组
+  
 ```C++
+//三循环二维数组
 for (int i = 1; i <= n; i++) {
     for (int j = 0; j <= m; j++) {
         for (int k = 0; k * v[i] <= j; k++) {
-
             f[i][j] = max(f[i][j], f[i - 1][j - k * v[i]] + k * w[i]);
         }
     }
 }
+//二循环二维数组
+for (int i = 1; i <= n; i++) {
+    for (int j = 0; j <= m; j++) {
+        f[i][j] = f[i - 1][j]; //不选
+        if (j - v[i] >= 0)
+            f[i][j] = max(f[i][j], f[i][j - v[i]] + w[i]);
+    }
+}
+
 //一维优化
 for (int i = 1; i <= n; i++) {
     for (int j = v[i]; j <= m; j++) {
@@ -2155,23 +2168,110 @@ for (int i = 1; i <= n; i++) {
 }
 ```
 
-多重背包
+分组背包：
+
 ```C++
-for (int i = 1; i <= n; i ++ )
-    for (int j = 0; j <= m; j ++ )
-        for (int k = 0; k <= s[i] && k * v[i] <= j; k ++ )
-            f[i][j] = max(f[i][j], f[i - 1][j - v[i] * k] + w[i] * k);
+f[N][N]; //只从前i组物品中选，当前体积小于等于j的最大值,每个组只能选一个。
+//三循环二维,
+for (int i = 1; i <= n; i++) {
+	for (int j = 0; j <= m; j++) {
+		f[i][j] = f[i - 1][j];  //不选
+		for (int k = 0; k < s[i]; k++) {  //
+			if (j >= v[i][k]) f[i][j] = max(f[i][j], f[i - 1][j - v[i][k]] + w[i][k]);
+		}
+	}
+}
 ```
 
-分组背包
+多重背包:   
+ 
+第i个物品选0~s[i]个
+
 ```C++
+//三重循环二维
+// f[i][j]表示从前i个物品中选,总体积不超过j的方案的最大价值
+// 集合划分:第i个物品选0~s[i]个
 for (int i = 1; i <= n; i ++ )
+    for (int j = 0; j <= m; j ++ )
+        for (int k = 0; k <= s[i] && k * v[i] <= j; k ++ ) //比完全背包的三重循环二维数组版本多了k <= s[i]的限制
+            f[i][j] = max(f[i][j], f[i - 1][j - v[i] * k] + w[i] * k);
+ 
+
+//三循环一维
+for (int i = 1; i <= n; i ++ ) //循环各组
     for (int j = m; j >= 0; j -- )
-        for (int k = 0; k < s[i]; k ++ )
+        for (int k = 0; k < s[i]; k ++ ) //组内循环
             if (v[i][k] <= j)
                 f[j] = max(f[j], f[j - v[i][k]] + w[i][k]);
 
 ```
+
+混合背包：01背包(1类物品用1次) + 完全背包(2类物品无限用) + 多重背包(3类物品用si次)
+```C++
+for (int i = 0; i < n; i++) {
+	if (!s[i]) {
+		for (int j = v[i]; j <= m; j++) //完全背包
+			f[j] = max(f[j], f[j - v[i]] + w[i]);
+	} else {
+		if (s[i] == -1) s[i] = 1;//0-1背包
+		for (int k = 1; k <= s[i]; k *= 2) {
+			for (int j = m; j >= k * v[i]; j--)
+				f[j] = max(f[j], f[j - k * v[i]] + k * w[i]);
+			s[i] -= k;
+		}
+		if (s[i])//多重背包
+		{
+			for (int j = m; j >= s[i] * v[i]; j--)
+				f[j] = max(f[j], f[j - s[i] * v[i]] + s[i] * w[i]);
+		}
+	}
+}
+```
+
+二维费用背包
+
+```C++
+//f[i][j][k] 表示考虑前i个物品，且容量不超过j，总重量不超过k的集合下能获得的最大价值
+//f[j][k],01背包问题的一维数组的二维化，一维是体积，二维是质量
+for (int i = 0; i < n; i++) {
+	for (int j = V; j >= v[i]; j--) {
+		for (int k = M; k >= m[i]; k--) {
+			f[j][k] = max(f[j][k], f[j - v[i]][k - m[i]] + w[i]);
+		}
+	}
+}
+```
+
+
+对比模板：
+
+二重循环二维数组对比：
+
+
+f[i][j] = max(f[i][j], f[i - 1][j - v[i]] + w[i]); //01背包
+f[i][j] = max(f[i][j], f[i][j - v[i]] + w[i]); //完全背包问题
+```
+
+三循环二维数组对比：
+
+```C++
+//完全背包
+for (int k = 0; k * v[i] <= j; k++) { 
+	f[i][j] = max(f[i][j], f[i - 1][j - k * v[i]] + k * w[i]);
+}
+
+//分组背包
+f[i][j] = f[i - 1][j];  //不选
+for (int k = 0; k < s[i]; k++) {   
+	if (j >= v[i][k]) f[i][j] = max(f[i][j], f[i - 1][j - v[i][k]] + w[i][k]);
+}
+
+//多重背包
+for (int k = 0; k <= s[i] && k * v[i] <= j; k ++ ) //比完全背包的三重循环二维数组版本多了k <= s[i]的限制
+	f[i][j] = max(f[i][j], f[i - 1][j - v[i] * k] + w[i] * k);
+```
+
+
 
 #### 区间DP 
 
@@ -2224,7 +2324,7 @@ for (int i = 1; i <= n; i ++ )
 
 模板题 AcWing 849. Dijkstra求最短路 I
 
-时间复杂是 O(n2+m)O(n2+m), nn 表示点数，mm 表示边数
+时间复杂是 O(n2+m), n 表示点数，m 表示边数
 
 ```cpp
 int g[N][N];  // 存储每条边
@@ -2260,7 +2360,7 @@ int dijkstra()
 
 模板题 AcWing 850. Dijkstra求最短路 II
 
-时间复杂度 O(mlogn)O(mlogn), nn 表示点数，mm 表示边数
+时间复杂度 O(mlogn), n 表示点数，m 表示边数
 
 ```cpp
 typedef pair<int, int> PII;
@@ -2396,7 +2496,7 @@ int spfa()
 
 模板题 AcWing 852. spfa判断负环
 
-时间复杂度是 O(nm)O(nm), nn 表示点数，mm 表示边数
+时间复杂度是 O(nm), n 表示点数，m 表示边数
 
 ```cpp
 int n;      // 总点数
@@ -2449,7 +2549,7 @@ bool spfa()
 
 模板题 AcWing 854. Floyd求最短路
 
-时间复杂度是 O(n3)O(n3), nn 表示点数
+时间复杂度是 O(n3), n 表示点数
 
 ```cpp
 初始化：
@@ -2658,7 +2758,7 @@ void tarjan(int u, int from)
 
 模板题 AcWing 858. Prim算法求最小生成树
 
-时间复杂度是 O(n2+m)O(n2+m), nn 表示点数，mm 表示边数
+时间复杂度是 O(n2+m), n 表示点数，m 表示边数
 
 ```cpp
 int n;      // n表示点数
@@ -2696,7 +2796,7 @@ int prim()
 
 模板题 AcWing 859. Kruskal算法求最小生成树
 
-时间复杂度是 O(mlogm)O(mlogm), nn 表示点数，mm 表示边数
+时间复杂度是 O(mlogm), n 表示点数，m 表示边数
 
 ```cpp
 int n, m;       // n是点数，m是边数
@@ -2747,7 +2847,7 @@ int kruskal()
 
 模板题 AcWing 860. 染色法判定二分图
 
-时间复杂度是 O(n+m)O(n+m), nn 表示点数，mm 表示边数
+时间复杂度是 O(n+m), n 表示点数，m 表示边数
 
 ```cpp
 int n;      // n表示点数
@@ -2790,7 +2890,7 @@ bool check()
 
 模板题 AcWing 861. 二分图的最大匹配
 
-时间复杂度是 O(nm)O(nm), nn 表示点数，mm 表示边数
+时间复杂度是 O(nm), n 表示点数，m 表示边数
 
 ```cpp
 int n1, n2;     // n1表示第一个集合中的点数，n2表示第二个集合中的点数
@@ -2830,7 +2930,7 @@ for (int i = 1; i <= n1; i ++ )
 
 模板题 AcWing 848. 有向图的拓扑序列
 
-时间复杂度 O(n+m)O(n+m), nn 表示点数，mm 表示边数
+时间复杂度 O(n+m), n 表示点数，m 表示边数
 
 ```cpp
 bool topsort()
