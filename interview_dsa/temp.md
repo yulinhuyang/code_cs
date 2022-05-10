@@ -270,7 +270,7 @@ for (int i = 1; i <= n; i ++ )
     for (int j = 0; j <= m; j ++ )
         for (int k = 0; k <= s[i] && k * v[i] <= j; k ++ ) //比完全背包的三重循环二维数组版本多了k <= s[i]的限制
             f[i][j] = max(f[i][j], f[i - 1][j - v[i] * k] + w[i] * k);
-```
+ 
 
 //三循环一维
 for (int i = 1; i <= n; i ++ ) //循环各组
