@@ -132,11 +132,10 @@ public:
 ```
 ##### 377  组合总和 Ⅳ
 
-完全背包优化：三循环-->二循环
+AcWing 3. 完全背包问题:https://www.acwing.com/solution/content/5345/     
+【宫水三叶】本题与完全背包的区别: https://leetcode.cn/problems/combination-sum-iv/solution/gong-shui-san-xie-yu-wan-quan-bei-bao-we-x0kn/     
 
-AcWing 3. 完全背包问题:https://www.acwing.com/solution/content/5345/
-
-【宫水三叶】本题与完全背包的区别: https://leetcode.cn/problems/combination-sum-iv/solution/gong-shui-san-xie-yu-wan-quan-bei-bao-we-x0kn/
+完全背包优化：三循环二维数组--> 二循环二维数组--> 二循环一维数组
 
 ```C++
 for (int i = 1; i <= n; i++) {
@@ -147,11 +146,10 @@ for (int i = 1; i <= n; i++) {
     }
 }
 ```
+二重循环二维数组对比：
 
-二重循环对比：
-
-f[i][j] = max(f[i][j], f[i - 1][j - v[i]] + w[i]);//01背包     
-f[i][j] = max(f[i][j], f[i][j - v[i]] + w[i]);//完全背包问题 
+f[i][j] = max(f[i][j], f[i - 1][j - v[i]] + w[i]);   //01背包         
+f[i][j] = max(f[i][j], f[i][j - v[i]] + w[i]);    //完全背包问题     
 
 ```C++
 //原始模板
