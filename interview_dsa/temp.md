@@ -151,7 +151,51 @@ for (int i = 1; i <= n; i++) {
 二重循环对比：
 
 f[i][j] = max(f[i][j], f[i - 1][j - v[i]] + w[i]);//01背包     
-f[i][j] = max(f[i][j], f[i][j - v[i]] + w[i]);//完全背包问题    
+f[i][j] = max(f[i][j], f[i][j - v[i]] + w[i]);//完全背包问题 
+
+```C++
+//原始模板
+class Solution {
+public:
+    int combinationSum4(vector<int> &nums, int target) {
+        int m = nums.size();
+        int len = target;
+        //定义f[i][j]为组合长度为i，凑成总和为j的方案数是多少
+        vector<vector<unsigned long long>> f(len + 1, vector<unsigned long long>(target + 1, 0));
+        f[0][0] = 1;
+        int res = 0;
+        //len最大选择的长度
+        for (int i = 1; i < len + 1; i++) {
+            for (int j = 0; j < target + 1; j++) {
+                for (auto x:nums) {
+                    if (j >= x) f[i][j] = f[i][j] + f[i - 1][j - x];
+                }
+            }
+            res += f[i][target];
+        }
+
+        return res;
+    }
+};
+
+//一维数组优化
+class Solution {
+public:
+    int combinationSum4(vector<int> &nums, int target) {
+        int m = nums.size();
+        int len = target;
+        vector<unsigned long long> f(target + 1, 0);
+        f[0] = 1;
+        for (int i = 1; i < target + 1; i++) {
+            for (auto x : nums) {
+                if (i >= x) f[i] = f[i] + f[i - x];
+            }
+        }
+
+        return f[target];
+    }
+};
+```
 
 
 True、False问题：dp[i] = dp[i] or dp[i-num]     
