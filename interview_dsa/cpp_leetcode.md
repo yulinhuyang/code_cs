@@ -9607,49 +9607,59 @@ for i in range(n + 1):
 
 **0-1背包**
 
-##### 416. 分割等和子集
+##### Leetcode 416 分割等和子集
 
-dp[i][j]含义
+0-1背包模板题
 
-i是前i个物品(硬币)代表选择, j是限制容量（目标金额）代表限制条件,dp[i][j]最大价值或方法数
-
-0-1背包: 最大价值, 变形子集背包
-
-完全(无限)背包：零钱问题
-
-```cpp
+	for 物品：   
+		for 体积：  
+			(for)决策：
+```C++
+//二维数组模板
 class Solution {
 public:
     bool canPartition(vector<int> &nums) {
+        int sum = 0;
         int m = nums.size();
-        if (m < 2) {
-            return false;
+        for (auto &x:nums) sum += x;
+        if (sum & 1) return false;
+        sum /= 2;
+        vector<vector<int>> f(m + 1, vector<int>(sum + 1, 0));
+        for (int i = 0; i < m + 1; i++) {
+            f[i][0] = true;
         }
-        int sum = accumulate(nums.begin(), nums.end(), 0);
-        if (sum & 1) {
-            return false;
-        }
-        int target = sum / 2;
-        int maxNum = *max_element(nums.begin(), nums.end());
-        if (maxNum > target) {
-            return false;
-        }
-        vector<vector<int>> dp(m + 1, vector<int>(target + 1, 0));
+
         for (int i = 1; i < m + 1; i++) {
-            dp[i][0] = true;
-        }
-        dp[0][0] = true;
-        dp[1][nums[0]] = true;
-        for (int i = 1; i < m + 1; i++) {
-            for (int j = 1; j < target + 1; j++) {
-                if (j < nums[i - 1]) {
-                    dp[i][j] = dp[i - 1][j];
-                } else {
-                    dp[i][j] = dp[i - 1][j] | dp[i - 1][j - nums[i - 1]];
+            for (int j = 1; j < sum + 1; j++) { //j从0或1开始都可以，但不能从nums[i-1]开始
+                f[i][j] = f[i - 1][j];
+                if (j >= nums[i - 1]) {
+                    f[i][j] |= f[i - 1][j - nums[i - 1]];
                 }
             }
         }
-        return dp[m][target];
+        return f[m][sum];
+    }
+};
+```
+
+```C++
+//一维简化，j逆序循环
+class Solution {
+public:
+    bool canPartition(vector<int> &nums) {
+        int sum = 0;
+        int m = nums.size();
+        for (auto &x:nums) sum += x;
+        if (sum & 1) return false;
+        sum /= 2;
+        vector<int> f(sum + 1, 0);
+        f[0] = 1;
+        for (int i = 0; i < m; i++) {
+            for (int j = sum; j >= nums[i]; j--) {
+                f[j] |= f[j - nums[i]];
+            }
+        }
+        return f[sum];
     }
 };
 ```
@@ -9664,31 +9674,53 @@ public:
 
  特殊情况，[i][0]特殊值,num[i-1]选择可以为0，不是前面都不选
  
-```cpp
+```C++
+//0-1背包  二维数组模板
 class Solution {
 public:
     int findTargetSumWays(vector<int> &nums, int target) {
-        int sum = accumulate(nums.begin(), nums.end(), 0);
+        int sum = 0;
+        for (auto &num:nums) sum += num;
         int diff = sum - target;
-        if (diff < 0 || diff & 1) {
-            return 0;
-        }
+        if (diff < 0 || diff & 1) return false;
         int m = nums.size();
-        int neg = diff / 2;
-        vector<vector<int>> dp(m + 1, vector<int>(neg + 1, 0));
-        dp[0][0] = 1;
+        diff /= 2;
+        vector<vector<int>> f(m + 1, vector<int>(diff + 1));
+        f[0][0] = 1;
         for (int i = 1; i < m + 1; i++) {
-            for (int j = 0; j < neg + 1; j++) {
-                dp[i][j] = dp[i - 1][j];
-                if (j >= nums[i - 1]) {
-                    dp[i][j] += dp[i - 1][j - nums[i - 1]];
-                }
+            for (int j = 0; j < diff + 1; j++) {//j从0或1开始都可以，但不能从nums[i-1]开始
+                f[i][j] = f[i - 1][j];
+                if (j >= nums[i - 1]) f[i][j] += f[i - 1][j - nums[i - 1]];
             }
         }
-        return dp[m][neg];
+        return f[m][diff];
     }
 };
-```   
+```
+
+```C++
+//0-1背包  一维模板
+class Solution {
+public:
+    int findTargetSumWays(vector<int> &nums, int target) {
+        int sum = 0;
+        for (auto &num:nums) sum += num;
+        int diff = sum - target;
+        if (diff < 0 || diff & 1) return false;
+        int m = nums.size();
+        diff /= 2;
+        vector<int> f(diff + 1, 0);
+        f[0] = 1;
+        for (int i = 1; i < m + 1; i++) {
+            for (int j = diff; j >= nums[i - 1]; j--) {
+                f[j] = f[j] + f[j - nums[i - 1]];
+            }
+        }
+        return f[diff];
+    }
+};
+
+```
 
 **完全背包**
 	
@@ -9751,7 +9783,59 @@ public:
 
 ```
 	
-				   
+##### Leetcode 377  组合总和 Ⅳ
+
+AcWing 3. 完全背包问题:https://www.acwing.com/solution/content/5345/     
+【宫水三叶】本题与完全背包的区别: https://leetcode.cn/problems/combination-sum-iv/solution/gong-shui-san-xie-yu-wan-quan-bei-bao-we-x0kn/     
+
+True、False问题：dp[i] = dp[i] or dp[i-num]         
+最大最小问题：dp[i] = min(dp[i], dp[i-num]+1)或者dp[i] = max(dp[i], dp[i-num]+1)         
+组合问题公式：dp[i] += dp[i-num]         
+	 
+```C++
+//原始模板
+class Solution {
+public:
+    int combinationSum4(vector<int> &nums, int target) {
+        int m = nums.size();
+        int len = target;
+        //定义f[i][j]为组合长度为i，凑成总和为j的方案数是多少
+        vector<vector<unsigned long long>> f(len + 1, vector<unsigned long long>(target + 1, 0));
+        f[0][0] = 1;
+        int res = 0;
+        //len最大选择的长度
+        for (int i = 1; i < len + 1; i++) {
+            for (int j = 0; j < target + 1; j++) {
+                for (auto x:nums) {
+                    if (j >= x) f[i][j] = f[i][j] + f[i - 1][j - x];
+                }
+            }
+            res += f[i][target];
+        }
+
+        return res;
+    }
+};
+
+//一维数组优化
+class Solution {
+public:
+    int combinationSum4(vector<int> &nums, int target) {
+        int m = nums.size();
+        int len = target;
+        vector<unsigned long long> f(target + 1, 0);
+        f[0] = 1;
+        for (int i = 1; i < target + 1; i++) {
+            for (auto x : nums) {
+                if (i >= x) f[i] = f[i] + f[i - x];
+            }
+        }
+
+        return f[target];
+    }
+};
+```
+	
 ### 区间dp
 
                              
