@@ -130,6 +130,33 @@ public:
 };
 
 ```
+##### 377  组合总和 Ⅳ
+
+完全背包优化：三循环-->二循环
+
+AcWing 3. 完全背包问题:https://www.acwing.com/solution/content/5345/
+
+【宫水三叶】本题与完全背包的区别: https://leetcode.cn/problems/combination-sum-iv/solution/gong-shui-san-xie-yu-wan-quan-bei-bao-we-x0kn/
+
+```C++
+for (int i = 1; i <= n; i++) {
+    for (int j = 0; j <= m; j++) {
+        f[i][j] = f[i - 1][j];
+        if (j - v[i] >= 0)
+            f[i][j] = max(f[i][j], f[i][j - v[i]] + w[i]);
+    }
+}
+```
+
+二重循环对比：
+
+f[i][j] = max(f[i][j], f[i - 1][j - v[i]] + w[i]);//01背包     
+f[i][j] = max(f[i][j], f[i][j - v[i]] + w[i]);//完全背包问题    
+
+
+True、False问题：dp[i] = dp[i] or dp[i-num]     
+最大最小问题：dp[i] = min(dp[i], dp[i-num]+1)或者dp[i] = max(dp[i], dp[i-num]+1)     
+组合问题公式：dp[i] += dp[i-num]     
 
 
 AcWing 1064. 小国王【线性状压DP+滚动数组优化+目标状态优化】:https://www.acwing.com/solution/content/56348/
