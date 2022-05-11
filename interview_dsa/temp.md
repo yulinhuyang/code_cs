@@ -25,6 +25,44 @@ public:
 };
 ```
 
+##### Leetcode 785  判断二分图
+
+染色法判断二分图 模板题
+
+```C++
+class Solution {
+    vector<int> color;
+
+public:
+    bool isBipartite(vector<vector<int>> &graph) {
+        int m = graph.size();
+        color = vector<int>(m, -1);
+        bool flag = true;
+        for (int i = 0; i < m; i++) {
+            if (color[i] == -1) {
+                if (!dfs(graph, i, 0)) {
+                    flag = false;
+                    break;
+                }
+            }
+        }
+        return flag;
+    }
+
+    bool dfs(vector<vector<int>> &graph, int u, int c) {
+        color[u] = c;
+        for (auto cur : graph[u]) {
+            if (color[cur] == -1) {
+                if (!dfs(graph, cur, !c))
+                    return false;
+            } else if (color[cur] == c)
+                return false;
+        }
+        return true;
+    }
+};
+```
+
 ##### Leetcode 752  打开转盘锁
 双向BFS模板题
 
