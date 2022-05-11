@@ -175,7 +175,33 @@ public:
     }
 };
 ```
+##### Leetcode 797 所有可能的路径
 
+```C++
+class Solution {
+    vector<vector<int>> ans;
+    vector<int> path;
+public:
+    vector<vector<int>> allPathsSourceTarget(vector<vector<int>> &graph) {
+        int n = graph.size();
+        path.emplace_back(0);
+        dfs(graph, 0, n - 1);
+        return ans;
+    }
+
+    void dfs(vector<vector<int>> &graph, int start, int end) {
+        if (start == end) {
+            ans.emplace_back(path);
+            return;
+        }
+        for (auto &y:graph[start]) {
+            path.emplace_back(y);
+            dfs(graph, y, end);
+            path.pop_back();
+        }
+    }
+};
+```
 
 AcWing 1064. 小国王【线性状压DP+滚动数组优化+目标状态优化】:https://www.acwing.com/solution/content/56348/
 
