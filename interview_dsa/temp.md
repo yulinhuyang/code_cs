@@ -64,6 +64,7 @@ public:
 ```
 
 ##### Leetcode 752  打开转盘锁
+
 双向BFS模板题
 
 ```C++
@@ -78,17 +79,20 @@ class Solution {
 
     int extend(queue<string> &q, unordered_set<string> &sets, unordered_map<string, int> &dist1,
                unordered_map<string, int> &dist2) {
-        auto t = q.front();
-        q.pop();
-        for (int i = 0; i < t.size(); i++) {
-            for (int j = -1; j <= 1; j++) {
-                if (j == 0) continue;
-                string t1 = t;
-                t1[i] = j == -1 ? MinusOne(t[i]) : PlusOne(t[i]);
-                if (dist1.count(t1) || sets.count(t1)) continue;
-                if (dist2.count(t1)) return dist1[t] + dist2[t1] + 1;
-                dist1[t1] = dist1[t] + 1;
-                q.emplace(t1);
+        int m = q.size(); //出一层
+        while (m--) {
+            auto t = q.front();
+            q.pop();
+            for (int i = 0; i < t.size(); i++) {
+                for (int j = -1; j <= 1; j++) {
+                    if (j == 0) continue;
+                    string t1 = t;
+                    t1[i] = j == -1 ? MinusOne(t[i]) : PlusOne(t[i]);
+                    if (dist1.count(t1) || sets.count(t1)) continue;
+                    if (dist2.count(t1)) return dist1[t] + dist2[t1] + 1;
+                    dist1[t1] = dist1[t] + 1;
+                    q.emplace(t1);
+                }
             }
         }
         return -1;
@@ -114,6 +118,58 @@ public:
                 t = extend(q2, sets, d2, d1);
             }
             if (t != -1) return t;
+        }
+        return -1;
+    }
+};
+```
+
+##### Leetcode 127 单词接龙
+
+【宫水三叶】如何使用「双向 BFS」解决搜索空间爆炸问题（附 A* 算法）: https://leetcode.cn/problems/word-ladder/solution/gong-shui-san-xie-ru-he-shi-yong-shuang-magjd/
+
+```C++
+class Solution {
+public:
+    int ladderLength(string beginWord, string endWord, vector<string> &wordList) {
+        unordered_set<string> sets(wordList.begin(), wordList.end());
+        if (!sets.count(endWord)) {
+            return 0;
+        }
+        queue<string> q1, q2;
+        q1.emplace(beginWord);
+        q2.emplace(endWord);
+        unordered_map<string, int> d1, d2;
+        d1[beginWord] = 0;
+        d2[endWord] = 0;
+        while (!q1.empty() && !q2.empty()) {
+            int t = -1;
+            if (q1.size() <= q2.size()) {
+                t = bfs(q1, d1, d2, sets);
+            } else {
+                t = bfs(q2, d2, d1, sets);
+            }
+            if (t != -1) return t;
+        }
+        return 0;
+    }
+
+    int bfs(queue<string> &q, unordered_map<string, int> &d1, unordered_map<string, int> &d2, unordered_set<string> &sets) {
+        int m = q.size();//出一层
+        while (m--) {
+            auto t = q.front();
+            q.pop();
+            for (int i = 0; i < t.size(); i++) {
+                auto t1 = t;
+                for (int j = 'a'; j <= 'z'; j++) {
+                    t1[i] = j;
+                    if (d2.count(t1)) return d1[t] + d2[t1] + 1 + 1;
+                    if (!sets.count(t1)) continue;
+                    if (d1.count(t1) && d1[t1] <= d1[t] + 1) continue;
+                    d1[t1] = d1[t] + 1;
+                    q.emplace(t1);
+                }
+            }
         }
         return -1;
     }
