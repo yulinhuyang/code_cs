@@ -326,6 +326,55 @@ public:
 };
 ```
 
+##### Leetcode 839 相似字符串组
+
+并查集模板题
+
+```C++
+class Solution {
+    vector<int> p;
+public:
+    int numSimilarGroups(vector<string> &strs) {
+        int m = strs.size();
+        p = vector<int>(m, -1);
+        for (int i = 0; i < m; i++) {
+            p[i] = i;
+        }
+        for (int i = 0; i < m - 1; i++) {
+            for (int j = i + 1; j < m; j++) {
+                int pa = find(i);
+                int pb = find(j);
+                if (pa == pb) continue;
+                if (check(strs[i], strs[j])) {
+                    p[pb] = pa;
+                }
+            }
+        }
+        int res = 0;
+        for (int i = 0; i < m; i++) {
+            cout << p[i] << endl;
+            if (p[i] == i) res++;
+        }
+        return res;
+    }
+
+    int find(int i) {
+        if (p[i] != i) p[i] = find(p[i]);
+        return p[i];
+    }
+
+    bool check(string &a, string &b) {
+        int num = 0;
+        for (int i = 0; i < a.size(); i++) {
+            if (a[i] != b[i]) {
+                num++;
+                if (num > 2) return false;
+            }
+        }
+        return num == 0 || num == 2;
+    }
+};
+```
 
 
 AcWing 1064. 小国王【线性状压DP+滚动数组优化+目标状态优化】:https://www.acwing.com/solution/content/56348/
