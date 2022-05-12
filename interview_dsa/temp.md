@@ -376,6 +376,34 @@ public:
 };
 ```
 
+##### Leetcode 128 最长连续序列
+
+```C++
+class Solution {
+public:
+    int longestConsecutive(vector<int> &nums) {
+        unordered_set<int> set;
+        for (auto &num:nums) {
+            set.emplace(num);
+        }
+        int res = 0;
+        for (auto &num:nums) {
+            if (set.count(num) && !set.count(num - 1)) {
+                set.erase(num);
+                int end = num;
+                while (set.count(end + 1)) {
+                    end++;
+                    set.erase(end);
+                }
+                res = max(res, end - num + 1);
+            }
+        }
+        return res;
+    }
+};
+
+```
+
 
 AcWing 1064. 小国王【线性状压DP+滚动数组优化+目标状态优化】:https://www.acwing.com/solution/content/56348/
 
