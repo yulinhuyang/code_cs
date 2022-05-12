@@ -227,7 +227,7 @@ public:
                 auto pre = words[i - 1][j];
                 auto cur = words[i][j];
                 if (pre != cur) {
-                    if (!graph[pre].count(cur)) { //加入graph要去重，仿真degree多加了
+                    if (!graph[pre].count(cur)) { //加入graph要去重，防止inDegree多加了
                         graph[pre].emplace(cur);
                         inDegree[cur]++;
 
