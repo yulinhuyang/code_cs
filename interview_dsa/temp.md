@@ -202,9 +202,11 @@ public:
     }
 };
 ```
-#####  剑指 Offer II 114 外星文字典
+#####  Offer II 114 外星文字典
 
 Leetcode 269 外星文字典
+
+map(set)(graph) + map(inDegree)
 
 ```C++
 class Solution {
@@ -225,7 +227,7 @@ public:
                 auto pre = words[i - 1][j];
                 auto cur = words[i][j];
                 if (pre != cur) {
-                    if (!graph[pre].count(cur)) {
+                    if (!graph[pre].count(cur)) { //加入graph要去重，仿真degree多加了
                         graph[pre].emplace(cur);
                         inDegree[cur]++;
 
@@ -263,6 +265,67 @@ public:
 };
 
 ```
+
+#####  Offer II 115 重建序列
+
+Leetcode 444 重建序列
+
+map(set)(graph) + map(inDegree)
+
+BFS 遍历size保证层序遍历性(最短路模型) ;加入graph要去重，仿真degree多加了
+
+```C++
+class Solution {
+public:
+    bool sequenceReconstruction(vector<int> &org, vector<vector<int>> &seqs) {
+        //map(set)(graph) + map(inDegree)
+        unordered_map<int, unordered_set<int>> graph;
+        unordered_map<int, int> inDegree;
+        for (auto &seq:seqs) {
+            for (auto &c:seq) {
+                inDegree[c] = 0;
+            }
+        }
+        if (org.size() != inDegree.size()) return false;
+        for (auto &seq:seqs) {
+            for (int i = 1; i < seq.size(); i++) {
+                //判重，防止inDegree多加
+                if (!graph[seq[i - 1]].count(seq[i])) {
+                    graph[seq[i - 1]].emplace(seq[i]);
+                    inDegree[seq[i]]++;
+                }
+            }
+        }
+        queue<int> q;
+        for (auto &node:inDegree) {
+            if (!node.second) q.emplace(node.first);
+        }
+
+        //入度为0的元素不唯一，则无法确定唯一序列
+        if (q.size() != 1) return false;
+        vector<int> topology;
+        while (!q.empty()) {
+            int size = q.size();
+            if (q.size() != 1) return false;
+            for (int i = 0; i < size; i++) {
+                auto t = q.front();
+                q.pop();
+                topology.emplace_back(t);
+                for (auto &y:graph[t]) {
+                    inDegree[y]--;
+                    if (!inDegree[y]) q.emplace(y);
+                }
+            }
+        }
+        if (topology.size() != inDegree.size()) return false;
+        for (int i = 0; i < topology.size(); i++) {
+            if (topology[i] != org[i]) return false;
+        }
+        return true;
+    }
+};
+```
+
 
 
 AcWing 1064. 小国王【线性状压DP+滚动数组优化+目标状态优化】:https://www.acwing.com/solution/content/56348/
