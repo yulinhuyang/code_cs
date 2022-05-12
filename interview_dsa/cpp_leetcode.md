@@ -7634,7 +7634,7 @@ public:
 ```    
     
 
-##### 784 字母大小写全排列
+##### Leetcode 784 字母大小写全排列
 
 ```C++
 class Solution{
@@ -7671,7 +7671,33 @@ public:
 };
 ```
 
- 
+##### Leetcode 797 所有可能的路径
+
+```C++
+class Solution {
+    vector<vector<int>> ans;
+    vector<int> path;
+public:
+    vector<vector<int>> allPathsSourceTarget(vector<vector<int>> &graph) {
+        int n = graph.size();
+        path.emplace_back(0);
+        dfs(graph, 0, n - 1);
+        return ans;
+    }
+
+    void dfs(vector<vector<int>> &graph, int start, int end) {
+        if (start == end) {
+            ans.emplace_back(path);
+            return;
+        }
+        for (auto &y:graph[start]) {
+            path.emplace_back(y);
+            dfs(graph, y, end);
+            path.pop_back();
+        }
+    }
+};
+``` 
 
 ### DFS floodfill问题
 
@@ -7825,77 +7851,58 @@ public:
 
 BFS: queue + while + for
 	
-##### 127 单词接龙
+##### Leetcode 127 单词接龙
 
-双向BFS理解每次各自扩展一层的含义
-
-26 字母扩展方法
+【宫水三叶】如何使用「双向 BFS」解决搜索空间爆炸问题（附 A* 算法）: https://leetcode.cn/problems/word-ladder/solution/gong-shui-san-xie-ru-he-shi-yong-shuang-magjd/
 
 ```C++
 class Solution {
 public:
     int ladderLength(string beginWord, string endWord, vector<string> &wordList) {
-        unordered_set<string> Sets;
-        for (auto &word:wordList) {
-            Sets.emplace(word);
-        }
-        if(!Sets.count(endWord))
+        unordered_set<string> sets(wordList.begin(), wordList.end());
+        if (!sets.count(endWord)) {
             return 0;
-        queue<string> qBegin;
-        qBegin.emplace(beginWord);
-        unordered_map<string, int> distBegin;
-        distBegin[beginWord] = 0;
-
-        queue<string> qEnd;
-        qEnd.emplace(endWord);
-        unordered_map<string, int> distEnd;
-        distEnd[endWord] = 0;
-
-        while (qBegin.size() && qEnd.size()) {
-            int len1 = qBegin.size();
-            for (int k = 0; k < len1; k++) {
-                auto word = qBegin.front();
-                qBegin.pop();
-                if (distEnd.count(word)) {
-                    return distBegin[word] + distEnd[word] + 1;
-                }
-                for (int i = 0; i < word.size(); i++) {
-                    auto tmp = word;
-                    for (int j = 'a'; j <= 'z'; j++) {
-                        tmp[i] = j;
-                        if (Sets.count(tmp) && !distBegin.count(tmp)) {
-                            distBegin[tmp] = distBegin[word] + 1;
-                            qBegin.emplace(tmp);
-                        }
-                    }
-                }
+        }
+        queue<string> q1, q2;
+        q1.emplace(beginWord);
+        q2.emplace(endWord);
+        unordered_map<string, int> d1, d2;
+        d1[beginWord] = 0;
+        d2[endWord] = 0;
+        while (!q1.empty() && !q2.empty()) {
+            int t = -1;
+            if (q1.size() <= q2.size()) {
+                t = bfs(q1, d1, d2, sets);
+            } else {
+                t = bfs(q2, d2, d1, sets);
             }
-
-            int len2 = qEnd.size();
-            for (int k = 0; k < len2; k++) {
-                auto wordEnd = qEnd.front();
-                qEnd.pop();
-                if (distBegin.count(wordEnd)) {
-                    return distBegin[wordEnd] + distEnd[wordEnd] + 1;
-                }
-                for (int i = 0; i < wordEnd.size(); i++) {
-                    auto tmp = wordEnd;
-                    for (int j = 'a'; j <= 'z'; j++) {
-                        tmp[i] = j;
-                        if (Sets.count(tmp) && !distEnd.count(tmp)) {
-                            distEnd[tmp] = distEnd[wordEnd] + 1;
-                            qEnd.emplace(tmp);
-                        }
-                    }
-                }
-            }
-
+            if (t != -1) return t;
         }
         return 0;
     }
+
+    int bfs(queue<string> &q, unordered_map<string, int> &d1, unordered_map<string, int> &d2, unordered_set<string> &sets) {
+        int m = q.size();//出一层
+        while (m--) {
+            auto t = q.front();
+            q.pop();
+            for (int i = 0; i < t.size(); i++) {
+                auto t1 = t;
+                for (int j = 'a'; j <= 'z'; j++) {
+                    t1[i] = j;
+                    if (d2.count(t1)) return d1[t] + d2[t1] + 1 + 1;
+                    if (!sets.count(t1)) continue;
+                    if (d1.count(t1) && d1[t1] <= d1[t] + 1) continue;
+                    d1[t1] = d1[t] + 1;
+                    q.emplace(t1);
+                }
+            }
+        }
+        return -1;
+    }
 };
 ```
-
+						      
 ##### 126 单词接龙 II
 
 BFS（26扩展方法） + DFS 反向搜索
@@ -8076,6 +8083,68 @@ public:
     }
 };
 ```
+
+##### Leetcode 752  打开转盘锁
+
+双向BFS模板题
+
+```C++
+class Solution {
+    char PlusOne(char s) {
+        return s == '9' ? '0' : s + 1;
+    }
+
+    char MinusOne(char s) {
+        return s == '0' ? '9' : s - 1;
+    }
+
+    int extend(queue<string> &q, unordered_set<string> &sets, unordered_map<string, int> &dist1,
+               unordered_map<string, int> &dist2) {
+        int m = q.size(); //出一层
+        while (m--) {
+            auto t = q.front();
+            q.pop();
+            for (int i = 0; i < t.size(); i++) {
+                for (int j = -1; j <= 1; j++) {
+                    if (j == 0) continue;
+                    string t1 = t;
+                    t1[i] = j == -1 ? MinusOne(t[i]) : PlusOne(t[i]);
+                    if (dist1.count(t1) || sets.count(t1)) continue;
+                    if (dist2.count(t1)) return dist1[t] + dist2[t1] + 1;
+                    dist1[t1] = dist1[t] + 1;
+                    q.emplace(t1);
+                }
+            }
+        }
+        return -1;
+    }
+
+public:
+    int openLock(vector<string> &deadends, string target) {
+        string start = "0000";
+        if(start == target) return  0;
+        unordered_set<string> sets(deadends.begin(), deadends.end());
+        if (sets.count(target) || sets.count(start)) return -1;
+        queue<string> q1, q2;
+        unordered_map<string, int> d1, d2;
+        q1.emplace(start);
+        q2.emplace(target);
+        d1[start] = 0;
+        d2[target] = 0;
+        while (!q1.empty() && !q2.empty()) {
+            int t;
+            if (q1.size() <= q2.size()) {
+                t = extend(q1, sets, d1, d2);
+            } else {
+                t = extend(q2, sets, d2, d1);
+            }
+            if (t != -1) return t;
+        }
+        return -1;
+    }
+};
+```
+						      
 ##### 934. 最短的桥
 
 先深度搜索，确度一座岛的边界,再广度搜索，查找路径。 DFS + 多源BFS最短路径。
@@ -8309,7 +8378,8 @@ public:
 
 
 ## 0x41  数据结构进阶 - 并查集
-	
+
+
 ##### 547. 省份数量
 
 ```cpp
@@ -8369,7 +8439,56 @@ public:
     }
 };
 ```
+##### Leetcode 839 相似字符串组
 
+并查集模板题
+
+```C++
+class Solution {
+    vector<int> p;
+public:
+    int numSimilarGroups(vector<string> &strs) {
+        int m = strs.size();
+        p = vector<int>(m, -1);
+        for (int i = 0; i < m; i++) {
+            p[i] = i;
+        }
+        for (int i = 0; i < m - 1; i++) {
+            for (int j = i + 1; j < m; j++) {
+                int pa = find(i);
+                int pb = find(j);
+                if (pa == pb) continue;
+                if (check(strs[i], strs[j])) {
+                    p[pb] = pa;
+                }
+            }
+        }
+        int res = 0;
+        for (int i = 0; i < m; i++) {
+            cout << p[i] << endl;
+            if (p[i] == i) res++;
+        }
+        return res;
+    }
+
+    int find(int i) {
+        if (p[i] != i) p[i] = find(p[i]);
+        return p[i];
+    }
+
+    bool check(string &a, string &b) {
+        int num = 0;
+        for (int i = 0; i < a.size(); i++) {
+            if (a[i] != b[i]) {
+                num++;
+                if (num > 2) return false;
+            }
+        }
+        return num == 0 || num == 2;
+    }
+};
+```
+			  		  
 ### 0x42 树状数组
 
 
@@ -9051,38 +9170,32 @@ public:
 				   
 ### 子序列(LIS模型)
 
-##### 128 最长连续序列
+##### Leetcode 128 最长连续序列
 
-unordered_set 使用
-
-for(auto num:nums) --> for(const int &num:nums) 迭代
-
-```c++
+```C++
 class Solution {
 public:
     int longestConsecutive(vector<int> &nums) {
-
         unordered_set<int> set;
-        int max_len = 0;
-        for (const int &num:nums) {
+        for (auto &num:nums) {
             set.emplace(num);
         }
-        for (const int &num:nums) {
-            if (set.count(num - 1)) {
-                continue;
+        int res = 0;
+        for (auto &num:nums) {
+            if (set.count(num) && !set.count(num - 1)) {
+                set.erase(num);
+                int end = num;
+                while (set.count(end + 1)) {
+                    end++;
+                    set.erase(end);
+                }
+                res = max(res, end - num + 1);
             }
-            int num_len = 1;
-            int current_num = num;
-            current_num += 1;
-            while (set.count(current_num)) {
-                current_num += 1;
-                num_len += 1;
-            }
-            max_len = max(max_len, num_len);
         }
-        return max_len;
+        return res;
     }
 };
+
 ```
 	
 ##### 300. 最长递增子序列
@@ -10091,6 +10204,131 @@ public:
     }
 };
 ```
+	
+#####  Offer II 114 外星文字典
+
+Leetcode 269 外星文字典
+
+map(set)(graph) + map(inDegree)
+
+```C++
+class Solution {
+public:
+    string alienOrder(vector<string> &words) {
+        unordered_map<char, unordered_set<char>> graph;
+        unordered_map<char, int> inDegree;//graph + indegree 双hash
+        for (auto &word:words) {
+            for (auto &c:word) {
+                if (!graph.count(c)) graph[c] = {};
+                if (!inDegree.count(c)) inDegree[c] = 0;
+            }
+        }
+        for (int i = 1; i < words.size(); i++) {
+            int j = 0;
+            int len = min(words[i - 1].size(), words[i].size());
+            for (; j < len; j++) {
+                auto pre = words[i - 1][j];
+                auto cur = words[i][j];
+                if (pre != cur) {
+                    if (!graph[pre].count(cur)) { //加入graph要去重，防止inDegree多加了
+                        graph[pre].emplace(cur);
+                        inDegree[cur]++;
+
+                    }
+                    break;
+                }
+            }
+            if (j == len && words[i - 1].size() > words[i].size()) {
+                return "";
+            }
+        }
+
+        queue<char> q;
+        //拓扑排序与多源bfs的一致性
+        for (auto &v:inDegree) {
+            if (!v.second) q.push(v.first);
+        }
+
+        string alienDict;
+        while (!q.empty()) {
+            int size = q.size();//bfs的层序性
+            for (int i = 0; i < size; i++) {
+                auto t = q.front();
+                q.pop();
+                alienDict.push_back(t);
+                for (auto &y:graph[t]) {
+                    inDegree[y]--;
+                    if (!inDegree[y]) q.emplace(y);
+                }
+            }
+        }
+        return alienDict.size() == inDegree.size() ? alienDict : "";
+
+    }
+};
+
+```
+
+#####  Offer II 115 重建序列
+
+Leetcode 444 重建序列
+
+map(set)(graph) + map(inDegree)
+
+BFS 遍历size保证层序遍历性(最短路模型) ;加入graph要去重，防止inDegree多加了
+
+```C++
+class Solution {
+public:
+    bool sequenceReconstruction(vector<int> &org, vector<vector<int>> &seqs) {
+        //map(set)(graph) + map(inDegree)
+        unordered_map<int, unordered_set<int>> graph;
+        unordered_map<int, int> inDegree;
+        for (auto &seq:seqs) {
+            for (auto &c:seq) {
+                inDegree[c] = 0;
+            }
+        }
+        if (org.size() != inDegree.size()) return false;
+        for (auto &seq:seqs) {
+            for (int i = 1; i < seq.size(); i++) {
+                //判重，防止inDegree多加
+                if (!graph[seq[i - 1]].count(seq[i])) {
+                    graph[seq[i - 1]].emplace(seq[i]);
+                    inDegree[seq[i]]++;
+                }
+            }
+        }
+        queue<int> q;
+        for (auto &node:inDegree) {
+            if (!node.second) q.emplace(node.first);
+        }
+
+        //入度为0的元素不唯一，则无法确定唯一序列
+        if (q.size() != 1) return false;
+        vector<int> topology;
+        while (!q.empty()) {
+            int size = q.size();
+            if (q.size() != 1) return false;
+            for (int i = 0; i < size; i++) {
+                auto t = q.front();
+                q.pop();
+                topology.emplace_back(t);
+                for (auto &y:graph[t]) {
+                    inDegree[y]--;
+                    if (!inDegree[y]) q.emplace(y);
+                }
+            }
+        }
+        if (topology.size() != inDegree.size()) return false;
+        for (int i = 0; i < topology.size(); i++) {
+            if (topology[i] != org[i]) return false;
+        }
+        return true;
+    }
+};
+```
+	
 
 ### 最短路
 
@@ -10402,7 +10640,44 @@ public:
 };
 ```
 
+##### Leetcode 785  判断二分图
 
+染色法判断二分图 模板题
+
+```C++
+class Solution {
+    vector<int> color;
+
+public:
+    bool isBipartite(vector<vector<int>> &graph) {
+        int m = graph.size();
+        color = vector<int>(m, -1);
+        bool flag = true;
+        for (int i = 0; i < m; i++) {
+            if (color[i] == -1) {
+                if (!dfs(graph, i, 0)) {
+                    flag = false;
+                    break;
+                }
+            }
+        }
+        return flag;
+    }
+
+    bool dfs(vector<vector<int>> &graph, int u, int c) {
+        color[u] = c;
+        for (auto cur : graph[u]) {
+            if (color[cur] == -1) {
+                if (!dfs(graph, cur, !c))
+                    return false;
+            } else if (color[cur] == c)
+                return false;
+        }
+        return true;
+    }
+};
+```
+	
 	
 	
 	
