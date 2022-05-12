@@ -405,6 +405,64 @@ public:
 ```
 
 
+
+
+
+AcWing190 字串变换
+
+双向BFS模板题
+
+```C++
+int extend(queue<string>& q, unordered_map<string, int>&da, unordered_map<string, int>& db, 
+    string a[N], string b[N])
+{
+    int d = da[q.front()];
+    while (q.size() && da[q.front()] == d)
+    {
+        auto t = q.front();
+        q.pop();
+		//每次每边扩展完整一层
+        for (int i = 0; i < n; i ++ ) 
+            for (int j = 0; j < t.size(); j ++ )
+                if (t.substr(j, a[i].size()) == a[i])
+                {
+                    string r = t.substr(0, j) + b[i] + t.substr(j + a[i].size());
+                    if (db.count(r)) return da[t] + db[r] + 1;
+                    if (da.count(r)) continue;
+                    da[r] = da[t] + 1;
+                    q.push(r);
+                }
+    }
+
+    return 11;
+}
+
+int bfs()
+{
+    if (A == B) return 0;
+    queue<string> qa, qb;
+    unordered_map<string, int> da, db;
+
+    qa.push(A), qb.push(B);
+    da[A] = db[B] = 0;
+
+    int step = 0;
+    while (qa.size() && qb.size())
+    {
+        int t;
+        if (qa.size() < qb.size()) t = extend(qa, da, db, a, b);
+        else t = extend(qb, db, da, b, a);
+
+        if (t <= 10) return t;
+        if ( ++ step == 10) return -1;
+    }
+
+    return -1;
+}
+
+
+```
+
 AcWing 1064. 小国王【线性状压DP+滚动数组优化+目标状态优化】:https://www.acwing.com/solution/content/56348/
 
 
