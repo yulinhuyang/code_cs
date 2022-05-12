@@ -202,6 +202,68 @@ public:
     }
 };
 ```
+#####  剑指 Offer II 114 外星文字典
+
+Leetcode 269 外星文字典
+
+```C++
+class Solution {
+public:
+    string alienOrder(vector<string> &words) {
+        unordered_map<char, unordered_set<char>> graph;
+        unordered_map<char, int> inDegree;//graph + indegree 双hash
+        for (auto &word:words) {
+            for (auto &c:word) {
+                if (!graph.count(c)) graph[c] = {};
+                if (!inDegree.count(c)) inDegree[c] = 0;
+            }
+        }
+        for (int i = 1; i < words.size(); i++) {
+            int j = 0;
+            int len = min(words[i - 1].size(), words[i].size());
+            for (; j < len; j++) {
+                auto pre = words[i - 1][j];
+                auto cur = words[i][j];
+                if (pre != cur) {
+                    if (!graph[pre].count(cur)) {
+                        graph[pre].emplace(cur);
+                        inDegree[cur]++;
+
+                    }
+                    break;
+                }
+            }
+            if (j == len && words[i - 1].size() > words[i].size()) {
+                return "";
+            }
+        }
+
+        queue<char> q;
+        //拓扑排序与多源bfs的一致性
+        for (auto &v:inDegree) {
+            if (!v.second) q.push(v.first);
+        }
+
+        string alienDict;
+        while (!q.empty()) {
+            int size = q.size();//bfs的层序性
+            for (int i = 0; i < size; i++) {
+                auto t = q.front();
+                q.pop();
+                alienDict.push_back(t);
+                for (auto &y:graph[t]) {
+                    inDegree[y]--;
+                    if (!inDegree[y]) q.emplace(y);
+                }
+            }
+        }
+        return alienDict.size() == inDegree.size() ? alienDict : "";
+
+    }
+};
+
+```
+
 
 AcWing 1064. 小国王【线性状压DP+滚动数组优化+目标状态优化】:https://www.acwing.com/solution/content/56348/
 
