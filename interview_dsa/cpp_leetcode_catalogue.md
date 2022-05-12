@@ -564,7 +564,7 @@ dfs空间和递归深度成正比，有爆栈风险，比如树的深度最坏�
 
 ### 子序列(LIS模型)
 
-- 128 最长连续序列(Longest Consecutive Sequence）:set中心展开法   
+- 128 最长连续序列(Longest Consecutive Sequence）:set一端展开法   
 - 300 最长递增子序列LIS：双循环dp O(nxn) 或者贪心+二分查找（替换）O(nlog(n))
 - 1143 LCS 最长公共子序列(Longest Common Subsequencee):二维dp 
 - 354 俄罗斯套娃信封问题: 二维子序列问题，先排序，再调用LIS模型(双循环dp或者贪心+二分查找（替换）)
