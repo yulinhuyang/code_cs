@@ -272,7 +272,7 @@ Leetcode 444 重建序列
 
 map(set)(graph) + map(inDegree)
 
-BFS 遍历size保证层序遍历性(最短路模型) ;加入graph要去重，仿真degree多加了
+BFS 遍历size保证层序遍历性(最短路模型) ;加入graph要去重，防止inDegree多加了
 
 ```C++
 class Solution {
