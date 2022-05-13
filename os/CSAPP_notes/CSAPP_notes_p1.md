@@ -1520,411 +1520,7 @@ C中提供了`float`和`double`两种精度的浮点数。由于编码不同，�
 
 ------
 
-# [读书笔记]CSAPP：DataLab
 
-
- 
-
-**下载地址：**
-
-[http://www.cs.cmu.edu/afs/cs/academic/class/15213-f15/www/labs/datalab-handout.tarwww.cs.cmu.edu/afs/cs/academic/class/15213-f15/www/labs/datalab-handout.tar](https://link.zhihu.com/?target=http%3A//www.cs.cmu.edu/afs/cs/academic/class/15213-f15/www/labs/datalab-handout.tar)
-
-------
-
-该实验主要考查同学对位级运算、无符号数编码、补码以及浮点数编码的掌握程度。**实验过程：**
-
-1. 在`bits.c`中做题目
-2. 使用`make clean`和`make`进行编译
-3. 调用`./btest -f funcName`测试`funcName`函数的结果，可以在代码中中插入`printf`输出中间结果，但是要记得最后删掉
-4. 调用`./dlc bits.c`查看是否使用了非法或过多的运算符
-5. 重复以上步骤，最后可以直接运行`./btest`输出最后结果。
-
-## bitXor
-
-```c
-/* 
- * bitXor - x^y using only ~ and & 
- *   Example: bitXor(4, 5) = 1
- *   Legal ops: ~ &
- *   Max ops: 14
- *   Rating: 1
- */
-int bitXor(int x, int y)
-{
-  int notand = ~(x & y);
-  int or = ~(~x&~y);
-  return notand & or;
-}
-```
-
-要求只能使用`^`和`&`实现异或运算符，通过查看`AND`、`OR`和`XOR`的真值表，我们可以发现`x^y=~(x&y)&(x|y)`，而我们这里缺少`|`运算，但是可以通过`~`和`&`构造出来，即`x|y=~(~x&~y)`。
-
-![img](pics/v2-7351074296e3f724156c6159b90dc854_720w.jpg)
-
-## tmin
-
-```c
-/* 
- * tmin - return minimum two's complement integer 
- *   Legal ops: ! ~ & ^ | + << >>
- *   Max ops: 4
- *   Rating: 1
- */
-int tmin(void) {
-  return 1<<31;
-}
-```
-
-这个主要考查补码的定义，通过将最高有效位置1，就能得到补码中的最小值，而且程序是32位的，所以直接对1左移31位就行。
-
-## isTmax
-
-```c
-/*
- * isTmax - returns 1 if x is the maximum, two's complement number,
- *     and 0 otherwise 
- *   Legal ops: ! ~ & ^ | +
- *   Max ops: 10
- *   Rating: 2
- */
-int isTmax(int x) {
-  int a = x+1;
-  return !((~a+1)^a)&(!!a); //加一溢出到TMin，并且-TMin==TMin，然后消除全1可能
-}
-```
-
-同样考查补码的性质，我们知道补码中的最大值是最高有效位为0，其他为1，但是该题中限制了不允许使用移位操作，所以无法直接进行移位。首先，Tmax加一会正溢出得到Tmin，而Tmin一个特殊性质就是Tmin的相反数和Tmin相等，所以我们可以首先通过`a=x+1`，然后判断其相反数是否和自身相同，即`(~a+1)^a`，并且我们要消除全1的情况。
-
-## allOddBits
-
-```c
-/* 
- * allOddBits - return 1 if all odd-numbered bits in word set to 1
- *   Examples allOddBits(0xFFFFFFFD) = 0, allOddBits(0xAAAAAAAA) = 1
- *   Legal ops: ! ~ & ^ | + << >>
- *   Max ops: 12
- *   Rating: 2
- */
-int allOddBits(int x) {
-  int a = x&(x>>2); //2 4
-  int b = a&(a>>4); //2 4 6 8
-  int c = b&(b>>8); //2 4 6 8 10 12 14 16
-  int d = c&(c>>16);
-  return (d>>1)&0x01;
-}
-```
-
-该算法要求判断是否全部偶数位都为1。我们通过不断的移位操作，能够将所有偶数位的值都“与”到倒数第二低的有效位上，然后直接判断其值是否为1。
-
-## negate
-
-```c
-/* 
- * negate - return -x 
- *   Example: negate(1) = -1.
- *   Legal ops: ! ~ & ^ | + << >>
- *   Max ops: 5
- *   Rating: 2
- */
-int negate(int x) {
-  return ~x+1;
-}
-```
-
-这题主要考察对补码的理解。我们补码对应的有符号数的运算可以直接在补码的位向量上进行计算，所以要保证相反数相加为0，表示需要使得两个位向量相加刚好低32位为0，所以直接对其取反加一，这样就能使得相加结果溢出1位，截断后就为0。
-
-## isAsciiDigit
-
-```c
-/* 
- * isAsciiDigit - return 1 if 0x30 <= x <= 0x39 (ASCII codes for characters '0' to '9')
- *   Example: isAsciiDigit(0x35) = 1.
- *            isAsciiDigit(0x3a) = 0.
- *            isAsciiDigit(0x05) = 0.
- *   Legal ops: ! ~ & ^ | + << >>
- *   Max ops: 15
- *   Rating: 3
- */
-int isAsciiDigit(int x) {
-  //x-0x30>=0-->x+~0x30+1>=0-->!((x+~0x30+1)>>31)
-  //x-0x39<=0-->x+~0x39+1<=0-->(x+~0x39+1)>>31
-  int less = !((x+~0x30+1)>>31);
-  int judge = x+~0x39+1;
-  return less&((!judge)|(judge>>31));
-}
-```
-
-这题主要考察如何实现大小比较。通过两数相减结果的正负来判断两个数之间的大小关系，但是这里不支持减法，但是`a-b`可以转化为`a+(-b)`，而`-b`就是`~b+1`，所以`a-b=a+(~b+1)`。然后我们可以判断该结果最高有效位是否为1，来判断结果的正负。
-
-## conditional
-
-```c
-/* 
- * conditional - same as x ? y : z 
- *   Example: conditional(2,4,5) = 4
- *   Legal ops: ! ~ & ^ | + << >>
- *   Max ops: 16
- *   Rating: 3
- */
-int conditional(int x, int y, int z) {
-  //!x: x is False-->zero-->0x01, x is True-->non-zero-->0x00
-  //!x<<31>>31: 0x01-->0xFFFFFF, 0x00-->0x00
-  int mask = !x<<31>>31;
-  return (mask&z)+((~mask)&y);
-}
-```
-
-要实现条件分支，有一个思路是如果将条件结果转化为全0或全1，由此乘到分支上进行筛选，即`(mask&z)+(~mask&y)`，如果mask为全1，则选择z，如果mask为全0，则为y。
-
-但是这里要如何将条件转化为全0和全1呢？这里利用了补码右移时是使用算数右移的特点。这里条件`x`是`int`类型，表示使用补码编码， 首先使用`!`判断x是否为0，如果不是0，则最低有效位为1，我们通过左移31位将其置为最高有效位，然后右移时就能全部置为1。
-
-## isLessOrEqual
-
-```c
-/* 
- * isLessOrEqual - if x <= y  then return 1, else return 0 
- *   Example: isLessOrEqual(4,5) = 1.
- *   Legal ops: ! ~ & ^ | + << >>
- *   Max ops: 24
- *   Rating: 3
- */
-int isLessOrEqual(int x, int y) {
-  //不同符号相减容易出现溢出问题，所以先判断符号是否相同，只有相同时才进行相减
-  int diff = (x>>31)^(y>>31);
-  //diff ? !(y>>31) : y-x
-  int part1 = x+~y+1;
-  int part2 = !part1;
-  int part3 = !!(part1>>31);
-  
-  int judge = part2 | part3;
-  
-  int ans = (!diff&judge)+(diff&(!(y>>31)));
-  return ans;
-}
-```
-
-这里也可以通过相减然后判断结果的正负来得到结果，但是要注意两个符号不同的补码相减容易造成溢出，使得结果比较难判断，而符号相同进行相减，就不会有溢出的问题了。我们首先可以通过两个数的最高有效位来判断符号是否相同，如果不同，可以很容易得到结果，如果相同，则需要相减来判断。
-
-## logicalNeg
-
-```c
-/* 
- * logicalNeg - implement the ! operator, using all of 
- *              the legal operators except !
- *   Examples: logicalNeg(3) = 0, logicalNeg(0) = 1
- *   Legal ops: ~ & ^ | + << >>
- *   Max ops: 12
- *   Rating: 4 
- */
-int logicalNeg(int x) {
-  //0的相反数还是0，其他的数字，要么自己，要么相反数最高位为1，就能由此判断
-  return (~(x|(~x+1))>>31)&1;
-}
-```
-
-0的相反数还是0，而其他数或者它的相反数一定有一个是负的，而负数算数右移31位能使得最低有效位置为1。
-
-## howManyBits
-
-```c
-/* howManyBits - return the minimum number of bits required to represent x in
- *             two's complement
- *  Examples: howManyBits(12) = 5
- *            howManyBits(298) = 10
- *            howManyBits(-5) = 4
- *            howManyBits(0)  = 1
- *            howManyBits(-1) = 1
- *            howManyBits(0x80000000) = 32
- *  Legal ops: ! ~ & ^ | + << >>
- *  Max ops: 90
- *  Rating: 4
- */
-int howManyBits(int x) {
-  int b16,b8,b4,b2,b1,b0;
-  int sign=x>>31;
-  x = (sign&~x)|(~sign&x);//如果x为正则不变，否则按位取反（这样好找最高位为1的，原来是最高位为0的，这样也将符号位去掉了）
-  // 不断缩小范围
-  b16 = !!(x>>16)<<4;//高十六位是否有1
-  x = x>>b16;//如果有（至少需要16位），则将原数右移16位
-  b8 = !!(x>>8)<<3;//剩余位高8位是否有1
-  x = x>>b8;//如果有（至少需要16+8=24位），则右移8位
-  b4 = !!(x>>4)<<2;//同理
-  x = x>>b4;
-  b2 = !!(x>>2)<<1;
-  x = x>>b2;
-  b1 = !!(x>>1);
-  x = x>>b1;
-  b0 = x;
-  return b16+b8+b4+b2+b1+b0+1;//+1表示加上符号位
-}
-```
-
-网上抄的……
-
-## float_twice
-
-```c
-/* 
- * float_twice - Return bit-level equivalent of expression 2*f for
- *   floating point argument f.
- *   Both the argument and result are passed as unsigned int's, but
- *   they are to be interpreted as the bit-level representation of
- *   single-precision floating point values.
- *   When argument is NaN, return argument
- *   Legal ops: Any integer/unsigned operations incl. ||, &&. also if, while
- *   Max ops: 30
- *   Rating: 4
- */
-unsigned float_twice(unsigned uf) {
-  //参数定义放在函数头
-  unsigned exp = uf>>23;
-  unsigned ans;
-  //NaN and inf
-  if(!((exp&0xFF)^0xFF)){
-	  return uf;
-  }
-  //non-normalized 直接左移
-  if(!(exp&0xFF)){
-	  unsigned sign = uf>>31<<31;
-	  return (uf<<1)|sign;
-  }
-  //normalized 指数部分加一
-  ans = (1<<23)+uf;
-  //inf
-  if(!(((ans>>23)&0xFF)^0xFF)){
-	  return ans>>23<<23;
-  }else{
-	  return ans;
-  }
-}
-```
-
-这里主要考察对浮点数编码的理解。浮点数的编码分成三种情况：
-
-- 规格化数：要求尾数表示为`1.f1,f2,...`，所以我们无法直接对尾数部分进行左移来乘2，但是我们可以直接对阶码部分加1来乘上2，需要判断阶码部分是否超出规格化数的表示范围，变成了无穷。
-- 非规格化数，要求阶码全为0，所以无法直接对解码进行加1，但是尾数表示为`0.f1,f2,...`所以我们可以直接对尾数部分左移来乘上2。而在非规格化数的最大值（尾数部分全为1）为 ![[公式]](https://www.zhihu.com/equation?tex=%5Csum_%7Bi%3D1%7D%5E%7Bn%7D2%5E%7B-i%7D%5Ctimes2%5E%7B2-2%5E%7Bk-1%7D%7D) ，如果对其右移，会变成规格化数，其值为 ![[公式]](https://www.zhihu.com/equation?tex=%28%5Csum_%7Bi%3D1%7D%5E%7Bn-1%7D2%5E%7B-i%7D%2B1%29%5Ctimes2%5E%7B2%2B2%5E%7Bk-1%7D%7D%3D%28%5Csum_%7Bi%3D0%7D%5E%7Bn-1%7D2%5E%7B-i%7D%29%5Ctimes2%5E%7B2%2B2%5E%7Bk-1%7D%7D%3D2%5Ctimes%28%5Csum_%7Bi%3D1%7D%5E%7Bn%7D2%5E%7B-i%7D%29%5Ctimes2%5E%7B2%2B2%5E%7Bk-1%7D%7D) ，刚好是两倍关系，所以对所有非规格化数都能直接左移。
-
-## float_i2f
-
-```c
-/* 
- * float_i2f - Return bit-level equivalent of expression (float) x
- *   Result is returned as unsigned int, but
- *   it is to be interpreted as the bit-level representation of a
- *   single-precision floating point values.
- *   Legal ops: Any integer/unsigned operations incl. ||, &&. also if, while
- *   Max ops: 30
- *   Rating: 4
- */
-unsigned float_i2f(int x) {
-	unsigned ux, mask, temp, e, sign = 0;
-	int E = 0, count;
-	
-	if(!x) return 0; //0就直接返回
-	
-	//将有符号数转化为无符号数
-	if(x&0x80000000){
-		ux = ~x+1;
-		sign = 0x80000000;
-	}
-	else ux=x;
-	
-	//统计有几位
-	temp = ux;
-	while(temp){
-		E += 1;
-		temp = temp>>1;
-	}
-	ux = ux&(~(1<<(E-1))); //去掉最高位
-	e = E+126; //计算e的值
-	//对尾数进行移位
-	if(E<=24){
-		ux = ux<<(24-E); //尾数位数小于23的，直接将其移到顶
-	}else{//尾数位数大于23的，要进行截断，需要考虑舍入问题
-		count = 0;
-		while(E>25){
-			if(ux&0x01) count+=1;
-			ux = ux>>1;
-			E -= 1;
-		}
-		mask = ux&0x01;
-		ux = ux>>1;
-		if(mask){
-			if(count) ux+=1;
-			else{
-				if(ux&0x01) ux+=1;
-			}
-		}
-		if(ux>>23){//进位造成多一位
-			e+=1;
-			ux = ux&0x7FFFFF;//(~(1<<23)); //去掉最高位
-		}
-	}
-	
-	return sign+(e<<23)+ux;
-}
-```
-
-将补码转化为浮点数编码步骤：
-
-1. 将补码转化为无符号数，并根据补码的符号来设置浮点数的符号位
-
-2. 因为补码一定是大于等于0的数，所以要么为0，要么为规格化数。如果是规格化数，首先统计除了最高有效位外一共需要几位，得到的就是E，然后通过 ![[公式]](https://www.zhihu.com/equation?tex=E%3De%2B1-2%5E%7Bk-1%7D) 得到解码位为 ![[公式]](https://www.zhihu.com/equation?tex=e%3DE-1%2B2%5E%7Bk-1%7D) 。
-
-3. 无符号数后面E位就是尾数部分，但是需要判断该部分是否23位，如果小于23位，直接将其左移填充；如果大于23位，需要对其进行舍入：
-
-4. 1. 如果是中间值，就需要向偶数舍入
-   2. 如果不是中间值，就需要向最近的进行舍入
-
-## float_f2i
-
-```c
-/* 
- * float_f2i - Return bit-level equivalent of expression (int) f
- *   for floating point argument f.
- *   Argument is passed as unsigned int, but
- *   it is to be interpreted as the bit-level representation of a
- *   single-precision floating point value.
- *   Anything out of range (including NaN and infinity) should return
- *   0x80000000u.
- *   Legal ops: Any integer/unsigned operations incl. ||, &&. also if, while
- *   Max ops: 30
- *   Rating: 4
- */
-int float_f2i(unsigned uf) {
-  //只可能是规格化数
-  int e = ((uf>>23)&0xFF)-127;
-  unsigned sign = uf>>31;
-  unsigned frac = (uf&0x7FFFFF)|0x800000; //加上1
-  if(e<0) return 0;	//小数
-  //先转到无符号数
-  if(e>31) return 0x80000000u;	//超出范围
-  if(e>23) frac = frac<<(e-23);
-  else frac = frac>>(23-e);
-  //将无符号数转化为补码
-  if(sign){ //负数
-	if(frac>>31) 	//溢出
-		return 0x80000000u;
-	else
-		return ~frac+1;
-  }else{	//正数
-	if(frac>>31)	//溢出
-		return 0x80000000u;
-	else
-		return frac;
-  }
-}
-```
-
-将浮点数转化为补码步骤：
-
-1. 首先假设浮点数为规格化数，则 ![[公式]](https://www.zhihu.com/equation?tex=E%3De-Bias) 得到指数部分，我们知道如果 ![[公式]](https://www.zhihu.com/equation?tex=E%3C0)，则计算出来的结果一定是小数（包括非规格化数），此时能直接舍入到0；如果 ![[公式]](https://www.zhihu.com/equation?tex=E%3E31) ，表示至少要将尾数部分右移31位，此时一定会超过补码的表示范围，所以直接将其溢出。
-2. 可通过最低23位得到尾数部分
-3. 尾数部分需要自己在最高有效位添1，如果是负数，则补码的最高位为1，就要求其对应的无符号编码最高位不为1，否则是负溢出溢出；如果是整数，则补码的最高位为0，就要求其编码的最高位为0，否则是正溢出。
-
-## 最终结果
-
-![img](pics/v2-f45923604187993a1ec0fc1750f3fde4_720w.jpg)
 
 # [读书笔记]CSAPP：5[VB]机器级表示：基础
 
@@ -3504,354 +3100,6 @@ cel2fahr:
 当出现无序的结果，可以使用指令`jp`（jump on parity）来进行跳转，而其他结果和无符号数的比较相同。
 
 
-# [读书笔记]CSAPP：BombLab
-
-
- 
-
-**代码地址：**[http://csapp.cs.cmu.edu/3e/bomb.tar](https://link.zhihu.com/?target=http%3A//csapp.cs.cmu.edu/3e/bomb.tar)
-
-**x86-64 GDB命令：**[http://csapp.cs.cmu.edu/3e/docs/gdbnotes-x86-64.pdf](https://link.zhihu.com/?target=http%3A//csapp.cs.cmu.edu/3e/docs/gdbnotes-x86-64.pdf)
-
-**说明：**[http://csapp.cs.cmu.edu/3e/bomblab.pdf](https://link.zhihu.com/?target=http%3A//csapp.cs.cmu.edu/3e/bomblab.pdf)
-
-**README：**[http://csapp.cs.cmu.edu/3e/README-bomblab](https://link.zhihu.com/?target=http%3A//csapp.cs.cmu.edu/3e/README-bomblab)
-
-------
-
-该实验为了考验同学GDB使用、反汇编器以及代码机器指令的熟练程度，我们需要分析代码来确定输入的6条字符串内容，来破解6个炸弹。
-
-**实验步骤：**
-
-1. 可以创建一个文件专门放你输入的答案，我这里创建一个文件`ans`
-2. 运行`objdump -d bomb > bomb.s`来反编译可执行文件`bomb`，得到该代码的汇编代码`bomb.s`
-3. 运行`gdb bomb`来调试`bomb`
-4. 为了防止炸弹爆炸，先使用`break explode_bomb`在炸弹爆炸代码处设置一个断点，防止不小心爆炸
-5. 设置完所有断点后，输入`run ans`来执行代码
-6. 通过分析机器代码来确定需要输入的代码
-
-## phase_1
-
-首先第一关的C语言代码为
-
-![img](pics/v2-47326c49513177bb2b0c99487b6269b5_720w.png)
-
-我们知道首先需要输入一个字符串`input`，然后将其作为参数输入到函数`phase_1`中。计算机在保存字符串时，是保存在连续的内存空间，并将字符串第一个字符的地址作为该字符串的地址。而该字符串作为函数`phase_1`的第一个参数，所以该字符串的地址保存在`%rdi`中。
-
-第一关的汇编代码为
-
-![img](pics/v2-4e93baa5f7f45fe707abb4e4c8ec49e4_720w.jpg)
-
-首先将`0x402400`保存在`%rsi`中，然后执行函数`strings_not_equal`，所以该函数是用来判断字符串是否相同，如果相同则将`%rax`设置为0，否则设置为1。所以这里第一个参数是我们输入的字符串，而第二个参数是地址`0x402400`保存的字符串。 然后`test %eax, %eax`判断结果的值，`je`表示值为0时跳过爆炸函数。所以我们只要输入地址`0x402400`保存的字符串就行了。
-
-通过`print (char *) 0x402400`就能知道需要输入的代码是什么
-
-![img](pics/v2-9acc1b7710f0192f4a9a9e61f7f114dd_720w.png)
-
-## phase_2
-
-首先通过`sub $0x28,%rsp`扩展了该函数的栈帧，然后通过`mov %rsp,%rsi`将当前的栈顶作为第二个参数，我们输入的字符串地址作为第一个参数，调用函数` read_six_numbers`。
-
-![img](pics/v2-881ba39b6f16eedc3871de7304c32358_720w.jpg)
-
-在`read_six_numbers`函数中，后面会调用函数`__isoc99_sscanf@plt`，即`sscanf`函数，该函数形式为
-
-```text
-int sscanf(const char *buffer, const char *format, [argument]...)
-```
-
-其中，`buffer`是输入的字符串，`format`是字符串的格式，`argument`是根据format提取出来的内容保存的位置，而该函数的返回值为格式化参数的数目。
-
-而且汇编代码中对`%rdi`、`%rsi`、`%rdx`等寄存器的赋值操作，所以以上代码是设置函数`sscanf`的参数。
-
-我们知道`%rdi`保存的是我们输入的字符串的地址，`%rsi`保存的是函数`phase_2`的栈顶地址。所以我们可以知道这些参数保存的内容：
-
-- 第三个参数`%rdx`保存栈顶地址
-- 第四个参数`%rcx`保存栈顶地址向上偏移`0x4`
-- 第五个参数`%r8`保存栈顶指针向上偏移`0x8`
-- 第六个参数`%r9`保存栈顶指针向上偏移`0xc`
-
-并且该函数输入超过6个参数的话，就会将其他的参数保存到内存地址中，其中有两个参数保存在内存中，对应的汇编代码为
-
-![img](pics/v2-ca2ec91cdedc2685eaa36eb6cb1b5ff6_720w.png)
-
-并且越靠前的参数，保存的地址越小，所以
-
-- 第七个参数保存在地址`%rsp`处，内容是栈顶指针向上偏移`0x10`
-- 第八个参数保存在地址`%rsp+0x8`处，内容是栈顶指针向上偏移`0x14`
-
-最后修改了第二个参数`%rsi`保存`0x4025c3`。
-
-我们知道函数 `sscanf`第二个参数是字符串你的格式，所以我们输入`print (char *) 0x4025c3`来获得格式的内容
-
-![img](pics/v2-e4ad155a37f03fafb4315f78284d8e3a_720w.png)
-
-所以我们知道，我们需要输入的格式内容是6个数字，并且数字之间要以空格间隔。并且我们可以根据参数顺序来确定函数`phase_2`栈帧中各个位置保存的内容。
-
-从函数`sscanf`返回后，第一行命令`cmpl $0x1,(%rsp)`比较的是栈顶指针`%rsp`对应的数字和1的大小，而栈顶指针`%rsp`保存的是我们输入的第一个数字，而下一行指令`je 400f30 `表示相等时跳过爆炸函数，所以我们输入的第一个数字就是1。
-
-当输入第一个数字是1时，就会跳转到
-
-![img](pics/v2-ea7f66c1a20159a7caaf3d609df9d03d_720w.png)
-
-表示将第二个数字地址保存在`%rbx`，栈顶向上偏移`0x18`的地址保存在`%rbp`，然后跳转回去。
-
-![img](data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='566' height='73'></svg>)
-
-首先`%eax`保存第一个数字，然后将其乘2，然后与`%rbx`指向的内存地址的值进行比较，这里就是与第二个数字相比，如果两者相同，就跳过炸弹爆炸函数 ，所以我们知道第二个数字是第一个数字的两倍。
-
-![img](pics/v2-a6186486565c6ebbadab34321bd7b9c3_720w.png)
-
-将`%rbx`内容加上`0x4`，则`%rbx`保存的是第三个数字的内存地址，然后与`%rbp`相比，如果不相同，还是跳转回去。
-
-![img](pics/v2-a6186486565c6ebbadab34321bd7b9c3_720w.png)
-
-所以这个是一个循环的函数，我们保存的最大地址是栈顶指针向上偏移`0x14`，而`%rbx`保存栈顶指针向上偏移`0x18`，并且我们输入的都是`int`数字类型，刚好占4字节，所以`%rbx`表示该循环的终点，表示所有数字都适用。 所以第三个数字是第二个数字的两倍，第四个数字是第三个数字的两倍，以此类推。
-
-由此对应的答案就是`1 2 4 8 16 32`。
-
-## phase_3
-
-第三道题是一个比较典型的`switch`代码。
-
-首先在`400f5b`中还是要执行一个`sscanf`函数，所以首先设置该函数的参数
-
-- 第一个参数`%rdi`是我们输入的字符串
-- 第二个参数`%rsi`是地址`0x4025cf`处的格式字符串，通过`print (char *) 0x4025cf`可以知道我们需要输入的字符串格式
-
-![img](pics/v2-95903de40bf3b472dd591a9429d704a7_720w.png)
-
-所以我们需要输入两个数字
-
-- 第三个参数`%rdx`表示将第一个数字保存在`0x8(%rsp)`处
-- 第四个参数`%rcx`表示将第二个数字保存在`0xc(%rsp)`处
-
-经过若干行通过函数`sscanf`返回的格式化输入数目，来判断我们是否按照要求输入了两个数字。然后会碰到`switch`的第一个组成部分
-
-![img](pics/v2-17f5f73ddab16404a0ebd39b5a621785_720w.png)
-
-从这段代码我们可以知道
-
-1. 进入`switch`之前，都需要将我们输入的值减掉`switch`所有分支中的最小值，将其转化为一个无符号数，但是这里没有，说明要求我们输入的是大于等于0的数字。而这里使用`0x8(%rsp)`进行比较，所以我们输入的第一个数字要求大于等于0
-2. `cmpl $0x7,0x8(%rsp)`表示我们输入的第一个数字最大只能是7
-
-然后到了`switch`的跳转部分
-
-![img](pics/v2-a432fd1e139c6edbbc1dfea96999afe2_720w.png)
-
-从这里我们知道，`switch`对应的跳转表的表头保存在`0x402470`处，并且根据我们输入的第一个参数进行跳转。所以我们可以先输出跳转表的所有内容，查看输入不同值时跳转到什么位置
-
-![img](pics/v2-28fa96ed75486148aa82d31f89e0c733_720w.jpg)
-
-通过跳转表和汇编代码，我们可以直接设置第一个数字为1，使其跳转到最靠近末尾的地址`400fb9`，此时汇编代码为
-
-![img](pics/v2-53abaca966684e9411447aa151246783_720w.png)
-
-这里首先将`0x137`保存到`%eax`中，然后将其和第二个数字进行比较，如果相同，则释放内存空间，所以我们可以输入`print /d 0x137`得到对应的十进制值
-
-![img](pics/v2-9fc5fb6c34e8c2432aab20ffd0fb9c9d_720w.png)
-
-所以答案为`1 311`。
-
-## phase_4
-
-这道题一进去还是要我们输入两个数字，将第一个数字保存在`0x8(%rsp)`中，第二个数字保存在`0xc(%rsp)`中。
-
-![img](pics/v2-4af2e05d1c6e9b68126c26aac92e3ed8_720w.png)
-
-表示第一个数字必须要比14小。然后设置第一个参数为第一个数字，第二个参数为0，第三个参数为14，调用函数`func4`，我们可以将该函数转化为对应的C代码
-
-```c
-int func4(int a=arg1, int b=0, int c=14){
-  if(c-b>=0){
-    int ans=(c-b)/2;
-  }else{
-    int ans=(c-b+1)/2;
-  }
-  int temp1=ans+b;
-  if(temp1-a<=0){
-    int ans=0;
-    if(temp1-a>=0){
-      return ans;
-    }else{
-      b=temp1+1;
-      int ans = func4(a,b,c);
-      ans=ans*2+1;
-      return ans;
-    }
-  }else{
-    c = temp1-1;
-    int ans = func4(a,b,c);
-    return ans*2;
-  }
-} 
-```
-
-**注意：**其中有一行命令是`sar %eax`，我一开始以为是向右移动`%cl`中记录的位数，但是这里其实是向右移动一位。
-
-首先看后面的汇编代码
-
-![img](pics/v2-87c637ee60da19cf1b273165e10795ce_720w.jpg)
-
-可以知道我们想要函数`func4`输出的值为0，所以我们这里可以直接输入第一个数字为7，此时就能使得该函数返回0。
-
-![img](pics/v2-62576550541804f9d44ea0c4333018a8_720w.png)
-
-然后后面这段代码中，`cmpl $0x0,0xc(%rsp)`表示要对第二个参数与0进行比较，`je 40105d `表示相等时就释放变量空间，所以第二个参数是0。所以答案为`7 0`。
-
-## phase_5
-
-这里首先`mov %rdi,%rbx`将我们的输入字符串保存到`%rbx`中，然后以下保存了一个金丝雀值，不需要去考虑它的值。
-
-![img](pics/v2-0eafe692e9b38536af7da8adf7fdb92c_720w.png)
-
-![img](pics/v2-540e0ee9d0ed273870408c2bf2236983_720w.png)
-
-这里调用了`string_length`函数，此时输入值`%rdi`保存着我们输入的字符串，所以该函数返回我们输入字符串的长度，然后和`0x6`比较，只有相等时才不会引爆炸弹，所以我们需要输入6个字符。
-
-![img](pics/v2-7b1112a9d3f51547fd6d02cb2a2e42b5_720w.png)
-
-这里首先将`%rax`置为0，然后开始到函数内部循环
-
-![img](pics/v2-ea9980819dd836965f3f97ffdcaf5227_720w.jpg)
-
-- `movzbl (%rbx,%rax,1),%ecx`这里可以把`%rax`看成是在我们输入字符串的索引值，然后根据索引，将当前字符保存到`%rcx`中。
-- `mov %cl,(%rsp)`和`mov (%rsp),%rdx`表示将`%rcx`低8位保存到`%rdx`中
-- `and $0xf,%edx`表示保留`%rdx`低4位，即当前字符的低4位
-- `movzbl 0x4024b0(%rdx),%edx`表示用我们当前字符的低4位作为偏移量，将地址`0x4024b0`偏移后值保存到`%edx`，我们可以通过`print (char *) 0x4024b0`查看这个地址中保存的内容，说明`%edx`中保存的是一个字符值
-
-![img](pics/v2-d14bda924591a968a9678a318f5b6f47_720w.png)
-
-- `mov %dl,0x10(%rsp,%rax,1)`表示将我们提取出来的字符保存到`0x10(%rsp, %rax, 1)`处
-- `add $0x1,%rax`和 `cmp $0x6,%rax`表示修改索引值，并且索引值最大为6
-
-所以这个循环的目的就是根据我们输入的字符串，提取低4个字节的值作为`0x4024b0`的偏移量，然后将对应的字符保存到`%rsp+0x10`到`%rsp+0x16`处，并且`movb $0x0,0x16(%rsp)`表示最后补充一个`\0`作为字符串的结尾。
-
-![img](pics/v2-089447da8ccdc12e0a4c0709e14f5489_720w.png)
-
-这段代码表示将地址`0x40245e`保存的字符串，和我们提取出来的字符串通过`string_not_equal`函数相互比较，所以就要保证我们提取出来的字符串和地址`0x40245e`保存的字符串相同。
-
-首先通过`print (cahr *) 0x40245e`获得该目标字符串
-
-![img](pics/v2-0ed59ce9cbc0b32ad26c4563562c39ea_720w.png)
-
-所以当前我们需要构造输入字符串，使得其ascii码的低4位可以从"maduiersnfotvbylSo you think you can stop the bomb with ctrl-c, do you?"索引出"flyers"。
-
-可以输入`man ascii`获得所有ascii码
-
-![img](pics/v2-da09a9ed3eae3920f8dd03519a695d00_720w.png)
-
-由于低4位就是一个十六进制值，所以根据想要的索引值，选择对应行都是正确答案。我这里输入的字符串是`ionefg`。
-
-## phase_6
-
-这部分汇编代码比较长，主要分成4部分。
-
-首先在地址`0x401153`之前是对输入进行检测，要求输入6个数字，范围在1到6之间，并且要求输入不同的数字。地址`0x40116f`之前是对输入进行处理，将输入对7进行取补操作。
-
-从`0x40116f`到`0x4011a9`之间是我看最久的代码。首先`%rdx`保存了一个内存地址`0x6032d0`，然后有一句`0x8(%rdx),%rdx`表示将`%rdx`中的地址偏移`0x8`再将其保存到`%rdx`中，而`%rdx,0x20(%rsp,%rsi,2)`表示将`%rdx`中的内容保存到栈对应的偏移位置。我们首先可视化以下这段内容保存的内容
-
-![img](pics/v2-d4a3de5bce1c5ff1e0358639bcd43d6e_720w.jpg)
-
-我们就可以知道这段内容保存的是一个链表结构，而我们刚刚的操作是将对应位置的链表节点地址保存到栈空间中。
-
-最后一段代码从`0x4011ab`到`0x4011f5`中是对我们保存顺序的要求，它要求我们按照节点内容的大小从大到小排序。
-
-而节点中各个值可以转成十进制进行比较
-
-![img](pics/v2-ab2bbb8424630e5d781f4a3c2e8491b9_720w.jpg)
-
-所以从大到小的索引序列为`3 4 5 6 1 2`，然后根据代码我们还要对其用7取补，得到最终答案为`4 3 2 1 6 5`。
-
-至此，该实验做完了，总体感觉是，做`phase_1`时确实刚上手不太熟练，但是按顺序做下来后感觉难度还行，就最后`phase_6`代码量稍微大一点，有点棘手。
-
-![img](pics/v2-493701aaef045eb2933058da290ded80_720w.jpg)
-
-## secret_phase
-
-做题的时候发现有个`func7`一直没有用过，就搜索了一下该函数，发现在一个`secret_phase`中调用过该函数，说明还有一个隐藏关卡，现在需要考虑如何进入这个隐藏关卡。搜索了一下`secret_phase`，发现在`phase_defused`函数中调用过，说明我们是通过`phase_defused`进入的。
-
-首先，`cmpl $0x6,0x202181(%rip)`会对比当前是否是第六关，如果不是就跳出。 然后会调用`sscanf`函数进行输入，首先看一下输入的参数
-
-![img](pics/v2-db4e4a9ce9911c299957defc18d333dd_720w.jpg)
-
-可以发现这里要求输入的是两个数字和一个字符串，而当前输入的只有两个数字，并且这两个数字刚好就是`phase_4`的答案。我们接着往下看，下面调用了`strings_not_equal`函数，说明要对输入进行判断，而两个参数分别是`lea 0x10(%rsp),%rdi`和`mov $0x402622,%esi`。其中`0x10(%rsp)`是输入的第三个字符串，而`0x402622`保存的内容是
-
-![img](pics/v2-695a844c58836064ff3613fffa27e5af_720w.png)
-
-说明我们可以将`phase_4`的答案改成`7 0 DrEvil`进入隐藏关卡
-
-![img](pics/v2-eb6cfd986839bf6f00dbe35f0b714eef_720w.png)
-
-在`secret_phase`中，首先会调用一个`strtol`函数将我们输入的内容转换成10进制数，说明我们的输入要是一个数字
-
-![img](pics/v2-10a7e5568b045811c14b2dc4d5a9e3a4_720w.png)
-
-这个要求我们输入的数字要小于等于999。
-
-然后将`0x6030f0`作为第一个参数，将我们输入的数字作为第二个参数，调用函数`func7`，我将其转换为C代码
-
-```c
-int func7(int *ad, int inp){
-  if(!ad) return ans;
-  int temp = &ad;
-  int ans;
-  if(temp-inp<=0){
-    ans = 0;
-    if(temp==inp) return ans;
-    ad = *(ad+0x10);
-    ans = func7(ad, inp);
-    ans = ans*2+1;
-    return ans;
-  }else{
-    ad = *(ad+0x8);
-    ans = func7(ad, inp)*2;
-    return ans;
-  }
-}
-```
-
-可以发现它是对一个二叉树进行访问，一侧保存在地址偏移`0x10`处，一侧保存在地址偏移`0x8`处，我们可以输出`0x6030f0`的内容知道二叉树的结构
-
-![img](pics/v2-fe247b0cda9ac6836035a2e890882abf_720w.jpg)
-
-将其整理下可得二叉树
-
-```text
-└─ 36
-   ├─ 8
-   │  ├─ 6
-   │  │  ├─ left: 1
-   │  │  └─ right: 7
-   │  └─ 22
-   │     ├─ left: 20
-   │     └─ right: 35
-   └─ 50
-      ├─ 45
-      │  ├─ left: 40
-      │  └─ right: 47
-      └─ 107
-         ├─ left: 99
-         └─ right: 1001
-```
-
-我们的目标是要函数`func7`输出2，遍历二叉树结构可得答案有`20`和`22`。
-
-所以，最终答案为
-
-```text
-Border relations with Canada have never been better.
-1 2 4 8 16 32
-1 311
-7 0 DrEvil
-ionefg
-4 3 2 1 6 5
-20
- 
-```
-
-![img](pics/v2-2ff448bcd06a3820ffa7bb43e2f9473e_720w.jpg)
-
 
 # [读书笔记]CSAPP：10[VB]机器级表示：进阶
 
@@ -5294,7 +4542,7 @@ word f_predPC = [
 ];
 ```
 
-**注意：**这里需要用前缀表明使用了哪个阶段的值，比如`f_valC`表示使用了取指阶段中计算出来的`valC`，如果是`D_valC`表示保存在流水线寄存器D中的`valC`值。
+**注意：** 这里需要用前缀表明使用了哪个阶段的值，比如`f_valC`表示使用了取指阶段中计算出来的`valC`，如果是`D_valC`表示保存在流水线寄存器D中的`valC`值。
 
 选择PC值时主要分以下三种情况：
 
@@ -5363,8 +4611,8 @@ bool need_valC = f_icode in {
 
 在译码阶段，比较复杂的逻辑单元与转发逻辑和合并信号相关
 
-- **合并信号：**我们可以发现只有`call`指令和条件跳转指令在后面阶段需要`valP`，前者用于压入栈中，后者用于预测错误时跳回，并且该两种指令都不需要从寄存器文件A端口读取数据，所以对于这两种指令，可以将`valA`的值设置为`valP`的值，减少流水线寄存器需要保存的信号。
-- **转发逻辑：**由于对寄存器文件的读写不在同一阶段，所以可能会造成数据冒险，可以直接使用流水线寄存器中保存的或者每个阶段中计算出来的值，而无需要求从寄存器文件中读取。一共包含5中转发源：`e_valE`、`m_valM`、`M_valE`、`W_valM`和`W_valE`，为了保证能读取到最新指令的结果，应该设置转发源满足从左到右依次降低的优先级。
+- **合并信号：** 我们可以发现只有`call`指令和条件跳转指令在后面阶段需要`valP`，前者用于压入栈中，后者用于预测错误时跳回，并且该两种指令都不需要从寄存器文件A端口读取数据，所以对于这两种指令，可以将`valA`的值设置为`valP`的值，减少流水线寄存器需要保存的信号。
+- **转发逻辑：** 由于对寄存器文件的读写不在同一阶段，所以可能会造成数据冒险，可以直接使用流水线寄存器中保存的或者每个阶段中计算出来的值，而无需要求从寄存器文件中读取。一共包含5中转发源：`e_valE`、`m_valM`、`M_valE`、`W_valM`和`W_valE`，为了保证能读取到最新指令的结果，应该设置转发源满足从左到右依次降低的优先级。
 
 由此我们可以完成译码阶段的HCL代码
 
@@ -5416,7 +4664,7 @@ word d_valB = [
 ];
 ```
 
-**注意：**在写回阶段时，我们要写入的寄存器文件目的是`W_dstE`和`W_dstM`的值。
+**注意：** 在写回阶段时，我们要写入的寄存器文件目的是`W_dstE`和`W_dstM`的值。
 
 当指令运行到最终的写回阶段时，因为流水线寄存器中的`stat`信号表示最近完成指令的处理器状态，所以就可以用来设置处理器的状态
 
@@ -5993,48 +5241,48 @@ void psum2(float a[], float p[], long n){
 
 如上图所示是一个简化的Intel处理器的结构，包含**两个特点：**
 
-- **超标量（Superscalar）：**处理器可以在每个时钟周期执行多个操作
-- **乱序（Out-of-order）：**指令执行的顺序不一定和机器代码的顺序相同，提高指令级并行
+- **超标量（Superscalar）：** 处理器可以在每个时钟周期执行多个操作
+- **乱序（Out-of-order）：** 指令执行的顺序不一定和机器代码的顺序相同，提高指令级并行
 
 该处理器主要由两部分构成：
 
-- **指令控制单元（Instruction Control Unit，ICU）：**通过取值控制逻辑从指令高速缓存中读出指令序列，并根据这些指令序列生成一组针对程序数据的基本操作，然后发送到EU中。
+- **指令控制单元（Instruction Control Unit，ICU）：** 通过取值控制逻辑从指令高速缓存中读出指令序列，并根据这些指令序列生成一组针对程序数据的基本操作，然后发送到EU中。
 
-- - **取指控制逻辑：**包含分支预测，来完成确定要取哪些指令。
+- - **取指控制逻辑：** 包含分支预测，来完成确定要取哪些指令。
 
-  - - **分支预测（Branch Prediction）技术：**当程序遇到分支时，程序有两个可能的前进方向，处理器会猜测是否选择分支，同时预测分支的目标地址，直接取目标地址处的指令。
+  - - **分支预测（Branch Prediction）技术：** 当程序遇到分支时，程序有两个可能的前进方向，处理器会猜测是否选择分支，同时预测分支的目标地址，直接取目标地址处的指令。
 
-  - **指令高速缓存（Instruction Cache）：**特殊的高速存储器，包含最近访问的指令。ICU通常会很早就取指，给指令译码留出时间。
+  - **指令高速缓存（Instruction Cache）：** 特殊的高速存储器，包含最近访问的指令。ICU通常会很早就取指，给指令译码留出时间。
 
-  - **指令译码逻辑：**接收实际的程序指令，将其转换成一组基本操作（微操作），并且可以在不同的硬件单元中并行地执行不同的基本操作。比如x86-64中的`addq %rax, 8(%rdx)`，可以分解成访问内存数据`8(%rdx)`、将其加到`%rax`上、将结果保存会内存中。
+  - **指令译码逻辑：** 接收实际的程序指令，将其转换成一组基本操作（微操作），并且可以在不同的硬件单元中并行地执行不同的基本操作。比如x86-64中的`addq %rax, 8(%rdx)`，可以分解成访问内存数据`8(%rdx)`、将其加到`%rax`上、将结果保存会内存中。
 
-  - **退役单元（Retirement Unit）：**指令译码时会将指令信息放到队列中，确保它遵守机器级程序的顺序语义。队列中的指令主要包含两个状态：
+  - **退役单元（Retirement Unit）：** 指令译码时会将指令信息放到队列中，确保它遵守机器级程序的顺序语义。队列中的指令主要包含两个状态：
 
-  - - **退役（Retired）：**当指令完成，且引起这条指令的分支点预测正确，则这条指令会从队列中出队，然后完成对寄存器文件的更新。
-    - **清空（Flushed）：**如果引起该指令的分支点预测错误，就会将该指令出队，并丢弃计算结果，由此保证预测错误不会改变程序状态。
+  - - **退役（Retired）：** 当指令完成，且引起这条指令的分支点预测正确，则这条指令会从队列中出队，然后完成对寄存器文件的更新。
+    - **清空（Flushed）：** 如果引起该指令的分支点预测错误，就会将该指令出队，并丢弃计算结果，由此保证预测错误不会改变程序状态。
     - **寄存器文件：**包含整数、浮点数和最近的SSE和AVX寄存器。
 
 - **执行单元（Execution Unit，EU）：**使用投机执行技术执行由ICU产生的基本操作，通常每个时钟周期会接收多个基本操作，将这些操作分配到一组功能单元中来执行实际的操作。
 
-- - **投机执行（Speculative Execution）技术：**直接执行ICU的预测指令，但是最终结果不会存放在程序寄存器或数据内存中，直到处理器能确定应该执行这些指令。分支操作会被送到EU中来确定分支预测是否正确。如果预测错误，EU会丢弃分支点之后计算出来的结果，并告诉分支模块。
+- - **投机执行（Speculative Execution）技术：** 直接执行ICU的预测指令，但是最终结果不会存放在程序寄存器或数据内存中，直到处理器能确定应该执行这些指令。分支操作会被送到EU中来确定分支预测是否正确。如果预测错误，EU会丢弃分支点之后计算出来的结果，并告诉分支模块。
 
-  - **功能单元：**专门用来处理不同类型操作的模块，并且可以使用寄存器重命名机制将“操作结果”直接在不同单元间进行交换，这是数据转发技术的高级版本。
+  - **功能单元：** 专门用来处理不同类型操作的模块，并且可以使用寄存器重命名机制将“操作结果”直接在不同单元间进行交换，这是数据转发技术的高级版本。
 
   - - **存储模块**和**加载模块**负责通过数据高速缓存来读写数据内存，各自包含一个**加法器**来完成地址的计算，并且单元内部都包含**缓冲区**来保存未完成的内存操作请求集合。每个时钟周期可完成开始一个操作。
 
-    - **分支模块：**当得知分支预测错误，就会在正确的分支目的中取指。
+    - **分支模块：** 当得知分支预测错误，就会在正确的分支目的中取指。
 
-    - **算数运算模块：**能够执行各种不同的操作。
+    - **算数运算模块：** 能够执行各种不同的操作。
 
     - **寄存器重命名机制（Register Renaming）：**会维护一个寄存器的重命名表来进行数据转发，主要有以下步骤
 
     - - 当执行一条更新寄存器`r`的指令`I1`，会产生一个指向该操作结果的唯一标识符`t`，然后将`(r, t)`加入重命名表中。
       - 当后续有需要用到寄存器`r`作为操作数的指令时，会将`t`作为操作数源的值输入到单元中进行执行
       - 当`I1`执行完成时，就会产生一个结果`(v, t)`，表示标识符`t`的操作产生了结果`v`，然后所有等待`t`作为源的操作都会使用`v`作为源值。
-      - **意义：**使用寄存器重命名机制，可以将值从一个操作直接转发到另一个操作，而无需进行寄存器文件的读写，使得后续的操作能在第一个操作`I1`完成后尽快开始。并且投机执行中，在预测正确之前不会将结果写入寄存器中，而通过该机制就可以预测着执行操作的整个序列。
-      - **注意：**重命名表只包含未进行寄存器写操作的寄存器，如果有个操作需要的寄存器没有在重命名表中，就可以直接从寄存器文件中获取值。
+      - **意义：** 使用寄存器重命名机制，可以将值从一个操作直接转发到另一个操作，而无需进行寄存器文件的读写，使得后续的操作能在第一个操作`I1`完成后尽快开始。并且投机执行中，在预测正确之前不会将结果写入寄存器中，而通过该机制就可以预测着执行操作的整个序列。
+      - **注意：** 重命名表只包含未进行寄存器写操作的寄存器，如果有个操作需要的寄存器没有在重命名表中，就可以直接从寄存器文件中获取值。
 
-  - **数据高速缓存（Data Cache）：**存放最近访问的数据值。
+  - **数据高速缓存（Data Cache）：** 存放最近访问的数据值。
 
 ### 3.2 功能单元的性能
 
@@ -6055,9 +5303,9 @@ void psum2(float a[], float p[], long n){
 
 ![img](pics/v2-5c691458ae77ccb328e9412dba2e2e68_720w.jpg)参考机的运算性能
 
-- **延迟（Latency）：**表示完成单独一个运算所需的时钟周期总数
-- **发射时间（Issue Time）：**表示采用流水线时，两个连续的同类型运算之间需要的最小时钟周期数
-- **容量（Capacity）：**表示能够执行该运算的功能单元数量
+- **延迟（Latency）：** 表示完成单独一个运算所需的时钟周期总数
+- **发射时间（Issue Time）：** 表示采用流水线时，两个连续的同类型运算之间需要的最小时钟周期数
+- **容量（Capacity）：** 表示能够执行该运算的功能单元数量
 
 每个运算都能在对应的功能单元进行计算，每个功能单元内部都是用流水线实现的，使得运算在功能单元内是分阶段执行的。发射时间为1的运算，意味着对应的功能单元是**完全流水线化的（Fully Popelined）**，要求运算在功能单元内的各个阶段是连续的，且逻辑上独立的，才能每个时钟周期执行一个运算。当发射时间大于1，意味着该运算在功能单元内不是完全流水线化的，特别是除法运算的延迟等于发射时间，意味着需要完全执行完当前的除法运算，才能执行下一条除法运算。
 
@@ -6067,13 +5315,13 @@ void psum2(float a[], float p[], long n){
 
 - **延迟界限：**
 
-- - **意义：**当指令存在数据相关时，指令的执行必须严格顺序执行，就会限制了处理器指令级并行的能力，延迟界限就会限制程序性能。
-  - **解释：**当存在数据相关时，指令是严格顺序执行的，意味着我们无法通过指令并行来进行加速。而通过参考机的运算性能知道执行每种运算所需的延迟，就确定了执行该运算所需的最小时钟周期数，此时CPE的延迟界限就是运算操作的延迟。比如整数乘法的延迟为3个时钟周期，意味着我们需要用3个时钟周期才能完成一个整数乘法运算，不可能更快了，所以当前的CPE值为3。
+- - **意义：** 当指令存在数据相关时，指令的执行必须严格顺序执行，就会限制了处理器指令级并行的能力，延迟界限就会限制程序性能。
+  - **解释：** 当存在数据相关时，指令是严格顺序执行的，意味着我们无法通过指令并行来进行加速。而通过参考机的运算性能知道执行每种运算所需的延迟，就确定了执行该运算所需的最小时钟周期数，此时CPE的延迟界限就是运算操作的延迟。比如整数乘法的延迟为3个时钟周期，意味着我们需要用3个时钟周期才能完成一个整数乘法运算，不可能更快了，所以当前的CPE值为3。
 
 - **吞吐量界限：**
 
-- - **意义：**刻画了处理器功能单元的原始计算能力，是程序性能的终极限制。
-  - **解释：**表示我们考虑系统中的所有的功能单元，计算出来运算结果的最大速率。比如参考机含有4个可以执行整数加法的功能单元，且整数加法的发射时间为1，所以系统执行整数加法的吞吐量为4，意味着CPE值为0.25，但是参考机中只有两个支持加载的功能单元，意味着每个时钟周期只能读取两个操作数，所以这里的吞吐量就受到了加载的限制，CPE值为0.5。再比如参考机内只含有一个能执行整数乘法的功能单元，说明一个时钟周期只能执行一个整数乘法，此时性能吞吐量就受到了功能单元运算的限制，CPE值为1。
+- - **意义：** 刻画了处理器功能单元的原始计算能力，是程序性能的终极限制。
+  - **解释：** 表示我们考虑系统中的所有的功能单元，计算出来运算结果的最大速率。比如参考机含有4个可以执行整数加法的功能单元，且整数加法的发射时间为1，所以系统执行整数加法的吞吐量为4，意味着CPE值为0.25，但是参考机中只有两个支持加载的功能单元，意味着每个时钟周期只能读取两个操作数，所以这里的吞吐量就受到了加载的限制，CPE值为0.5。再比如参考机内只含有一个能执行整数乘法的功能单元，说明一个时钟周期只能执行一个整数乘法，此时性能吞吐量就受到了功能单元运算的限制，CPE值为1。
 
 ![img](pics/v2-8b67698ba76b05addf610503e7db076d_720w.jpg)
 
@@ -6081,7 +5329,7 @@ void psum2(float a[], float p[], long n){
 
 ### 3.3 处理器操作的抽象模型
 
-这里介绍一种非正式的程序的**数据流（Data-flow）**表示，可以展示不同操作之间的数据相关是如何限制操作的执行顺序，并且图中的**关键路径（Cirtical Path）**给出了执行这些指令所需的时钟周期数的下界。
+这里介绍一种非正式的程序的**数据流（Data-flow）** 表示，可以展示不同操作之间的数据相关是如何限制操作的执行顺序，并且图中的**关键路径（Cirtical Path）**给出了执行这些指令所需的时钟周期数的下界。
 
 ### 3.3.1 从机器级代码到数据流图
 
@@ -6097,12 +5345,12 @@ void psum2(float a[], float p[], long n){
 
 根据数据流图可以将寄存器分成以下几种：
 
-- **只读：**只包含寄存器指向操作的箭头，不包含从操作指向该寄存器的箭头。比如`%rax`。
-- **只写：**只包含从操作指向该寄存器的箭头，不包含从寄存器指向操作的箭头。
-- **局部：**寄存器值在循环内部修改和使用，迭代与迭代之间不相关。比如条件码寄存器。
-- **循环：**寄存器既作为源又作为目的，并且一次迭代中产生的值会在另一次迭代中使用。比如`%rdx`和`%xmm0`。
+- **只读：** 只包含寄存器指向操作的箭头，不包含从操作指向该寄存器的箭头。比如`%rax`。
+- **只写：** 只包含从操作指向该寄存器的箭头，不包含从寄存器指向操作的箭头。
+- **局部：** 寄存器值在循环内部修改和使用，迭代与迭代之间不相关。比如条件码寄存器。
+- **循环：** 寄存器既作为源又作为目的，并且一次迭代中产生的值会在另一次迭代中使用。比如`%rdx`和`%xmm0`。
 
-**注意：**因为迭代之间是数据相关的，必须保证循环寄存器在上一轮迭代中计算完成，才能在下一轮迭代中使用该循环寄存器，所以循环寄存器之间的操作链决定了限制性能的数据相关。
+**注意：** 因为迭代之间是数据相关的，必须保证循环寄存器在上一轮迭代中计算完成，才能在下一轮迭代中使用该循环寄存器，所以循环寄存器之间的操作链决定了限制性能的数据相关。
 
 我们可以对数据流图进行修改，上方寄存器只有只读寄存器和循环寄存器，下方寄存器只有只写寄存器和循环寄存器，得到如下图所示的数据流图
 
@@ -6123,7 +5371,7 @@ void psum2(float a[], float p[], long n){
 
 可以发现里面有两个数据相关链，只有当上方的计算完成时才会计算下一个。并且由于相邻迭代的循环寄存器存在数据相关，所以只能顺序执行，所以要独立地考虑操作对应的延迟。由于参考机中浮点数乘法的延迟为5个时钟周期，而整数加法的延迟为1个时钟周期，所以左侧数据相关链是关键路径，限制了程序的性能。只要左侧操作的延迟大于1个时钟周期（比右侧的延迟大），则程序的CPE就是该操作的延迟。
 
-**注意：**数据流中的关键路径只是提供程序需要周期数的下界，还有很多其他因素会限制性能。比如当我们将左侧的操作变为整数加法时，根据数据流预测的CPE应该为1，但是由于这里的操作变得很快，使得其他操作供应数据的速度不够快，造成实际得到的CPE为1.27。
+**注意：** 数据流中的关键路径只是提供程序需要周期数的下界，还有很多其他因素会限制性能。比如当我们将左侧的操作变为整数加法时，根据数据流预测的CPE应该为1，但是由于这里的操作变得很快，使得其他操作供应数据的速度不够快，造成实际得到的CPE为1.27。
 
 ------
 
@@ -6179,9 +5427,7 @@ double polyh(double a[], double x, long degree){
 
 可以发现，迭代n次时，函数`poly`需要的加法次数为2n，乘法次数为2n；函数`polyh`需要的加法次数为2n，乘法次数为1n。虽然`polyh`计算次数减少了，但是CPE却变得更差了，说明函数具有更少的操作不意味着具有更好的性能。
 
-**注意：**我们只要关注单独循环寄存器之间的延迟，然后再在各个循环寄存器之间进行比较，得到最大的延迟。
-
-**（以上只是自己的推测，和课后答案有所区别，如有问题请指出，谢谢）**
+**注意：** 我们只要关注单独循环寄存器之间的延迟，然后再在各个循环寄存器之间进行比较，得到最大的延迟。
 
 ------
 
@@ -6396,11 +5642,11 @@ acc = acc OP (data[i] OP (data[i+1]) (... OP data[i+k-1])));
 - 当加载操作和存储操作的地址相同：图中的虚线就存在，则`%rax`为循环寄存器，关键路径为左侧路径，包含存储数据计算、加载操作和加法操作，CPE大约为7.3。
 - 当加载操作和存储操作的地址不同：图中的虚线就不存在，则`%rax`就不是循环寄存器，其中`s_data`操作和`load`操作可以并行执行，关键路径为右侧路径，只有一个减法操作，CPE大约为1.3。
 
-**注意：**要在更大范围观察写/读相关，不一定存在一个迭代中，可能在相邻迭代中，只要发现有存储操作，而后执行相同地址的加载操作，就会有写/读相关。
+**注意：** 要在更大范围观察写/读相关，不一定存在一个迭代中，可能在相邻迭代中，只要发现有存储操作，而后执行相同地址的加载操作，就会有写/读相关。
 
 ## 6 程序剖析
 
-**程序剖析（Profiling）**会在代码中插入工具代码，来确定程序的各个部分需要的时间。可以在实际的基准数据上运行实际程序的同时进行剖析，不过运行会比正常慢一些（2倍左右）。
+**程序剖析（Profiling）** 会在代码中插入工具代码，来确定程序的各个部分需要的时间。可以在实际的基准数据上运行实际程序的同时进行剖析，不过运行会比正常慢一些（2倍左右）。
 
 Unix系统提供一个剖析程序GPROF，提供以下信息：
 
@@ -6437,517 +5683,7 @@ gprof prog
 - 要尽量使得哈希函数分布均匀，并且要产生较大范围
 
 
-# [读书笔记]CSAPP：ArchLab
 
-
- **README：**[http://csapp.cs.cmu.edu/3e/README-archlab](https://link.zhihu.com/?target=http%3A//csapp.cs.cmu.edu/3e/README-archlab)
-
-**说明：**[http://csapp.cs.cmu.edu/3e/archlab.pdf](https://link.zhihu.com/?target=http%3A//csapp.cs.cmu.edu/3e/archlab.pdf)
-
-**代码：**[http://csapp.cs.cmu.edu/3e/archlab-handout.tar](https://link.zhihu.com/?target=http%3A//csapp.cs.cmu.edu/3e/archlab-handout.tar)
-
-------
-
-该实验主要是学习流水线Y86-64处理器的设计和实现，同时对处理器和基准测试程序进行优化以使性能最大化。
-
-主要包含三个实验：在A部分中，将编写一些简单的Y86-64程序，并熟悉Y86-64工具。在B部分中，对SEQ仿真器进行扩展。这两部分将为C部分（实验的核心）做好准备，在C部分中，将优化Y86-64基准程序和处理器设计。
-
-我们首先下载得到`archlab-handout.tar`文件，然后运行
-
-```text
-tar xvf archlab-handout.tar
-cd archlab-handout
-tar xvf sim.tar
-```
-
-你后续的所有工作都是在sim文件夹中进行操作的，然后执行
-
-```text
-make clean; make
-```
-
-如果出现错误，则执行以下命令
-
-```text
-# .make: flex：命令未找到
-sudo apt-get install bison flex
-```
-
-## part A
-
-该部分主要是在文件夹`sim/misc`中，主要是用Y86-64提供的指令集完成`example.c`中的函数编写，其中包含三个函数：`sum_list`、`rsum_list`和`copy_block`。可以使用汇编器`yas`对Y86-64程序进行汇编，然后使用指令集模拟器`yis`运行可执行文件。
-
-**Y86-64指令集：**
-
-![img](pics/v2-14bf040ba06f4354e45674df091ff2f0_720w.jpg)
-
-![img](pics/v2-5c96ac57694720220d0f8aaf8d2ec263_720w.jpg)
-
-Y86-64中包含的**程序员可见状态**有
-
-![img](pics/v2-22e0c30eab110efcf96706b17271f41d_720w.jpg)
-
-### 1. sum_list
-
-在`examples.c`中首先定义了一个链节点的结构体
-
-```c
-/* linked list element */
-typedef struct ELE {
-    long val;
-    struct ELE *next;
-} *list_ptr;
- 
-```
-
-`sum_list`函数对应的C代码如下所示，是对链表`ls`元素进行累加
-
-```c
-long sum_list(list_ptr ls)
-{
-    long val = 0;
-    while (ls) {
-	val += ls->val;
-	ls = ls->next;
-    }
-    return val;
-}
-```
-
-我们需要写一个Y86-64汇编程序对以下链表结构调用`sum_list`函数
-
-```text
-  .align 8
-ele1:
-  .quad 0x00a
-  .quad ele2
-ele2:
-  .quad 0x0b0
-  .quad ele3
-ele3:
-  .quad 0xc00
-  .quad 0 
-```
-
-**注意：**链表是保存在内存中的，并且根据结构体`ELE`的声明，一个`ELE`实例在内存中的分布是8字节的`val`值以及8字节的`ELE *`值。
-
-将以下代码保存到`sum.ys`中
-
-```text
-  .pos 0 #设置当前位置为0
-  irmovq stack, %rsp #设置栈指针
-  call main
-  halt
-
-#链表
-  .align 8 #地址和8字节对齐
-ele1:
-  .quad 0x00a
-  .quad ele2
-ele2:
-  .quad 0x0b0
-  .quad ele3
-ele3:
-  .quad 0xc00
-  .quad 0
-
-main:
-  irmovq ele1, %rdi #将链表的第一个元素ele1作为输入
-  call sum_list
-  ret
-
-sum_list:
-  pushq %rbx #%rbx为被调用者保存寄存器，后面有用到该寄存器，所以需要先压入栈中
-  xorq %rax, %rax #用%rax保存val值，首先置零
-  jmp test
-loop:
-  mrmovq (%rdi), %rbx #将链节点中的val保存到%rbx中
-  addq %rbx, %rax
-  mrmovq 8(%rdi), %rdi #将当前指向链节点val地址的%rdi增加8字节，指向了保存下一个链节点地址的地址，再访问内存，得到下一个节点的地址
-test:
-  andq %rdi,%rdi #对输入链节点进行判断
-  jne loop #如果链节点是非零的，就进入循环loop
-  popq %rbx
-  ret
-
-  .pos 0x200 #设置栈地址
-stack:
-```
-
-然后在`sim/misc`文件夹中运行`./yas sum.ys`得到`sum.yo`可执行文件，然后运行`./yis sum.yo`得到运行结果
-
-![img](pics/v2-5f4068b1a17b3c3cd08ecd9a2bec30bc_720w.jpg)
-
-其中`%rax`中保存着计算结果。
-
-### 2. rsum_list
-
-`rsum_list`函数对应的C代码如下所示，是通过递归形式完成链表累加
-
-```c
-long rsum_list(list_ptr ls)
-{
-    if (!ls)
-	return 0;
-    else {
-	long val = ls->val;
-	long rest = rsum_list(ls->next);
-	return val + rest;
-    }
-} 
-```
-
-和上一节一样，我们创建一个`rsum.ys`文件，写入以下代码
-
-```text
-   .pos 0
-  irmovq stack, %rsp
-  call main
-  halt
-
-  .align 8
-ele1:
-  .quad 0x00a
-  .quad ele2
-ele2:
-  .quad 0x0b0
-  .quad ele3
-ele3:
-  .quad 0xc00
-  .quad 0
-
-main:
-  irmovq ele1, %rdi
-  call rsum_list
-  ret
-
-rsum_list:
-  pushq %rbx
-  xorq %rax, %rax
-  andq %rdi, %rdi
-  je finish
-  mrmovq (%rdi), %rbx
-  mrmovq 8(%rdi), %rdi
-  call rsum_list
-  addq %rbx, %rax #当调用rsum_list后，结果保存在%rax中
-finish:
-  popq %rbx
-  ret
-  
-  .pos 0x200
-stack:
-```
-
-运行结果为
-
-![img](pics/v2-f66692be1c82d1f1eda233ab31b7fba2_720w.jpg)
-
-### 3 copy_block
-
-`copy_block`函数是将内存中的一个块复制到另一个不重叠的区域，并且计算所有复制单词的xor校验和Xor，对应的C代码为
-
-```c
-long copy_block(long *src, long *dest, long len)
-{
-    long result = 0;
-    while (len > 0) {
-	long val = *src++;
-	*dest++ = val;
-	result ^= val;
-	len--;
-    }
-    return result;
-} 
-```
-
-我们写一个Y86-64程序，将下列的块作为函数的输入
-
-```text
-  .align 8
-# Source block
-src:
-  .quad 0x00a
-  .quad 0x0b0
-  .quad 0xc00
-# Destination block
-dest:
-  .quad 0x111
-  .quad 0x222
-  .quad 0x333
-```
-
-我们创建`copy.ys`保存以下代码
-
-```text
-  .pos 0
-  irmovq stack, %rsp
-  call main
-  halt
-
-  .align 8
-# Source block
-src:
-  .quad 0x00a
-  .quad 0x0b0
-  .quad 0xc00
-# Destination block
-dest:
-  .quad 0x111
-  .quad 0x222
-  .quad 0x333
-
-main:
-  irmovq src, %rdi
-  irmovq dest, %rsi
-  irmovq $3, %rdx
-  call copy_block
-  ret
-
-copy_block:
-  pushq %rbx
-  pushq %r12
-  pushq %r13
-  xorq %rax, %rax
-  irmovq $8, %r12
-  irmovq $1, %r13
-loop:
-  andq %rdx, %rdx
-  jle finish
-  mrmovq (%rdi), %rbx
-  rmmovq %rbx, (%rsi)
-  xorq %rbx, %rax
-  addq %r12, %rdi
-  addq %r12, %rsi
-  subq %r13, %rdx
-  jmp loop
-finish:
-  popq %r13
-  popq %r12
-  popq %rbx
-  ret
-
-  .pos 0x200
-stack: 
-```
-
-**注意：**
-
-- Y86-64指令集中不包含立即数和寄存器之间的运算指令，所以需要先通过`irmovq`将立即数保存到寄存器中，再用该寄存器进行计算
-- 出入栈的寄存器顺序要相反
-
-运行结果为
-
-![img](pics/v2-c8911dc0844be52e2ad033fa71da98d8_720w.jpg)
-
-## part B
-
-该部分在`sim/seq`文件夹中，想要我们对SEQ处理器进行扩展，使其支持`iaddq`指令。
-
-根据题目4.3我们可以知道`iaddq`的指令编码
-
-![img](pics/v2-b1060593dc6c8a7240101c755be9ff82_720w.png)
-
-然后我们可以参考`opq`指令和`irmovq`的执行过程得到`iaddq`的执行过程
-
-![img](pics/v2-dab194b0d42ef0ad657801cdea55db3e_720w.jpg)
-
-然后我们需要在`seq-full.hcl`文件中进行修改，使其包含`iaddq`指令。首先该HCL中包含了`iaddq`的指令代码`IIADDQ`，然后我将需要修改的内容列在下方
-
-```text
-#取指阶段
-##该信号判断是否为合法指令
-bool instr_valid = icode in 
-	{ INOP, IHALT, IRRMOVQ, IIRMOVQ, IRMMOVQ, IMRMOVQ,
-	  IOPQ, IJXX, ICALL, IRET, IPUSHQ, IPOPQ , IIADDQ}; 
-##由于iaddq指令需要读取寄存器rB
-bool need_regids =
-	icode in { IRRMOVQ, IOPQ, IPUSHQ, IPOPQ, 
-		   IIRMOVQ, IRMMOVQ, IMRMOVQ , IIADDQ};
-#由于iaddq指令还需要立即数
-bool need_valC =
-	icode in { IIRMOVQ, IRMMOVQ, IMRMOVQ, IJXX, ICALL ,IIADDQ}; 
-
-#译码阶段和写回阶段
-##因为iaddq要使用rB寄存器，所以需要设置srcB的源为rB
-word srcB = [
-	icode in { IOPQ, IRMMOVQ, IMRMOVQ, IIADDQ} : rB;
-	icode in { IPUSHQ, IPOPQ, ICALL, IRET } : RRSP;
-	1 : RNONE;  # Don't need register
-];
-##计算完的结果valE需要保存到寄存器rB中
-word dstE = [
-	icode in { IRRMOVQ } && Cnd : rB;
-	icode in { IIRMOVQ, IOPQ, IIADDQ} : rB;
-	icode in { IPUSHQ, IPOPQ, ICALL, IRET } : RRSP;
-	1 : RNONE;  # Don't write any register
-];
-
-#执行阶段
-##iaddq指令需要将valC作为aluA的值
-word aluA = [
-	icode in { IRRMOVQ, IOPQ } : valA;
-	icode in { IIRMOVQ, IRMMOVQ, IMRMOVQ, IIADDQ } : valC;
-	icode in { ICALL, IPUSHQ } : -8;
-	icode in { IRET, IPOPQ } : 8;
-	# Other instructions don't need ALU
-];
-##iaddq指令需要将aluB的值设置为valB
-word aluB = [
-	icode in { IRMMOVQ, IMRMOVQ, IOPQ, ICALL, 
-		   IPUSHQ, IRET, IPOPQ, IIADDQ } : valB;
-	icode in { IRRMOVQ, IIRMOVQ } : 0;
-	# Other instructions don't need ALU
-];
-##iaddq指令也需要更新CC
-bool set_cc = icode in { IOPQ , IIADDQ};
-```
-
-修改完后需要通过该HCL文件构建SEQ仿真器（ssim）的新实例，然后对其进行测试：
-
-- 根据`seq-full.hcl`文件构建新的仿真器
-
-```text
-make VERSION=full
-```
-
-**注意：**如果你不含有`Tcl/Tk`，需要在`Makefile`中将对应行注释掉
-
-- 在小的Y86-64程序中测试你的方法
-
-```text
-./ssim -t ../y86-code/asumi.yo
-```
-
-如果失败了，还要重新修改你的实现
-
-- 使用基准程序来测试你的方法
-
-```text
-(cd ../y86-code; make testssim)
-```
-
-这将在基准程序上运行ssim，并通过将结果处理器状态与高级ISA仿真中的状态进行比较来检查正确性。注意，这些程序均未测试添加的指令，只是确保你的方法没有为原始说明注入错误。
-
-- 一旦可以正确执行基准测试程序，则应在`../ptest`中运行大量的回归测试
-
-测试除了`iaddq`以外的所有指令
-
-```text
-(cd ../ptest; make SIM=../seq/ssim) 
-```
-
-![img](pics/v2-c61eeb0a7eafeb223b82a9d4bbacebdc_720w.jpg)
-
-测试我们实现的`iaddq`指令
-
-```text
- (cd ../ptest; make SIM=../seq/ssim TFLAGS=-i)
-```
-
-![img](pics/v2-622b2b2b320ba0a69d4a560d46707be8_720w.jpg)
-
-## part C
-
-该部分在`sim/pipe`中进行，需要我们修改`ncopy.ys`使得`ncopy`函数尽可能块，也可以修改`pipe-full.hcl`文件来增加`iaddq`指令。
-
-当你修改了了`ncopy.ys`文件时，需要使用`make drivers`进行编译，当修改了`pipe-full.hcl`时，需要使用`make psim VERSION=full`编译。
-
-可以用`./correctness.pl`测试`ncopy`函数的正确性，然后使用`./benchmark.pl`来测试函数的性能，希望CPE越小越好。初始CPE为15.18，大于10.5为0分，小于7.5为满分60。
-
-我只得到8.63的CPE，只有37.4，代码如下
-
-```text
-	xorq %rax,%rax		# count = 0;
-	
-	iaddq $-5, %rdx
-	jg Loop6x6
-	iaddq $5, %rdx
-	jg Loop1
-	ret
-
-Loop1:
-	mrmovq (%rdi), %r8
-	rrmovq %rax, %r14
-	iaddq $1, %r14
-	andq %r8, %r8
-	cmovg %r14, %rax
-	rmmovq %r8, (%rsi)
-		
-	iaddq $8, %rdi		# src++
-	iaddq $8, %rsi		# dst++
-	iaddq $-1, %rdx		# len--
-
-	jg Loop1
-	ret
-
-Loop6x6:
-	mrmovq (%rdi), %r8
-	rrmovq %rax, %r14
-	iaddq $1, %r14
-	andq %r8, %r8
-	cmovg %r14, %rax
-	rmmovq %r8, (%rsi)
-	
-	mrmovq 8(%rdi), %r8
-	rrmovq %rax, %r14
-	iaddq $1, %r14
-	andq %r8, %r8
-	cmovg %r14, %rax
-	rmmovq %r8, 8(%rsi)
-	
-	mrmovq 16(%rdi), %r8
-	rrmovq %rax, %r14
-	iaddq $1, %r14
-	andq %r8, %r8
-	cmovg %r14, %rax
-	rmmovq %r8, 16(%rsi)
-	
-	mrmovq 24(%rdi), %r8
-	rrmovq %rax, %r14
-	iaddq $1, %r14
-	andq %r8, %r8
-	cmovg %r14, %rax
-	rmmovq %r8, 24(%rsi)
-	
-	mrmovq 32(%rdi), %r8
-	rrmovq %rax, %r14
-	iaddq $1, %r14
-	andq %r8, %r8
-	cmovg %r14, %rax
-	rmmovq %r8, 32(%rsi)
-	
-	mrmovq 40(%rdi), %r8
-	rrmovq %rax, %r14
-	iaddq $1, %r14
-	andq %r8, %r8
-	cmovg %r14, %rax
-	rmmovq %r8, 40(%rsi)
-	
-	
-	iaddq $48, %rdi		# src++
-	iaddq $48, %rsi		# dst++
-	iaddq $-6, %rdx		# len--
-	
-	jg Loop6x6
-	iaddq $5, %rdx
-	jg Loop1 
-```
-
-修改了以下几部分：
-
-- 加上了`iaddq`指令，并将代码中包含立即数加减法的指令替换成`iaddq`。15.18-->13.70
-- 因为当前处理器采用AT策略来预测分支，所以修改了跳转指令，使其跳转到可能性较大的分支。13.70-->13.55
-- 使用条件转义指令，并将其放在读取内存之后，消除加载/使用冒险。13.55-->13.11
-- 使用循环展开，不同结果如下所示
-
-![img](pics/v2-cb3de37e9eb5163bc1fbe0874f36e04f_720w.png)
-
-所以这里采用7x7进行展开
-
-- 在跳转之前，我们都用`and`来得到条件码，其实计算出值后就会得到对应的条件码，所以可以删除`and`。9.70-->9.52
-- 消除一些冗余的，不需要的计算。9.52-->9.02
-- 重新测了一下循环展开的数量，现在6x6更好。9.02-->9.01
-- 去掉不必要的跳转指令。9.01-->8.63
 
 
 # [读书笔记]CSAPP：15[VB]存储层次结构
@@ -6969,30 +5705,30 @@ Loop6x6:
 
 ------
 
-理想状态中，我们将存储器系统视为一个线性字节数组，CPU能在常数时间内访问每个存储器位置。但实际上**存储器系统（Memory System）**是一个具有不同容量、成本和访问时间的存储设备的层次结构，分别具有以下几部分：
+理想状态中，我们将存储器系统视为一个线性字节数组，CPU能在常数时间内访问每个存储器位置。但实际上**存储器系统（Memory System）** 是一个具有不同容量、成本和访问时间的存储设备的层次结构，分别具有以下几部分：
 
 1. CPU中的寄存器保存最常使用的数据，能在0个时钟周期内访问
-2. **高速缓存存储器（Cache Memory）**是靠近CPU的、较小的快速存储器，保存一部分从**主存储器（Main Memory）**取出的常用指令和数据，能在4~75个时钟周期内访问
+2. **高速缓存存储器（Cache Memory）**是靠近CPU的、较小的快速存储器，保存一部分从**主存储器（Main Memory）** 取出的常用指令和数据，能在4~75个时钟周期内访问
 3. 主存缓存存储磁盘上的数据，需要上百个时钟周期访问
 4. 磁盘存储通过网络连接的其他机器的磁盘或磁带上的数据，需要几千万格周期进行访问
 
 上方存储器作为下方存储器的缓存，速度更快、容量更小。
 
-存储器的层次结构之所有有效，是因为程序具有**局部性（Locality）**的基本属性，倾向于不断访问相同的数据项集合，或者倾向于访问相邻的数据项集合。我们希望程序能具有更好的局部性，使得数据项存储在较高层次的存储器中，这样程序就会倾向于从存储器结构中较高层次访问数据项，运行会更快。
+存储器的层次结构之所有有效，是因为程序具有**局部性（Locality）** 的基本属性，倾向于不断访问相同的数据项集合，或者倾向于访问相邻的数据项集合。我们希望程序能具有更好的局部性，使得数据项存储在较高层次的存储器中，这样程序就会倾向于从存储器结构中较高层次访问数据项，运行会更快。
 
 ## 1 存储技术
 
 ### 1.1 随机访问存储器
 
-**随机访问存储器（Random-Access Memory，RAM）**根据存储单元实现方式可以分为两类：静态的RAM（SRAM）和动态的RAM（DRAM）。
+**随机访问存储器（Random-Access Memory，RAM）** 根据存储单元实现方式可以分为两类：静态的RAM（SRAM）和动态的RAM（DRAM）。
 
 ![img](pics/v2-933c9f4227843802cce01e44b5b7b867_720w.png)
 
 ### 1.1.1 SRAM
 
-- 将每个位保存到由6个晶体管电路构成的**双稳态的（Bistable）**存储器单元。
-- **属性：**可以无限期地保持在两个不同的电压配置或状态之一，而其他的都是不稳定状态，会迅速转移到两个稳定状态之一。
-- **特点：**由于具有双稳态，所以只要有电，就会永远保持它的值，即使有干扰，当干扰消除时就会恢复到稳态。
+- 将每个位保存到由6个晶体管电路构成的**双稳态的（Bistable）** 存储器单元。
+- **属性：** 可以无限期地保持在两个不同的电压配置或状态之一，而其他的都是不稳定状态，会迅速转移到两个稳定状态之一。
+- **特点：** 由于具有双稳态，所以只要有电，就会永远保持它的值，即使有干扰，当干扰消除时就会恢复到稳态。
 
 由于SRAM存取速度较快，只要供电就会保持不变，对光和电噪音等干扰不敏感，但是每位的存储需要6个晶体管，使得造价较为昂贵，且密集度低，使其适合作为小容量高速的高速缓存存储器。
 
@@ -7010,17 +5746,17 @@ Loop6x6:
 
 ![img](pics/v2-09684a145353368254bbeffd40811319_720w.jpg)
 
-如上图所示，我们有一个 ![[公式]](https://www.zhihu.com/equation?tex=16%5Ctimes8) 的DRAM芯片，其中包含16个超单元，每个超单元由8个DRAM单元组成，使得每个超单元能存储8位信息。并且16个超单元被组成4行4列的阵列形式。由一个**内存控制器（Memory Controller）**通过`addr`引脚和`data`引脚将控制DRAM芯片数据的传入和传出，比如想要获得`(2,1)`处超单元的数据
+如上图所示，我们有一个 ![[公式]](https://www.zhihu.com/equation?tex=16%5Ctimes8) 的DRAM芯片，其中包含16个超单元，每个超单元由8个DRAM单元组成，使得每个超单元能存储8位信息。并且16个超单元被组成4行4列的阵列形式。由一个**内存控制器（Memory Controller）** 通过`addr`引脚和`data`引脚将控制DRAM芯片数据的传入和传出，比如想要获得`(2,1)`处超单元的数据
 
-1. 内存控制器发送**行地址（Row Access Strobe，RAS）**2到DRAM芯片，则DRAM芯片会将行2中的整行内容复制到**内部行缓冲区**。
-2. 内存控制器发送**列地址（Column Access Strobe，CAS）**1到DRAM芯片，则DRAM芯片会从内部行缓冲区获得1列的数据，将其发送到内存控制器。
+1. 内存控制器发送**行地址（Row Access Strobe，RAS）** 2到DRAM芯片，则DRAM芯片会将行2中的整行内容复制到**内部行缓冲区**。
+2. 内存控制器发送**列地址（Column Access Strobe，CAS）** 1到DRAM芯片，则DRAM芯片会从内部行缓冲区获得1列的数据，将其发送到内存控制器。
 
 **注意：**
 
 - 内存控制器发送RAS和CAS时，使用相同的`addr`引脚，使得必须分两步发送地址，会增加访问时间。
 - 如果将16个DRAM单元组织成线性形式，则需要4位的地址引脚才能索引到每个超单元，但是将其组织成4行4列的阵列形式，只需要2位的地址引脚。
 
-为了一次性能访问更多的数据，可以将多个DRAM芯片封装到一个**内存模块（Memory Module）**中，将其扎到主板的扩展槽中。
+为了一次性能访问更多的数据，可以将多个DRAM芯片封装到一个**内存模块（Memory Module）** 中，将其扎到主板的扩展槽中。
 
 ![img](pics/v2-604407000fe483d31503470dce970bcf_720w.jpg)
 
@@ -7034,17 +5770,17 @@ Loop6x6:
 
 而基于传统的DRAM单元，可以做一些优化来提高访问基本DRAM单元的速度：
 
-- **快页模式DRAM（Fast Page Mode DRAM，FPM DRAM）：**传统的DRAM芯片通过CAS获得数据后，会将那一行的数据从内部行缓冲区直接删掉，如果访问多个在同一行的超单元时，需要反复读取相同的行。而FPM DRAM能够获取一次行数据后，后面的读取直接从内部行缓冲区读取。
-- **扩展数据输出DRAM（Extended Data Out DRAM，EDO DRAM）：**对FPM DRAM进行改进，使得各个CAS信号在时间上更加紧密。
-- **同步DRAM（Synchronous DRAM，SDRAM）：**DRAM芯片与内存控制器的通信使用一组显示的控制信号，通常是异步的，而SDRAM使用了，控制内存控制器的外部时钟信号的上升沿来代替控制信号。
-- **双倍数据速率同步DRAM（Double Data-Rate Sychronous DRAM，DDR SDRAM）：**对SDRAM的优化，通过使用两个时钟沿作为控制信号，从而使得DRAM的速度翻倍。
-- **视频RAM（Video RAM，VRAM）：**用于图形系统的帧缓冲区，与FPM DRAM的区别：VRAM的输出是通过对内部缓冲区的移位得到的，VRAM允许对内存并行地读和写。
+- **快页模式DRAM（Fast Page Mode DRAM，FPM DRAM）：** 传统的DRAM芯片通过CAS获得数据后，会将那一行的数据从内部行缓冲区直接删掉，如果访问多个在同一行的超单元时，需要反复读取相同的行。而FPM DRAM能够获取一次行数据后，后面的读取直接从内部行缓冲区读取。
+- **扩展数据输出DRAM（Extended Data Out DRAM，EDO DRAM）：** 对FPM DRAM进行改进，使得各个CAS信号在时间上更加紧密。
+- **同步DRAM（Synchronous DRAM，SDRAM）：** DRAM芯片与内存控制器的通信使用一组显示的控制信号，通常是异步的，而SDRAM使用了，控制内存控制器的外部时钟信号的上升沿来代替控制信号。
+- **双倍数据速率同步DRAM（Double Data-Rate Sychronous DRAM，DDR SDRAM）：** 对SDRAM的优化，通过使用两个时钟沿作为控制信号，从而使得DRAM的速度翻倍。
+- **视频RAM（Video RAM，VRAM）：** 用于图形系统的帧缓冲区，与FPM DRAM的区别：VRAM的输出是通过对内部缓冲区的移位得到的，VRAM允许对内存并行地读和写。
 
-从更高层面来看，数据流是通过称为**总线（Bus）**的共享电子电路在处理器和DRAM主存之间传递数据的。总线是一组并行的导线，能够携带地址、数据和控制信号，也可以将数据和地址信号使用相同的导线。
+从更高层面来看，数据流是通过称为**总线（Bus）** 的共享电子电路在处理器和DRAM主存之间传递数据的。总线是一组并行的导线，能够携带地址、数据和控制信号，也可以将数据和地址信号使用相同的导线。
 
 ![img](pics/v2-60ee1fa13df03d55d7ec6e40298025fd_720w.jpg)
 
-如上图所示是一个连接CPU和DRAM主存的总线结构。其中**I/O桥接器（I/O Bridge）**芯片组包括内存控制器，能够将系统总线的电子信号和内存总线的电子信号互相翻译，也能将系统总线和内存总线连接到I/O总线。
+如上图所示是一个连接CPU和DRAM主存的总线结构。其中**I/O桥接器（I/O Bridge）** 芯片组包括内存控制器，能够将系统总线的电子信号和内存总线的电子信号互相翻译，也能将系统总线和内存总线连接到I/O总线。
 
 当从内存加载数据到寄存器中：
 
@@ -7069,56 +5805,56 @@ Loop6x6:
 
 ### 1.1.3 非易失性存储器
 
-之前介绍的DRAM和SRAM在断电时都会丢失数据，所以是**易失的（Volatile）**，而**非易失性存储器（Nonvolatile Memory）**即使断电后，也会保存信息，该类存储器称为**只读存储器（Read-Only Memory，ROM）**，但是现在ROM中有的类型既可以读也可以写了，可以根据ROM能够重编程的次数以及对它们进行重编程所用的机制进行区分，包括：
+之前介绍的DRAM和SRAM在断电时都会丢失数据，所以是**易失的（Volatile）**，而**非易失性存储器（Nonvolatile Memory）** 即使断电后，也会保存信息，该类存储器称为**只读存储器（Read-Only Memory，ROM）**，但是现在ROM中有的类型既可以读也可以写了，可以根据ROM能够重编程的次数以及对它们进行重编程所用的机制进行区分，包括：
 
-- **可编程ROM（PROM）：**可以编程一次
-- **可擦写PROM（EPROM）：**可以批量擦除
-- **闪存（Flash Memory）：**具有部分（块级）擦除功能，大约擦除十万次后会耗尽
+- **可编程ROM（PROM）：** 可以编程一次
+- **可擦写PROM（EPROM）：** 可以批量擦除
+- **闪存（Flash Memory）：** 具有部分（块级）擦除功能，大约擦除十万次后会耗尽
 
 存储在ROM设备中的程序称为**固件（Firmware）**，包括BIOS、磁盘控制器、网卡、图形加速器和安全子系统等。当计算机系统通电后，会运行存储在ROM中的固件。
 
 ### 1.2 磁盘存储
 
-**磁盘（Disk）**是被用来保存大量数据的存储设备，但是读信息的速度比DRAM慢10万倍，比SRAM慢100万倍。
+**磁盘（Disk）** 是被用来保存大量数据的存储设备，但是读信息的速度比DRAM慢10万倍，比SRAM慢100万倍。
 
 ![img](pics/v2-6f683170077745bddb02117e90df1dcd_720w.jpg)
 
-如上图所示是一个磁盘的构造。磁盘是由多个叠放在一起的**盘片（Platter）**构成，每个盘片有两个覆盖着磁性记录材料的**表面（Surface）**。每个表面由一组称为**磁道（Track）**的同心圆组成，每个磁道被划分为若干**扇区（Sector）**，每个扇区包含相同数量的数据位（通常为512位）作为读写数据的基本单位。扇区之间通过**间隙（Gap）**分隔开来，间隙不保存数据信息，只用来表示扇区的格式化位。通常会使用**柱面（Cylinder）**来描述不同表面上相同磁道的集合，比如柱面k就是6个表面上磁道k的集合。盘片中央会有一个可以旋转的**主轴（Spindle）**，使得盘片以固定的旋**转速率（Rotational Rate）**旋转，单位通常为**RPM（Revolution Per Minute）**。
+如上图所示是一个磁盘的构造。磁盘是由多个叠放在一起的**盘片（Platter）** 构成，每个盘片有两个覆盖着磁性记录材料的**表面（Surface）**。每个表面由一组称为**磁道（Track）** 的同心圆组成，每个磁道被划分为若干**扇区（Sector）**，每个扇区包含相同数量的数据位（通常为512位）作为读写数据的基本单位。扇区之间通过**间隙（Gap）** 分隔开来，间隙不保存数据信息，只用来表示扇区的格式化位。通常会使用**柱面（Cylinder）** 来描述不同表面上相同磁道的集合，比如柱面k就是6个表面上磁道k的集合。盘片中央会有一个可以旋转的**主轴（Spindle）**，使得盘片以固定的旋**转速率（Rotational Rate）** 旋转，单位通常为**RPM（Revolution Per Minute）**。
 
 将磁盘能记录的最大位数称为最大容量（容量），主要由以下方面决定：
 
-- **记录密度（Recording Density）：**一英寸的磁道中可以放入的位数
-- **磁道密度（Track Density）：**从盘片中心出发，沿着半径方向一英寸，包含多少磁道
-- **面密度（Areal Density）：**记录密度和磁道密度的乘积
+- **记录密度（Recording Density）：** 一英寸的磁道中可以放入的位数
+- **磁道密度（Track Density）：** 从盘片中心出发，沿着半径方向一英寸，包含多少磁道
+- **面密度（Areal Density）：** 记录密度和磁道密度的乘积
 
 磁盘容量的计算公式为：
 
 ![img](pics/v2-e1f5a852f08d8fe6210b1f60dead54f3_720w.png)
 
-在面密度较低时，每个磁道都被分成了相同的扇区，所以能够划分的扇区数由最内侧磁道能记录的扇区数决定，这就使得外侧的磁道具有很多间隙。现代大容量磁盘采用**多区记录（Multiple Zone Recording）**技术，将一组连续的柱面划分成一个区，在同一个区中，每个柱面的每条磁道都有相同数量的扇区，由该区中最内侧的磁道决定，由此使得外侧的区能划分成更多的扇区。
+在面密度较低时，每个磁道都被分成了相同的扇区，所以能够划分的扇区数由最内侧磁道能记录的扇区数决定，这就使得外侧的磁道具有很多间隙。现代大容量磁盘采用**多区记录（Multiple Zone Recording）** 技术，将一组连续的柱面划分成一个区，在同一个区中，每个柱面的每条磁道都有相同数量的扇区，由该区中最内侧的磁道决定，由此使得外侧的区能划分成更多的扇区。
 
 ![img](pics/v2-0e18ccad49d39461d97188145ff2af37_720w.jpg)
 
-如上图所示，磁盘通过一个连接在**传动臂（Actuator Arm）**上的**读/写头（Read/Write Head）**来进行读写，对于有多个盘面的磁盘，会用多个位于同一柱面上的垂直排列的读/写头。对于扇区的**访问时间（Access Time）**由以下几部分构成：
+如上图所示，磁盘通过一个连接在**传动臂（Actuator Arm）** 上的 **读/写头（Read/Write Head）** 来进行读写，对于有多个盘面的磁盘，会用多个位于同一柱面上的垂直排列的读/写头。对于扇区的**访问时间（Access Time）** 由以下几部分构成：
 
-- **寻道时间：**为了读取到目标扇区，会先控制传动臂将读/写头移动到该扇区对应的磁道上，该时间称为寻道时间。
+- **寻道时间：** 为了读取到目标扇区，会先控制传动臂将读/写头移动到该扇区对应的磁道上，该时间称为寻道时间。
 
-- - **影响因素：**依赖于读/写头之前的位置，以及传动臂在盘面上移动的速度。
+- - **影响因素：** 依赖于读/写头之前的位置，以及传动臂在盘面上移动的速度。
   - 通常为3~9ms，最大时间可为20ms。
 
-- **旋转时间：**当读/写头处于目标磁道时，需要等待目标扇区的第一个位旋转到读/写头下。
+- **旋转时间：** 当读/写头处于目标磁道时，需要等待目标扇区的第一个位旋转到读/写头下。
 
-- - **影响因素：**目标扇区之前的位置，以及磁盘的旋转速度。
+- - **影响因素：** 目标扇区之前的位置，以及磁盘的旋转速度。
   - ![[公式]](https://www.zhihu.com/equation?tex=T_%7Bmax%5C+rotation%7D%3D%5Cfrac%7B1%7D%7BRPM%7D%5Ccdot+%5Cfrac%7B60s%7D%7B1min%7D)，平均旋转时间为一半
 
-- **传送时间：**当读/写头处于目标扇区的第一位时，就可以进行传送了
+- **传送时间：** 当读/写头处于目标扇区的第一位时，就可以进行传送了
 
-- - **影响因素：**磁盘旋转速率，以及每条磁道的扇区数
+- - **影响因素：** 磁盘旋转速率，以及每条磁道的扇区数
   - ![[公式]](https://www.zhihu.com/equation?tex=T_%7Bavg%5C+transfer%7D%3D%5Cfrac%7B1%7D%7BRPM%7D%5Ccdot+%5Cfrac%7B1%7D%7B%E5%B9%B3%E5%9D%87%E6%AF%8F%E6%9D%A1%E7%A3%81%E9%81%93%E7%9A%84%E6%89%87%E5%8C%BA%E6%95%B0%7D%5Ctimes+%5Cfrac%7B60s%7D%7B1min%7D)
 
 ![img](pics/v2-c14149b05b66531d45f079a78883c10c_720w.jpg)
 
-**可以发现：**寻道时间和旋转时间是主要影响部分，并且两者大致相等，通常可以寻道时间乘2来估计访问时间。
+**可以发现：** 寻道时间和旋转时间是主要影响部分，并且两者大致相等，通常可以寻道时间乘2来估计访问时间。
 
 由于磁盘构造的复杂性，现代磁盘将其抽象为B个扇区大小的逻辑块序列，编号为`0,1,...,B-1`，通过磁盘中的**磁盘控制器**来维护逻辑块号和实际扇区之间的映射关系。为此需要通过磁盘控制器对磁盘进行格式化：
 
@@ -7138,12 +5874,12 @@ Loop6x6:
 
 如上图所示是一个总线结构实例。对于像图形卡、鼠标、键盘、监视器这类输入/输出设备，都是通过**I/O总线**连接到CPU和主存的，比如Intel的**外围设备互联（Peripheral Component Interconnect，PCI）总线**，在PCI模型中，系统中所有的设备共享总线，一个时刻只能有一台设备访问这些线路，目前PCI总线已被PCEe总线取代了。虽然I/O总线比系统总线和内存总线慢，但是能容纳种类繁多的第三方I/O设备
 
-- **通用串行总线（Universal Serial Bus，USB）控制器：**USB总线是一个广泛使用的标准，连接许多外围I/O设备，而USB控制器作为连接到USB总线的设备的中转站。
-- **图形卡（或适配器）：**包含硬件和软件逻辑，负责CPU在显示器上画像素。
-- **主机总线适配器：**用于将一个或多个磁盘连接到I/O总线，使用**主机总线接口**定义的通信协议，磁盘接口包括**SCSI**和**SATA**，通常SCSI磁盘比SATA磁盘速度更快更昂贵，且SCSI主机总线适配器可以支持多个磁盘驱动器，而SATA只能支持一个。
-- **网络适配器：**可以通过将适配器插入到主板上空的插槽，从而连接到I/O总线。
+- **通用串行总线（Universal Serial Bus，USB）控制器：** USB总线是一个广泛使用的标准，连接许多外围I/O设备，而USB控制器作为连接到USB总线的设备的中转站。
+- **图形卡（或适配器）：** 包含硬件和软件逻辑，负责CPU在显示器上画像素。
+- **主机总线适配器：** 用于将一个或多个磁盘连接到I/O总线，使用**主机总线接口**定义的通信协议，磁盘接口包括**SCSI**和**SATA**，通常SCSI磁盘比SATA磁盘速度更快更昂贵，且SCSI主机总线适配器可以支持多个磁盘驱动器，而SATA只能支持一个。
+- **网络适配器：** 可以通过将适配器插入到主板上空的插槽，从而连接到I/O总线。
 
-**注意：**系统总线和内存总线是与CPU相关的，而PCI总线这样的I/O总线被设计成与底层CPU无关。
+**注意：** 系统总线和内存总线是与CPU相关的，而PCI总线这样的I/O总线被设计成与底层CPU无关。
 
 CPU会在地址空间中保留一块地址用于与I/O设备通信，每个地址称为**I/O端口（I/O Port）**，而连接到总线的设备会被映射到一个或多个端口，则处理器可通过端口地址来访问该I/O设备，该技术称为**内存映射I/O（Memory-mapped I/O）**。
 
@@ -7161,11 +5897,11 @@ CPU会在地址空间中保留一块地址用于与I/O设备通信，每个地�
 
 ### 1.3 固态硬盘
 
-**固态硬盘（Solid State Disk，SSD）**是一种基于闪存的存储技术，插在I/O总线上标准硬盘插槽（通常为USB或SATA），处于磁盘和DRAM存储器的中间点。从CPU的角度来看，SSD与磁盘完全相同，有相同的接口和包装。
+**固态硬盘（Solid State Disk，SSD）** 是一种基于闪存的存储技术，插在I/O总线上标准硬盘插槽（通常为USB或SATA），处于磁盘和DRAM存储器的中间点。从CPU的角度来看，SSD与磁盘完全相同，有相同的接口和包装。
 
 ![img](pics/v2-917429960df29b0a0591dcf2ce7b9599_720w.jpg)
 
-如上图所示是一个SSD的基本结构。它由**闪存**和**闪存翻译层（Flash Translation Layer）**组成
+如上图所示是一个SSD的基本结构。它由**闪存**和** 闪存翻译层（Flash Translation Layer）**组成
 
 - 闪存翻译层是一个硬件/固件设备，用来将对逻辑块的请求翻译成对底层物理设备的访问。
 - 闪存的基本属性决定了SSD随机读写的性能，通常由B个块的序列组成，每个块由P页组成，页作为数据的单位进行读写。通常页大小为512字节~4KB，块中包含32~128页，则块的大小有16KB~512KB。
@@ -7183,14 +5919,14 @@ CPU会在地址空间中保留一块地址用于与I/O设备通信，每个地�
 
 SSD的优缺点：
 
-- **优点：**由于闪存是半导体存储器，没有移动的部件，所以速度比磁盘更快且磨损小，能耗低
-- **缺点：**SSD每字节比磁盘贵大约30倍，所以常用的存储容量比磁盘小100倍左右。
+- **优点：** 由于闪存是半导体存储器，没有移动的部件，所以速度比磁盘更快且磨损小，能耗低
+- **缺点：** SSD每字节比磁盘贵大约30倍，所以常用的存储容量比磁盘小100倍左右。
 
 ### 1.4 存储技术趋势
 
 具有以下重要思想：
 
-- **不同存储技术有不同的价格和性能折中：**从性能而言，SRAM>DRAM>SSD>磁盘，而从每字节造价而言，SRAM>DRAM>SSD>磁盘。
+- **不同存储技术有不同的价格和性能折中：** 从性能而言，SRAM>DRAM>SSD>磁盘，而从每字节造价而言，SRAM>DRAM>SSD>磁盘。
 - 不同存储技术的价格和性能属性以不同的速率变化着
 
 ![img](pics/v2-131afd9a55e4f5355cb0f0e776ba10a5_720w.jpg)
@@ -7199,21 +5935,21 @@ SSD的优缺点：
 
 ## 2 局部性
 
-具有良好**局部性（Locality）**的程序，会倾向于引用最近引用过的数据项本身，或者引用最近引用过的数据项周围的数据项。局部性主要具有两种形式：
+具有良好**局部性（Locality）** 的程序，会倾向于引用最近引用过的数据项本身，或者引用最近引用过的数据项周围的数据项。局部性主要具有两种形式：
 
-- **时间局部性（Temporal Locality）：**引用过的数据项在不久会被多次引用。
+- **时间局部性（Temporal Locality）：** 引用过的数据项在不久会被多次引用。
 
 ![img](pics/v2-92e18eee9fec87d25e674d4eee44afcd_720w.png)
 
-- **空间局部性（Spatial Locality）：**引用过的数据项，在不久会引用附近的数据项。
+- **空间局部性（Spatial Locality）：** 引用过的数据项，在不久会引用附近的数据项。
 
 ![img](pics/v2-82179b9f2bb653a4e86550e56526ec74_720w.png)
 
 从硬件到操作系统，再到应用程序，都利用了局部性
 
-- **硬件：**在处理器和主存之间引入一个小而快速的高速缓存存储器，来保存最近引用的指令和数据，从而提高对主存的访问速度。
-- **操作系统：**用主存来缓存虚拟空间中最近被引用的数据块。
-- **应用程序：**比如Web浏览器会将最近引用的文档放入本地磁盘中，来缓存服务器的数据。
+- **硬件：** 在处理器和主存之间引入一个小而快速的高速缓存存储器，来保存最近引用的指令和数据，从而提高对主存的访问速度。
+- **操作系统：** 用主存来缓存虚拟空间中最近被引用的数据块。
+- **应用程序：** 比如Web浏览器会将最近引用的文档放入本地磁盘中，来缓存服务器的数据。
 
 有良好局部性的程序比局部性较差的程序运行更快。
 
@@ -7270,7 +6006,7 @@ SSD的优缺点：
 
 如上图所示是一种经典的存储器层次结构，会使用基于SRAM的高速缓存存储器来解决CPU和DRAM主存之间的鸿沟，通常还可以在DRAM主存和本地磁盘之间添加一层SSD，来弥补两者之间的差距。通常还可以在本地磁盘下方添加一个本地磁带，提供成本更低的存储。
 
-**高速缓存（Cache）**是一个小而快速的存储设备，用来作为存储在更大更慢设备中的数据对象的缓冲区域。而使用高速缓存的过程称为**缓存（Caching）**。
+**高速缓存（Cache）** 是一个小而快速的存储设备，用来作为存储在更大更慢设备中的数据对象的缓冲区域。而使用高速缓存的过程称为**缓存（Caching）**。
 
 存储器层次结构的**中心思想**是让层次结构中的每一层来缓存低一层的数据对象，将第k层的更快更小的存储设备作为第k+1层的更大更慢的存储设备的缓存。
 
@@ -7278,7 +6014,7 @@ SSD的优缺点：
 
 ![img](pics/v2-bed760846b2d38575f36c7b36e483032_720w.jpg)
 
-上图展示的是存储器层次结构的基本缓存原理。每一层存储器都会被划分成连续的数据对象组块，称为**块（Block）**，每个块都有一个唯一的地址或名字，并且通常块的大小都是固定的。第k层作为第k+1层的缓存，数据会以块大小作为**传送单元（Transfer Unit）**在第k层和第k+1层之间来回赋值，使得第k层保存第k+1层块的一个子集的副本。通常存储器层次结构中较低层的设备的访问时间较长，所以较低层中会使用较大的块。
+上图展示的是存储器层次结构的基本缓存原理。每一层存储器都会被划分成连续的数据对象组块，称为**块（Block）**，每个块都有一个唯一的地址或名字，并且通常块的大小都是固定的。第k层作为第k+1层的缓存，数据会以块大小作为**传送单元（Transfer Unit）** 在第k层和第k+1层之间来回赋值，使得第k层保存第k+1层块的一个子集的副本。通常存储器层次结构中较低层的设备的访问时间较长，所以较低层中会使用较大的块。
 
 ### 3.1 缓存命中
 
@@ -7288,10 +6024,10 @@ SSD的优缺点：
 
 如果第k层没有缓存数据对象d，则称为**缓存不命中（Cache Miss）**，则会从第k+1层中取出包含d的块，然后第k层的缓存会执行某个**放置策略（Placement Policy）**来决定该块要保存在第k层的什么位置
 
-- 来自第k+1层的任意块能保存在第k层的任意块中，如果第k层的缓存满了，则会覆盖现存的一个**牺牲块（Victim Block）**，称为**替换（Replacing）**或**驱逐（Evicting）**这个牺牲块，会根据**替换策略（Replacement Policy）**来决定要替换第k层的哪个块
+- 来自第k+1层的任意块能保存在第k层的任意块中，如果第k层的缓存满了，则会覆盖现存的一个**牺牲块（Victim Block）**，称为**替换（Replacing）**或**驱逐（Evicting）** 这个牺牲块，会根据**替换策略（Replacement Policy）** 来决定要替换第k层的哪个块
 
-- - **随机替换策略：**会随机选择一个牺牲块
-  - **最近最少被使用（LRU）替换策略：**选择最后被访问的时间离现在最远的块
+- - **随机替换策略：** 会随机选择一个牺牲块
+  - **最近最少被使用（LRU）替换策略：** 选择最后被访问的时间离现在最远的块
 
 随机放置块会使得定位起来代价很高。
 
@@ -7314,8 +6050,8 @@ SSD的优缺点：
 
 通过以上内容，就能解释局部性好的程序的优势：
 
-- **时间局部性：**当一个数据对象在第一次不命中被复制到缓存中时，我们希望程序的时间局部性好，则在不久的将来就能反复在第k层访问到该块，使得程序运行更快。
-- **空间局部性：**由于缓存中一个块包含多个数据对象，我们希望程序的空间局部性好，就可以直接利用第k层的数据块，避免再从第k+1层传输块到第k层。
+- **时间局部性：** 当一个数据对象在第一次不命中被复制到缓存中时，我们希望程序的时间局部性好，则在不久的将来就能反复在第k层访问到该块，使得程序运行更快。
+- **空间局部性：** 由于缓存中一个块包含多个数据对象，我们希望程序的空间局部性好，就可以直接利用第k层的数据块，避免再从第k+1层传输块到第k层。
 
 # [读书笔记]CSAPP：16[VB]高速缓存存储器
 
@@ -7364,25 +6100,25 @@ SSD的优缺点：
 
 如上图的b中所示，会将m位的地址划分成三部分：
 
-- **s位：**高速缓存被组织成一个数组，而该数组通过 ![[公式]](https://www.zhihu.com/equation?tex=S%3D2%5Es+)进行索引。
-- **b位：**每个组中包含E个**高速缓存行（Cache Line）**，每个行有一个 ![[公式]](https://www.zhihu.com/equation?tex=B%3D2%5Eb) 字节的**数据块（Block）**组成。
-- **t位：**每一个高速缓存行有一个 ![[公式]](https://www.zhihu.com/equation?tex=t%3Dm-%28s%2Bb%29) 位的**标记位（Valid Bit）**，唯一表示存储在这个高速缓存行中的数据块，用于搜索数据块。
+- **s位：** 高速缓存被组织成一个数组，而该数组通过 ![[公式]](https://www.zhihu.com/equation?tex=S%3D2%5Es+)进行索引。
+- **b位：** 每个组中包含E个**高速缓存行（Cache Line）**，每个行有一个 ![[公式]](https://www.zhihu.com/equation?tex=B%3D2%5Eb) 字节的**数据块（Block）**组成。
+- **t位：** 每一个高速缓存行有一个 ![[公式]](https://www.zhihu.com/equation?tex=t%3Dm-%28s%2Bb%29) 位的**标记位（Valid Bit）**，唯一表示存储在这个高速缓存行中的数据块，用于搜索数据块。
 
 该高速缓存的结构可以通过元组`(S, E, B, m)`来描述，且容量C为所有块的大小之和， ![[公式]](https://www.zhihu.com/equation?tex=C%3DS%5Ctimes+E%5Ctimes+B) 。
 
-**注意：**如果将组索引放在最高有效位，则连续的内存块就会映射到相同的高速缓存组中，通过将组索引放在中间，可以使得连续的内存块尽可能分散在各个高速缓存组中，可以充分利用各个高速缓存组
+**注意：** 如果将组索引放在最高有效位，则连续的内存块就会映射到相同的高速缓存组中，通过将组索引放在中间，可以使得连续的内存块尽可能分散在各个高速缓存组中，可以充分利用各个高速缓存组
 
 ![img](pics/v2-fdc470fa5dd6cf621180e9e953a2337f_720w.jpg)
 
 当一条加载指令指示CPU从主存地址A中读取一个字w时，会将该主存地址A发送到高速缓存中，则高速缓存会根据以下步骤判断地址A是否命中：
 
-1. **组选择：**根据地址划分，将中间的s位表示为无符号数作为组的索引，可得到该地址对应的组。
-2. **行匹配：**根据地址划分，可得到t位的标志位，由于组内的任意一行都可以包含任意映射到该组的数据块，所以就要线性搜索组中的每一行，判断是否有和标志位匹配且设置了有效位的行，如果存在，则缓存命中，否则缓冲不命中。
-3. **字抽取：**如果找到了对应的高速缓存行，则可以将b位表示为无符号数作为块偏移量，得到对应位置的字。
+1. **组选择：** 根据地址划分，将中间的s位表示为无符号数作为组的索引，可得到该地址对应的组。
+2. **行匹配：** 根据地址划分，可得到t位的标志位，由于组内的任意一行都可以包含任意映射到该组的数据块，所以就要线性搜索组中的每一行，判断是否有和标志位匹配且设置了有效位的行，如果存在，则缓存命中，否则缓冲不命中。
+3. **字抽取：** 如果找到了对应的高速缓存行，则可以将b位表示为无符号数作为块偏移量，得到对应位置的字。
 
 当高速缓存命中时，会很快抽取出字w，并将其返回给CPU。如果缓存不命中，CPU会进行等待，高速缓存会向主存请求包含字w的数据块，当请求的块从主存到达时，高速缓存会将这个块保存到它的一个高速缓存行中，然后从被存储的块中抽取出字w，将其返回给CPU。
 
-**注意：**为了使得地址中的b位能够编码块偏移量，要求从下一层存储器中，根据块偏移量的值从中截取出块大小的数据块。
+**注意：** 为了使得地址中的b位能够编码块偏移量，要求从下一层存储器中，根据块偏移量的值从中截取出块大小的数据块。
 
 该编码方式具有以下**特点：**
 
@@ -7417,7 +6153,7 @@ SSD的优缺点：
 
 我们可以发现，循环第一次迭代引用`x[0]`时，缓存不命中会使得包含`x[0]`~`x[3]`的数据块保存到高速缓存组0处，但是当引用`y[0]`时，会发现高速缓存组0处保存的数据不匹配，又出现了缓存不命中，就会使得包含`y[0]`~`y[3]`的数据块保存到高速缓存0处，依次类推。可以发现始终会发生缓存不命中，使得性能下降。这种情况称为**抖动（Thrash）**，即高速缓存反复地加载和驱逐相同的高速缓存块的组。
 
-**可以发现：**即使程序的局部性良好，且工作集的大小没有超过高速缓存容量，但是由于这些数据块都被映射到了相同的高速缓存组中，且直接映射高速缓存每个组中只有一个高速缓存行，所以会出现抖动，不断出现缓存不命中。
+**可以发现：** 即使程序的局部性良好，且工作集的大小没有超过高速缓存容量，但是由于这些数据块都被映射到了相同的高速缓存组中，且直接映射高速缓存每个组中只有一个高速缓存行，所以会出现抖动，不断出现缓存不命中。
 
 我们这里想要相同所以的`x`和`y`可以保存到不同的高速缓存组中，就能避免抖动现象，这里可以在数组`x`后填充B个字节，使得数组`y`的地址向后偏移，得到如下形式
 
@@ -7432,12 +6168,12 @@ SSD的优缺点：
 当缓存不命中时需要进行缓存行替换，如果对应的高速缓存组中有空的高速缓存行，则直接将其保存到空行中。但是如果没有空行，就要考虑合适的**替换策略**：
 
 - 最简单的替换策略是随机选择要替换的行
-- **最不常使用（Least-Frequently-Used，LFU）策略：**替换过去某个时间窗口内引用次数最少的一行。
-- **最近最少使用（Least-Recently-Used，LRU）策略：**替换最后一次访问时间最久远的那一行
+- **最不常使用（Least-Frequently-Used，LFU）策略：** 替换过去某个时间窗口内引用次数最少的一行。
+- **最近最少使用（Least-Recently-Used，LRU）策略：** 替换最后一次访问时间最久远的那一行
 
 ### 1.1.3 全相联高速缓存
 
-**全相联高速缓存（Full Associative Cache）**是用一个包含所有高速缓存行的组组成的，其中 ![[公式]](https://www.zhihu.com/equation?tex=E%3DC%2FB) ，即 ![[公式]](https://www.zhihu.com/equation?tex=S%3D1) 。
+**全相联高速缓存（Full Associative Cache）** 是用一个包含所有高速缓存行的组组成的，其中 ![[公式]](https://www.zhihu.com/equation?tex=E%3DC%2FB) ，即 ![[公式]](https://www.zhihu.com/equation?tex=S%3D1) 。
 
 ![img](pics/v2-8555d7a723c947b64a891caa4ec0cc10_720w.jpg)
 
@@ -7451,15 +6187,15 @@ SSD的优缺点：
 
 当CPU想要对地址A进行写操作时，会通过地址A判断是否缓存了该地址，如果缓存了称为**写命中（Write Hit）**，否则称为**写不命中（Write Miss）**。
 
-- **写命中：**高速缓存会先更新缓存的副本，然后可以采取不同方法更新下一层的副本
+- **写命中：** 高速缓存会先更新缓存的副本，然后可以采取不同方法更新下一层的副本
 
-- - **直写（Write-Though）：**立即更新下一层的副本值。缺点是每次写都会引起总线流量。
-  - **写回（Write-Back）：**为每个高速缓存行维护一个**修改位（Dirty Bit）**，表明这个高速缓存块是否被修改。当被修改的高速缓存块被驱逐时，会查看修改位，判断该块是否被修改，只有被修改才会更新下一层的副本值。能够显著减少总线流量，但是复杂性高。
+- - **直写（Write-Though）：** 立即更新下一层的副本值。缺点是每次写都会引起总线流量。
+  - **写回（Write-Back）：** 为每个高速缓存行维护一个**修改位（Dirty Bit）**，表明这个高速缓存块是否被修改。当被修改的高速缓存块被驱逐时，会查看修改位，判断该块是否被修改，只有被修改才会更新下一层的副本值。能够显著减少总线流量，但是复杂性高。
 
 - **写不命中：**
 
-- - **写不分配（Not-Write-Allocate）：**直接将字写到下一层中。
-  - **写分配（Write-Allocate）：**加载相应的下一层的块到当前层的高速缓存中，然后更新当前高速缓存块。得益于空间局部性，进行一次写分配后，下一次有较高几率会写命中，但是缺点是每次写不命中就要将块从第一层向上传输。
+- - **写不分配（Not-Write-Allocate）：** 直接将字写到下一层中。
+  - **写分配（Write-Allocate）：** 加载相应的下一层的块到当前层的高速缓存中，然后更新当前高速缓存块。得益于空间局部性，进行一次写分配后，下一次有较高几率会写命中，但是缺点是每次写不命中就要将块从第一层向上传输。
 
 直写高速缓存通常为写不分配的，写回高速缓存通常为写分配的。
 
@@ -7469,9 +6205,9 @@ SSD的优缺点：
 
 之前介绍的高速缓存值保存程序数据，但是高速缓存同样也能保存指令。可以将高速缓存分成以下几种：
 
-- **i-cache：**只保存指令的高速缓存
-- **d-cache：**只保存程序数据的高速缓存
-- **Unified Cache：**即能保存指令，也能保存程序数据的高速缓存
+- **i-cache：** 只保存指令的高速缓存
+- **d-cache：** 只保存程序数据的高速缓存
+- **Unified Cache：** 即能保存指令，也能保存程序数据的高速缓存
 
 ![img](pics/v2-daf61d2d3345d895745dc86855ffcddf_720w.jpg)
 
@@ -7490,12 +6226,12 @@ SSD的优缺点：
 
 衡量高速缓存的指标有：
 
-- **命中率（Hit Rate）：**内存引用命中的比率，`命中数量/引用数量`。
-- **不命中率（Miss Rate）：**内存引用不命中的比率，`不命中数量/引用数量`。通常，L1高速缓存为3~10%，L2高速缓存为<1%。
+- **命中率（Hit Rate）：** 内存引用命中的比率，`命中数量/引用数量`。
+- **不命中率（Miss Rate）：** 内存引用不命中的比率，`不命中数量/引用数量`。通常，L1高速缓存为3~10%，L2高速缓存为<1%。
 - **命中时间（Hit Time）：** 从高速缓存传输一个字到CPU的时间，包括组选择、行匹配和字选择时间。通常，L1高速缓存需要4个时钟周期，L2高速缓存需要10个时钟周期。
-- **不命中处罚（Miss Penalty）：**当缓存不命中时，要从下一层的存储结构中传输对应块到当前层中，需要额外的时间（不包含命中时间）。通常，主存需要50~200个时钟周期。
+- **不命中处罚（Miss Penalty）：** 当缓存不命中时，要从下一层的存储结构中传输对应块到当前层中，需要额外的时间（不包含命中时间）。通常，主存需要50~200个时钟周期。
 
-**注意：**命中和不命中两者对性能影响很大，比如99%命中率的性能会比97%命中率高两倍。
+**注意：** 命中和不命中两者对性能影响很大，比如99%命中率的性能会比97%命中率高两倍。
 
 接下来讨论高速缓存中不同参数对高速缓存性能的影响：
 
@@ -7536,14 +6272,14 @@ L1高速缓存的块大小为8字节，则`b=3`且一次存放两个`int`，而�
 
 ## 2 存储器山
 
-一个程序从存储器系统中读取数据的速率称为**读吞吐量（Read Throughput）**或**读带宽（Read Bandwidth）**，单位为`MB/s`。 我们通过以下代码来衡量空间局部性和时间局部性对程序吞吐量的影响
+一个程序从存储器系统中读取数据的速率称为**读吞吐量（Read Throughput）**或**读带宽（Read Bandwidth）** ，单位为`MB/s`。 我们通过以下代码来衡量空间局部性和时间局部性对程序吞吐量的影响
 
 ![img](pics/v2-f80d3dc5a77671c44450285f4c997221_720w.jpg)
 
 第37行我们首先对高速缓存进行暖身，然后在第38行计算程序运行的时钟周期个数。
 
-- **时间局部性：**通过`size`来控制我们工作集的大小，由此来控制工作集存放的高速缓存的级别。假设工作集很小，则工作集会全部存放在L1高速缓存中，模拟了时间局部性优异的程序反复读取之前访问过的数据，则都是从L1高速缓存读取数据的。假设工作集很大，则工作集会存放到L3高速缓存中，模拟了时间局部性很差的程序，不断读取新的数据，则会出现缓存不命中，而不断从L3高速缓存中取数据的过程。所以通过控制工作集大小，来模拟程序局部性。
-- **空间局部性：**通过`stride`来控制读取的步长，来控制程序的空间局部性。
+- **时间局部性：** 通过`size`来控制我们工作集的大小，由此来控制工作集存放的高速缓存的级别。假设工作集很小，则工作集会全部存放在L1高速缓存中，模拟了时间局部性优异的程序反复读取之前访问过的数据，则都是从L1高速缓存读取数据的。假设工作集很大，则工作集会存放到L3高速缓存中，模拟了时间局部性很差的程序，不断读取新的数据，则会出现缓存不命中，而不断从L3高速缓存中取数据的过程。所以通过控制工作集大小，来模拟程序局部性。
+- **空间局部性：** 通过`stride`来控制读取的步长，来控制程序的空间局部性。
 
 通过调整`size`和`stride`来度量程序的吞吐量，可以得到以下存储器山（Memory Mountain）
 
@@ -7561,7 +6297,7 @@ L1高速缓存的块大小为8字节，则`b=3`且一次存放两个`int`，而�
 
 可以发现，步长越小越能充分利用L1高速缓存，使得吞吐量较高。当步长为8字节时，会跨越64字节，而当前高速缓存的块大小只有64字节，说明每次读取都无法在L2高速缓存中命中，都需要从L3高速缓存读取，所以后续保持不变。
 
-**综上所述：**需要利用时间局部性来访问L1高速缓存，还需要利用空间局部性，使得尽可能多的字从一个高速缓存行中读取到。
+**综上所述：** 需要利用时间局部性来访问L1高速缓存，还需要利用空间局部性，使得尽可能多的字从一个高速缓存行中读取到。
 
 ## 3 改善程序
 
@@ -7610,304 +6346,5 @@ L1高速缓存的块大小为8字节，则`b=3`且一次存放两个`int`，而�
 - 将注意力集中在内循环中，因为大部分的计算和内存访问都集中在这里
 - 按照数据对象存储在内存中的顺序，以步长为1来读数据，使得空间局部性最大。比如步长为2的命中率就比步长为1的命中率降低一半。
 - 一旦从存储器读入一个数据对象时，就尽可能使用它，使得时间局部性最大。特别是局部变量，编译器会将其保存在寄存器中。
-
-# [读书笔记]CSAPP：CacheLab
-
-
- **README：**[http://csapp.cs.cmu.edu/3e/README-cachelab](https://link.zhihu.com/?target=http%3A//csapp.cs.cmu.edu/3e/README-cachelab)
-
-**说明：**[http://csapp.cs.cmu.edu/3e/cachelab.pdf](https://link.zhihu.com/?target=http%3A//csapp.cs.cmu.edu/3e/cachelab.pdf)
-
-**代码：**[http://csapp.cs.cmu.edu/3e/cachelab-handout.tar](https://link.zhihu.com/?target=http%3A//csapp.cs.cmu.edu/3e/cachelab-handout.tar)
-
-**复习：**[http://www.cs.cmu.edu/afs/cs/academic/class/15213-f15/www/recitations/rec07.pdf](https://link.zhihu.com/?target=http%3A//www.cs.cmu.edu/afs/cs/academic/class/15213-f15/www/recitations/rec07.pdf)
-
-------
-
-实验室由两部分组成，在第一部分中，将编写一个小的C程序来模拟高速缓存的行为，统计出命中、不命中和驱逐的次数。在第二部分中，将优化一个小型矩阵转置函数，以最大程度地减少高速缓存未命中的次数。
-
-## Part A
-
-Linux中提供`valgrind`程序，能够返回执行特定命令的轨迹，比如运行
-
-```text
-valgrind --log-fd=1 --tool=lackey -v --trace-mem=yes ls -l
-```
-
-就会返回执行`ls -l`时，按照内存访问的顺序顺序捕获内存访问轨迹。比如会返回
-
-```text
-I 0400d7d4,8
- M 0421c7f0,4
- L 04f6b868,8
- S 7ff0005c8,8
-```
-
-其中，第一列为操作符，`I`表示加载指令，`L`表示加载数据，`S`表示保存数据，`M`表示加载数据后再保存数据。然后第二列为地址，第三列为访问的数据大小。
-
-该任务向我们我们在`csim.c`中写代码，会给出参数
-
-```text
--s <s>: Number of set index bits (S = 2s is the number of sets)
--E <E>: Associativity (number of lines per set)
--b <b>: Number of block bits (B = 2b is the block size)
--t <tracefile>: Name of the valgrind trace to replay
-```
-
-来指定高速缓存结构，然后统计`tracefile`中内存访问轨迹的命中、不被命中和驱逐的次数。
-
-我们首先来分析：
-
-- 由于该实验主要考虑数据的读写，所以不考虑`I`
-- `M`中的加载操作和`L`相同，并且`M`后面的保存操作是在相同的地址中进行的，所以可以直接将保存操作当做hit
-- `L`和`S`是相同的
-
-```c
-#include <getopt.h>
-#include <stdlib.h>
-#include <stdio.h>
-#include <limits.h>
-#include "cachelab.h"
-
-//定义结构体
-typedef struct {
-	long tag; //标识
-	long time;  //时间戳
-	int valid_bit;  //有效位
-} Line;
-
-//创建缓存
-Line **initCache(int s, int E){
-	Line **cache;
-	int i,j;
-	int S = 1 << s; //2^s
-	cache = (Line **)malloc(S*sizeof(Line*));
-	if(cache==NULL) exit(1);
-	for(i=0;i<S;i++){
-		cache[i] = (Line*)malloc(E*sizeof(Line));
-		for(j=0;j<E;j++){
-			cache[i][j].tag=0;
-			cache[i][j].time=0;
-			cache[i][j].valid_bit=0;
-		}
-	}
-	return cache;
-}
-int main(int argc, char** argv){
-	int opt,s,E,b;
-	int S,tag;  //解析每一条对应的组号和标志
-	char *fileName;
-	Line **cache;
-	int hit_count=0, miss_count=0, eviction_count=0;
-	int isHit, isEvic;  //标记是否命中或驱逐
-	FILE *pFile;
-	char identifier;
-	unsigned long long address;
-	int size;
-	int saveIndex;
-	long time_stamp=0;    //不断增加的时间戳
-	long min_time;  //LRU
-	int index;
-
-	//读取参数
-	while(-1 != (opt = getopt(argc, argv, "s:E:b:t:"))){
-		switch(opt){
-			case 's':
-				s = atoi(optarg);
-				break;
-			case 'E':
-				E = atoi(optarg);
-				break;
-			case 'b':
-				b = atoi(optarg);
-				break;
-			case 't':
-				fileName = (char *)optarg;
-			default:
-				printf("wrong argument\n");
-				break;
-		}
-	}
-
-	//初始化缓存
-	cache = initCache(s, E);
-
-	pFile = fopen(fileName, "r");
-	while(fscanf(pFile," %c %llx,%d", &identifier, &address, &size)>0){
-		if(identifier == 'I') continue; //不考虑指令读取
-
-		//获取当前的组号和标志
-		address = address >> b;
-		S = address & ~(~0 << s);
-		tag = address >> s;
-
-		isHit = 0;
-		isEvic = 0;
-		min_time = LONG_MAX;
-
-		for(index=0; index<E; index++){
-			Line line = cache[S][index];
-			if(line.valid_bit==0){
-				saveIndex = index;
-				min_time = LONG_MIN;
-				isEvic = 0;
-				continue;
-			}
-			if(line.tag!=tag){
-				if(min_time > line.time){
-					min_time = line.time;
-					saveIndex = index;
-					isEvic = 1;
-				}
-				continue;
-			}
-			saveIndex = index;
-			isHit = 1;
-			break;
-		}
-		cache[S][saveIndex].time = time_stamp;
-		time_stamp += 1;
-		if(identifier == 'M') hit_count += 1;
-		if(isHit){
-            hit_count += 1;
-            continue;
-        }
-        miss_count += 1;
-        if(isEvic) eviction_count += 1;
-        cache[S][saveIndex].valid_bit = 1;
-        cache[S][saveIndex].tag = tag;
-	}
-	free(cache);
-	printSummary(hit_count, miss_count, eviction_count);
-    return 0;
-}
-```
-
-然后运行
-
-```text
-make clean
-make
-./test-csim
-```
-
-可以得到最终结果
-
-![img](pics/v2-6cd5e2c4d87cac47469bbaa62c70165a_720w.jpg)
-
-## Part B
-
-该任务要求我们在`trans.c`文件中完成`transpose_submit`函数，使得矩阵转置时的不命中次数尽可能小，分别对 ![[公式]](https://www.zhihu.com/equation?tex=32%5Ctimes+32) 、 ![[公式]](https://www.zhihu.com/equation?tex=64%5Ctimes+64) 和 ![[公式]](https://www.zhihu.com/equation?tex=61%5Ctimes+67) 矩阵进行实验。
-
-**要求：**
-
-- 只运行使用最多12个`int`局部变量
-- 不能使用递归函数
-- 不能对矩阵A进行修改
-- 不能通过`malloc`申请空间
-
-该高速缓存的架构为`s=5, E=1, b=5`。
-
-### 32x32
-
-想要降低不命中次数，需要提高函数的局部性，要么通过修改循环顺序来提高空间局部性，要么通过分块技术来提高时间局部性。
-
-```c
-void trans(int M, int N, int A[N][M], int B[M][N]){
-    int i, j, tmp;
-    for (i = 0; i < N; i++) {
-        for (j = 0; j < M; j++) {
-            tmp = A[i][j];
-            B[j][i] = tmp;
-        }
-    }    
-}
-```
-
-以上为该任务提供的一个baseline，就是最简单的矩阵转置操作。从空间局部性来看，矩阵`A`的步长为1，所以空间局部性良好，而矩阵`B`的步长为N，空间局部性较差，并且无论我们怎么调整循环顺序，都无法改变，所以无法从空间局部性的角度来减少不命中次数。
-
-所以我们需要通过分块技术来优化时间局部性。由于缓存中每个块大小为 ![[公式]](https://www.zhihu.com/equation?tex=2%5Eb%3D2%5E5%3D32) 字节，而`int`类型为4字节，所以缓存中的每个数据块可以保存8个元素，由于矩阵是行优先存储的，所以相当于保存了`A[0][0]~A[0][7]`，我们希望能够充分利用该数据块，所以需要保存对应的`B[0][0]~B[7][0]`，意味着需要8个高速缓存行，分别保存`B[0][0]~B[0][7]`、`B[1][0]~B[1][7]`……由于32x32矩阵中，每一行有32个元素，则相邻两行间隔了3个高速缓存行，比如根据矩阵`B`的地址，其元素保存在高速缓存中是如下形式
-
-![img](pics/v2-6eb502e101af978f3e083ceaa2872f3f_720w.jpg)
-
-可以发现，我们想要的`B[0][0]~B[0][7]`和`B[1][0]~B[1][7]`之间还间隔了3个高速缓存行。而该高速缓存配置刚好能保存8行，所以我们设置分块技术的块大小为8，此时高速缓存中就保存了`B[0][0]~B[0][7]`到`B[7][0]~B[7][7]`的块，则在内侧的循环中，就能充分利用这些块后才会将其丢弃，减少了原始代码中由于缓存空间有限，而驱逐了后面要用的块。
-
-可以得到以下代码
-
-```c
-void transpose_submit(int M, int N, int A[N][M], int B[M][N]){
-    int ii,jj,i,j,temp;
-    int bsize=8;
-    int ren = bsize * (N/bsize); /* Amount that fits evenly into blocks */
-    int cen = bsize * (M/bsize); /* Amount that fits evenly into blocks */
-	
-    for(ii=0; ii<ren; ii+=bsize){
-        for(jj=0; jj<cen; jj+=bsize){
-             //分成bsize*bsize大小的块
-             for(i=ii; i<ii+bsize; i+=1){
-                 for(j=jj; j<jj+bsize; j+=1){
-                     temp = A[i][j];
-                     B[j][i] = temp;
-                 }
-             }
-        }
-    }
-} 
-```
-
-> 分块技术相当于将B中特定大小的块全部保存在高速缓存中，优化类似B[j][i]这种空间局部性差的代码。
-
-通过块大小为8的分块技术，我们可以将不命中次数从1183降低到343。
-
-![img](pics/v2-705773bec464aaafd1cfa6cfc35c0e95_720w.jpg)
-
-**需要注意：**复习PPT中说了，矩阵`A`和`B`被存储在内存中的地址中，使得它们都对齐到缓存中的同一位置，这就意味着在矩阵`A`和矩阵`B`的同一行会反复出现冲突不命中。
-
-我们可以把A和B存放在不对齐的地址中，但是该任务中限制了我们不能使用`malloc`。那我们可以尝试一次性将所有元素都读取出来，这样就不用反复从内存中读取，也就不存在冲突不命中了。
-
-```c
- void transpose_submit(int M, int N, int A[N][M], int B[M][N])
-{
-	int i,j,k;
-	int v1,v2,v3,v4,v5,v6,v7,v8;
-	
-	for(i=0; i<M; i+=8){
-		for(j=0; j<N; j+=8){
-			for(k=i; k<i+8; k+=1){
-				v1 = A[k][j+0]; //以下会从矩阵A中读取数据
-				v2 = A[k][j+1];
-				v3 = A[k][j+2];
-				v4 = A[k][j+3];
-				v5 = A[k][j+4];
-				v6 = A[k][j+5];
-				v7 = A[k][j+6];
-				v8 = A[k][j+7];
-				
-				B[j+0][k] = v1; //这里B会覆盖A的内容，然后开始保存数据
-				B[j+1][k] = v2;
-				B[j+2][k] = v3;
-				B[j+3][k] = v4;
-				B[j+4][k] = v5;
-				B[j+5][k] = v6;
-				B[j+6][k] = v7;
-				B[j+7][k] = v8;
-			}
-		}
-	}
-}
-```
-
-通过以上方法可以减少很多冲突不命中，结果得到了287。
-
-### 64x64
-
-这里同样使用分块技术进行优化，需要注意的是，当矩阵大小变为64x64时，矩阵中的每一行需要8个高速缓存行进行保存，使得高速缓存中只能保存4行的矩阵内容，如果我们还是使用块大小为8的分块技术，就会使得第5行和第1行冲突、第6行和第2行冲突等等，由此就会出现冲突不命中，所以我们只能设置块大小为4。
-
-比如我们使用块大小为8，则不命中数目为4723，当修改块大小为4时，不命中次数为1891，当解决冲突不命中时，不命中次数为1699。
-
-### 61x67
-
-由于这里行和列的数目不同，以及每一行元素个数不是刚好保存填充完整的行，所以元素保存在缓存中会存在错位，可能会减少`B`的冲突不命中，所以可以使用较大的块。比如我们使用大小为17的块，结果为1950。
-
 
 
