@@ -252,6 +252,12 @@ Typora 完全使用详解： https://sspai.com/post/54912
 在线markdown2: https://www.zybuluo.com/mdeditor
 	
 mermaid: https://github.com/mermaid-js/mermaid
+	
+居中且显示表头：
+	
+<center> <img src="https://pic4.zhimg.com/80/v2-989c0d7d3f7c71f7fe87aee0caabe39b_720w.jpg" style="zoom:80%" /> </center>    
+<center>四种内存访问模式</center>    	
+	
 
 ### 绑定核
 
