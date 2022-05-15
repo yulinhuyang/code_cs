@@ -607,11 +607,11 @@ IEEE浮点表示使用 ![[公式]](https://www.zhihu.com/equation?tex=V%3D%28-1%
 
 C语言中有单精度精浮点数`float`，其中s=1、k=8、n=23；还有双精度浮点数`double`，其中s=1、k=11、n=52。
 
-![img](pics/v2-db6d6ab3b68227d45df5e3995787409f_720w.jpg)
+![img](CSAPP_notes/pics/v2-db6d6ab3b68227d45df5e3995787409f_720w.jpg)
 
-![img](pics/v2-f5e130f5f454f7752e1339f6ca1c8d5c_720w.jpg)
+![img](CSAPP_notes/pics/v2-f5e130f5f454f7752e1339f6ca1c8d5c_720w.jpg)
 
-![img](pics/v2-441d9146a1ec099e79a8fae7c08340ef_720w.jpg)
+![img](CSAPP_notes/pics/v2-441d9146a1ec099e79a8fae7c08340ef_720w.jpg)
 
 - float由一个符号位+8个阶码位+23个小数位表示
 - 根据阶码位的三种状态，可表示四种数值：  
@@ -668,7 +668,7 @@ C语言中有单精度精浮点数`float`，其中s=1、k=8、n=23；还有双�
 3. **汇编器**将汇编代码转化为二进制目标代码文件，它是机器代码的一种形式，包含了所有指令的二进制表示，但是还没有填入全局值的地址。
 4. **链接器**将目标代码文件和实现库函数的代码合并，产生最终可执行代码文件。
 
-![img](pics/v2-82aca65f1bb3fb2805ef5d8eaab039e6_720w.jpg)
+![img](CSAPP_notes/pics/v2-82aca65f1bb3fb2805ef5d8eaab039e6_720w.jpg)
 
 **编译器**
 
@@ -687,7 +687,7 @@ void multstore(long x, long y,long *dest){
 -  `-Og`：是生成机器代码的优化等级，这个表示编译器会生成符合原始C代码整体结构的机器代码，这是用于调试的级别，便于我们学习观察。其他的`-O1`或`-O2`会得到更好的程序性能，但是机器代码和源代码的关系就比较难以理解。
 - `-S`：只生成到汇编代码。
 
-![img](pics/v2-00075e568d36528f2afb34bcfd6350d2_720w.jpg)
+![img](CSAPP_notes/pics/v2-00075e568d36528f2afb34bcfd6350d2_720w.jpg)
 
 **汇编器**
 
@@ -695,7 +695,7 @@ void multstore(long x, long y,long *dest){
 
 可以通过**反汇编器（Disassembler）**来将机器代码转化为类似汇编代码的格式，在Linux中，我们可以运行`objdump -d mstore.o`，可以得到。
 
-![img](pics/v2-c4fc386c468908cd39715aafe15f0a7b_720w.jpg)
+![img](CSAPP_notes/pics/v2-c4fc386c468908cd39715aafe15f0a7b_720w.jpg)
 
 最左侧一栏是对应的字节地址，中间是每个指令的编码，右侧是生成的汇编代码。我们可以发现：
 
@@ -731,7 +731,7 @@ long mult2(long a, long b){
 
 在x84-64中C语言数据类型的大小如下图所示
 
-![img](pics/v2-0171cf3327ea119d261f85baa9ffdb9d_720w.jpg)
+![img](CSAPP_notes/pics/v2-0171cf3327ea119d261f85baa9ffdb9d_720w.jpg)
 
 - 生成4字节数据的指令会把高位 4个字节置零。
 - 使用寄存器进行内存引用时，要用64位寄存器。
@@ -749,7 +749,7 @@ long mult2(long a, long b){
 - `%rip`用来保存当前执行指令的地址
 - `%rax`用来存放函数的返回值
 
-![img](pics/v2-c9d40bfe595910c641dcff1552271965_720w.jpg)
+![img](CSAPP_notes/pics/v2-c9d40bfe595910c641dcff1552271965_720w.jpg)
 
 小点：
 - intel x86-64处理器有16个通用寄存器，名字都以%r开头。
@@ -764,7 +764,7 @@ long mult2(long a, long b){
 
 大多数指令由一个或多个操作数（Operand），指示出一个操作中要使用的元数据值，以及放置结果的目的位置。x86-64支持的操作数格式如下
 
-![img](pics/v2-b32c873388a887015276a06e82c4f0c4_720w.jpg)
+![img](CSAPP_notes/pics/v2-b32c873388a887015276a06e82c4f0c4_720w.jpg)
 
 其中包含三种类型：
 
@@ -781,7 +781,7 @@ long mult2(long a, long b){
 
 该类数据传送指令将数据从一个位置复制到另一个位置，不做任何变化。不同类型指令指定了不同的数据大小（一个字为两个字节）。**源操作数**是一个立即数，可以保存在寄存器或内存中；**目的操作数**是一个位置，可以是寄存器或内存位置。
 
-![img](pics/v2-0fe15622c3fca210583c2226ca96081d_720w.jpg)
+![img](CSAPP_notes/pics/v2-0fe15622c3fca210583c2226ca96081d_720w.jpg)
 
 **注意：**
 
@@ -790,7 +790,7 @@ long mult2(long a, long b){
 - `movl`以寄存器为目的时，会将寄存器的高位4字节置0。
 - 如果用`movq`来传输立即数时，该立即数只能表示为32位补码，然后扩展到64位的值。而`movabsq`能够以任意64位立即数作为源操作数，并且只能以寄存器作为目的。
 
-![img](pics/v2-7b37d95d4cc012d878aa256cdd0252c7_720w.jpg)
+![img](CSAPP_notes/pics/v2-7b37d95d4cc012d878aa256cdd0252c7_720w.jpg)
 
 这里可以把寄存器当做临时存储。
 
@@ -798,7 +798,7 @@ long mult2(long a, long b){
 
 在将较小的源值复制到较大的目的时，提供两个类`MOVZ`和`MOVS`。`MOVZ`是将目的中剩余的字节填充0，`MOVS`是将目的剩余的字节填充符号位的值。它们每条指令后面都有两个字符，分别表示源大小和目的大小。
 
-![img](pics/v2-94de5422d2b4ce8ea24f6399ad21a483_720w.jpg)
+![img](CSAPP_notes/pics/v2-94de5422d2b4ce8ea24f6399ad21a483_720w.jpg)
 
 **综上：**
 
@@ -812,7 +812,7 @@ long mult2(long a, long b){
 
 这里使用一个特殊的寄存器`%rsp`来保存栈顶内存地址。并且提供两个操作指令`PUSH`和`POP`分别对应入栈和出栈，以操作64位数据为例，如下图所示
 
-![img](pics/v2-49661b166cab2fa5ee179302451072d1_720w.jpg)
+![img](CSAPP_notes/pics/v2-49661b166cab2fa5ee179302451072d1_720w.jpg)
 
 因为栈和程序代码和其他的程序数据都放在同一内存中，所以我们可以根据`%rsp`来访问栈中的任意位置。假设栈顶元素是8字节的，则`movq 8(%rsp), %rdx`表示将第二个元素保存在寄存器`%rdx`中。
 
@@ -820,13 +820,13 @@ long mult2(long a, long b){
 
 以下列出了x86-64中的一些算数和逻辑操作，除了`leaq`以外，其他都有对不同大小数据的指令。
 
-![img](pics/v2-6ac2eb969006dec9210154ab0cea25ff_720w.jpg)
+![img](CSAPP_notes/pics/v2-6ac2eb969006dec9210154ab0cea25ff_720w.jpg)
 
 #### 3.5.5　特殊的算术操作
 
 在3-10中我们并没有看到除法操作，它是使用比较特殊的指令进行计算的，如下图所示
 
-![img](pics/v2-836680e5ad5f3d044328423e760a942e_720w.jpg)
+![img](CSAPP_notes/pics/v2-836680e5ad5f3d044328423e760a942e_720w.jpg)
 
 其中`R[%rdx]:R[%rax]`表示将两个寄存器的值拼接起来作为一个数，其中寄存器`%rdx`是高八字节，`%rax`是低八字节。它这里只有一个操作数表示除数，而被除数保存在`%rax`和`%rdx`中。
 
@@ -875,7 +875,7 @@ x86-64提供了另外两类指令，只会设置条件码而不会改变目的�
 
 常见的所有跳转指令如下图所示
 
-![img](pics/v2-4eda484b3aa5b144599714e298b2474b_720w.jpg)
+![img](CSAPP_notes/pics/v2-4eda484b3aa5b144599714e298b2474b_720w.jpg)
 
 对于直接跳转的跳转目标的编码，有**两种编码方式：**
 
@@ -1000,19 +1000,19 @@ long fact_for_while(long n){
 
 `switch`语句可以根据一个整数索引数值进行多重分支。通常使用**跳转表（Jump Table）**数据结构使得实现更加高效，它是一个数组，每个元素是对应的代码块起始地址，根据整数索引得到对应的代码地址后，就可以直接跳转到对应的代码块。
 
-![img](pics/v2-ff84a30a90834d4039b901e7afa1bb05_720w.jpg)
+![img](CSAPP_notes/pics/v2-ff84a30a90834d4039b901e7afa1bb05_720w.jpg)
 
 如下图所示的C语言代码
 
-![img](pics/v2-ff0086df487d98b5f05861b6598bc336_720w.jpg)
+![img](CSAPP_notes/pics/v2-ff0086df487d98b5f05861b6598bc336_720w.jpg)
 
 我们首先看GCC提供对跳转表支持后的C语言代码
 
-![img](pics/v2-dcbc963f2ddff0365c1aab21f14f87ea_720w.jpg)
+![img](CSAPP_notes/pics/v2-dcbc963f2ddff0365c1aab21f14f87ea_720w.jpg)
 
 里面有一个跳转表数组`jt`，GCC提供了一个新的运算`&&`，能够创建一个指向代码位置的指针。首先在第9行中，计算输入值`x`和`switch`的最小值的差，并将其保存到无符号数中。然后将其作为跳转表的索引，直接在第16行中跳转到索引的代码位置。
 
-![img](pics/v2-62c238008658cd25df4515495728b10e_720w.jpg)
+![img](CSAPP_notes/pics/v2-62c238008658cd25df4515495728b10e_720w.jpg)
 
 
 ### 3.7　过程
@@ -1036,7 +1036,7 @@ long fact_for_while(long n){
 - 当函数需要使用“被调用者保存寄存器”时，就直接将其`push`到栈中，使用过后再`pop`重置。
 - 无论是“被保存的寄存器”还是“局部变量”以及“参数构造区”，一开始如何申请这些区域，后面使用完后还会逆向地通过`%rsp`将这些区域释放掉，这是动态的过程，使得一个函数运行完时，`%rsp`指向的就是返回地址，就能直接通过`ret`返回到调用者的断点处。
 
-![img](pics/v2-15dd017291dfe33b74be5595980a06ea_720w.jpg)
+![img](CSAPP_notes/pics/v2-15dd017291dfe33b74be5595980a06ea_720w.jpg)
 
 - 进入一个函数时，首先将要使用的“被调用者保存寄存器”`push`到栈中，然后**通过`%rsp`来申请一段固定大小的空间**，用来存放局部变量和参数构造区，最后再释放申请的空间。
 
@@ -1065,7 +1065,7 @@ long fact_for_while(long n){
 
 - 函数Q返回时：释放分配给函数Q的栈帧，并且让程序计数器调用返回地址，继续从函数P的断点处继续执行。
 
-![img](pics/v2-91464005565bfbada7e8b74dd7f87528_720w.jpg)
+![img](CSAPP_notes/pics/v2-91464005565bfbada7e8b74dd7f87528_720w.jpg)
 
 #### 3.7.3　数据传送
 
@@ -1094,9 +1094,9 @@ long fact_for_while(long n){
 - 在函数间传递数据，主要通过寄存器进行，x86-64提供了6个用于传递参数的寄存器，根据参数的顺序，需要放入特定的寄存器中。x86-64将寄存器%rax作为函数返回值的寄存器。
 - 如果某个函数要传递超过6个参数的话，就需要将第7个到第n个参数保存在栈中，然后通过栈顶指针%rsp进行索引其中第7个参数在栈顶位置。要求每个参数的大小要为8字节的倍数。这部分区域称为参数构造区
 
-![img](pics/v2-94244742aede5e0d6d534c688470168f_720w.jpg)
+![img](CSAPP_notes/pics/v2-94244742aede5e0d6d534c688470168f_720w.jpg)
 
-![img](pics/v2-0168d4ce0a8c42624861130fe1c98b62_720w.jpg)
+![img](CSAPP_notes/pics/v2-0168d4ce0a8c42624861130fe1c98b62_720w.jpg)
 
 由于栈顶还要保存一个8字节的返回地址，所以第7个参数的地址为`8(%rsp)`，如果第7个元素大小不超过8字节，则第8个元素的地址为`16(%rsp)`，以此类推。
 
@@ -1110,7 +1110,7 @@ long fact_for_while(long n){
 
 x86-64提供了一组指令来完成上述操作
 
-![img](pics/v2-a5bb83c1e8f8e735e89d0d3cf0f1f507_720w.jpg)
+![img](CSAPP_notes/pics/v2-a5bb83c1e8f8e735e89d0d3cf0f1f507_720w.jpg)
 
 注意：在64位操作系统中，返回地址是64位8字节的。
 
@@ -1177,11 +1177,11 @@ T D[R][C]
 
 在内存中，这种二维数组是按照“行优先”的形式保存在内存中的，即先按顺序保存`D[0]`的`C`个元素，然后再紧接着保存`D[1]`的`C`个元素，以此类推。
 
-![img](pics/v2-c0a90df9cb0c7a2f5cd411cc3049e3a7_720w.jpg)
+![img](CSAPP_notes/pics/v2-c0a90df9cb0c7a2f5cd411cc3049e3a7_720w.jpg)
 
 所以当该数组的起始地址为`x`，`T`的大小为`L`时，`D[i][j]`的地址为`x+L(Ci+j)`。类似一元数组，我们也可以很容易地通过“比例变址寻址”的方式进行索引。
 
-![img](pics/v2-4a8e5a38ef03df9ab12abbddfdb02bea_720w.jpg)
+![img](CSAPP_notes/pics/v2-4a8e5a38ef03df9ab12abbddfdb02bea_720w.jpg)
 
 #### 3.8.4　定长数组
 
@@ -1189,17 +1189,17 @@ T D[R][C]
 
 对于以下代码：
 
-![img](pics/v2-7481364d7aecbeeddaa020e344906611_720w.jpg)
+![img](CSAPP_notes/pics/v2-7481364d7aecbeeddaa020e344906611_720w.jpg)
 
 我们首先看它经过优化后的C代码
 
-![img](pics/v2-002541eca8d7602526e4b5270c99f4f8_720w.jpg)
+![img](CSAPP_notes/pics/v2-002541eca8d7602526e4b5270c99f4f8_720w.jpg)
 
 可以发现这里省略了变量`j`，并且将所有数组引用都转换成了指针间的引用，避免了索引`A[i][j]`要计算乘法`A+L(Ci+j)`的巨大损耗。
 
 对应的汇编代码为
 
-![img](pics/v2-b050bab6298929b6818d2c5e85222ea4_720w.jpg)
+![img](CSAPP_notes/pics/v2-b050bab6298929b6818d2c5e85222ea4_720w.jpg)
 
 #### 3.8.5　变长数组
 
@@ -1268,7 +1268,7 @@ var_ele:
 
 由此就将4个对象包装到了结构类型`rec`中了，这些对象大小依次为4、4、8和8字节，它的存储是按顺序连续地排列在内存空间中的
 
-![img](pics/v2-28b1202b608edd2413e0a2e37797af5d_720w.png)
+![img](CSAPP_notes/pics/v2-28b1202b608edd2413e0a2e37797af5d_720w.png)
 
 我们同样可以声明嵌套的结构体
 
@@ -1285,7 +1285,7 @@ struct prob{
 
 其在内存中的分布为
 
-![img](pics/v2-6248100e7a248106f9b04961fd3594ef_720w.png)
+![img](CSAPP_notes/pics/v2-6248100e7a248106f9b04961fd3594ef_720w.png)
 
 注意：结构体分配地址空间时，对不同类型的值的起始地址有固定的要求，例如占8个字节的数据类型，起始地址必须是8的倍数，因此如果按顺序排列不满足，就会在前面或者后面插空（为了满足结构体数组，也即是末尾地址要满足下一个结构体首元素的起始地址）直到满足起始地址要求。
 
@@ -1296,7 +1296,7 @@ struct prob{
 - 定义：允许以多种类型来引用一个对象。
 - 存储：保存在公共的一块内存中，通过不同对象的类型来赋予这块内存不同的含义。内存大小为最大字段的大小。
 
-![img](pics/v2-3e4853108b0748c61e29d5da70597e29_720w.jpg)
+![img](CSAPP_notes/pics/v2-3e4853108b0748c61e29d5da70597e29_720w.jpg)
 
 主要具有以下应用情况：
 
@@ -1317,14 +1317,14 @@ struct和union的区别：struct为每个对象分配了单独的内存空间，
 
 **对齐原则**是任何K字节的基本对象的地址必须是K的倍数
 
-![img](pics/v2-eb000636c4b38f3a342fe7cb97cd13f5_720w.jpg)
+![img](CSAPP_notes/pics/v2-eb000636c4b38f3a342fe7cb97cd13f5_720w.jpg)
 
 为此，在`struct`中两个连续的对象，编译器可能中间会插入间隙，来满足各自对内存地址的要求。并且还有**两个额外的要求：**
 
 - 要求结构的初始地址一定是结构体中最大对象大小的倍数，使得偏移量加上初始地址才是真的满足倍数关系的。
 - 在结构体末尾填充，使其是结构体中最大对象大小的倍数，使得结构数组中下一个元素的地址也是成倍数关系的。
 
-![img](pics/v2-48b8732ad7e07f17a2a3dd5b3ba6debf_720w.jpg)
+![img](CSAPP_notes/pics/v2-48b8732ad7e07f17a2a3dd5b3ba6debf_720w.jpg)
 
 我们可以画图把一个个对象依次填充进去，并且要求它的偏移量是满足K的倍数。然后考虑要在末尾填充多少字节能够使得总共大小是最大对象大小的倍数。最终最大对象的大小就是对初始地址的对齐要求。
 
@@ -1336,7 +1336,7 @@ struct和union的区别：struct为每个对象分配了单独的内存空间，
 
 虚拟内存存储数据也是分不同区域的，如下图所示（不是按比例绘制的），地址从下到上依次递增。
 
-<center> <img src="pics/v2-7cd7264f28d58a9be5e57315ad683345_720w.jpg" style="zoom:80%" /> </center>     
+<center> <img src="CSAPP_notes/pics/v2-7cd7264f28d58a9be5e57315ad683345_720w.jpg" style="zoom:80%" /> </center>     
 
 
 - **Stack**：在Linux中，将栈放置在整个地址空间的最顶部，用于函数调用，及**局部变量**的存储，这样随着函数的运行，栈顶就能向低地址不断扩展。常用系统中栈的大小是8MB，可通过命令`limit`查看，如果用栈指针访问超过8MB范围的地址，就会出现**段错误（Segmentation Fault）**。 相同程序的栈的分配是固定的。
@@ -1347,12 +1347,12 @@ struct和union的区别：struct为每个对象分配了单独的内存空间，
 
 以以下代码为例
 
-<center> <img src="pics/v2-e9b39aed2190b7332b488809d7aa9f86_720w.jpg" style="zoom:80%" /> </center>     
+<center> <img src="CSAPP_notes/pics/v2-e9b39aed2190b7332b488809d7aa9f86_720w.jpg" style="zoom:80%" /> </center>     
 
 
 `big_array`、`huge_array`和`global`是全局变量，因此存储在Data区中。`useless`和`main`是函数，因此存放在Text中。`main`函数中的`p1`、`p2`、`p3`、`p4`是通过`malloc`申请空间的，所以保存在Heap区。`local`是局部变量，所以保存在Stack区中。
 
-![img](pics/v2-099c9cdd9067127ab3261927732da30f_720w.jpg)
+![img](CSAPP_notes/pics/v2-099c9cdd9067127ab3261927732da30f_720w.jpg)
 
 我们可以发现，通过`malloc`申请的变量，较小的会保存到靠近Data区，而较大的会保存到靠近Stack极限的位置。由于Heap中有部分还没有申请，所以如果尝试引用Heap中空白的区域，会产生段错误。
 
@@ -1398,23 +1398,23 @@ gets函数有一个问题就是不知道返回的数据大小是否超过缓冲�
 
 包含的寄存器如下所示
 
-<center> <img src="pics/v2-7f63e705303a129f273ae3e69c0935a2_720w.jpg" style="zoom:90%" /> </center>     
+<center> <img src="CSAPP_notes/pics/v2-7f63e705303a129f273ae3e69c0935a2_720w.jpg" style="zoom:90%" /> </center>     
 
 一个XMM寄存器，可以满足16个char、8个short、4个int、4个float和2个double同时进行操作，也就实现了SIMD运算。
 
 #### 3.11.1　浮点传送和转换操作
 
-![img](pics/v2-8ef5d9a4bbbb619fdc61cba12a78d246_720w.jpg)
+![img](CSAPP_notes/pics/v2-8ef5d9a4bbbb619fdc61cba12a78d246_720w.jpg)
 
 浮点数-->整型：
 
-![img](pics/v2-776546f2367e4f91596fc797ef302450_720w.jpg)
+![img](CSAPP_notes/pics/v2-776546f2367e4f91596fc797ef302450_720w.jpg)
 
 前面的`cvt`表示转换（convert），后一个`t`表示截断（truncated）。在将浮点数转换成整数时，指令会执行截断，把值向0进行舍入。可以发现这些都是标量指令。
 
 整型-->浮点数：
 
-![img](pics/v2-c8819c28968805c2f29c911eb931bcac_720w.jpg)
+![img](CSAPP_notes/pics/v2-c8819c28968805c2f29c911eb931bcac_720w.jpg)
 
 #### 3.11.2　过程中的浮点代码
 
@@ -1428,7 +1428,7 @@ gets函数有一个问题就是不知道返回的数据大小是否超过缓冲�
 
 提供一组执行算数运算你的标量AVX2浮点指令
 
-<center> <img src="pics/v2-ae8bf8cbbbb8f00fb50753e46c03b5e1_720w.jpg" style="zoom:90%" /> </center>     
+<center> <img src="CSAPP_notes/pics/v2-ae8bf8cbbbb8f00fb50753e46c03b5e1_720w.jpg" style="zoom:90%" /> </center>     
 
 每条指令可以有一个源操作数或两个源操作数，以及一个目的操作数。其中，第一个源操作数可以是XMM寄存器或内存位置，而第二个操作数和目的操作数只能是XMM寄存器。
 
@@ -1474,7 +1474,7 @@ gets函数有一个问题就是不知道返回的数据大小是否超过缓冲�
 
 **例1：**
 
-![img](pics/v2-6b50cc9e2e510812c5b8c1dbf62451c9_720w.jpg)
+![img](CSAPP_notes/pics/v2-6b50cc9e2e510812c5b8c1dbf62451c9_720w.jpg)
 
 **HCL表达式：**`bool eq = (a && b) || (!a && !b);`
 
@@ -1482,7 +1482,7 @@ gets函数有一个问题就是不知道返回的数据大小是否超过缓冲�
 
 **例2：**
 
-![img](pics/v2-31bce23d064b38eff5577bfb23d7448c_720w.jpg)
+![img](CSAPP_notes/pics/v2-31bce23d064b38eff5577bfb23d7448c_720w.jpg)
 
 **HCL表达式：**`bool out = (s && a) || (!s && b);`
 
@@ -1519,7 +1519,7 @@ gets函数有一个问题就是不知道返回的数据大小是否超过缓冲�
 
 我们可以得到顺序实现的SEQ抽象视图
 
-![img](pics/v2-7bc4c0445975a2aa00465089e82ceb90_720w.jpg)
+![img](CSAPP_notes/pics/v2-7bc4c0445975a2aa00465089e82ceb90_720w.jpg)
 
 - 数据内存和指令内存都是在相同的内存空间中，只是根据不同的功能对其进行划分
 - 寄存器文件包含两个读端口`A`和`B`，以及两个写端口`M`和`E`，分别接收来自内存的值`valM`以及ALU计算的结构`valE`。
@@ -1527,7 +1527,7 @@ gets函数有一个问题就是不知道返回的数据大小是否超过缓冲�
 
 更加详细的图如下所示
 
-![img](pics/v2-0fcb524cf8794ef3640b17ef5779785a_720w.jpg)
+![img](CSAPP_notes/pics/v2-0fcb524cf8794ef3640b17ef5779785a_720w.jpg)
 
 - 白色方框为时钟寄存器；蓝色方框为硬件单元，当做黑盒子而不关心细节设计；白色圆圈表示线路名字。
 - 宽度为字长的数据使用粗线；宽度为字节或更窄的数据用细线；单个位的数据用虚线，主要表示控制值。
@@ -1547,15 +1547,15 @@ gets函数有一个问题就是不知道返回的数据大小是否超过缓冲�
 
 #### 4.5.1　SEQ+：重新安排计算阶段
 
-![img](pics/v2-0186c3d90add46649d7efbce39352c5e_720w.jpg)
+![img](CSAPP_notes/pics/v2-0186c3d90add46649d7efbce39352c5e_720w.jpg)
 
 对应的SEQ+硬件结构如下图所示，可以发现将更新PC阶段移到了时钟周期开始的位置。
 
-![img](pics/v2-14b32da251541d94dff7e5a2f3ab6ce0_720w.jpg)
+![img](CSAPP_notes/pics/v2-14b32da251541d94dff7e5a2f3ab6ce0_720w.jpg)
 
 我们可以在各个阶段中加入流水线寄存器，并将信号重新排列来将SEQ+转换成初步的流水线处理器PIPE-，硬件结构如下图所示
 
-![img](pics/v2-f411a0fb3cdbb173ed5e5f257552a642_720w.jpg)
+![img](CSAPP_notes/pics/v2-f411a0fb3cdbb173ed5e5f257552a642_720w.jpg)
 
 #### 4.5.2　插入流水线寄存器
 #### 4.5.3　对信号进行重新排列和标号
@@ -1566,7 +1566,7 @@ gets函数有一个问题就是不知道返回的数据大小是否超过缓冲�
 
 在Y86-64中，程序状态包含程序寄存器、内存、条件码寄存器和状态寄存器。程序寄存器的读取处于译码阶段，而写入处于写回阶段，因此程序寄存器会出现数据冒险的可能，以以下代码为例
 
-![img](pics/v2-660fd508757184e2c3741cc534bf5cda_720w.jpg)
+![img](CSAPP_notes/pics/v2-660fd508757184e2c3741cc534bf5cda_720w.jpg)
 
 #### 4.5.6　异常处理
 #### 4.5.7　PIPE各阶段的实现
@@ -1718,7 +1718,7 @@ void psum2(float a[], float p[], long n){
 
 我们可以调整输入的向量大小，得到以上两个函数计算时所需的周期数，然后使用最小二乘拟合来得到曲线图。`psum1`函数的结果为`368+9.0n`，而`psum2`的结果为`368+6.0n`，其中斜率就是CPE指标，所以`psum1`为9.0，`psum2`为6.0，所以根据CPE指标，`psum2`更优于`psum1`。
 
-![img](pics/v2-fff3e45b8441b9d160330eea840a2a89_720w.jpg)
+![img](CSAPP_notes/pics/v2-fff3e45b8441b9d160330eea840a2a89_720w.jpg)
 
 我们可以通过这种方式得到不同函数的曲线图，由此可以计算出各种函数性能最优的元素个数区间。
 
@@ -1726,17 +1726,17 @@ void psum2(float a[], float p[], long n){
 
 我们定义了以下数据结构、生成向量、访问向量以及确定向量长度的基本过程
 
-![img](pics/v2-ba5165128ab6ce9d114c6465292882c0_720w.jpg)数据结构
+![img](CSAPP_notes/pics/v2-ba5165128ab6ce9d114c6465292882c0_720w.jpg)数据结构
 
-![img](pics/v2-7bd952214d9ffe1cb2bc29ee8e3859a9_720w.jpg)生成向量、访问向量以及确定向量长度
+![img](CSAPP_notes/pics/v2-7bd952214d9ffe1cb2bc29ee8e3859a9_720w.jpg)生成向量、访问向量以及确定向量长度
 
 我们通过声明数据类型`data_t`、初始值`IDENT`和运算符`OP`来测量整数/浮点数数据的累加/累乘函数的性能。首先给出合并运算的初始实现
 
-![img](pics/v2-4709d5179473c32d667e5917a73976dc_720w.jpg)
+![img](CSAPP_notes/pics/v2-4709d5179473c32d667e5917a73976dc_720w.jpg)
 
 对应的CPE度量值如下图所示
 
-![img](pics/v2-e87e21c48734ce1aedcd79982dfe2545_720w.png)
+![img](CSAPP_notes/pics/v2-e87e21c48734ce1aedcd79982dfe2545_720w.png)
 
 我们将在函数`combine1`的基础上对其进行优化来降低CPE度量值，**最好的方法**是实验加分析：反复尝试不同方法，进行测量，检查汇编代码来确定底层的性能瓶颈。
 
@@ -1744,13 +1744,13 @@ void psum2(float a[], float p[], long n){
 
 我们对`combine1`函数进行编译得到如下图所示的汇编代码，可以发现每次循环迭代时都会执行`call vec_length`指令来计算向量长度，但是向量长度在该函数中是不变的，所以我们可以将计算向量长度的代码移到循环外面，得到`combine2`。
 
-![img](pics/v2-3b8d7477417097f6e11c133a320c4013_720w.jpg)
+![img](CSAPP_notes/pics/v2-3b8d7477417097f6e11c133a320c4013_720w.jpg)
 
-![img](pics/v2-718148544323920ebc5144e36f75ac4d_720w.jpg)
+![img](CSAPP_notes/pics/v2-718148544323920ebc5144e36f75ac4d_720w.jpg)
 
 当前性能如下图所示
 
-![img](pics/v2-a6eb435efa21dbee23ad519faeecab05_720w.png)
+![img](CSAPP_notes/pics/v2-a6eb435efa21dbee23ad519faeecab05_720w.png)
 
 该优化称为**代码移动（Code Motion）**：识别要执行多次（比如在循环内）但是计算结果不会改变的计算（会增加很多额外的函数调用，出现`ret`指令会降低流水线效率），就将该计算移到前面。
 
@@ -1764,11 +1764,11 @@ void psum2(float a[], float p[], long n){
 
 我们可以将其改为以下形式来减少函数调用
 
-![img](pics/v2-85b363aca82719e421d9235840658525_720w.jpg)
+![img](CSAPP_notes/pics/v2-85b363aca82719e421d9235840658525_720w.jpg)
 
 但是该函数的性能如下图所示，性能并没有提升，说明内循环中的其他操作才是瓶颈。
 
-![img](pics/v2-d7b170906595342609678a7f6c98f0c8_720w.png)
+![img](CSAPP_notes/pics/v2-d7b170906595342609678a7f6c98f0c8_720w.png)
 
 > 由于存在函数调用OB，编译器不会自动完成上述优化。
 
@@ -1776,7 +1776,7 @@ void psum2(float a[], float p[], long n){
 
 我们对`combine3`进行编译，得到循环内对应的汇编代码
 
-![img](pics/v2-25620b9625d3bc30b675f898499b97f9_720w.jpg)
+![img](CSAPP_notes/pics/v2-25620b9625d3bc30b675f898499b97f9_720w.jpg)
 
 可以发现每次循环时，首先会从内存中读取`*dest`的值，然后将其写回内存中，再一次迭代时，又从内存中读取刚写入的`*dest`值，这就存在不必要的内存读写。
 
@@ -1784,15 +1784,15 @@ void psum2(float a[], float p[], long n){
 
 我们可以将代码修改为以下形式
 
-![img](pics/v2-20816095bca407695099ce0e98f9b2dc_720w.jpg)
+![img](CSAPP_notes/pics/v2-20816095bca407695099ce0e98f9b2dc_720w.jpg)
 
 当函数中的局部变量数目少于寄存器数目时，就会将局部变量保存到寄存器中，就无须在内存中进行读写了，其对应的汇编代码为
 
-![img](pics/v2-b770a79aac14757945f9afdd277c91f0_720w.jpg)
+![img](CSAPP_notes/pics/v2-b770a79aac14757945f9afdd277c91f0_720w.jpg)
 
 对应的性能为
 
-![img](pics/v2-07ae19bd9a01856059e521bf3d43cacb_720w.png)
+![img](CSAPP_notes/pics/v2-07ae19bd9a01856059e521bf3d43cacb_720w.png)
 
 > 由于存在内存别名使用，两个函数可能会不同的行为，所以编译器不会自动进行优化。
 
@@ -1804,7 +1804,7 @@ void psum2(float a[], float p[], long n){
 
 #### 5.7.1　整体操作
 
-![img](pics/v2-34200df416e7e5a14ef1ffd06c18c16a_720w.jpg)
+![img](CSAPP_notes/pics/v2-34200df416e7e5a14ef1ffd06c18c16a_720w.jpg)
 
 乱序处理器框图
 
@@ -1885,17 +1885,17 @@ void combine5(vec_ptr v, data_t *dest){
 
 我们看到改程序具有以下性能
 
-![img](pics/v2-c0f60274980b1ba6ee59a9096d98dd63_720w.jpg)
+![img](CSAPP_notes/pics/v2-c0f60274980b1ba6ee59a9096d98dd63_720w.jpg)
 
 可以发现整数加法优化到了延迟界限，因为延迟展开能减少不必要的操作的数量（例如循环索引计算和条件分支），但是其他的并没有优化，因为其延迟界限是主要限制因素。
 
 可以发现循环展开无法突破延迟界限。我们可以得到`combine5`循环部分的汇编代码
 
-![img](pics/v2-f671c1c508e058f7c94e1d210fa31336_720w.jpg)
+![img](CSAPP_notes/pics/v2-f671c1c508e058f7c94e1d210fa31336_720w.jpg)
 
 可以得到对应的数据流图
 
-![img](pics/v2-bb6cee54ac818ea680d0e4188a634184_720w.jpg)
+![img](CSAPP_notes/pics/v2-bb6cee54ac818ea680d0e4188a634184_720w.jpg)
 
 其中，`%xmm0`保存`acc`，`%rdx`保存`i`。可以发现循环展开虽然能将循环次数减少为原来的k分之一，但是每次迭代所需的时钟周期变为了原来的k倍，使得总体的延迟不变，无法突破延迟界限。
 
@@ -1938,11 +1938,11 @@ void combine6(vec_ptr v, data_t *dest){
 
 我们看到改程序具有以下性能
 
-![img](pics/v2-c488c1ce70bb3579e01a7be181397f38_720w.jpg)
+![img](CSAPP_notes/pics/v2-c488c1ce70bb3579e01a7be181397f38_720w.jpg)
 
 可以通过循环对应的数据流图来分析
 
-![img](pics/v2-9ca75b7b96d0d14e69e107e33d6835b4_720w.jpg)
+![img](CSAPP_notes/pics/v2-9ca75b7b96d0d14e69e107e33d6835b4_720w.jpg)
 
 其中，`%xmm0`保存`acc0`，`%xmm`保存`%acc1`，`%rdx`保存`i`。可以发现，我们通过在循环中引入多个变量，使得原来在同一个循环寄存器中的浮点数乘法运算分配到不同的循环寄存器中，就消除了循环寄存器的数据相关限制，就可以使用不同的功能单元，或利用功能单元的流水线进行并行计算，就**能突破延迟界限**。
 
@@ -1972,15 +1972,15 @@ void combine6(vec_ptr v, data_t *dest){
 
 但是对于如下所示的链表函数，计算当前加载地址，需要先获取上一轮的地址，由此加载操作之间就存在数据相关，就需要考虑加载延迟了。
 
-![img](pics/v2-1552d7be27e2cd8c36a1f61ccd02cb6b_720w.jpg)
+![img](CSAPP_notes/pics/v2-1552d7be27e2cd8c36a1f61ccd02cb6b_720w.jpg)
 
 循环中对应的汇编代码为
 
-![img](pics/v2-59ee3b73219336d4fbc10a7d0da840b4_720w.jpg)
+![img](CSAPP_notes/pics/v2-59ee3b73219336d4fbc10a7d0da840b4_720w.jpg)
 
 其中，`%rax`保存`len`，`%rdi`保存`ls`，我们可以得到对应的数据流图
 
-![img](pics/v2-b9696d371d739b87e6da6e7b3a6b5852_720w.jpg)
+![img](CSAPP_notes/pics/v2-b9696d371d739b87e6da6e7b3a6b5852_720w.jpg)
 
 可以发现这里有两个数据相关的循环寄存器`%rdi`和`%rax`，其中加法操作需要的延迟通常比加载操作的延迟小，所以左侧为关键路径，这里测得该函数的CPE为4.0，就是加载操作对应的延迟。
 
@@ -1991,19 +1991,19 @@ void combine6(vec_ptr v, data_t *dest){
 
 首先需要先了解加载和存储单元的细节。如下图所示，在存储单元中会有一个**存储缓冲区**，用来保存发射到存储单元但是还未保存到数据高速缓存的存储操作的地址和数据，由此避免存储操作之间的等待。并且加载操作会检查存储缓冲区中是否有需要的地址，如果有，则直接将存储缓冲区中的数据作为加载操作的结果。
 
-![img](pics/v2-10efefb2716c8e1e3b12a7c72f19dfb1_720w.jpg)
+![img](CSAPP_notes/pics/v2-10efefb2716c8e1e3b12a7c72f19dfb1_720w.jpg)
 
 我们看以下代码，会从`*src`处读取数据，然后将其保存到`*dest`
 
-![img](pics/v2-0c353a86d5bce54961ca44c3a41f8e33_720w.jpg)
+![img](CSAPP_notes/pics/v2-0c353a86d5bce54961ca44c3a41f8e33_720w.jpg)
 
 循环内对应的汇编代码为
 
-![img](pics/v2-7dce2b60690878c1644dbadf4ba1b31f_720w.jpg)
+![img](CSAPP_notes/pics/v2-7dce2b60690878c1644dbadf4ba1b31f_720w.jpg)
 
 我们可以的带对应的数据流图
 
-![img](pics/v2-7814e69f0131578e5423d04e2f72181f_720w.jpg)
+![img](CSAPP_notes/pics/v2-7814e69f0131578e5423d04e2f72181f_720w.jpg)
 
 我们需要注意以下几点：
 
@@ -2012,7 +2012,7 @@ void combine6(vec_ptr v, data_t *dest){
 
 对其进行重新排列，并且去除掉非循环寄存器，可以得到如下的数据流图
 
-![img](pics/v2-e8cd64ddb5f6806adb5c9491e3e94663_720w.jpg)
+![img](CSAPP_notes/pics/v2-e8cd64ddb5f6806adb5c9491e3e94663_720w.jpg)
 
 我们可以发现：
 
@@ -2082,7 +2082,7 @@ gprof prog
 
 **随机访问存储器（Random-Access Memory，RAM）** 根据存储单元实现方式可以分为两类：静态的RAM（SRAM）和动态的RAM（DRAM）。
 
-![img](pics/v2-933c9f4227843802cce01e44b5b7b867_720w.png)
+![img](CSAPP_notes/pics/v2-933c9f4227843802cce01e44b5b7b867_720w.png)
 
 
 **非易失性存储器**
@@ -2097,7 +2097,7 @@ gprof prog
 
 **磁盘（Disk）** 是被用来保存大量数据的存储设备，但是读信息的速度比DRAM慢10万倍，比SRAM慢100万倍。
 
-![img](pics/v2-6f683170077745bddb02117e90df1dcd_720w.jpg)
+![img](CSAPP_notes/pics/v2-6f683170077745bddb02117e90df1dcd_720w.jpg)
 
 如上图所示是一个磁盘的构造。磁盘是由多个叠放在一起的**盘片（Platter）** 构成，每个盘片有两个覆盖着磁性记录材料的**表面（Surface）**。每个表面由一组称为**磁道（Track）** 的同心圆组成，每个磁道被划分为若干**扇区（Sector）**，每个扇区包含相同数量的数据位（通常为512位）作为读写数据的基本单位。扇区之间通过**间隙（Gap）** 分隔开来，间隙不保存数据信息，只用来表示扇区的格式化位。通常会使用**柱面（Cylinder）** 来描述不同表面上相同磁道的集合，比如柱面k就是6个表面上磁道k的集合。盘片中央会有一个可以旋转的**主轴（Spindle）**，使得盘片以固定的旋**转速率（Rotational Rate）** 旋转，单位通常为**RPM（Revolution Per Minute）**。
 
@@ -2109,11 +2109,11 @@ gprof prog
 
 磁盘容量的计算公式为：
 
-![img](pics/v2-e1f5a852f08d8fe6210b1f60dead54f3_720w.png)
+![img](CSAPP_notes/pics/v2-e1f5a852f08d8fe6210b1f60dead54f3_720w.png)
 
 在面密度较低时，每个磁道都被分成了相同的扇区，所以能够划分的扇区数由最内侧磁道能记录的扇区数决定，这就使得外侧的磁道具有很多间隙。现代大容量磁盘采用**多区记录（Multiple Zone Recording）** 技术，将一组连续的柱面划分成一个区，在同一个区中，每个柱面的每条磁道都有相同数量的扇区，由该区中最内侧的磁道决定，由此使得外侧的区能划分成更多的扇区。
 
-![img](pics/v2-0e18ccad49d39461d97188145ff2af37_720w.jpg)
+![img](CSAPP_notes/pics/v2-0e18ccad49d39461d97188145ff2af37_720w.jpg)
 
 如上图所示，磁盘通过一个连接在**传动臂（Actuator Arm）** 上的 **读/写头（Read/Write Head）** 来进行读写，对于有多个盘面的磁盘，会用多个位于同一柱面上的垂直排列的读/写头。对于扇区的**访问时间（Access Time）** 由以下几部分构成：
 
@@ -2132,7 +2132,7 @@ gprof prog
 - - **影响因素：** 磁盘旋转速率，以及每条磁道的扇区数
   - ![[公式]](https://www.zhihu.com/equation?tex=T_%7Bavg%5C+transfer%7D%3D%5Cfrac%7B1%7D%7BRPM%7D%5Ccdot+%5Cfrac%7B1%7D%7B%E5%B9%B3%E5%9D%87%E6%AF%8F%E6%9D%A1%E7%A3%81%E9%81%93%E7%9A%84%E6%89%87%E5%8C%BA%E6%95%B0%7D%5Ctimes+%5Cfrac%7B60s%7D%7B1min%7D)
 
-![img](pics/v2-c14149b05b66531d45f079a78883c10c_720w.jpg)
+![img](CSAPP_notes/pics/v2-c14149b05b66531d45f079a78883c10c_720w.jpg)
 
 **可以发现：** 寻道时间和旋转时间是主要影响部分，并且两者大致相等，通常可以寻道时间乘2来估计访问时间。
 
@@ -2146,7 +2146,7 @@ gprof prog
 
 **固态硬盘（Solid State Disk，SSD）** 是一种基于闪存的存储技术，插在I/O总线上标准硬盘插槽（通常为USB或SATA），处于磁盘和DRAM存储器的中间点。从CPU的角度来看，SSD与磁盘完全相同，有相同的接口和包装。
 
-![img](pics/v2-917429960df29b0a0591dcf2ce7b9599_720w.jpg)
+![img](CSAPP_notes/pics/v2-917429960df29b0a0591dcf2ce7b9599_720w.jpg)
 
 如上图所示是一个SSD的基本结构。它由**闪存**和** 闪存翻译层（Flash Translation Layer）**组成
 
@@ -2160,11 +2160,11 @@ gprof prog
 
 - **时间局部性（Temporal Locality）：** 引用过的数据项在不久会被多次引用。
 
-![img](pics/v2-92e18eee9fec87d25e674d4eee44afcd_720w.png)
+![img](CSAPP_notes/pics/v2-92e18eee9fec87d25e674d4eee44afcd_720w.png)
 
 - **空间局部性（Spatial Locality）：** 引用过的数据项，在不久会引用附近的数据项。
 
-![img](pics/v2-82179b9f2bb653a4e86550e56526ec74_720w.png)
+![img](CSAPP_notes/pics/v2-82179b9f2bb653a4e86550e56526ec74_720w.png)
 
 从硬件到操作系统，再到应用程序，都利用了局部性
 
@@ -2178,7 +2178,7 @@ gprof prog
 
 **例1：**
 
-![img](pics/v2-b31a0fe3850f843ea7bc207e764a766d_720w.jpg)
+![img](CSAPP_notes/pics/v2-b31a0fe3850f843ea7bc207e764a766d_720w.jpg)
 
 分析上述程序的局部性。对于变量`sum`，每一轮迭代都会引用一次，所以`sum`具有好的时间局部性，而`sum`是标量，所以没有空间局部性。对于变量`v`，其数据在内存中的分布如图b中所示，每一轮迭代都是引用不同的数据项，所以时间局部性较差，但是会按照内存存储的顺序依次引用数据项，所以空间局部性较好。 综合来说，该程序具有较好的局部性。
 
@@ -2188,23 +2188,23 @@ gprof prog
 
 **例2：**
 
-![img](pics/v2-48a83a08edb84d9a8ab728150dd0aaac_720w.jpg)
+![img](CSAPP_notes/pics/v2-48a83a08edb84d9a8ab728150dd0aaac_720w.jpg)
 
 对于以上代码，变量`sum`的时间局部性较好且不具有空间局部性，对于二维数组变量`v`，在内存中是按照行优先存储的，而代码中也是按照行优顺序进行应用的，所以变量`v`具有步长为1的引用模式，所以具有较好的空间局部性，而时间局部性较差。总体来说，该程序具有良好的局部性。
 
 **例3：**
 
-![img](pics/v2-561d453a9fd069a3386d106d2c08952f_720w.jpg)
+![img](CSAPP_notes/pics/v2-561d453a9fd069a3386d106d2c08952f_720w.jpg)
 
 上述代码将变量`v`的引用顺序变为了列优先，则根据`v`的内存存储形式，变量`v`具有步长为N的引用模式，则时间局部性较差，且空间局部性也较差。总体来说，该程序的局部性较差。
 
 **例4：**
 
-![img](pics/v2-b48d6f916ab0fc996be0a489eee1841e_720w.jpg)
+![img](CSAPP_notes/pics/v2-b48d6f916ab0fc996be0a489eee1841e_720w.jpg)
 
 我们需要判断以上三个函数的局部性。首先根据结构体的定义可以得到结构体数组在内存中的存储形式如下所示
 
-![img](pics/v2-91128cb42e57ffa12c5fa6c10809f46b_720w.png)
+![img](CSAPP_notes/pics/v2-91128cb42e57ffa12c5fa6c10809f46b_720w.png)
 
 则`clear1`函数的步长为1，具有良好的空间局部性；而`clear2`函数会在结构体中不同的字段中反复跳跃，空间局部性相对`clear1`差一些；而`clear3`函数会在相邻两个结构体中反复跳跃，空间局部性相比`clear2`更差。
 
@@ -2225,7 +2225,7 @@ gprof prog
 - cache都是基于SRAM的。
 - 从cache中取数据时，高位使用tag而不是set来索引，这样做的好处是使得相邻的内存块映射到不同的set中，如果取一个连续的数组时，就不需要一直进行cache line的替换。
 
-![img](pics/v2-a5efaee2ec60e7c80143ac8e1992bf46_720w.jpg)
+![img](CSAPP_notes/pics/v2-a5efaee2ec60e7c80143ac8e1992bf46_720w.jpg)
 
 **高速缓存（Cache）** 是一个小而快速的存储设备，用来作为存储在更大更慢设备中的数据对象的缓冲区域。而使用高速缓存的过程称为**缓存（Caching）**。
 
@@ -2233,7 +2233,7 @@ gprof prog
 
 **该结构之所以有效**，是因为程序的局部性原理。相比于第k+1层的数据，程序会倾向于访问存储在第k层的数据。如果我们访问第k+1层存储的数据，我们会将其拷贝到第k层，因为根据局部性原理我们很有可能将再次访问该数据，由此我们就能以第k层的访问速度来访问数据。而且因为我们不经常访问第k+1层的数据，我们就可以使用速度更慢且更便宜的存储设备。
 
-![img](pics/v2-bed760846b2d38575f36c7b36e483032_720w.jpg)
+![img](CSAPP_notes/pics/v2-bed760846b2d38575f36c7b36e483032_720w.jpg)
 
 上图展示的是存储器层次结构的基本缓存原理。每一层存储器都会被划分成连续的数据对象组块，称为**块（Block）**，每个块都有一个唯一的地址或名字，并且通常块的大小都是固定的。第k层作为第k+1层的缓存，数据会以块大小作为**传送单元（Transfer Unit）** 在第k层和第k+1层之间来回赋值，使得第k层保存第k+1层块的一个子集的副本。通常存储器层次结构中较低层的设备的访问时间较长，所以较低层中会使用较大的块。
 
@@ -2266,11 +2266,11 @@ gprof prog
 
 较早期的计算机系统的存储器层次结构只有三层：CPU寄存器、主存和磁盘，但是随着CPU的发展，使得主存和CPU之间的读取速度逐渐拉大，由此在CPU和主存之间插入一个小而快速的SRAM高速缓存存储器，称为**L1高速缓存**，随着后续的发展，又增加了**L2高速缓存**和**L3高速缓存**。
 
-![img](pics/v2-3a293eaec3e353719cc3fd99b4d6a58a_720w.png)
+![img](CSAPP_notes/pics/v2-3a293eaec3e353719cc3fd99b4d6a58a_720w.png)
 
 通用的高速缓存存储器组织结构：
 
-![img](pics/v2-f4f20030ddac5693b9ffe76f570df080_720w.jpg)
+![img](CSAPP_notes/pics/v2-f4f20030ddac5693b9ffe76f570df080_720w.jpg)
 
 - **s位：** 高速缓存被组织成一个数组，而该数组通过 ![[公式]](https://www.zhihu.com/equation?tex=S%3D2%5Es+)进行索引。
 - **b位：** 每个组中包含E个**高速缓存行（Cache Line）**，每个行有一个 ![[公式]](https://www.zhihu.com/equation?tex=B%3D2%5Eb) 字节的**数据块（Block）**组成。
@@ -2288,7 +2288,7 @@ gprof prog
 
 #### 6.4.2　直接映射高速缓存
 
-![img](pics/v2-aa702758461fd483d0f4c4693a9cb913_720w.jpg)
+![img](CSAPP_notes/pics/v2-aa702758461fd483d0f4c4693a9cb913_720w.jpg)
 
 如上图所示，当 ![[公式]](https://www.zhihu.com/equation?tex=E%3D1) 时，高速缓存称为**直接映射高速缓存（Direct-mapped Cache）**，每个高速缓存组中只含有一个高速缓存行。
 
@@ -2296,7 +2296,7 @@ gprof prog
 
 直接映射高速缓存的冲突不命中是由于每个高速缓存组中只有一个高速缓存行，所以扩大E的值，当 ![[公式]](https://www.zhihu.com/equation?tex=1%3CE%3CC%2FB) 时，称为**E路组相联高速缓存（Set Associative Cache）**，此时需要额外的硬件逻辑来进行行匹配，所以更加昂贵。（ ![[公式]](https://www.zhihu.com/equation?tex=E%3CC%2FB) 即要求 ![[公式]](https://www.zhihu.com/equation?tex=S%3E1) ）
 
-![img](pics/v2-b45e58cebd38c1cbb108a38786f347d6_720w.jpg)2路组相联高速缓存
+![img](CSAPP_notes/pics/v2-b45e58cebd38c1cbb108a38786f347d6_720w.jpg)2路组相联高速缓存
 
 当缓存不命中时需要进行缓存行替换，如果对应的高速缓存组中有空的高速缓存行，则直接将其保存到空行中。但是如果没有空行，就要考虑合适的**替换策略**：
 
@@ -2323,7 +2323,7 @@ gprof prog
 
 接下来讨论高速缓存中不同参数对高速缓存性能的影响：
 
-![img](pics/v2-a26dbb445b61f888567ab72014633ca2_720w.jpg)
+![img](CSAPP_notes/pics/v2-a26dbb445b61f888567ab72014633ca2_720w.jpg)
 
 想要编写高速缓存友好（Cache Friendly）的代码，**基本方法为：**
 
@@ -2337,7 +2337,7 @@ gprof prog
 
 一个程序从存储器系统中读取数据的速率称为**读吞吐量（Read Throughput）**或**读带宽（Read Bandwidth）** ，单位为`MB/s`。 我们通过以下代码来衡量空间局部性和时间局部性对程序吞吐量的影响
 
-![img](pics/v2-f80d3dc5a77671c44450285f4c997221_720w.jpg)
+![img](CSAPP_notes/pics/v2-f80d3dc5a77671c44450285f4c997221_720w.jpg)
 
 第37行我们首先对高速缓存进行暖身，然后在第38行计算程序运行的时钟周期个数。
 
@@ -2346,17 +2346,17 @@ gprof prog
 
 通过调整`size`和`stride`来度量程序的吞吐量，可以得到以下存储器山（Memory Mountain）
 
-![img](pics/v2-9138e6ee2de307d51925388b2f6ff952_720w.jpg)
+![img](CSAPP_notes/pics/v2-9138e6ee2de307d51925388b2f6ff952_720w.jpg)
 
 可以保持`stride`不变，观察高速缓存的大小和时间局部性对性能的影响
 
-![img](pics/v2-25318f54b07e9c5b04fb7da56fdd07db_720w.jpg)
+![img](CSAPP_notes/pics/v2-25318f54b07e9c5b04fb7da56fdd07db_720w.jpg)
 
 可以发现，当工作集大小小于L1高速缓存的大小时，模拟了时间局部性很好的程序，所有读都是直接在L1高速缓存中进行的，则吞吐量较高；当工作集大小较大时，模拟了时间局部性较差的程序，读操作需要从更高的高速缓存中加载，则吞吐量下降了。
 
 可以保持工作集为4MB，沿着L3山脊查看空间局部性对性能的影响
 
-![img](pics/v2-d477dbe3deb3abf57143b85f565a9afa_720w.jpg)
+![img](CSAPP_notes/pics/v2-d477dbe3deb3abf57143b85f565a9afa_720w.jpg)
 
 可以发现，步长越小越能充分利用L1高速缓存，使得吞吐量较高。当步长为8字节时，会跨越64字节，而当前高速缓存的块大小只有64字节，说明每次读取都无法在L2高速缓存中命中，都需要从L3高速缓存读取，所以后续保持不变。
 
@@ -2366,11 +2366,11 @@ gprof prog
 
 我们可以有不同的循环方式来实现矩阵乘法
 
-![img](pics/v2-6bbe62a7cfd8f056115a07f20978c8e1_720w.jpg)
+![img](CSAPP_notes/pics/v2-6bbe62a7cfd8f056115a07f20978c8e1_720w.jpg)
 
 假设每个块中能保存4个元素，则可以分析每个变量的命中率
 
-![img](pics/v2-cec776bff5e8f8509dfe8abafe9a91b9_720w.jpg)
+![img](CSAPP_notes/pics/v2-cec776bff5e8f8509dfe8abafe9a91b9_720w.jpg)
 
 说明我们可以对循环重排列，来提高空间局部性，增加命中率。
 
@@ -2378,23 +2378,23 @@ gprof prog
 
 分块的主要思想是将一个程序中的数据结构组织成大的**片（Chunk）**，使得能够将一个片加载到L1高速缓存中，并在这个偏重进行读写。
 
-![img](pics/v2-db473872415172a66013ad0cd8d2dc34_720w.jpg)
+![img](CSAPP_notes/pics/v2-db473872415172a66013ad0cd8d2dc34_720w.jpg)
 
 如上图所示是一个普通的矩阵乘法函数，这里将二维数组想象成一个连续的字节数组，通过显示计算偏移量进行计算。这里假设每个块中可保存8个元素，并且高速缓存容量远小于矩阵的行列数。
 
 每一次迭代就计算一个C的元素值，我们分析每一次迭代的不命中次数
 
-![img](pics/v2-bc67b5311d1e669da02dd6d3cce20714_720w.jpg)
+![img](CSAPP_notes/pics/v2-bc67b5311d1e669da02dd6d3cce20714_720w.jpg)
 
 对于矩阵`a`，一次会保存行的8个元素到块中，则一行元素一共会有`n/8`次不命中。对于矩阵`b`，因为是列优先读取的，所以无法利用高速缓存中保存的块，所以一行元素会有n次不命中。则一共会有`9n/8`次不命中，对于C中的`n*n`个元素，一共会有 ![[公式]](https://www.zhihu.com/equation?tex=9n%5E3%2F8) 次不命中。
 
-![img](pics/v2-a4883999ac783bcd14b90632b4905630_720w.jpg)
+![img](CSAPP_notes/pics/v2-a4883999ac783bcd14b90632b4905630_720w.jpg)
 
 如上图所示是使用分块技术实现的矩阵乘法，将矩阵乘法分解为若干个`BxB`小矩阵的乘法，每次能将一个`BxB`的小矩阵加载到缓存中。
 
 每一次迭代就计算C中一个`BxB`大小的块，我们分析每一次迭代的不命中次数
 
-![img](pics/v2-1ced9758084018e0653d9aee26cb5109_720w.jpg)
+![img](CSAPP_notes/pics/v2-1ced9758084018e0653d9aee26cb5109_720w.jpg)
 
 每个块有 ![[公式]](https://www.zhihu.com/equation?tex=B%5E2%2F8) 次不命中次数，而每一行每一列有`n/B`个块，所以计算一次C中的一个块会有 ![[公式]](https://www.zhihu.com/equation?tex=2n%2FB%5Ctimes+B%5E2%2F8%3DnB%2F4) 次不命中，则一共会有 ![[公式]](https://www.zhihu.com/equation?tex=nB%2F4%5Ctimes+%28n%2FB%29%5E2%3Dn%5E3%2F%284B%29) ，我们就能调整B的大小来减小不命中率。
 
@@ -2407,5 +2407,8 @@ gprof prog
 - 将注意力集中在内循环中，因为大部分的计算和内存访问都集中在这里
 - 按照数据对象存储在内存中的顺序，以步长为1来读数据，使得空间局部性最大。比如步长为2的命中率就比步长为1的命中率降低一半。
 - 一旦从存储器读入一个数据对象时，就尽可能使用它，使得时间局部性最大。特别是局部变量，编译器会将其保存在寄存器中。
+
+
+
 
 
