@@ -3,7 +3,7 @@
 
 **CSAPP + CMU 15-213 相关**
 
-https://fengmuzi2003.gitbook.io/csapp3e/
+https://hansimov.gitbook.io/csapp/
 
 https://www.bilibili.com/video/BV1iW411d7hd
 
