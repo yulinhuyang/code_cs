@@ -5,15 +5,15 @@
 
 https://hansimov.gitbook.io/csapp/
 
-https://www.bilibili.com/video/BV1iW411d7hd
+九曲阑干：https://www.bilibili.com/video/BV1cD4y1D7uR 
+
+南京大学 计算机系统基础(一) 袁春风： https://www.bilibili.com/video/BV1kE411X7S5
+
+CMU 15-213： https://www.bilibili.com/video/BV1iW411d7hd
 
 https://www.zhihu.com/question/20402534/answer/1670374116
 
 https://github.com/EugeneLiu/translationCSAPP
-
-https://nju-projectn.github.io/ics-pa-gitbook/ics2019/
-
-http://www.cs.cmu.edu/afs/cs/academic/class/15213-f15/www/schedule.html
 
 其他：
 
