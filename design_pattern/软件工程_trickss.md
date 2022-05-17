@@ -13,9 +13,6 @@
 
 [软件工程常用文档](https://github.com/cuizhenjie/software-engineering-document)
 
-### 2  notes
-
-最重要的： 用例图、类图、时序图
 
 
 
