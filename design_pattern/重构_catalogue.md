@@ -64,87 +64,87 @@
 
 **第5章 介绍重构名录**
 
-5.1　重构的记录格式 
-5.2　挑选重构的依据 
+5.1　重构的记录格式     
+5.2　挑选重构的依据     
 
 **第6章　第一组重构** 
 
-6.1　提炼函数（Extract Function） 
-6.2　内联函数（Inline Function） 
-6.3　提炼变量（Extract Variable） 
-6.4　内联变量（Inline Variable） 
-6.5　改变函数声明（Change Function Declaration） 
-6.6　封装变量（Encapsulate Variable） 
-6.7　变量改名（Rename Variable） 
-6.8　引入参数对象（Introduce Parameter Object） 
-6.9　函数组合成类（Combine Functions into Class） 
-6.10　函数组合成变换（Combine Functions into Transform） 
-6.11　拆分阶段（Split Phase） 
+6.1　提炼函数（Extract Function）     
+6.2　内联函数（Inline Function）     
+6.3　提炼变量（Extract Variable）     
+6.4　内联变量（Inline Variable）     
+6.5　改变函数声明（Change Function Declaration）     
+6.6　封装变量（Encapsulate Variable）     
+6.7　变量改名（Rename Variable）     
+6.8　引入参数对象（Introduce Parameter Object）     
+6.9　函数组合成类（Combine Functions into Class）     
+6.10　函数组合成变换（Combine Functions into Transform）     
+6.11　拆分阶段（Split Phase）     
 
 **第7章　封装**
  
-7.1　封装记录（Encapsulate Record） 
-7.2　封装集合（Encapsulate Collection） 
-7.3　以对象取代基本类型（Replace Primitive with Object） 
-7.4　以查询取代临时变量（Replace Temp with Query） 
-7.5　提炼类（Extract Class） 
-7.6　内联类（Inline Class） 
-7.7　隐藏委托关系（Hide Delegate） 
-7.8　移除中间人（Remove Middle Man） 
-7.9　替换算法（Substitute Algorithm）
+7.1　封装记录（Encapsulate Record）     
+7.2　封装集合（Encapsulate Collection）     
+7.3　以对象取代基本类型（Replace Primitive with Object）     
+7.4　以查询取代临时变量（Replace Temp with Query）     
+7.5　提炼类（Extract Class）     
+7.6　内联类（Inline Class）     
+7.7　隐藏委托关系（Hide Delegate）     
+7.8　移除中间人（Remove Middle Man）     
+7.9　替换算法（Substitute Algorithm）    
  
 **第8章　搬移特性** 
 
-8.1　搬移函数（Move Function） 
-8.2　搬移字段（Move Field） 
-8.3　搬移语句到函数（Move Statements into Function） 
-8.4　搬移语句到调用者（Move Statements to Callers） 
-8.5　以函数调用取代内联代码（Replace Inline Code with Function Call） 
-8.6　移动语句（Slide Statements） 
-8.7　拆分循环（Split Loop） 
-8.8　以管道取代循环（Replace Loop with Pipeline） 
-8.9　移除死代码（Remove Dead Code） 
+8.1　搬移函数（Move Function）     
+8.2　搬移字段（Move Field）     
+8.3　搬移语句到函数（Move Statements into Function）     
+8.4　搬移语句到调用者（Move Statements to Callers）     
+8.5　以函数调用取代内联代码（Replace Inline Code with Function Call）     
+8.6　移动语句（Slide Statements）     
+8.7　拆分循环（Split Loop）     
+8.8　以管道取代循环（Replace Loop with Pipeline）     
+8.9　移除死代码（Remove Dead Code）     
 
 **第9章　重新组织数据** 
 
-9.1　拆分变量（Split Variable） 
-9.2　字段改名（Rename Field） 
-9.3　以查询取代派生变量（Replace Derived Variable with Query） 
-9.4　将引用对象改为值对象（Change Reference to Value） 
-9.5　将值对象改为引用对象（Change Value to Reference） 
+9.1　拆分变量（Split Variable）     
+9.2　字段改名（Rename Field）     
+9.3　以查询取代派生变量（Replace Derived Variable with Query）     
+9.4　将引用对象改为值对象（Change Reference to Value）     
+9.5　将值对象改为引用对象（Change Value to Reference）     
 
 **第10章　简化条件逻辑**
  
-10.1　分解条件表达式（Decompose Conditional） 
-10.2　合并条件表达式（Consolidate Conditional Expression） 
-10.3　以卫语句取代嵌套条件表达式（Replace Nested Conditional with Guard Clauses） 
-10.4　以多态取代条件表达式（Replace Conditional with Polymorphism） 
-10.5　引入特例（Introduce Special Case） 
-10.6　引入断言（Introduce Assertion）
+10.1　分解条件表达式（Decompose Conditional）         
+10.2　合并条件表达式（Consolidate Conditional Expression）     
+10.3　以卫语句取代嵌套条件表达式（Replace Nested Conditional with Guard Clauses）     
+10.4　以多态取代条件表达式（Replace Conditional with Polymorphism）     
+10.5　引入特例（Introduce Special Case）     
+10.6　引入断言（Introduce Assertion）    
  
 **第11章　重构API** 
 
-11.1　将查询函数和修改函数分离（Separate Query from Modifier） 
-11.2　函数参数化（Parameterize Function） 
-11.3　移除标记参数（Remove Flag Argument） 
-11.4　保持对象完整（Preserve Whole Object） 
-11.5　以查询取代参数（Replace Parameter with Query） 
-11.6　以参数取代查询（Replace Query with Parameter） 
-11.7　移除设值函数（Remove Setting Method） 
-11.8　以工厂函数取代构造函数（Replace Constructor with Factory Function） 
-11.9　以命令取代函数（Replace Function with Command） 
-11.10　以函数取代命令（Replace Command with Function） 
+11.1　将查询函数和修改函数分离（Separate Query from Modifier）     
+11.2　函数参数化（Parameterize Function）     
+11.3　移除标记参数（Remove Flag Argument）     
+11.4　保持对象完整（Preserve Whole Object）     
+11.5　以查询取代参数（Replace Parameter with Query）     
+11.6　以参数取代查询（Replace Query with Parameter）     
+11.7　移除设值函数（Remove Setting Method）     
+11.8　以工厂函数取代构造函数（Replace Constructor with Factory Function）     
+11.9　以命令取代函数（Replace Function with Command）     
+11.10　以函数取代命令（Replace Command with Function）     
 
 **第12章　处理继承关系**
 
-12.1　函数上移（Pull Up Method） 
-12.2　字段上移（Pull Up Field） 
-12.3　构造函数本体上移（Pull Up Constructor Body） 
-12.4　函数下移（Push Down Method） 
-12.5　字段下移（Push Down Field） 
-12.6　以子类取代类型码（Replace Type Code with Subclasses） 
-12.7　移除子类（Remove Subclass） 
-12.8　提炼超类（Extract Superclass） 
-12.9　折叠继承体系（Collapse Hierarchy） 
-12.10　以委托取代子类（Replace Subclass with Delegate） 
-12.11　以委托取代超类（Replace Superclass with Delegate） 
+12.1　函数上移（Pull Up Method）     
+12.2　字段上移（Pull Up Field）     
+12.3　构造函数本体上移（Pull Up Constructor Body）     
+12.4　函数下移（Push Down Method）     
+12.5　字段下移（Push Down Field）     
+12.6　以子类取代类型码（Replace Type Code with Subclasses）     
+12.7　移除子类（Remove Subclass）     
+12.8　提炼超类（Extract Superclass）     
+12.9　折叠继承体系（Collapse Hierarchy）     
+12.10　以委托取代子类（Replace Subclass with Delegate）     
+12.11　以委托取代超类（Replace Superclass with Delegate）     
