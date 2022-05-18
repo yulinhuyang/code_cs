@@ -1,12 +1,13 @@
-# 《C++ Primer中文版（第5版）》笔记
 
-参考：https://github.com/czs108/Cpp-Primer-5th-Note-CN
+参考：
 
-## 目录
+https://github.com/czs108/Cpp-Primer-5th-Note-CN
+
+**目录**
 
 [第1章 开始](https://github.com/czs108/Cpp-Primer-5th-Note-CN/tree/master/Chapter-1%20Getting%20Started)
 
-### 第I部分 C++基础
+**第I部分 C++基础**
 
 [第2章 变量和基本类型](https://github.com/czs108/Cpp-Primer-5th-Note-CN/tree/master/Chapter-2%20Variables%20and%20Basic%20Types)
 
@@ -20,7 +21,7 @@
 
 [第7章 类](https://github.com/czs108/Cpp-Primer-5th-Note-CN/tree/master/Chapter-7%20Classes)
 
-### 第II部分 C++标准库
+**第II部分 C++标准库**
 
 [第8章 IO库](https://github.com/czs108/Cpp-Primer-5th-Note-CN/tree/master/Chapter-8%20The%20IO%20Library)
 
@@ -32,7 +33,7 @@
 
 [第12章 动态内存](https://github.com/czs108/Cpp-Primer-5th-Note-CN/tree/master/Chapter-12%20Dynamic%20Memory)
 
-### 第III部分 类设计者的工具
+**第III部分 类设计者的工具**
 
 [第13章 拷贝控制](https://github.com/czs108/Cpp-Primer-5th-Note-CN/tree/master/Chapter-13%20Copy%20Control)
 
@@ -42,7 +43,7 @@
 
 [第16章 模板与泛型编程](https://github.com/czs108/Cpp-Primer-5th-Note-CN/tree/master/Chapter-16%20Templates%20and%20Generic%20Programming)
 
-### 第IV部分 高级主题
+**第IV部分 高级主题**
 
 [第17章 标准库特殊设施](https://github.com/czs108/Cpp-Primer-5th-Note-CN/tree/master/Chapter-17%20Specialized%20Library%20Facilities)
 
@@ -50,11 +51,165 @@
 
 [第19章 特殊工具与技术](https://github.com/czs108/Cpp-Primer-5th-Note-CN/tree/master/Chapter-19%20Specialized%20Tools%20and%20Techniques)
 
-## 关于
 
-***GitHub***：https://github.com/czs108
+**第1章 开始**      
+1.1 编写一个简单的C++程序        
+1.2 初识输入输出        
+1.3 注释简介        
+1.4 控制流        
+1.5 类简介        
+1.6 书店程序        
+ 
+**第Ⅰ部分 C++基础**       
+**第2章 变量和基本类型**       
+2.1 基本内置类型       
+2.2 变量       
+2.3 复合类型       
+2.4 const限定符       
+2.5 处理类型       
+2.6 自定义数据结构       
+ 
+**第3章 字符串、向量和数组**       
+3.1 命名空间的using声明       
+3.2 标准库类型string       
+3.3 标准库类型vector       
+3.4 迭代器介绍       
+3.5 数组       
+3.6 多维数组       
+ 
+**第4章 表达式**       
+4.1 基础              
+4.2 算术运算符              
+4.3 逻辑和关系运算符       
+4.4 赋值运算符        
+4.5 递增和递减运算符        
+4.6 成员访问运算符        
+4.7 条件运算符        
+4.8 位运算符        
+4.9 sizeof运算符        
+4.10 逗号运算符        
+4.11 类型转换        
+4.12 运算符优先级表        
+ 
+**第5章 语句**        
+5.1 简单语句        
+5.2 语句作用域        
+5.3 条件语句        
+5.4 迭代语句        
+5.5 跳转语句        
+5.6 try语句块和异常处理        
+ 
+**第6章 函数**        
+6.1 函数基础         
+6.2 参数传递         
+6.3 返回类型和return语句         
+6.4 函数重载         
+6.5 特殊用途语言特性         
+6.6 函数匹配         
+6.7 函数指针         
+ 
+**第7章 类**         
+7.1 定义抽象数据类型         
+7.2 访问控制与封装         
+7.3 类的其他特性         
+7.4 类的作用域         
+7.5 构造函数再探         
+7.6 类的静态成员         
+ 
+**第Ⅱ部分 C++标准库**         
+**第8章 IO库**         
+8.1 IO类         
+8.2 文件输入输出         
+8.3 string流         
+ 
+**第9章 顺序容器**         
+9.1 顺序容器概述         
+9.2 容器库概览         
+9.3 顺序容器操作         
+9.4 vector对象是如何增长的         
+9.5 额外的string操作         
+9.6 容器适配器         
+ 
+**第10章 泛型算法**         
+10.1 概述         
+10.2 初识泛型算法         
+10.3 定制操作         
+10.4 再探迭代器         
+10.5 泛型算法结构         
+10.6 特定容器算法         
+ 
+**第11章 关联容器**         
+11.1 使用关联容器         
+11.2 关联容器概述         
+11.3 关联容器操作         
+11.4 无序容器         
+ 
+**第12章 动态内存**         
+12.1 动态内存与智能指针         
+12.2 动态数组         
+12.3 使用标准库：文本查询程序         
+ 
+**第Ⅲ部分 类设计者的工具**         
+**第13章 拷贝控制**         
+13.1 拷贝、赋值与销毁         
+13.2 拷贝控制和资源管理         
+13.3 交换操作         
+13.4 拷贝控制示例         
+13.5 动态内存管理类         
+13.6 对象移动         
+ 
+**第14章 重载运算与类型转换**         
+14.1 基本概念         
+14.2 输入和输出运算符         
+14.3 算术和关系运算符         
+14.4 赋值运算符         
+14.5 下标运算符         
+14.6 递增和递减运算符         
+14.7 成员访问运算符         
+14.8 函数调用运算符         
+14.9 重载、类型转换与运算符         
+ 
+**第15章 面向对象程序设计**         
+15.1 OOP：概述         
+15.2 定义基类和派生类         
+15.3 虚函数         
+15.4 抽象基类         
+15.5 访问控制与继承         
+15.6 继承中的类作用域         
+15.7 构造函数与拷贝控制         
+15.8 容器与继承         
+15.9 文本查询程序再探         
+ 
+**第16章 模板与泛型编程**         
+16.1 定义模板         
+16.2 模板实参推断         
+16.3 重载与模板         
+16.4 可变参数模板         
+16.5 模板特例化         
+ 
+**第Ⅳ部分 高级主题**        
+**第17章 标准库特殊设施**         
+17.1 tuple类型         
+17.2 bitset类型         
+17.3 正则表达式         
+17.4 随机数         
+17.5 IO库再探         
 
-***E-Mail***：chenzs108@outlook.com
+**第18章 用于大型程序的工具**        
+18.1 异常处理         
+18.2 命名空间         
+18.3 多重继承与虚继承         
+ 
+**第19章 特殊工具与技术**         
+19.1 控制内存分配         
+19.2 运行时类型识别         
+19.3 枚举类型         
+19.4 类成员指针         
+19.5 嵌套类         
+19.6 union：一种节省空间的类         
+19.7 局部类         
+19.8 固有的不可移植的特性         
+
 
 
 
@@ -93,7 +248,7 @@ int main()
 
 # 第2章 变量和基本类型
 
-## 基本内置类型（Primitive Built-in Types）
+## 2.1 基本内置类型（Primitive Built-in Types）
 
 ### 算数类型（Arithmetic Types）
 
@@ -210,7 +365,7 @@ std::cout << '\115' << '\n';    // prints M followed by a newline
 
 使用一个长整型字面值时，最好使用大写字母`L`进行标记，小写字母`l`和数字`1`容易混淆。
 
-## 变量（Variables）
+## 2.2 变量（Variables）
 
 ### 变量定义（Variable Definitions）
 
@@ -290,7 +445,7 @@ int main()
 
 如果函数有可能用到某个全局变量，则不宜再定义一个同名的局部变量。
 
-## 复合类型（Compound Type）
+## 2.3 复合类型（Compound Type）
 
 ### 引用（References）
 
@@ -395,7 +550,7 @@ r = &i;         // r refers to a pointer; assigning &i to r makes p point to i
 
 面对一条比较复杂的指针或引用的声明语句时，从右向左阅读有助于弄清它的真实含义。
 
-## const限定符（Const Qualifier）
+## 2.4 const限定符（Const Qualifier）
 
 在变量类型前添加关键字`const`可以创建值不能被改变的对象。`const`变量必须被初始化。
 
@@ -542,7 +697,7 @@ constexpr const int *cp = &i;   // cp是指向const int的const指针
 
 建议使用`constexpr`修饰表示数组大小的对象，因为数组的大小必须在编译期间确定且不能改变。
 
-## 处理类型（Dealing with Types）
+## 2.5 处理类型（Dealing with Types）
 
 ### 类型别名（Type Aliases）
 
@@ -623,7 +778,7 @@ decltype(cj) z;     // error: z is a reference and must be initialized
 
 `decltype((var))`的结果永远是引用，而`decltype(var)`的结果只有当*var*本身是一个引用时才会是引用。
 
-## 自定义数据结构（Defining Our Own Data Structures）
+## 2.6 自定义数据结构（Defining Our Own Data Structures）
 
 C++11规定可以为类的数据成员（data member）提供一个类内初始值（in-class initializer）。创建对象时，类内初始值将用于初始化数据成员，没有初始值的成员将被默认初始化。
 
@@ -661,7 +816,7 @@ struct Sales_data
 
 # 第3章 字符串、向量和数组
 
-## 命名空间的using声明（Namespace using Declarations）
+## 3.1 命名空间的using声明（Namespace using Declarations）
 
 使用`using`声明后就无须再通过专门的前缀去获取所需的名字了。
 
@@ -673,7 +828,7 @@ using std::cout;
 
 头文件中通常不应该包含`using`声明。
 
-## 标准库类型string（Library string Type）
+## 3.2 标准库类型string（Library string Type）
 
 标准库类型`string`表示可变长的字符序列，定义在头文件*string*中。
 
@@ -741,7 +896,7 @@ for (auto c : str)      // for every char in str
 
 C++标准并不要求标准库检测下标是否合法。编程时可以把下标的类型定义为相应的`size_type`，这是一种无符号数，可以确保下标不会小于0，此时代码只需要保证下标小于`size`的值就可以了。另一种确保下标合法的有效手段就是使用范围`for`语句。
 
-## 标准库类型vector（Library vector Type）
+## 3.3 标准库类型vector（Library vector Type）
 
 标准库类型`vector`表示对象的集合，也叫做容器（container），定义在头文件*vector*中。`vector`中所有对象的类型都相同，每个对象都有一个索引与之对应并用于访问该对象。
 
@@ -798,7 +953,7 @@ for (decltype(ivec.size()) ix = 0; ix != 10; ++ix)
 }
 ```
 
-## 迭代器介绍（Introducing Iterators）
+## 3.4 迭代器介绍（Introducing Iterators）
 
 迭代器的作用和下标类似，但是更加通用。所有标准库容器都可以使用迭代器，但是其中只有少数几种同时支持下标运算符。
 
@@ -844,7 +999,7 @@ C++11新增了`cbegin`和`cend`函数，不论`vector`或`string`对象是否为
 
 `difference_type`类型用来表示两个迭代器间的距离，这是一种带符号整数类型。
 
-## 数组（Arrays）
+## 3.5 数组（Arrays）
 
 数组类似`vector`，但数组的大小确定不变，不能随意向数组中添加元素。
 
@@ -974,7 +1129,7 @@ vector<int> ivec(begin(int_arr), end(int_arr));
 
 在新版本的C++程序中应该尽量使用`vector`、`string`和迭代器，避免使用内置数组、C风格字符串和指针。
 
-## 多维数组（Multidimensional Arrays）
+## 3.6 多维数组（Multidimensional Arrays）
 
 C++中的多维数组其实就是数组的数组。当一个数组的元素仍然是数组时，通常需要用两个维度定义它：一个维度表示数组本身的大小，另一个维度表示其元素（也是数组）的大小。通常把二维数组的第一个维度称作行，第二个维度称作列。
 
@@ -1057,7 +1212,7 @@ for (auto p = ia; p != ia + 3; ++p)
 
 # 第4章 表达式
 
-## 基础（Fundamentals）
+## 4.1 基础（Fundamentals）
 
 表达式（expression）由一个或多个运算对象（operand）组成，对表达式求值将得到一个结果（result）。字面值和变量是最简单的表达式，其结果就是字面值和变量的值。
 
@@ -1100,7 +1255,7 @@ cout << i << " " << ++i << endl;    // undefined
 
 当改变运算对象的子表达式本身就是另一个子表达式的运算对象时，第二条规则无效。如`*++iter`，递增运算符改变了*iter*的值，而改变后的*iter*又是解引用运算符的运算对象。类似情况下，求值的顺序不会成为问题。
 
-## 算术运算符（Arithmetic Operators）
+## 4.2 算术运算符（Arithmetic Operators）
 
 算术运算符（左结合律）：
 
@@ -1108,7 +1263,7 @@ cout << i << " " << ++i << endl;    // undefined
 
 在除法运算中，C++语言的早期版本允许结果为负数的商向上或向下取整，C++11新标准则规定商一律向0取整（即直接去除小数部分）。
 
-## 逻辑和关系运算符（Logical and Relational Operators）
+## 4.3 逻辑和关系运算符（Logical and Relational Operators）
 
 关系运算符作用于算术类型和指针类型，逻辑运算符作用于任意能转换成布尔值的类型。逻辑运算符和关系运算符的返回值都是布尔类型。
 
@@ -1121,7 +1276,7 @@ cout << i << " " << ++i << endl;    // undefined
 
 进行比较运算时，除非比较的对象是布尔类型，否则不要使用布尔字面值`true`和`false`作为运算对象。
 
-## 赋值运算符（Assignment Operators）
+## 4.4 赋值运算符（Assignment Operators）
 
 赋值运算符`=`的左侧运算对象必须是一个可修改的左值。
 
@@ -1145,7 +1300,7 @@ ival = jval = 0;    // ok: each assigned 0
 
 复合赋值运算符包括`+=`、`-=`、`*=`、`/=`、`%=`、`<<=`、`>>=`、`&=`、`^=`和`|=`。任意一种复合运算都完全等价于*a = a op b*。
 
-## 递增和递减运算符（Increment and Decrement Operators）
+## 4.5 递增和递减运算符（Increment and Decrement Operators）
 
 递增和递减运算符是为对象加1或减1的简洁书写形式。很多不支持算术运算的迭代器可以使用递增和递减运算符。
 
@@ -1168,7 +1323,7 @@ j = i++;    // j = 1, i = 2: postfix yields the unincremented value
 cout << *iter++ << endl;
 ```
 
-## 成员访问运算符（The Member Access Operators）
+## 4.6 成员访问运算符（The Member Access Operators）
 
 点运算符`.`和箭头运算符`->`都可以用来访问成员，表达式`ptr->mem`等价于`(*ptr).mem`。
 
@@ -1179,7 +1334,7 @@ n = (*p).size();    // run size on the object to which p points
 n = p->size();      // equivalent to (*p).size()
 ```
 
-## 条件运算符（The Conditional Operator）
+## 4.7 条件运算符（The Conditional Operator）
 
 条件运算符的使用形式如下：
 
@@ -1195,7 +1350,7 @@ cond ? expr1 : expr2;
 
 条件运算符的优先级非常低，因此当一个长表达式中嵌套了条件运算子表达式时，通常需要在它两端加上括号。
 
-## 位运算符（The Bitwise Operators）
+## 4.8 位运算符（The Bitwise Operators）
 
 位运算符（左结合律）：
 
@@ -1205,7 +1360,7 @@ cond ? expr1 : expr2;
 
 左移运算符`<<`在运算对象右侧插入值为0的二进制位。右移运算符`>>`的行为依赖于其左侧运算对象的类型：如果该运算对象是无符号类型，在其左侧插入值为0的二进制位；如果是带符号类型，在其左侧插入符号位的副本或者值为0的二进制位，如何选择视具体环境而定。
 
-## sizeof运算符（The sizeof Operator）
+## 4.9 sizeof运算符（The sizeof Operator）
 
 `sizeof`运算符返回一个表达式或一个类型名字所占的字节数，返回值是`size_t`类型。
 
@@ -1220,7 +1375,7 @@ cond ? expr1 : expr2;
 - 对数组执行`sizeof`运算得到整个数组所占空间的大小。
 - 对`string`或`vector`对象执行`sizeof`运算只返回该类型固定部分的大小，不会计算对象中元素所占空间的大小。
 
-## 逗号运算符（Comma Operator）
+## 4.10 逗号运算符（Comma Operator）
 
 逗号运算符`,`含有两个运算对象，按照从左向右的顺序依次求值，最后返回右侧表达式的值。逗号运算符经常用在`for`循环中。
 
@@ -1231,7 +1386,7 @@ for(vector<int>::size_type ix = 0; ix != ivec.size(); ++ix, --cnt)
     ivec[ix] = cnt;
 ```
 
-## 类型转换（Type Conversions）
+## 4.11 类型转换（Type Conversions）
 
 无须程序员介入，会自动执行的类型转换叫做隐式转换（implicit conversions）。
 
@@ -1275,9 +1430,13 @@ type (expression);    // function-style cast notation
 (type) expression;    // C-language-style cast notation
 ```
 
+## 4.12 运算符优先级表
+
+
+
 # 第5章 语句
 
-## 简单语句（Simple Statements）
+## 5.1 简单语句（Simple Statements）
 
 如果在程序的某个地方，语法上需要一条语句但是逻辑上不需要，则应该使用空语句（null statement）。空语句中只含有一个单独的分号`;`。
 
@@ -1303,7 +1462,7 @@ while (iter != svec.end()) ;    // the while body is the empty statement
 
 空块的作用等价于空语句。
 
-## 语句作用域（Statement Scope）
+## 5.2 语句作用域（Statement Scope）
 
 可以在`if`、`switch`、`while`和`for`语句的控制结构内定义变量，这些变量只在相应语句的内部可见，一旦语句结束，变量也就超出了其作用范围。
 
@@ -1313,7 +1472,7 @@ while (int i = get_num())   // i is created and initialized on each iteration
 i = 0;  // error: i is not accessible outside the loop
 ```
 
-## 条件语句（Conditional Statements）
+## 5.3 条件语句（Conditional Statements）
 
 ### if语句（The if Statement）
 
@@ -1367,7 +1526,7 @@ case true:
 }
 ```
 
-## 迭代语句（Iterative Statements）
+## 5.4 迭代语句（Iterative Statements）
 
 迭代语句通常称为循环，它重复执行操作直到满足某个条件才停止。`while`和`for`语句在执行循环体之前检查条件，`do-while`语句先执行循环体再检查条件。
 
@@ -1424,7 +1583,7 @@ while (condition);
 
 因为`do-while`语句先执行语句或块，再判断条件，所以不允许在条件部分定义变量。
 
-## 跳转语句（Jump Statements）
+## 5.5 跳转语句（Jump Statements）
 
 跳转语句中断当前的执行过程。
 
@@ -1486,7 +1645,7 @@ goto label;
 
 建议不要在程序中使用`goto`语句，它使得程序既难理解又难修改。
 
-## try语句块和异常处理（try Blocks and Exception Handling）
+## 5.6 try语句块和异常处理（try Blocks and Exception Handling）
 
 异常（exception）是指程序运行时的反常行为，这些行为超出了函数正常功能的范围。当程序的某一部分检测到一个它无法处理的问题时，需要使用异常处理（exception handling）。
 
@@ -1547,7 +1706,7 @@ catch (exception-declaration)
 
 # 第6章 函数
 
-## 函数基础（Function Basics）
+## 6.1 函数基础（Function Basics）
 
 典型的函数定义包括返回类型（return type）、函数名字、由0个或多个形式参数（parameter，简称形参）组成的列表和函数体（function body）。函数执行的操作在函数体中指明。
 
@@ -1623,7 +1782,7 @@ int f4(int v1, int v2) { /* ... */ }  // ok
 
 分离式编译允许我们把程序按照逻辑关系分割到几个文件中去，每个文件独立编译。这一过程通常会产生后缀名是*.obj*或*.o*的文件，该文件包含对象代码（object code）。之后编译器把对象文件链接（link）在一起形成可执行文件。
 
-## 参数传递（Argument Passing）
+## 6.2 参数传递（Argument Passing）
 
 形参初始化的机理与变量初始化一样。
 
@@ -1766,7 +1925,7 @@ else
 
 省略符形参应该仅仅用于C和C++通用的类型，大多数类类型的对象在传递给省略符形参时都无法正确拷贝。
 
-## 返回类型和return语句（Return Types and the return Statement）
+## 6.3 返回类型和return语句（Return Types and the return Statement）
 
 `return`语句有两种形式，作用是终止当前正在执行的函数并返回到调用该函数的地方。
 
@@ -1903,7 +2062,7 @@ decltype(odd) *arrPtr(int i)
 }
 ```
 
-## 函数重载（Overloaded Functions）
+## 6.4 函数重载（Overloaded Functions）
 
 同一作用域内的几个名字相同但形参列表不同的函数叫做重载函数。
 
@@ -1978,7 +2137,7 @@ void fooBar(int ival)
 
 在C++中，名字查找发生在类型检查之前。
 
-## 特殊用途语言特性（Features for Specialized Uses）
+## 6.5 特殊用途语言特性（Features for Specialized Uses）
 
 ### 默认实参（Default Arguments）
 
@@ -2096,7 +2255,7 @@ int a2[scale(i)];   // error: scale(i) is not a constant expression
 | `__TIME__` | 文件编译时间 |
 | `__DATE__` | 文件编译日期 |
 
-## 函数匹配（Function Matching）
+## 6.6 函数匹配（Function Matching）
 
 函数实参类型与形参类型越接近，它们匹配得越好。
 
@@ -2122,7 +2281,7 @@ lookup(a);  // calls lookup(const Account&)
 lookup(b);  // calls lookup(Account&)
 ```
 
-## 函数指针（Pointers to Functions）
+## 6.7 函数指针（Pointers to Functions）
 
 要想声明一个可以指向某种函数的指针，只需要用指针替换函数名称即可。
 
@@ -2174,7 +2333,7 @@ useBigger(s1, s2, lengthCompare);
 
 类的基本思想是数据抽象（data abstraction）和封装（encapsulation）。数据抽象是一种依赖于接口（interface）和实现（implementation）分离的编程及设计技术。类的接口包括用户所能执行的操作；类的实现包括类的数据成员、负责接口实现的函数体以及其他私有函数。
 
-## 定义抽象数据类型（Defining Abstract Data Types）
+## 7.1 定义抽象数据类型（Defining Abstract Data Types）
 
 ### 设计Sales_data类（Designing the Sales_data Class）
 
@@ -2335,7 +2494,7 @@ Sales_data(const std::string &s):
 
 编译器能合成拷贝、赋值和析构函数，但是对于某些类来说合成的版本无法正常工作。特别是当类需要分配类对象之外的资源时，合成的版本通常会失效。
 
-## 访问控制与封装（Access Control and Encapsulation）
+## 7.2 访问控制与封装（Access Control and Encapsulation）
 
 使用访问说明符（access specifier）可以加强类的封装性：
 
@@ -2413,7 +2572,7 @@ std::ostream &print(std::ostream&, const Sales_data&);
 
 为了使友元对类的用户可见，通常会把友元的声明（类的外部）与类本身放在同一个头文件中。
 
-## 类的其他特性（Additional Class Features）
+## 7.3 类的其他特性（Additional Class Features）
 
 ### 类成员再探（Class Members Revisited）
 
@@ -2554,7 +2713,7 @@ class Screen
 
 如果类想把一组重载函数声明为友元，需要对这组函数中的每一个分别声明。
 
-## 类的作用域（Class Scope）
+## 7.4 类的作用域（Class Scope）
 
 当成员函数定义在类外时，返回类型中使用的名字位于类的作用域之外，此时返回类型必须指明它是哪个类的成员。
 
@@ -2640,7 +2799,7 @@ void Screen::dummy_fcn(pos ht)
 }
 ```
 
-## 构造函数再探（Constructors Revisited）
+## 7.5 构造函数再探（Constructors Revisited）
 
 ### 构造函数初始值列表（Constructor Initializer List）
 
@@ -2808,7 +2967,7 @@ Data val1 = { 0, "Anna" };
 
 `constexpr`构造函数必须初始化所有数据成员，初始值使用`constexpr`构造函数或常量表达式。
 
-## 类的静态成员（static Class Members）
+## 7.6 类的静态成员（static Class Members）
 
 使用关键字`static`可以声明类的静态成员。静态成员存在于任何对象之外，对象中不包含与静态成员相关的数据。
 
@@ -2902,6 +3061,10 @@ private:
 };
 ```
 
+
+
+# 第Ⅱ部分 C++标准库 
+
 # 第8章 IO库
 
 部分IO库设施：
@@ -2915,7 +3078,7 @@ private:
 - `<<`运算符：向`ostream`对象写入输出数据。
 - `getline`函数：从`istream`对象读取一行数据，写入`string`对象。
 
-## IO类（The IO Classes）
+## 8.1 IO类（The IO Classes）
 
 头文件*iostream*定义了用于读写流的基本类型，*fstream*定义了读写命名文件的类型，*sstream*定义了读写内存中`string`对象的类型。
 
@@ -3012,7 +3175,7 @@ cin.tie(old_tie);   // reestablish normal tie between cin and cout
 
 每个流同时最多关联一个流，但多个流可以同时关联同一个`ostream`。向`tie`传递空指针可以解开流的关联。
 
-## 文件输入输出（File Input and Output）
+## 8.2 文件输入输出（File Input and Output）
 
 头文件*fstream*定义了三个类型来支持文件IO：`ifstream`从给定文件读取数据，`ofstream`向指定文件写入数据，`fstream`可以同时读写指定文件。
 
@@ -3065,7 +3228,7 @@ out.open("precious", ofstream::app);   // mode is out and app
 out.close();
 ```
 
-## string流（string Streams）
+## 8.3 string流（string Streams）
 
 头文件*sstream*定义了三个类型来支持内存IO：`istringstream`从`string`读取数据，`ostringstream`向`string`写入数据，`stringstream`可以同时读写`string`的数据。
 
@@ -3125,7 +3288,7 @@ for (const auto &entry : people)
 
 # 第9章 顺序容器
 
-## 顺序容器概述（Overview of the Sequential Containers）
+## 9.1 顺序容器概述（Overview of the Sequential Containers）
 
 顺序容器类型：
 
@@ -3153,7 +3316,7 @@ for (const auto &entry : people)
   - 如果必须在中间位置插入元素，可以在输入阶段使用`list`。输入完成后将`list`中的内容拷贝到`vector`中。
 - 不确定应该使用哪种容器时，可以先只使用`vector`和`list`的公共操作：使用迭代器，不使用下标操作，避免随机访问。这样在必要时选择`vector`或`list`都很方便。
 
-## 容器库概览（Container Library Overview）
+## 9.2 容器库概览（Container Library Overview）
 
 每个容器都定义在一个头文件中，文件名与类型名相同。容器均为模板类型。
 
@@ -3339,7 +3502,7 @@ v1 == v2    // false; v2 has fewer elements than v1
 
 容器的相等运算符实际上是使用元素的`==`运算符实现的，而其他关系运算符则是使用元素的`<`运算符。如果元素类型不支持所需运算符，则保存该元素的容器就不能使用相应的关系运算。
 
-## 顺序容器操作（Sequential Container Operations）
+## 9.3 顺序容器操作（Sequential Container Operations）
 
 ### 向顺序容器添加元素（Adding Elements to a Sequential Container）
 
@@ -3483,7 +3646,7 @@ while (begin != v.end())
 }
 ```
 
-## vector对象是如何增长的（How a vector Grows）
+## 9.4 vector对象是如何增长的（How a vector Grows）
 
 `vector`和`string`的实现通常会分配比新空间需求更大的内存空间，容器预留这些空间作为备用，可用来保存更多新元素。
 
@@ -3499,7 +3662,7 @@ while (begin != v.end())
 
 在C++11中可以使用`shrink_to_fit`函数来要求`deque`、`vector`和`string`退回不需要的内存空间（并不保证退回）。
 
-## 额外的string操作（Additional string Operations）
+## 9.5 额外的string操作（Additional string Operations）
 
 ### 构造string的其他方法（Other Ways to Construct strings）
 
@@ -3567,7 +3730,7 @@ C++11增加了`string`和数值之间的转换函数：
 
 如果给定的`string`不能转换为一个数值，则转换函数会抛出`invalid_argument`异常。如果转换得到的数值无法用任何类型表示，则抛出`out_of_range`异常。
 
-## 容器适配器（Container Adaptors）
+## 9.6 容器适配器（Container Adaptors）
 
 标准库定义了`stack`、`queue`和`priority_queue`三种容器适配器。容器适配器可以改变已有容器的工作机制。
 
@@ -3598,9 +3761,11 @@ stack<string, vector<string>> str_stk2(svec);
 
 
 
+
+
 # 第10章 泛型算法
 
-## 概述（Overview）
+## 10.1 概述（Overview）
 
 大多数算法都定义在头文件*algorithm*中，此外标准库还在头文件*numeric*中定义了一组数值泛型算法。一般情况下，这些算法并不直接操作容器，而是遍历由两个迭代器指定的元素范围进行操作。
 
@@ -3619,7 +3784,7 @@ cout << "The value " << val
 
 泛型算法本身不会执行容器操作，它们只会运行于迭代器之上，执行迭代器操作。算法可能改变容器中元素的值，或者在容器内移动元素，但不会改变底层容器的大小（当算法操作插入迭代器时，迭代器可以向容器中添加元素，但算法自身不会进行这种操作）。
 
-## 初识泛型算法（A First Look at the Algorithms）
+## 10.2 初识泛型算法（A First Look at the Algorithms）
 
 ### 只读算法（Read-Only Algorithms）
 
@@ -3720,7 +3885,7 @@ void elimDups(vector<string> &words)
 
 ![10-1](../pics/10-1.png)
 
-## 定制操作（Customizing Operations）
+## 10.3 定制操作（Customizing Operations）
 
 默认情况下，很多比较算法使用元素类型的`<`或`==`运算符完成操作。可以为这些算法提供自定义操作来代替默认运算符。
 
@@ -3878,7 +4043,7 @@ ostream &print(ostream &os, const string &s, char c);
 for_each(words.begin(), words.end(), bind(print, ref(os), _1, ' '));
 ```
 
-## 再探迭代器（Revisiting Iterators）
+## 10.4 再探迭代器（Revisiting Iterators）
 
 除了为每种容器定义的迭代器之外，标准库还在头文件*iterator*中定义了另外几种迭代器。
 
@@ -3993,7 +4158,7 @@ cout << string(rcomma.base(), line.cend()) << endl;
 
 反向迭代器的目的是表示元素范围，而这些范围是不对称的。用普通迭代器初始化反向迭代器，或者给反向迭代器赋值时，结果迭代器与原迭代器指向的并不是相同元素。
 
-## 泛型算法结构（Structure of Generic Algorithms）
+## 10.5 泛型算法结构（Structure of Generic Algorithms）
 
 算法要求的迭代器操作可以分为5个迭代器类别（iterator category）：
 
@@ -4063,7 +4228,7 @@ reverse_copy(beg, end, dest);   // copy elements in reverse order into dest
 
 一些算法同时提供`_copy`和`_if`版本。
 
-## 特定容器算法（Container-Specific Algorithms）
+## 10.6 特定容器算法（Container-Specific Algorithms）
 
 对于`list`和`forward_list`类型，应该优先使用成员函数版本的算法，而非通用算法。
 
@@ -4076,6 +4241,10 @@ reverse_copy(beg, end, dest);   // copy elements in reverse order into dest
 ![10-10](../pics/10-10.png)
 
 链表特有版本的算法操作会改变底层容器。
+
+
+
+
 
 
 
@@ -4098,7 +4267,7 @@ reverse_copy(beg, end, dest);   // copy elements in reverse order into dest
 
 `map`和`multimap`类型定义在头文件*map*中；`set`和`multiset`类型定义在头文件*set*中；无序容器定义在头文件*unordered_map*和*unordered_set*中。
 
-## 使用关联容器（Using an Associative Container）
+## 11.1 使用关联容器（Using an Associative Container）
 
 `map`类型通常被称为关联数组（associative array）。
 
@@ -4118,7 +4287,7 @@ for (const auto &w : word_count)    // for each element in the map
 
 `set`类型的`find`成员返回一个迭代器。如果给定关键字在`set`中，则迭代器指向该关键字，否则返回的是尾后迭代器。
 
-## 关联容器概述（Overview of the Associative Containers）
+## 11.2 关联容器概述（Overview of the Associative Containers）
 
 ### 定义关联容器（Defining an Associative Container）
 
@@ -4189,7 +4358,7 @@ pair<string, int> process(vector<string> &v)
 }
 ```
 
-## 关联容器操作（Operations on Associative Containers）
+## 11.3 关联容器操作（Operations on Associative Containers）
 
 关联容器定义了类型别名来表示容器关键字和值的类型：
 
@@ -4328,7 +4497,7 @@ for (auto pos = authors.equal_range(search_item);
     cout << pos.first->second << endl;  // print each title
 ```
 
-## 无序容器（The Unordered Containers）
+## 11.4 无序容器（The Unordered Containers）
 
 新标准库定义了4个无序关联容器（unordered associative container），这些容器使用哈希函数（hash function）和关键字类型的`==`运算符组织元素。
 
@@ -4347,7 +4516,7 @@ for (auto pos = authors.equal_range(search_item);
 
 程序用堆（heap）来存储动态分配（dynamically allocate）的对象。动态对象的生存期由程序控制。
 
-## 动态内存与智能指针（Dynamic Memory and Smart Pointers）
+## 12.1 动态内存与智能指针（Dynamic Memory and Smart Pointers）
 
 C++中的动态内存管理通过一对运算符完成：`new`在动态内存中为对象分配空间并返回指向该对象的指针，可以选择对对象进行初始化；`delete`接受一个动态对象的指针，销毁该对象并释放与之关联的内存。
 
@@ -4649,7 +4818,7 @@ if (shared_ptr<int> np = wp.lock())
 }
 ```
 
-## 动态数组（Dynamic Arrays）
+## 12.2 动态数组（Dynamic Arrays）
 
 使用`allocator`类可以将内存分配和初始化过程分离，这通常会提供更好的性能和更灵活的内存管理能力。
 
@@ -4762,6 +4931,11 @@ alloc.deallocate(p, n);
 
 传递给`uninitialized_copy`的目的位置迭代器必须指向未构造的内存，它直接在给定位置构造元素。返回（递增后的）目的位置迭代器。
 
+## 12.3 使用标准库：文本查询程序 
+
+
+
+# 第Ⅲ部分 类设计者的工具
 
 # 第13章 拷贝控制
 
@@ -4777,7 +4951,7 @@ alloc.deallocate(p, n);
 
 在定义任何类时，拷贝控制操作都是必要部分。
 
-## 拷贝、赋值与销毁（Copy，Assign，and Destroy）
+## 13.1 拷贝、赋值与销毁（Copy，Assign，and Destroy）
 
 ### 拷贝构造函数（The Copy Constructor）
 
@@ -4960,7 +5134,7 @@ struct NoCopy
 
 在旧版本的C++标准中，类通过将拷贝构造函数和拷贝赋值运算符声明为`private`成员来阻止类对象的拷贝。在新标准中建议使用`=delete`而非`private`。
 
-## 拷贝控制和资源管理（Copy Control and Resource Management）
+## 13.2 拷贝控制和资源管理（Copy Control and Resource Management）
 
 通常，管理类外资源的类必须定义拷贝控制成员。
 
@@ -5064,7 +5238,7 @@ HasPtr& HasPtr::operator=(const HasPtr &rhs)
 }
 ```
 
-## 交换操作（Swap）
+## 13.3 交换操作（Swap）
 
 通常，管理类外资源的类会定义`swap`函数。如果一个类定义了自己的`swap`函数，算法将使用自定义版本，否则将使用标准库定义的`swap`。
 
@@ -5118,15 +5292,15 @@ HasPtr& HasPtr::operator=(HasPtr rhs)
 }
 ```
 
-## 拷贝控制示例（A Copy-Control Example）
+## 13.4 拷贝控制示例（A Copy-Control Example）
 
 拷贝赋值运算符通常结合了拷贝构造函数和析构函数的工作。在这种情况下，公共部分应该放在`private`的工具函数中完成。
 
-## 动态内存管理类（Classes That Manage Dynamic Memory）
+## 13.5 动态内存管理类（Classes That Manage Dynamic Memory）
 
 移动构造函数通常是将资源从给定对象“移动”而不是拷贝到正在创建的对象中。
 
-## 对象移动（Moving Objects）
+## 13.6 对象移动（Moving Objects）
 
 某些情况下，一个对象拷贝后就立即被销毁了，此时移动而非拷贝对象会大幅度提高性能。
 
@@ -5349,9 +5523,13 @@ public:
 
 
 
+
+
+
+
 # 第14章 重载运算与类型转换
 
-## 基本概念（Basic Concepts）
+## 14.1 基本概念（Basic Concepts）
 
 重载的运算符是具有特殊名字的函数，它们的名字由关键字`operator`和其后要定义的运算符号组成。
 
@@ -5398,7 +5576,7 @@ string u = "hi" + s;    // would be an error if + were a member of string
 - 改变对象状态或者与给定类型密切相关的运算符，如递增、递减、解引用运算符，通常是成员函数。
 - 具有对称性的运算符可能转换任意一端的运算对象，如算术、相等性、关系和位运算符，通常是普通函数。
 
-## 输入和输出运算符（Input and Output Operators）
+## 14.2 输入和输出运算符（Input and Output Operators）
 
 ### 重载输出运算符<<（Overloading the Output Operator <<）
 
@@ -5446,7 +5624,7 @@ istream &operator>>(istream &is, Sales_data &item)
 
 如果输入的数据不符合规定的格式，即使从技术上看IO操作是成功的，输入运算符也应该设置流的条件状态以标示出失败信息。通常情况下，输入运算符只设置`failbit`状态。`eofbit`、`badbit`等错误最好由IO标准库自己标示。
 
-## 算术和关系运算符（Arithmetic and Relational Operators）
+## 14.3 算术和关系运算符（Arithmetic and Relational Operators）
 
 通常情况下，算术和关系运算符应该定义为非成员函数，以便两侧的运算对象进行转换。其次，由于这些运算符一般不会改变运算对象的状态，所以形参都是常量引用。
 
@@ -5500,7 +5678,7 @@ Sales_data operator+(const Sales_data &lhs, const Sales_data &rhs)
 - 如果类定义了`operator==`，则关系运算符的定义应该与`operator==`保持一致。特别是，如果两个对象是不相等的，那么其中一个对象应该小于另一个对象。
 - 只有存在唯一一种逻辑可靠的小于关系时，才应该考虑为类定义`operator<`。
 
-## 赋值运算符（Assignment Operators）
+## 14.4 赋值运算符（Assignment Operators）
 
 赋值运算符必须定义为成员函数，复合赋值运算符通常也是如此。这两类运算符都应该返回其左侧运算对象的引用。
 
@@ -5526,7 +5704,7 @@ Sales_data& Sales_data::operator+=(const Sales_data &rhs)
 }
 ```
 
-## 下标运算符（Subscript Operator）
+## 14.5 下标运算符（Subscript Operator）
 
 下标运算符必须定义为成员函数。
 
@@ -5546,7 +5724,7 @@ private:
 }
 ```
 
-## 递增和递减运算符（Increment and Decrement Operators）
+## 14.6 递增和递减运算符（Increment and Decrement Operators）
 
 定义递增和递减运算符的类应该同时定义前置和后置版本，这些运算符通常定义为成员函数。
 
@@ -5594,7 +5772,7 @@ p.operator++(0);    // call postfix operator++
 p.operator++();     // call prefix operator++
 ```
 
-## 成员访问运算符（Member Access Operators）
+## 14.7 成员访问运算符（Member Access Operators）
 
 箭头运算符必须定义为成员函数，解引用运算符通常也是如此。
 
@@ -5620,7 +5798,7 @@ public:
 - 如果*point*是指针，则调用内置箭头运算符，表达式等价于`(*point).mem`。
 - 如果*point*是重载了`operator->`的类的对象，则使用`point.operator->()`的结果来获取*mem*，表达式等价于`(point.operator->())->mem`。其中，如果该结果是一个指针，则执行内置操作，否则重复调用当前操作。
 
-## 函数调用运算符（Function-Call Operator）
+## 14.8 函数调用运算符（Function-Call Operator）
 
 函数调用运算符必须定义为成员函数。一个类可以定义多个不同版本的调用运算符，相互之间必须在参数数量或类型上有所区别。
 
@@ -5749,7 +5927,7 @@ cout << f3(4,2) << endl;   // prints 8
 
 C++11新标准库中的`function`类与旧版本中的`unary_function`和`binary_function`没有关系，后两个类已经被`bind`函数代替。
 
-## 重载、类型转换与运算符（Overloading，Conversions，and Operators）
+## 14.9 重载、类型转换与运算符（Overloading，Conversions，and Operators）
 
 转换构造函数和类型转换运算符共同定义了类类型转换（class-type conversion）。
 
@@ -5923,9 +6101,12 @@ int i = s3 + 0;    // error: ambiguous
 
 
 
+
+
+
 # 第15章 面向对象程序设计
 
-## OOP：概述（OOP：An Overview）
+## 15.1 OOP：概述（OOP：An Overview）
 
 面向对象程序设计（object-oriented programming）的核心思想是数据抽象（封装）、继承和动态绑定（多态）。
 
@@ -5956,7 +6137,7 @@ public:
 
 使用基类的引用或指针调用一个虚函数时将发生动态绑定（dynamic binding），也叫运行时绑定（run-time binding）。函数的运行版本将由实参决定。
 
-## 定义基类和派生类（Defining Base and Derived Classes）
+## 15.2 定义基类和派生类（Defining Base and Derived Classes）
 
 ### 定义基类（Defining a Base Class）
 
@@ -6055,7 +6236,7 @@ item = bulk;        // calls Quote::operator=(const Quote&)
 
 用一个派生类对象为一个基类对象初始化或赋值时，只有该对象中的基类部分会被拷贝、移动或赋值，它的派生类部分会被忽略掉。
 
-## 虚函数（Virtual Functions）
+## 15.3 虚函数（Virtual Functions）
 
 当且仅当通过指针或引用调用虚函数时，才会在运行过程解析该调用，也只有在这种情况下对象的动态类型有可能与静态类型不同。
 
@@ -6111,7 +6292,7 @@ double undiscounted = baseP->Quote::net_price(42);
 
 如果一个派生类虚函数需要调用它的基类版本，但没有使用作用域运算符，则在运行时该调用会被解析为对派生类版本自身的调用，从而导致无限递归。
 
-## 抽象基类（Abstract Base Classes）
+## 15.4 抽象基类（Abstract Base Classes）
 
 在类内部虚函数声明语句的分号前添加`=0`可以将一个虚函数声明为纯虚（pure virtual）函数。一个纯虚函数无须定义。
 
@@ -6129,7 +6310,7 @@ double net_price(std::size_t) const = 0;
 
 重构（refactoring）负责重新设计类的体系以便将操作或数据从一个类移动到另一个类中。
 
-## 访问控制与继承（Access Control and Inheritance）
+## 15.5 访问控制与继承（Access Control and Inheritance）
 
 一个类可以使用`protected`关键字来声明外部代码无法访问，但是派生类对象可以访问的成员。
 
@@ -6221,7 +6402,7 @@ protected:
 
 建议显式地声明派生类的继承方式，不要仅仅依赖于默认设置。
 
-## 继承中的类作用域（Class Scope under Inheritance）
+## 15.6 继承中的类作用域（Class Scope under Inheritance）
 
 当存在继承关系时，派生类的作用域嵌套在其基类的作用域之内。
 
@@ -6293,7 +6474,7 @@ public:
 
 类内使用`using`声明改变访问级别的规则同样适用于重载函数的名字。
 
-## 构造函数与拷贝控制（Constructors and Copy Control）
+## 15.7 构造函数与拷贝控制（Constructors and Copy Control）
 
 ### 虚析构函数（Virtual Destructors）
 
@@ -6412,7 +6593,7 @@ public:
 
 当一个基类构造函数含有默认实参时，这些默认值不会被继承。相反，派生类会获得多个继承的构造函数，其中每个构造函数分别省略掉一个含有默认值的形参。
 
-## 容器与继承（Containers and Inheritance）
+## 15.8 容器与继承（Containers and Inheritance）
 
 因为容器中不能保存不同类型的元素，所以不能把具有继承关系的多种类型的对象直接存储在容器中。
 
@@ -6420,12 +6601,18 @@ public:
 
 如果想在容器中存储具有继承关系的对象，则应该存放基类的指针。
 
+## 15.9 文本查询程序再探   
+
+
+
+
+
 
 
 
 # 第16章 模板与泛型编程
 
-## 定义模板（Defining a Template）
+## 16.1 定义模板（Defining a Template）
 
 ### 函数模板（Function Templates）
 
@@ -6825,7 +7012,7 @@ int i = compare(a1[0], a2[0]);    // instantiation will appear elsewhere
 
 `unique_ptr`在编译时绑定删除器，避免了间接调用删除器的运行时开销。`shared_ptr`在运行时绑定删除器，使用户重载删除器的操作更加简便。
 
-## 模板实参推断（Template Argument Deduction）
+## 16.2 模板实参推断（Template Argument Deduction）
 
 对于函数模板，编译器通过调用的函数实参来确定其模板参数。这个过程被称作模板实参推断。
 
@@ -7157,7 +7344,7 @@ void flip(F f, T1 &&t1, T2 &&t2)
 
 与`std::move`一样，对`std::forward`也不应该使用`using`声明。
 
-## 重载与模板（Overloading and Templates）
+## 16.3 重载与模板（Overloading and Templates）
 
 函数模板可以被另一个模板或普通非模板函数重载。
 
@@ -7189,7 +7376,7 @@ string debug_rep(char *p)
 
 在定义任何函数之前，应该声明所有重载的函数版本。这样编译器就不会因为未遇到你希望调用的函数而实例化一个并非你所需要的版本。
 
-## 可变参数模板（Variadic Templates）
+## 16.4 可变参数模板（Variadic Templates）
 
 可变参数模板指可以接受可变数量参数的模板函数或模板类。可变数量的参数被称为参数包（parameter pack），分为两种：
 
@@ -7305,7 +7492,7 @@ void fun(Args&&... args)    // expands Args as a list of rvalue references
 }
 ```
 
-## 模板特例化（Template Specializations）
+## 16.5 模板特例化（Template Specializations）
 
 在某些情况下，通用模板的定义对特定类型是不合适的，可能编译失败或者操作不正确。如果不希望或不能使用模板版本时，可以定义类或函数模板的特例化版本。一个特例化版本就是模板的一个独立定义，其中的一个或多个模板参数被指定为特定类型。
 
@@ -7395,9 +7582,16 @@ fi.Bar();    // uses our specialization of Foo<int>::Bar()
 ```
 
 
+
+
+
+
+
+# 第Ⅳ部分 高级主题
+
 # 第17章 标准库特殊设施
 
-## tuple类型（The tuple Type）
+## 17.1 tuple类型（The tuple Type）
 
 `tuple`是类似`pair`的模板，定义在头文件*tuple*中。与`pair`不同，`tuple`可以有任意数量的成员。如果希望将一些数据组合成单一对象，但又不想定义新数据结构时，可以使用`tuple`（“快速而随意”的数据结构）。
 
@@ -7451,7 +7645,7 @@ tuple_element<1, trans>::type cnt = get<1>(item);    // cnt is an int
 
 `tuple`的一个常见用途是从一个函数返回多个值。
 
-## bitset类型（The bitset Type）
+## 17.2 bitset类型（The bitset Type）
 
 标准库在头文件*bitset*中定义了`bitset`类，用于处理二进制位。`bitset`可以处理超过最长整型类型大小的位集合。
 
@@ -7507,7 +7701,7 @@ cout << "ulong = " << ulong << endl;
 
 读取结束后用临时`string`对象初始化`bitset`。如果读取的字符数小于`bitset`的大小，则`bitset`的高位被置为0。
 
-## 正则表达式（Regular Expressions）
+## 17.3 正则表达式（Regular Expressions）
 
 正则表达式是一种描述字符序列的方法。C++11新标准增加了正则表达式库（RE库），定义在头文件*regex*中，包含多个组件。
 
@@ -7649,7 +7843,7 @@ string fmt2 = "$2.$5.$7 ";    // put space after the last number as a separator
 cout << regex_replace(s, r, fmt2, format_no_copy) << endl;
 ```
 
-## 随机数（Random Numbers）
+## 17.4 随机数（Random Numbers）
 
 在新标准出现之前，C和C++都依赖于一个简单的C库函数`rand`来生成随机数。该函数生成均匀分布的伪随机整数，每个随机数的范围在0和一个系统相关的最大值（至少为32767）之间。
 
@@ -7768,7 +7962,7 @@ uniform_real_distribution<> u(0,1);    // generates double by default
 
 由于引擎会返回相同的随机数序列，因此需要在循环中使用引擎时，必须在循环体外定义引擎对象。否则每次循环都会创建新引擎，生成相同序列。同样，分布对象也需要保持运行状态，也必须在循环体外定义。
 
-## IO库再探（The IO Library Revisited）
+## 17.5 IO库再探（The IO Library Revisited）
 
 ### 格式化输入与输出（Formatted Input and Output）
 
@@ -8112,7 +8306,7 @@ seekp(offset, from);    // offset has type off_type
 
 # 第18章 用于大型程序的工具
 
-## 异常处理（Exception Handling）
+## 18.1 异常处理（Exception Handling）
 
 异常处理机制允许程序中独立开发的部分能够在运行期间就出现的问题进行通信并做出相应的处理，使问题检测和解决过程相互分离。
 
@@ -8339,7 +8533,7 @@ public:
 
 实际编程中通常会自定义`exception`（或者`exception`的标准库派生类）的派生类以扩展其继承体系。这些面向具体应用的异常类表示了与应用相关的异常状态。
 
-## 命名空间（Namespaces）
+## 18.2 命名空间（Namespaces）
 
 大型应用程序通常会使用多个独立开发的库，其中某些名字可能会相互冲突。多个库将名字放置在全局命名空间中会产生命名空间污染（namespace pollution）。
 
@@ -8685,7 +8879,7 @@ void fooBar(int ival)
 
 如果存在多个`using`指示，则来自每个命名空间的名字都会成为候选函数集的一部分。
 
-## 多重继承与虚继承（Multiple and Virtual Inheritance）
+## 18.3 多重继承与虚继承（Multiple and Virtual Inheritance）
 
 多重继承（Multiple inheritance）是指从多个直接基类中产生派生类的能力。多重继承的派生类继承了所有父类的属性。
 
@@ -8842,9 +9036,15 @@ Panda::Panda(std::string name, bool onExhibit)
 一个类可以有多个虚基类，此时这些虚子对象按照它们在派生列表中出现的顺序依次构造。
 
 
+
+
+
+
+
+
 # 第19章 特殊工具与技术
 
-## 控制内存分配（Controlling Memory Allocation）
+## 19.1 控制内存分配（Controlling Memory Allocation）
 
 ### 重载new和delete（Overloading new and delete）
 
@@ -8934,7 +9134,7 @@ new (place_address) type [size] { braced initializer list }
 
 调用析构函数会销毁对象，但不会释放内存。如果需要的话，可以重新使用该空间。
 
-## 运行时类型识别（Run-Time Type Identification）
+## 19.2 运行时类型识别（Run-Time Type Identification）
 
 运行时类型识别（RTTI）的功能由两个运算符实现：
 
@@ -9097,7 +9297,7 @@ bool Base::equal(const Base &rhs) const
 
 对于某种给定类型来说，`name`成员的返回值因编译器而异并且不一定与在程序中使用的名字一致。对于`name`返回值的唯一要求就是类型不同则返回的字符串必须有所区别。
 
-## 枚举类型（Enumerations）
+## 19.3 枚举类型（Enumerations）
 
 和类一样，每个枚举类型都定义了一种新的类型。枚举属于字面值常量类型。
 
@@ -9202,7 +9402,7 @@ enum intValues : unsigned long long;    // unscoped, must specify a type
 enum class open_modes;    // scoped enums can use int by default
 ```
 
-## 类成员指针（Pointer to Class Member）
+## 19.4 类成员指针（Pointer to Class Member）
 
 成员指针（pointer to member）是指可以指向类的非静态成员的指针。
 
@@ -9319,7 +9519,7 @@ f(*svec.begin());   // ok: passes a string object; f uses .* to call empty
 f(&svec[0]);        // ok: passes a pointer to string; f uses .-> to call empty
 ```
 
-## 嵌套类（Nested Classes）
+## 19.5 嵌套类（Nested Classes）
 
 一个类可以定义在另一个类的内部，前者被称为嵌套类或嵌套类型（nested type）。嵌套类通常用于定义作为实现部分的类。
 
@@ -9348,7 +9548,7 @@ class TextQuery::QueryResult
 
 在嵌套类在其外层类之外完成真正的定义之前，它都是一个不完全类型。
 
-## union：一种节省空间的类（union: A Space-Saving Class）
+## 19.6 union：一种节省空间的类（union: A Space-Saving Class）
 
 联合（union）是一种特殊的类。一个联合可以有多个数据成员，但是在任意时刻只有一个数据成员可以有值。给联合的某个成员赋值之后，其他成员会变为未定义状态。分配给联合对象的存储空间至少要能容纳它的最大数据成员。
 
@@ -9407,7 +9607,7 @@ C++的早期版本规定，在联合中不能含有定义了构造函数或拷�
 
 对于联合来说，构造或销毁类类型成员的操作非常复杂。通常情况下，可以把含有类类型成员的联合内嵌在另一个类中，这个类可以管理并控制与联合的类类型成员相关的状态转换。
 
-## 局部类（Local Classes）
+## 19.7 局部类（Local Classes）
 
 类可以定义在某个函数的内部，这种类被称为局部类。局部类定义的类型只能在定义它的作用域内可见。
 
@@ -9462,7 +9662,7 @@ void foo()
 
 局部类内的嵌套类也是一个局部类，必须遵循局部类的各种规定。
 
-## 固有的不可移植的特性（Inherently Nonportable Features）
+## 19.8 固有的不可移植的特性（Inherently Nonportable Features）
 
 ### 位域（Bit-fields）
 
@@ -9641,5 +9841,7 @@ int strcmp(const char*, const char*);
 extern "C" void print(const char*);
 extern "C" void print(int);
 ```
+
+
 
 
