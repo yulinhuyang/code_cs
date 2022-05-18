@@ -266,7 +266,7 @@ double fun(int i) {
 }
 ```
 
-<center> <img src="https://pic4.zhimg.com/80/v2-989c0d7d3f7c71f7fe87aee0caabe39b_720w.jpg" style="zoom:80%" /> </center>
+<center> <img src="CSAPP_notes/pics/v2-989c0d7d3f7c71f7fe87aee0caabe39b_720w.jpg" style="zoom:80%" /> </center>
 <center>数组的内存布局：</center>
 
 fun(6)时，就会出现Segmentation fault。
@@ -301,13 +301,13 @@ void copyji(int src[2048][2048],
 代码一进行的是行优先，而代码二进行的是列优先的。但是在普通的系统中，代码一运行速度为4.3ms，而代码二运行速度为81.8ms，性能相差差不多20倍。
 
 
-<center> <img src="https://pic1.zhimg.com/80/v2-f8c4d5db924eea1d6a316bf2a0a96330_720w.jpg" style="zoom:70%" /> </center>
+<center> <img src="CSAPP_notes/pics/v2-f8c4d5db924eea1d6a316bf2a0a96330_720w.jpg" style="zoom:70%" /> </center>
 <center>四种内存访问模式</center>
 
 
 **Great Reality 5：Computers do more than execute programs**
 
-https://pic1.zhimg.com/80/v2-9261fa5b390395e7b190ead4d369ff8c_720w.jpg
+CSAPP_notes/pics/v2-9261fa5b390395e7b190ead4d369ff8c_720w.jpg
 
 ## CSAPP：第1章 计算机系统漫游
 
@@ -315,7 +315,7 @@ https://pic1.zhimg.com/80/v2-9261fa5b390395e7b190ead4d369ff8c_720w.jpg
 
 #### 1.4.1　系统的硬件组成 
 
-<center> <img src="https://pic3.zhimg.com/80/v2-556a69b41b84eac82c1497a4b6f7a29e_720w.jpg" style="zoom:70%" /> </center>
+<center> <img src="CSAPP_notes/pics/v2-556a69b41b84eac82c1497a4b6f7a29e_720w.jpg" style="zoom:70%" /> </center>
 <center>计算机硬件组成</center>
 
 寄存器：通常为8位寄存器，用来保存一个字节的数据。CPU中有若干寄存器，每个寄存器都有唯一的地址，用来保存CPU中临时运算结果。其中有两个寄存器比较特殊：   
@@ -327,7 +327,7 @@ ALU：算术逻辑单元，主要用来处理CPU中的数学和逻辑运算。
 
 #### 1.4.2　运行hello程序
 
-<center> <img src="https://pic1.zhimg.com/80/v2-2cafa537bff05cc3e40cdaec022ec7b4_720w.jpg" style="zoom:70%" /> </center>
+<center> <img src="CSAPP_notes/pics/v2-2cafa537bff05cc3e40cdaec022ec7b4_720w.jpg" style="zoom:70%" /> </center>
 <center>程度的编译与执行</center>
 
 gcc -o hello hello.c
@@ -355,7 +355,7 @@ gcc -o hello hello.c
 
 ### 1.6　存储设备形成层次结构
 
-<center> <img src="https://pic2.zhimg.com/80/v2-5baf6d3c4dfc3497d4abf87e5359eae1_720w.jpg" style="zoom:70%" /> </center>
+<center> <img src="CSAPP_notes/pics/v2-5baf6d3c4dfc3497d4abf87e5359eae1_720w.jpg" style="zoom:70%" /> </center>
 <center>存储器层次结构</center>
 
 存储器层次结构的主要思想是将上一层的存储器作为下一层存储器的高速缓存。程序员可以利用对整个存储器层次结构的理解来提高程序性能。  
@@ -390,7 +390,7 @@ gcc -o hello hello.c
 - 栈：位于用户虚拟内存顶部，编译器用来实现函数调用，当调用函数时，栈就增长，当返回一个函数时，栈就缩小。
 - 内核虚拟内存：地址空间顶部的区域为内核保留，不运行程序读写这个区域，或直接调用内核代码定义的函数。
 
-<center> <img src="https://pic3.zhimg.com/80/v2-846f9268b03bdd60c908e1a0da19613e_720w.jpg" style="zoom:70%" /> </center>
+<center> <img src="CSAPP_notes/pics/v2-846f9268b03bdd60c908e1a0da19613e_720w.jpg" style="zoom:70%" /> </center>
 <center>进程的虚拟地址空间</center>   
 
 #### 1.7.4　文件
@@ -433,10 +433,10 @@ Amdahl定律对提升系统某一部分性能所带来的的效果进行量化�
 
 一个指令的执行过程通常包含：取指令阶段、解码阶段和执行指令阶段
 
-<center> <img src="https://pic2.zhimg.com/80/v2-128d8c42daafe50a06964cfa074d4f81_720w.jpg" style="zoom:70%" /> </center>
+<center> <img src="CSAPP_notes/pics/v2-128d8c42daafe50a06964cfa074d4f81_720w.jpg" style="zoom:70%" /> </center>
 <center>CPU顺序处理指令</center>
 
-<center> <img src="https://pic4.zhimg.com/80/v2-60b488382f86994c85b00a3db9a1700f_720w.jpg" style="zoom:70%" /> </center>
+<center> <img src="CSAPP_notes/pics/v2-60b488382f86994c85b00a3db9a1700f_720w.jpg" style="zoom:70%" /> </center>
 <center>CPU并行处理指令</center>
 
 ###  1.9.2.3 单指令、多数据并行
@@ -466,7 +466,7 @@ c语言中每个字符串都有一个结尾字符null，用ascii码表示，asci
 
 > 不同字长的机器中，指针的大小也就不同，并且不同机器/操作系统配置使用不同的存储分配规则，会使得指针的长度和内容差很多。
 
-<center> <img src="https://pic1.zhimg.com/80/v2-4fee3518f4971cb842d8f92cf4f24494_720w.jpg" style="zoom:100%" /> </center>
+<center> <img src="CSAPP_notes/pics/v2-4fee3518f4971cb842d8f92cf4f24494_720w.jpg" style="zoom:100%" /> </center>
 
 
 #### 2.1.3　寻址和字节顺序
@@ -499,14 +499,14 @@ c语言中每个字符串都有一个结尾字符null，用ascii码表示，asci
 
 有符号（signed）和无符号（unsigned）两个版本，常量默认是有符号版本，可以加上后缀u或者U来将其指定为无符号版本。
 
-<center> <img src="https://pic2.zhimg.com/80/v2-5e20fa527362eacfaf96de94ba087709_720w.jpg" style="zoom:70%" /> </center>
+<center> <img src="CSAPP_notes/pics/v2-5e20fa527362eacfaf96de94ba087709_720w.jpg" style="zoom:70%" /> </center>
 <center>CPU并行处理指令</center>
 
 有符号数的取值范围是不对称的，负数的范围比正数范围大1。
 
 给定一串二进制编码来表示整数，具体如何解释这些二进制主要取决于它的编码方式，对相同的二进制采用不同的编码方式得到的整数结果是不同的。
 
-<center> <img src="https://pic2.zhimg.com/80/v2-d5f671dada9952846dabfe60cbe859f5_720w.jpg" style="zoom:90%" /> </center>
+<center> <img src="CSAPP_notes/pics/v2-d5f671dada9952846dabfe60cbe859f5_720w.jpg" style="zoom:90%" /> </center>
 
 C库中的文件<limits.h>定义了一组常量，来限定编译器运行的这台机器的不同整型数据类型的取值范围，比如它定义了常量INT_MAX、INT_MIN和UINT_MAX，就分别对应上面推导的最大值和最小值。
 
@@ -2407,6 +2407,7 @@ gprof prog
 - 将注意力集中在内循环中，因为大部分的计算和内存访问都集中在这里
 - 按照数据对象存储在内存中的顺序，以步长为1来读数据，使得空间局部性最大。比如步长为2的命中率就比步长为1的命中率降低一半。
 - 一旦从存储器读入一个数据对象时，就尽可能使用它，使得时间局部性最大。特别是局部变量，编译器会将其保存在寄存器中。
+
 
 
 
