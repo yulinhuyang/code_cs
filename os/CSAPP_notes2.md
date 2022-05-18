@@ -4060,7 +4060,7 @@ for(i=0; i<niters; i++){
 
 第24行首先对缓冲区进行初始化，然后生成了`NTHREADS`个消费者线程，在线程例程中，会通过`pthread_detach`函数来分离消费者线程，然后死循环通过`sbuf_remove`函数来从缓冲区中获得已连接描述符`connfd`，当`pthread_create`函数返回时，这些消费者线程就开始运行了，此时由于`sbuf->items`为0，所以这些消费者线程会被`P(&sbuf->items)`挂起。然后在生产者线程中通过`accept`函数来获得已连接描述符`connfd`，并通过`sbuf_insert`函数将其插入到缓冲区中，此时`sbuf->items`就不为0了，那些被挂起的消费者线程就会一个个被`V(&sbuf->items)`重启，然后将获得的`connfd`传入`echo_cnt`函数来与客户端通信。这里的对等线程的数目是我们一开始创建的那些线程，而不是等到获得`connfd`时才创建，所以称为预线程化，可以自己控制对等线程的数目。
 
-<center> <img src="https://pic4.zhimg.com/80/v2-17a62548623a7fd98b3b515c499f786b_720w.jpg" style="zoom:80%" /> </center>    
+<center> <img src="CSAPP_notes/pics/v2-17a62548623a7fd98b3b515c499f786b_720w.jpg" style="zoom:80%" /> </center>    
 
 这个`echo_cnt`函数会通过全局变量`byte_cnt`来统计服务器总共从客户端获得的字节数，由于不同的消费者线程都会调用`echo_cnt`函数，所以会有多个线程来访问`byte_cnt`共享变量，所以我们对`byte_cnt`的访问需要使用互斥锁。而我们这里将互斥锁和`byte_cnt`的初始化过程放在了子线程中，通过`pthread_once`函数来保证该初始化函数`init_echo_cnt`函数只被执行一次。
 
@@ -4160,7 +4160,7 @@ void qsort_serial(data_t *base, size_t nele) {
 
 - - **解决方法：** 重写函数，将状态作为参数的一部分传递，避免被其他线程修改。
 
-<center> <img src="https://pic3.zhimg.com/80/v2-47d7dba4d4f155dfec0a338d3406fdb6_720w.jpg" style="zoom:80%" /> </center>  
+<center> <img src="CSAPP_notes/pics/v2-47d7dba4d4f155dfec0a338d3406fdb6_720w.jpg" style="zoom:80%" /> </center>  
 
 - **第三类：返回指向静态变量的指针的函数：** 静态变量保存在数据区，在进程中只有一个实例，是所有线程共享的，当你返回一个静态变量的指针时，是指向一个内存地址，而在别的线程中可能也会通过该静态变量对该内存地址的内容进行修改。
 
@@ -4169,13 +4169,13 @@ void qsort_serial(data_t *base, size_t nele) {
   - - 重写函数，让调用者传递保存结果的地址
     - 使用**加锁-复制（Lock-and-Copy）** 技术，将线程不安全函数与一个互斥锁联系起来，用`P`和`V`函数将该不安全函数的调用部分包围起来，并将其结果保存在一个局部变量中。**问题：**需要引入额外的同步操作，会降低程序的速度，其次是有一些函数会返回十分复杂的数据结构，比如`getaddrinfo`，此时就需要深拷贝才能复制整个结构数据。
 
-<center> <img src="https://pic3.zhimg.com/80/v2-eb61d5ecad4fbe8f2054430d9048c202_720w.jpg" style="zoom:80%" /> </center>  
+<center> <img src="CSAPP_notes/pics/v2-eb61d5ecad4fbe8f2054430d9048c202_720w.jpg" style="zoom:80%" /> </center>  
 
 - **第四类：调用线程不安全函数的函数：** 如果该线程不安全函数属于第二类，就要修改函数的源码，如果是第一类或第三类，可以直接通过互斥锁的方式保证函数时线程安全的。
 
 Linux系统提供的大多数线程不安全函数都有对应的线程安全版本，一般是以`_r`结尾的。
 
-<center> <img src="https://pic3.zhimg.com/80/v2-6220fcae8ae7d87393961bccf2604d5e_720w.jpg" style="zoom:80%" /> </center>  
+<center> <img src="CSAPP_notes/pics/v2-6220fcae8ae7d87393961bccf2604d5e_720w.jpg" style="zoom:80%" /> </center>  
 
 我们可以更进一步得到线程安全函数中的一类**可重入函数（Reentrant Function）** ，当他们被多个线程引用时，不会引用任何共享数据。可将其分成两类：
 
@@ -4186,7 +4186,7 @@ Linux系统提供的大多数线程不安全函数都有对应的线程安全版
 
 上面第二类线程不安全函数，只能通过修改函数使其是线程安全的，并且由于无法使用互斥锁，所以只能将其改为可重入的
 
-<center> <img src="https://pic1.zhimg.com/80/v2-3835789b5e9672855b1172d4d10b99c4_720w.jpg" style="zoom:80%" /> </center>   
+<center> <img src="CSAPP_notes/pics/v2-3835789b5e9672855b1172d4d10b99c4_720w.jpg" style="zoom:80%" /> </center>   
 
 **注意：** 可重入函数是线程安全函数的真子集，所以可重入函数一定是线程安全函数，而线程安全函数不一定是可重入函数，可能是用互斥锁来实现线程安全的。可重入函数由于不用同步操作，所以通常速度会更快。
 
@@ -4196,12 +4196,12 @@ Linux系统提供的大多数线程不安全函数都有对应的线程安全版
 
 这个例子之前也说过
 
-<center> <img src="https://pic3.zhimg.com/80/v2-cd18c0caceff1e7dfba69704174519f2_720w.jpg" style="zoom:80%" /> </center>    
+<center> <img src="CSAPP_notes/pics/v2-cd18c0caceff1e7dfba69704174519f2_720w.jpg" style="zoom:80%" /> </center>    
 
 
 该程序中，第13行创建线程时传入的参数为`&i`，而在线程例程中通过`*((int*)vargp)`将其转化为`int`，此时就会出现竞争。因为主线程中的局部变量`i`保存在主线程的栈中，而传入的线程例程的参数是`i`的地址，在前一个线程在第22行读取该地址中的`i`之前，第12行修改了该地址内的数据，就会造成竞争。这里假设了第22行在第12行之前执行。
 
-<center> <img src="https://pic2.zhimg.com/80/v2-b274d3d3b81f1961d22880d3717fd0a1_720w.jpg" style="zoom:80%" /> </center>    
+<center> <img src="CSAPP_notes/pics/v2-b274d3d3b81f1961d22880d3717fd0a1_720w.jpg" style="zoom:80%" /> </center>    
 
 正确的方法是申请一个独立的空间
 
@@ -4220,6 +4220,7 @@ Linux系统提供的大多数线程不安全函数都有对应的线程安全版
 ![img](CSAPP_notes/pics/v2-b0f49bceaba0d1a4764aaaf291216004_720w.jpg)
 
 **注意：** 要注意互斥锁的初始状态。
+
 
 
 
