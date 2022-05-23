@@ -6,6 +6,10 @@ AcWing 1064. 小国王【线性状压DP+滚动数组优化+目标状态优化】
 贪心：局部最优=全局最优     
 模拟是指根据题意要求实现功能，通常操作多，代码量大，无复杂算法，考察熟练程度。
 
+https://ac.nowcoder.com/acm/archive/oi-advance?pageSize=10&page=1    
+
+https://www.bilibili.com/video/BV1KE411V79h     
+
 
 scanf(“格式控制字符串”, 地址表列)    
 printf("<格式化字符串>", <参量表>)   
