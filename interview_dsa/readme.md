@@ -24,6 +24,8 @@ yxc leetcode全解(究极班)： https://www.acwing.com/activity/content/activit
 
 **ACM_OI**
 
+ACM算法日常：https://github.com/acm-clan/algorithm-stone
+
 https://github.com/soulmachine/acm-cheat-sheet
 
 算法竞赛进阶指南: 
