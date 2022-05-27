@@ -72,12 +72,12 @@ int main() {
 
 补充笔记：
 
-AcWing95 费解的开关：
+**AcWing95 费解的开关：**
 #include<bits/stdc++.h> 万能头文件    
 void *memcpy(void *str1, const void *str2, size_t n) 反向的从str2中拷贝n个到str1。       
 
 
-AcWing96 奇怪的汉诺塔：
+**AcWing96 奇怪的汉诺塔：**
 
 n盘3塔：d[n] = d[n-1]*2 + 1    
 n盘4塔：f[i] = min(2*f[i] + d[n-i]),i < n,f[1] = 1   
@@ -87,14 +87,17 @@ memset(f,0x3f,sizeof(f))
 cin>>x>>y>>w :cin输入多个值
 
 
-AcWing99 激光炸弹：二维前缀和
+**AcWing99 激光炸弹：**
 
+二维前缀和
 
-AcWing100 IncDec序列：    
+**AcWing100 IncDec序列：**
+
 差分序列: A的差分序列是B，B[1]=A[1],B[i]=A[i]-A[i-1](2<=i<=n)        
 改成目标为把b2,b3...bn变成全0，最终数列由n个b1构成，这里b[1]=一个常数(b1-b0，实际没有0)。        
 
-AcWing 101 最高的牛：    
+**AcWing 101 最高的牛：**
+
 差分：序列A的区间[l,r] + d 等价于序列Bl + d,Br+1 - d。    
 牛A和B可以相互看到，则[A+1，B-1]区间的牛高度都-1。
 最高的牛的位置肯定是0，因为它左右的牛都看不到。
