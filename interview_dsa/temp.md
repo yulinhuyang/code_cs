@@ -103,6 +103,24 @@ cin>>x>>y>>w :cin输入多个值
 最高的牛的位置肯定是0，因为它左右的牛都看不到。
 
 
+**AcWing103 电影**
+
+离散化技巧(稀疏->稠密)   
+
+```cpp
+//数组的迭代器,end是不到达的点
+sort(cinema + 1, cinema + tot + 1);
+//unique + find 离散化索引
+k = unique(cinema + 1, cinema + tot + 1) - (cinema + 1);
+
+int find(int x) {
+    return lower_bound(cinema + 1, cinema + 1 + k, x) - (cinema + 1);
+}
+```
+
+统计每个科学家的语言，遍历电影去找max1、max2。
+
+
 
 
 
