@@ -120,6 +120,28 @@ int find(int x) {
 
 统计每个科学家的语言，遍历电影去找max1、max2。
 
+**AcWing 104 货仓选址 **
+
+排序 + 中位数
+
+折半减去算距离    
+
+**AcWing 105 七夕祭**
+
+贪心参考：
+
+
+参考： 
+
+**AcWing 122 糖果传递**
+
+https://www.acwing.com/solution/content/41677/
+
+环形均分纸牌问题：∑i=1n−1∣∣∑j=1iAj∣∣=∑i=1n−1|Si|其中 Si 为 Ai 的前缀和，即 Si=∑j=1iAj
+
+破环成链：
+    
+https://www.acwing.com/solution/content/52804/
 
 
 
