@@ -151,7 +151,7 @@ https://www.acwing.com/solution/content/41677/
 
 **AcWing 107  超快速排序**
 
-归并排序变形：统计逆序对的数量    
+归并排序变形：统计逆序对的数量 
 
 ```cpp
 while (i <= mid && j <= r) {
@@ -162,6 +162,7 @@ while (i <= mid && j <= r) {
 	}
 }
 ```
+注：快排的变形是快选，归并的变形是逆序对统计。   
 
 **AcWing 108 奇数码问题**
 
