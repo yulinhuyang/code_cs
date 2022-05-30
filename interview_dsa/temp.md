@@ -120,6 +120,37 @@ int find(int x) {
 }
 ```
 
+**AcWing 109 天才ACM**
+
+倍增 + 二路归并优化：https://www.acwing.com/solution/content/82450/
+
+https://www.acwing.com/solution/content/15458/
+
+倍增:从小区间往大区间扩展，效率高于二分。  
+
+```cpp
+while (start <= n) {
+	int step = 1;
+	while (step) {
+		//start到end是已经排好序的
+		if (end + step <= n && check(start, end, end + step)) {
+			end += step;
+			step *= 2;
+			if (end > n) break;
+			//已经校验完成的区间拷贝回去
+			for (int i = start; i <= end; i++) {
+				b[i] = t[i - start];
+			}
+		} else {
+			step /= 2;
+		}
+	}
+	start = end + 1;
+	ans++;
+}
+```
+
+
 统计每个科学家的语言，遍历电影去找max1、max2。
 
 **AcWing 104 货仓选址 **
