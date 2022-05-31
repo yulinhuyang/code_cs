@@ -240,7 +240,21 @@ pair<PII, int> cows[N];
 //堆用来维护区间问题
 priority_queue<PII,vector<PII>,greater<PII>> heap;
 
+**AcWing 112 雷达设备**
 
+转换为区间问题：https://www.acwing.com/solution/content/1061/
+
+```cpp
+for (int i = 0; i < n; i++) {
+	if (a[i].first > end + eps) {
+		res++;
+		end = a[i].second;
+	} else {
+		end = min(end, a[i].second);
+	}
+}
+```
+	
 
 
 
