@@ -228,7 +228,7 @@ for(int i = n - 1;i >= 0;i--){
 }
 ```
 
-**AcWing 111 畜栏预定 **
+**AcWing 111 畜栏预定**
 
 https://www.acwing.com/solution/content/1060/
  
