@@ -228,7 +228,17 @@ for(int i = n - 1;i >= 0;i--){
 }
 ```
 
+**AcWing 111 畜栏预定 **
 
+https://www.acwing.com/solution/content/1060/
+ 
+同一时刻，最大交集的数量。类似于砖墙问题。         
+
+//pair 当结构体使用
+pair<PII, int> cows[N];
+
+//堆用来维护区间问题
+priority_queue<PII,vector<PII>,greater<PII>> heap;
 
 
 
