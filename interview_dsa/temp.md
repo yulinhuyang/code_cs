@@ -203,6 +203,30 @@ while (start <= n) {
 }
 ```
 
+**AcWing 110 防晒**
+
+贪心一般都有排序
+
+匈牙利算法：如果一个匹配不存在增广路径，则该匹配是二分图的一个最大匹配。    
+给每头奶牛匹配一个尽可能大的防晒霜。    
+
+```cpp
+//优先满足大的
+//区间排序 按照first第一个关键字，second第二关键字排序
+sort(cows, cows + n);
+//从右往左
+int res = 0;
+spfS[0] = spfS[1001] = n;
+for(int i = n - 1;i >= 0;i--){
+	auto iter = spfS.upper_bound(cows[i].second);
+	iter--; 
+	if(iter->first >= cows[i].first && iter->first <= cows[i].second){
+		iter->second--;
+		res++;
+		if(iter->second == 0) spfS.erase(iter);
+	}
+}
+```
 
 
 
