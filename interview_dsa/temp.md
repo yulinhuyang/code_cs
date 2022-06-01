@@ -255,6 +255,32 @@ for (int i = 0; i < n; i++) {
 }
 ```
 	
+**AcWing 114 国王游戏**
+
+贪心都有排序，需要制定排序规则，根据区间起点、终点、两数乘积、两数(字符串)之和等
+
+```cpp
+//国王不参与排序
+sort(nums + 1, nums + n + 1, [](PII & a, PII & b) {
+	return a.first * a.second < b.first * b.second;
+});
+```
+
+高精度乘法模板：乘从低位开始,返回数是反着的。
+高精度除法模板：除从高位开始。is_first作flag判首位不能为0
+
+
+vector比较大小 模板
+
+```cpp
+vector<int> max_vec(vector<int> a, vector<int> b) {
+    if (a.size() > b.size()) return a;
+    if (a.size() < b.size()) return b;
+    if (vector<int>(a.rbegin(), a.rend()) > vector<int>(b.rbegin(), b.rend())) return a;
+    return b;
+}
+```
+
 
 
 
