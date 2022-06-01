@@ -319,6 +319,22 @@ for (int i = 0; i < (1 << 16); i++) {
 }
 ```
 
+**AcWing 120 防线**
+
+枚举每一个等差数列(起点s,终点e,差为d),如果s <= x，则两区间存在交集，它与[minn,x]的共同区间是[s,min(e,x)],此区间包含数列个数是[(min(e,x)-s)/d] + 1。    
+前缀和 + 二分     getSum(l) - getSum(l - 1)     
+										       
+```cpp
+long long get(int x) {
+    long long sum = 0;
+    for (int i = 0; i < n; i++) {
+        if (seqs[i].s <= x) {
+            sum += (min(seqs[i].e, x) - seqs[i].s)/ seqs[i].d + 1;
+        }
+    }
+    return sum;
+}
+```
 
 
 
