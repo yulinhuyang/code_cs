@@ -336,5 +336,25 @@ long long get(int x) {
 }
 ```
 
+**AcWing 121 赶牛入圈**
+
+二维前缀和 + 离散化(sort，unique和erase的惯用法 + get(二分)) + 二分判定
+
+sort，unique和erase的惯用法  + get(二分)
+
+unique的功能是去除相邻的重复元素(只保留一个),其实它并不真正把重复的元素删除，是把重复的元素移到后面去了，然后依然保存到了原数组中,返回去重后最后一个元素的地址,unique去除的是相邻的重复元素，所以一般用之前都会要排一下序。
+```cpp
+//前缀和数组会用到下标0，所有0压入number，让离散化从1开始。
+//离散化
+nums.emplace_back(0);
+sort(nums.begin(), nums.end());
+nums.erase(unique(nums.begin(), nums.end()), nums.end());
+
+//枚举len要去掉下边界
+while (nums[x2] - nums[x1 + 1] + 1 > len) x1++;
+```
+    
+什么时候用离散化后的索引，什么时候用离散化前的索引，这个要灵活对待。    
+
 
 
