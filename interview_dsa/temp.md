@@ -361,3 +361,14 @@ while (nums[x2] - nums[x1 + 1] + 1 > len) x1++;
 
 排序、中位数、货仓选址问题扩展      
 推导：|X0 - 0 - a|、|Xn- n - a|，这里的a取avg的值。    
+	
+	
+**AcWing 125 耍杂技的牛**
+
+typedef old new_name
+
+邻项交换原则: 1 关键字 总和(w + s)排序 2 关键字 w 排序。   
+
+贪心推导： max(①,②) ⩾ max(③,④) ,且Wi+Si >= Wi+1 + Si+1   
+	
+	
