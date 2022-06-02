@@ -365,7 +365,9 @@ while (nums[x2] - nums[x1 + 1] + 1 > len) x1++;
 	
 **AcWing 125 耍杂技的牛**
 
-typedef old new_name
+typdef long long LL    
+typdef pair<long long> PLL    
+typdef pair<double double> PDD     
 
 邻项交换原则: 1 关键字 总和(w + s)排序 2 关键字 w 排序。   
 
@@ -409,6 +411,6 @@ auto iter = m.lower_bound(3);
 
 最小或最优匹配问题
 
-typdef long long LL    
-typdef pair<long long> PLL    
-typdef pair<double double> PDD   
+策略可以变成以x从大到小的顺序考虑每一个任务，如果能匹配机器，则从能匹配的机器中选择机器y最小的一个。 
+	
+	
