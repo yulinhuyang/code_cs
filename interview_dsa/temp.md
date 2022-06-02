@@ -372,3 +372,20 @@ typedef old new_name
 贪心推导： max(①,②) ⩾ max(③,④) ,且Wi+Si >= Wi+1 + Si+1   
 	
 	
+**AcWing 126 最大的和**
+
+二维前缀和简化(4 for) ——> 压缩列方向的前缀和(3 for)。  
+
+```cpp
+//双指针枚举行
+for (int i = 1; i <= n; i++) {
+	for (int j = i; j <= n; j++) {
+		//枚举列
+		int last = 0;//last 缓存此次枚举前面的列
+		for (int k = 1; k <= n; k++) {
+			last = max(last, 0) + a[j][k] - a[i - 1][k];
+			ans = max(ans, last);
+		}
+	}
+}
+```
