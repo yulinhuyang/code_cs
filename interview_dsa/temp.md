@@ -389,3 +389,24 @@ for (int i = 1; i <= n; i++) {
 	}
 }
 ```
+				      
+**AcWing 127 任务**    
+
+lower_bound支持的迭代器：set、map、multiset、multimap、vector(先sort)
+
+```cpp
+//vector 用法
+vector<int> nums = { 3,2,4,1,5 };
+sort(nums.begin(), nums.end());
+auto iter = upper_bound(nums.begin(), nums.end(), 1);
+
+//map 用法
+map<int, int> m;
+auto iter = m.lower_bound(3);    
+```
+
+最小或最优匹配问题
+
+typdef long long LL 
+typdef pair<long long> PLL 
+typdef pair<double double> PDD
