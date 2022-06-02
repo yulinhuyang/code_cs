@@ -376,6 +376,8 @@ typedef old new_name
 
 二维前缀和简化(4 for) ——> 压缩列方向的前缀和(3 for)。  
 
+涉及前缀和问题、字符串匹配之类的，索引需要从1开始，正常都是从0开始。    
+
 ```cpp
 //双指针枚举行
 for (int i = 1; i <= n; i++) {
@@ -407,6 +409,6 @@ auto iter = m.lower_bound(3);
 
 最小或最优匹配问题
 
-typdef long long LL 
-typdef pair<long long> PLL 
-typdef pair<double double> PDD
+typdef long long LL    
+typdef pair<long long> PLL    
+typdef pair<double double> PDD   
