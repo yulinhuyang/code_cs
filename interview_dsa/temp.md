@@ -420,3 +420,11 @@ while (j >= 0 && machs[j].first >= tasks[i].first) ys.insert(machs[j--].second);
 **AcWing 128 编辑器**
 
 对顶栈问题：left + right
+
+**AcWing 130 火车进出栈问题**
+
+计算 C(n,2n)/(N+1)：2n!/(n! * (2n - n)! *(n + 1))
+	
+	
+	
+	
