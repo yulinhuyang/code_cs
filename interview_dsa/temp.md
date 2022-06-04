@@ -426,5 +426,14 @@ while (j >= 0 && machs[j].first >= tasks[i].first) ys.insert(machs[j--].second);
 计算 C(n,2n)/(N+1)：2n!/(n! * (2n - n)! *(n + 1))
 	
 	
+**AcWing132 小组队列**
+
+queue 存tid  + queue数组 ，类似纵向展开的邻接表
+
+```cpp
+while(cin >> command,command != "STOP")// while 读取并判断结构    
+
+queue<int> persons[N] //queue队列
+```
 	
 	
