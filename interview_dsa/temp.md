@@ -436,4 +436,10 @@ while(cin >> command,command != "STOP")// while 读取并判断结构
 queue<int> persons[N] //queue队列
 ```
 	
-	
+**AcWing 133 蚯蚓**
+
+三个队列模拟优先队列，    
+q1：切后第一段； q2：切后第二段； q3:存储蚯蚓长度    
+排序：从高到低。   
+每次取各个队头并求max       
+每个队列都隐藏着单调队列的性质。    	
