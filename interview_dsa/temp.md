@@ -417,3 +417,6 @@ while (j >= 0 && machs[j].first >= tasks[i].first) ys.insert(machs[j--].second);
 	auto it = ys.lower_bound(tasks[i].second);	
 ```	
 	
+**AcWing 128 编辑器**
+
+对顶栈问题：left + right
