@@ -502,4 +502,23 @@ ULL get(int l, int r)
     return h[r] - h[l - 1] * power[r - l + 1];
 }
 ```		
-	
+
+**AcWing 139 回文子串的最大长度**
+
+字符串hash(前缀/后缀) + 二分   
+
+hl：从前向后求字符串前缀的hash值
+hr：从后向前求字符串后缀的hash值   
+枚举回文串的中心点，求最大半径。二分半径长度。
+插入#法：将字符串长度变为奇数。    
+
+```cpp
+n *= 2;
+p[0] = 1;
+for (int i = 1, j = n; i <= n; i ++, j -- )
+{
+	hl[i] = hl[i - 1] * base + str[i] - 'a' + 1; 
+	hr[i] = hr[i - 1] * base + str[j] - 'a' + 1;
+	p[i] = p[i - 1] * base;
+}
+```
