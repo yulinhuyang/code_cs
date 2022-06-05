@@ -466,3 +466,40 @@ else
 **AcWing135 最大子序和**
 
 前缀和 + 单调非严格上升队列模板
+		
+**AcWing136 邻值查找**    
+
+PLL 数组存储 值+索引   
+
+数组排序，串成一个链表，取一个节点的前驱和后继比较，求最近的。
+
+```cpp
+//双哨兵
+a[0].first = -3e9,a[n + 1].first = 3e9;
+//删节点
+l[right] = left, r[left] = right;   
+```
+
+**AcWing138 兔子与兔子**
+
+scanf("%s",str + 1); //str偏移一位后，读输入，即str有效数据从1开始。
+int n = strlen(str + 1);
+
+```cpp
+//字符串hash模板
+scanf("%s", str + 1);
+int n = strlen(str + 1);
+power[0] = 1;
+for (int i = 1; i <= n; i ++ )
+{
+	h[i] = h[i - 1] * p + str[i] - 'a' + 1;
+	power[i] = power[i - 1] * p;
+}
+
+//获取一个区间值
+ULL get(int l, int r)
+{
+    return h[r] - h[l - 1] * power[r - l + 1];
+}
+```		
+	
