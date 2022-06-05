@@ -522,3 +522,37 @@ for (int i = 1, j = n; i <= n; i ++, j -- )
 	p[i] = p[i - 1] * base;
 }
 ```
+
+**AcWing 140 后缀数组**
+
+后缀数组的模板题: https://www.acwing.com/solution/content/30646/
+
+后缀数组：字符串S的所有后缀按照字典序排列，排名为i的后缀记为SA[i]
+最长公共前缀：排名为i的后缀和排名为i-1的后缀，两者的最长公共前缀长度是Height[i]
+
+对后缀进行排序，排序方法是计算最长的公共前缀，然后取前缀的下一个。
+
+```cpp
+sa[i]是以str[i]字符为首字母的后缀字符串
+
+//后缀的最长公共前缀
+int get_max_common_prefix(int a, int b) {
+    int l = 0, r = min(n - a + 1, n - b + 1);
+    while (l < r) {
+        int mid = l + r + 1 >> 1;
+        if (get(a, a + mid - 1) != get(b, b + mid - 1)) r = mid - 1;
+        else l = mid;
+    }
+    return l;
+}
+
+//后缀排序
+bool cmp(int a, int b) {
+    int l = get_max_common_prefix(a, b);
+    int av = a + l > n ? INT32_MIN : str[a + l];
+    int bv = b + l > n ? INT32_MIN : str[b + l];
+    return av < bv;
+}
+```
+			     
+			     
