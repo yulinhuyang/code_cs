@@ -559,3 +559,14 @@ bool cmp(int a, int b) {
 
 对于某一个字符串S[1~i],在它众多的next[i]的候选中，如果存在一个next[i],使得i%(i-next[i]) == 0,那么S[1~(i-next[i])]可以为S[1~i]的循环元，而i/(i-next[i])是它的循环次数K。
 			     
+**AcWing 143 最大异或对**
+
+https://www.acwing.com/solution/content/9587/ 
+
+字典树不单单可以高效存储和查找字符串集合,还可以存储二进制数字。           
+cin.tie(0) 和ios::sync_with_stdio(false)是等价的，解除与cout输出流的关联，这样每次cin或cout之前都不会刷新彼此的缓冲区。        
+int的最高位是第31位，且最高位是符号。            
+res = res*2+1  等价与 res += 1 << i;     
+				
+				
+				
