@@ -562,11 +562,13 @@ bool cmp(int a, int b) {
 **AcWing 143 最大异或对**
 
 https://www.acwing.com/solution/content/9587/ 
+		 
+trie(二进制) ：30位从高位到低位		   
 
 字典树不单单可以高效存储和查找字符串集合,还可以存储二进制数字。           
 cin.tie(0) 和ios::sync_with_stdio(false)是等价的，解除与cout输出流的关联，这样每次cin或cout之前都不会刷新彼此的缓冲区。        
 int的最高位是第31位，且最高位是符号。            
-res = res*2+1  等价与 res += 1 << i;     
+res = res*2+1  等价于 res += 1 << i;     
 				
 				
 **AcWing 144 最长异或值路径**
@@ -576,7 +578,7 @@ x节点到y节点上所有的异或权值就是D[x] xor D[y]
 
 问题转化：D[1]~D[n]中选择任意两个数,xor的结果值就会变成最大。
 
-dfs + trie(二进制)  
+dfs 邻接表 + trie(二进制)  
 
 邻接表模板：https://www.acwing.com/file_system/file/content/whole/index/content/1528095/
 
