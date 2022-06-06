@@ -563,7 +563,7 @@ bool cmp(int a, int b) {
 
 https://www.acwing.com/solution/content/9587/ 
 		 
-trie(二进制) ：30位从高位到低位		   
+trie(二进制) :30位从高位到低位		   
 
 字典树不单单可以高效存储和查找字符串集合,还可以存储二进制数字。           
 cin.tie(0) 和ios::sync_with_stdio(false)是等价的，解除与cout输出流的关联，这样每次cin或cout之前都不会刷新彼此的缓冲区。        
