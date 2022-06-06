@@ -599,10 +599,10 @@ memset(head, 0xff, sizeof(head));      等价于   memset(head, -1, sizeof(head)
 for (int i = head[x]; i != -1; i = Next[i])  等价于   for (int i = head[x]; ~i; i = Next[i]) 
 ~0 = -1    
 ~ -1 = 0    
-```				
-
+```
 				
-				**AcWing 145 超市**
+				
+**AcWing 145 超市**
 
 https://www.acwing.com/solution/content/28939/
 
