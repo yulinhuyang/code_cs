@@ -569,4 +569,32 @@ int的最高位是第31位，且最高位是符号。
 res = res*2+1  等价与 res += 1 << i;     
 				
 				
-				
+**AcWing 144 最长异或值路径**
+
+D[x]表示根节点到x的路径上的所有边权的xor值,D[x] = D[father(x)] xor weight(x,father(x)) 也就是D[x节点的父亲]异或上x节点到他父亲的路径。
+x节点到y节点上所有的异或权值就是D[x] xor D[y]    
+
+问题转化：D[1]~D[n]中选择任意两个数,xor的结果值就会变成最大。
+
+dfs + trie(二进制)  
+
+邻接表模板：https://www.acwing.com/file_system/file/content/whole/index/content/1528095/
+
+```cpp
+// edge[m] 表示编号为 m 的边的终点
+// weight[m] 表示编号为 m 的边的权值
+// Next[tot] = head[x] next是邻接表
+// head[x] = m 表示点 x 的邻接表的表头是编号为 m 的边
+// 邻接表加入有向边 (x, y)，权值为 z
+void add(int x, int y, int z) {
+    // 真实数据
+    edge[tot] = y, weight[tot] = z;
+    // 在表头 x 处插入
+    Next[tot] = head[x], head[x] = tot++;
+}
+
+memset(head, 0xff, sizeof(head));      等价于   memset(head, -1, sizeof(head));
+for (int i = head[x]; i != -1; i = Next[i])  等价于   for (int i = head[x]; ~i; i = Next[i]) 
+~0 = -1    
+~ -1 = 0    
+```				
