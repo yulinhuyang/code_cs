@@ -600,3 +600,72 @@ for (int i = head[x]; i != -1; i = Next[i])  等价于   for (int i = head[x]; ~
 ~0 = -1    
 ~ -1 = 0    
 ```				
+
+				
+				**AcWing 145 超市**
+
+https://www.acwing.com/solution/content/28939/
+
+二叉堆 + 贪心、并查集(天数) + 贪心   
+
+
+并差集按size大小合并模板：LeetCode1627 带阈值的图连通性：https://www.acwing.com/file_system/file/content/whole/index/content/1382246/
+```cpp
+void merge(int x, int y) {
+	int fx = find(x), fy = find(y);
+	if (fx == fy)
+		return;
+	if (sz[fx] < sz[fy]) {
+		f[fx] = fy;
+		sz[fy] += sz[fx];
+	} else {
+		f[fy] = fx;
+		sz[fx] += sz[fy];
+	}
+}
+```
+
+并差集，天数为坑，向前移动占坑：fa[r] = r - 1;
+
+```cpp
+#include <iostream>
+#include <algorithm>
+
+using namespace std;
+const int N = 10010;
+int fa[N];
+
+int find(int x) {
+    if (fa[x] != x) fa[x] = find(fa[x]);
+    return fa[x];
+}
+
+int main() {
+    pair<int, int> a[N];
+    int n;
+    while (cin >> n) {
+        int d = 0;
+        for (int i = 0; i < n; i++) {
+            cin >> a[i].first >> a[i].second;
+            d = max(d, a[i].second);
+        }
+        sort(a, a + n);
+        for (int i = 0; i <= d; i++) {
+            fa[i] = i;
+        }
+
+        int ans = 0;
+        for (int i = n - 1; i >= 0; i--) {
+            int r = find(a[i].second);
+            if (r) {
+                ans += a[i].first;
+                fa[r] = r - 1;
+            }
+        }
+        cout << ans << endl;
+    }
+    return 0;
+}
+
+```
+
