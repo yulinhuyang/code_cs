@@ -557,7 +557,7 @@ bool cmp(int a, int b) {
 			     
 **AcWing141 周期**
 
-对于某一个字符串S[1~i],在它众多的next[i]的候选中，如果存在一个next[i],使得i%(i-next[i]) == 0,那么S[1~(i-next[i])]可以为S[1~i]的循环元，而i/(i-next[i])是它的循环次数K。
+对于某一个字符串S[1 ~ i], 在它众多的next[i]的候选中，如果存在一个next[i],使得i%(i-next[i]) == 0,那么S[1~(i-next[i])]可以为S[1~i]的循环元，而i/(i-next[i])是它的循环次数K。
 			     
 **AcWing 143 最大异或对**
 
