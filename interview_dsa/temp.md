@@ -739,3 +739,14 @@ res += sum;
 heap.push({sum, depth + 1});
 ```
 	
+**AcWing 150 括号画家 **
+
+栈处理括号问题：栈模拟匹配的过程，把所有配对的括号都删掉，遍历的时候求出来被删掉的连续一段的长度最大是多少。
+栈存索引 
+```cpp
+char c = str[i];
+if (c == ')' && stk.size() && str[stk.top()] == '(') stk.pop();
+else if (c == ']' && stk.size() && str[stk.top()] == '[') stk.pop();
+else if (c == '}' && stk.size() && str[stk.top()] == '{') stk.pop();
+else stk.push(i);
+```
