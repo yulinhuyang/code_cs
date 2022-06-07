@@ -708,3 +708,34 @@ d[p] = d[left] + d[right] - d[p];
 S.insert({d[p], p});
 ```
 	
+**AcWing148 合并果子**
+
+二叉huffman树
+
+**AcWing149 荷马史诗**
+
+为了最小化权重w*距离l的总和，让权值大的叶子节点的深度尽量小。   
+k叉huffman树的求解，每次从堆中取出最小的k个权值。为了防止最后一轮循环时，堆中剩余子节点个数小于k，需要补加一些额外的
+权值为0的叶子节点，使叶子节点的个数n满足（n-1)mod(k-1) = 0,让子节点不足k个的情况发生在最底层，而不是根节点处。
+
+权值相同的节点，优先考虑当前深度最小的(已合并次数最少)的进行合并。   
+
+```cpp
+//填充0
+while ((n - 1) % (m - 1)) {
+	heap.push({0ll, 0});
+	n++;
+}
+
+LL sum = 0;
+int depth = 0;
+for (int i = 0; i < m; i ++ )
+{
+	sum += heap.top().first;
+	depth = max(depth, heap.top().second);//优先考虑深度最小的，靠近根节点进行合并
+	heap.pop();
+}
+res += sum;
+heap.push({sum, depth + 1});
+```
+	
