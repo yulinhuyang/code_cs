@@ -669,3 +669,25 @@ int main() {
 
 ```
 
+**AcWing 146 序列**
+
+m个序列的组合的n个最小值问题，礼物问题    
+
+memcpy: 长度单位是字节   
+
+序列问题模板：
+
+```cpp
+//合并a和b
+priority_queue<PII, vector<PII>, greater<PII>> heap;
+for (int i = 0; i < n; i++) {
+	heap.push({a[0] + b[i], 0});
+}
+for (int i = 0; i < n; i++) {
+	auto t = heap.top();
+	heap.pop();
+	c[i] = t.first;
+	heap.push({t.first+ a[t.second + 1]  - a[t.second] , t.second + 1});
+}
+memcpy(a, c, 4 * n);
+```
