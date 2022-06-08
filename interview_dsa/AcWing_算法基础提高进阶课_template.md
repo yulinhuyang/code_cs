@@ -571,6 +571,25 @@ for (int i = 1; i <= n; i ++ )
     stk[ ++ tt] = i;
 }
 ```
+```cpp
+//stl
+left.emplace(0);
+h[0] = h[n + 1] = -1; //哨兵
+//单调上升栈，寻找左右边界
+for (int i = 1; i <= n; i++) {
+    while (left.size() && h[left.top()] >= h[i]) left.pop();
+    l[i] = left.top();
+    left.emplace(i);
+}
+
+right.emplace(n + 1);
+for (int i = n; i >= 1; i--) {
+    while (right.size() && h[right.top()] >= h[i]) right.pop();
+    r[i] = right.top();
+    right.emplace(i);
+}
+
+```
 
 #### 队列
 
@@ -635,6 +654,17 @@ for (int i = 0; i < n; i ++ )
     while (hh <= tt && check_out(q[hh])) hh ++ ;  // 判断队头是否滑出窗口
     while (hh <= tt && check(q[tt], i)) tt -- ;
     q[ ++ tt] = i;
+}
+```
+```cpp
+//stl
+deque<int> q;
+for (int i = 0; i < n; i++) {
+    if (q.size() && i - q.front() >= k) q.pop_front();
+    //最小值，单调上升栈
+    while (q.size() && a[q.back()] >= a[i]) q.pop_back();
+    q.push_back(i);
+    if (i >= k - 1) cout << a[q.front()] << " ";
 }
 ```
 
