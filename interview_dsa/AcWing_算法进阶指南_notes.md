@@ -96,6 +96,58 @@ int lowbit(int x)
 置0： x& = ~(1<<i)    
 取反：x^ = 1 << i    
 取某一位： (x >> i) &1    
+  
+- AcWing95 费解的开关：
+  
+#include<bits/stdc++.h> 万能头文件    
+void *memcpy(void *str1, const void *str2, size_t n) 反向的从str2中拷贝n个到str1。 
+
+- 最短hamilton距离(状态压缩DP 模板题)
+  
+f[i][j] 这里i代表方案结合，每个位置j代表这个点是否被经过过。
+
+状态压缩DP: 方案i --> 位置j-->转移点k
+
+```cpp
+#include  <stdio.h>
+#include <string.h>
+#include <iostream>
+
+using namespace std;
+
+const int N = 20, M = 1 << 20;
+int nums[N][N], f[M][N];
+
+int main() {
+    int n;
+    cin >> n;
+    for (int i = 0; i < n; i++) {
+        for (int j = 0; j < n; j++) {
+            cin >> nums[i][j];
+        }
+    }
+    
+    memset(f,0x3f,sizeof(f));
+    //i 方案
+    f[1][0] = 0;
+    for (int i = 0; i < (1 << n); i++) {
+        //j 位置
+        for (int j = 0; j < n; j++) {
+            if ((i >> j) & 1) {
+                //枚举到j的点k
+                for (int k = 0; k < n; k++) {
+                    //i - (1 << j)  --> i ^ (1 << j) 去掉状态j的集合i。每个点只能到达一次，所以想从 k -> j，到达 k 时不可经过 j。
+                    if (i - (1 << j) >> k & 1) {
+                        f[i][j] = min(f[i][j], f[i - (1 << j)][k] + nums[k][j]);
+                    }
+                }
+            }
+        }
+    }
+    cout << f[(1 << n) - 1][n - 1] <<endl;
+}
+
+```
 
 #### 0x02 递推与递归
 
@@ -163,6 +215,11 @@ void dfs(int u, int state)
 }
 ```
 
+- AcWing96 奇怪的汉诺塔：
+
+n盘3塔：d[n] = d[n-1]*2 + 1       
+n盘4塔：f[i] = min(2*f[i] + d[n-i]),i < n,f[1] = 1     
+                                           
 #### 0x03 前缀和与差分
 
 前缀和：下标从1开始。
@@ -191,7 +248,19 @@ for (int i = R; i <= n; i ++ )
 差分：将原序列上的区间操作转为差分序列上的单点操作。
 
 <div align="center"> <img src="../pics/chafen1.png" width="50%"/> </div><br>
+ 
+- AcWing99 激光炸弹：   
+二维前缀和     
+  
+- AcWing100 IncDec序列：   
+差分序列: A的差分序列是B，B[1]=A[1],B[i]=A[i]-A[i-1](2<=i<=n)           
+改成目标为把b2,b3...bn变成全0，最终数列由n个b1构成，这里b[1]=一个常数(b1-b0，实际没有0)。  
 
+- AcWing 101 最高的牛：    
+差分：序列A的区间[l,r] + d 等价于序列Bl + d,Br+1 - d。       
+牛A和B可以相互看到，则[A+1，B-1]区间的牛高度都-1。   
+最高的牛的位置肯定是0，因为它左右的牛都看不到。    
+  
 ####  0x04 二分
 
 二分求解转判定
@@ -236,13 +305,79 @@ while (r - l > 1e-5)
 
 中位数：对顶堆(在线)、链表+ hash(离线)
 
-- AcWing106 动态中位数
-- AcWing104 货仓选址：中位数
-
 第k大的数：快排划分
 
 逆序对：归并排序求逆序对个数，合并时考虑
 
+  
+- AcWing103 电影 
+
+离散化技巧(稀疏->稠密)   
+
+```cpp
+//数组的迭代器,end是不到达的点
+sort(cinema + 1, cinema + tot + 1);
+//unique + find 离散化索引
+k = unique(cinema + 1, cinema + tot + 1) - (cinema + 1);
+
+int find(int x) {
+    return lower_bound(cinema + 1, cinema + 1 + k, x) - (cinema + 1);
+}
+```
+ 统计每个科学家的语言，遍历电影去找max1、max2。
+ 
+- AcWing106 动态中位数   
+对顶堆(在线)   
+  
+- AcWing104 货仓选址：中位数
+  
+排序 + 中位数       
+找到中位数，累加出每个点到中位数的距离之和   
+
+- AcWing 105 七夕祭
+
+贪心+前缀和+中位数+排序    
+
+只会改变一行的喜爱小摊或者一列的喜爱小摊，而不会同时改变行和列的喜爱小摊。一部分是求行的最少次数，一部分是求列的最少次数。     
+贪心参考：环形均分纸牌问题       
+行列环形均分纸牌问题 
+  
+- AcWing 122 糖果传递 
+
+https://www.acwing.com/solution/content/41677/
+
+均分纸牌问题: ∑ i=1~n−1 |Si|，其中 Si 为 Ai 的前缀和，即Ai = ci - T/M，Si是第i个人要给第i+1个人的牌的数量,ci减去均值的前缀和。    
+      
+环形均分纸牌问题：破环成链，一定存在一个最优解方案，环上有相邻的两个人之间没有发生交换。    
+      
+可以直接枚举断点K的位置，再做一遍线性纸牌均分。断点Sk可以直接取排序后的中位数即可，然后使用货仓选择模型计算最小距离 ∑i=1 n |Si−Sk|。    
+
+减去均值的前缀和 + 货仓中位数计算距离
+  
+- AcWing 107  超快速排序 
+
+归并排序变形：统计逆序对的数量 
+
+```cpp
+while (i <= mid && j <= r) {
+	if (a[i] < a[j]) tmp[k++] = a[i++];
+	else {
+		tmp[k++] = a[j++];
+		ans += mid - i + 1; //归并变形，计算逆序对数量
+	}
+}
+```
+注：快排的变形是快选，归并的变形是逆序对统计。   
+
+- AcWing 108 奇数码问题 
+
+左右移动完全不改变逆序对个数，而上下移动并不改变逆序对的奇偶性。        
+性质：因为两个矩阵,逆序对奇偶性如果不同的话,是肯定不可以变成一样的,这是可以肯定的。       
+0是空格,不加入逆序对计算之中。    
+
+ans += mid - i + 1; //归并变形，计算逆序对数量  
+  
+  
 #### 0x06 倍增
 
 倍增 + 二进制划分结合（RMQ区间最值、LCA最近公共祖先）
