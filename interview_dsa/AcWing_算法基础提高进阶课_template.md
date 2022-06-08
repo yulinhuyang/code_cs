@@ -246,6 +246,17 @@ S[x2, y2] - S[x1 - 1, y2] - S[x2, y1 - 1] + S[x1 - 1, y1 - 1]
 
 S[x1, y1] += c, S[x2 + 1, y1] -= c, S[x1, y2 + 1] -= c, S[x2 + 1, y2 + 1] += c
 
+列方向压缩前缀和：AcWing126 最大的和  
+
+```cpp
+for (int i = 1; i <= n; i ++ )
+    for (int j = 1; j <= n; j ++ )
+    {
+        cin >> g[i][j];
+        g[i][j] += g[i - 1][j];
+    }
+
+```
 
 #### 二分法
 
@@ -363,7 +374,7 @@ int quick_select(int q[], int l, int r, int k) {
 ```
 
 
-**归并排序算法模板**
+**归并排序(逆序对)算法模板**
 
 模板题 AcWing 787. 归并排序
 ```cpp
@@ -385,6 +396,47 @@ void merge_sort(int q[], int l, int r)
     
     for (i = l, j = 0; i <= r; i ++, j ++ ) q[i] = tmp[j];
 }
+```
+
+AcWing 107 超快速排序
+
+```cpp
+while (i <= mid && j <= r) {
+	if (a[i] < a[j]) tmp[k++] = a[i++];
+	else {
+		tmp[k++] = a[j++];
+		ans += mid - i + 1; //归并变形，计算逆序对数量
+	}
+}
+```
+
+#### 中位数
+
+AcWing 104 货仓选址：排序+中位数
+AcWing 122 糖果传递：
+
+均分纸牌问题: ∑ i=1~n−1 |Si|，其中 Si 为 Ai 的前缀和，即Ai = ci - T/M，Si是第i个人要给第i+1个人的牌的数量,ci减去均值的前缀和。   
+环形均分纸牌问题：破环成链，一定存在一个最优解方案，环上有相邻的两个人之间没有发生交换。   
+可以直接枚举断点K的位置，再做一遍线性纸牌均分。断点Sk可以直接取排序后的中位数即可，然后使用货仓选择模型计算最小距离 ∑i=1 n |Si−Sk|。  
+减去均值的前缀和 + 货仓中位数计算距离  
+
+```cpp
+LL sum = 0;
+for (int i = 1; i <= n; i ++ )
+{
+    scanf("%lld", &a[i]);
+    sum += a[i];
+}
+sum /= n;
+for (int i = n; i > 1; i -- )
+{
+    a[i] = a[i] - sum + a[i + 1];
+}
+a[1] = 0;
+sort(a + 1, a + n + 1);
+
+LL res = 0;
+for (int i = 1; i <= n; i ++ ) res += abs(a[i] - a[(n + 1) / 2]);
 ```
 
 
@@ -409,9 +461,49 @@ int find(int x) // 找到第一个大于等于x的位置
     }
     return r + 1; // 映射到1, 2, -n
 }
+//stl find
+int find(int x) {
+    return lower_bound(cinema + 1, cinema + 1 + k, x) - (cinema + 1);
+}
 ```
 
+#### 倍增模板
+
+AcWing 109 天才ACM 
+
+```cpp
+while (start <= n) {
+	int step = 1;
+	while (step) {
+		//start到end是已经排好序的
+		if (end + step <= n && check(start, end, end + step)) {
+			end += step;
+			step *= 2;
+			if (end > n) break;
+			//已经校验完成的区间拷贝回去
+			for (int i = start; i <= end; i++) {
+				b[i] = t[i - start];
+			}
+		} else {
+			step /= 2;
+		}
+	}
+	start = end + 1;
+	ans++;
+}
+```
+
+
 #### 区间合并 
+
+贪心问题一般都需要排序，邻项交换技巧，需要制定排序规则，根据区间起点、终点、两数乘积、两数(字符串)之和等
+
+```cpp
+//国王不参与排序
+sort(nums + 1, nums + n + 1, [](PII & a, PII & b) {
+	return a.first * a.second < b.first * b.second;
+});
+```
 
 模板题 AcWing 803. 区间合并
 
@@ -851,6 +943,47 @@ void up(int u)
 
 // O(n)建堆
 for (int i = n / 2; i; i -- ) down(i);
+```
+
+AcWing 146 序列: m个序列的组合的n个最小值问题，礼物问题
+
+```cpp
+//合并a和b
+priority_queue<PII, vector<PII>, greater<PII>> heap;
+for (int i = 0; i < n; i++) {
+	heap.push({a[0] + b[i], 0});
+}
+for (int i = 0; i < n; i++) {
+	auto t = heap.top();
+	heap.pop();
+	c[i] = t.first;
+	heap.push({t.first+ a[t.second + 1]  - a[t.second] , t.second + 1});
+}
+memcpy(a, c, 4 * n);
+
+```
+
+
+
+AcWing149 荷马史诗: huffman 树模板
+
+```cpp
+//填充0
+while ((n - 1) % (m - 1)) {
+	heap.push({0ll, 0});
+	n++;
+}
+
+LL sum = 0;
+int depth = 0;
+for (int i = 0; i < m; i ++ )
+{
+	sum += heap.top().first;
+	depth = max(depth, heap.top().second);//优先考虑深度最小的，靠近根节点进行合并
+	heap.pop();
+}
+res += sum;
+heap.push({sum, depth + 1});
 ```
 
 #### C++ STL简介
