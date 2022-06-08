@@ -227,6 +227,13 @@ n盘4塔：f[i] = min(2*f[i] + d[n-i]),i < n,f[1] = 1
 
 <div align="center"> <img src="../pics/qianzhuihe1.png" width="50%"/> </div><br>
 
+
+前缀和和差分是一对互逆运算。
+
+差分：将原序列上的区间操作转为差分序列上的单点操作。
+
+<div align="center"> <img src="../pics/chafen1.png" width="50%"/> </div><br>
+ 
 - AcWing99 激光炸弹
 - 
 ```C++
@@ -242,15 +249,6 @@ for (int i = R; i <= n; i ++ )
     for (int j = R; j <= m; j ++ )
         res = max(res, s[i][j] - s[i - R][j] - s[i][j - R] + s[i - R][j - R]);
 ```
-
-前缀和和差分是一对互逆运算。
-
-差分：将原序列上的区间操作转为差分序列上的单点操作。
-
-<div align="center"> <img src="../pics/chafen1.png" width="50%"/> </div><br>
- 
-- AcWing99 激光炸弹：   
-二维前缀和     
   
 - AcWing100 IncDec序列：   
 差分序列: A的差分序列是B，B[1]=A[1],B[i]=A[i]-A[i-1](2<=i<=n)           
