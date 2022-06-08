@@ -750,3 +750,84 @@ else if (c == ']' && stk.size() && str[stk.top()] == '[') stk.pop();
 else if (c == '}' && stk.size() && str[stk.top()] == '{') stk.pop();
 else stk.push(i);
 ```
+		      
+
+**AcWing 131 直方图中最大的矩形**
+
+哨兵：避免对于边界值的判断   
+直方图最大矩形模板(单调栈)：先判上升/下降  
+
+https://www.acwing.com/solution/content/34591/ 
+
+两个单调上升栈，寻找左右边界   
+
+```cpp
+#include <iostream>
+#include <stack>
+
+using namespace std;
+
+const int N = 100010;
+using LL = long long;
+int h[N], l[N], r[N];
+int n;
+
+LL solve() {
+    stack<int> left;
+    stack<int> right;
+
+    left.emplace(0);
+    h[0] = h[n + 1] = -1; //哨兵
+    //单调上升栈，寻找左右边界
+    for (int i = 1; i <= n; i++) {
+        while (left.size() && h[left.top()] >= h[i]) left.pop();
+        l[i] = left.top();
+        left.emplace(i);
+    }
+
+    right.emplace(n + 1);
+    for (int i = n; i >= 1; i--) {
+        while (right.size() && h[right.top()] >= h[i]) right.pop();
+        r[i] = right.top();
+        right.emplace(i);
+    }
+
+    LL ans = 0;
+    for (int i = 1; i <= n; i++) {
+        ans = max(ans, 1LL* h[i] * (r[i] - l[i] - 1));
+    }
+    return ans;
+}
+
+int main() {
+    while (cin >> n, n) {
+        for (int i = 1; i <= n; i++) {
+            cin >> h[i];
+        }
+        LL ans = solve();
+        cout << ans << endl;
+    }
+
+    return 0;
+}
+
+```
+
+
+**AcWing 152 城市游戏**
+
+列方向累加，压缩列方向的和
+
+```cpp
+    for (int i = 1; i <= m; i++) {
+        for (int j = 1; j <= n; j++) {
+            cin >> g[i][j];
+            if (g[i][j] == 'F') sum[i][j] = sum[i - 1][j] + 1;
+            else sum[i][j] = 0;
+        }
+    }
+```
+
+逐行应用直方图最大矩形(单调栈)模板
+
+		      
