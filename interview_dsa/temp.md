@@ -830,4 +830,63 @@ int main() {
 
 逐行应用直方图最大矩形(单调栈)模板
 
+**AcWing 153 双栈排序**
+
+建图 + 染色法判断+ 栈(字典序输出)
+
+https://www.acwing.com/solution/content/3710/
+
+从栈底到栈顶仍然可以保持降序。
+从前往后遍历每个数，每次先将当前数压入栈中，如果后面的所有数均比栈顶元素大，则将栈顶弹出，否则栈顶不能被弹出。
+两个数 i,j(i≤j) 不能被放入同一个栈中，当且仅当存在k,k>j, 且 q[k]<q[i]<q[j]。    
+
+所有满足条件的点分到两个栈，转化为图论问题，如果i,j满足条件，则在i和j之间连一条边。      
+字典序最小：先将当前点分配到第一个栈中，出栈优先出第一个栈里面的。
+
+
+**AcWing 154 滑动窗口**
+
+单调队列模板题：deque 双端队列，索引头出，单调尾出
+
+最小值，上升栈；最大值，下降栈；队列取头   
+区别严格和不严格单调，这里是严格单调。     
+
+清空队列的方法：q = deque<int>();  
+
+```cpp
+#include <iostream>
+#include <deque>
+
+using namespace std;
+const int N = 1000010;
+int a[N];
+
+
+int main() {
+    int n, k;
+    cin >> n >> k;
+    for (int i = 0; i < n; i++) {
+        cin >> a[i];
+    }
+    deque<int> q;
+    for (int i = 0; i < n; i++) {
+        if (q.size() && i - q.front() >= k) q.pop_front();
+        //最小值，单调上升栈
+        while (q.size() && a[q.back()] >= a[i]) q.pop_back();
+        q.push_back(i);
+        if (i >= k - 1) cout << a[q.front()] << " ";
+    }
+
+    cout << endl;
+    q = deque<int>(); 
+    for (int i = 0; i < n; i++) {
+        if (q.size() && i - q.front() >= k) q.pop_front();
+        //最大值，单调下降栈
+        while (q.size() && a[q.back()] <= a[i]) q.pop_back();
+        q.push_back(i);
+        if (i >= k - 1) cout << a[q.front()] << " ";
+    }
+    return 0;
+}
+```
 		      
