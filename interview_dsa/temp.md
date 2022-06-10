@@ -803,19 +803,21 @@ ULL get(ULL h[], int l, int r) {
 int main() {
     cin >> m >> n >> a >> b;
     p[0] = 1;
+	
     //求p进制的数组
 	for (int i = 1; i <= m *n; i++) {
         p[i] = p[i - 1] * P;
     }
-	//预先将每一行hash化
+			     
+    //预先将每一行hash化
     for (int i = 1; i <= m; i++) {
         cin >> str + 1;
         for (int j = 1; j <= n; j++) {
             hashv[i][j] = hashv[i][j - 1] * P + str[j] - '0';
         }
     }
-	
-	//枚举每一个a*b矩阵，将hash值填入set中 
+    
+    //枚举每一个a*b矩阵，将hash值填入set中 
     unordered_set<ULL> set;
     for (int i = b; i <= n; i++) {
         int l = i - b + 1, r = i;
