@@ -774,4 +774,74 @@ priority_queue<PII, vector<PII>, greater<PII>> endts;    //小根堆，维护释
 set + priority_queue 结构，将set的起始下标放入堆中，便于寻找满足释放时间的起始点。set 空间维度，增加了一个时间维度。   
 
 
+**AcWing156 矩阵**
+
+二维字符串hash：P进制数，m x n位长   
+
+求p进制的数组          
+预先将每一行hash化           
+枚举每一个a*b矩阵，将hash值填入set中         
+
+二维hash 模板题
+
+```cpp
+#include <iostream>
+#include <unordered_set>
+
+using namespace std;
+
+using ULL = unsigned long long;
+const int N = 1010, M = N * N, P = 131;
+int m, n, a, b;
+ULL hashv[N][N], p[M];
+char str[N];
+
+ULL get(ULL h[], int l, int r) {
+    return h[r] - h[l - 1] * p[r - l + 1];
+}
+
+int main() {
+    cin >> m >> n >> a >> b;
+    p[0] = 1;
+    //求p进制的数组
+	for (int i = 1; i <= m *n; i++) {
+        p[i] = p[i - 1] * P;
+    }
+	//预先将每一行hash化
+    for (int i = 1; i <= m; i++) {
+        cin >> str + 1;
+        for (int j = 1; j <= n; j++) {
+            hashv[i][j] = hashv[i][j - 1] * P + str[j] - '0';
+        }
+    }
+	
+	//枚举每一个a*b矩阵，将hash值填入set中 
+    unordered_set<ULL> set;
+    for (int i = b; i <= n; i++) {
+        int l = i - b + 1, r = i;
+        ULL s = 0;
+        for (int j = 1; j <= m; j++) {
+            s = s * p[b] + get(hashv[j], l, r);
+            if (j > a) s -= get(hashv[j - a], l, r) * p[a * b];
+            if (j >= a) set.insert(s);
+        }
+    }
+    int q;
+    cin >> q;
+    while (q--) {
+        ULL s = 0;
+        for (int i = 1; i <= a; i++) {
+            cin >> str + 1;
+            for (int j = 1; j <= b; j++) {
+                s = s * P + str[j] - '0';
+            }
+        }
+        if (set.count(s)) cout << "1" << endl;
+        else cout << "0" << endl;
+    }
+    return 0;
+}
+```
+
+
 
