@@ -751,3 +751,27 @@ int main() {
 }
 ```
 		      
+**AcWing 155 内存分配**
+
+Set + priority_queue
+
+Set(平衡树)：排序,log级别的插入、删除、求前驱、后继操作，替换双链表。
+
+内存块先释放后删除。
+
+申请时刻 T，需要内存单元数 M 及运行时间 P  
+
+https://www.acwing.com/solution/content/1840/
+
+```cpp
+ans;  //ans:全部进程都运行完毕的时刻,cnt:被放入过等待队列的进程总数
+queue<PII> waits;   //等待队列，first: 内存长度，second: 占用时间
+set<PII> runs;      //当前进程，first: 起始下标，second：长度
+priority_queue<PII, vector<PII>, greater<PII>> endts;    //小根堆，维护释放顺序，first: 释放时间，second: 起始下标  
+//runs 和endts维护内容一样的，endts方便小根堆释放    
+```
+
+set + priority_queue 结构，将set的起始下标放入堆中，便于寻找满足释放时间的起始点。set 空间维度，增加了一个时间维度。   
+
+
+
