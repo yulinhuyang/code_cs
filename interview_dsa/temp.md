@@ -857,3 +857,30 @@ int main() {
 每一段看做一棵子树的操作，第一个数一定是0（来到这棵子树的根节点），最后一个数一定是1（回到这棵子树的根节点） 
 
 
+**AcWing158 项链**
+
+求字符串的最小表示模板题
+
+https://oi-wiki.org/string/minimal-string/ 
+
+给定一个字符串S[1~n]，不断把它的最后一个字符放到开头，最终会得到n个字符串，称这n个字符串是循环同构的。这些字符串中字典序最小的一个，称为字符串S的最小表示。
+
+```cpp
+int get_min(char str[])
+{
+    int i = 0, j = 1;
+    while (i < n && j < n)
+    {
+        int k = 0;
+        while (k < n && str[i + k] == str[j + k]) k ++ ;
+        if (k == n) break;
+        if (str[i + k] > str[j + k]) i += k + 1;
+        else j += k + 1;
+        if (i == j) i ++ ;
+    }
+    int res = min(i, j);
+    str[res + n] = 0;
+    return res;
+}
+```
+
