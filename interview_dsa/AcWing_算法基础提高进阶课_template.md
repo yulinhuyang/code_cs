@@ -1037,6 +1037,18 @@ for (int i = 0; i < n; i++) {
 memcpy(a, c, 4 * n);
 
 ```
+**数据备份模板**
+
+```cpp
+d[p] = d[left] + d[right] - d[p];
+S.insert({d[p], p});
+```
+
+**对顶堆模板**
+
+相同点：down.top是第i小的数/中位数
+
+对比动态中位数：优先加入大根堆down，然后根据数量关系(max_heap.size() > min_heap.size() + 1)和平衡关系(min_heap.top() < max_heap.top())进行调整。
 
 
 **huffman 树模板**
