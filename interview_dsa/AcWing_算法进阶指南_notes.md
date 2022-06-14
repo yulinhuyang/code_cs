@@ -384,6 +384,37 @@ RMQ/ST表/区间最值查询 ---- 模板： https://www.acwing.com/blog/content/
 
 算法学习笔记(12): ST表： https://zhuanlan.zhihu.com/p/105439034 
 
+
+- AcWing 109 天才ACM 
+
+倍增 + 二路归并优化：https://www.acwing.com/solution/content/82450/
+
+https://www.acwing.com/solution/content/15458/
+
+倍增:从小区间往大区间扩展，效率高于二分。  
+
+```cpp
+while (start <= n) {
+	int step = 1;
+	while (step) {
+		//start到end是已经排好序的
+		if (end + step <= n && check(start, end, end + step)) {
+			end += step;
+			step *= 2;
+			if (end > n) break;
+			//已经校验完成的区间拷贝回去
+			for (int i = start; i <= end; i++) {
+				b[i] = t[i - start];
+			}
+		} else {
+			step /= 2;
+		}
+	}
+	start = end + 1;
+	ans++;
+}
+```
+						    
 #### 0x07 贪心
 
 一般先排序    
@@ -392,10 +423,83 @@ RMQ/ST表/区间最值查询 ---- 模板： https://www.acwing.com/blog/content/
 区间合并：st end 延迟处理法    
 区间问题：按左端点、右端点、先左后右端点排序
 
-- AcWing 110 防晒: 排序+二分
-- AcWing 111 畜栏预定:区间起点排序。
-- AcWing 112 雷达设备：
-- AcWing 114 国王游戏:交换求最优
+- AcWing 110 防晒  
+
+贪心一般都有排序
+
+匈牙利算法：如果一个匹配不存在增广路径，则该匹配是二分图的一个最大匹配。    
+给每头奶牛匹配一个尽可能大的防晒霜。    
+
+```cpp
+//优先满足大的
+//区间排序 按照first第一个关键字，second第二关键字排序
+sort(cows, cows + n);
+//从右往左
+int res = 0;
+spfS[0] = spfS[1001] = n;
+for(int i = n - 1;i >= 0;i--){
+	auto iter = spfS.upper_bound(cows[i].second);
+	iter--; 
+	if(iter->first >= cows[i].first && iter->first <= cows[i].second){
+		iter->second--;
+		res++;
+		if(iter->second == 0) spfS.erase(iter);
+	}
+}
+```
+
+- AcWing 111 畜栏预定 
+
+https://www.acwing.com/solution/content/1060/
+ 
+同一时刻，最大交集的数量。类似于砖墙问题。         
+
+//pair 当结构体使用
+pair<PII, int> cows[N];
+
+//堆用来维护区间问题
+priority_queue<PII,vector<PII>,greater<PII>> heap;
+
+- AcWing 112 雷达设备 
+
+转换为区间问题：https://www.acwing.com/solution/content/1061/
+
+```cpp
+for (int i = 0; i < n; i++) {
+	if (a[i].first > end + eps) {
+		res++;
+		end = a[i].second;
+	} else {
+		end = min(end, a[i].second);
+	}
+}
+```
+	
+- AcWing 114 国王游戏 
+
+贪心都有排序，需要制定排序规则，根据区间起点、终点、两数乘积、两数(字符串)之和等
+
+```cpp
+//国王不参与排序
+sort(nums + 1, nums + n + 1, [](PII & a, PII & b) {
+	return a.first * a.second < b.first * b.second;
+});
+```
+
+高精度乘法模板：乘从低位开始,返回数是反着的。
+高精度除法模板：除从高位开始。is_first作flag判首位不能为0
+
+vector比较大小 模板
+
+```cpp
+vector<int> max_vec(vector<int> a, vector<int> b) {
+    if (a.size() > b.size()) return a;
+    if (a.size() < b.size()) return b;
+    if (vector<int>(a.rbegin(), a.rend()) > vector<int>(b.rbegin(), b.rend())) return a;
+    return b;
+}
+```
+
 
 #### 练习
 
@@ -411,6 +515,43 @@ RMQ/ST表/区间最值查询 ---- 模板： https://www.acwing.com/blog/content/
 - AcWing 125 耍杂技的牛：贪心/邻项交换
 - AcWing 126 最大的和：贪心
 - AcWing 127 任务：贪心
+
+
+- AcWing115 给树染色 
+
+树的贪心合并，并查集的变形    
+
+每次找出当前权值最大的非根节点，将其染色顺序排在紧随父节点之后的位置，然后将该点合并进父节点中，更新父节点的权值。直到将所有点都合并进根节点为止。    
+为了方便计算，每次会将两组点合并，将其中一组点接在另外一组点的后面，比如两组点分别是xi和yi,将yi接在xi之后，则yi中每个点所乘的系数都会增加一个相同的偏移量，这个偏移量就是xi中点的个数，假设是k,
+则合并之后，总的权重直接加上 k * Σyi。
+
+```cpp
+struct Node {
+    int p, s, v; //parent nums value
+    double avg;
+};
+```
+	
+- AcWing 116 飞行员兄弟 
+
+构造一个16位的二进制数，二进制数的每一位代表4*4矩阵中的一位，只需要枚举这个16位的二进制数，就可以确定我们的方案。最优解方案，
+
+```Cpp
+//矩阵转int表示状态
+for (int i = 0; i < N; i++) {
+	for (int j = 0; j < N; j++) {
+		for (int k = 0; k < N; k++) change[i][j] += (1 << get(i, k)) + (1 << get(k, j));
+		change[i][j] -= (1 << get(i, j));
+	}
+}
+
+//枚举所有的可能
+for (int i = 0; i < (1 << 16); i++) {
+	for (int j = 0; j < 16; j++) {
+		if(i >> j & 1)
+	}
+}
+```
 
 ### 0x10 基本数据结构
 
