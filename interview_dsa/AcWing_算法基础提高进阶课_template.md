@@ -222,6 +222,17 @@ vector<int> div(vector<int> &A, int b, int &r)
 }
 ```
 
+**vector 比较大小模板**
+
+```cpp
+vector<int> max_vec(vector<int> a, vector<int> b) {
+    if (a.size() > b.size()) return a;
+    if (a.size() < b.size()) return b;
+    if (vector<int>(a.rbegin(), a.rend()) > vector<int>(b.rbegin(), b.rend())) return a;
+    return b;
+}
+```
+
 #### 前缀和与差分 
 
 一维前缀和 —— 模板题 AcWing 795. 前缀和
@@ -838,9 +849,32 @@ ULL get(int l, int r)
 
 ```
 
+**字符串最小表示**
+
+```cpp
+int get_min(char str[])
+{
+    int i = 0, j = 1;
+    while (i < n && j < n)
+    {
+        int k = 0;
+        while (k < n && str[i + k] == str[j + k]) k ++ ;
+        if (k == n) break;
+        if (str[i + k] > str[j + k]) i += k + 1;
+        else j += k + 1;
+        if (i == j) i ++ ;
+    }
+    int res = min(i, j);
+    str[res + n] = 0;
+    return res;
+}
+```
+
 #### KMP 
 
 模板题 AcWing 831. KMP字符串
+
+Next[i]表示模式串P中以i（下标从 1 开始）结尾的真后缀能匹配 P 的前缀的最大长度。
 
 ```cpp
 // s[]是长文本，p[]是模式串，n是s的长度，m是p的长度
@@ -865,8 +899,47 @@ for (int i = 1, j = 0; i <= n; i ++ )
 }
 ```
 
+**计算循环节**
+
+对于某一个字符串S[1 ~ i], 在它众多的next[i]的候选中，如果存在一个next[i],使得i%(i-next[i]) == 0,那么S[1~(i-next[i])]可以为S[1~i]的循环元，而i/(i-next[i])是它的循环次数K。
+
+```cpp
+void get_next()
+{
+    for (int i = 2, j = 0; i <= n; i ++ )
+    {
+        while (j && str[i] != str[j + 1]) j = nxt[j];
+        if (str[i] == str[j + 1]) j ++ ;
+        nxt[i] = j;
+    }
+}
+
+int main()
+{
+    int T = 1;
+    while (scanf("%d", &n), n)
+    {
+        scanf("%s", str + 1);
+
+        get_next();
+
+        printf("Test case #%d\n", T ++ );
+        for (int i = 2; i <= n; i ++ )
+        {
+            int t = i - nxt[i];
+            if (i > t && i % t == 0) printf("%d %d\n", i, i / t);
+        }
+        puts("");
+    }
+
+    return 0;
+}		   
+```
+ 
 
 #### Trie树 
+
+变形10进制、二进制
 
 模板题 AcWing 835. Trie字符串统计
 
@@ -945,6 +1018,8 @@ void up(int u)
 for (int i = n / 2; i; i -- ) down(i);
 ```
 
+**n个最小值问题，礼物问题**
+
 AcWing 146 序列: m个序列的组合的n个最小值问题，礼物问题
 
 ```cpp
@@ -964,8 +1039,9 @@ memcpy(a, c, 4 * n);
 ```
 
 
+**huffman 树模板**
 
-AcWing149 荷马史诗: huffman 树模板
+AcWing149 荷马史诗: 
 
 ```cpp
 //填充0
