@@ -51,9 +51,19 @@ int main() {
 
 ```
 
+
 **AcWing 161 电话列表**
 
 Trie[N][10]    
 Trie模板改进：插入和判断同时进行     
 
+
+**AcWing 162 黑盒子**
+
+对顶堆模板题：大根堆down ---------> <------- 小根堆up ，从左到右数值是递增的   
+
+第k小的数：第i次get，盒子内总数是u[i]的时候，第i小的数。
+每次get操作，大顶堆最多增加一个元素。    
+对比动态中位数：优先加入大根堆down，然后根据数量关系(max_heap.size() > min_heap.size() + 1)和平衡关系(min_heap.top() < max_heap.top())进行调整。   
+相同点：down.top是第i小的数/中位数
 
