@@ -923,3 +923,23 @@ int get_min(char str[])
 }
 ```
 
+**AcWing160 匹配统计**
+
+KMP算法详解：https://www.acwing.com/blog/content/2347/
+
+https://www.acwing.com/solution/content/15841/
+
+KMP + 后缀和   
+
+Next[i]表示模式串P中以i（下标从 1 开始）结尾的真后缀能匹配 P 的前缀的最大长度。
+
+```cpp
+if (a[i] == b[j + 1]) j ++ ;
+// 字符串 A 中，以 i−j+1 为起点的与 B 匹配的长度最小为 j
+```
+
+cnt[x]：存的是满足匹配的前缀长度至少为 x 的后缀数量
+满足匹配的前缀恰好为 x 的答案：匹配的前缀至少为 x 的后缀数量 减去 匹配的前缀至少为 x + 1的后缀数量。
+	
+	
+	
