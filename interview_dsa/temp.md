@@ -419,7 +419,46 @@ bool cmp(int a, int b) {
 **AcWing141 周期**
 
 对于某一个字符串S[1 ~ i], 在它众多的next[i]的候选中，如果存在一个next[i],使得i%(i-next[i]) == 0,那么S[1~(i-next[i])]可以为S[1~i]的循环元，而i/(i-next[i])是它的循环次数K。
-			     
+
+```cpp
+const int N = 1000010;
+
+int n;
+char str[N];
+int nxt[N];
+
+void get_next()
+{
+    for (int i = 2, j = 0; i <= n; i ++ )
+    {
+        while (j && str[i] != str[j + 1]) j = nxt[j];
+        if (str[i] == str[j + 1]) j ++ ;
+        nxt[i] = j;
+    }
+}
+
+int main()
+{
+    int T = 1;
+    while (scanf("%d", &n), n)
+    {
+        scanf("%s", str + 1);
+
+        get_next();
+
+        printf("Test case #%d\n", T ++ );
+        for (int i = 2; i <= n; i ++ )
+        {
+            int t = i - nxt[i];
+            if (i > t && i % t == 0) printf("%d %d\n", i, i / t);
+        }
+        puts("");
+    }
+
+    return 0;
+}		   
+```		   
+		   
 **AcWing 143 最大异或对**
 
 https://www.acwing.com/solution/content/9587/ 
