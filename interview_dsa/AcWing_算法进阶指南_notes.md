@@ -704,40 +704,67 @@ ios::sync_with_stdio(false)详解： https://blog.csdn.net/L1558198727/article/d
 
 计算 C(n,2n)/(N+1)：2n!/(n! * (2n - n)! *(n + 1))	
 	
-- AcWing 131 直方图中最大的矩形：单调栈，模板题。
+- AcWing 131 直方图中最大的矩形    
 
-```C++
-void get(int *last)
-{
-    stack<int> stk;
-    h[0] = -1;
-    stk.push(0);
-    for (int i = 1; i <= n; i ++ )
-    {
-        while (h[stk.top()] >= h[i]) stk.pop();
-        last[i] = stk.top() + 1;
-        stk.push(i);
+哨兵：避免对于边界值的判断   
+直方图最大矩形模板(单调栈)：先判上升/下降  
+
+https://www.acwing.com/solution/content/34591/ 
+
+两个单调上升栈，寻找左右边界   
+
+```cpp
+#include <iostream>
+#include <stack>
+
+using namespace std;
+
+const int N = 100010;
+using LL = long long;
+int h[N], l[N], r[N];
+int n;
+
+LL solve() {
+    stack<int> left;
+    stack<int> right;
+
+    left.emplace(0);
+    h[0] = h[n + 1] = -1; //哨兵
+    //单调上升栈，寻找左右边界
+    for (int i = 1; i <= n; i++) {
+        while (left.size() && h[left.top()] >= h[i]) left.pop();
+        l[i] = left.top();
+        left.emplace(i);
     }
+
+    right.emplace(n + 1);
+    for (int i = n; i >= 1; i--) {
+        while (right.size() && h[right.top()] >= h[i]) right.pop();
+        r[i] = right.top();
+        right.emplace(i);
+    }
+
+    LL ans = 0;
+    for (int i = 1; i <= n; i++) {
+        ans = max(ans, 1LL* h[i] * (r[i] - l[i] - 1));
+    }
+    return ans;
 }
 
-int main()
-{
-    while (cin >> n, n)
-    {
-        for (int i = 1; i <= n; i ++ ) scanf("%d", &h[i]);
-
-        get(l);
-        reverse(h + 1, h + 1 + n);
-        get(r);
-
-        LL res = 0;
-        for (int i = 1, j = n; i <= n; i ++, j -- )
-            res = max(res, (LL)h[i] * (n - l[j] + 1 - r[i] + 1));
-        printf("%lld\n", res);
+int main() {
+    while (cin >> n, n) {
+        for (int i = 1; i <= n; i++) {
+            cin >> h[i];
+        }
+        LL ans = solve();
+        cout << ans << endl;
     }
+
     return 0;
 }
+
 ```
+
 
 #### 0x12 队列
 
@@ -1305,69 +1332,7 @@ else if (c == ']' && stk.size() && str[stk.top()] == '[') stk.pop();
 else if (c == '}' && stk.size() && str[stk.top()] == '{') stk.pop();
 else stk.push(i);
 ```
-		      
-
-- AcWing 131 直方图中最大的矩形    
-
-哨兵：避免对于边界值的判断   
-直方图最大矩形模板(单调栈)：先判上升/下降  
-
-https://www.acwing.com/solution/content/34591/ 
-
-两个单调上升栈，寻找左右边界   
-
-```cpp
-#include <iostream>
-#include <stack>
-
-using namespace std;
-
-const int N = 100010;
-using LL = long long;
-int h[N], l[N], r[N];
-int n;
-
-LL solve() {
-    stack<int> left;
-    stack<int> right;
-
-    left.emplace(0);
-    h[0] = h[n + 1] = -1; //哨兵
-    //单调上升栈，寻找左右边界
-    for (int i = 1; i <= n; i++) {
-        while (left.size() && h[left.top()] >= h[i]) left.pop();
-        l[i] = left.top();
-        left.emplace(i);
-    }
-
-    right.emplace(n + 1);
-    for (int i = n; i >= 1; i--) {
-        while (right.size() && h[right.top()] >= h[i]) right.pop();
-        r[i] = right.top();
-        right.emplace(i);
-    }
-
-    LL ans = 0;
-    for (int i = 1; i <= n; i++) {
-        ans = max(ans, 1LL* h[i] * (r[i] - l[i] - 1));
-    }
-    return ans;
-}
-
-int main() {
-    while (cin >> n, n) {
-        for (int i = 1; i <= n; i++) {
-            cin >> h[i];
-        }
-        LL ans = solve();
-        cout << ans << endl;
-    }
-
-    return 0;
-}
-
-```
-
+		     
 
 - AcWing 152 城市游戏   
 
@@ -1596,6 +1561,88 @@ if (a[i] == b[j + 1]) j ++ ;
 cnt[x]：存的是满足匹配的前缀长度至少为 x 的后缀数量    
 满足匹配的前缀恰好为 x 的答案：匹配的前缀至少为 x 的后缀数量 减去 匹配的前缀至少为 x + 1的后缀数量。
 	
+
+- AcWing159 奶牛矩阵      
+
+n-next[n]就是最小循环节的长度，行的最小循环节*列的最小循环节          
+求行列的循环节  
+    
+https://www.acwing.com/solution/content/114474/  
+
+```cpp
+#include <iostream>
+#include <cstring>
+#include <string>
+
+using namespace std;
+const int N = 10010;
+
+string s[N], st[N];
+int r, c, ne[N], h, w;
+
+int main() {
+    cin >> r >> c;
+    for (int i = 1; i <= r; i++) {
+        string str;
+        cin >> str;
+        s[i] = " " + str;
+        for (int j = 1; j <= c; j++) {
+            st[j] += s[i][j]; //转置
+        }
+    }
+
+    ne[0] = 0;
+    for (int i = 2, j = 0; i <= r; i++) {
+        while (j && s[i] != s[j + 1]) j = ne[j];
+        if (s[i] == s[j + 1]) j++;
+        ne[i] = j;
+    }
+    int width = r - ne[r];
+
+    memset(ne, 0, sizeof(ne[0]));
+    ne[0] = 0;
+    for (int i = 2, j = 0; i <= c; i++) {
+        while (j && st[i] != st[j + 1]) j = ne[j];
+        if (st[i] == st[j + 1]) j++;
+        ne[i] = j;
+    }
+    int height = c - ne[c];
+    cout << width * height << endl;
+    return 0;
+}
+
+```
+
+- AcWing 161 电话列表    
+
+Trie[N][10]    
+Trie模板改进：插入和判断同时进行     
+
+- AcWing 162 黑盒子    
+
+对顶堆模板题：大根堆down ---------> <------- 小根堆up ，从左到右数值是递增的   
+
+第k小的数：第i次get，盒子内总数是u[i]的时候，第i小的数。
+每次get操作，大顶堆最多增加一个元素。    
+对比动态中位数：优先加入大根堆down，然后根据数量关系(max_heap.size() > min_heap.size() + 1)和平衡关系(min_heap.top() < max_heap.top())进行调整。   
+相同点：down.top是第i小的数/中位数
+
+
+- AcWing 163 生日礼物   
+
+https://www.acwing.com/solution/content/3787/
+
+双链表 + 堆 
+
+问题转化：将连续的正数和负数合并，选若干段的问题。      
+压缩正数和负数段，确保相邻的异号。     
+先将所有的正数都选上，和res,如果正数段< M 则输出。否则需要减少的段记为k。  
+减少段数的方法：   
+1 删除一段正数，res -= 这个值。  
+2 将多段正数和连接他们的负数一起选上，减去其中负数段的绝对值。就是合并正数段。  
+
+数据备份模板题：选当前段、选左右段，两种只会出现一种。  
+
 
 	
 
