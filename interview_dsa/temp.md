@@ -63,6 +63,37 @@ https://www.acwing.com/solution/content/32118/
 可行性剪枝： if (cab[i] + cat[now] <= w)  不超过车承重     
 最优性剪枝： if (cnt >= ans)  return          	
 
+
+**AcWing 166 数独**
+
+数独 舞蹈链解法 Dancing links解法：https://www.acwing.com/solution/content/3843/
+位运算 + dfs解法：https://www.acwing.com/solution/content/31873/
+
+打表: 查表法是一种在某些条件下简化算法的办法,通过打表技巧获得一个有序表或常量表。  
+
+位为1表示可选，待填充；为0表示已填充。  
+
+```cpp
+//打表
+for (int i = 0; i < N; i++) {
+	map[1 << i] = i; //打表，快速知道是哪一个数字
+}
+for (int i = 0; i < 1 << N; i++) {
+	int s = 0;
+	for (int j = i; j; j -= lowBit(j)) s++;
+	ones[i] = s; //记录每个状态有多少个1
+}
+
+
+//位运算的映射与反映射
+row[i] = col[i] = (1 << N) - 1;  //初始化为全1
+int t = str[k] - '1'; 
+row[i] -= 1 << t;    //注意第4位对应1 << 3   
+```
+
+优化搜索顺序：dfs优先选一个1的个数最少的，这样的分支数量最少。依次做lowbit操作，选择每个分支。   
+可行性剪枝：if (dfs(cnt - 1)) return true;   
+排除等效冗余：避免重复遍历若干棵覆盖同一状态空间的等效搜索树。   
 		
 
 
