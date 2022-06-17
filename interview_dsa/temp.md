@@ -101,6 +101,43 @@ row[i] -= 1 << t;    //注意第4位对应1 << 3
 		
 
 
+**AcWing167 木棍**
+
+https://www.acwing.com/solution/content/36030/
+
+优化搜索序列:优先选择较长的木棒
+排除等效冗余：
+1 先后加入的木棒具有单调性  
+2 对于当前木棒，如果拼接失败，不能再尝试和他等长的木棒。
+3 第一次尝试拼入木棒就递归失败，那么后面必然失败。
+4 如果最后一个木棒失败，则一定失败。   
+
+截止条件：双阈值，u 组成的木棍数量，cur 已经拼接的长度  
+
+
+```cpp
+bool dfs(int u, int cur, int start) {
+    if (u * length == sum) return true;
+    if (cur == length) return dfs(u + 1, 0, 0);
+
+    for (int i = start; i < n; i++) {
+        if(st[i]) continue;
+        int l = sticks[i];
+        if (cur + l <= length) {
+            st[i] = true;
+            if (dfs(u, cur + l, i + 1)) return true;
+            st[i] = false;
+            if (!cur) return false; //第一次尝试失败，后面也会失败
+            if (cur + l == length) return false; //最后一根失败了，也会失败
+            int j = i;
+            while (j < n && sticks[j] == l) j++; //等长的木棍都会失败，跳过
+            i = j - 1;
+        }
+    }
+    return false;
+}
+```
+
 
 
 			     
