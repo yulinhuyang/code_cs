@@ -138,6 +138,46 @@ bool dfs(int u, int cur, int start) {
 }
 ```
 
+**AcWing 168 生日蛋糕**  
+
+https://www.acwing.com/solution/content/31876/
+
+https://img-blog.csdnimg.cn/20210127003014554.png
+
+总体积n，层数m，表面积S最小
+
+优化搜索顺序(二维,影响性大到小原则)：层间，从下到上;层内，先枚举半径再枚举高(R影响大)，半径由大到小，高度由大到小。   
+第u层： 
+R:  u <= Ru <= min{Ru+1−1 ，(int)sqrt(n - v)}
+H:  u <= Hu <= min{Hu+1−1， (n - v) / r / r)}
+推导：根据表面积和体积关系，推导 S + 2(n−V)/Ru+1 >= Sans 剪枝  
+最优性剪枝：上面(1~u-1) + 下面(u ~m) < res(面积最优解)
+
+
+```cpp
+void dfs(int u, int v, int s) {
+    if (v + minv[u] > n) return;
+    if (s + mins[u] >= ans) return;
+    if (s + 2 * (n - v) / R[u + 1] >= ans) return;
+
+    if (!u) {
+        if (v == n) ans = s;
+        return;
+    }
+    //枚举r ,h取最小u
+    for (int r = min(R[u + 1] - 1, (int)sqrt(n - v)); r >= u; r--) {
+        for (int h = min(H[u + 1] - 1, (n - v) / r / r); h >= u; h--) {
+            int t = 0;
+            if (u == m) t = r * r;
+            R[u] = r;
+            H[u] = h;
+            dfs(u - 1, v + r * r * h, s + 2 * r * h + t);
+        }
+    }
+}
+
+
+```
 
 
 			     
