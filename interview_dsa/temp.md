@@ -180,6 +180,59 @@ void dfs(int u, int v, int s) {
 ```
 
 
+**AcWing 170 加成序列**
+
+迭代加深:在当前深度限制下搜不到答案，就把深度限制增加，重新进行一次搜索。先搜索浅层，再搜索深层。
+     
+https://www.acwing.com/solution/content/6859/   
+
+迭代加深+dfs(双指针+剪枝)
+
+```cpp
+for (int i = u - 1; i >= 0; i -- )
+	for (int j = i; j >= 0; j -- )
+	{
+		int s = path[i] + path[j];
+		if (s > n || s <= path[u - 1] || st[s]) continue;
+		st[s] = true;
+
+		path[u] = s;
+		if (dfs(u + 1, k)) return true;
+	}
+```
+
+
+**AcWing 171 送礼物**
+
+双向搜索：从初态和终态出个各搜索一半的状态，产生两棵深度减半的搜索树，在中间交会、合成最终的答案。 
+
+https://www.acwing.com/solution/content/38250/
+
+dfs1先搜索出前一半礼物(1 ~ N/2 + 2)选出若干，得到 0~W 之间，放入数组A。
+dfs2再从后一半礼物(N/2 + 3 ~ N)中选出一些，达到的重量是t,数组A中二分出来一个 <= W - t 最大的，用两者和更新答案。
+
+```cpp
+void dfs2(int u, int s) {
+    //截止条件
+    if (u == n) {
+        int l = 0, r = cnt - 1;
+        while (l < r) {
+            int mid = l + r + 1 >> 1;
+            if (weights[mid] + (long long )s <= m) l = mid;
+            else r = mid - 1;
+        }
+        if (weights[l] + (long long) s <= m) ans = max(ans, weights[l] + s);
+        return;
+    }
+    //不选
+    dfs2(u + 1, s);
+
+    //选
+    if ((long long) s + g[u] <= m) {
+        dfs2(u + 1, s + g[u]);
+    }
+}
+```
 			     
    
 		   
