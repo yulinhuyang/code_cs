@@ -280,7 +280,65 @@ for (int i = 0; i < m; i++) {
 }
 ```   
 		   
+**AcWing 175 电路维修** 
 
+https://www.acwing.com/solution/content/21775/
+
+区分格子的坐标和角点坐标
+
+点和格子双枚举：左上角，右上角，右下角，左下角  
+
+```cpp
+//对于点的顺时针枚举
+int dx[4] = {-1, -1, 1, 1};
+int dy[4] = {-1, 1, 1, -1};
+
+//对于格子的枚举
+int ix[4] = {-1, -1, 0, 0};
+int iy[4] = {-1, 0, 0, -1};
+
+char cs[] = "\\/\\/";
+```
+
+旋转电线，则从当前的点到想去的点边权是1，否则是0。  
+
+每次从队头取出元素，并进行拓展其他元素时         
+1 若拓展某一元素的边权是0，则将该元素插入到队头。      
+2 若拓展某一元素的边权是1，则将该元素插入到队尾。   
+在边权不同一的情况下，更新其他点的距离并不是最短距离，而出队的点的距离才是最短距离。      
+
+```cpp
+while (q.size())
+{
+	auto t = q.front();
+	q.pop_front();
+
+	int x = t.first, y = t.second;
+	if (st[x][y]) continue;
+	st[x][y] = true;  //出队的点的距离才是最短距离
+
+	for (int i = 0; i < 4; i ++ )
+	{
+		int a = x + dx[i], b = y + dy[i];
+		int j = x + ix[i], k = y + iy[i];
+		if (a >= 0 && a <= n && b >= 0 && b <= m)
+		{
+			int w = 0;
+			if (g[j][k] != cs[i]) w = 1; //对比格子的状态
+			if (d[a][b] > d[x][y] + w)
+			{
+				d[a][b] = d[x][y] + w;
+				if (w) q.push_back({a, b});
+				else q.push_front({a, b});
+			}
+		}
+	}
+}
+
+//点比格子数多，所以是m、n  
+if (d[n][m] == 0x3f3f3f3f) return -1;
+return d[n][m];
+```
 				
 				
 
