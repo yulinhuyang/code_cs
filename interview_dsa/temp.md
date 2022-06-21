@@ -263,7 +263,22 @@ dx[3][4] = {       // x 坐标的偏移量
 };
 ```
 
-   
+**AcWing 173 矩阵距离**
+
+多源BFS
+
+```cpp
+memset(d, -1, sizeof(d));
+queue<PII> q;
+for (int i = 0; i < m; i++) {
+	for (int j = 0; j < n; j++) {
+		if (g[i][j] == '1') {
+			q.push({i, j});
+			d[i][j] = 0;
+		};
+	}
+}
+```   
 		   
 
 				
