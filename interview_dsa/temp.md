@@ -265,7 +265,7 @@ dx[3][4] = {       // x 坐标的偏移量
 
 **AcWing 173 矩阵距离**
 
-多源BFS
+多源BFS 模板题
 
 ```cpp
 memset(d, -1, sizeof(d));
