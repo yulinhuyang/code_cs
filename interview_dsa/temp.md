@@ -369,7 +369,6 @@ https://www.acwing.com/solution/content/16438/
 
 堆优化的dijkstra + 双状态维护
 
-
 重载 < 号，大根堆变成小根堆。         
 维护状态(city,fuel) :城市编号u + 剩余油量c，扩展从两维扩展。  
 
@@ -405,7 +404,7 @@ int dijkstra(int start, int end, int cap)
         if (st[t.u][t.c]) continue;
         st[t.u][t.c] = true;
 		
-		//油箱未满，尝试扩展C  
+	//油箱未满，尝试扩展C  
         if (t.c < cap)
         {
             if (dist[t.u][t.c + 1] > t.d + price[t.u])
@@ -415,7 +414,7 @@ int dijkstra(int start, int end, int cap)
             }
         }
 		
-		//扩展邻边u
+	//扩展邻边u
         for (int i = h[t.u]; ~i; i = ne[i])
         {
             int j = e[i];
