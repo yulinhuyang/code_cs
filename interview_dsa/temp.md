@@ -363,6 +363,76 @@ return d[n][m];
 每个状态被更新(入队)、扩展(出队)多次，最终完成搜索后，记录数组中保存了最小代价。
 				
 				
+**AcWing 176 装满的油箱** 
+
+https://www.acwing.com/solution/content/16438/
+
+堆优化的dijkstra + 双状态维护
+
+
+重载 < 号，大根堆变成小根堆。         
+维护状态(city,fuel) :城市编号u + 剩余油量c，扩展从两维扩展。  
+
+分层图最短路问题,(x,c) --> 扩展 (x,c+1)，边权为px 代表加一单位油需要的花费;扩展邻边
+ 
+```cpp
+int dist[N][C];
+bool st[N][C];
+
+struct Ver
+{
+    int d, u, c;
+    bool operator< (const Ver &W)const
+    {
+        return d > W.d;
+    }
+};
+
+int dijkstra(int start, int end, int cap)
+{
+    memset(dist, 0x3f, sizeof dist);
+    memset(st, false, sizeof st);
+    priority_queue<Ver> heap;
+    heap.push({0, start, 0});
+    dist[start][0] = 0;
+
+    while (heap.size())
+    {
+        auto t = heap.top(); heap.pop();
+
+        if (t.u == end) return t.d;
+
+        if (st[t.u][t.c]) continue;
+        st[t.u][t.c] = true;
+		
+		//油箱未满，尝试扩展C  
+        if (t.c < cap)
+        {
+            if (dist[t.u][t.c + 1] > t.d + price[t.u])
+            {
+                dist[t.u][t.c + 1] = t.d + price[t.u];
+                heap.push({dist[t.u][t.c + 1], t.u, t.c + 1});
+            }
+        }
+		
+		//扩展邻边u
+        for (int i = h[t.u]; ~i; i = ne[i])
+        {
+            int j = e[i];
+            if (t.c >= w[i])
+            {
+                if (dist[j][t.c - w[i]] > t.d)
+                {
+                    dist[j][t.c - w[i]] = t.d;
+                    heap.push({dist[j][t.c - w[i]], j, t.c - w[i]});
+                }
+            }
+        }
+    }
+
+    return -1;
+}
+```
 				
 
 	
