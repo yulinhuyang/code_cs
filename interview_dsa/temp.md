@@ -433,6 +433,73 @@ int dijkstra(int start, int end, int cap)
 }
 ```
 				
+**AcWing177 噩梦**
+  
+https://www.acwing.com/solution/content/16498/   
+
+双向BFS: 普通的求最少步数的双向bfs,需要从起始状态、目标状态分别开始，两边轮流进行，每次扩展一层。当两边各自有一个状态在记录数组
+中发生重复时，说明两个搜索过程相遇了，可以合并得出起点到终点的最少步数。**入队的时候，比较和记录状态**。
+
+```cpp
+while (qb.size() || qg.size())
+{
+	step ++ ;
+	for (int i = 0; i < 3; i ++ )
+		for (int j = 0, len = qb.size(); j < len; j ++ )
+		{
+			auto t = qb.front();
+			qb.pop();
+			int x = t.first, y = t.second;
+			if (!check(x, y, step)) continue;
+			for (int k = 0; k < 4; k ++ )
+			{
+				int a = x + dx[k], b = y + dy[k];
+				if (check(a, b, step))
+				{
+					if (st[a][b] == 2)// st的不同值对应途经状态
+					{
+						return step;
+					}
+					if (!st[a][b])
+					{
+						st[a][b] = 1;
+						qb.push({a, b});
+					}
+				}
+			}
+		}
+
+	for (int i = 0; i < 1; i ++ )
+		for (int j = 0, len = qg.size(); j < len; j ++ )
+		{
+			auto t = qg.front();
+			qg.pop();
+
+			int x = t.first, y = t.second;
+			if (!check(x, y, step)) continue;
+			for (int k = 0; k < 4; k ++ )
+			{
+				int a = x + dx[k], b = y + dy[k];
+				if (check(a, b, step))
+				{
+					if (st[a][b] == 1)
+					{
+						return step;
+					}
+					if (!st[a][b])
+					{
+						st[a][b] = 2;
+						qg.push({a, b});
+					}
+				}
+			}
+		}
+}
+
+```
+
+对比AcWing190 字串变换: 每次每边扩展完整一层
+
 
 	
 
