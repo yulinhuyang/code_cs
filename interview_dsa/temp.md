@@ -501,5 +501,60 @@ while (qb.size() || qg.size())
 对比AcWing190 字串变换: 每次每边扩展完整一层
 
 
+
+**AcWing 183  靶形数独**  
+
+
+数独的位运算模板
+ 
+```cpp
+inline void draw(int x, int y, int t)
+{
+    int s = 1;
+    if (t > 0) g[x][y] = t;
+    else
+    {
+        s = -1;
+        t = -t;
+        g[x][y] = 0;
+    }
+
+    t--;
+    row[x] -= (1 << t) * s;
+    col[y] -= (1 << t) * s;
+    cell[x / 3][y / 3] -= (1 << t) * s;
+}
+
+
+void dfs(int cnt, int score) {
+    if (!cnt) {
+        ans = max(ans, score);
+        return;
+    }
+	
+    //枚举最少选择的分支
+    int minv = 10;
+    int x, y;
+    for (int i = 0; i < N; i++) {
+        for (int j = 0; j < N; j++) {
+            if (!g[i][j]) {
+                int t = ones[get(i, j)];
+                if (t < minv) {
+                    x = i, y = j;
+                    minv = ones[get(i, j)];
+                }
+            }
+        }
+    }
+	
+	//依次做lowbit操作，选择每个分支
+    for (int j = get(x, y); j; j -= lowbit(j)) {
+        int t = map[lowbit(j)] + 1;
+        draw(x, y, t);
+        dfs(cnt - 1, score + get_score(x, y, t));
+        draw(x, y, -t);
+    }
+}
+```
 	
 
