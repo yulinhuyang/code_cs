@@ -557,4 +557,57 @@ void dfs(int cnt, int score) {
 }
 ```
 	
+**AcWing 184 虫食算**
 
+https://www.acwing.com/solution/content/83532/   
+
+N个字母并不一定顺序地代表0到N−1。   
+q[u]来定位字母，path[q[u]]来得到字母的赋值结果,枚举u ；          
+path置为-1为判断字母是否被赋值做铺垫；    
+
+提前剪枝：直接用a+b>=n包含了a+b+0>=n和a+b+1>=n两种情况   
+
+```cpp
+bool check()
+{
+    for (int i = n - 1, t = 0; i >= 0; i -- )
+    {
+        int a = e[0][i] - 'A', b = e[1][i] - 'A', c = e[2][i] - 'A';    //转化 
+        if (path[a] != -1 && path[b] != -1 && path[c] != -1)    //剪枝：判断一列的三个字母是否都确定 
+        {
+            a = path[a], b = path[b], c = path[c];
+            if (t != -1)    //上一列字母全部确定 
+            {
+                if ((a + b + t) % n != c) return false;
+                if (!i && a + b + t >= n) return false;     //第一列特判 
+                t = (a + b + t) / n; 
+            }
+            else    //上一列字母中有没有确定的
+            {
+                if ((a + b + 0) % n != c && (a + b + 1) % n != c) return false;     //剪枝：若进位是0或1的两种情况取膜后均无法得到c则返回false 
+                if (!i && a + b >= n) return false;     //第一列特判 
+            }
+        }
+        else t = -1;
+    }
+
+    return true;    //历经百般磨难都没有false说明满足题意，成功返回true 
+}
+
+bool dfs(int u)
+{
+    if (u == n) return true;     
+
+    for (int i = 0; i < n; i ++ )
+        if (!st[i])
+        {
+            st[i] = true;   //某字母出现过 
+            path[q[u]] = i;     //选择编号q[u](某字母)可能的数字i
+            if (check() && dfs(u + 1)) return true;   //每次确定一个字母都进行check判断 
+            st[i] = false;      //回溯 
+            path[q[u]] = -1;
+        }
+
+    return false;   //已经判断过该组合无法满足题意，因此false 
+}
+```
