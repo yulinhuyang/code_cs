@@ -611,3 +611,48 @@ bool dfs(int u)
     return false;   //已经判断过该组合无法满足题意，因此false 
 }
 ```
+
+
+**AcWing 186 巴士**
+
+https://www.acwing.com/solution/content/4221/
+
+剪枝策略：       
+1 枚举组合数，为避免重复在DFS时传入当前枚举的起点。          
+2 将所有等差数列按长度排序，优先枚举长度较长的等差数列，这样搜索树的前几层分支少，可以快速回溯。    
+3 因为2，当前路线覆盖的点数是最多的，如果当前路线覆盖的点数*剩余可选的路径点数 + 当前已经覆盖的点数 < 总点数，则当前方案一定非法，直接回溯即可。      
+
+```cpp
+bool is_route(int a, int d) {
+    for (int i = a; i < 60; i += d) {
+        if (!bus[i]) {
+            return false;
+        }
+    }
+    return true;
+}
+//depth尝试线路数,u当前线路号，sum 当前累积点数，start可行路线
+bool dfs(int depth, int u, int sum, int start) {
+    if (depth == u) return sum == n;
+    if (routes[start].first * (depth - u) + sum < n) return false;
+
+    for (int i = start; i < routes.size(); i++) {
+        auto r = routes[i];
+        int a = r.second.first, d = r.second.second;
+        if (!is_route(a, d)) continue;
+        for (int j = a; j < 60; j += d) bus[j]--;
+        if (dfs(depth, u + 1, sum + r.first, i)) return true;
+        for (int j = a; j < 60; j += d) bus[j]++;
+    }
+    return false;
+}
+
+for (int i = 0; i < 60; i++) {
+	for (int j = i + 1; i + j < 60; j++) {
+		if (is_route(i, j)) {
+			routes.push_back({(59 - i) / j + 1, {i, j}});//点数、起点、方差
+		}
+	}
+}
+```
+
