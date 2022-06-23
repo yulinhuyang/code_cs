@@ -656,3 +656,67 @@ for (int i = 0; i < 60; i++) {
 }
 ```
 
+**AcWing 187 导弹防御系统**
+
+https://www.acwing.com/solution/content/4258/
+
+dfs(LIS) + 迭代加深  
+
+从前往后枚举每颗导弹属于某个上升子序列，还是下降子序列；    
+如果属于上升子序列，则枚举属于哪个上升子序列（包括新开一个上升子序列）；如果属于下降子序列，可以类似处理。  
+类似最长上升子序列问题 LIS II，分别记录每个上升子序列的末尾数up[]、和下降子序列的末尾数down[]，可以快速判断当前数接在某个序列的后面。  
+
+贪心：当前数接在最大的数后面，一定不会比接在其他数列后面更差。这样up和down是单调的。  
+
+
+```cpp
+int h[N];
+int down[N], up[N]; //因为贪心的性质，up和down是单调的
+int n;
+
+//su 上升序列数量， sd 下降序列数量
+//up需要从1开始，保持数量和索引的一致
+bool dfs(int depth, int u, int su, int sd) {
+    if (su + sd > depth) return false;
+    if (u == n) return true;
+
+    //枚举放在上升子序列后面
+    bool flag = false;
+    for (int i = 1; i <= su; i++) {
+        if (up[i] < h[u]) {
+            int t = up[i];
+            up[i] = h[u];
+            if (dfs(depth, u + 1, su, sd)) return true;
+
+            up[i] = t;
+            flag = true;
+            break;
+        }
+    }
+    //新开一个
+    if (!flag) {
+        up[su + 1] = h[u];
+        if (dfs(depth, u + 1, su + 1, sd)) return true;
+    }
+
+    //枚举放在下降子序列后面
+    flag = false;
+    for (int i = 1; i <= sd; i++) {
+        if (down[i] > h[u]) {
+            int t = down[i];
+            down[i] = h[u];
+            if (dfs(depth, u + 1, su, sd)) return true;
+            down[i] = t;
+            flag = true;
+            break;
+        }
+    }
+    if (!flag) {
+        down[sd + 1] = h[u];
+        if (dfs(depth, u + 1, su, sd + 1)) return true;
+    }
+
+    return false;
+}
+```
+
