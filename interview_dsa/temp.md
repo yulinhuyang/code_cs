@@ -720,3 +720,24 @@ bool dfs(int depth, int u, int su, int sd) {
 }
 ```
 
+**AcWing188 武士风度的牛**
+
+BFS的日字型遍历    
+
+```cpp
+int dx[8] = {-2, -1, 1, 2, 2, 1, -1, -2};
+int dy[8] = { 1, 2, 2, 1, -1, -2, -2,-1};
+```
+
+**AcWing189 乳草的入侵**
+
+https://www.acwing.com/solution/content/112028/  
+
+8连通BFS遍历   
+起点直角坐标转换数组坐标：平移到左下角(x = n - y)，交换x,y, 给出坐标(1,1)开始，所以 x = n + 1 - y    
+```cpp
+for (int x = t.first - 1; x <= t.first + 1; x++) {
+	for (int y = t.second - 1; y <= t.second + 1; y++) {
+	
+	}
+```
