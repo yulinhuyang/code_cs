@@ -794,3 +794,22 @@ int bfs() {
 }
 ```
 
+**AcWing191 天气预报**  
+
+https://www.acwing.com/solution/content/15341/   
+
+bfs走重复路，可以通过bool或者通过最短路径的时候更改数组的值来实现。      
+四个角下雨天是相邻三个格子下雨天的子集，每个格子7天内都下过雨当且仅当四个角七天内下过雨。 
+
+```cpp
+int state[N][4][4];
+int n;
+//bfs 防止走重复路，可以通过bool 自己
+//天、坐标、四个角没有下雨的天数
+//最多不能超过7天不下雨
+bool st[N][3][3][7][7][7][7];
+
+struct Node{
+    int day,x,y,s0,s1,s2,s3;
+};
+```
