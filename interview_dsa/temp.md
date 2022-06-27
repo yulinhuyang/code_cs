@@ -741,3 +741,56 @@ for (int x = t.first - 1; x <= t.first + 1; x++) {
 	
 	}
 ```
+
+**AcWing190 字串变换**
+
+https://www.acwing.com/solution/content/5434/  
+
+双向BFS模板题      
+扩展方式：分别枚举在原字符串中使用替换规则的起点，和所使用的的替换规则。  
+
+```cpp
+int extend(queue<string> &q, unordered_map<string, int> &da, unordered_map<string, int> &db, string a[N], string b[N]) {
+    //出队同一层的元素的判断方法
+    int d = da[q.front()];
+    while (q.size() && da[q.front()] == d) {
+        auto t = q.front();
+        q.pop();
+
+        //遍历变换规则
+        for (int i = 0; i < n; i++) {
+            for (int j = 0; j < t.size(); j++) {
+                if (t.substr(j, a[i].size()) == a[i]) {
+                    string ne = t.substr(0, j) + b[i] + t.substr(j + a[i].size(), t.size());
+                    if (db.count(ne)) return da[t] + db[ne] + 1;
+                    if (da.count(ne)) continue;
+                    da[ne] = da[t] + 1;
+                    q.push(ne);
+                }
+            }
+        }
+    }
+    return 11;
+}
+
+int bfs() {
+    if (A == B) return 0;
+    queue<string> qa, qb;
+    unordered_map<string, int> da, db;
+    qa.push(A);
+    qb.push(B);
+    da[A] = db[B] = 0;
+
+    int step = 0;
+    while (qa.size() && qb.size()) {
+        int t = 0;
+        if (qa.size() < qb.size()) t = extend(qa, da, db, a, b);
+        else t = extend(qb, db, da, b, a);
+        if (t <= 10) return t;
+        if (++step == 10) return -1;
+    }
+
+    return -1;
+}
+```
+
