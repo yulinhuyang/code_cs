@@ -813,3 +813,53 @@ struct Node{
     int day,x,y,s0,s1,s2,s3;
 };
 ```
+
+
+**AcWing237 程序自动分析**
+
+https://www.acwing.com/solution/content/28513/     
+可视化理解：https://www.acwing.com/solution/content/33345/   
+
+unordered_map 离散化
+
+并差集模板题：对立关系
+
+```cpp
+int fa[N * 2];  
+unordered_map<int, int> H; //离散化   
+vector<PII> eqs, uneqs;    
+
+//离散化
+int mapping(int x) {
+    if (H.count(x)) return H[x];
+    return H[x] = cnt++;
+}
+```  
+
+**AcWing238 银河英雄传说 **
+
+https://www.acwing.com/solution/content/11000/
+
+树形图理解
+p[x]存储每个点的祖宗节点  
+d[x](x与p[x]之间边的权值，到祖宗节点的距离) + size[p[x]](表示祖宗节点所在集合中的点的数量)   
+
+```cpp
+int find(int x) {
+    if (p[x] != x) {
+        int root = find(p[x]); //tmp
+        d[x] += d[p[x]];       //add
+        p[x] = root;   
+    }
+    return p[x];
+}
+
+//union
+x = find(x), y = find(y); //tmp
+d[x] = size[y];           //add d 
+size[y] += size[x];		  //add size 
+p[x] = y;                 //Assign 
+```
+
+
+
