@@ -8,3 +8,9 @@ https://www.acwing.com/solution/content/29308/
 数组d的真正含义以及find()函数调用过程：https://www.acwing.com/solution/content/15938/
 
 https://www.acwing.com/solution/content/1357/
+
+
+**AcWing 257 关押罪犯**
+
+https://www.acwing.com/solution/content/3042/  
+
