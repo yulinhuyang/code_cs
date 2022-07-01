@@ -510,6 +510,8 @@ find . -name “*” |xargs cat|wc -l
 find . -name “*” |xargs cat|grep -v ^$|wc -l  	
 	
 	
-
+### cd 命令
+	
+cd -    回到上一次的目录
 	
 	
