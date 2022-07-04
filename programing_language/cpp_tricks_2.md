@@ -26,3 +26,5 @@ int main() {
     cout << d.use_count() << endl; // 3 
 }
 ```
+
+size_t 反向循环，不能i >= 0,int的可以
