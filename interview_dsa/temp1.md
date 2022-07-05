@@ -292,3 +292,73 @@ int main()
 }
 
 ```
+
+
+
+**AcWing 239 奇偶游戏**
+
+https://www.acwing.com/solution/content/29308/
+
+S[L~R]偶数个1，等价于 L-1 ~ R奇偶性相同     
+X拆分成 Xodd(sum[x]是奇数) 和 Xeven(sum[x]是偶数)     
+ans = 0: 合并 Xodd和Yodd，Xeven和Yeven       
+ans = 1: 合并 Xodd和Yeven，Xeven和Yodd 
+
+
+扩展域    
+
+```cpp
+a = get(a - 1), b = get(b);
+if (type == "even") {
+	if (find(a + Base) == find(b)) {
+		res = i - 1;
+		break;
+	}
+	p[find(a)] = find(b);
+	p[find(a + Base)] = find(b + Base);
+} else {
+	if (find(a) == find(b)) {
+		res = i - 1;
+		break;
+	}
+	p[find(a + Base)] = find(b);
+	p[find(a)] = find(b + Base);
+}
+```
+
+
+**AcWing240 食物链**
+
+https://www.acwing.com/solution/content/15938/
+
+https://www.acwing.com/solution/content/1357/
+
+边带权 
+
+d[i]:i到父节点的距离，不是根节点的距离。 
+路径压缩：查询某个节点i时，如果i的父节点不为根节点的话，就会进行递归调用，将i节点沿途路径上所有节点均指向父节点。
+路径压缩前，每段权值是1，递归find压缩后，每段都指向父节点，权值根据关系不同而不同。
+ 
+x, y是同类的话的d[x]与d[y]模三同余（路径压缩后根节点就是父节点）  
+x吃y的话的d[x] - 1与d[y]模三同余   
+y吃x的话的d[x] + 1与d[y]模三同余   
+
+向量理解：d[px] = d[y] + d[x->y] - d[x]
+
+```cpp
+int px = find(x);
+int py = find(y);
+if (t == 1) {
+	if (px == py && (d[x] - d[y]) % 3) res++; //自己
+	else if (px != py) {
+		p[px] = py; //合并父节点
+		d[px] = d[y] - d[x];
+	}
+} else {
+	if (px == py && (d[x] - 1 - d[y]) % 3) res++; //自己
+	else if (px != py) {
+		p[px] = py; //合并父节点
+		d[px] = d[y] - d[x] + 1;
+	}
+}
+```
