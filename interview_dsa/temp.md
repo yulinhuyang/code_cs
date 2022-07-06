@@ -109,4 +109,29 @@ f[i][j] 的值是集合中所有方案的最小值；
     }
 ```
 
+**AcWing 274 移动服务 **
 
+https://www.acwing.com/solution/content/4957/   
+
+求DP先确定阶段，如果阶段不足以表示一个状态，把附加信息作为状态的维度。  
+确定DP状态时，选择最小的能够覆盖整个状态空间的维度集合。
+
+f[i][x][y]表示已经处理完前i个请求，且三个服务员处于p[i],x,y的所有方案的集合。
+f[i][x][y]的值是集合中所有方案的花费的最小值。
+
+三维状态的DP
+
+```cpp
+for (int i = 0; i < m; i++) {
+	for (int x = 1; x <= n; x++) {
+		for (int y = 1; y <= n; y++) {
+			int z = p[i], v = f[i][x][y];
+			if (x == y || y == z || x == z) continue;
+			int u = p[i + 1];
+			f[i + 1][x][y] = min(f[i + 1][x][y], v + w[z][u]);
+			f[i + 1][x][z] = min(f[i + 1][x][z], v + w[y][u]);
+			f[i + 1][z][y] = min(f[i + 1][z][y], v + w[x][u]);
+		}
+	}
+}
+```
