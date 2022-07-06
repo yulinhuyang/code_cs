@@ -82,5 +82,31 @@ for (int i = 1; i <= n; i++) {
 }
 ```
 
+- AcWing 273 分级 
+
+https://www.acwing.com/solution/content/4956/   
+
+非严格单调，贪心 + 序列型DP, 前缀和思想优化掉一维循环  
+    
+一定存在一组最优解，使得每个Bi都是原序列中的某个值     
+
+f[i][j] 代表所有给A[1]~ A[i]分配好了值且最后一个B[i] = A'[j]的方案的集合；      
+f[i][j] 的值是集合中所有方案的最小值；    
+
+```cpp
+    for (int i = 1; i <= n; i++) b[i] = a[i];
+    sort(b + 1, b + 1 + n);
+    for (int i = 1; i <= n; i++) {
+        int minv = INF;
+        for (int j = 1; j <= n; j++) {
+            minv = min(minv, f[i - 1][j]);
+            f[i][j] = minv + abs(a[i] - b[j]);
+        }
+    }
+    int res = INF;
+    for (int i = 1; i <= n; i++) {
+        res = min(res, f[n][i]);
+    }
+```
 
 
