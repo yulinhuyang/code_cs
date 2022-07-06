@@ -37,3 +37,50 @@ for (int a = 0; a <= s[0]; a++) {
 	}
 }
 ```
+
+- AcWing 272 最长公共上升子序列 FCIS
+
+https://www.acwing.com/solution/content/4955/
+
+f[i][j]代表所有a[1 ~ i]和b[1 ~ j]中以b[j]结尾的公共上升子序列的集合；   
+f[i][j]的值等于该集合的子序列中长度的最大值；    
+
+划分：   
+不包含a[i]的子集，最大值是f[i - 1][j]      
+包含a[i]的子集，将这个子集继续划分，依据是子序列的倒数第二个元素在b[]中是哪个数    
+
+
+
+```cpp
+//基础版
+for (int i = 1; i <= n; i++) {
+	for (int j = 1; j <= n; j++) {
+		f[i][j] = f[i - 1][j];
+		if (a[i] == b[j]) {
+			int maxV = 1;
+			for (int k = 1; k < j; k++) {
+				if (a[i] > b[k]) {
+					maxV = max(maxV, f[i - 1][k] + 1);
+				}
+			}
+			f[i][j] = max(f[i][j], maxV);
+		}
+	}
+}
+```
+
+
+```cpp
+//循环优化版
+for (int i = 1; i <= n; i++) {
+	int maxv = 1;
+	for (int j = 1; j <= n; j++) {
+		f[i][j] = f[i - 1][j];
+		if (a[i] == b[j]) f[i][j] = max(f[i][j], maxv);
+		if (a[i] > b[j]) maxv = max(maxv, f[i - 1][j] + 1);
+	}
+}
+```
+
+
+
