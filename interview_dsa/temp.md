@@ -169,4 +169,56 @@ for (int k = 2; k <= n + m; k++) {
 }
 ```
 
+- AcWing 277 饼干
+
+https://www.acwing.com/solution/content/5240/    
+
+贪心(邻项交换) + DP + 方案倒推推  
+
+一般的DP问题都是在有限集合内求最值或求个数，极个别的DP问题会在无限集合内求最值，此时先将无限集想办法缩小到有限集。
+等效处理：如果第i个孩子获取的饼干数大于1，等价于分配j-i个饼干给前i个孩子，饼干数大小顺序相对不变。
+
+状态表示：f[i][j] 所以将j个饼干分配给前i个小朋友，且分配的饼干数单调下降的分配方案的怨气总和最小值。  
+状态计算：划分依据，最后有几个小朋友也都分配1个饼干。   
+f[i-k][j-k] + (s[i] - s[i-k])*(i - k)   
+
+```cpp
+
+sort(g + 1, g + 1 + n);
+reverse(g + 1, g + 1 + n);
+for (int i = 1; i <= n; i++) s[i] = s[i - 1] + g[i].first; //前缀和
+
+memset(f,0x3f3f, sizeof(f));
+f[0][0] = 0;
+for (int i = 1; i <= n; i++) {
+	for (int j = 1; j <= m; j++) {
+		if (j >= i) f[i][j] = f[i][j - i];     //糖比人多，每人少分一块，不影响怨气值
+		for (int k = 1; k <= i && k <= j; k++) {
+			f[i][j] = min(f[i][j], f[i - k][j - k] + (s[i] - s[i - k]) * (i - k));
+		}
+	}
+}
+
+cout << f[n][m] << endl;
+int i = n, j = m;
+int h = 0;
+while (i && j) {
+	if (j >= i && f[i][j] == f[i][j - i]) {
+		j -= i;
+		h++;   //等效处理的还原回来
+	} else {
+		for (int k = 1; k <= i && k <= j; k++) {
+			if (f[i][j] == f[i - k][j - k] + (s[i] - s[i - k]) * (i - k)) {
+				//i-k ~ i的每个人都分配一块
+				for (int u = i; u > i - k; u--) {
+					ans[g[u].second] = 1 + h;
+				}
+				i -= k;
+				j -= k;
+				break;
+			}
+		}
+	}
+}
+```
 
