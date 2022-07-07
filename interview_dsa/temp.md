@@ -109,7 +109,7 @@ f[i][j] 的值是集合中所有方案的最小值；
     }
 ```
 
-**AcWing 274 移动服务 **
+- AcWing 274 移动服务   
 
 https://www.acwing.com/solution/content/4957/   
 
@@ -135,3 +135,38 @@ for (int i = 0; i < m; i++) {
 	}
 }
 ```
+
+- AcWing 275  传纸条 
+
+https://www.acwing.com/solution/content/3954/ 
+
+寻找两条路径等效：交集中的格子一定在每条路径的相同步数处，让两个人同时从起点出发，每次同时走一步，这样路径中相交的格子一定在同一步内。
+
+状态表示：f[k, i, j] 表示两个人同时走了k步，第一个人在 (i, k - i) 处，第二个人在 (j, k - j)处的所有走法的最大分值。    
+状态计算：按照最后一步两个人的走法分成四种情况：
+f[k - 1, i, j] + score(k, i, j)    
+f[k - 1, i, j - 1] + score(k, i, j)    
+f[k - 1, i - 1, j] + score(k, i, j)    
+f[k - 1, i - 1, j - 1] + score(k, i, j)     
+两人不能走到相同格子，则i和j不能相等    
+
+```cpp
+for (int k = 2; k <= n + m; k++) {
+	for (int i = max(1, k - m); i < k && i <= n; i++) {
+		for (int j = max(1, k - m); j < k && j <= n; j++) {
+			//循环四个各种
+			for (int a = 0; a <= 1; a++) {
+				for (int b = 0; b <= 1; b++) {
+					int t = g[i][k - i];
+					if (i != j || k == 2 || k == n + m) {
+						t += g[j][k - j];
+						f[k][i][j] = max(f[k][i][j], f[k - 1][i - a][j - b] + t);
+					}
+				}
+			}
+		}
+	}
+}
+```
+
+
