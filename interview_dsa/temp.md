@@ -222,3 +222,33 @@ while (i && j) {
 }
 ```
 
+
+
+- AcWing278 数字组合
+
+https://www.acwing.com/solution/content/5241/  
+
+0-1背包求方案数
+
+```cpp
+f[0] = 1;
+for (int i = 0; i < n; i++) {
+	for (int j = m; j >= a[i]; j--) {
+		f[j] += f[j - a[i]];
+	}
+}
+```
+
+- AcWing279 自然数拆分
+
+完全背包求方案数   
+
+```cpp
+f[0] = 1;
+for (int i = 1; i < n; i++) {
+	for (int j = i; j <= n; j++) {
+		f[j] = (f[j] + f[j - i]) % MOD;
+	}
+}
+```
+
