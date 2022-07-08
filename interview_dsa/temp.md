@@ -298,3 +298,58 @@ while (j) {
 	}
 }
 ```
+
+
+- AcWing281 硬币
+
+https://www.acwing.com/solution/content/11075/  
+
+多重背包 + 滑动窗口，求可行性
+
+```cpp
+//多重背包模板更正
+//三循环一维
+for (int i = 1; i <= n; i ++ ) //循环各组
+    for (int j = m; j >= 0; j -- )
+        for (int k = 0; k <= s[i] && v[i]*k <= j; k ++ ) //组内循环 
+            f[j] = max(f[j], f[j - v[i]*k] + w[i]*k);
+```
+
+多重背包模板会超时，需要进行优化(空间换时间)才行 
+```cpp
+//超时版
+memset(f, false, sizeof(f));
+f[0] = 1;
+for (int i = 1; i <= n; i++) {
+	for (int j = m; j >= 0; j--) {
+		for (int k = 0; k <= s[i] && v[i] * k <= j; k++) {
+			if (!f[j] && f[j - v[i] * k]) {
+				f[j] = 1;
+			}
+		}
+	}
+}
+```
+
+关注可行性，不是最优性     
+设used[j]表示在第i阶段下将f[j]变为true至少需要使用多少枚第i种硬币，去掉一重循环。
+
+1 前i-1种硬币就能拼成面值j，即在第i阶段开始前，f[j]已经成为true。尽量走这种情况
+2 使用了第i种硬币，即在第i阶段的递推过程中，发现f[j-a[i]]为true，从而使用一个i硬币，使f[j]变为true
+
+```cpp
+//空间换时间版
+for (int i = 1; i <= n; i++) {
+	memset(used,0, sizeof(used));
+	for(int j = v[i];j <= m;j++){
+		if(!f[j] && f[j - v[i]] && used[j - v[i]] < s[i])  
+		{ 
+			f[j] = 1;
+			used[j] = used[j - v[i]] + 1;
+		}
+	}
+}
+```
+
+
+
