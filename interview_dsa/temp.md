@@ -386,3 +386,40 @@ for (int len = 2; len <= n; len++) {
 }	
 ```
 
+
+**AcWing283 多边形**   
+
+https://www.acwing.com/solution/content/1119/  
+
+区间DP + 状态机(min、max) + 拆环成链
+   
+任意选择一个位置断开，复制形成两倍长度的链     
+
+```cpp
+for (int len = 1; len <= n * 2; len++) {
+	for (int l = 1; l + len - 1 <= n * 2; l++) {
+		int r = l + len - 1;
+		if (len == 1) {
+			f[l][r] = g[l][r] = w[l];
+		} else {
+			f[l][r] = -INF;
+			g[l][r] = INF;
+			for (int k = l; k < r; k++) {
+				int minl = g[l][k], minr = g[k + 1][r], maxl = f[l][k], maxr = f[k + 1][r];
+				if (c[k + 1] == 't') {
+					f[l][r] = max(f[l][r], maxl + maxr);
+					g[l][r] = min(g[l][r], minl + minr);
+				} else {
+					int x1 = minl * minr, x2 = minl * maxr, x3 = maxl * maxr, x4 = maxl * minr;
+					f[l][r] = max(f[l][r], max(max(x1,x2),max(x3,x4)));
+					g[l][r] = min(g[l][r], min(min(x1,x2),min(x3,x4)));
+				}
+			}
+		}
+	}
+}
+int res = 0;
+for (int i = 1; i <= n; i++) {
+	res = max(res, f[i][i + n - 1]);
+}
+```
