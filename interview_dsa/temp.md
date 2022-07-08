@@ -252,3 +252,49 @@ for (int i = 1; i < n; i++) {
 }
 ```
 
+- AcWing280 陪审团
+
+https://www.acwing.com/solution/content/11079/   
+
+二维体积的0-1背包问题  
+F[j,d,p] = F[j,d,p] or F[j - 1,d - a[i],p - b[i]]  
+f[i][j][k]:前i个人中选j个人,且总差为k时候的总分
+
+不选，则f[i][j][k]=f[i-1][j][k]
+选，f[i][j][k]=f[i-1][j-1][k-(p[i]-d[i])]+d[i]+p[i]
+
+puts()函数用来向标准输出设备（屏幕）写字符串并换行   
+
+```cpp
+memset(f,-0x3f, sizeof(f));
+f[0][0][base] = 0;
+for (int i = 1; i <= n; i++) {
+	for (int j = 0; j <= m; j++) {
+		for (int k = 0; k < M; k++) {
+			f[i][j][k] = f[i - 1][j][k]; //不选i
+			int t = k - (p[i] - d[i]);
+			if (t < 0 || t >= M) continue;
+			if (j < 1) continue;
+			f[i][j][k] = max(f[i][j][k], f[i - 1][j - 1][t] + p[i] + d[i]); //选i
+		}
+	}
+}
+int v = 0;
+while (f[n][m][base + v] < 0 && f[n][m][base - v] < 0) v++;
+if (f[n][m][base - v] > f[n][m][base + v]) {
+	v = base - v;
+} else {
+	v = base + v;
+}
+
+//回溯求DP方案
+int cnt = 0, i = n, j = m, k = v;
+while (j) {
+	if (f[i][j][k] == f[i - 1][j][k]) i--;
+	else {
+		ans[cnt++] = i;
+		k -= (p[i] - d[i]);
+		i--, j--;
+	}
+}
+```
