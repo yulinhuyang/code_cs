@@ -351,5 +351,39 @@ for (int i = 1; i <= n; i++) {
 }
 ```
 
+- AcWing 282 石子合并  
 
+https://www.acwing.com/solution/content/13945/   
+
+区间DP模板题
+
+```cpp
+//区间DP
+//模板1  
+for (int len = 2; len <= n; len ++ )         //枚举长度 
+    for (int l = 1; l + len - 1 <= n; l ++ ) //枚举起点
+    {
+        int r = l + len - 1;
+        f[l][r] = INF;
+        for (int k = l; k < r; k ++ )        //枚举分割点
+            f[l][r] = min(f[l][r], f[l][k] + f[k + 1][r] + s[r] - s[l - 1]);
+    }
+	
+
+//模板2	
+memset(f, 0x3f3f3f, sizeof(f));
+for(int i = 0;i <= n;i++){
+	f[i][i] = 0;
+}
+
+for (int len = 2; len <= n; len++) {
+	for (int l = 1; l + len - 1 <= n; l++) {
+		int r = l + len - 1;
+		f[l][r] = 0x3f3f3f;
+		for (int k = l; k < r; k++) {
+			f[l][r] = min(f[l][r], f[l][k] + f[k + 1][r] + s[r] - s[l - 1]);
+		}
+	}
+}	
+```
 
