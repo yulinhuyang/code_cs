@@ -423,3 +423,44 @@ for (int i = 1; i <= n; i++) {
 	res = max(res, f[i][i + n - 1]);
 }
 ```
+
+- AcWing 284 金字塔
+
+https://www.acwing.com/solution/content/10533/
+
+区间DP + 记忆化搜索 / 区间DP
+
+f[l][r]表示s[l][r]对应多少种可能的金字塔结构(树形结构)      
+方案计数类的DP问题，一个状态的各个决策之间满足加法原理，而每个决策划分的几个子状态之间满足乘法原理。
+
+```cpp
+//记忆化搜索lyd解法
+int solve(int l, int r){
+	if(l == r) return 1;
+	if(l > r) return 0;
+	if(f[l][r] != -1) return f[l][r];
+	f[l][r] = 0;
+	for(int k = l + 2;k <= r;++k)      //枚举第一棵子树在s中划分的结束位置
+		if(s[k] == s[l])
+			f[l][r] = (f[l][r] + (ll)solve(l+1, k-1)*solve(k, r)) % mod;
+	return f[l][r];
+}
+```
+
+```cpp
+//yxc解法
+for (int len = 1; len <= n; len += 2) {
+	for (int l = 1; l + len - 1 <= n; l++) {
+		int r = l + len - 1;
+		if(len == 1) f[l][r] = 1;
+		else if(s[l] == s[r]){
+		   for (int k = l; k < r; k += 2) {
+				if(s[k] == s[r]){
+					f[l][r] = (f[l][r] + (long long) f[l][k] * f[k + 1][r - 1]) % MOD;
+				}
+			}
+		}
+	}
+}
+```
+
