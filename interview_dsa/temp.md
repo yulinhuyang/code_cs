@@ -464,3 +464,81 @@ for (int len = 1; len <= n; len += 2) {
 }
 ```
 
+- AcWing 285 没有上司的舞会
+
+树形DP：dfs + 状态机
+
+树形DP模板更新
+
+DP的阶段：一般以节点从深到浅(子树从小的到大)的顺序作为DP的阶段
+DP的状态计算：第一维是节点编号(代表该节点为根的子树),第二位是状态机的状态;递归的方式实现树形DP,先递归在它的每个子节点上进行DP,回溯时，从子节点向节点x进行状态转移。  
+
+```cpp
+void add(int a,int b){
+    e[idx] = b, ne[idx] = h[a], h[a] = idx++;
+}
+
+void dfs(int u){
+    f[u][1] = w[u];
+    for (int i = h[u]; ~i; i = ne[i]) {
+        int j = e[i];
+        dfs(j);
+        f[u][0] += max(f[j][0], f[j][1]);
+        f[u][1] += f[j][0];
+    }
+}
+
+int main() {
+    cin >> n;
+    for (int i = 1; i <= n; i++) {
+        cin >> w[i];
+    }
+    memset(h,-1,sizeof(h));
+    for (int i = 0; i < n - 1; i++) {
+        int a, b;
+        cin >> a >> b;
+        add(b, a);
+        st[a] = true;
+    }
+
+    //寻找root
+    int root = 1;
+    while (st[root]) root++;
+
+    //dfs从根开始
+    dfs(root);
+
+    cout << max(f[root][0], f[root][1]);
+    return 0;
+}
+```
+
+- AcWing286 选课
+
+https://www.acwing.com/solution/content/75468/   
+
+树形DP + 分组背包
+
+虚拟课程：0号节点，把包含N个节点的森林转化为包含N+1个节点的树，其中0号节点是根节点。
+F[x][t]以x为根的子树中，选t门课能获得的最高学分。
+分组背包：有p=|Son(x)|组物品，每组有t-1个，背包总容量t-1，每组选[0,t-1]个。
+
+```cpp
+void dfs(int u) {
+
+    //p = |son(x)|组物品，每组 t-1个，背包总容量 t-1,每组选[0,t-1]个
+    for (int i = h[u]; ~i; i = ne[i]) {
+        int son = e[i];
+        dfs(son);
+        for (int j = m - 1; j >= 0; j--) {
+            for (int k = 1; k <= j; k++) {
+                f[u][j] = max(f[u][j], f[u][j - k] + f[son][k]);
+            }
+        }
+    }
+    for (int j = m; j >= 0; j--) {
+        f[u][j] = f[u][j - 1] + w[u];
+    }
+    f[u][0] = 0;
+}
+```
