@@ -542,3 +542,60 @@ void dfs(int u) {
     f[u][0] = 0;
 }
 ```
+
+
+- AcWing287 积蓄程度
+
+二次扫描与换根法    
+
+特点：给定一个树形结构，需要以每个节点为根进行一系列统计。   
+1次扫描:任选一个节点，在有根树上执行一次树形DP，即回溯时发生，自底向上的状态转移。
+2次扫描:从刚才选出的根出发，对整棵树执行一次dfs,每次递归前进行自顶向下的推导，计算出换根后的解。
+
+D[x]:表示以x为根的子树中，把x作为源点，从x出发流向子树的流量最大是多少。       
+D[x] = min(D[y],c(x,y))  y的度数 > 1，y属于son(x)，对son求和。
+
+F[i]:以i作为源点，流向整个水系，流量最大是多少。   
+
+换根：x作源点总流量F[x],x流向y的流量是min(D[y],c(x,y)),从x流向除y以外其他部分的流量是二者之差。       
+于是，把y作为源点，先流到x,再流向其他部分的流量就是把这个差再与c(x,y)取min即可。      
+F[y] = D[y] （流向y为根的子树的） + min(F[x]- min(D[y],c(x,y)),c(x,y)) （流向父节点x,进而流向其他部分的）    y的度数不为1         
+
+```cpp
+int dfs_d(int u, int fa) {
+    if (deg[u] == 1) { //入度是1理论上可以无限流
+        d[u] = INF; 
+        return d[u];
+    }
+    
+    d[u] = 0;
+    //~i: i不等于-1
+    for (int i = h[u]; ~i; i = ne[i]) {
+        int j = e[i];
+        int cxy = w[i];
+        if (j == fa) continue;
+        d[u] += min(cxy, dfs_d(j, u)); //累加以u为根的子节点的流量
+    }
+    return d[u];
+}
+
+void dfs_f(int u,int fa){
+    for (int i = h[u]; ~i; i = ne[i]) {
+        int j = e[i];
+        int cxy = w[i];
+        if (j == fa) continue;
+        if (deg[j] == 1) {
+            f[j] = min(cxy,f[u] - cxy); //根据以x为根的源点，计算以y为根的源点的流量
+        } else {
+            //x作为源点流量F[x],流向y的流量是min(D[y],c(x,y)),从x流向除y以外其他部分的流量是二者之差
+            //把y作为源点，先流到x,再流向其他部分的流量就是把这个差再与c(x,y)取min即可。
+            //F[y] = D[y] （流向y为根的子树的） + min(F[x]- min(D[y],c(x,y)),c(x,y)) （流向父节点x,进而流向其他部分的）    y的度数不为1         
+            f[j] = d[j] + min(f[u] - min(d[j], cxy), cxy);
+            dfs_f(j,u);
+        }
+    }
+}
+```
+
+
+
