@@ -2514,15 +2514,12 @@ for (int i = 1; i <= n; i ++ )
     for (int j = 0; j <= m; j ++ )
         for (int k = 0; k <= s[i] && k * v[i] <= j; k ++ ) //比完全背包的三重循环二维数组版本多了k <= s[i]的限制
             f[i][j] = max(f[i][j], f[i - 1][j - v[i] * k] + w[i] * k);
- 
-
+ 		
 //三循环一维
 for (int i = 1; i <= n; i ++ ) //循环各组
     for (int j = m; j >= 0; j -- )
-        for (int k = 0; k < s[i]; k ++ ) //组内循环
-            if (v[i][k] <= j)
-                f[j] = max(f[j], f[j - v[i][k]] + w[i][k]);
-
+        for (int k = 0; k <= s[i] && v[i]*k <= j; k ++ ) //组内循环 
+            f[j] = max(f[j], f[j - v[i]*k] + w[i]*k);
 ```
 
 混合背包：01背包(1类物品用1次) + 完全背包(2类物品无限用) + 多重背包(3类物品用si次)
@@ -2594,15 +2591,92 @@ for (int k = 0; k <= s[i] && k * v[i] <= j; k ++ ) //比完全背包的三重循
 
 #### 区间DP 
 
-```C++
-for (int len = 2; len <= n; len ++ )
-    for (int l = 1; l + len - 1 <= n; l ++ )
+```cpp
+//模板1  
+for (int len = 2; len <= n; len ++ )         //枚举长度 
+    for (int l = 1; l + len - 1 <= n; l ++ ) //枚举起点
     {
         int r = l + len - 1;
         f[l][r] = INF;
-        for (int k = l; k < r; k ++ )
+        for (int k = l; k < r; k ++ )        //枚举分割点
             f[l][r] = min(f[l][r], f[l][k] + f[k + 1][r] + s[r] - s[l - 1]);
     }
+	
+
+//模板2	
+memset(f, 0x3f3f3f, sizeof(f));
+for(int i = 0;i <= n;i++){
+	f[i][i] = 0;
+}
+
+for (int len = 2; len <= n; len++) {
+	for (int l = 1; l + len - 1 <= n; l++) {
+		int r = l + len - 1;
+		for (int k = l; k < r; k++) {
+			f[l][r] = min(f[l][r], f[l][k] + f[k + 1][r] + s[r] - s[l - 1]);
+		}
+	}
+}	
+```
+
+```cpp
+//模板3
+//记忆化搜索lyd解法
+int solve(int l, int r){
+	if(l == r) return 1;
+	if(l > r) return 0;
+	if(f[l][r] != -1) return f[l][r];
+	f[l][r] = 0;
+	for(int k = l + 2;k <= r;++k)      //枚举第一棵子树在s中划分的结束位置
+		if(s[k] == s[l])
+			f[l][r] = (f[l][r] + (ll)solve(l+1, k-1)*solve(k, r)) % mod;
+	return f[l][r];
+}
+```
+
+#### 树形DP
+
+DP的阶段：一般以节点从深到浅(子树从小的到大)的顺序作为DP的阶段      
+DP的状态计算：第一维是节点编号(代表该节点为根的子树),第二位是状态机的状态;递归的方式实现树形DP,先递归在它的每个子节点上进行DP,回溯时，从子节点向节点x进行状态转移。     
+
+```cpp
+void add(int a,int b){
+    e[idx] = b, ne[idx] = h[a], h[a] = idx++;
+}
+
+void dfs(int u){
+    f[u][1] = w[u];
+    for (int i = h[u]; ~i; i = ne[i]) {
+        int j = e[i];
+        dfs(j);
+        f[u][0] += max(f[j][0], f[j][1]);
+        f[u][1] += f[j][0];
+    }
+}
+
+int main() {
+    cin >> n;
+    for (int i = 1; i <= n; i++) {
+        cin >> w[i];
+    }
+    memset(h,-1,sizeof(h));
+    for (int i = 0; i < n - 1; i++) {
+        int a, b;
+        cin >> a >> b;
+        add(b, a);
+        st[a] = true;
+    }
+
+    //寻找root
+    int root = 1;
+    while (st[root]) root++;
+
+    //dfs从根开始
+    dfs(root);
+
+    cout << max(f[root][0], f[root][1]);
+    return 0;
+}
 ```
 
 #### 状态压缩DP
@@ -2628,12 +2702,41 @@ for (int i = 1; i <= m; i ++ )
 #### 单调队列优化DP 
 
 ```C++
+//模板1
 for (int i = 1; i <= n; i ++ )
 {
 	if (q[hh] < i - m) hh ++ ;
 	res = max(res, s[i] - s[q[hh]]);
 	while (hh <= tt && s[q[tt]] >= s[i]) tt -- ;
 	q[ ++ tt] = i;
+}
+```
+
+```cpp
+//模板2 环形DP + 单调队列
+deque<int> q;
+int w[N];
+int n;
+
+int main() {
+    cin >> n;
+    for (int i = 1; i <= n; i++) {
+        cin >> w[i];
+        w[i + n] = w[i];
+    }
+
+    int len = n / 2;
+    int res = 0;
+    q.push_back(1);
+    for (int i = 2; i <= 2 * n; i++) {
+        if (q.size() && len < i - q.front()) q.pop_front();
+        res = max(res, w[i] + i + w[q.front()] - q.front()); //Aj - j的最大值
+        while (q.size() && w[q.back()] - q.back() <= w[i] - i) q.pop_back();
+        q.push_back(i);
+    }
+    
+    printf("%d\n",res);
+    return 0;
 }
 ```
 
