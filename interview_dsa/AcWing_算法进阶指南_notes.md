@@ -3538,7 +3538,6 @@ res = max(res, f[n & 1][m][1]);
 
 https://www.acwing.com/solution/content/26229/ 
 
-单调队列模板更新
 
 ```cpp
 deque<int> q;
