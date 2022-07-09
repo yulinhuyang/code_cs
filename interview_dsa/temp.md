@@ -643,3 +643,39 @@ res = max(res, f[n & 1][m][1]);
 ```
 
 
+- AcWing289 环路运输
+
+拆环为链 + 单调队列    
+转化为在长度为2N的直线公路上，满足i - j < N/2 的哪两个仓库i和j之间运送货物，运送代价 Ai+ Aj + i - j最大   
+其中可变的是Aj - j，单调队列求这部分的递增
+
+https://www.acwing.com/solution/content/26229/ 
+
+单调队列模板更新
+
+```cpp
+deque<int> q;
+int w[N];
+int n;
+
+int main() {
+    cin >> n;
+    for (int i = 1; i <= n; i++) {
+        cin >> w[i];
+        w[i + n] = w[i];
+    }
+
+    int len = n / 2;
+    int res = 0;
+    q.push_back(1);
+    for (int i = 2; i <= 2 * n; i++) {
+        if (q.size() && len < i - q.front()) q.pop_front();
+        res = max(res, w[i] + i + w[q.front()] - q.front()); //Aj - j的最大值
+        while (q.size() && w[q.back()] - q.back() <= w[i] - i) q.pop_back();
+        q.push_back(i);
+    }
+    
+    printf("%d\n",res);
+    return 0;
+}
+```
