@@ -29,11 +29,55 @@ F[i][j]表示第i行的形态为j时，前i行分割方案的总数。j是十进
 
 一般都需要预处理
 
+状态压缩DP模板更新
+
 ```cpp
+const int N = 12, M = 1 << N;
+LL f[N][M];
+bool st[M]; //是否有偶数个连续的0,有则为true
+vector<int> state[M]; //预存储合法状态
 
+//预处理1 判断i是否有偶数个连续的0
+for (int i = 0; i < (1 << n); i++) {
+	bool isvalid = true; // 是否有偶数个连续的0，有则有效。
+	int cnt = 0;
+	for (int j = 0; j < n; j++) {
+		if (i >> j & 1) {
+			if (cnt & 1) {
+				isvalid = false;
+				break;
+			}
+			cnt = 0; //开始下一段
+		} else cnt++;
+	}
+	if (cnt & 1) isvalid = false;
+	st[i] = isvalid;
+}
 
+//预处理2 判断i-2列和i-1列是否冲突
+for (int i = 0; i < 1 << n; i++) {
+	state[i].clear();
+	for (int k = 0; k < 1 << n; k++) {
+		if ((i & k) == 0 && st[i | k]) {
+			state[i].emplace_back(k);
+		}
+	}
+}
 
+//dp开始
+memset(f, 0, sizeof(f));
+f[0][0] = 1;
+for (int i = 1; i <= m; i++) {
+	for (int j = 0; j < (1 << n); j++) {
+		for (auto k: state[j]) {    //遍历合法的转移
+			f[i][j] += f[i - 1][k]; //方案数
+		}
+	}
+}
 
 ```
+
+
+
 
 
