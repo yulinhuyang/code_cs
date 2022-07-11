@@ -77,6 +77,80 @@ for (int i = 1; i <= m; i++) {
 
 ```
 
+vector<int> state[M]：vector和数组嵌套使用。
+
+- AcWing292 炮兵阵地
+
+https://www.acwing.com/solution/content/12392/ 
+
+S集合:相邻两个1的距离不小于3的所有M位二进制数,代表两个炮兵的距离不能小于3。     
+count:M位2进制中1的个数。     
+valid(i,x):M位2进制数x属于S,且x中的每个1对应地图中的第i行中的位置都是平原,则能摆下炮兵。  
+  
+压缩存储两层的信息，然后枚举合法的i-2层状态进行转移。  
+
+状态表示：f[i][j][k]:第i层状态是j, i-1层状态是k,该方案前i行能摆下多少个炮兵。     
+状态计算：f[i][j][k] = max f[i-1][k][pre] + cnt[j], valid(i,j) valid(i-1,k)，并且j&k = 0。     
+pre是枚举的能够与k和j合法存在于三行中的所有状态.      
+
+
+```cpp
+bool check(int s){
+    for(int i = 0;i < m;i++){
+        if ((s >> i & 1) && ((s >> i + 1 & 1) || (s >> i + 2 & 1))) {
+            return false;
+        }
+    }
+    return true;
+}
+
+int count(int s) {
+    int res = 0;
+    while (s) {
+        res += s & 1;
+        s >>= 1;
+    }
+    return res;
+}
+
+
+//预处理合法状态,连续三位不能都是1(1表示放一个炮兵)
+for (int i = 0; i < 1 << m; i++) {
+	if (check(i)) {
+		state.emplace_back(i);
+		cnt[i] = count(i); // 1的个数，即可以放炮兵的数量
+	}
+}
+
+//状态计算
+// i状态j,i-1状态是k,i-2状态是u.
+for (int i = 0; i < n + 2; i++) {
+	for (int j = 0; j < state.size(); j++) {
+		for (int k = 0; k < state.size(); k++) {
+			for (int u = 0; u < state.size(); u++) {
+				int a = state[u], b = state[k], c = state[j];
+				if (a & b || b & c || a & c) continue;
+				if (g[i] & c) continue;
+				f[i & 1][j][k] = max(f[i & 1][j][k], f[i - 1 & 1][k][u] + cnt[c]);
+			}
+		}
+	}
+}
+cout << f[n + 1 & 1][0][0] << endl;
+```
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 
