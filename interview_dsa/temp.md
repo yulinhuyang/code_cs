@@ -144,8 +144,6 @@ cout << f[n + 1 & 1][0][0] << endl;
 
 - AcWing298 围栏  
 
-- AcWing297 赤壁之战
-
 - AcWing299 裁剪序列
 
 
