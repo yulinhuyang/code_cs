@@ -140,9 +140,48 @@ cout << f[n + 1 & 1][0][0] << endl;
 ```
 
 
-- AcWing294 计算重复
+- AcWing298 围栏
 
-- AcWing298 围栏  
+https://www.acwing.com/solution/content/2130/
+
+单调队列优化适合决策取值范围的上下边界均单调编号，每个决策在候选集合中插入或删除至多一次的情况。     
+f[i][j] 表示安排前i个工匠粉刷前j块木板(木板可以空着不刷)，能获得的最大报酬。         
+f[i][j] = max {f[i-1][k] + Pi(j-k)} ， j - Li <= k <= Si - 1          
+在考虑内层循环j和决策k时，把外层循环变量i看作定值。     
+f[i][j] = Pi*j + max{f[i-1][k] - Pi*k} ， j - Li <= k <= Si - 1     
+
+求max用单调递减队列(可以取队头)，求min用单调递增队列。  
+维护一个随着决策点k单调递增，f[i-1][k] - Pi*k的递减序列。
+
+```cpp
+sort(car + 1,car + 1 + m);
+for (int i = 1; i <= m; i++) {
+	q.clear();
+
+	//对于每个i填充对应的一段j
+	for (int j = 0; j <= n; j++) {
+		f[i][j] = f[i - 1][j];
+		if (j) f[i][j] = max(f[i][j], f[i][j - 1]);
+
+		int l = car[i].l, s = car[i].s, p = car[i].p;
+		//超出元素出队
+		if (q.size() && q.front() < j - l) q.pop_front();
+		if (j >= s && q.size()) {
+			//取队头进行状态转移
+			int k = q.front();
+			f[i][j] = max(f[i][j], f[i-1][k] + p * (j - k));
+		}
+
+		if (j < s) {
+			//维护队尾的单调性
+			while (q.size() && f[i - 1][q.back()] - p * q.back() <= f[i - 1][j] - p * j) q.pop_back();
+			q.push_back(j);
+		}
+	}
+}
+```
+				  
+				  
 
 - AcWing299 裁剪序列
 
