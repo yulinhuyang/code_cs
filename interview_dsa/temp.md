@@ -140,8 +140,6 @@ cout << f[n + 1 & 1][0][0] << endl;
 ```
 
 
-- AcWing 529 宝藏 ：https://www.acwing.com/solution/content/4026/
-
 - AcWing294 计算重复
 
 - AcWing298 围栏  
