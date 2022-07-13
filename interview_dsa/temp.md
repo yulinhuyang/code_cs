@@ -143,6 +143,8 @@ cout << f[n + 1 & 1][0][0] << endl;
 - AcWing298 围栏
 
 https://www.acwing.com/solution/content/2130/
+				  
+单调队列  
 
 单调队列优化适合决策取值范围的上下边界均单调编号，每个决策在候选集合中插入或删除至多一次的情况。     
 f[i][j] 表示安排前i个工匠粉刷前j块木板(木板可以空着不刷)，能获得的最大报酬。         
@@ -185,6 +187,9 @@ for (int i = 1; i <= m; i++) {
 - AcWing299 裁剪序列
 
 https://www.acwing.com/solution/acwing/content/2176/    
+	
+1D/1D 动态规划 + 单调队列 + 二叉堆(multiset)	
+
 
 F[i]把前i个数分成若干段，满足每段中所有数的和不超过M的前提下，各段的最大值之和是多少。             
 F[i] = min{F[j] + max{Ak}} , 0 <= j < i, j + 1 <= k <= i, Ak求和 <= M；        
