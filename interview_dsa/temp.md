@@ -359,6 +359,53 @@ for (int A = 0; A <= b[1]; A++) {
 
 ```
 
+						 
 
+- AcWing 313 花店橱窗
+
+f[i][j]:前i种花插入j个花瓶的最大价值
+
+转移方程：
+j == i: f[i][j] = f[i - 1][j - 1] + g[i][j];
+j > i: f[i][j] = max(f[i][j - 1], f[i - 1][j - 1] + g[i][j])
+
+
+//更新参考答案
+```cpp
+#include <iostream>
+
+using namespace std;
+
+const int N = 110, M = 110;
+int g[N][M], f[N][M]; //f[i][j] i种花、j个花瓶的最大价值
+int m, n;
+
+void print(int i, int j) {
+    if (i == 0 || j == 0) return;
+    while (f[i][j] == f[i][j - 1]) j--; //花瓶没插入
+    print(i - 1, j - 1);
+    cout << j << " ";
+}
+
+int main() {
+    scanf("%d%d", &n, &m);
+    for (int i = 1; i <= n; i++) {
+        for (int j = 1; j <= m; j++) {
+            cin >> g[i][j];
+        }
+    }
+
+    for (int i = 1; i <= n; i++) {
+        for (int j = i; j <= m; j++) {
+            if (j == i) f[i][j] = f[i - 1][j - 1] + g[i][j];
+            else f[i][j] = max(f[i][j - 1], f[i - 1][j - 1] + g[i][j]);
+        }
+    }
+    cout << f[n][m] << endl;
+    print(n, m);
+
+    return 0;
+}
+```
 
 
