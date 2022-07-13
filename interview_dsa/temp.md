@@ -182,11 +182,66 @@ for (int i = 1; i <= m; i++) {
 ```
 				  
 				  
-
 - AcWing299 裁剪序列
 
+https://www.acwing.com/solution/acwing/content/2176/    
+
+F[i]把前i个数分成若干段，满足每段中所有数的和不超过M的前提下，各段的最大值之和是多少。             
+F[i] = min{F[j] + max{Ak}} , 0 <= j < i, j + 1 <= k <= i, Ak求和 <= M；        
+DP转移优化的指定思想是及时排除不可能的决策，保持候选集合的高度有效性和秩序性。     
+维护一个决策点j单调递增，数值Aj单调递减的队列。   
+
+二叉堆与单调队列建立映射关系：二叉堆与单调队列保存相同的候选集合，该插入的时候一起插入，该删除的时候一起删除（懒惰删除法）   
+单调队列以Aj递减作为比较大小的依据，二叉堆以F[j] + max {Ak} (j+1 <= k <= i)作为比较大小的依据，保证能快速在候选集合中查询最值。
+
+// 单调队列模板更新：求max递减队列，求min递增队列。
+1D/1D 动态规划：F[i] = min {F[j] + val(i,j)}, L(i) <= j <= R(i)     
+最优化问题 L(i)和R(i)是关于变量i的一次函数，限制j的取值范围；可以把val(i,j)分成两个部分，第一部分与i有关， 第二部分与j有关。
+val(i,j)的每一项都仅与i和j中的一个有关，是单调队列进行优化的基本条件。  
+
+```cpp
+multiset<LL> S;
+
+void remove(LL x)
+{
+	auto it = S.find(x);
+	S.erase(it);
+}
 
 
+int hh = 0, tt = 0;
+LL sum = 0;
+for (int i = 1, j = 0; i <= n; i ++ )    // 双指针 j  i
+{
+	sum += a[i];
+	while (sum > m) sum -= a[ ++ j];     //滑动窗口sum和
+
+	while (hh <= tt && q[hh] <= j)      //j之前的全部队头出栈
+	{
+		if (hh < tt) remove(f[q[hh]] + a[q[hh + 1]]); //不是第一次
+		hh ++ ;
+	}
+	
+	int tail = tt;
+	while (hh <= tt && a[q[tt]] <= a[i])  //队尾不符合单调递减序列的，全部出栈
+	{
+		if (tt != tail) remove(f[q[tt]] + a[q[tt + 1]]); //不是第一次，tt+1存在的情况
+		tt -- ;
+	}
+	
+	
+	if (hh <= tt && tt != tail) remove(f[q[tt]] + a[q[tt + 1]]); //队列非空，删除队尾 f[j] + a[j+1]，tt!=tail 队尾存在的情况
+	
+	
+	//同入
+	q[ ++ tt] = i;     // 队尾入队 
+	if (hh < tt) S.insert(f[q[tt - 1]] + a[q[tt]]);   // 队尾入S
+	
+	//f[i]取最小
+	f[i] = f[j] + a[q[hh]];                         //更新f[i]
+	if (S.size()) f[i] = min(f[i], *S.begin());    //S是满足队列条件的最小值
+}
+```
 
 
 
