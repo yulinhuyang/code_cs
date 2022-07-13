@@ -409,3 +409,55 @@ int main() {
 ```
 
 
+
+- AcWing314 低买
+
+https://www.acwing.com/solution/content/26282/   
+
+最长单调递减子序列(LDS)的长度和方案数，继承思想      
+
+fi = max{fj} + 1 (j < i，aj > ai) ： 让每个位置的元素继承大于其自身的前缀中的最优解。    
+aj > ai且 fj + 1 = fi :  则fi的最优解可以利用j转移，则i位置的方案数可以继承j位置的方案数。   
+f[i]以i结尾的长度，g[i]以i结尾的方案数            
+
+//LDS模板更新
+```cpp
+ 
+const int N = 5010;
+int a[N];
+int f[N], g[N]; //f[i]以i结尾的子序列长度, g[i]以i结尾的方案数
+int n;
+ 
+
+g[0] = 1;
+for (int i = 1; i <= n; i++) {
+	for (int j = 0; j < i; j++) {
+		//序列长度继承
+		if (!j || a[i] < a[j]) f[i] = max(f[i], f[j] + 1);
+	}
+
+	for (int j = 1; j < i; j++) {
+		//相同值的只考虑最后一个
+		if (a[j] == a[i]) {
+			f[j] = 0;
+		}
+	}
+	for (int j = 0; j < i; j++) {
+		if ((!j || a[i] < a[j]) && f[i] == f[j] + 1) {
+			// 方案数继承
+			g[i] += g[j];
+		}
+	}
+}
+int res = 0;
+for (int i = 0; i <= n; i++) {
+	res = max(res, f[i]);
+}
+int cnt = 0;
+for (int i = 1; i <= n; i++) {
+	if (f[i] == res){
+		cnt += g[i];
+	};  //回溯方案
+}
+cout << res << " " << cnt << endl;
+```
