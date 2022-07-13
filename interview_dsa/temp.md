@@ -332,6 +332,32 @@ int main() {
 ```
 
 
+- AcWing312 乌龟棋 
+
+https://www.acwing.com/solution/content/3953/
+
+f[b1][b2][b3][b4]表示所有第i种卡片使用了bi张的走法的最大分值
+
+多维DP
+
+```cpp
+for (int A = 0; A <= b[1]; A++) {
+	for (int B = 0; B <= b[2]; B++) {
+		for (int C = 0; C <= b[3]; C++) {
+			for (int D = 0; D <= b[4]; D++) {
+				int &v = f[A][B][C][D];
+				int t = score[A + 2 * B + 3 * C + 4 * D];
+				v = t;
+				if (A) v = max(v, f[A - 1][B][C][D] + t);
+				if (B) v = max(v, f[A][B - 1][C][D] + t);
+				if (C) v = max(v, f[A][B][C - 1][D] + t);
+				if (D) v = max(v, f[A][B][C][D - 1] + t);
+			}
+		}
+	}
+}
+
+```
 
 
 
