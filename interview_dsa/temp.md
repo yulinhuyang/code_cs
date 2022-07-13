@@ -194,12 +194,13 @@ DP转移优化的指定思想是及时排除不可能的决策，保持候选集
 二叉堆与单调队列建立映射关系：二叉堆与单调队列保存相同的候选集合，该插入的时候一起插入，该删除的时候一起删除（懒惰删除法）   
 单调队列以Aj递减作为比较大小的依据，二叉堆以F[j] + max {Ak} (j+1 <= k <= i)作为比较大小的依据，保证能快速在候选集合中查询最值。
 
-// 单调队列模板更新：求max递减队列，求min递增队列。
-1D/1D 动态规划：F[i] = min {F[j] + val(i,j)}, L(i) <= j <= R(i)     
-最优化问题 L(i)和R(i)是关于变量i的一次函数，限制j的取值范围；可以把val(i,j)分成两个部分，第一部分与i有关， 第二部分与j有关。
-val(i,j)的每一项都仅与i和j中的一个有关，是单调队列进行优化的基本条件。  
+// 单调队列模板更新：求max递减队列，求min递增队列。     
+1D/1D 动态规划：F[i] = min {F[j] + val(i,j)}, L(i) <= j <= R(i)         
+最优化问题 L(i)和R(i)是关于变量i的一次函数，限制j的取值范围；可以把val(i,j)分成两个部分，第一部分与i有关， 第二部分与j有关。      
+val(i,j)的每一项都仅与i和j中的一个有关，是单调队列进行优化的基本条件。        
 
 ```cpp
+//yxc 							 
 multiset<LL> S;
 
 void remove(LL x)
@@ -243,10 +244,87 @@ for (int i = 1, j = 0; i <= n; i ++ )    // 双指针 j  i
 }
 ```
 
+```cpp
+//stl版本
+#include <iostream>
+#include <queue>
+#include <algorithm>
+#include <set>
 
+using namespace std;
 
+using LL = long long;
+const int N = 100010;
+int n;
+LL m;
+int a[N];
+deque<int> q;
+multiset<LL> S;
+LL f[N];
 
+void remove(LL x) {
+    auto it = S.find(x);
+    S.erase(it);
+}
 
+int main() {
+    scanf("%d%lld", &n, &m);
+    for (int i = 1; i <= n; i++) {
+        cin >> a[i];
+        if (a[i] > m) {
+            puts("-1");
+            return 0;
+        }
+    }
+
+    LL sum = 0;
+    //双指针i j
+    for (int i = 1, j = 0; i <= n; i++) {
+        //滑窗sum出j
+        sum += a[i];
+        while (sum > m) sum -= a[++j];
+
+        //删队头超界的
+        //单调队列以Aj递减作为比较大小的依据，二叉堆以F[j] + max {Ak} (j+1 <= k <= i)作为比较大小的依据，保证能快速在候选集合中查询最值。
+        int frt = INT32_MAX;
+        while (q.size() && q.front() <= j) {
+            if (q.size() > 1) {
+                frt = q.front();
+                q.pop_front();
+                remove(f[frt] + a[q.front()]);
+            } else{
+                q.pop_front();
+            }
+        }
+
+        //删队尾不符合单调递减的队列
+        int pre = INT32_MAX;
+        while (q.size() && a[q.back()] <= a[i]) {
+            if (pre != INT32_MAX) {
+                remove(f[q.back()] + a[pre]);
+            }
+            pre = q.back();
+            q.pop_back();
+        }
+        if (q.size() && pre != INT32_MAX) {
+            remove(f[q.back()] + a[pre]);
+        }
+
+        //同入队
+        if (q.size()) S.insert(f[q.back()] + a[i]);
+        q.push_back(i);
+
+        //更新f[i]
+        f[i] = f[j] + a[q.front()];
+        //f[i][j] = max {f[i-1][k] + Pi(j-k)} ， j - Li <= k <= Si - 1
+        if(S.size()) f[i] = min(f[i],*S.begin()); // 满足条件的最小值
+    }
+    printf("%lld\n", f[n]);
+
+    return 0;
+}		    
+		    
+```
 
 
 
