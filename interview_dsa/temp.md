@@ -461,3 +461,78 @@ for (int i = 1; i <= n; i++) {
 }
 cout << res << " " << cnt << endl;
 ```
+	
+	
+	
+
+- AcWing315 旅行
+
+LCS + 26字符dfs
+
+更新LCS模板  
+
+```cpp
+
+
+//26方向dfs 模板
+void dfs(int i, int j, int u, int len) {
+    if (u > len) {
+        puts(path + 1);
+        return;
+    }
+    if (s1[i] == s2[j]) {
+        path[u] = s1[i];
+        dfs(i + 1, j + 1, u + 1, len);
+    } else {
+        //26字母dfs
+        for (int k = 0; k <= 25; k++) {
+            int a = 0; //s1中下一个字母k出现的位置
+            int b = 0;
+            for (int x = i; x <= n; x++) {
+                if (s1[x] == 'a' + k) {
+                    a = x;
+                    break;
+                }
+            }
+            for (int x = j; x <= m; x++) {
+                if (s2[x] == 'a' + k) {
+                    b = x;
+                    break;
+                }
+            }
+            if (a && b && f[a][b] == f[i][j]) {
+                //f[a][b]和f[i][j]值相同，说明都转移到f[i-1][j-1]
+                dfs(a, b, u, len);
+            }
+        }
+    }
+
+}
+
+//LCS模板
+
+int main() {
+    cin >> s1 + 1 >> s2 + 1;
+    n = strlen(s1 + 1), m = strlen(s2 + 1);
+
+    //反向迭代方便dfs正向求方案
+    //注意dfs的遍历方向和公式的关系
+    for (int i = n; i; i--) {
+        for (int j = m; j; j--) {
+            if (s1[i] == s2[j]) {
+                f[i][j] = f[i + 1][j + 1] + 1;
+            }
+            else {
+                f[i][j] = max(f[i + 1][j], f[i][j + 1]);
+            }
+        }
+    }
+
+    //反向dfs求方案
+    dfs(1, 1, 1, f[1][1]);
+
+    return 0;
+}
+```
+ 
+ 	
