@@ -469,8 +469,14 @@ cout << res << " " << cnt << endl;
 
 LCS + 26字符dfs
 
-更新LCS模板  
+更新LCS模板: 
+f[i][j]表示a的前i个字符, b的前j个字符的最长串长度
+	
+正向方程：       
+f[i][j] = f[i−1][j−1]      if a[i] == b[j]
+f[i][j] = max(f[i−1][j],f[i][j−1])
 
+	
 ```cpp
 
 
