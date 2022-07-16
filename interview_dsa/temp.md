@@ -626,4 +626,51 @@ int main() {
     return 0;
 }
 ```
- 
+
+	
+- AcWing318 划分大理石
+
+零钱问题 - 多重背包问题模板简化
+
+https://www.acwing.com/solution/content/12873/      
+
+f[i]体积(重量)为i是否可以拼成   
+
+
+```cpp
+while (true) {
+	int sum = 0;
+	for (int i = 1; i <= 6; i++) {
+		cin >> a[i];
+		sum += a[i] * i;
+	}
+
+	if (!sum) break;
+	if (sum & 1) {
+		cout << "Can't" << endl;
+	} else {
+		sum /= 2;
+		memset(f,0, sizeof(f));
+		f[0] = true;
+		for (int i = 1; i <= 6; i++) {
+			int s = a[i], k = 1;
+			//简化多重背包
+			while (s >= k) {
+				for (int j = sum; j >= i * k; j--) {
+					f[j] |= f[j - i * k];
+				}
+				s -= k;
+				k *= 2;
+			}
+			//0-1背包
+			if (s > 0) {
+				for (int j = sum; j >= i * s; j--) {
+					f[j] |= f[j - i * s];
+				}
+			}
+		}
+		if (f[sum]) cout << "Can" << endl;
+		else cout << "Can't" << endl;
+	}
+}
+```
