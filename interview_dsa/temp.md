@@ -542,3 +542,88 @@ int main() {
 ```
  
  	
+- AcWing316  减操作 
+
+https://www.acwing.com/solution/content/2590/   
+
+01背包问题，a[1]一定是加，a[2]一定是减。
+
+解方程组： x + y = sum, x - y = t    
+则y = (sum - t) / 2 
+
+
+只有当i−1位进行cut操作的时候,这个第i位才可以是减 --->  一个数字前面是+号,只有在它这一位进行cut操作。
+
+f[i]第i个数是不是减号
+
+```cpp
+#include <iostream>
+#include <cstring>
+
+using namespace std;
+
+
+const int N = 10001, M = 100001;
+
+int n, t;
+int flag = 0;
+int a[N], f[M], book[N]; //book数组,符号是否为减法
+
+
+// x体积
+// s物品选择
+// dfs回溯
+void find(int x, int s) {
+    if (x == 0) {
+        flag = 1;
+        return;
+    }
+    for (int i = s; i >= 3; i++) {
+        if (x - a[i] >= 0 && f[x - a[i]]) {
+            book[i] = 1;
+            find(x - a[i], i - 1);
+            if (flag) return;
+            book[i] = 0;
+        }
+    }
+};
+
+int main() {
+    cin >> n >> t;
+    int sum = 0;
+    for (int i = 1; i <= n; i++) {
+        sum += a[i];
+        cin >> a[i];
+    }
+
+    int s = (sum - t) >> 1 - a[2];
+
+    //dp背包
+    f[0] = 1;
+    //物品
+    for (int i = 2; i <= n; i++) {
+        //体积
+        for (int j = s; j >= a[i]; j--) {
+            f[i] = f[j] | f[j - a[i]];
+        }
+    }
+
+    book[2] = 1; //2肯定被选上
+    find(s, n);
+    int cnt = 0;
+    for (int i = 2; i <= n; i++) {
+        if (!book[i]) { //加号, cut操作对应的位置是加号
+            cout << i - cnt - 1 << endl;
+            cnt++;
+        }
+    }
+    for (int i = 2; i <= n; i++) {
+        if (book[i]) {
+            cout << 1 << endl;
+        }
+    }
+
+    return 0;
+}
+```
+ 
