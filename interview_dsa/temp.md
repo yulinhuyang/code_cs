@@ -792,7 +792,7 @@ int main()
 }
 ```	
 	
--AcWing 323 战略游戏
+- AcWing 323 战略游戏
 
 https://www.acwing.com/solution/content/66365/
 
