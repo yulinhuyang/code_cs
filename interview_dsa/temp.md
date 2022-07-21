@@ -796,7 +796,56 @@ int main()
 
 https://www.acwing.com/solution/content/66365/
 
+树形DP + dfs + 状态机模型    
+    
+f[N][2]: f[i][0] 在i上不放哨兵， f[i][1]在i放哨兵  
+
 ```cpp
+#include <iostream>
+#include <cstring>
 
+using namespace std;
+const int N = 1510;
+int e[N], ne[N], h[N], idx;
+int f[N][2];
+bool st[N]; // 记录某个点是否是root
+int n;
 
+void add(int a, int b) {
+    e[idx] = b, ne[idx] = h[a], h[a] = idx++;
+}
+
+void dfs(int u) {
+    f[u][0] = 0, f[u][1] = 1;
+    for (int i = h[u]; ~i; i = ne[i]) {
+        int j = e[i];
+        dfs(j);
+        f[u][0] += f[j][1];
+        f[u][1] += min(f[j][0], f[j][1]);
+    }
+}
+
+int main() {
+    while (cin >> n) {
+        idx = 0;
+        memset(h, -1, sizeof(h));
+        memset(st, false, sizeof(st));
+        for (int i = 0; i < n; i++) {
+            int a, size,b;
+            scanf("%d:(%d)", &a, &size);
+            while (size--) {
+                scanf("%d", &b);
+                add(a, b);
+                st[b] = true;
+            }
+        }
+        int root = 0;
+        while (st[root]) root++;
+
+        dfs(root);
+        cout << min(f[root][0], f[root][1]) << endl;
+    }
+
+    return 0;
+}
 ```
