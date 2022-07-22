@@ -849,3 +849,14 @@ int main() {
     return 0;
 }
 ```
+
+- AcWing 327 玉米田
+
+https://www.acwing.com/solution/content/56822/
+
+- AcWing 338 计数问题  
+
+https://www.acwing.com/solution/content/4934/   
+
+https://www.acwing.com/solution/content/7128/    
+
