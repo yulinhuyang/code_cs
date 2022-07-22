@@ -645,3 +645,210 @@ int main()
 
 ##### AcWing350 巡逻
 
+
+##### AcWing352  闇の連鎖
+
+```cpp
+#include <cstdio>
+#include <cstring>
+#include <iostream>
+#include <algorithm>
+
+using namespace std;
+
+const int N = 100010, M = N * 2;
+
+int n, m;
+int h[N], e[M], ne[M], idx;
+int depth[N], fa[N][17];
+int d[N];
+int q[N];
+int ans;
+
+void add(int a, int b)
+{
+    e[idx] = b, ne[idx] = h[a], h[a] = idx ++ ;
+}
+
+void bfs()
+{
+    memset(depth, 0x3f, sizeof depth);
+    depth[0] = 0, depth[1] = 1;
+    int hh = 0, tt = 0;
+    q[0] = 1;
+
+    while (hh <= tt)
+    {
+        int t = q[hh ++ ];
+        for (int i = h[t]; ~i; i = ne[i])
+        {
+            int j = e[i];
+            if (depth[j] > depth[t] + 1)
+            {
+                depth[j] = depth[t] + 1;
+                q[ ++ tt] = j;
+                fa[j][0] = t;
+                for (int k = 1; k <= 16; k ++ )
+                    fa[j][k] = fa[fa[j][k - 1]][k - 1];
+            }
+        }
+    }
+}
+
+int lca(int a, int b)
+{
+    if (depth[a] < depth[b]) swap(a, b);
+    for (int k = 16; k >= 0; k -- )
+        if (depth[fa[a][k]] >= depth[b])
+            a = fa[a][k];
+    if (a == b) return a;
+    for (int k = 16; k >= 0; k -- )
+        if (fa[a][k] != fa[b][k])
+        {
+            a = fa[a][k];
+            b = fa[b][k];
+        }
+    return fa[a][0];
+}
+
+int dfs(int u, int father)
+{
+    int res = d[u];
+    for (int i = h[u]; ~i; i = ne[i])
+    {
+        int j = e[i];
+        if (j != father)
+        {
+            int s = dfs(j, u);
+            if (s == 0) ans += m;
+            else if (s == 1) ans ++ ;
+            res += s;
+        }
+    }
+
+    return res;
+}
+
+int main()
+{
+    scanf("%d%d", &n, &m);
+    memset(h, -1, sizeof h);
+    for (int i = 0; i < n - 1; i ++ )
+    {
+        int a, b;
+        scanf("%d%d", &a, &b);
+        add(a, b), add(b, a);
+    }
+
+    bfs();
+
+    for (int i = 0; i < m; i ++ )
+    {
+        int a, b;
+        scanf("%d%d", &a, &b);
+        int p = lca(a, b);
+        d[a] ++, d[b] ++, d[p] -= 2;
+    }
+    dfs(1, -1);
+    printf("%d\n", ans);
+
+    return 0;
+}
+```
+
+
+##### AcWing367  学校网络
+
+```cpp
+#include <cstring>
+#include <iostream>
+#include <algorithm>
+
+using namespace std;
+
+const int N = 110, M = 10010;
+
+int n;
+int h[N], e[M], ne[M], idx;
+int dfn[N], low[N], timestamp;
+int stk[N], top;
+bool in_stk[N];
+int id[N], scc_cnt;
+int din[N], dout[N];
+
+void add(int a, int b)
+{
+    e[idx] = b, ne[idx] = h[a], h[a] = idx ++ ;
+}
+
+void tarjan(int u)
+{
+    dfn[u] = low[u] = ++ timestamp;
+    stk[ ++ top] = u, in_stk[u] = true;
+
+    for (int i = h[u]; ~i; i = ne[i])
+    {
+        int j = e[i];
+        if (!dfn[j])
+        {
+            tarjan(j);
+            low[u] = min(low[u], low[j]);
+        }
+        else if (in_stk[j])
+            low[u] = min(low[u], dfn[j]);
+    }
+
+    if (dfn[u] == low[u])
+    {
+        ++ scc_cnt;
+        int y;
+        do {
+            y = stk[top -- ];
+            in_stk[y] = false;
+            id[y] = scc_cnt;
+        } while (y != u);
+    }
+}
+
+int main()
+{
+    cin >> n;
+    memset(h, -1, sizeof h);
+    for (int i = 1; i <= n; i ++ )
+    {
+        int t;
+        while (cin >> t, t) add(i, t);
+    }
+
+    for (int i = 1; i <= n; i ++ )
+        if (!dfn[i])
+            tarjan(i);
+
+    for (int i = 1; i <= n; i ++ )
+        for (int j = h[i]; j != -1; j = ne[j])
+        {
+            int k = e[j];
+            int a = id[i], b = id[k];
+            if (a != b)
+            {
+                dout[a] ++ ;
+                din[b] ++ ;
+            }
+        }
+
+    int a = 0, b = 0;
+    for (int i = 1; i <= scc_cnt; i ++ )
+    {
+        if (!din[i]) a ++ ;
+        if (!dout[i]) b ++ ;
+    }
+
+    printf("%d\n", a);
+    if (scc_cnt == 1) puts("0");
+    else printf("%d\n", max(a, b));
+
+    return 0;
+}
+```
+
+
