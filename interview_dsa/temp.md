@@ -835,15 +835,7 @@ int main() {
 }
 ```
 
-- AcWing 327 玉米田
-
-https://www.acwing.com/solution/content/56822/
-
-- AcWing 338 计数问题  
-
-https://www.acwing.com/solution/content/4934/   
-
-https://www.acwing.com/solution/content/7128/    
+  
 
 						   
 **AcWing 1064. 小国王【线性状压DP+滚动数组优化+目标状态优化】**
@@ -859,4 +851,153 @@ https://ac.nowcoder.com/acm/archive/oi-advance?pageSize=10&page=1
 
 https://www.bilibili.com/video/BV1KE411V79h     
 
+						   
+						   
+
+- AcWing 327 玉米田     
+
+参考：小国王:状压 + 滚动数组 https://www.acwing.com/solution/content/56348/
+
+https://www.acwing.com/solution/content/56822/  
+
+f[i][j]表示前i行，且第i行状态是j的方案 的总数      
+fij = 求和fi-1,pre      pre是枚举的能够与j合法存在于相邻行的所有状态      
+
+f[n+1][0]：前n + 1行状态为0，即前n行可以任意状态
+
+```cpp
+#include <iostream>
+#include <vector>
+
+using namespace std;
+
+const int N = 14, M = 1 << N, mod = 1e8;
+int g[N];
+int f[N][M];
+vector<int> state; //不能有相邻的1
+vector<int> head[M];
+int n, m , k;
+
+bool check(int state) {
+    return !(state & (state << 1));  //不能有相邻的1
+}
+
+int main() {
+    cin >> n >> m;
+    //输入
+    for (int i = 1; i <= n; i++) {
+        for (int j = 0; j < m; j++) {
+            cin >> k;
+            g[i] |= !k << j;
+        }
+    }
+
+    //预处理
+    for (int i = 0; i < 1 << m; i++) {
+        if (check(i)) {
+            state.emplace_back(i);
+        }
+    }
+    for (auto &st:state) {
+        for (auto &ne_st: state) {
+            if (!(st & ne_st)) {
+                head[st].emplace_back(ne_st);
+            }
+        }
+    }
+
+    f[0][0] = 1;
+    for (int i = 1; i <= n + 1; i++) {
+        for (auto &st:state) {
+            if (!(g[i] & st)) {
+                for (auto pre:head[st]) {
+                    f[i][st] = (f[i][st] + f[i - 1][pre]) % mod;
+                }
+            }
+        }
+    }
+
+    cout << f[n + 1][0] << endl;
+    return 0;
+}
+
+//滚动数组优化
+    f[0][0] = 1;
+    for (int i = 1; i <= n + 1; i++) {
+        for (auto &st:state) {
+            f[i & 1][st] = 0;
+            if (!(g[i] & st)) {
+                for (auto pre:head[st]) {
+                    f[i & 1][st] = (f[i & 1][st] + f[(i - 1) & 1][pre]) % mod;
+                }
+            }
+        }
+    }
+
+    cout << f[(n + 1) & 1][0] << endl;
+
+```
+
+
+- AcWing 338 计数问题
+
+数位dp解法：https://www.acwing.com/solution/content/4934/    
+
+通俗解法：计数类问题模板题： https://www.acwing.com/solution/content/7128/
+
+不用vector存每一位, 直接计算某位的左边和右边的整数是多少; 当i为0的时其左边的整数不能为0。    
+
+%取低位，/取高位; 取某一位，先截断取高位，再 % 取低位。
+
+//更新模板，计数问题的通用模板   
+
+```cpp
+#include <iostream>
+#include <cmath>
+
+using namespace std;
+
+int dgt(int n) {
+    int res = 0;
+    while (n) {
+        res++;
+        n /= 10;
+    }
+    return res;
+}
+
+int count(int n,int i){
+    int res = 0, d = dgt(n);
+    for (int j = 1; j <= d; j++) {
+        // % 取低位， / 取高位
+        // 取某一位，先截断取高位，再 % 取低位。
+        int p = pow(10, j - 1), l = n / p / 10, r = n % p, dj = n / p % 10;
+        if (i) res += l * p;
+        if (!i && l) res += (l - 1) * p; //首位不能全零，l - 1
+
+        if (dj > i && (i || l)) res += p;
+        if (dj == i) res += r + 1; //如果dj = i = 0,此时肯定不是高位。
+    }
+    return res;
+}
+
+
+int main() {
+    int a, b;
+    while (cin >> a >> b, a) {
+        if (a > b) swap(a, b);
+        for (int i = 0; i <= 9; i++) {
+            cout << count(b, i) - count(a - 1, i) << " ";
+        }
+        cout << endl;
+    }
+
+    return 0;
+}
+```
+
+
+
+						   
+						   
 						   
