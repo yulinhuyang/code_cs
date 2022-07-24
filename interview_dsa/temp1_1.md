@@ -94,3 +94,151 @@ spfa(dMax, n, rh, false);
 
 ```
 
+
+
+- AcWing342 道路与航线  
+
+https://www.acwing.com/solution/content/33202/   
+
+dfs + 拓扑排序 + dijkstra(卡spfa)
+
+把每个连通块整体看作一个点，再把单向边添加到图中，会得到一个有向无环图。     
+
+1 dfs 出所有的连通块。id[]存储每个点属于哪个连通块。 vector<int> block[]存储每个连通块里有哪些点。          
+2 输入航线，统计每个连通块的入度。     
+3 对每个连通块进行拓扑排序,入度为0的连通块加入队列。        
+4 对队列中的点，跑dijkstra算法。每次将当前入度为0的连通块的所有点进入heap, 然后heap更新距离，如果有非当前块的点且--该点的连通块入度为空，则加入队列。      
+
+
+for (int i = e[u]; ~i; i = ne[i]) ： 这里的i实际是idx;  //更新模板
+
+```cpp
+#include <iostream>
+#include <cstring>
+#include <queue>
+#include <vector>
+
+using namespace std;
+
+using PII = pair<int,int>;
+
+const int N = 25010, M = 150010, INF = 0x3f3f3f3f;
+int h[N], e[M], w[M], ne[M], idx;
+int dist[N];
+bool st[N];
+
+
+int n,mr,mp,s;
+int id[N];
+vector<int> block[N];
+int deg[N];
+int bcnt;
+queue<int> q;
+
+void add(int a, int b, int c) {
+    e[idx] = b, w[idx] = c, ne[idx] = h[a], h[a] = idx++;
+}
+
+void dfs(int u, int bid) {
+    id[u] = bid;
+    block[bid].emplace_back(u);
+
+    //这里i是idx
+    for (int i = h[u]; ~i; i = ne[i]) {
+        int j = e[i];
+        if (!id[j]) {
+            dfs(j, bid);
+        }
+    }
+}
+
+
+void dijkstra(int block_id) {
+    priority_queue<PII, vector<PII>, greater<PII>> heap;
+    for (int u: block[block_id]) {
+        heap.push({dist[u], u});
+    }
+
+    while (heap.size()) {
+        PII t = heap.top();
+        heap.pop();
+        int u = t.second;
+
+        if (st[u]) continue;
+        st[u] = true;
+        
+        //i 相当于idx,因此是e[i],w[i]
+        for (int i = h[u]; ~i; i = ne[i]) {
+            int j = e[i];
+            if (dist[j] > dist[u] + w[i]) {
+                dist[j] = dist[u] + w[i];
+                //本块内的入度为0,则加入heap
+                if (id[j] == block_id) heap.push({dist[j], j});
+            }
+
+            if (id[j] != block_id && --deg[id[j]] == 0) q.push(id[j]); //连通块id加入队列
+        }
+    }
+}
+
+//连通块的拓扑排序
+void topSort() {
+    memset(dist, INF, sizeof(dist));
+    dist[s] = 0;
+
+    //入度为0的连通块入栈
+    for (int i = 1; i <= bcnt; i++) {
+        if (!deg[i]) {
+            q.emplace(i);
+        }
+    }
+
+    while (q.size()) {
+        auto t = q.front();
+        q.pop();
+        dijkstra(t);
+    }
+
+}
+
+int main() {
+    cin >> n >> mr >> mp >> s;
+    memset(h, -1, sizeof(h));
+
+    //道路
+    for (int i = 0; i < mr; i++) {
+        int a, b, c;
+        cin >> a >> b >> c;
+        add(a, b, c);
+        add(b, a, c);
+    }
+
+    //dfs得到所有连通块
+    for (int i = 1; i <= n; i++) {
+        if (!id[i]) {
+            bcnt++;
+            dfs(i, bcnt);
+        }
+    }
+
+    //航线
+    for (int i = 0; i < mp; i++) {
+        int a, b, c;
+        cin >> a >> b >> c;
+        add(a, b, c);
+        deg[id[b]]++;
+    }
+
+    //拓扑排序
+    topSort();
+
+    for (int i = 1; i <= n; i++) {
+        if (dist[i] > INF / 2) puts("NO PATH");
+        else printf("%d\n", dist[i]);
+    }
+
+    return 0;
+}
+
+```
+
