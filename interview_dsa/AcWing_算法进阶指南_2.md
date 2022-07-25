@@ -3095,6 +3095,89 @@ int main()
 
 ```  
 
+```cpp
+//stl版本
+#include <iostream>
+#include <queue>
+#include <algorithm>
+#include <set>
+
+using namespace std;
+
+using LL = long long;
+const int N = 100010;
+int n;
+LL m;
+int a[N];
+deque<int> q;
+multiset<LL> S;
+LL f[N];
+
+void remove(LL x) {
+    auto it = S.find(x);
+    S.erase(it);
+}
+
+int main() {
+    scanf("%d%lld", &n, &m);
+    for (int i = 1; i <= n; i++) {
+        cin >> a[i];
+        if (a[i] > m) {
+            puts("-1");
+            return 0;
+        }
+    }
+
+    LL sum = 0;
+    //双指针i j
+    for (int i = 1, j = 0; i <= n; i++) {
+        //滑窗sum出j
+        sum += a[i];
+        while (sum > m) sum -= a[++j];
+
+        //删队头超界的
+        //单调队列以Aj递减作为比较大小的依据，二叉堆以F[j] + max {Ak} (j+1 <= k <= i)作为比较大小的依据，保证能快速在候选集合中查询最值。
+        int frt = INT32_MAX;
+        while (q.size() && q.front() <= j) {
+            if (q.size() > 1) {
+                frt = q.front();
+                q.pop_front();
+                remove(f[frt] + a[q.front()]);
+            } else{
+                q.pop_front();
+            }
+        }
+
+        //删队尾不符合单调递减的队列
+        int pre = INT32_MAX;
+        while (q.size() && a[q.back()] <= a[i]) {
+            if (pre != INT32_MAX) {
+                remove(f[q.back()] + a[pre]);
+            }
+            pre = q.back();
+            q.pop_back();
+        }
+        if (q.size() && pre != INT32_MAX) {
+            remove(f[q.back()] + a[pre]);
+        }
+
+        //同入队
+        if (q.size()) S.insert(f[q.back()] + a[i]);
+        q.push_back(i);
+
+        //更新f[i]
+        f[i] = f[j] + a[q.front()];
+        //f[i][j] = max {f[i-1][k] + Pi(j-k)} ， j - Li <= k <= Si - 1
+        if(S.size()) f[i] = min(f[i],*S.begin()); // 满足条件的最小值
+    }
+    printf("%lld\n", f[n]);
+
+    return 0;
+}		    
+		    
+```		    
+	
+
 ## 0x5A 斜率优化
 
 ##### AcWing300   任务安排1
@@ -3664,6 +3747,45 @@ int main()
     }
 
     cout << endl;
+
+    return 0;
+}
+```
+
+
+```cpp
+//版本2  线性DP
+#include <iostream>
+
+using namespace std;
+
+const int N = 110, M = 110;
+int g[N][M], f[N][M]; //f[i][j] i种花、j个花瓶的最大价值
+int m, n;
+
+void print(int i, int j) {
+    if (i == 0 || j == 0) return;
+    while (f[i][j] == f[i][j - 1]) j--; //花瓶没插入
+    print(i - 1, j - 1);
+    cout << j << " ";
+}
+
+int main() {
+    scanf("%d%d", &n, &m);
+    for (int i = 1; i <= n; i++) {
+        for (int j = 1; j <= m; j++) {
+            cin >> g[i][j];
+        }
+    }
+
+    for (int i = 1; i <= n; i++) {
+        for (int j = i; j <= m; j++) {
+            if (j == i) f[i][j] = f[i - 1][j - 1] + g[i][j];
+            else f[i][j] = max(f[i][j - 1], f[i - 1][j - 1] + g[i][j]);
+        }
+    }
+    cout << f[n][m] << endl;
+    print(n, m);
 
     return 0;
 }
@@ -4259,134 +4381,137 @@ int main()
 
 ```
 
-##### AcWing342   道路与航线  
+##### AcWing342 道路与航线
 
-
-```cpp
-#include <cstring>
+ ```cpp
 #include <iostream>
-#include <algorithm>
-#include <vector>
+#include <cstring>
 #include <queue>
-
-#define x first
-#define y second
+#include <vector>
 
 using namespace std;
 
-typedef pair<int, int> PII;
+using PII = pair<int,int>;
 
 const int N = 25010, M = 150010, INF = 0x3f3f3f3f;
-
-int n, mr, mp, S;
-int id[N];
 int h[N], e[M], w[M], ne[M], idx;
-int dist[N], din[N];
-vector<int> block[N];
-int bcnt;
+int dist[N];
 bool st[N];
+
+
+int n,mr,mp,s;
+int id[N];
+vector<int> block[N];
+int deg[N];
+int bcnt;
 queue<int> q;
 
-void add(int a, int b, int c)
-{
-    e[idx] = b, w[idx] = c, ne[idx] = h[a], h[a] = idx ++ ;
+void add(int a, int b, int c) {
+    e[idx] = b, w[idx] = c, ne[idx] = h[a], h[a] = idx++;
 }
 
-void dfs(int u, int bid)
-{
-    id[u] = bid, block[bid].push_back(u);
+void dfs(int u, int bid) {
+    id[u] = bid;
+    block[bid].emplace_back(u);
 
-    for (int i = h[u]; ~i; i = ne[i])
-    {
+    //这里i是idx
+    for (int i = h[u]; ~i; i = ne[i]) {
         int j = e[i];
-        if (!id[j])
+        if (!id[j]) {
             dfs(j, bid);
-    }
-}
-
-void dijkstra(int bid)
-{
-    priority_queue<PII, vector<PII>, greater<PII>> heap;
-
-    for (auto u : block[bid])
-        heap.push({dist[u], u});
-
-    while (heap.size())
-    {
-        auto t = heap.top();
-        heap.pop();
-
-        int ver = t.y, distance = t.x;
-        if (st[ver]) continue;
-        st[ver] = true;
-
-        for (int i = h[ver]; ~i; i = ne[i])
-        {
-            int j = e[i];
-            if (id[j] != id[ver] && -- din[id[j]] == 0) q.push(id[j]);
-            if (dist[j] > dist[ver] + w[i])
-            {
-                dist[j] = dist[ver] + w[i];
-                if (id[j] == id[ver]) heap.push({dist[j], j});
-            }
         }
     }
 }
 
-void topsort()
-{
-    memset(dist, 0x3f, sizeof dist);
-    dist[S] = 0;
 
-    for (int i = 1; i <= bcnt; i ++ )
-        if (!din[i])
-            q.push(i);
+void dijkstra(int block_id) {
+    priority_queue<PII, vector<PII>, greater<PII>> heap;
+    for (int u: block[block_id]) {
+        heap.push({dist[u], u});
+    }
 
-    while (q.size())
-    {
-        int t = q.front();
+    while (heap.size()) {
+        PII t = heap.top();
+        heap.pop();
+        int u = t.second;
+
+        if (st[u]) continue;
+        st[u] = true;
+        
+        //i 相当于idx,因此是e[i],w[i]
+        for (int i = h[u]; ~i; i = ne[i]) {
+            int j = e[i];
+            if (dist[j] > dist[u] + w[i]) {
+                dist[j] = dist[u] + w[i];
+                //本块内的入度为0,则加入heap
+                if (id[j] == block_id) heap.push({dist[j], j});
+            }
+
+            if (id[j] != block_id && --deg[id[j]] == 0) q.push(id[j]); //连通块id加入队列
+        }
+    }
+}
+
+//连通块的拓扑排序
+void topSort() {
+    memset(dist, INF, sizeof(dist));
+    dist[s] = 0;
+
+    //入度为0的连通块入栈
+    for (int i = 1; i <= bcnt; i++) {
+        if (!deg[i]) {
+            q.emplace(i);
+        }
+    }
+
+    while (q.size()) {
+        auto t = q.front();
         q.pop();
         dijkstra(t);
     }
+
 }
 
-int main()
-{
-    cin >> n >> mr >> mp >> S;
-    memset(h, -1, sizeof h);
+int main() {
+    cin >> n >> mr >> mp >> s;
+    memset(h, -1, sizeof(h));
 
-    while (mr -- )
-    {
+    //道路
+    for (int i = 0; i < mr; i++) {
         int a, b, c;
         cin >> a >> b >> c;
-        add(a, b, c), add(b, a, c);
+        add(a, b, c);
+        add(b, a, c);
     }
 
-    for (int i = 1; i <= n; i ++ )
-        if (!id[i])
-        {
-            bcnt ++ ;
+    //dfs得到所有连通块
+    for (int i = 1; i <= n; i++) {
+        if (!id[i]) {
+            bcnt++;
             dfs(i, bcnt);
         }
-
-    while (mp -- )
-    {
-        int a, b, c;
-        cin >> a >> b >> c;
-        din[id[b]] ++ ;
-        add(a, b, c);
     }
 
-    topsort();
+    //航线
+    for (int i = 0; i < mp; i++) {
+        int a, b, c;
+        cin >> a >> b >> c;
+        add(a, b, c);
+        deg[id[b]]++;
+    }
 
-    for (int i = 1; i <= n; i ++ )
-        if (dist[i] > INF / 2) cout << "NO PATH" << endl;
-        else cout << dist[i] << endl;
+    //拓扑排序
+    topSort();
+
+    for (int i = 1; i <= n; i++) {
+        if (dist[i] > INF / 2) puts("NO PATH");
+        else printf("%d\n", dist[i]);
+    }
 
     return 0;
 }
-```
 
+```
 
 ##### AcWing343   排序  
 
@@ -4418,14 +4543,14 @@ int check()
 {
     for (int i = 0; i < n; i ++ )
         if (d[i][i])
-            return 2;
+            return 2; //存在矛盾
 
     for (int i = 0; i < n; i ++ )
         for (int j = 0; j < i; j ++ )
             if (!d[i][j] && !d[j][i])
-                return 0;
+                return 0;// 不能确定
 
-    return 1;
+    return 1; // 可以确定
 }
 
 char get_min()
@@ -4465,7 +4590,7 @@ int main()
                 g[a][b] = 1;
                 floyd();
                 type = check();
-                if (type) t = i;
+                if (type) t = i;//第一次发现的位置
             }
         }
 
