@@ -2430,6 +2430,79 @@ void extend(char c)
 
 ## 0x50 动态规划
 
+#### 线性DP
+
+LIS/LDS模板         
+
+```cpp
+const int N = 5010;
+int a[N];
+int f[N], g[N]; //f[i]以i结尾的子序列长度, g[i]以i结尾的方案数
+int n;
+ 
+
+g[0] = 1;
+for (int i = 1; i <= n; i++) {
+	for (int j = 0; j < i; j++) {
+		//序列长度继承
+		if (!j || a[i] < a[j]) f[i] = max(f[i], f[j] + 1);
+	}
+
+	for (int j = 1; j < i; j++) {
+		//相同值的只考虑最后一个
+		if (a[j] == a[i]) {
+			f[j] = 0;
+		}
+	}
+	for (int j = 0; j < i; j++) {
+		if ((!j || a[i] < a[j]) && f[i] == f[j] + 1) {
+			// 方案数继承
+			g[i] += g[j];
+		}
+	}
+}
+int res = 0;
+for (int i = 0; i <= n; i++) {
+	res = max(res, f[i]);
+}
+int cnt = 0;
+for (int i = 1; i <= n; i++) {
+	if (f[i] == res){
+		cnt += g[i];
+	};  //回溯方案
+}
+cout << res << " " << cnt << endl;
+
+```
+
+LCS模板
+
+```cpp
+
+int main() {
+    cin >> s1 + 1 >> s2 + 1;
+    n = strlen(s1 + 1), m = strlen(s2 + 1);
+
+    //反向迭代方便dfs正向求方案
+    //注意dfs的遍历方向和公式的关系
+    for (int i = n; i; i--) {
+        for (int j = m; j; j--) {
+            if (s1[i] == s2[j]) {
+                f[i][j] = f[i + 1][j + 1] + 1;
+            }
+            else {
+                f[i][j] = max(f[i + 1][j], f[i][j + 1]);
+            }
+        }
+    }
+
+    //反向dfs求方案
+    dfs(1, 1, 1, f[1][1]);
+
+    return 0;
+}
+```
+
 #### 背包DP
 
 0-1 背包:  
@@ -2682,6 +2755,7 @@ int main() {
 #### 状态压缩DP
 
 ```C++
+//模板 1
 //预处理
 for (int i = 0; i < 1 << n; i ++ )
 {
@@ -2697,9 +2771,107 @@ for (int i = 1; i <= m; i ++ )
     for (int j = 0; j < 1 << n; j ++ )
         for (auto k : state[j])
             f[i][j] += f[i - 1][k];
+
+
+//模板2 AcWing291
+const int N = 12, M = 1 << N;
+LL f[N][M];
+bool st[M]; //是否有偶数个连续的0,有则为true
+vector<int> state[M]; //预存储合法状态
+
+//预处理1 判断i是否有偶数个连续的0
+for (int i = 0; i < (1 << n); i++) {
+	bool isvalid = true; // 是否有偶数个连续的0，有则有效。
+	int cnt = 0;
+	for (int j = 0; j < n; j++) {
+		if (i >> j & 1) {
+			if (cnt & 1) {
+				isvalid = false;
+				break;
+			}
+			cnt = 0; //开始下一段
+		} else cnt++;
+	}
+	if (cnt & 1) isvalid = false;
+	st[i] = isvalid;
+}
+
+//预处理2 判断i-2列和i-1列是否冲突
+for (int i = 0; i < 1 << n; i++) {
+	state[i].clear();
+	for (int k = 0; k < 1 << n; k++) {
+		if ((i & k) == 0 && st[i | k]) {
+			state[i].emplace_back(k);
+		}
+	}
+}
+
+//dp开始
+memset(f, 0, sizeof(f));
+f[0][0] = 1;
+for (int i = 1; i <= m; i++) {
+	for (int j = 0; j < (1 << n); j++) {
+		for (auto k: state[j]) {    //遍历合法的转移
+			f[i][j] += f[i - 1][k]; //方案数
+		}
+	}
+}
+
 ```
 
+#### 数位DP简化模板
+
+AcWing 338 计数问题
+
+```cpp
+#include <iostream>
+#include <cmath>
+
+using namespace std;
+
+int dgt(int n) {
+    int res = 0;
+    while (n) {
+        res++;
+        n /= 10;
+    }
+    return res;
+}
+
+int count(int n,int i){
+    int res = 0, d = dgt(n);
+    for (int j = 1; j <= d; j++) {
+        // % 取低位， / 取高位
+        // 取某一位，先截断取高位，再 % 取低位。
+        int p = pow(10, j - 1), l = n / p / 10, r = n % p, dj = n / p % 10;
+        if (i) res += l * p;
+        if (!i && l) res += (l - 1) * p; //首位不能全零，l - 1
+
+        if (dj > i && (i || l)) res += p;
+        if (dj == i) res += r + 1; //如果dj = i = 0,此时肯定不是高位。
+    }
+    return res;
+}
+
+
+int main() {
+    int a, b;
+    while (cin >> a >> b, a) {
+        if (a > b) swap(a, b);
+        for (int i = 0; i <= 9; i++) {
+            cout << count(b, i) - count(a - 1, i) << " ";
+        }
+        cout << endl;
+    }
+
+    return 0;
+}
+```
+
+
 #### 单调队列优化DP 
+
+求max用单调递减队列(可以取队头)，求min用单调递增队列。  
 
 ```C++
 //模板1
@@ -2974,6 +3146,7 @@ bool spfa()
 时间复杂度是 O(n3), n 表示点数
 
 ```cpp
+
 初始化：
     for (int i = 1; i <= n; i ++ )
         for (int j = 1; j <= n; j ++ )
@@ -2990,6 +3163,17 @@ void floyd()
 }
 ```
 
+AcWing343 排序:传递闭包
+
+```cpp
+    for (int k = 0; k < n; k++) {
+        for (int i = 0; i < n; i++) {
+            for (int j = 0; j < n; j++) {
+                d[i][j] |= d[i][k] && d[k][j];
+            }
+        }
+    }
+```
 
 #### 倍增求LCA
 ```C++
