@@ -22,15 +22,15 @@ https://www.acwing.com/solution/content/9256/
 
 https://www.acwing.com/solution/content/20140/
 
-无向图的最小环     
-
 floyd不用邻接表，直接
 
 g[i][j]边长关系存储
 d[i][j]连通性、最短距离
 
 pos[i][j]：最短路中经过的点是k，且k是此路径中的编号最大的点(除去i、j)。    
-性质：i~j的最短道路中，一定没有环；i,j之间的最短道路经过k,则i~k、k~j之间无交集。   
+性质：i ~ j的最短道路中，一定没有环；i,j之间的最短道路经过k,则i~k、k~j之间无交集。   
+
+无向图的最小环： 状态方程 min(d[i][j] + a[j][k] + a[k][i]), 其中1 <= i < j < k 
 
 ```cpp
 //floyd模板题   
