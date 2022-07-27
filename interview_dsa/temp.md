@@ -72,7 +72,38 @@ for (int k = 1; k <= n; k++) {
 
 ```
 
-AcWing345 牛站
+- AcWing345 牛站
+
+https://www.acwing.com/solution/content/17209/    
+
+限定边数的最短路问题:    
+floyd + 倍增： https://www.acwing.com/solution/content/36603/      
+Bellman-Ford: https://www.acwing.com/solution/content/6111/    
+
+ 
+这里使用floyd + 倍增
+
+d[k][i][j]从i走到j正好经过k条路径的最短距离。
+d[a+b][i][j] = min(dist[a+b][i][j], dist[a][i][k] + dist[b][k][j])
+
+k条边，将k转为二进制数，倍增拼凑  
+
+答案数组=g数组走过2条边的最短距离 + g数组走过4条边的最短距离 +  g数组走过16条边的最短距离     
+
+```cpp
+//类floyd
+//用上次的结果来更新一次
+static int temp[N][N];
+    memset(temp,0x3f,sizeof temp);
+    for(int k=1;k<=n;k++)
+        for(int i=1;i<=n;i++)
+            for(int j=1;j<=n;j++)
+                temp[i][j]=min(temp[i][j],a[i][k]+b[k][j]);
+
+```
+
+
+
 
 AcWing346 走廊泼水节
 
