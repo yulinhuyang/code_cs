@@ -124,7 +124,7 @@ void qmi(){
 
 - AcWing853 有边数限制的最短路
 
-模板更新
+模板加入更新，back数组
 
 https://www.acwing.com/solution/content/6320/ 
 
