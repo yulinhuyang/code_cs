@@ -282,8 +282,85 @@ cout << fixed << setprecision(2) << r << endl;
 
 ```
 
-AcWing362 区间
 
+
+差分约束系统：
+N个变量X1~XN,M个约束条件，每个约束条件都由两个变量作差构成，如Xi-Xj<=ck。      
+变形为Xi <= Xj+Ck,这个与最短路问题中三角形不等式dist[y] <= dist[x] +z相似，可以把每个变量Xi看作有向图中的一个节点i,对于每个约束条件     
+Xi-Xj <= Ck，从节点j到节点i连一条长度为Ck的有向边。  
+设dist[0] = 0,以0为起点求单源最短路，如果图中存在负环，则给定的差分约束系统无解；否则Xi=dist[i]就是差分约束系统的一组解。  
+
+
+- AcWing362 区间
+
+从0~50000中选出尽量少的整数，使每个区间[ai,bi]内都有至少ci个数被选。
+
+差分约束  + SPFA求最长路
+
+https://www.acwing.com/solution/content/42920/
+
+s[k]表示0~k之间最少选出多少整数，前缀和思想
+
+约束条件：
+s[k]-s[k-1] >= 0  ---> 从每个k-1到k连长度为0的有向边      
+s[k-1]-s[k] >= -1 ---> 从每个k到k-1连接长度为-1的有向边。    
+s[bi] - s[ai-1] >= ci 从每个ai-1到bi连长度为ci的有向边。       
+s[-1] = 0,以-1为起点求单源最长路。 
+
+ci <= bi -ai + 1,图中没有正环，差分约束一定有解
+
+```cpp
+
+//求最长路
+void spfa(){
+    queue<int> q;
+
+    for(int i = 0;i <= 50001;i++){
+        q.push(i);
+        st[i] = true;
+    }
+
+    while (q.size()) {
+        auto t = q.front();
+        q.pop();
+        st[t] = false;
+
+        for (int i = h[t]; ~i; i = ne[i]) {
+            int j = e[i];
+            if (dist[j] < dist[t] + w[i]) {
+                dist[j] = dist[t] + w[i];
+                if (!st[j]) {
+                    q.push(j);
+                    st[j] = true;
+                }
+            }
+        }
+    }
+}
+
+
+int main() {
+
+    cin >> n;
+    memset(h, -1, sizeof(h));
+    for (int i = 0; i < n; i++) {
+        int a, b, c;
+        cin >> a >> b >> c;
+        a++, b++;  // 0~50000  -> 1~50001
+        add(a - 1, b, c);
+    }
+
+    for (int i = 1; i <= 50001; i++) {
+        add(i - 1, i, 0);
+        add(i, i - 1, -1);
+    }
+
+    spfa();
+    cout << dist[50001] << endl;
+
+    return 0;
+}
+```
 
 AcWing367 学校网络
 
