@@ -467,7 +467,42 @@ for (int i = 1; i <= n; i++) {
 ```
 
 
-AcWing376 机器任务
+
+- AcWing376 机器任务
+
+https://www.acwing.com/solution/content/25058/
+
+一个任务可以被A、B机器的两种状态a[i]、b[i]完成，将任务看成一条边，两种状态看成两个端点。    
+所有任务就是从N+M-2个点中，选出最少的点，覆盖所有的边(任务)     
+二分图的最小点覆盖问题等价于最大匹配数--匈牙利算法。     
+
+```cpp
+//加入x能否使得匹配更多
+bool find(int x) {
+    //B的模式
+    for (int i = 0; i < m; i++) {
+        //g[x][i] = 1可以切换
+        if (!st[i] && g[x][i]) {
+            st[i] = true;
+            if (match[i] == -1 || find(match[i])) {
+                match[i] = x;
+                return true;
+            }
+        }
+    }
+    return false;
+}
+
+int res = 0;
+//A的模式
+for (int i = 0; i < n; i++) {
+	//加入i是否可以使匹配数增加
+	memset(st, false, sizeof(st));
+	if (find(i)) res++;
+}
+cout << res << endl;
+```
+
 
 AcWing378 骑士放置
 
