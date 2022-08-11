@@ -206,7 +206,81 @@ for (int i = 0; i < n - 1; i++) {
 AcWing352 闇の連鎖
 
 
-AcWing361 观光奶牛
+- AcWing361 观光奶牛
+
+二分 + SPFA求负环 + 0-1分数规划
+
+https://www.acwing.com/solution/content/6472/
+
+mid < Σf[vi]/ Σtime[ei] 
+
+对于每轮二分，建立一张新图，结构与原图相同，但是没有点权，有向边e=(x,y) 的权值是 mid *time[e] - fun[x]，即原本的边权乘上mid再减去入点的权值。    
+新图上，如果 Σ mid *time[ei] - fun[vi] < 0,则图中存在负环，用SPFA求负环，mid比答案小，则l = mid;     
+若最短路的求解正常结束，则r = mid。   
+
+SPFA判负环方法：
+
+```cpp
+//最短路包含的边数不超过n次, 超过n次就说明存在负环.   
+cnt[i] = cnt[j] + 1;
+if (cnt[i] > n) return false;
+```
+
+SPFA会多次出入队列，st[i]表示i是否在队列中
+
+```cpp
+void add(int a, int b, int c) {
+    e[idx] = b, w[idx] = c, ne[idx] = h[a], h[a] = idx++;
+}
+
+//是否存在负环
+bool spfa(double mid) {
+    for (int i = 1; i <= n; i++) {
+        dist[i] = 0;
+        cnt[i] = 0;
+        st[i] = false;
+    }
+
+    queue<int> q;
+    //st是否在队列中
+    for (int i = 1; i <= n; i++) {
+        q.push(i);
+        st[i] = true;
+    }
+
+    while (q.size()) {
+        auto t = q.front();
+        q.pop();
+        st[t] = false;
+
+        for (int i = h[t]; ~i; i = ne[i]) {
+            int j = e[i];
+            if (dist[j] > dist[t] + w[i] * mid - f[j]) {
+                dist[j] = dist[t] + w[i] * mid - f[j];
+                cnt[j] = cnt[t] + 1;
+
+                if (cnt[j] >= n) return true;
+                if (!st[j]) {
+                    q.push(j);
+                    st[j] = true;
+                }
+            }
+        }
+    }
+
+    return false;
+}
+
+
+double l = 0.0, r = 1e9;
+while (r - l > 1e-8) {
+	double mid = (l + r) / 2.0;
+	if (spfa(mid)) l = mid;
+	else r = mid;
+}
+cout << fixed << setprecision(2) << r << endl;
+
+```
 
 AcWing362 区间
 
