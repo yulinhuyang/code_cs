@@ -362,8 +362,69 @@ int main() {
 }
 ```
 
-AcWing367 学校网络
+- AcWing367 学校网络
 
+tarjan求有向图的强连通分量模板题
+
+在追溯值计算过程中，若从x回溯前，有low[x]=dfn(x)成立，则栈中从x到栈顶的所有节点构成一个强连通分量。
+
+tarjan算法求出所有强连通分量，并执行缩点过程，得到有向无环图。
+求有向无环图中零入度点的个数 a 
+最少加多少边，把图变成强连通图：max(p,q) p个零入度点，q个零出度点。  
+
+```cpp
+
+//tarjan模板
+void tarjan(int u) {
+    dfn[u] = low[u] = ++cnt;
+    stk[++tt] = u, in_stk[u] = true;
+    for (int i = h[u]; ~i; i = ne[i]) {
+        int j = e[i];
+        if (!dfn[j]) {
+            tarjan(j);
+            low[u] = min(low[u], low[j]);
+        } else if(in_stk[j]) {
+            low[u] = min(low[u], low[j]);
+        }
+    }
+
+    //x到栈顶所有节点是同一个强连通分量
+    if (dfn[u] == low[u]) {
+        int y;
+        ++num; //组号
+        do {
+            y = stk[tt--];
+            in_stk[y] = false;
+            id[y] = num;
+        } while (y != u);
+    }
+}
+
+
+//tarjan缩点
+for (int i = 1; i <= n; i++) {
+	if (!dfn[i]) {
+		tarjan(i);
+	}
+}
+
+//计算每个组的出度和入度
+for (int i = 1; i <= n; i++) {
+	for (int j = h[i]; ~j; j = ne[j]) {
+		int k = e[j];
+		if (id[k] != id[i]) {
+			din[id[k]]++;
+			dout[id[i]]++;
+		}
+	}
+}
+
+int a = 0, b = 0;
+for (int i = 1; i <= num; i++) {
+	if (!din[i]) a++;
+	if (!dout[i]) b++;
+}
+```
 AcWing368 银河
 
 AcWing372 棋盘覆盖
