@@ -427,7 +427,44 @@ for (int i = 1; i <= num; i++) {
 ```
 AcWing368 银河
 
-AcWing372 棋盘覆盖
+- AcWing 372 棋盘覆盖
+
+二分图匹配的模型两个要素：     
+0要素：节点能分成独立的两个集合，每个集合内部有0条边。     
+1要素：每个节点只能与1条匹配边相连。    
+
+匈牙利算法求最大匹配数
+
+AcWing 861 二分图的最大匹配: https://www.acwing.com/solution/content/5334/
+
+```cpp
+//加入t是否可以使匹配增多
+bool find(PII t) {
+    for (int i = 0; i < 4; i++) {
+        int a = t.first + dx[i], b = t.second + dy[i];
+        if (!a || a > n || !b || b > n || g[a][b] || st[a][b]) continue;
+
+        st[a][b] = true;
+        //如果{a,b}没有被匹配，或者{a,b}匹配的对象已经有其他可以匹配的了
+        if (!match[a][b].first || find(match[a][b])) {
+            match[a][b] = t;
+            return true;
+        }
+    }
+    return false;
+}
+
+int res = 0;
+//只取i+j为奇数的格子
+for (int i = 1; i <= n; i++) {
+	for (int j = 1; j <= n; j++) {
+		if ((i + j) % 2 == 0 || g[i][j]) continue;
+		//每轮模拟匹配
+		memset(st, false, sizeof(st));
+		if (find({i, j})) res++;
+	}
+}
+```
 
 
 AcWing376 机器任务
