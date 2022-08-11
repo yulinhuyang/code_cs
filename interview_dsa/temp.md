@@ -175,8 +175,33 @@ int main() {
 ```
 
 
-AcWing346 走廊泼水节
+- AcWing346 走廊泼水节
 
+Kruskal算法：对n个点的n-1边的权值从小到大排序，依次扫描每条边，结合并查集算法。 
+为了保证(x,y)一定在最小生成树中，必须让(x,y)是权值最小的边，新增的边权值取w + 1,Sx和Sy之间会增加|Sx|*|Sy|-1条边，累加(w+1)*(|Sx|*|Sy|-1)即可。      
+
+kruskal模板题  
+
+```cpp
+int n;
+struct Edge
+{
+    int a, b, w;
+    bool operator< (const Edge &t) const
+    {
+        return w < t.w;
+    }
+}e[N]
+
+for (int i = 0; i < n - 1; i++) {
+	int pa = find(e[i].a), pb = find(e[i].b), w = e[i].w;
+	if (pa != pb) {
+		res += (pSize[pa] * pSize[pb] - 1) * (w + 1);
+		pSize[pb] += pSize[pa];
+		p[pa] = pb;
+	}
+}
+```
 
 AcWing352 闇の連鎖
 
