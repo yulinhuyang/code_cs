@@ -504,7 +504,33 @@ cout << res << endl;
 ```
 
 
-AcWing378 骑士放置
+- AcWing 378. 骑士放置
+
+https://www.acwing.com/solution/content/25435/
+
+最大独立集 = n-最小点覆盖 = n-最大边匹配   
+
+最大独立集，选出最多的点使得选出的点之间没有边
+在二分图中,总共n个点，求最大独立集n-m(越大越好)则去掉的点数m越小越好
+找最小点覆盖所有m条边，找最大匹配m。
+
+```cpp
+int dx[8] = {-2, -1, 1, 2, 1, 2, -1, -2};
+int dy[8] = {1, 2, 2, 1, -2, -1, -2, -1};
+
+bool find(PII t) {
+    for (int i = 0; i < 8; i++) {
+        int a = t.first + dx[i], b = t.second + dy[i];
+        if (a < 1 || a > n || b < 1 || b > m || g[a][b] || st[a][b]) continue;
+        st[a][b] = true;
+        if (match[a][b].first == 0 || find(match[a][b])) {
+            match[a][b] = t;
+            return true;
+        }
+    }
+    return false;
+}
+```
 
 
 
