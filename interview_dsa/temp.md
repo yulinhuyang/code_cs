@@ -441,6 +441,25 @@ scc中无正环 <=> scc中的边==0 <=> scc中所有点相同 <=> 可近似看�
 那么当没有正环时,经过tarjan后的图就是topo图
 
 ```cpp
+memset(h, -1, sizeof(h));
+//差分
+for (int i = 1; i <= n; i++) {
+     //虚拟源点
+     add(h, 0, i, 1);
+}
+
+for (int i = 1; i <= m; i++) {
+        int t, a, b;
+        cin >> t >> a >> b;
+        if (t == 1) {
+            add(h, a, b, 0);
+            add(h, b, a, 0);
+        } else if (t == 2) add(h, a, b, 1);
+	else if (t == 3) add(h, b, a, 0);
+	else if (t == 4) add(h, b, a, 1);
+	else add(h, a, b, 0);
+}
+
 tarjan(0);
 bool success = true;
 for(int i=0;i<=n;i++)
