@@ -425,7 +425,63 @@ for (int i = 1; i <= num; i++) {
 	if (!dout[i]) b++;
 }
 ```
-AcWing368 银河
+
+
+- AcWing368 银河
+
+https://www.acwing.com/solution/content/24811/
+
+差分约束 + tarjan + 缩点建图 + topo序dp最长路
+
+求最小->求所有下界的最大->最长路 √
+求最大->求所有上界的最小->最短路
+
+scc中无正环 <=> scc中的边==0 <=> scc中所有点相同 <=> 可近似看成一个点
+
+那么当没有正环时,经过tarjan后的图就是topo图
+
+```cpp
+tarjan(0);
+bool success = true;
+for(int i=0;i<=n;i++)
+{
+	for(int j = h[i];~j;j=ne[j])
+	{
+		int k = e[j];
+		int a = id[i],b = id[k];
+		// 如果a和b在一个scc里,判断w[a][b]是否>0
+		if(a==b)
+		{
+			if(w[j]>0)
+			{
+				success = false;
+				break;
+			}
+		}
+		// 如果不在一个scc里 在新图里加一条边
+		else add(hs,a,b,w[j]);
+	}
+	if(!success) break;
+}
+if(!success) cout << "-1";
+else
+{
+	// 有解 求最长路
+	for(int i = scc_cnt;i;i--)
+	{
+		for(int j = hs[i];~j;j=ne[j])
+		{
+			int k = e[j];
+			dist[k] = max(dist[k],dist[i]+w[j]);
+		}
+	}
+	LL res = 0;
+	// 结果 = 新图里每个scc的距离 * scc里的点数 = dist[scc] * cnt[scc] 
+	for(int i=1;i<=scc_cnt;i++) res+=(LL)dist[i]*scc_size[i];
+	cout << res;
+}
+```
+
 
 - AcWing 372 棋盘覆盖
 
