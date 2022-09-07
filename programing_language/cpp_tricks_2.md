@@ -30,3 +30,8 @@ int main() {
 size_t 反向循环，不能i >= 0,int的可以
 
 explicit关键字用来修饰类的构造函数，被修饰的构造函数的类，不能发生相应的隐式类型转换，只能以显示的方式进行类型转换。
+
+boost生成和解析json: https://blog.csdn.net/baidu_41388533/article/details/119714125
+
+
+
