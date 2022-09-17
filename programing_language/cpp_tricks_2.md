@@ -39,3 +39,6 @@ C++17 filesystem 文件系统: https://blog.csdn.net/qq_40946921/article/details
 
 C++json解析库：   https://github.com/nlohmann/json
 
+json库nlohmann简单使用教程: https://blog.csdn.net/u011341856/article/details/108797920
+
+
