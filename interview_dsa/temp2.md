@@ -45,13 +45,32 @@ SkipList的原理与实现： https://zhuanlan.zhihu.com/p/33674267
 
 ##### C++ 运算符重载
 
-返回值 operator 重载符号  参数列表
+**返回值 operator 重载符号  参数列表**
 
 成员函数：Box operator+(const Box&);
 
 非成员函数： Box operator+(const Box&, const Box&);
 
 ##### C++ 匿名函数
+
+**捕获 参数列表 函数体**
+
+[](int x, int y) { return x + y; } // 隐式返回类型
+
+[](int& x) { ++x; }   //引用
+
+
+参数列表：
+
+[]        //未定义变量.试图在Lambda内使用任何外部变量都是错误的.
+[x, &y]   //x 按值捕获, y 按引用捕获.
+[&]       //用到的任何外部变量都隐式按引用捕获
+[=]       //用到的任何外部变量都隐式按值捕获
+
+
+
+
+
 
 
 
