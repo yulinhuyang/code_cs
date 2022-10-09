@@ -71,6 +71,13 @@ SkipList的原理与实现： https://zhuanlan.zhihu.com/p/33674267
 [=]       //用到的任何外部变量都隐式按值捕获
 
 
+Sort后面的参数:
+
+1. 函数指针，自己实现cmp函数
+ 
+2. 类的仿函数，定义一个类，里面直接bool operator(){…}
+
+3. lambda函数，[] (const int u,const int v){return u.w < v.w ;}
 
 
 
