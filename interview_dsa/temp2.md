@@ -42,3 +42,18 @@ LSM树详解: https://zhuanlan.zhihu.com/p/181498475
 SkipList的原理与实现： https://zhuanlan.zhihu.com/p/33674267
 
 桶排序： https://www.acwing.com/blog/content/8989/
+
+##### C++ 运算符重载
+
+返回值 operator 重载符号  参数列表
+
+成员函数：Box operator+(const Box&);
+
+非成员函数： Box operator+(const Box&, const Box&);
+
+##### C++ 匿名函数
+
+
+
+
+
