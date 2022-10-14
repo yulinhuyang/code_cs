@@ -45,7 +45,7 @@ SkipList的原理与实现： https://zhuanlan.zhihu.com/p/33674267
 
 ##### C++ 运算符重载
 
-**返回值 operator 重载符号  参数列表 + 函数体**
+**返回值 operator 重载符号  参数列表  + const(可选) + 函数体**
 
 成员函数：Box operator+(const Box&);
 
