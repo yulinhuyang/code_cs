@@ -257,6 +257,41 @@ S[x2, y2] - S[x1 - 1, y2] - S[x2, y1 - 1] + S[x1 - 1, y1 - 1]
 
 S[x1, y1] += c, S[x2 + 1, y1] -= c, S[x1, y2 + 1] -= c, S[x2 + 1, y2 + 1] += c
 
+构建差分数组 -> 记录操作变化 -> 恢复变化后的数组
+
+差分和前缀和互为逆运算，有效索引需要从1开始
+
+
+```cpp
+//AcWing797 差分
+//b是a的差分，对a所有操作包括读入，都直接施加在b上。
+int a[N], b[N];
+
+void insert(int l, int r, int c) {
+    b[l] += c;
+    b[r + 1] -= c;
+}
+
+int main() {
+    cin >> n >> m;
+    for (int i = 1; i <= n; i++) {
+        cin >> a[i];
+        insert(i, i, a[i]);
+    }
+
+    int l, r, c;
+    while (m--) {
+        cin >> l >> r >> c;
+        insert(l, r, c);
+    }
+    for (int i = 1; i <= n; i++) {
+        a[i] = a[i - 1] + b[i];
+        cout << a[i] << " ";
+    }
+}
+```
+
+
 列方向压缩前缀和：AcWing126 最大的和  
 
 ```cpp
@@ -326,21 +361,36 @@ double bsearch_3(double l, double r)
 
 模板题 AcWIng 799. 最长连续不重复子序列
 
-AcWing 800. 数组元素的目标和
-
-	for (int i = 0, j = 0; i < n; i ++ )
-	{
-		while (j < i && check(i, j)) j ++ ;
-	
-		// 具体问题的逻辑
+```cpp
+//AcWing 799 最长连续不重复子序列
+for (int i = 0, j = 0; i < n; i++) {
+	cin >> a[i];
+	s[a[i]]++;
+	while (j < i && s[a[i]] > 1) {
+		s[a[j]]--;
+		j++;
 	}
+	ans = max(ans, i - j + 1);
+}
+```
 
+AcWing 800. 数组元素的目标和
+```cpp
+for (int i = 0, j = 0; i < n; i ++ )
+{
+	while (j < i && check(i, j)) j ++ ;
+
+	// 具体问题的逻辑
+}
+```
 常见问题分类：
     (1) 对于一个序列，用两个指针维护一段区间
     (2) 对于两个序列，维护某种次序，比如归并排序中合并两个有序序列的操作
 
 
 #### 排序
+
+快排是先合后分(递归)，归并是先分(递归)后合
 
 **快速排序(快选)算法模板** 
 
@@ -1238,7 +1288,9 @@ memset(h, -1, sizeof h);
 
 时间复杂度 O(n+m)O(n+m), nn 表示点数，mm 表示边数
 
-(1) 深度优先遍历 —— 模板题 AcWing 846. 树的重心
+#####  深度优先遍历DFS
+
+(0) 模板题 AcWing 846. 树的重心
 
 ```cpp
 int dfs(int u)
@@ -1252,8 +1304,114 @@ int dfs(int u)
     }
 }
 ```
+(1) memo 存储
 
-(2) 宽度优先遍历 —— 模板题 AcWing 847. 图中点的层次
+记忆化dfs,memo,既当visit又存储值；在DFS搜索回溯之后，得到返回的结果
+
+```cpp
+//AcWing 901. 滑雪
+int dfs(int i, int j) {
+    //memo 既当visit,又存储值
+    if (memo[i][j] != -1) return memo[i][j];
+    //最小是1
+    memo[i][j] = 1;
+    for (int k = 0; k < 4; k++) {
+        int newX = i + dx[k], newY = j + dy[k];
+        if (newX >= 1 && newX <= n && newY >= 1 && newY <= m && g[newX][newY] < g[i][j]) {
+            memo[i][j] = max(memo[i][j], dfs(newX, newY) + 1);
+        }
+    }
+    return memo[i][j];
+}
+
+int dfs(int i, int j) {
+    //memo 既当visit,又存储值
+    if (memo[i][j] != -1) return memo[i][j];
+    //最小是1
+    memo[i][j] = 1;
+    for (int k = 0; k < 4; k++) {
+        int newX = i + dx[k], newY = j + dy[k];
+        if (newX >= 1 && newX <= n && newY >= 1 && newY <= m && g[newX][newY] < g[i][j]) {
+            memo[i][j] = max(memo[i][j], dfs(newX, newY) + 1);
+        }
+    }
+    return memo[i][j];
+}
+```
+
+(2) 回溯标记法
+
+```cpp
+//AcWing 843. n-皇后问题
+char g[N][N];
+bool col[N], dg[N * 2], udg[N * 2]; // dfs 行，列和主副对角线的标记法
+int n;
+
+void dfs(int u) {
+    if (u == n) {
+        for (int i = 0; i < n; i++) cout << g[i] << endl;
+        cout << endl;
+    }
+
+    for (int i = 0; i < n; i++) {
+        if (!col[i] && !dg[u + i] && !udg[n + u - i]) {
+            col[i] = dg[u + i] = udg[n + u - i] = true;
+            g[u][i] = 'Q';
+            dfs(u + 1);
+            g[u][i] = '.';
+            col[i] = dg[u + i] = udg[n + u - i] = false;
+        }
+    }
+
+}
+```
+
+(3) 剪枝
+
+优化搜索顺序、排除等效冗余、可行性剪枝（上下界）、最优性剪枝、记忆化(v memo)
+
+```cpp
+//AcWing167 木棒
+
+bool dfs(int u, int cur, int start)
+{
+    if (u * length == sum) return true; //如果总长度到达了,返回true
+    if (cur == length) return dfs(u + 1, 0, 0);
+
+    for (int i = start; i < n; i ++ )
+    {
+        if (st[i] || cur + w[i] > length) continue;
+
+        st[i] = true;
+        if (dfs(u, cur + w[i], i + 1)) return true;
+        st[i] = false;
+
+        if (!cur || cur + w[i] == length) return false; //如果第一根失败了或者最后一根失败了,就一定失败
+
+        int j = i;
+        while (j < n && w[j] == w[i]) j ++ ; //如果i失败了,那么长度跟i一样的棍子也一定失败
+        i = j - 1;
+    }
+
+    return false; //枚举完了还没有成功,就返回失败
+}
+```
+
+
+
+
+##### 宽度优先遍历BFS
+
+1  最短路BFS: 问题只计最少步数，等价于在边权为1的图上求最短路。 使用普通的BFS,时间复杂度是O(n),每个状态只访问(入队)一次。第一次入队时即为该状态的最少步数。
+
+2  多源BFS: 0-1矩阵距离问题, 超级虚拟源点，第一次访问即最短
+
+3  双端队列广搜：问题每次扩展的代价是0或1，等价于在边权只有0和1的图上求最短路, 时间复杂度是O(N), 如果这条分支边权为0，则从队首入队，否则从队尾入队。每个状态被更新(入队)多次，只扩展一次，第一次出队时即为该状态的最小代价。
+
+4  双向广搜：密码锁问题、8数码问题、单词接龙
+
+
+(0)  模板题 AcWing 847. 图中点的层次
 
 ```cpp
 queue<int> q;
@@ -1277,8 +1435,40 @@ while (q.size())
 }
 ```	
 
-```C++
-//双向bfs 模板题： AcWing190 字串变换
+(1) 普通bfs(最短路bfs): AcWing 844 走迷宫
+
+```cpp
+int bfs() {
+    queue<PII> q;
+    int dx[4] = {-1, 0, 1, 0}, dy[4] = {0, 1, 0, -1};
+
+    memset(d, -1, sizeof(d));
+    q.push({0, 0});
+    d[0][0] = 0;
+    while (q.size()) {
+        auto t = q.front();
+        q.pop();
+
+        //普通bfs,这里不走回头路
+        for (int i = 0; i < 4; i++) {
+            int x = t.first + dx[i], y = t.second + dy[i];
+            if (x >= 0 && x < n && y >= 0 && y < m && g[x][y] == 0 && d[x][y] == -1) {
+                d[x][y] = d[t.first][t.second] + 1;
+                q.push({x, y});
+            }
+        }
+    }
+
+    return d[n - 1][m - 1];
+}
+```
+
+
+(2) 多源bfs: leetcode 542 01 矩阵
+
+(3) 双向bfs: AcWing190 字串变换
+
+```cpp
 
 int extend(queue<string>& q, unordered_map<string, int>&da, unordered_map<string, int>& db, 
     string a[N], string b[N])
@@ -1326,8 +1516,9 @@ int bfs()
 
     return -1;
 }
-
 ```
+
+
 
 #### 模拟退火
 
@@ -2432,72 +2623,70 @@ void extend(char c)
 
 #### 线性DP
 
-LIS/LDS模板         
+(1) LIS 普通模板：Acwing 895. 最长上升子序列
 
 ```cpp
-const int N = 5010;
-int a[N];
-int f[N], g[N]; //f[i]以i结尾的子序列长度, g[i]以i结尾的方案数
 int n;
- 
-
-g[0] = 1;
 for (int i = 1; i <= n; i++) {
-	for (int j = 0; j < i; j++) {
-		//序列长度继承
-		if (!j || a[i] < a[j]) f[i] = max(f[i], f[j] + 1);
-	}
-
+	f[i] = 1;
 	for (int j = 1; j < i; j++) {
-		//相同值的只考虑最后一个
-		if (a[j] == a[i]) {
-			f[j] = 0;
-		}
-	}
-	for (int j = 0; j < i; j++) {
-		if ((!j || a[i] < a[j]) && f[i] == f[j] + 1) {
-			// 方案数继承
-			g[i] += g[j];
+		if (a[i] > a[j]) {
+			f[i] = max(f[i], f[j] + 1);
 		}
 	}
 }
-int res = 0;
-for (int i = 0; i <= n; i++) {
-	res = max(res, f[i]);
-}
-int cnt = 0;
-for (int i = 1; i <= n; i++) {
-	if (f[i] == res){
-		cnt += g[i];
-	};  //回溯方案
-}
-cout << res << " " << cnt << endl;
 
+int res = 0;
+for (int i = 1; i <= n; i++) res = max(res, f[i]);
 ```
 
-LCS模板
+(2) LIS二分模板：Acwing 896. 最长上升子序列 II
 
 ```cpp
+int a[N], q[N];
+int n;
+
+int len = 0;
+for (int i = 1; i <= n; i++) {
+	int l = 0, r = len;
+	//寻找严格右边界
+	while (l < r) {
+		int mid = l + r + 1 >> 1;
+		if (q[mid] < a[i]) l = mid;
+		else r = mid - 1;
+	}
+	len = max(len, r + 1);
+	q[r + 1] = a[i];
+}
+```
+
+(3) LCS模板:AcWing 897. 最长公共子序列， 变形，编辑距离等
+
+```cpp
+#include <iostream>
+
+using namespace std;
+
+const int N = 10010, M = 10010;
+char a[N], b[M];
+int f[N][M];
+int n, m;
 
 int main() {
-    cin >> s1 + 1 >> s2 + 1;
-    n = strlen(s1 + 1), m = strlen(s2 + 1);
-
-    //反向迭代方便dfs正向求方案
-    //注意dfs的遍历方向和公式的关系
-    for (int i = n; i; i--) {
-        for (int j = m; j; j--) {
-            if (s1[i] == s2[j]) {
-                f[i][j] = f[i + 1][j + 1] + 1;
-            }
-            else {
-                f[i][j] = max(f[i + 1][j], f[i][j + 1]);
+    cin >> n >> m;
+    cin >> a + 1;
+    cin >> b + 1;
+    //LCS模板
+    for (int i = 1; i <= n; i++) {
+        for (int j = 1; j <= m; j++) {
+            f[i][j] = max(f[i - 1][j], f[i][j - 1]);
+            if (a[i] == b[j]) {
+                f[i][j] = max(f[i][j], f[i - 1][j - 1] + 1);
             }
         }
     }
 
-    //反向dfs求方案
-    dfs(1, 1, 1, f[1][1]);
+    cout << f[n][m];
 
     return 0;
 }
@@ -2505,7 +2694,9 @@ int main() {
 
 #### 背包DP
 
-0-1 背包:  
+(1) 0-1 背包:  
+
+AcWing 2 01背包问题
 
 ```C++
 //二循环二维
@@ -2529,7 +2720,7 @@ for (int i = 1; i <= n; i++) {
 }
 ```
 
-完全背包： 
+(2) 完全背包： 
 
 完全背包优化：三循环二维数组--> 二循环二维数组--> 二循环一维数组
   
@@ -2560,22 +2751,48 @@ for (int i = 1; i <= n; i++) {
 }
 ```
 
-分组背包：
+(3) 分组背包：
+
+ AcWing 9 分组背包问题
 
 ```C++
+//三循环二维
 f[N][N]; //只从前i组物品中选，当前体积小于等于j的最大值,每个组只能选一个。
-//三循环二维,
+//物品
 for (int i = 1; i <= n; i++) {
+	//体积
 	for (int j = 0; j <= m; j++) {
-		f[i][j] = f[i - 1][j];  //不选
-		for (int k = 0; k < s[i]; k++) {  //
-			if (j >= v[i][k]) f[i][j] = max(f[i][j], f[i - 1][j - v[i][k]] + w[i][k]);
+		f[i][j] = f[i - 1][j];
+		//决策
+		for (int k = 0; k < s[i]; k++) {
+			if (j >= v[i][k]) {
+				f[i][j] = max(f[i][j], f[i-1][j - v[i][k]] + w[i][k]);
+			}
 		}
 	}
 }
+cout << f[n][m] << endl;
 ```
 
-多重背包:   
+```cpp
+//三循环一维
+//物品
+for (int i = 1; i <= n; i++) {
+	//体积
+	//f[i][j]需要从f[i - 1][j]计算来的，去掉一维需要反向
+	for (int j = m; j >= 0; j--) {
+		//决策
+		for (int k = 0; k < s[i]; k++) {
+			if (j >= v[i][k]) {
+				f[j] = max(f[j], f[j - v[i][k]] + w[i][k]);
+			}
+		}
+	}
+}
+cout << f[m] << endl;
+```
+
+(4) 多重背包:   
  
 第i个物品选0~s[i]个
 
@@ -2595,7 +2812,10 @@ for (int i = 1; i <= n; i ++ ) //循环各组
             f[j] = max(f[j], f[j - v[i]*k] + w[i]*k);
 ```
 
-混合背包：01背包(1类物品用1次) + 完全背包(2类物品无限用) + 多重背包(3类物品用si次)
+(5) 混合背包：
+
+01背包(1类物品用1次) + 完全背包(2类物品无限用) + 多重背包(3类物品用si次)
+
 ```C++
 for (int i = 0; i < n; i++) {
 	if (!s[i]) {
@@ -2617,7 +2837,7 @@ for (int i = 0; i < n; i++) {
 }
 ```
 
-二维费用背包
+(6) 二维费用背包
 
 ```C++
 //f[i][j][k] 表示考虑前i个物品，且容量不超过j，总重量不超过k的集合下能获得的最大价值
@@ -2632,7 +2852,7 @@ for (int i = 0; i < n; i++) {
 ```
 
 
-对比模板：
+(7)  对比模板：
 
 二重循环二维数组对比：
 
@@ -3092,6 +3312,12 @@ int spfa()
 
 时间复杂度是 O(nm), n 表示点数，m 表示边数
 
+Bellman-Ford 算法判断负环: 若经过n 轮迭代，算法仍未结束（仍有能力产生更新的边），则图中存在负环.
+
+1 设cnt[N]表示从1到 x 的最短路径包含的边数，cnt[1]=0 。当执行更新 dist[y]=dist[x]+z 时，同样更新cnt[y]=cnt[x]+1 。若发现cnt[y]≥n ，则图中有负环。若算法正常结束，则图中没有负环。 
+
+2 统计每个点入队的次数，如果某个点入队 n 次，则存在负环。
+
 ```cpp
 int n;      // 总点数
 int h[N], w[N], e[N], ne[N], idx;       // 邻接表存储所有边
@@ -3366,6 +3592,12 @@ void tarjan(int u, int from)
 
 时间复杂度是 O(n2+m), n 表示点数，m 表示边数
 
+朴素Prim求解最小生成树的方法与Dijkstra算法很相似，可以参考学习。
+
+朴素Prim算法通过n次遍历来确定n个点，首先将寻找到的距离集合最近的点，将这个点加入集合，再拿这个点来更新不在集合中的点离集合距离。每次遍历是先找点，再更新其他点的距离，这与Dijkstra算法相同。
+
+堆优化版的Prim算法和堆优化的Dijkstra算法也很相似，时间复杂度也相同。所以一般在求解稀疏图时，不用堆优化的Prim,而是用Kruskal算法，Kruskal算法的时间复杂度为O(mlogm)与O(mlogn)差不多，所以在求解稀疏图时用Kruskal算法。
+
 ```cpp
 int n;      // n表示点数
 int g[N][N];        // 邻接矩阵，存储所有边
@@ -3460,35 +3692,47 @@ int n;      // n表示点数
 int h[N], e[M], ne[M], idx;     // 邻接表存储图
 int color[N];       // 表示每个点的颜色，-1表示未染色，0表示白色，1表示黑色
 
-// 参数：u表示当前节点，c表示当前点的颜色
-bool dfs(int u, int c)
-{
-    color[u] = c;
-    for (int i = h[u]; i != -1; i = ne[i])
-    {
-        int j = e[i];
-        if (color[j] == -1)
-        {
-            if (!dfs(j, !c)) return false;
-        }
-        else if (color[j] == c) return false;
-    }
+void add(int a, int b) {
+    e[idx] = b, ne[idx] = h[a], h[a] = idx++;
+}
 
+//u节点,c颜色
+//0未图色，1白色，2黑色
+bool dfs(int u, int c) {
+    color[u] = c;
+    for (int i = h[u]; i != -1; i = ne[i]) {
+        int j = e[i];
+        if (!color[j]) {
+            if (!dfs(j, 3 - c)) return false;
+        } else if (color[j] == c) {
+            return false;
+        }
+    }
     return true;
 }
 
-bool check()
-{
-    memset(color, -1, sizeof color);
+int main() {
+
+    cin >> n >> m;
+    memset(h, -1, sizeof(h));
+    while (m--) {
+        int a, b;
+        cin >> a >> b;
+        add(a, b);
+    }
+
     bool flag = true;
-    for (int i = 1; i <= n; i ++ )
-        if (color[i] == -1)
-            if (!dfs(i, 0))
-            {
+    for (int i = 1; i <= n; i++) {
+        if (!color[i]) {
+            if (!dfs(i, 1)) {
                 flag = false;
                 break;
             }
-    return flag;
+        }
+    }
+    if (flag) cout << "Yes" << endl;
+    else cout << "No" << endl;
+    return 0;
 }
 ```
 
