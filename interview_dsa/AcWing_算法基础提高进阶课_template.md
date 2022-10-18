@@ -555,16 +555,11 @@ while (start <= n) {
 ```
 
 
-#### 区间合并 
+#### 贪心模板
 
 贪心问题一般都需要排序，邻项交换技巧，需要制定排序规则，根据区间起点、终点、两数乘积、两数(字符串)之和等
 
-```cpp
-//国王不参与排序
-sort(nums + 1, nums + n + 1, [](PII & a, PII & b) {
-	return a.first * a.second < b.first * b.second;
-});
-```
+（1） 区间合并
 
 模板题 AcWing 803. 区间合并
 
@@ -590,6 +585,87 @@ void merge(vector<PII> &segs)
     
     segs = res;
 }
+```
+
+(2) 区间选点模板：AcWing 905. 区间选点
+
+```cpp
+struct Range {
+    int l, r;
+    bool operator<(const Range &w) const {
+        return r < w.r;
+    }
+} range[N];
+
+//r递增排序
+sort(range, range + n);
+int res = 0, ed = -2e9;
+for (int i = 0; i < n; i++) {
+	if (ed < range[i].l) {
+		ed = range[i].r;
+		res++;
+	}
+}
+```
+
+(3) 区间覆盖模板: AcWing 907. 区间覆盖
+
+```cpp
+struct Range {
+    int l, r;
+
+    bool operator<(const Range &w) const {
+        return l < w.l;
+    }
+} range[N];
+
+
+//l升序
+sort(range, range + n);
+int res = 0;
+bool success = false;
+for (int i = 0; i < n; i++) {
+	int j = i, r = -2e9;
+	//贪心：寻找最靠后的符合条件的区间
+	while (j < n && range[j].l <= st) {
+		r = max(r, range[j].r);
+		j++;
+	}
+	if (r < st) {
+		res = -1;
+		break;
+	}
+	res++;
+	if (r >= ed) {
+		success = true;
+		break;
+	}
+	st = r;
+	i = j - 1;
+}
+```
+
+(4) 排序不等式 AcWing 913. 排队打水
+
+排序 + 邻项交换
+
+```cpp
+// a1(n-1) + a2(n-2) ..最小，等价于 a1*1 +a2*2最大,则ai降序排列
+cin >> n;
+for (int i = 0; i < n; i++) {
+	cin >> a[i];
+}
+sort(a, a + n);
+reverse(a, a + n);
+int res = 0;
+for (int i = 0; i < n; i++) res += i * a[i];
+```
+
+```cpp
+//国王不参与排序
+sort(nums + 1, nums + n + 1, [](PII & a, PII & b) {
+	return a.first * a.second < b.first * b.second;
+});
 ```
 
 #### 马拉车算法
