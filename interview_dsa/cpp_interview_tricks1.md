@@ -858,16 +858,44 @@ b.flip()    //等价于~
 b.flip(k)   //把第k位取反
 ```	
 	
-#### 13 lambda表达式用法
+#### 13 lambda与重载
 
+##### lambda表达式用法
+	
 [capture list] (params list) mutable exception-> return type { function body }
 
-函数名相当于使用[]代替了
+**捕获 参数列表 函数体**
 	
+函数名相当于使用[]代替了
+
+```cpp
 //用于复杂的逻辑比较
-sort(lbvec.begin(), lbvec.end(), [](int a, int b) -> bool { return a < b; });   // Lambda表达式
+sort(lbvec.begin(), lbvec.end(), [](int a, int b) -> bool { return a < b; });   // Lambda表达式  
+[](int x, int y) { return x + y; } // 隐式返回类型 
+[](int& x) { ++x; }   //引用
 
+参数列表：
+[]        //未定义变量.试图在Lambda内使用任何外部变量都是错误的.
+[x, &y]   //x 按值捕获, y 按引用捕获.
+[&]       //用到的任何外部变量都隐式按引用捕获
+[=]       //用到的任何外部变量都隐式按值捕获
+```
 
+Sort后面的参数:
+	```cpp
+	1. 函数指针，自己实现cmp函数
+	2. 类的仿函数，定义一个类，里面直接bool operator(){…}
+	3. lambda函数，[] (const int u,const int v){return u.w < v.w ;}
+	```									 
+
+##### C++ 运算符重载
+
+**返回值 operator 重载符号  参数列表  + const(可选) + 函数体**
+
+成员函数：Box operator+(const Box&);
+
+非成员函数： Box operator+(const Box&, const Box&);		
+	
 #### 14 指针的使用 与new
 
 ```python
