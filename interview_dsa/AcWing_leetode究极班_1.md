@@ -1,3 +1,5 @@
+LeetCode究极班：https://www.acwing.com/activity/content/activity_person/content/29799/1/
+
 ### 究极班——Week 1（第1-10题）
 
 #####  LeetCode  1. 两数之和
