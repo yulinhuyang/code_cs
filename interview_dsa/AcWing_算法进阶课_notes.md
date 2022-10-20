@@ -18,3 +18,8 @@ LSM树详解: https://zhuanlan.zhihu.com/p/181498475
 #### SkipList
 
 SkipList的原理与实现： https://zhuanlan.zhihu.com/p/33674267
+
+#### KD Tree
+
+KD-Tree原理详解: https://zhuanlan.zhihu.com/p/112246942
+
