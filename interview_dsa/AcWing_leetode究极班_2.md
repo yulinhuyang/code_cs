@@ -12666,3 +12666,3730 @@ public:
     }
 };
 ```
+
+
+
+
+### 究极班- Week 54(第 1154 ~ 1157、1160 ~ 1163、1169 ~ 1172、1175、1177、1178、1184 ~ 1187、1189 题)
+
+#####  LeetCode 1154. 一年中的第几天
+```cpp
+class Solution {
+public:
+    int is_leap(int year) {
+        if (year % 4 == 0 && year % 100 || year % 400 == 0)
+            return 1;
+        return 0;
+    }
+
+    int dayOfYear(string date) {
+        const int days[13] = {
+            0, 31, 28, 31, 30, 31, 30, 31, 31, 30, 31, 30, 31
+        };
+        int year, month, day;
+        sscanf(date.c_str(), "%d-%d-%d", &year, &month, &day);
+        int res = 0;
+        for (int i = 1; i < month; i ++ ) {
+            res += days[i];
+            if (i == 2) res += is_leap(year);
+        }
+        return res + day;
+    }
+};
+```
+#####  LeetCode 1155. 掷骰子的N种方法
+```cpp
+class Solution {
+public:
+    int numRollsToTarget(int n, int k, int target) {
+        const int MOD = 1e9 + 7;
+        vector<int> f(target + 1);
+        f[0] = 1;
+        for (int i = 1; i <= n; i ++ ) {
+            for (int j = target; j >= 0; j -- ) {
+                f[j] = 0;
+                for (int u = 1; u <= k && u <= j; u ++ ) {
+                    f[j] = (f[j] + f[j - u]) % MOD;
+                }
+            }
+        }
+        return f[target];
+    }
+};
+```
+#####  LeetCode 1156. 单字符重复子串的最大长度
+```cpp
+class Solution {
+public:
+    int maxRepOpt1(string s) {
+        vector<int> p[26];
+        for (int i = 0; i < s.size(); i ++ ) {
+            p[s[i] - 'a'].push_back(i);
+        }
+
+        int res = 0;
+        for (auto q: p) {
+            for (int i = 0, j = 0; i < q.size(); i ++ ) {  // 中间有一个空位
+                while (q[i] - q[j] > i - j + 1) j ++ ;
+                if ((i + 1 < q.size() || j)) {
+                    res = max(res, q[i] - q[j] + 1);
+                }
+            }
+
+            for (int i = 0, j = 0; i < q.size(); i ++ ) {  // 中间有一个空位
+                while (q[i] - q[j] > i - j) j ++ ;
+                int t = q[i] - q[j] + 1;
+                if (i + 1 < q.size() || j) t ++ ;
+                res = max(res, t);
+            }
+        }
+
+        return res;
+    }
+};
+
+```
+#####  LeetCode 1157. 子数组中占绝大多数的元素
+```cpp
+class MajorityChecker {
+public:
+    int n, len;
+    unordered_map<int, int> cnt;
+    unordered_map<int, vector<int>> s;
+    vector<int> a;
+
+    MajorityChecker(vector<int>& arr) {
+        n = arr.size();
+        len = sqrt(n * 2);
+        a = arr;
+
+        for (auto x: a) cnt[x] ++ ;
+        for (auto& [k, v]: cnt) {
+            if (v > len) {
+                s[k] = vector<int>(n + 1);
+                for (int i = 1; i <= n; i ++ ) {
+                    s[k][i] = s[k][i - 1];
+                    if (a[i - 1] == k) s[k][i] ++ ;
+                }
+            }
+        }
+    }
+
+    int query(int left, int right, int threshold) {
+        if (right - left + 1 <= len) {
+            cnt.clear();
+            for (int i = left; i<= right; i ++ ) {
+                if ( ++ cnt[a[i]] >= threshold) {
+                    return a[i];
+                }
+            }
+        } else {
+            for (auto& [k, v]: s) {
+                if (v[right + 1] - v[left] >= threshold) {
+                    return k;
+                }
+            }
+        }
+
+        return -1;
+    }
+};
+
+/**
+ * Your MajorityChecker object will be instantiated and called as such:
+ * MajorityChecker* obj = new MajorityChecker(arr);
+ * int param_1 = obj->query(left,right,threshold);
+ */
+
+```
+#####  LeetCode 1160. 拼写单词
+```cpp
+class Solution {
+public:
+    int countCharacters(vector<string>& words, string chars) {
+        unordered_map<char, int> hw, hc;
+        for (auto c: chars) hc[c] ++ ;
+
+        int res = 0;
+        for (auto& w: words) {
+            hw.clear();
+            bool flag = true;
+            for (auto c: w) {
+                if ( ++ hw[c] > hc[c]) {
+                    flag = false;
+                    break;
+                }
+            }
+
+            if (flag) res += w.size();
+        }
+
+        return res;
+    }
+};
+
+```
+#####  LeetCode 1161. 最大层内元素和
+```cpp
+/**
+ * Definition for a binary tree node.
+ * struct TreeNode {
+ *     int val;
+ *     TreeNode *left;
+ *     TreeNode *right;
+ *     TreeNode() : val(0), left(nullptr), right(nullptr) {}
+ *     TreeNode(int x) : val(x), left(nullptr), right(nullptr) {}
+ *     TreeNode(int x, TreeNode *left, TreeNode *right) : val(x), left(left), right(right) {}
+ * };
+ */
+class Solution {
+public:
+    vector<int> sum;
+
+    void dfs(TreeNode* root, int depth) {
+        if (!root) return;
+        if (depth > sum.size()) sum.push_back(0);
+        sum[depth - 1] += root->val;
+        dfs(root->left, depth + 1);
+        dfs(root->right, depth + 1);
+    }
+
+    int maxLevelSum(TreeNode* root) {
+        dfs(root, 1);
+
+        int mx = -2e9, res = 0;
+        for (int i = 0; i < sum.size(); i ++ ) {
+            if (mx < sum[i]) {
+                mx = sum[i];
+                res = i + 1;
+            }
+        }
+
+        return res;
+    }
+};
+
+```
+#####  LeetCode 1162. 地图分析
+```cpp
+#define x first
+#define y second
+
+typedef pair<int, int> PII;
+
+class Solution {
+public:
+    int maxDistance(vector<vector<int>>& g) {
+        int n = g.size(), m = g[0].size(), INF = 1e8;
+        vector<vector<int>> dist(n, vector<int>(m, INF));
+        queue<PII> q;
+        for (int i = 0; i < n; i ++ ) 
+            for (int j = 0; j < m; j ++ )
+                if (g[i][j]) {
+                    dist[i][j] = 0;
+                    q.push({i, j});
+                }
+
+        int dx[4] = {-1, 0, 1, 0}, dy[4] = {0, 1, 0, -1};
+        while (q.size()) {
+            auto t = q.front();
+            q.pop();
+            for (int i = 0; i < 4; i ++ ) {
+                int x = t.x + dx[i], y = t.y + dy[i];
+                if (x < 0 || x >= n || y < 0 || y >= m) continue;
+                if (dist[x][y] >dist[t.x][t.y] + 1) {
+                    dist[x][y] = dist[t.x][t.y] + 1;
+                    q.push({x, y});
+                }
+            }
+        }
+
+        int res = -1;
+        for (int i = 0; i < n; i ++ )
+            for (int j = 0; j < m; j ++ )
+                if (!g[i][j])
+                    res = max(res, dist[i][j]);
+
+        if (res == INF) res = -1;
+        return res;
+    }
+};
+
+```
+#####  LeetCode 1163. 按字典序排在最后的子串
+```cpp
+typedef unsigned long long ULL;
+const int N = 400010, P = 13331;
+
+ULL p[N], h[N];
+
+class Solution {
+public:
+    int n;
+
+    ULL get(int l, int r) {
+        return h[r] - h[l - 1] * p[r - l + 1];
+    }
+
+    bool cmp(int a, int b, string& s) {
+        if (a > b) return !cmp(b, a, s);
+
+        int l = 0, r = n - b + 1;
+        while (l < r) {
+            int mid = l + r + 1 >> 1;
+            if (get(a, a + mid - 1) == get(b, b + mid - 1)) l = mid;
+            else r = mid - 1;
+        }
+
+        if (r == n - b + 1) return false;
+        return s[a + r - 1] < s[b + r - 1];
+    }
+
+    string lastSubstring(string s) {
+        n = s.size();
+        p[0] = 1;
+        for (int i = 1; i <= n; i ++ ) {
+            p[i] = p[i - 1] * P;
+            h[i] = h[i - 1] * P + s[i - 1];
+        }
+
+        int res = 1;
+        for (int i = 2; i <= n; i ++ ) {
+            if (cmp(res, i, s)) {
+                res = i;
+            }
+        }
+
+        return s.substr(res - 1);
+    }
+};
+
+```
+#####  LeetCode 1169. 查询无效交易
+```cpp
+struct Trans {
+    string name, city, str;
+    int time, price;
+    bool valid;
+
+    Trans(string _str) {
+        str = _str;
+        int k = 0;
+        while (str[k] != ',') name += str[k ++ ];
+        k ++ ;
+        string s;
+        while (str[k] != ',') s += str[k ++ ];
+        k ++ ;
+        time = stoi(s);
+        s.clear();
+        while (str[k] != ',') s += str[k ++ ];
+        k ++ ;
+        price = stoi(s);
+        while (k < str.size()) city += str[k ++ ];
+        if (price > 1000) valid = false;
+        else valid = true;
+    }
+
+    bool operator< (const Trans& t) {
+        return time < t.time;
+    }
+};
+
+class Solution {
+public:
+    vector<string> invalidTransactions(vector<string>& transactions) {
+        unordered_map<string, vector<Trans>> hash;
+        for (auto& t: transactions) {
+            auto trans = Trans(t);
+            hash[trans.name].push_back(trans);
+        }
+
+        for (auto& [k, v]: hash) {
+            sort(v.begin(), v.end());
+            unordered_map<string, int> cnt;
+            for (int i = 0, j = 0, tot = 0; i < v.size(); i ++ ) {
+                if ( ++ cnt[v[i].city] == 1) tot ++ ;
+                while (v[i].time - v[j].time > 60) {
+                    if ( -- cnt[v[j].city] == 0) {
+                        tot -- ;
+                    }
+                    j ++ ;
+                }
+                if (tot > 1) v[i].valid = false;
+            }
+
+            cnt.clear();
+            reverse(v.begin(), v.end());
+            for (int i = 0, j = 0, tot = 0; i < v.size(); i ++ ) {
+                if ( ++ cnt[v[i].city] == 1) tot ++ ;
+                while (v[j].time - v[i].time > 60) {
+                    if ( -- cnt[v[j].city] == 0) {
+                        tot -- ;
+                    }
+                    j ++ ;
+                }
+                if (tot > 1) v[i].valid = false;
+            }
+        }
+
+        vector<string> res;
+        for (auto& [k, v]: hash) {
+            for (auto& t: v) {
+                if (!t.valid) {
+                    res.push_back(t.str);
+                }
+            }
+        }
+
+        return res;
+    }
+};
+
+```
+#####  LeetCode 1170. 比较字符串最小字母出现频次
+```cpp
+class Solution {
+public:
+    int f(string& s) {
+        map<char, int> cnt;
+        for (auto c: s) cnt[c] ++ ;
+        return cnt.begin()->second;
+    }
+
+    vector<int> numSmallerByFrequency(vector<string>& queries, vector<string>& words) {
+        int s[11] = {0};
+        for (auto& w: words) s[f(w)] ++ ;
+        for (int i = 1; i <= 10; i ++ ) s[i] += s[i - 1];
+
+        vector<int> res;
+        for (auto& q: queries) res.push_back(s[10] - s[f(q)]);
+
+        return res;
+    }
+};
+```
+#####  LeetCode 1171. 从链表中删去总和值为零的连续节点
+```cpp
+/**
+ * Definition for singly-linked list.
+ * struct ListNode {
+ *     int val;
+ *     ListNode *next;
+ *     ListNode() : val(0), next(nullptr) {}
+ *     ListNode(int x) : val(x), next(nullptr) {}
+ *     ListNode(int x, ListNode *next) : val(x), next(next) {}
+ * };
+ */
+class Solution {
+public:
+    ListNode* removeZeroSumSublists(ListNode* head) {
+        unordered_map<int, ListNode*> hash;
+        auto dummy = new ListNode(0, head);
+        hash[0] = dummy;
+        int sum = 0;
+        for (auto p = head; p; p = p->next) {
+            sum += p->val;
+            if (hash.count(sum)) {
+                int cur = sum;
+                for (auto q = hash[sum]->next; q != p; q = q->next) {
+                    cur += q->val;
+                    hash.erase(cur);
+                }
+                hash[sum]->next = p->next;
+            } else {
+                hash[sum] = p;
+            }
+        }
+        return dummy->next;
+    }
+};
+
+```
+#####  LeetCode 1172. 餐盘栈
+```cpp
+class DinnerPlates {
+public:
+    vector<stack<int>> stks;
+    priority_queue<int, vector<int>, greater<int>> heap;
+    int last = -1, capacity;
+
+    DinnerPlates(int capacity) {
+        this->capacity = capacity;
+    }
+
+    void push(int val) {
+        if (heap.empty()) {
+            int id = stks.size();
+            stks.push_back(stack<int>());
+            heap.push(id);
+        }
+        auto& stk = stks[heap.top()];
+        stk.push(val);
+        last = max(last, heap.top());
+        if (stk.size() == capacity) heap.pop();
+    }
+
+    int pop() {
+        return popAtStack(last);
+    }
+
+    int popAtStack(int index) {
+        if (index == -1 || index > last) return -1;
+        auto& stk = stks[index];
+        if (stk.empty()) return -1;
+        int res = stk.top();
+        stk.pop();
+        if (stk.size() == capacity - 1) heap.push(index);
+        while (last >= 0 && stks[last].empty()) last -- ;
+        return res;
+    }
+};
+
+/**
+ * Your DinnerPlates object will be instantiated and called as such:
+ * DinnerPlates* obj = new DinnerPlates(capacity);
+ * obj->push(val);
+ * int param_2 = obj->pop();
+ * int param_3 = obj->popAtStack(index);
+ */
+
+```
+#####  LeetCode 1175. 质数排列
+```cpp
+typedef long long LL;
+
+const int MOD = 1e9 + 7;
+
+class Solution {
+public:
+    LL fact(int n) {
+        int res = 1;
+        for (int i = 1; i <= n; i ++ ) {
+            res = (LL)res * i % MOD;
+        }
+        return res;
+    }
+
+    int numPrimeArrangements(int n) {
+        int cnt = 0;
+        for (int i = 2; i <= n; i ++ ) {
+            bool is_prime = true;
+            for (int j = 2; j * j <= i; j ++ ) {
+                if (i % j == 0) {
+                    is_prime = false;
+                    break;
+                }
+            }
+            if (is_prime) cnt ++ ;
+        }
+        return fact(n - cnt) * fact(cnt) % MOD;
+    }
+};
+
+```
+#####  LeetCode 1177. 构建回文串检测
+```cpp
+class Solution {
+public:
+    vector<bool> canMakePaliQueries(string str, vector<vector<int>>& queries) {
+        int n = str.size();
+        vector<vector<int>> s(26, vector<int>(n + 1));
+        for (int i = 0; i < 26; i ++ ) {
+            for (int j = 1; j <= n; j ++ ) {
+                s[i][j] = s[i][j - 1];
+                if (i + 'a' == str[j - 1]) s[i][j] ++ ;
+            }
+        }
+
+        vector<bool> res;
+        for (auto& q: queries) {
+            int l = q[0] + 1, r = q[1] + 1, k = q[2];
+            int cnt = 0;
+            for (int i = 0; i < 26; i ++ ) {
+                if ((s[i][r] - s[i][l - 1]) % 2)
+                    cnt ++ ;
+            }
+            res.push_back(cnt / 2 <= k);
+        }
+
+        return res;
+    }
+};
+
+```
+#####  LeetCode 1178. 猜字谜
+```cpp
+class Solution {
+public:
+    vector<int> findNumOfValidWords(vector<string>& words, vector<string>& puzzles) {
+        unordered_map<int, int> hash;
+        for (auto& w: words) {
+            int state = 0;
+            for (auto c: w) {
+                state |= 1 << c - 'a';
+            }
+            hash[state] ++ ;
+        }
+
+        vector<int> res;
+        for (auto& p: puzzles) {
+            int cnt = 0;
+            for (int i = 0; i < 1 << 6; i ++ ) {
+                int state = 1 << p[0] - 'a';
+                for (int j = 0; j < 6; j ++ ) {
+                    if (i >> j & 1) {
+                        state |= 1 << p[j + 1] - 'a';
+                    }
+                }
+                cnt += hash[state];
+            }
+            res.push_back(cnt);
+        }
+
+        return res;
+    }
+};
+
+```
+#####  LeetCode 1184. 公交站间的距离
+```cpp
+class Solution {
+public:
+    int distanceBetweenBusStops(vector<int>& d, int a, int b) {
+        if (a > b) swap(a, b);
+        int s1 = 0, sum = 0;
+        for (auto x: d) sum += x;
+        for (int i = a; i < b; i ++ ) s1 += d[i];
+        return min(s1, sum - s1);
+    }
+};
+```
+#####  LeetCode 1185. 一周中的第几天
+```cpp
+class Solution {
+public:
+    const int months[13] = {
+        0, 31, 28, 31, 30, 31, 30, 31, 31, 30, 31, 30, 31
+    };
+
+    int is_leap(int year) {
+        if (year % 4 == 0 && year % 100 || year % 400 == 0)
+            return 1;
+        return 0;
+    }
+
+    int get_days(int year, int month) {
+        int res = months[month];
+        if (month == 2) res += is_leap(year);
+        return res;
+    }
+
+    string dayOfTheWeek(int day, int month, int year) {
+        int res = 4;
+        for (int i = 1971; i < year; i ++ )
+            res += 365 + is_leap(i);
+
+        for (int i = 1; i < month; i ++ )
+            res += get_days(year, i);
+
+        res += day;
+        res %= 7;
+
+        string week[7] = {"Sunday", "Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday"};
+        return week[res];
+    }
+};
+
+```
+#####  LeetCode 1186. 删除一次得到子数组最大和
+```cpp
+前后缀分解做法
+class Solution {
+public:
+    int maximumSum(vector<int>& a) {
+        int n = a.size();
+        vector<int> f(n), g(n);
+        int res = a[0];
+        f[0] = a[0];
+        for (int i = 1; i < n; i ++ ) {
+            f[i] = max(f[i - 1], 0) + a[i];
+            res = max(res, f[i]);
+        }
+
+        g[n - 1] = a[n - 1];
+        for (int i = n - 2; i >= 0; i -- )
+            g[i] = max(g[i + 1], 0) + a[i];
+
+        for (int i = 1; i < n - 1; i ++ )
+            res = max(res, f[i - 1] + g[i + 1]);
+
+        return res;
+    }
+};
+状态机类型DP
+class Solution {
+public:
+    int maximumSum(vector<int>& a) {
+        int n = a.size(), INF = 2e9;
+        vector<int> f(n), g(n);
+        f[0] = a[0];
+        g[0] = -INF;
+        int res = a[0];
+        for (int i = 1; i < n; i ++ ) {
+            f[i] = max(f[i - 1], 0) + a[i];
+            g[i] = g[i - 1] + a[i];
+            if (i >= 2) g[i] = max(g[i], f[i - 2] + a[i]);
+            res = max({res, f[i], g[i]});
+        }
+
+        return res;
+    }
+};
+```
+#####  LeetCode 1187. 使数组严格递增
+```cpp
+class Solution {
+public:
+    int makeArrayIncreasing(vector<int>& a, vector<int>& b) {
+        sort(b.begin(), b.end());
+        int n = a.size(), m = b.size(), INF = 2e9;
+        b.push_back(INF);
+        vector<vector<int>> f(n, vector<int>(m + 1, INF));
+        f[0][0] = a[0];
+        for (int i = 1; i <= m; i ++ ) f[0][i] = min(a[0], b[0]);
+        for (int i = 1; i < n; i ++ ) {
+            for (int j = 0; j <= m; j ++ ) {
+                if (f[i - 1][j] < a[i]) f[i][j] = a[i];
+                if (j) {
+                    int l = 0, r = m;
+                    while (l < r) {
+                        int mid = l + r >> 1;
+                        if (b[mid] > f[i - 1][j - 1]) r = mid;
+                        else l = mid + 1;
+                    }
+                    f[i][j] = min(f[i][j], b[r]);
+                }
+            }
+        }
+
+        for (int i = 0; i <= m; i ++ )
+            if (f[n - 1][i] < INF)
+                return i;
+        return -1;
+    }
+};
+```
+#####  LeetCode 1189. “气球” 的最大数量
+```cpp
+class Solution {
+public:
+    int maxNumberOfBalloons(string text) {
+        unordered_map<char, int> cnt;
+        for (auto c: text) cnt[c] ++ ;
+        return min({cnt['b'], cnt['a'], cnt['l'] / 2, cnt['o'] / 2, cnt['n']});
+    }
+};
+```
+
+
+### 究极班- Week 55(第 1190 ~ 1192、1200 ~ 1203、1206 ~ 1208 题)
+
+#####  LeetCode 1190. 反转每对括号间的子串
+```cpp
+class Solution {
+public:
+    string reverseParentheses(string s) {
+        unordered_map<int, int> hash;
+        stack<int> stk;
+        for (int i = 0; i < s.size(); i ++ ) {
+            if (s[i] == '(') stk.push(i);
+            else if (s[i] == ')') {
+                hash[i] = stk.top();
+                hash[stk.top()] = i;
+                stk.pop();
+            }
+        }
+
+        string res;
+        int d = 1;
+        for (int i = 0; i < s.size(); i += d) {
+            if (s[i] == '(' || s[i] == ')') {
+                d = -d;
+                i = hash[i];
+            } else {
+                res += s[i];
+            }
+        }
+
+        return res;
+    }
+};
+
+```
+#####  LeetCode 1191. K 次串联后最大子数组之和
+```cpp
+typedef long long LL;
+
+const int MOD = 1e9 + 7;
+
+class Solution {
+public:
+    int kConcatenationMaxSum(vector<int>& arr, int k) {
+        LL mx = 0, l = 0, r = 0, sum = 0, s = 0;
+        for (int i = 0; i < arr.size(); i ++ ) {
+            sum += arr[i];
+            l = max(l, sum);
+            s = max(s, 0ll) + arr[i];
+            mx = max(mx, s);
+            if (i + 1 == arr.size()) r = s;
+        }
+
+        if (k == 1) return mx % MOD;
+        if (sum < 0) return max(mx, l + r) % MOD;
+        return max(sum * (LL)(k - 2) + l + r, mx) % MOD;
+    }
+};
+
+```
+#####  LeetCode 1192. 查找集群内的「关键连接」
+```cpp
+const int N = 100010, M = N * 2;
+
+int h[N], e[M], ne[M], idx;
+int dfn[N], low[N], timestamp;
+
+class Solution {
+public:
+    vector<vector<int>> ans;
+    void add(int a, int b) {
+        e[idx] = b, ne[idx] = h[a], h[a] = idx ++ ;
+    }
+
+    void tarjan(int u, int from) {
+        dfn[u] = low[u] = ++ timestamp;
+        for (int i = h[u]; ~i; i = ne[i]) {
+            int j = e[i];
+            if (!dfn[j]) {
+                tarjan(j, i);
+                low[u] = min(low[u], low[j]);
+                if (dfn[u] < low[j]) ans.push_back({u, j});
+            } else if (i != (from ^ 1)) {
+                low[u] = min(low[u], low[j]);
+            }
+        }
+    }
+
+    vector<vector<int>> criticalConnections(int n, vector<vector<int>>& connections) {
+        memset(h, -1, n * 4);
+        memset(dfn, 0, n * 4);
+        idx = timestamp = 0;
+
+        for (auto& p: connections) {
+            int a = p[0], b = p[1];
+            add(a, b), add(b, a);
+        }
+
+        tarjan(0, -1);
+        return ans;
+    }
+};
+
+```
+#####  LeetCode 1200. 最小绝对差
+```cpp
+class Solution {
+public:
+    vector<vector<int>> minimumAbsDifference(vector<int>& arr) {
+        sort(arr.begin(), arr.end());
+        int mn = 1e8;
+        for (int i = 1; i < arr.size(); i ++ )
+            mn = min(mn, arr[i] - arr[i - 1]);
+
+        vector<vector<int>> res;
+        for (int i = 1; i < arr.size(); i ++ ) {
+            if (arr[i] - arr[i - 1] == mn) {
+                res.push_back({arr[i - 1], arr[i]});
+            }
+        }
+
+        return res;
+    }
+};
+
+```
+#####  LeetCode 1201. 丑数 III
+```cpp
+typedef long long LL;
+
+class Solution {
+public:
+    int gcd(int a, int b) {
+        return b ? gcd(b, a % b) : a;
+    }
+
+    LL lcm(LL a, LL b) {
+        return a * b / gcd(a, b);
+    }
+
+    int nthUglyNumber(int n, LL a, LL b, LL c) {
+        LL ab = lcm(a, b), ac = lcm(a, c), bc = lcm(b, c);
+        LL abc = lcm(ab, c);
+
+        LL l = 1, r = 2e9;
+        while (l < r) {
+            LL mid = l + r >> 1;
+            LL cnt = mid / a + mid / b + mid / c - mid / ab - mid / ac - mid / bc + mid / abc;
+            if (cnt >= n) r = mid;
+            else l = mid + 1;
+        }
+        return r;
+    }
+};
+```
+#####  LeetCode 1202. 交换字符串中的元素
+```cpp
+class Solution {
+public:
+    vector<int> p;
+
+    int find(int x) {
+        if (p[x] != x) p[x] = find(p[x]);
+        return p[x];
+    }
+
+    string smallestStringWithSwaps(string s, vector<vector<int>>& pairs) {
+        int n = s.size();
+        for (int i = 0; i < n; i ++ ) p.push_back(i);
+
+        for (auto& items: pairs) {
+            int a = items[0], b = items[1];
+            p[find(a)] = find(b);
+        }
+
+        vector<vector<char>> chr(n);
+        vector<vector<int>> pos(n);
+        for (int i = 0; i < n; i ++ ) {
+            int k = find(i);
+            chr[k].push_back(s[i]);
+            pos[k].push_back(i);
+        }
+
+        string res = s;
+        for (int i = 0; i < n; i ++ ) {
+            sort(chr[i].begin(), chr[i].end());
+            for (int j = 0; j < chr[i].size(); j ++ ) {
+                res[pos[i][j]] = chr[i][j];
+            }
+        }
+
+        return res;
+    }
+};
+```
+#####  LeetCode 1203. 项目管理
+```cpp
+class Solution {
+public:
+    vector<int> sortItems(int n, int m, vector<int>& group, vector<vector<int>>& beforeItems) {
+        vector<int> gc(m);
+        for (int i = 0; i < n; i ++ ) {
+            int id = group[i];
+            if (id != -1) gc[id] ++ ;
+            else {
+                gc.push_back(1);
+                group[i] = m ++ ;
+            }
+        }
+
+        vector<vector<int>> g1(n), g2(m);
+        vector<int> d1(n), d2(m);
+        for (int i = 0; i < n; i ++ ) {
+            for (int j: beforeItems[i]) {
+                g1[j].push_back(i);
+                d1[i] ++ ;
+                int a = group[i], b = group[j];
+                if (a != b) {
+                    g2[b].push_back(a);
+                    d2[a] ++ ;
+                }
+            }
+        }
+
+        queue<int> q;
+        for (int i = 0; i < m; i ++ ) {
+            if (!d2[i]) {
+                q.push(i);
+            }
+        }
+        int cnt = 0, cur = 0;
+        vector<int> pos(m);
+        while (q.size()) {
+            auto t = q.front();
+            q.pop();
+            cnt ++ ;
+            pos[t] = cur;
+            cur += gc[t];
+            for (auto j: g2[t]) {
+                if ( -- d2[j] == 0) {
+                    q.push(j);
+                }
+            }
+        }
+
+        if (cnt != m) return {};
+        for (int i = 0; i < n; i ++ ) {
+            if (!d1[i]) {
+                q.push(i);
+            }
+        }
+
+        cnt = 0;
+        vector<int> res(n);
+        while (q.size()) {
+            auto t = q.front();
+            q.pop();
+            cnt ++ ;
+            int k = group[t];
+            res[pos[k] ++ ] = t;
+            for (auto j: g1[t]) {
+                if ( -- d1[j] == 0) {
+                    q.push(j);
+                }
+            }
+        }
+
+        if (cnt != n) return {};
+        return res;
+    }
+};
+```
+#####  LeetCode 1206. 设计跳表
+```cpp
+class Skiplist {
+public:
+    static const int level = 8;
+
+    struct Node {
+        int val;
+        vector<Node*> next;
+        Node(int _val): val(_val) {
+            next.resize(level, NULL);
+        }
+    }*head;
+
+    Skiplist() {
+        head = new Node(-1);
+    }
+
+    ~Skiplist() {
+        delete head;
+    }
+
+    void find(int target, vector<Node*>& pre) {
+        auto p = head;
+        for (int i = level - 1; i >= 0; i -- ) {
+            while (p->next[i] && p->next[i]->val < target) p = p->next[i];
+            pre[i] = p;
+        }
+    }
+
+    bool search(int target) {
+        vector<Node*> pre(level);
+        find(target, pre);
+        auto p = pre[0]->next[0];
+        return p && p->val == target;
+    }
+
+    void add(int num) {
+        vector<Node*> pre(level);
+        find(num, pre);
+        auto p = new Node(num);
+        for (int i = 0; i < level; i ++ ) {
+            p->next[i] = pre[i]->next[i];
+            pre[i]->next[i] = p;
+            if (rand() % 2) break;
+        }
+    }
+
+    bool erase(int num) {
+        vector<Node*> pre(level);
+        find(num, pre);
+
+        auto p = pre[0]->next[0];
+        if (!p || p->val != num) return false;
+
+        for (int i = 0; i < level && pre[i]->next[i] == p; i ++ )
+            pre[i]->next[i] = p->next[i];
+
+        delete p;
+
+        return true;
+    }
+};
+
+/**
+ * Your Skiplist object will be instantiated and called as such:
+ * Skiplist* obj = new Skiplist();
+ * bool param_1 = obj->search(target);
+ * obj->add(num);
+ * bool param_3 = obj->erase(num);
+ */
+
+```
+#####  LeetCode 1207. 独一无二的出现次数
+```cpp
+class Solution {
+public:
+    bool uniqueOccurrences(vector<int>& arr) {
+        unordered_map<int, int> cnt;
+        for (auto x: arr) cnt[x] ++;
+
+        unordered_set<int> hash;
+        for (auto& [k, v]: cnt) {
+            if (hash.count(v)) return false;
+            hash.insert(v);
+        }
+        return true;
+    }
+};
+```
+#####  LeetCode 1208. 尽可能使字符串相等
+```cpp
+class Solution {
+public:
+    int equalSubstring(string s, string t, int maxCost) {
+        int res = 0;
+        for (int i = 0, j = 0, cost = 0; i < s.size(); i ++ ) {
+            cost += abs(s[i] - t[i]);
+            while (cost > maxCost) {
+                cost -= abs(s[j] - t[j]);
+                j ++ ;
+            }
+            res = max(res, i - j + 1);
+        }
+        return res;
+    }
+};
+```
+
+
+
+
+
+### 究极班- Week 56(第 1209、1210、1217 ~ 1224、1227、1232 ~ 1235、1237 ~ 1240、1247 题)
+
+
+#####  LeetCode 1209. 删除字符串中的所有相邻重复项 II
+```cpp
+#define x first
+#define y second
+
+class Solution {
+public:
+    string removeDuplicates(string s, int k) {
+        stack<pair<char, int>> stk;
+        for (auto c: s) {
+            if (stk.empty() || stk.top().x != c) stk.push({c, 1});
+            else stk.top().y ++ ;
+
+            if (stk.top().y >= k) {
+                stk.top().y -= k;
+                if (stk.top().y == 0) stk.pop();
+            }
+        }
+
+        string res;
+        while (stk.size()) {
+            auto t = stk.top();
+            stk.pop();
+            res += string(t.y, t.x);
+        }
+        reverse(res.begin(), res.end());
+        return res;
+    }
+};
+```
+#####  LeetCode 1210. 穿过迷宫的最少移动次数
+```cpp
+class Solution {
+public:
+    struct Node {
+        int x, y, d;
+    };
+
+    vector<vector<vector<int>>> dist;
+    queue<Node> q;
+
+    void update(int x, int y, int d, int distance) {
+        if (dist[x][y][d] > distance) {
+            dist[x][y][d] = distance;
+            q.push({x, y, d});
+        }
+    }
+
+    int minimumMoves(vector<vector<int>>& g) {
+        int n = g.size(), INF = 1e8;
+        dist = vector<vector<vector<int>>>(n, vector<vector<int>>(n, vector<int>(2, INF)));
+        q.push({0, 0, 0});
+        dist[0][0][0] = 0;
+
+        int dx[2] = {0, 1}, dy[2] = {1, 0};
+
+        while (q.size()) {
+            auto t = q.front();
+            q.pop();
+            int distance = dist[t.x][t.y][t.d];
+            if (t.x == n - 1 && t.y == n - 2 && t.d == 0)
+                return distance;
+            Node a{t.x, t.y}, b{t.x + dx[t.d], t.y + dy[t.d]};
+
+            // 向右平移
+            if (a.y + 1 < n && !g[a.x][a.y + 1] && b.y + 1 < n && !g[b.x][b.y + 1])
+                update(t.x, t.y + 1, t.d, distance + 1);
+
+            // 向下平移
+            if (a.x + 1 < n && !g[a.x + 1][a.y] && b.x + 1 < n && !g[b.x + 1][b.y])
+                update(t.x + 1, t.y, t.d, distance + 1);
+
+            // 顺时针旋转90度
+            if (t.d == 0 && t.x + 1 < n && !g[t.x + 1][t.y] && !g[t.x + 1][t.y + 1])
+                update(t.x, t.y, 1, distance + 1);
+
+            // 逆时针旋转90度
+            if (t.d == 1 && t.y + 1 < n && !g[t.x][t.y + 1] && !g[t.x + 1][t.y + 1])
+                update(t.x, t.y, 0, distance + 1);
+        }
+
+        return -1;
+    }
+};
+```
+#####  LeetCode 1217. 玩筹码
+```cpp
+class Solution {
+public:
+    int minCostToMoveChips(vector<int>& position) {
+        int odd = 0, even = 0;
+        for (auto x: position)
+            if (x % 2) odd ++ ;
+            else even ++ ;
+        return min(odd, even);
+    }
+};
+```
+#####  LeetCode 1218. 最长定差子序列
+```cpp
+class Solution {
+public:
+    int longestSubsequence(vector<int>& arr, int d) {
+        unordered_map<int, int> f;
+        int res = 0;
+        for (auto x: arr) {
+            if (f.count(x - d)) f[x] = f[x - d] + 1;
+            else f[x] = 1;
+            res = max(res, f[x]);
+        }
+
+        return res;
+    }
+};
+
+```
+#####  LeetCode 1219. 黄金矿工
+```cpp
+class Solution {
+public:
+    vector<vector<int>> g;
+    int n, m;
+    int ans = 0;
+    int dx[4] = {-1, 0, 1, 0}, dy[4] = {0, 1, 0, -1};
+
+    void dfs(int x, int y, int sum) {
+        int w = g[x][y];
+        sum += w;
+        ans = max(ans, sum);
+        g[x][y] = 0;
+
+        for (int i = 0; i < 4; i ++ ) {
+            int a = x + dx[i], b = y + dy[i];
+            if (a >= 0 && a < n && b >= 0 && b < m && g[a][b])
+                dfs(a, b, sum);
+        }
+
+        g[x][y] = w;
+    }
+
+    int getMaximumGold(vector<vector<int>>& grid) {
+        g = grid;
+        n = g.size(), m = g[0].size();
+        for (int i = 0; i < n; i ++ )
+            for (int j = 0; j < m; j ++ )
+                if (g[i][j])
+                    dfs(i, j, 0);
+        return ans;
+    }
+};
+
+```
+#####  LeetCode 1220. 统计元音字母序列的数目
+```cpp
+class Solution {
+public:
+    int countVowelPermutation(int n) {
+        const int MOD = 1e9 + 7;
+
+        vector<vector<int>> f(n + 1, vector<int>(5, 0));
+
+        int g[5][5] = {
+            {0, 1, 0, 0, 0},
+            {1, 0, 1, 0, 0},
+            {1, 1, 0, 1, 1},
+            {0, 0, 1, 0, 1},
+            {1, 0, 0, 0, 0},
+        };
+        for (int i = 0; i < 5; i ++ ) f[1][i] = 1;
+        for (int i = 2; i <= n; i ++ )
+            for (int j = 0; j < 5; j ++ )
+                for (int k = 0; k < 5; k ++ )
+                    if (g[k][j])
+                        f[i][j] = (f[i][j] + f[i - 1][k]) % MOD;
+
+        int res = 0;
+        for (int i = 0; i < 5; i ++ )
+            res = (res + f[n][i]) % MOD;
+        return res;
+    }
+};
+
+```
+#####  LeetCode 1221. 分割平衡字符串
+```cpp
+class Solution {
+public:
+    int balancedStringSplit(string s) {
+        int res = 0, cnt = 0;
+        for (auto c: s) {
+            if (c == 'L') cnt -- ;
+            else cnt ++ ;
+            if (!cnt) res ++ ;
+        }
+        return res;
+    }
+};
+```
+#####  LeetCode 1222. 可以攻击国王的皇后
+```cpp
+class Solution {
+public:
+    vector<vector<int>> queensAttacktheKing(vector<vector<int>>& queens, vector<int>& king) {
+        bool st[8][8] = {0};
+        for (auto& q: queens) st[q[0]][q[1]] = true;
+
+        vector<vector<int>> res;
+
+        for (int i = -1; i <= 1; i ++ )
+            for (int j = -1; j <= 1; j ++ )
+                if (i || j) {
+                    int x = king[0], y = king[1];
+                    while (true) {
+                        x += i, y += j;
+                        if (x >= 8 || x < 0 || y >= 8 || y < 0) break;
+                        if (st[x][y]) {
+                            res.push_back({x, y});
+                            break;
+                        }
+                    }
+                }
+
+        return res;
+    }
+};
+
+```
+#####  LeetCode 1223. 掷骰子模拟
+```cpp
+class Solution {
+public:
+    int dieSimulator(int n, vector<int>& rollMax) {
+        const int MOD = 1e9 + 7;
+        vector<vector<vector<int>>> f(n + 1, vector<vector<int>>(6, vector<int>(16)));
+        for (int i = 0; i < 6; i ++ ) f[1][i][1] = 1;
+        for (int i = 1; i < n; i ++ )
+            for (int j = 0; j < 6; j ++ )
+                for (int k = 1; k <= rollMax[j]; k ++ )
+                    for (int u = 0; u < 6; u ++ ) {
+                        int len = 1;
+                        if (u == j) {
+                            len = k + 1;
+                            if (len > rollMax[j]) continue;
+                        }
+                        f[i + 1][u][len] = (f[i + 1][u][len] + f[i][j][k]) % MOD;
+                    }
+
+        int res = 0;
+        for (int i = 0; i < 6; i ++ )
+            for (int j = 1; j <= rollMax[i]; j ++ )
+                res = (res + f[n][i][j]) % MOD;
+        return res;
+    }
+};
+```
+#####  LeetCode 1224. 最大相等频率
+```cpp
+class Solution {
+public:
+    int maxEqualFreq(vector<int>& nums) {
+        unordered_map<int, int> cnt, hash;
+
+        int res = 0, len = 0;
+        for (auto x: nums) {
+            if (cnt.count(x)) {
+                hash[cnt[x]] -- ;
+                if (!hash[cnt[x]]) hash.erase(cnt[x]);
+            }
+            cnt[x] ++ ;
+            hash[cnt[x]] ++ ;
+
+            len ++ ;
+            if (hash.size() == 1) {
+                for (auto& [k, v]: hash) {
+                    if (v == 1 || k == 1) res = len;
+                }
+            } if (hash.size() == 2) {
+                vector<vector<int>> tmp;
+                for (auto& [k, v]: hash) {
+                    tmp.push_back({k, v});
+                }
+                if (tmp[0][0] > tmp[1][0]) swap(tmp[0], tmp[1]);
+                if (tmp[0][0] == 1 && tmp[0][1] == 1) res = len;
+                else if (tmp[0][0] + 1 == tmp[1][0] && tmp[1][1] == 1) res = len;
+            }
+        }
+
+        return res;
+    }
+};
+```
+#####  LeetCode 1227. 飞机座位分配概率
+```cpp
+class Solution {
+public:
+    double nthPersonGetsNthSeat(int n) {
+        return n > 1 ? 0.5 : 1;
+    }
+};
+```
+#####  LeetCode 1232. 缀点成线
+```cpp
+class Solution {
+public:
+    bool checkStraightLine(vector<vector<int>>& c) {
+        for (int i = 2; i < c.size(); i ++ ) {
+            int x1 = c[1][0] - c[0][0], y1 = c[1][1] - c[0][1];
+            int x2 = c[i][0] - c[0][0], y2 = c[i][1] - c[0][1];
+            if (x1 * y2 - x2 * y1) return false;
+        }
+        return true;
+    }
+};
+```
+#####  LeetCode 1233. 删除子文件夹
+```cpp
+class Solution {
+public:
+    vector<string> removeSubfolders(vector<string>& folder) {
+        sort(folder.begin(), folder.end());
+
+        for (auto& f: folder) f += '/';
+
+        vector<string> res;
+        for (auto& f: folder) {
+            if (res.empty() || res.back().size() > f.size() || f.substr(0, res.back().size()) != res.back())
+                res.push_back(f);
+        }
+
+        for (auto& f: res) f.pop_back();
+        return res;
+    }
+};
+```
+#####  LeetCode 1234. 替换子串得到平衡字符串
+```cpp
+class Solution {
+public:
+    int get(char c) {
+        if (c == 'Q') return 0;
+        if (c == 'W') return 1;
+        if (c == 'E') return 2;
+        return 3;
+    }
+
+    bool check(vector<int>& tot, vector<int>& sum, int target) {
+        for (int i = 0; i < 4; i ++ )
+            if (tot[i] - sum[i] > target)
+                return false;
+        return true;
+    }
+
+    int balancedString(string s) {
+        vector<int> tot(4);
+        for (auto c: s) tot[get(c)] ++ ;
+        int n = s.size();
+
+        if (tot[0] == n / 4 && tot[1] == n / 4 && tot[2] == n / 4)
+            return 0;
+        int res = n;
+        vector<int> sum(4);
+        for (int i = 0, j = 0; i < n; i ++ ) {
+            sum[get(s[i])] ++ ;
+            while (j <= i && check(tot, sum, n / 4)) {
+                res = min(res, i - j + 1);
+                sum[get(s[j])] -- ;
+                j ++ ;
+            }
+        }
+
+        return res;
+    }
+};
+```
+#####  LeetCode 1235. 规划兼职工作
+```cpp
+class Solution {
+public:
+    struct Job {
+        int l, r, w;
+        bool operator< (const Job& t) const {
+            return r < t.r;
+        }
+    };
+
+    int jobScheduling(vector<int>& startTime, vector<int>& endTime, vector<int>& profit) {
+        int n = startTime.size();
+        vector<Job> jobs;
+        for (int i = 0; i < n; i ++ )
+            jobs.push_back({startTime[i], endTime[i], profit[i]});
+
+        sort(jobs.begin(), jobs.end());
+        vector<int> f(n);
+        f[0] = jobs[0].w;
+        for (int i = 1; i < n; i ++ ) {
+            f[i] = max(f[i - 1], jobs[i].w);
+            if (jobs[0].r <= jobs[i].l) {
+                int l = 0, r = i - 1;
+                while (l < r) {
+                    int mid = l + r + 1 >> 1;
+                    if (jobs[mid].r <= jobs[i].l) l = mid;
+                    else r = mid - 1;
+                }
+                f[i] = max(f[i], f[r] + jobs[i].w);
+            }
+        }
+
+        return f[n - 1];
+    }
+};
+```
+#####  LeetCode 1237. 找出给定方程的正整数解
+```cpp
+/*
+ * // This is the custom function interface.
+ * // You should not implement it, or speculate about its implementation
+ * class CustomFunction {
+ * public:
+ *     // Returns f(x, y) for any given positive integers x and y.
+ *     // Note that f(x, y) is increasing with respect to both x and y.
+ *     // i.e. f(x, y) < f(x + 1, y), f(x, y) < f(x, y + 1)
+ *     int f(int x, int y);
+ * };
+ */
+
+class Solution {
+public:
+    vector<vector<int>> findSolution(CustomFunction& c, int z) {
+        vector<vector<int>> res;
+        int x = 1, y = 1000;
+        while (x <= 1000 && y >= 1) {
+            int t = c.f(x, y);
+            if (t > z) y -- ;
+            else if (t < z) x ++ ;
+            else {
+                res.push_back({x, y});
+                y --, x ++ ;
+            }
+        }
+
+        return res;
+    }
+};
+```
+#####  LeetCode 1238. 循环码排列
+```cpp
+class Solution {
+public:
+    vector<int> circularPermutation(int n, int start) {
+        vector<int> a{0, 1};
+        for (int i = 1; i < n; i ++ ) {
+            vector<int> b = a;
+            for (int j = a.size() - 1; j >= 0; j -- )
+                b.push_back(a[j] + (1 << i));
+            a = b;
+        }
+
+        for (int& x: a) x ^= start;
+        return a;
+    }
+};
+```
+#####  LeetCode 1239. 串联字符串的最大长度
+```cpp
+class Solution {
+public:
+    int maxLength(vector<string>& strs) {
+        vector<int> state;
+        int n = strs.size();
+        for (auto& str: strs) {
+            int s = 0;
+            for (auto c: str) {
+                int t = c - 'a';
+                if (s >> t & 1) {
+                    s = -1;
+                    break;
+                }
+                s |= 1 << t;
+            }
+            state.push_back(s);
+        }
+
+        int res = 0;
+        for (int i = 0; i < 1 << n; i ++ ) {
+            int s = 0, len = 0;
+            for (int j = 0; j < n; j ++ )
+                if (i >> j & 1) {
+                    if (state[j] == -1 || (s & state[j])) {
+                        len = -1;
+                        break;
+                    }
+                    s |= state[j];
+                    len += strs[j].size();
+                }
+            res = max(res, len);
+        }
+
+        return res;
+    }
+};
+```
+#####  LeetCode 1240. 铺瓷砖
+```cpp
+class Solution {
+public:
+    vector<vector<bool>> st;
+    int ans, n, m;
+
+    bool check(int x, int y, int len) {
+        for (int i = x; i < x + len; i ++ )
+            for (int j = y; j < y + len; j ++ )
+                if (st[i][j])
+                    return false;
+        return true;
+    }
+
+    void fill(int x, int y, int len, bool t) {
+        for (int i = x; i < x + len; i ++ )
+            for (int j = y; j < y + len; j ++ )
+                st[i][j] = t;
+    }
+
+    void dfs(int x, int y, int cnt) {
+        if (cnt >= ans) return;  // 最优性剪枝
+        // 组合数优化
+        if (y == m) x ++, y = 0;
+        if (x == n) ans = cnt;
+        else {
+            if (st[x][y]) dfs(x, y + 1, cnt);
+            else {
+                // 搜索顺序优化
+                for (int len = min(n - x, m - y); len; len -- ) {
+                    if (check(x, y, len)) {
+                        fill(x, y, len, true);
+                        dfs(x, y + 1, cnt + 1);
+                        fill(x, y, len, false);
+                    }
+                }
+            }
+        }
+    }
+
+    int tilingRectangle(int n, int m) {
+        ans = n * m;
+        this->n = n, this->m = m;
+        st = vector<vector<bool>>(n, vector<bool>(m));
+
+        dfs(0, 0, 0);
+
+        return ans;
+    }
+};
+```
+#####  LeetCode 1247. 交换字符使得字符串相同
+```cpp
+class Solution {
+public:
+    int minimumSwap(string s1, string s2) {
+        int a = 0, b = 0;
+        for (int i = 0; i < s1.size(); i ++ )
+            if (s1[i] != s2[i])
+                if (s1[i] == 'x') a ++ ;
+                else b ++ ;
+
+        if ((a + b) % 2) return -1;
+        if (a % 2) return (a + b) / 2 + 1;
+        return (a + b) / 2;
+    }
+};
+```
+
+
+
+
+### 究极班- Week 57（第 1248 ~ 1250、1252 ~ 1255、1260 ~ 1262 题）
+
+#####  LeetCode 1248. 统计「优美子数组」
+```cpp
+class Solution {
+public:
+    int numberOfSubarrays(vector<int>& nums, int k) {
+        int n = nums.size();
+        unordered_map<int, int> cnt;
+        cnt[0] ++ ;
+        int res = 0, sum = 0;
+        for (auto x: nums) {
+            if (x % 2) sum ++ ;
+            res += cnt[sum - k];
+            cnt[sum] ++ ;
+        }
+        return res;
+    }
+};
+```
+#####  LeetCode 1249. 移除无效的括号
+```cpp
+class Solution {
+public:
+    string minRemoveToMakeValid(string s) {
+        string res;
+        int cnt = 0;
+        for (auto c: s) {
+            if (c == '(') cnt ++, res += c;
+            else if (c == ')') {
+                if (cnt) cnt --, res += c;
+            } else res += c;
+        }
+
+        cnt = 0;
+        s = res, res = "";
+        reverse(s.begin(), s.end());
+        for (auto c: s) {
+            if (c == ')') cnt ++, res += c;
+            else if (c == '(') {
+                if (cnt) cnt --, res += c;
+            } else res += c;
+        }
+        reverse(res.begin(), res.end());
+        return res;
+    }
+};
+
+```
+#####  LeetCode 1250. 检查「好数组」
+```cpp
+class Solution {
+public:
+    int gcd(int a, int b) {
+        return b ? gcd(b, a % b) : a;
+    }
+
+    bool isGoodArray(vector<int>& nums) {
+        int res = 0;
+        for (auto x: nums)
+            res = gcd(res, x);
+        return res == 1;
+    }
+};
+```
+
+
+
+#####  LeetCode 1252. 奇数值单元格的数目
+```cpp
+class Solution {
+public:
+    int oddCells(int m, int n, vector<vector<int>>& indices) {
+        vector<int> row(m), col(n);
+        for (auto& p: indices) {
+            row[p[0]] ++ ;
+            col[p[1]] ++ ;
+        }
+
+        int oddm = 0, oddn = 0;
+        for (int x: row) oddm += x % 2;
+        for (int x: col) oddn += x % 2;
+        return oddm * (n - oddn) + (m - oddm) * oddn;
+    }
+};
+```
+#####  LeetCode 1253. 重构 2 行二进制矩阵
+```cpp
+class Solution {
+public:
+    vector<vector<int>> reconstructMatrix(int upper, int lower, vector<int>& colsum) {
+        int n = colsum.size();
+        vector<vector<int>> res(2, vector<int>(n, -1));
+        int cnt = 0;
+        for (int i = 0; i < n; i ++ ) {
+            int c = colsum[i];
+            if (c == 0) res[0][i] = res[1][i] = 0;
+            else if (c == 2) {
+                res[0][i] = res[1][i] = 1;
+                upper -- ;
+                lower -- ;
+            } else cnt ++ ;
+        }
+
+        if (upper < 0 || lower < 0 || cnt != upper + lower) return {};
+        for (int i = 0; i < n; i ++ )
+            if (res[0][i] == -1) {
+                if (upper) {
+                    res[0][i] = 1;
+                    res[1][i] = 0;
+                    upper -- ;
+                } else {
+                    res[0][i] = 0;
+                    res[1][i] = 1;
+                }
+            }
+
+        return res;
+    }
+};
+```
+#####  LeetCode 1254. 统计封闭岛屿的数目
+```cpp
+class Solution {
+public:
+    int n, m;
+    vector<vector<int>> g;
+    int dx[4] = {-1, 0, 1, 0}, dy[4] = {0, 1, 0, -1};
+
+    int dfs(int x, int y) {
+        int res = 1;
+        g[x][y] = 1;
+        for (int i = 0; i < 4; i ++ ) {
+            int a = x + dx[i], b = y + dy[i];
+            if (a < 0 || a >= n || b < 0 || b >= m) {
+                res = 0;
+                continue;
+            }
+            if (!g[a][b] && !dfs(a, b))
+                res = 0;
+        }
+        return res;
+    }
+
+    int closedIsland(vector<vector<int>>& grid) {
+        int res = 0;
+        n = grid.size(), m = grid[0].size();
+        g = grid;
+        for (int i = 0; i < n; i ++ )
+            for (int j = 0; j < m; j ++ )
+                if (!g[i][j])
+                    res += dfs(i, j);
+        return res;
+    }
+};
+```
+#####  LeetCode 1255. 得分最高的单词集合
+```cpp
+class Solution {
+public:
+    int maxScoreWords(vector<string>& words, vector<char>& letters, vector<int>& score) {
+        int tot[26] = {0};
+        for (auto c: letters) tot[c - 'a'] ++ ;
+        int n = words.size();
+        int res = 0;
+        for (int i = 0; i < 1 << n; i ++ ) {
+            int cnt[26] = {0};
+            for (int j = 0; j < n; j ++ )
+                if (i >> j & 1)
+                    for (auto c: words[j])
+                        cnt[c - 'a'] ++ ;
+
+            bool flag = true;
+            for (int j = 0; j < 26; j ++ )
+                if (cnt[j] > tot[j]) {
+                    flag = false;
+                    break;
+                }
+
+            if (flag) {
+                int sum = 0;
+                for (int j = 0; j < 26; j ++ )
+                    sum += cnt[j] * score[j];
+                res = max(res, sum);
+            }
+        }
+
+        return res;
+    }
+};
+```
+#####  LeetCode 1260. 二维网格迁移
+```cpp
+class Solution {
+public:
+    int n, m;
+
+    void reverse(vector<vector<int>>& grid, int start, int end) {
+        for (int i = start, j = end - 1; i < j; i ++, j -- )
+            swap(grid[i / m][i % m], grid[j / m][j % m]);
+    }
+
+    vector<vector<int>> shiftGrid(vector<vector<int>>& grid, int k) {
+        n = grid.size(), m = grid[0].size();
+        k %= n * m;
+        reverse(grid, 0, n * m);
+        reverse(grid, 0, k);
+        reverse(grid, k, n * m);
+        return grid;
+    }
+};
+```
+#####  LeetCode 1261. 在受污染的二叉树中查找元素
+```cpp
+/**
+ * Definition for a binary tree node.
+ * struct TreeNode {
+ *     int val;
+ *     TreeNode *left;
+ *     TreeNode *right;
+ *     TreeNode() : val(0), left(nullptr), right(nullptr) {}
+ *     TreeNode(int x) : val(x), left(nullptr), right(nullptr) {}
+ *     TreeNode(int x, TreeNode *left, TreeNode *right) : val(x), left(left), right(right) {}
+ * };
+ */
+class FindElements {
+public:
+    unordered_set<int> hash;
+
+    void dfs(TreeNode* root, int x) {
+        hash.insert(x);
+        root->val = x;
+        if (root->left) dfs(root->left, x * 2 + 1);
+        if (root->right) dfs(root->right, x * 2 + 2);
+    }
+
+    FindElements(TreeNode* root) {
+        dfs(root, 0);
+    }
+
+    bool find(int target) {
+        return hash.count(target);
+    }
+};
+
+/**
+ * Your FindElements object will be instantiated and called as such:
+ * FindElements* obj = new FindElements(root);
+ * bool param_1 = obj->find(target);
+ */
+
+```
+#####  LeetCode 1262. 可被三整除的最大和
+```cpp
+class Solution {
+public:
+    int maxSumDivThree(vector<int>& nums) {
+        const int INF = 1e8;
+        int sum = 0;
+        int f1 = INF, s1 = INF;
+        int f2 = INF, s2 = INF;
+        for (auto x: nums) {
+            sum += x;
+            if (x % 3 == 1) {
+                if (x <= f1) s1 = f1, f1 = x;
+                else if (x < s1) s1 = x;
+            } else if (x % 3 == 2) {
+                if (x <= f2) s2 = f2, f2 = x;
+                else if (x < s2) s2 = x;
+            }
+        }
+
+        if (sum % 3 == 0) return sum;
+        if (sum % 3 == 1)
+            return max(sum - f1, sum - f2 - s2);
+        return max(sum - f2, sum - f1 - s1);
+    }
+};
+```
+
+
+### 究极班-Week 58(第 1263、1266 ~ 1269、1275 ~ 1278、1281 题)
+
+
+#####  LeetCode 1263. 推箱子
+```cpp
+typedef vector<int> VI;
+
+const int N = 20;
+
+int dist[N][N][N][N];
+bool st[N][N][N][N];
+
+class Solution {
+public:
+    int minPushBox(vector<vector<char>>& g) {
+        int n = g.size(), m = g[0].size();
+        VI start(4);
+        for (int i = 0; i < n; i ++ )
+            for (int j = 0; j < m; j ++ )
+                if (g[i][j] == 'B') start[0] = i, start[1] = j;
+                else if (g[i][j] == 'S') start[2] = i, start[3] = j;
+
+        deque<VI> q;
+        q.push_back(start);
+        memset(dist, 0x3f, sizeof dist);
+        memset(st, 0, sizeof st);
+
+        dist[start[0]][start[1]][start[2]][start[3]] = 0;
+        int dx[4] = {-1, 0, 1, 0}, dy[4] = {0, 1, 0, -1};
+
+        while (q.size()) {
+            auto t = q.front();
+            q.pop_front();
+
+            if (st[t[0]][t[1]][t[2]][t[3]]) continue;
+            st[t[0]][t[1]][t[2]][t[3]] = true;
+
+            int distance = dist[t[0]][t[1]][t[2]][t[3]];
+            if (g[t[0]][t[1]] == 'T') return distance;
+
+            for (int i = 0; i < 4; i ++ ) {
+                int x = t[2] + dx[i], y = t[3] + dy[i];
+                if (x >= 0 && x < n && y >= 0 && y < m && g[x][y] != '#'
+                    && (x != t[0] || y != t[1]) && dist[t[0]][t[1]][x][y] > distance) {
+                        dist[t[0]][t[1]][x][y] = distance;
+                        q.push_front({t[0], t[1], x, y});
+                    }
+
+                if (t[0] - t[2] == dx[i] && t[1] - t[3] == dy[i]) {
+                    x = t[0] + dx[i], y = t[1] + dy[i];
+                    if (x >= 0 && x < n && y >= 0 && y < m && g[x][y] != '#'
+                        && dist[x][y][t[0]][t[1]] > distance + 1) {
+                            dist[x][y][t[0]][t[1]] = distance + 1;
+                            q.push_back({x, y, t[0], t[1]});
+                        }
+                }
+            }
+        }
+
+        return -1;
+    }
+};
+```
+#####  LeetCode 1266. 访问所有点的最小时间
+```cpp
+class Solution {
+public:
+    int minTimeToVisitAllPoints(vector<vector<int>>& p) {
+        int res = 0;
+        for (int i = 1; i < p.size(); i ++ ) {
+            int dx = abs(p[i][0] - p[i - 1][0]);
+            int dy = abs(p[i][1] - p[i - 1][1]);
+            res += max(dx, dy);
+        }
+        return res;
+    }
+};
+
+```
+#####  LeetCode 1267. 统计参与通信的服务器
+```cpp
+class Solution {
+public:
+    int countServers(vector<vector<int>>& g) {
+        int n = g.size(), m = g[0].size();
+        vector<int> row(n), col(m);
+        for (int i = 0; i < n; i ++ )
+            for (int j = 0; j < m; j ++ )
+                if (g[i][j]) {
+                    row[i] ++ ;
+                    col[j] ++ ;
+                }
+
+        int res = 0;
+        for (int i = 0; i < n; i ++ )
+            for (int j = 0; j < m; j ++ )
+                if (g[i][j] && (row[i] >= 2 || col[j] >= 2))
+                    res ++ ;
+        return res;
+    }
+};
+```
+#####  LeetCode 1268. 搜索推荐系统
+```cpp
+class Solution {
+public:
+    vector<vector<string>> suggestedProducts(vector<string>& ps, string str) {
+        sort(ps.begin(), ps.end());
+        vector<vector<string>> ans;
+        string cur;
+        int k = 0, n = ps.size();
+        for (auto c: str) {
+            cur += c;
+            while (k < n && ps[k] < cur) k ++ ;
+            vector<string> res;
+            for (int i = k; i < n && i < k + 3; i ++ )
+                if (ps[i].substr(0, cur.size()) == cur) {
+                    res.push_back(ps[i]);
+                } else {
+                    break;
+                }
+            ans.push_back(res);
+        }
+        return ans;
+    }
+};
+```
+#####  LeetCode 1269. 停在原地的方案数
+```cpp
+class Solution {
+public:
+    int numWays(int n, int m) {
+        const int MOD = 1e9 + 7;
+        m = min(m, n);
+        vector<vector<int>> f(n + 1, vector<int>(m));
+        f[0][0] = 1;
+        for (int i = 1; i <= n; i ++ )
+            for (int j = 0; j < m; j ++ ) {
+                f[i][j] = f[i - 1][j];
+                if (j) f[i][j] = (f[i][j] + f[i - 1][j - 1]) % MOD;
+                if (j + 1 < m) f[i][j] = (f[i][j] + f[i - 1][j + 1]) % MOD;
+            }
+        return f[n][0];
+    }
+};
+```
+#####  LeetCode 1275. 找出井字棋的获胜者
+```cpp
+class Solution {
+public:
+    int g[3][3];
+
+    bool check(int x) {
+        for (int i = 0; i < 3; i ++ ) {
+            if (g[i][0] == x && g[i][1] == x && g[i][2] == x)
+                return true;
+            if (g[0][i] == x && g[1][i] == x && g[2][i] == x)
+                return true;
+        }
+
+        if (g[0][0] == x && g[1][1] == x && g[2][2] == x)
+            return true;
+        if (g[0][2] == x && g[1][1] == x && g[2][0] == x)
+            return true;
+        return false;
+    }
+
+    string tictactoe(vector<vector<int>>& moves) {
+        memset(g, 0, sizeof g);
+        int t = 1;
+        for (auto& move: moves) {
+            g[move[0]][move[1]] = t;
+            t = 3 - t;
+        }
+
+        if (check(1)) return "A";
+        if (check(2)) return "B";
+        if (moves.size() == 9) return "Draw";
+        return "Pending";
+    }
+};
+```
+#####  LeetCode 1276. 不浪费原料的汉堡制作方案
+```cpp
+class Solution {
+public:
+    vector<int> numOfBurgers(int a, int b) {
+        if (a < b * 2 || (a - 2 * b) % 2) return {};
+        int x = (a - b * 2) / 2;
+        if (b < x) return {};
+        int y = b - x;
+        return {x, y};
+    }
+};
+```
+#####  LeetCode 1277. 统计全为 1 的正方形子矩阵
+```cpp
+class Solution {
+public:
+    int countSquares(vector<vector<int>>& g) {
+        int n = g.size(), m = g[0].size();
+        vector<vector<int>> f(n, vector<int>(m));
+
+        int res = 0;
+        for (int i = 0; i < n; i ++ )
+            for (int j = 0; j < m; j ++ )
+                if (g[i][j]) {
+                    if (!i || !j) {
+                        f[i][j] = 1;
+                        res ++ ;
+                    } else {
+                        f[i][j] = min({f[i - 1][j], f[i][j - 1], f[i - 1][j - 1]}) + 1;
+                        res += f[i][j];
+                    }
+                }
+
+        return res;
+    }
+};
+```
+#####  LeetCode 1278. 分割回文串 III
+```cpp
+class Solution {
+public:
+    int palindromePartition(string s, int m) {
+        int n = s.size(), INF = 1e8;
+        vector<vector<int>> f(n, vector<int>(m + 1, INF));
+        vector<vector<int>> cost(n, vector<int>(n));
+        for (int i = 0; i < n; i ++ )
+            for (int j = i; j < n; j ++ )
+                for (int a = i, b = j; a < b; a ++, b -- )
+                    if (s[a] != s[b])
+                        cost[i][j] ++ ;
+
+        for (int i = 0; i < n; i ++ ) {
+            f[i][1] = cost[0][i];
+            for (int j = 2; j <= m; j ++ )
+                for (int k = i; k > 0; k -- )
+                    f[i][j] = min(f[i][j], f[k - 1][j - 1] + cost[k][i]);
+        }
+
+        return f[n - 1][m];
+    }
+};
+
+```
+#####  LeetCode 1281. 整数的各位积和之差
+```cpp
+class Solution {
+public:
+    int subtractProductAndSum(int n) {
+        int p = 1, s = 0;
+        while (n) {
+            p *= n % 10;
+            s += n % 10;
+            n /= 10;
+        }
+        return p - s;
+    }
+};
+```
+
+
+
+### 究极班- Week 59(第 1282 ~ 1284、1286 ~ 1292 题)
+
+
+#####  LeetCode 1282. 用户分组
+```cpp
+class Solution {
+public:
+    vector<vector<int>> groupThePeople(vector<int>& groupSizes) {
+        vector<vector<int>> res;
+        unordered_map<int, vector<int>> hash;
+        for (int i = 0; i < groupSizes.size(); i ++ ) {
+            int x = groupSizes[i];
+            hash[x].push_back(i);
+            if (hash[x].size() == x) {
+                res.push_back(hash[x]);
+                hash[x].clear();
+            }
+        }
+        return res;
+    }
+};
+```
+#####  LeetCode 1283. 使结果不超过阈值的最小除数
+```cpp
+class Solution {
+public:
+    bool check(vector<int>& nums, int threshold, int mid) {
+        int sum = 0;
+        for (auto x: nums)
+            sum += (x + mid - 1) / mid;
+        return sum <= threshold;
+    }
+
+    int smallestDivisor(vector<int>& nums, int threshold) {
+        int l = 1, r = 1e6 + 1;
+        while (l < r) {
+            int mid = l + r >> 1;
+            if (check(nums, threshold, mid)) r = mid;
+            else l = mid + 1;
+        }
+        return r;
+    }
+};
+```
+#####  LeetCode 1284. 转化为全零矩阵的最少反转次数
+```cpp
+class Solution {
+public:
+    int minFlips(vector<vector<int>>& g) {
+        int n = g.size(), m = g[0].size();
+        int dx[] = {-1, 0, 1, 0, 0}, dy[] = {0, 1, 0, -1, 0};
+        int res = -1;
+        for (int i = 0; i < 1 << n * m; i ++ ) {
+            auto w = g;
+            int cnt = 0;
+            for (int j = 0; j < n * m; j ++ )
+                if (i >> j & 1) {
+                    cnt ++ ;
+                    for (int k = 0; k < 5; k ++ ) {
+                        int x = j / m + dx[k], y = j % m + dy[k];
+                        if (x >= 0 && x < n && y >= 0 && y < m)
+                            w[x][y] ^= 1;
+                    }
+                }
+
+            bool allzero = true;
+            for (int j = 0; j < n; j ++ )
+                for (int k = 0; k < m; k ++ )
+                    if (w[j][k]) {
+                        allzero = false;
+                        break;
+                    }
+
+            if (allzero && (res == -1 || res > cnt)) res = cnt;
+        }
+
+        return res;
+    }
+};
+```
+#####  LeetCode 1286. 字母组合迭代器
+```cpp
+class CombinationIterator {
+public:
+    string str;
+    int n, m, cur;
+
+    CombinationIterator(string characters, int combinationLength) {
+        str = characters;
+        n = str.size(), m = combinationLength, cur = 0;
+        for (int i = 0; i < m; i ++ )
+            cur |= 1 << i;
+    }
+
+    string next() {
+        string res;
+        for (int i = 0; i < n; i ++ )
+            if (cur >> i & 1)
+                res += str[i];
+
+        int k = n - 1;
+        while (k >= 0 && (cur >> k & 1)) k -- ;
+        if (n - k - 1 == m) cur = -1;
+        else {
+            int cnt = n - k;
+            while (k >= 0 && !(cur >> k & 1)) k -- ;
+            for (int i = k; i < n; i ++ )
+                if (cur >> i & 1)
+                    cur -= 1 << i;
+            for (int i = k + 1, j = 0; j < cnt; i ++, j ++ )
+                cur |= 1 << i;
+        }
+
+        return res;
+    }
+
+    bool hasNext() {
+        return cur != -1;
+    }
+};
+
+/**
+ * Your CombinationIterator object will be instantiated and called as such:
+ * CombinationIterator* obj = new CombinationIterator(characters, combinationLength);
+ * string param_1 = obj->next();
+ * bool param_2 = obj->hasNext();
+ */
+```
+#####  LeetCode 1287. 有序数组中出现次数超过25%的元素
+```cpp
+class Solution {
+public:
+    int findSpecialInteger(vector<int>& a) {
+        int n = a.size(), m = n / 4 + 1;
+        for (int i = 0; i < n; i += m) {
+            int x = a[i];
+            int l = lower_bound(a.begin(), a.end(), x) - a.begin();
+            int r = upper_bound(a.begin(), a.end(), x) - a.begin();
+            if (r - l >= m) return x;
+        }
+        return -1;
+    }
+};
+
+```
+#####  LeetCode 1288. 删除被覆盖区间
+```cpp
+class Solution {
+public:
+    int removeCoveredIntervals(vector<vector<int>>& intervals) {
+        sort(intervals.begin(), intervals.end(), [](const vector<int>& a, const vector<int>& b) {
+            if (a[0] != b[0]) return a[0] < b[0];
+            return a[1] > b[1];
+        });
+        int res = intervals.size(), r = 0;
+        for (auto& q: intervals) {
+            if (q[1] <= r) res -- ;
+            r = max(r, q[1]);
+        }
+        return res;
+    }
+};
+```
+#####  LeetCode 1289. 下降路径最小和 II
+```cpp
+class Solution {
+public:
+    int minFallingPathSum(vector<vector<int>>& g) {
+        int n = g.size(), m = g[0].size(), INF = 1e8;
+        vector<vector<int>> f(n, vector<int>(m));
+        for (int i = 0; i < m; i ++ ) f[0][i] = g[0][i];
+        for (int i = 1; i < n; i ++ ) {
+            int d1 = INF, d2 = INF;
+            for (int j = 0; j < m; j ++ ) {
+                int x = f[i - 1][j];
+                if (x <= d1) d2 = d1, d1 = x;
+                else if (x < d2) d2 = x;
+            }
+            for (int j = 0; j < m; j ++ )
+                if (f[i - 1][j] == d1) f[i][j] = d2 + g[i][j];
+                else f[i][j] = d1 + g[i][j];
+        }
+
+        int res = INF;
+        for (int i = 0; i < m; i ++ )
+            res = min(res, f[n - 1][i]);
+        return res;
+    }
+};
+```
+#####  LeetCode 1290. 二进制链表转整数
+```cpp
+/**
+ * Definition for singly-linked list.
+ * struct ListNode {
+ *     int val;
+ *     ListNode *next;
+ *     ListNode() : val(0), next(nullptr) {}
+ *     ListNode(int x) : val(x), next(nullptr) {}
+ *     ListNode(int x, ListNode *next) : val(x), next(next) {}
+ * };
+ */
+class Solution {
+public:
+    int getDecimalValue(ListNode* head) {
+        int res = 0;
+        for (auto p = head; p; p = p->next)
+            res = res * 2 + p->val;
+        return res;
+    }
+};
+```
+#####  LeetCode 1291. 顺次数
+```cpp
+class Solution {
+public:
+    vector<int> sequentialDigits(int low, int high) {
+        vector<int> res;
+        for (int i = 1; i <= 9; i ++ ) {
+            int x = 0;
+            for (int j = i; j <= 9; j ++ ) {
+                x = x * 10 + j;
+                if (x >= low && x <= high)
+                    res.push_back(x);
+            }
+        }
+
+        sort(res.begin(), res.end());
+        return res;
+    }
+};
+```
+#####  LeetCode 1292. 元素和小于等于阈值的正方形的最大边长
+```cpp
+class Solution {
+public:
+    vector<vector<int>> s;
+
+    int get(int x1, int y1, int x2, int y2) {
+        return s[x2][y2] - s[x1 - 1][y2] - s[x2][y1 - 1] + s[x1 - 1][y1 - 1];
+    }
+
+    int maxSideLength(vector<vector<int>>& g, int threshold) {
+        int n = g.size(), m = g[0].size();
+        s = vector<vector<int>>(n + 1, vector<int>(m + 1));
+        for (int i = 1; i <= n; i ++ )
+            for (int j = 1; j <= m; j ++ )
+                s[i][j] = s[i - 1][j] + s[i][j - 1] - s[i - 1][j - 1] + g[i - 1][j - 1];
+
+        int res = 0;
+        for (int i = 1; i <= n; i ++ )
+            for (int j = 1; j <= m; j ++ )
+                for (int k = res + 1; k <= min(i, j); k ++ ) {
+                    if (get(i - k + 1, j - k + 1, i, j) > threshold) break;
+                    res ++ ;
+                }
+
+        return res;
+    }
+};
+```
+
+
+
+### 究极班- Week 60(第 1293、1295 ~ 1302、1304 题)
+
+#####  LeetCode 1293. 网格中的最短路径
+```cpp
+class Solution {
+public:
+    struct Node {
+        int x, y, z;
+    };
+
+    int shortestPath(vector<vector<int>>& g, int k) {
+        int n = g.size(), m = g[0].size(), INF = 1e8;
+        k = min(k, max(0, n + m - 3));
+        vector<vector<vector<int>>> dist(n, vector<vector<int>>(m, vector<int>(k + 1, INF)));
+        dist[0][0][0] = 0;
+        queue<Node> q;
+        q.push({0, 0, 0});
+
+        int dx[] = {-1, 0, 1, 0}, dy[] = {0, 1, 0, -1};
+
+        while (q.size()) {
+            auto t = q.front();
+            q.pop();
+
+            int distance = dist[t.x][t.y][t.z];
+            if (t.x == n - 1 && t.y == m - 1) return distance;
+            for (int i = 0; i < 4; i ++ ) {
+                int x = t.x + dx[i], y = t.y + dy[i];
+                if (x >= 0 && x < n && y >= 0 && y < m) {
+                    int z = t.z + g[x][y];
+                    if (z <= k && dist[x][y][z] > distance + 1) {
+                        dist[x][y][z] = distance + 1;
+                        q.push({x, y, z});
+                    }
+                }
+            }
+        }
+
+        return -1;
+    }
+};
+```
+#####  LeetCode 1295. 统计位数为偶数的数字
+```cpp
+class Solution {
+public:
+    int findNumbers(vector<int>& nums) {
+        int res = 0;
+        for (auto x: nums)
+            if (to_string(x).size() % 2 == 0)
+                res ++ ;
+        return res;
+    }
+};
+```
+#####  LeetCode 1296. 划分数组为连续数字的集合
+```cpp
+class Solution {
+public:
+    bool isPossibleDivide(vector<int>& nums, int k) {
+        if (nums.size() % k) return false;
+        multiset<int> S;
+        for (auto x: nums) S.insert(x);
+
+        while (S.size()) {
+            int x = *S.begin();
+            for (int i = x; i < x + k; i ++ ) {
+                auto it = S.find(i);
+                if (it == S.end()) return false;
+                S.erase(it);
+            }
+        }
+
+        return true;
+    }
+};
+```
+#####  LeetCode 1297. 子串的最大出现次数
+```cpp
+typedef unsigned long long ULL;
+
+const int P = 13331;
+
+class Solution {
+public:
+    int maxFreq(string s, int maxLetters, int m, int maxSize) {
+        int n = s.size();
+        ULL p = 1, key = 0;
+        for (int i = 0; i < m; i ++ ) p = p * P;
+
+        unordered_map<ULL, int> hash;
+        unordered_map<char, int> cnt;
+        int res = 0;
+        for (int i = 0, tot = 0; i < n; i ++ ) {
+            key = key * P + s[i];
+            if (!cnt[s[i]]) tot ++ ;
+            cnt[s[i]] ++ ;
+            if (i >= m) {
+                cnt[s[i - m]] -- ;
+                if (!cnt[s[i - m]]) tot -- ;
+                key -= s[i - m] * p;
+            }
+
+            if (i >= m - 1 && tot <= maxLetters)
+                res = max(res, ++ hash[key]);
+        }
+        return res;
+    }
+};
+```
+#####  LeetCode 1298. 你能从盒子里获得的最大糖果数
+```cpp
+class Solution {
+public:
+    int maxCandies(vector<int>& status, vector<int>& candies, vector<vector<int>>& keys, vector<vector<int>>& containedBoxes, vector<int>& initialBoxes) {
+        queue<int> q;
+        unordered_set<int> S_closed, S_keys;
+
+        for (auto x: initialBoxes)
+            if (status[x]) q.push(x);
+            else S_closed.insert(x);
+
+        int res = 0;
+        while (q.size()) {
+            int t = q.front();
+            q.pop();
+
+            res += candies[t];
+            for (auto x: keys[t]) {
+                if (S_closed.count(x)) {
+                    q.push(x);
+                    S_closed.erase(x);
+                } else {
+                    S_keys.insert(x);
+                }
+            }
+
+            for (auto x: containedBoxes[t]) {
+                if (status[x]) q.push(x);
+                else if (S_keys.count(x)) {
+                    q.push(x);
+                    S_keys.erase(x);
+                } else {
+                    S_closed.insert(x);
+                }
+            }
+        }
+
+        return res;
+    }
+};
+```
+#####  LeetCode 1299. 将每个元素替换为右侧最大元素
+```cpp
+class Solution {
+public:
+    vector<int> replaceElements(vector<int>& a) {
+        int r = -1;
+        for (int i = a.size() - 1; i >= 0; i -- ) {
+            int t = a[i];
+            a[i] = r;
+            r = max(r, t);
+        }
+        return a;
+    }
+};
+```
+#####  LeetCode 1300. 转变数组后最接近目标值的数组和
+```cpp
+class Solution {
+public:
+
+    int get(vector<int>& a, int mid) {
+        int res = 0;
+        for (auto x: a)
+            res += min(x, mid);
+        return res;
+    }
+
+    int findBestValue(vector<int>& a, int target) {
+        int sum = 0, mx = 0;
+        for (auto x: a) sum += x, mx = max(mx, x);
+        if (sum < target) return mx;
+
+        int l = 0, r = 1e5;
+        while (l < r) {
+            int mid = l + r >> 1;
+            if (get(a, mid) >= target) r = mid;
+            else l = mid + 1;
+        }
+
+        int lower = get(a, r - 1), upper = get(a, r);
+        if (target - lower <= upper - target)
+            return r - 1;
+        return r;
+    }
+};
+```
+#####  LeetCode 1301. 最大得分的路径数目
+```cpp
+class Solution {
+public:
+    vector<int> pathsWithMaxScore(vector<string>& w) {
+        int n = w.size(), m = w[0].size(), INF = 1e8, MOD = 1e9 + 7;
+        vector<vector<int>> f(n, vector<int>(m, -INF)), g(n, vector<int>(m));
+        f[0][0] = 0, g[0][0] = 1;
+        w[n - 1][m - 1] = '0';
+        for (int i = 0; i < n; i ++ ) {
+            for (int j = 0; j < m; j ++ ) {
+                if (!i && !j || w[i][j] == 'X') continue;
+                int &t = f[i][j], &r = g[i][j];
+                if (i) t = max(t, f[i - 1][j]);
+                if (j) t = max(t, f[i][j - 1]);
+                if (i && j) t = max(t, f[i - 1][j - 1]);
+                if (i && f[i - 1][j] == t)
+                    r = (r + g[i - 1][j]) % MOD;
+                if (j && f[i][j - 1] == t)
+                    r = (r + g[i][j - 1]) % MOD;
+                if (i && j && f[i - 1][j - 1] == t)
+                    r = (r + g[i - 1][j - 1]) % MOD;
+                t += w[i][j] - '0';
+            }
+        }
+        if (f[n - 1][m - 1] < 0)
+            return {0, 0};
+        return {f[n - 1][m - 1], g[n - 1][m - 1]};
+    }
+};
+```
+#####  LeetCode 1302. 层数最深叶子节点的和
+```cpp
+/**
+ * Definition for a binary tree node.
+ * struct TreeNode {
+ *     int val;
+ *     TreeNode *left;
+ *     TreeNode *right;
+ *     TreeNode() : val(0), left(nullptr), right(nullptr) {}
+ *     TreeNode(int x) : val(x), left(nullptr), right(nullptr) {}
+ *     TreeNode(int x, TreeNode *left, TreeNode *right) : val(x), left(left), right(right) {}
+ * };
+ */
+class Solution {
+public:
+    int depth = -1, sum = 0;
+
+    void dfs(TreeNode* root, int d) {
+        if (!root) return;
+        if (d > depth) depth = d, sum = root->val;
+        else if (d == depth) sum += root->val;
+
+        dfs(root->left, d + 1);
+        dfs(root->right, d + 1);
+    }
+
+    int deepestLeavesSum(TreeNode* root) {
+        dfs(root, 0);
+        return sum;
+    }
+};
+```
+#####  LeetCode 1304. 和为零的 N 个不同整数
+```cpp
+class Solution {
+public:
+    vector<int> sumZero(int n) {
+        vector<int> res;
+        for (int i = 1; i <= n / 2; i ++ ) {
+            res.push_back(i);
+            res.push_back(-i);
+        }
+        if (n % 2) res.push_back(0);
+        return res;
+    }
+};
+```
+
+
+### 究极班- Week 61（第 1305 ~ 1307、1309 ~ 1315 题）
+
+#####  LeetCode 1305. 两棵二叉搜索树中的所有元素
+```cpp
+/**
+ * Definition for a binary tree node.
+ * struct TreeNode {
+ *     int val;
+ *     TreeNode *left;
+ *     TreeNode *right;
+ *     TreeNode() : val(0), left(nullptr), right(nullptr) {}
+ *     TreeNode(int x) : val(x), left(nullptr), right(nullptr) {}
+ *     TreeNode(int x, TreeNode *left, TreeNode *right) : val(x), left(left), right(right) {}
+ * };
+ */
+class Solution {
+public:
+    void dfs(TreeNode* root, vector<int>& a) {
+        if (!root) return;
+        dfs(root->left, a);
+        a.push_back(root->val);
+        dfs(root->right, a);
+    }
+
+    vector<int> getAllElements(TreeNode* root1, TreeNode* root2) {
+        vector<int> a, b;
+        dfs(root1, a), dfs(root2, b);
+        vector<int> res;
+        int i = 0, j = 0;
+        while (i < a.size() && j < b.size()) {
+            if (a[i] < b[j]) res.push_back(a[i ++ ]);
+            else res.push_back(b[j ++ ]);
+        }
+        while (i < a.size()) res.push_back(a[i ++ ]);
+        while (j < b.size()) res.push_back(b[j ++ ]);
+        return res;
+    }
+};
+```
+#####  LeetCode 1306. 跳跃游戏 III
+```cpp
+class Solution {
+public:
+    bool dfs(vector<int>& a, int k) {
+        if (!a[k]) return true;
+        int pos[] = {k - a[k], k + a[k]};
+        a[k] = -1;
+        for (auto x: pos) {
+            if (x >= 0 && x < a.size() && a[x] != -1) {
+                if (dfs(a, x)) return true;
+            }
+        }
+        return false;
+    }
+
+    bool canReach(vector<int>& arr, int start) {
+        return dfs(arr, start);
+    }
+};
+```
+#####  LeetCode 1307. 口算难题
+```cpp
+class Solution {
+public:
+    vector<string> words;
+    string result;
+    int p[300];
+    bool st[10];
+
+    bool dfs(int k, int carry) {
+        if (k == result.size()) {
+            if (carry) return false;
+            for (auto& w: words) {
+                if (w.size() > 1 && !p[w.back()]) return false;
+            }
+            if (result.size() > 1 && !p[result.back()]) return false;
+            return true;
+        }
+
+        bool flag = true;
+        int sum = carry;
+        for (auto& w: words) {
+            if (k >= w.size()) continue;
+            char c = w[k];
+            if (p[c] == -1) {
+                flag = false;
+                for (int i = 0; i < 10; i ++ ) {
+                    if (!st[i]) {
+                        p[c] = i;
+                        st[i] = true;
+                        if (dfs(k, carry)) return true;
+                        st[i] = false;
+                        p[c] = -1;
+                    }
+                }
+            } else {
+                sum += p[c];
+            }
+        }
+
+        if (flag) {
+            carry = sum / 10;
+            sum %= 10;
+            char c = result[k];
+            if (p[c] == -1 && !st[sum]) {
+                p[c] = sum;
+                st[sum] = true;
+                if (dfs(k + 1, carry)) return true;
+                st[sum] = false;
+                p[c] = -1;
+            } else if (p[c] == sum) {
+                if (dfs(k + 1, carry)) return true;
+            }
+        }
+
+        return false;
+    }
+
+    bool isSolvable(vector<string>& words, string result) {
+        memset(p, -1, sizeof p);
+        memset(st, 0, sizeof st);
+
+        for (auto& w: words) reverse(w.begin(), w.end());
+        reverse(result.begin(), result.end());
+        this->words = words;
+        this->result = result;
+
+        set<char> hash;
+        int len = 0;
+        for (auto& w: words) {
+            for (auto c: w) {
+                hash.insert(c);
+            }
+            len = max(len, (int)w.size());
+        }
+        for (auto c: result) hash.insert(c);
+        if (hash.size() > 10) return false; 
+        if (len > result.size() || result.size() - len > 1) return false;
+
+        return dfs(0, 0);
+    }
+};
+```
+#####  LeetCode 1309. 解码字母到整数映射
+```cpp
+class Solution {
+public:
+    string freqAlphabets(string s) {
+        string res;
+        for (int i = 0; i < s.size(); i ++ ) {
+            if (i + 2 < s.size() && s[i + 2] == '#') {
+                res += 'j' + stoi(s.substr(i, 2)) - 10;
+                i += 2;
+            } else {
+                res += 'a' + s[i] - '1';
+            }
+        }
+        return res;
+    }
+};
+```
+#####  LeetCode 1310. 子数组异或查询
+```cpp
+class Solution {
+public:
+    vector<int> xorQueries(vector<int>& w, vector<vector<int>>& queries) {
+        int n = w.size();
+        vector<int> s(n + 1);
+        for (int i = 1; i <= n; i ++ ) s[i] = s[i - 1] ^ w[i - 1];
+        vector<int> res;
+        for (auto& q: queries) {
+            int l = q[0] + 1, r = q[1] + 1;
+            res.push_back(s[r] ^ s[l - 1]);
+        }
+        return res;
+    }
+};
+```
+#####  LeetCode 1311. 获取你好友已观看的视频
+```cpp
+class Solution {
+public:
+    vector<string> watchedVideosByFriends(vector<vector<string>>& watchedVideos, vector<vector<int>>& friends, int id, int level) {
+        int n = friends.size();
+        queue<int> q;
+        vector<int> dist(n, 1e8);
+        dist[id] = 0;
+        q.push(id);
+
+        while (q.size()) {
+            auto t = q.front();
+            q.pop();
+
+            for (auto x: friends[t]) {
+                if (dist[x] > dist[t] + 1) {
+                    dist[x] = dist[t] + 1;
+                    q.push(x);
+                }
+            }
+        }
+
+        unordered_map<string, int> hash;
+        for (int i = 0; i < n; i ++ ) {
+            if (dist[i] == level) {
+                for (auto& v: watchedVideos[i]) {
+                    hash[v] ++ ;
+                }
+            }
+        }
+
+        vector<pair<int, string>> items;
+        for (auto& [k, v]: hash) items.push_back({v, k});
+        sort(items.begin(), items.end());
+
+        vector<string> res;
+        for (auto& p: items) res.push_back(p.second);
+        return res;
+    }
+};
+
+```
+#####  LeetCode 1312. 让字符串成为回文串的最少插入次数
+```cpp
+class Solution {
+public:
+    int minInsertions(string s) {
+        int n = s.size();
+        vector<vector<int>> f(n, vector<int>(n));
+
+        for (int len = 2; len <= n; len ++ ) {
+            for (int i = 0; i + len - 1 < n; i ++ ) {
+                int j = i + len - 1;
+                f[i][j] = min(f[i + 1][j], f[i][j - 1]) + 1;
+                if (s[i] == s[j]) {
+                    f[i][j] = min(f[i][j], f[i + 1][j - 1]);
+                }
+            }
+        }
+
+        return f[0][n - 1];
+    }
+};
+```
+#####  LeetCode 1313. 解压缩编码列表
+```cpp
+class Solution {
+public:
+    vector<int> decompressRLElist(vector<int>& nums) {
+        vector<int> res;
+        for (int i = 0; i < nums.size(); i += 2) {
+            for (int j = 0; j < nums[i]; j ++ ) {
+                res.push_back(nums[i + 1]);
+            }
+        }
+        return res;
+    }
+};
+
+```
+#####  LeetCode 1314. 矩阵区域和
+```cpp
+class Solution {
+public:
+    vector<vector<int>> s;
+
+    int get(int x1, int y1, int x2, int y2) {
+        return s[x2][y2] - s[x1 - 1][y2] - s[x2][y1 - 1] + s[x1 - 1][y1 - 1];
+    }
+
+    vector<vector<int>> matrixBlockSum(vector<vector<int>>& g, int k) {
+        int n = g.size(), m = g[0].size();
+        s = vector<vector<int>>(n + 1, vector<int>(m + 1));
+        for (int i = 1; i <= n; i ++ ) {
+            for (int j = 1; j <= m; j ++ ) {
+                s[i][j] = s[i - 1][j] + s[i][j - 1] - s[i - 1][j - 1] + g[i - 1][j - 1];
+            }
+        }
+
+        vector<vector<int>> res(n, vector<int>(m));
+        for (int i = 1; i <= n; i ++ ) {
+            for (int j = 1; j <= m; j ++ ) {
+                res[i - 1][j - 1] = get(max(i - k, 1), max(j - k, 1), min(n, i + k), min(m, j + k));
+            }
+        }
+
+        return res;
+    }
+};
+```
+#####  LeetCode 1315. 祖父节点值为偶数的节点和
+```cpp
+/**
+ * Definition for a binary tree node.
+ * struct TreeNode {
+ *     int val;
+ *     TreeNode *left;
+ *     TreeNode *right;
+ *     TreeNode() : val(0), left(nullptr), right(nullptr) {}
+ *     TreeNode(int x) : val(x), left(nullptr), right(nullptr) {}
+ *     TreeNode(int x, TreeNode *left, TreeNode *right) : val(x), left(left), right(right) {}
+ * };
+ */
+class Solution {
+public:
+    int ans = 0;
+
+    void dfs(TreeNode* root, int p, int pg) {
+        if (!root) return;
+        if (pg % 2 == 0) ans += root->val;
+        dfs(root->left, root->val % 2, p);
+        dfs(root->right, root->val % 2, p);
+    }
+
+    int sumEvenGrandparent(TreeNode* root) {
+        dfs(root, 1, 1);
+        return ans;
+    }
+};
+
+```
+
+
+### 究极班- Week 62(第 1316 ~ 1320、1323 ~ 1326、1328 题)
+
+#####  LeetCode 1316. 不同的循环子字符串
+```cpp
+typedef unsigned long long ULL;
+
+const int N = 2010, P = 131;
+
+ULL h[N], p[N];
+
+class Solution {
+public:
+    ULL get(int l, int r) {
+        return h[r] - h[l - 1] * p[r - l + 1];
+    }
+
+    int distinctEchoSubstrings(string text) {
+        int n = text.size();
+        p[0] = 1;
+        for (int i = 1; i <= n; i ++ ) {
+            p[i] = p[i - 1] * P;
+            h[i] = h[i - 1] * P + text[i - 1];
+        }
+
+        unordered_set<ULL> hash;
+        for (int i = 1; i <= n; i ++ )
+            for (int j = 1; i + j * 2 <= n + 1; j ++ ) {
+                auto left = get(i, i + j - 1);
+                auto right = get(i + j, i + j * 2 - 1);
+                if (left == right) hash.insert(left);
+            }
+
+        return hash.size();
+    }
+};
+
+```
+#####  LeetCode 1317. 将整数转换为两个无零整数的和
+```cpp
+class Solution {
+public:
+    vector<int> getNoZeroIntegers(int n) {
+        for (int a = 1; a < n; a ++ ) {
+            int b = n - a;
+            if (to_string(a).find('0') == -1 && to_string(b).find('0') == -1)
+                return {a, b};
+        }
+        return {};
+    }
+};
+```
+#####  LeetCode 1318. 或运算的最小翻转次数
+```cpp
+class Solution {
+public:
+    int minFlips(int a, int b, int c) {
+        int res = 0;
+        for (int i = 0; i < 30; i ++ ) {
+            int x = a >> i & 1, y = b >> i & 1, z = c >> i & 1;
+            if (!z) res += x + y;
+            else if (!x && !y) res ++ ;
+        }
+        return res;
+    }
+};
+
+```
+#####  LeetCode 1319. 连通网络的操作次数
+```cpp
+class Solution {
+public:
+    vector<int> p;
+
+    int find(int x) {
+        if (p[x] != x) p[x] = find(p[x]);
+        return p[x];
+    }
+
+    int makeConnected(int n, vector<vector<int>>& connections) {
+        if (connections.size() < n - 1) return -1;
+        for (int i = 0; i < n; i ++ ) p.push_back(i);
+
+        int res = n;
+        for (auto& e: connections) {
+            int a = e[0], b = e[1];
+            if (find(a) != find(b)) {
+                p[find(a)] = find(b);
+                res -- ;
+            }
+        }
+        return res - 1;
+    }
+};
+```
+#####  LeetCode 1320. 二指输入的的最小距离
+```cpp
+class Solution {
+public:
+    int get_dist(int x, int y) {
+        return abs(x / 6 - y / 6) + abs(x % 6 - y % 6);
+    }
+
+    int minimumDistance(string word) {
+        int n = word.size(), INF = 1e8;
+        vector<vector<vector<int>>> f(n + 1, vector<vector<int>>(26, vector<int>(26, INF)));
+        for (int i = 0; i < 26; i ++ )
+            for (int j = 0; j < 26; j ++ )
+                f[0][i][j] = 0;
+
+        for (int i = 0; i < n; i ++ )
+            for (int j = 0; j < 26; j ++ )
+                for (int k = 0; k < 26; k ++ ) {
+                    int t = word[i] - 'A';
+                    f[i + 1][t][k] = min(f[i + 1][t][k], f[i][j][k] + get_dist(j, t));
+                    f[i + 1][j][t] = min(f[i + 1][j][t], f[i][j][k] + get_dist(k, t));
+                }
+
+        int res = INF;
+        for (int i = 0; i < 26; i ++ )
+            for (int j = 0; j < 26; j ++ )
+                res = min(res, f[n][i][j]);
+        return res;
+    }
+};
+```
+#####  LeetCode 1323. 6 和 9 组成的最大数字
+```cpp
+class Solution {
+public:
+    int maximum69Number (int num) {
+        string str = to_string(num);
+        for (auto& c: str)
+            if (c == '6') {
+                c = '9';
+                break;
+            }
+        return stoi(str);
+    }
+};
+```
+#####  LeetCode 1324. 竖直打印单词
+```cpp
+class Solution {
+public:
+    vector<string> printVertically(string s) {
+        vector<string> res;
+        int c = 0;
+        for (int i = 0; i < s.size(); i ++ ) {
+            if (s[i] == ' ') continue;
+            int j = i, r = 0;
+            while (j < s.size() && s[j] != ' ') {
+                while (res.size() <= r) res.push_back("");
+                while (res[r].size() <= c) res[r] += ' ';
+                res[r][c] = s[j];
+                j ++, r ++ ;
+            }
+            c ++, i = j;
+        }
+        return res;
+    }
+};
+
+```
+#####  LeetCode 1325. 删除给定值的叶子节点
+```cpp
+/**
+ * Definition for a binary tree node.
+ * struct TreeNode {
+ *     int val;
+ *     TreeNode *left;
+ *     TreeNode *right;
+ *     TreeNode() : val(0), left(nullptr), right(nullptr) {}
+ *     TreeNode(int x) : val(x), left(nullptr), right(nullptr) {}
+ *     TreeNode(int x, TreeNode *left, TreeNode *right) : val(x), left(left), right(right) {}
+ * };
+ */
+class Solution {
+public:
+    TreeNode* removeLeafNodes(TreeNode* root, int target) {
+        if (!root) return NULL;
+        root->left = removeLeafNodes(root->left, target);
+        root->right = removeLeafNodes(root->right, target);
+        if (!root->left && !root->right && root->val == target)
+            return NULL;
+        return root;
+    }
+};
+
+
+```
+#####  LeetCode 1326. 灌溉花园的最少水龙头数目
+```cpp
+#define x first
+#define y second
+
+typedef pair<int, int> PII;
+
+class Solution {
+public:
+    int minTaps(int n, vector<int>& ranges) {
+        vector<PII> q;
+        for (int i = 0; i < ranges.size(); i ++ ) {
+            q.push_back({i - ranges[i], i + ranges[i]});
+        }
+        sort(q.begin(), q.end());
+        int res = 0, r = 0;
+        for (int i = 0; i < q.size(); i ++ ) {
+            int j = i, mr = -1;
+            while (j < q.size() && q[j].x <= r) mr = max(mr, q[j ++ ].y);
+            if (mr == -1) return -1;
+            res ++ ;
+            if (mr >= n) return res;
+            r = mr;
+            i = j - 1;
+        }
+
+        return -1;
+    }
+};
+```
+#####  LeetCode 1328. 破坏回文串
+```cpp
+class Solution {
+public:
+    string breakPalindrome(string str) {
+        if (str.size() == 1) return "";
+        for (int i = 0; i < str.size() / 2; i ++ ) {
+            if (str[i] != 'a' && (str.size() % 2 == 0 || i != str.size() / 2)) {
+                str[i] = 'a';
+                return str;
+            }
+        }
+
+        str.back() = 'b';
+        return str;
+    }
+};
+
+```
+
+
+
+### 究极班- Week 63(第 1329 ~ 1335、1337 ~ 1340 题)
+
+
+#####  LeetCode 1329. 将矩阵按对角线排序
+```cpp
+class Solution {
+public:
+    vector<vector<int>> diagonalSort(vector<vector<int>>& g) {
+        int n = g.size(), m = g[0].size();
+        for (int b = -(n - 1); b <= m - 1; b ++ ) {
+            vector<int> q;
+            for (int x = 0, y = b; x < n && y < m; x ++, y ++ )
+                if (y >= 0)
+                    q.push_back(g[x][y]);
+            sort(q.begin(), q.end());
+            for (int x = 0, y = b, k = 0; x < n && y < m; x ++, y ++ )
+                if (y >= 0)
+                    g[x][y] = q[k ++ ];
+        }
+        return g;
+    }
+};
+```
+#####  LeetCode 1330. 翻转子数组得到最大的数组值
+```cpp
+class Solution {
+public:
+    int maxValueAfterReverse(vector<int>& nums) {
+        int n = nums.size();
+        if (n == 1) return 0;
+
+        int sum = 0;
+        for (int i = 1; i < n; i ++ )
+            sum += abs(nums[i] - nums[i - 1]);
+        int res = sum;
+        for (int i = 1; i < n - 1; i ++ ) {
+            res = max(res, sum - abs(nums[i] - nums[i + 1]) + abs(nums[0] - nums[i + 1]));
+            res = max(res, sum - abs(nums[i] - nums[i - 1]) + abs(nums[i - 1] - nums.back()));
+        }
+
+        int a = max(nums[0], nums[1]), b = min(nums[0], nums[1]);
+        for (int i = 2; i < n; i ++ ) {
+            int c = nums[i - 1], d = nums[i];
+            if (c < d) swap(c, d);
+            if (c < b) res = max(res, sum + 2 * (b - c));
+            if (a < d) res = max(res, sum + 2 * (d - a));
+            b = max(b, min(c, d));
+            a = min(a, max(c, d));
+        }
+
+        return res;
+    }
+};
+```
+#####  LeetCode 1331. 数组序号转换
+```cpp
+class Solution {
+public:
+    vector<int> arrayRankTransform(vector<int>& a) {
+        auto b = a;
+        sort(b.begin(), b.end());
+        b.erase(unique(b.begin(), b.end()), b.end());
+        vector<int> res;
+        for (auto x: a)
+            res.push_back(lower_bound(b.begin(), b.end(), x) - b.begin() + 1);
+        return res;
+    }
+};
+```
+#####  LeetCode 1332. 删除回文子序列
+```cpp
+class Solution {
+public:
+    int removePalindromeSub(string s) {
+        for (int i = 0, j = s.size() - 1; i < j; i ++, j -- )
+            if (s[i] != s[j])
+                return 2;
+        return 1;
+    }
+};
+```
+#####  LeetCode 1333. 餐厅过滤器
+```cpp
+class Solution {
+public:
+    vector<int> filterRestaurants(vector<vector<int>>& restaurants, int veganFriendly, int maxPrice, int maxDistance) {
+        vector<vector<int>> q;
+        for (auto& r: restaurants) {
+            if (veganFriendly && !r[2] || r[3] > maxPrice || r[4] > maxDistance) continue;
+            q.push_back(r);
+        }
+
+        sort(q.begin(), q.end(), [](vector<int>& a, vector<int>& b) {
+            if (a[1] != b[1]) return a[1] > b[1];
+            return a[0] > b[0];
+        });
+
+        vector<int> res;
+        for (auto& p: q) res.push_back(p[0]);
+        return res;
+    }
+};
+
+```
+#####  LeetCode 1334. 阈值距离内邻居最少的城市
+```cpp
+class Solution {
+public:
+    int findTheCity(int n, vector<vector<int>>& edges, int distanceThreshold) {
+        vector<vector<int>> d(n, vector<int>(n, 1e8));
+        for (int i = 0; i < n; i ++ ) d[i][i] = 0;
+        for (auto& e: edges) {
+            int a = e[0], b = e[1], c = e[2];
+            d[a][b] = d[b][a] = min(d[a][b], c);
+        }
+        for (int k = 0; k < n; k ++ )
+            for (int i = 0; i < n; i ++ )
+                for (int j = 0; j < n; j ++ )
+                    d[i][j] = min(d[i][j], d[i][k] + d[k][j]);
+
+        int id = -1, min_cnt = n + 1;
+        for (int i = 0; i < n; i ++ ) {
+            int cnt = 0;
+            for (int j = 0; j < n; j ++ )
+                if (i != j && d[i][j] <= distanceThreshold)
+                    cnt ++ ;
+            if (cnt <= min_cnt) {
+                min_cnt = cnt;
+                id = i;
+            }
+        }
+        return id;
+    }
+};
+
+```
+#####  LeetCode 1335. 工作计划的最低难度
+```cpp
+class Solution {
+public:
+    int minDifficulty(vector<int>& w, int d) {
+        int n = w.size(), INF = 1e8;
+        vector<vector<int>> f(n + 1, vector<int>(d + 1, INF));
+        f[0][0] = 0;
+        for (int i = 1; i <= n; i ++ ) {
+            for (int j = 1; j <= d; j ++ ) {
+                int cost = 0;
+                for (int k = 1; k <= i; k ++ ) {
+                    cost = max(cost, w[i - k]);
+                    f[i][j] = min(f[i][j], f[i - k][j - 1] + cost);
+                }
+            }
+        }
+        if (f[n][d] == INF) return -1;
+        return f[n][d];
+    }
+};
+```
+#####  LeetCode 1337. 矩阵中战斗力最弱的 K 行
+```cpp
+class Solution {
+public:
+    vector<int> kWeakestRows(vector<vector<int>>& mat, int k) {
+        vector<int> cnt;
+        for (auto& line: mat) {
+            int c = 0;
+            for (auto x: line)
+                c += x;
+            cnt.push_back(c);
+        }
+
+        vector<int> res;
+        for (int i = 0; i < mat.size(); i ++ )
+            res.push_back(i);
+        sort(res.begin(), res.end(), [&](int a, int b) {
+            if (cnt[a] != cnt[b]) return cnt[a] < cnt[b];
+            return a < b;
+        });
+
+        res.erase(res.begin() + k, res.end());
+        return res;
+    }
+};
+
+```
+#####  LeetCode 1338. 数组大小减半
+```cpp
+class Solution {
+public:
+    int minSetSize(vector<int>& arr) {
+        unordered_map<int, int> hash;
+        for (auto x: arr) hash[x] ++ ;
+        vector<int> cnt;
+        for (auto& [k, v]: hash) cnt.push_back(v);
+        sort(cnt.begin(), cnt.end(), greater<int>());
+
+        for (int i = 0, sum = 0; i < cnt.size(); i ++ ) {
+            sum += cnt[i];
+            if (sum * 2 >= arr.size())
+                return i + 1;
+        }
+        return 0;
+    }
+};
+```
+#####  LeetCode 1339. 分裂二叉树的最大乘积
+```cpp
+/**
+ * Definition for a binary tree node.
+ * struct TreeNode {
+ *     int val;
+ *     TreeNode *left;
+ *     TreeNode *right;
+ *     TreeNode() : val(0), left(nullptr), right(nullptr) {}
+ *     TreeNode(int x) : val(x), left(nullptr), right(nullptr) {}
+ *     TreeNode(int x, TreeNode *left, TreeNode *right) : val(x), left(left), right(right) {}
+ * };
+ */
+typedef long long LL;
+
+class Solution {
+public:
+    const int MOD = 1e9 + 7;
+    LL tot = 0, ans = 0;
+
+    int dfs(TreeNode* root) {
+        if (!root) return 0;
+        int sum = root->val;
+        sum += dfs(root->left) + dfs(root->right);
+        ans = max(ans, sum * (tot - sum));
+        return sum;
+    }
+
+    int maxProduct(TreeNode* root) {
+        tot = dfs(root);
+        dfs(root);
+        return ans % MOD;
+    }
+};
+
+```
+#####  LeetCode 1340. 跳跃游戏 V
+
+```cpp
+class Solution {
+public:
+    int minJumps(vector<int>& w) {
+        unordered_map<int, vector<int>> hash;
+        int n = w.size(), INF = 1e9;
+        for (int i = 0; i < n; i ++ )
+            hash[w[i]].push_back(i);
+
+        vector<int> dist(n, INF);
+        queue<int> q;
+        dist[0] = 0;
+        q.push(0);
+
+        while (q.size()) {
+            auto t = q.front();
+            q.pop();
+
+            for (int i = t - 1; i <= t + 1; i += 2) {
+                if (i >= 0 && i < n && dist[i] > dist[t] + 1) {
+                    dist[i] = dist[t] + 1;
+                    q.push(i);
+                }
+            }
+
+            int val = w[t];
+            if (hash.count(val)) {
+                for (int i: hash[val]) {
+                    if (dist[i] > dist[t] + 1) {
+                        dist[i] = dist[t] + 1;
+                        q.push(i);
+                    }
+                }
+                hash.erase(val);
+            }
+        }
+
+        return dist[n - 1];
+    }
+};
+```
+
+### 究极班- Week 64(第 1342 ~ 1349、1351 ~ 1354、1356 ~ 1358 题)
+
+
+#####  LeetCode 1342. 将数字变成 0 的操作次数
+```cpp
+class Solution {
+public:
+    int numberOfSteps(int num) {
+        int res = 0;
+        while (num) {
+            if (num & 1) num -- ;
+            else num >>= 1;
+            res ++ ;
+        }
+        return res;
+    }
+};
+```
+#####  LeetCode 1343. 大小为 K 且平均值大于等于阈值的子数组数目
+```cpp
+class Solution {
+public:
+    int numOfSubarrays(vector<int>& a, int k, int threshold) {
+        int res = 0;
+        for (int i = 0, j = 0, s = 0; i < a.size(); i ++ ) {
+            s += a[i];
+            if (i - j >= k) s -= a[j ++ ];
+            if (i - j + 1 == k && s >= k * threshold) res ++ ;
+        }
+        return res;
+    }
+};
+```
+#####  LeetCode 1344. 时钟指针的夹角
+```cpp
+class Solution {
+public:
+    double angleClock(int hour, int minutes) {
+        hour %= 12;
+        double x = minutes * 6;
+        double y = hour * 30 + minutes * 0.5;
+        return min(abs(x - y), 360 - abs(x - y));
+    }
+};
+
+```
+#####  LeetCode 1345. 跳跃游戏 IV
+```cpp
+class Solution {
+public:
+    int minJumps(vector<int>& w) {
+        unordered_map<int, vector<int>> hash;
+        int n = w.size(), INF = 1e9;
+        for (int i = 0; i < n; i ++ )
+            hash[w[i]].push_back(i);
+
+        vector<int> dist(n, INF);
+        queue<int> q;
+        dist[0] = 0;
+        q.push(0);
+
+        while (q.size()) {
+            auto t = q.front();
+            q.pop();
+
+            for (int i = t - 1; i <= t + 1; i += 2) {
+                if (i >= 0 && i < n && dist[i] > dist[t] + 1) {
+                    dist[i] = dist[t] + 1;
+                    q.push(i);
+                }
+            }
+
+            int val = w[t];
+            if (hash.count(val)) {
+                for (int i: hash[val]) {
+                    if (dist[i] > dist[t] + 1) {
+                        dist[i] = dist[t] + 1;
+                        q.push(i);
+                    }
+                }
+                hash.erase(val);
+            }
+        }
+
+        return dist[n - 1];
+    }
+};
+```
+#####  LeetCode 1346. 检查整数及其两倍数是否存在
+```cpp
+class Solution {
+public:
+    bool checkIfExist(vector<int>& w) {
+        unordered_set<int> hash;
+        for (auto x: w) {
+            if (hash.count(x * 2) || x % 2 == 0 && hash.count(x / 2))
+                return true;
+            hash.insert(x);
+        }
+        return false;
+    }
+};-
+
+```
