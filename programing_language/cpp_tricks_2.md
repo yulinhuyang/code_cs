@@ -44,3 +44,5 @@ json库nlohmann简单使用教程: https://blog.csdn.net/u011341856/article/deta
 KD-Tree原理详解: https://zhuanlan.zhihu.com/p/112246942
 
 【C++】关于 std::set_intersection( ) 函数用法: https://blog.csdn.net/Sim0Hayha/article/details/80043558
+
+C++ 保存vector到文件： https://blog.csdn.net/BlackCarDriver/article/details/103690469
