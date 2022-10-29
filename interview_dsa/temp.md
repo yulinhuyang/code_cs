@@ -41,7 +41,7 @@ public:
 桶排序： https://www.acwing.com/blog/content/8989/
 
 
-stringstream 的头文件是stream  
+stringstream 的头文件是sstream  
 
 
 
