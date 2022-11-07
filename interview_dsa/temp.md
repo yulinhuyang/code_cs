@@ -43,5 +43,5 @@ public:
 
 stringstream 的头文件是sstream  
 
-
+ 万能头文件： #include<bits/stdc++.h>
 
