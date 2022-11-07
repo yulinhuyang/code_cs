@@ -43,5 +43,9 @@ public:
 
 stringstream 的头文件是sstream  
 
- 万能头文件： #include<bits/stdc++.h>
+C++/C++11中头文件sstream介绍 : https://blog.csdn.net/fengbingchun/article/details/69788873
+
+万能头文件： #include<bits/stdc++.h>
+
+
 
