@@ -49,3 +49,6 @@ C++/C++11中头文件sstream介绍 : https://blog.csdn.net/fengbingchun/article/
 
 董晓算法： https://space.bilibili.com/517494241/
 
+
+当前目录下查找某个名字的文件夹：    find  ./ -name "*8DFZ1"   
+
