@@ -28,8 +28,9 @@ Acwing 技术分享： https://www.acwing.com/blog/
 - void insert - Trie 插入
 
 0x20 搜索
-- 深度优先遍历
-- 宽度优先遍历
+- 深度优先遍历 (DFS)
+- 宽度优先遍历 (BFS)
+- Astar：图遍历 + BFS
 - simulate_anneal - 模拟退火
 
 0x30 数学
