@@ -2956,6 +2956,173 @@ for (int k = 0; k <= s[i] && k * v[i] <= j; k ++ ) //比完全背包的三重循
 	f[i][j] = max(f[i][j], f[i - 1][j - v[i] * k] + w[i] * k);
 ```
 
+(8)  背包问题求方案数
+
+AcWing 1021 货币系统
+
+```cpp
+    cin >> n >> m;
+    f[0] = 1;
+    for (int i = 0; i < n; i++) {
+        int v;
+        cin >> v;
+        for (int j = v; j <= m; j++) {
+            f[j] += f[j - v]; //背包问题求方案数
+        }
+    }
+    cout << f[m] << endl;
+```
+
+(9)  背包问题求具体方案
+
+```cpp
+#include <iostream>
+#include <vector>
+
+using namespace std;
+const int N = 1010;
+int f[N][N],v[N],w[N];
+int n, m;
+
+int main() {
+    cin >> n >> m;
+    for (int i = 1; i <= n; i++) {
+        cin >> v[i] >> w[i];
+    }
+    for (int i = n; i >= 1; i--) {
+        for (int j = 0; j <= m; j++) {
+            f[i][j] = f[i + 1][j];
+            if (j >= v[i]) f[i][j] = max(f[i][j], f[i + 1][j - v[i]] + w[i]);
+        }
+    }
+
+    int j = m;
+    //追溯
+    for (int i = 1; i <= n; i++) {
+        if (j >= v[i] && f[i][j] == f[i + 1][j - v[i]] + w[i]) {
+            cout << i << ' ';
+            j -= v[i];
+        }
+    }
+    return 0;
+}
+```
+
+#### 状态机模板
+
+画状态转换图
+
+AcWing 1057. 股票买卖 IV
+
+```cpp
+const int N = 100010, M = 110;
+int f[N][M][2], w[N];//买入作为一次交易的开始，会画状态转换图，分析状态机模型
+//f[i][j][0] i天，最多j次交易(也可以小于j次)，0表示没有，1表示持有
+int n, m;
+
+int main() {
+    cin >> n >> m;
+    for (int i = 1; i <= n; i++) {
+        cin >> w[i];
+    }
+
+    memset(f, -0x3f, sizeof(f));
+    for (int i = 0; i <= n; i++) {
+        f[i][0][0] = 0;
+    }
+    for (int i = 1; i <= n; i++) {
+        for (int j = 1; j <= m; j++) {
+            f[i][j][0] = max(f[i - 1][j][0], f[i - 1][j][1] + w[i]);
+            f[i][j][1] = max(f[i - 1][j][1], f[i - 1][j - 1][0] - w[i]);
+        }
+    }
+
+    int res = 0;
+    for (int i = 1; i <= m; i++) {
+        res = max(res, f[n][i][0]);
+    }
+    cout << res << endl;
+}
+```
+
+
+#### 状态压缩DP
+
+棋盘式
+
+```C++
+vector<int> state;   //所有合法状态
+vector<int> head[M]; // vector + 数组用法，状态为state[i]时的,所有合法的转移状态
+int cnt[M];  //状态M中1的数量
+int n,m;
+LL f[N][K][M]; //f[i][j][k]:  ixi的棋盘上，放置j个小国王,并且放置状态是state[k]
+
+bool check(int state) {
+    //有两个连续1则无效
+    for(int i = 0;i < n;i++){
+        if((state >> i & 1) && (state >> i + 1 & 1)){
+            return false;
+        }
+    }
+    return true;
+}
+
+int count(int state) {
+    int res = 0;
+    for(int i = 0;i < n;i++){
+        if (state >> i & 1) {
+            res++;
+        }
+    }
+    return res;
+}
+
+
+int main() {
+    cin >> n >> m;
+    //预计算所有合法状态
+    for (int i = 0; i < 1 << n; i++) {
+        if (check(i)) {
+            state.emplace_back(i);
+            cnt[i] = count(i);
+        }
+    }
+
+    //预处理前后合法状态
+    for (int i = 0; i < state.size(); i++) {
+        for (int j = 0; j < state.size(); j++) {
+            int a = state[i], b = state[j];
+            if ((a & b) == 0 && check(a | b)) {
+                head[i].emplace_back(j); // i和j不矛盾，合法
+            }
+        }
+    }
+
+    f[0][0][0] = 1;
+    for (int i = 1; i <= n + 1; i++) {
+        for (int j = 0; j <= m; j++) {
+            //遍历所有可能的状态a
+            for (int a = 0; a < state.size(); a++) {
+                //所有合法的前一个状态
+                for (int b:head[a]) {
+                    int c = cnt[state[a]];
+                    if (j >= c) {
+                        f[i][j][a] += f[i - 1][j - c][b];
+                    }
+                }
+            }
+        }
+    }
+
+    //前n行合法，第n+1没有放置
+    cout << f[n + 1][m][0] << endl;
+
+    return 0;
+}
+```
+
+
+集合式: AcWing 524. 愤怒的小鸟
 
 
 #### 区间DP 
@@ -3003,9 +3170,15 @@ int solve(int l, int r){
 }
 ```
 
+
 #### 树形DP
 
-DP的阶段：一般以节点从深到浅(子树从小的到大)的顺序作为DP的阶段      
+(1)  树形DP + 状态机
+
+AcWing 285. 没有上司的舞会
+
+DP的阶段：一般以节点从深到浅(子树从小的到大)的顺序作为DP的阶段  
+
 DP的状态计算：第一维是节点编号(代表该节点为根的子树),第二位是状态机的状态;递归的方式实现树形DP,先递归在它的每个子节点上进行DP,回溯时，从子节点向节点x进行状态转移。     
 
 ```cpp
@@ -3048,72 +3221,33 @@ int main() {
 }
 ```
 
-#### 状态压缩DP
+(2) 最长路+次长路模板
 
-```C++
-//模板 1
-//预处理
-for (int i = 0; i < 1 << n; i ++ )
-{
-    state[i].clear();
-    for (int j = 0; j < 1 << n; j ++ )
-        if ((i & j) == 0 && st[i | j])
-            state[i].push_back(j);
-}
-//计算
-memset(f, 0, sizeof f);
-f[0][0] = 1;
-for (int i = 1; i <= m; i ++ )
-    for (int j = 0; j < 1 << n; j ++ )
-        for (auto k : state[j])
-            f[i][j] += f[i - 1][k];
+AcWing 1072. 树的最长路径
 
-
-//模板2 AcWing291
-const int N = 12, M = 1 << N;
-LL f[N][M];
-bool st[M]; //是否有偶数个连续的0,有则为true
-vector<int> state[M]; //预存储合法状态
-
-//预处理1 判断i是否有偶数个连续的0
-for (int i = 0; i < (1 << n); i++) {
-	bool isvalid = true; // 是否有偶数个连续的0，有则有效。
-	int cnt = 0;
-	for (int j = 0; j < n; j++) {
-		if (i >> j & 1) {
-			if (cnt & 1) {
-				isvalid = false;
-				break;
-			}
-			cnt = 0; //开始下一段
-		} else cnt++;
-	}
-	if (cnt & 1) isvalid = false;
-	st[i] = isvalid;
+```cpp
+void add(int a,int b,int c){
+    //有一条b指向b,它的权值是c,它插在了h[a]的头部,h[a]指向了它，自加。
+    e[idx] = b, w[idx] = c, ne[idx] = h[a], h[a] = idx++;
 }
 
-//预处理2 判断i-2列和i-1列是否冲突
-for (int i = 0; i < 1 << n; i++) {
-	state[i].clear();
-	for (int k = 0; k < 1 << n; k++) {
-		if ((i & k) == 0 && st[i | k]) {
-			state[i].emplace_back(k);
-		}
-	}
+int dfs(int u, int father) {
+    int dist = 0; //从当前点向下走的最大长度
+    int d1 = 0, d2 = 0;
+    for (int i = h[u]; i != -1; i = ne[i]) {
+        int j = e[i];
+        if (j == father) continue;
+        int d = dfs(j, u) + w[i];
+        dist = max(dist, d);
+        if (d >= d1) d2 = d1, d1 = d;
+        else if (d > d2) d2 = d;
+    }
+    res = max(res, d1 + d2);
+    return dist;
 }
-
-//dp开始
-memset(f, 0, sizeof(f));
-f[0][0] = 1;
-for (int i = 1; i <= m; i++) {
-	for (int j = 0; j < (1 << n); j++) {
-		for (auto k: state[j]) {    //遍历合法的转移
-			f[i][j] += f[i - 1][k]; //方案数
-		}
-	}
-}
-
 ```
+
+
 
 #### 数位DP简化模板
 
@@ -3167,10 +3301,9 @@ int main() {
 
 #### 单调队列优化DP 
 
-求max用单调递减队列(可以取队头)，求min用单调递增队列。  
+（1）求max用单调递减队列(可以取队头)，求min用单调递增队列。  
 
 ```C++
-//模板1
 for (int i = 1; i <= n; i ++ )
 {
 	if (q[hh] < i - m) hh ++ ;
@@ -3180,8 +3313,8 @@ for (int i = 1; i <= n; i ++ )
 }
 ```
 
+（2） 环形DP + 单调队列
 ```cpp
-//模板2 环形DP + 单调队列
 deque<int> q;
 int w[N];
 int n;
@@ -3207,6 +3340,96 @@ int main() {
     return 0;
 }
 ```
+
+(3) 典型一维问题
+
+AcWing 135. 最大子序和
+
+```cpp
+for(int i = 1;i <= n;i++){
+    cin >> s[i];
+    s[i] += s[i - 1];
+}
+
+int hh = 0, tt = 0; //初始时队列不为空，包含一个0,相当于哨兵0
+int res = -1e9;
+for (int i = 1; i <= n; i++) {
+    if (q[hh] < i - m) hh++;
+    res = max(res, s[i] - s[q[hh]]);
+    //取负队头，单调上升序列
+    while (hh <= tt && s[q[tt]] >= s[i]) tt--;
+    q[++tt] = i;
+}
+cout << res << endl;
+```
+
+AcWing 1089. 烽火传递
+
+```cpp
+int hh = 0, tt = 0; //初始的0在
+for (int i = 1; i <= n; i++) {
+    if (q[hh] < i - m) hh++;
+    f[i] = f[q[hh]] + w[i];
+    //队头取min,单调上升
+    while (hh <= tt && f[q[tt]] >= f[i]) tt--;
+    q[++tt] = i;
+}
+
+//f[i]表示前1~i座烽火台满足条件，且第i座烽火台点燃的方案集合
+int res = 1e9;
+for(int i = n - m + 1;i <= n;i++) res = min(res,f[i]);
+cout << res << endl;
+```
+
+(4) 二维滑窗模板
+
+```cpp
+void get_min(int a[], int b[], int tot) {
+    int hh = 0, tt = -1;
+    for (int i = 1; i <= tot; i++) {
+        if (hh <= tt && q[hh] <= i - k) hh++;
+        //队头最小值，单调上升队列
+        while (hh <= tt && a[q[tt]] >= a[i]) tt--;
+        q[++tt] = i;
+        b[i] = a[q[hh]];
+    }
+}
+
+void get_max(int a[], int b[], int tot) {
+    int hh = 0, tt = -1;
+    for (int i = 1; i <= tot; i++) {
+        if (hh <= tt && q[hh] <= i - k) hh++;
+        //队头最大值，单调下降队列
+        while (hh <= tt && a[q[tt]] <= a[i]) tt--;
+        q[++tt] = i;
+        b[i] = a[q[hh]];
+    }
+}
+
+for (int i = 1; i <= n; i++) {
+    get_min(w[i], row_min[i], m);
+    get_max(w[i], row_max[i], m);
+}
+
+int res = INF;
+int a[N], b[N], c[N];
+for (int j = k; j <= m; j++) {
+    for (int i = 1; i <= n; i++) {
+        a[i] = row_min[i][j];
+    }
+    get_min(a, b, n);
+
+    for (int i = 1; i <= n; i++) {
+        a[i] = row_max[i][j];
+    }
+    get_max(a, c, n);
+
+    for (int i = k; i <= n; i++) {
+        res = min(res, c[i] - b[i]);
+    }
+}
+```
+
 
 ## 0x60 图论
 
