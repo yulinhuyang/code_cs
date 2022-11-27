@@ -1383,7 +1383,32 @@ int dfs(int u)
     }
 }
 ```
-(1) memo 存储
+
+(1) DFS 连通性模型
+
+AcWing 1112. 迷宫
+
+```cpp
+//dfs 可行性
+bool dfs(int x, int y) {
+    //截止条件
+    if(g[x][y] == '#') return false;  //入口可能是不能通行的，如果入参数据进行判断可能也存在问题，则只能作为截止判断条件，不能作为循环判断条件
+    if (x == xb && y == yb) return true;
+    st[x][y] = true;
+
+    for (int i = 0; i < 4; i++) {
+        int a = x + dx[i], b = y + dy[i];
+        //循环条件
+        if (a < 0 || a >= n || b < 0 || b >= n) continue;
+        if (st[a][b]) continue;
+        if (dfs(a, b)) return true;
+    }
+
+    return false;
+}
+```
+
+(2) memo 存储
 
 记忆化dfs,memo,既当visit又存储值；在DFS搜索回溯之后，得到返回的结果
 
@@ -1418,7 +1443,7 @@ int dfs(int i, int j) {
 }
 ```
 
-(2) 回溯标记法
+(3) 回溯标记法
 
 ```cpp
 //AcWing 843. n-皇后问题
@@ -1445,7 +1470,7 @@ void dfs(int u) {
 }
 ```
 
-(3) 剪枝
+(4) 剪枝
 
 优化搜索顺序、排除等效冗余、可行性剪枝（上下界）、最优性剪枝、记忆化(v memo)
 
@@ -1481,13 +1506,15 @@ bool dfs(int u, int cur, int start)
 
 ##### 宽度优先遍历BFS
 
-1  最短路BFS: 问题只计最少步数，等价于在边权为1的图上求最短路。 使用普通的BFS,时间复杂度是O(n),每个状态只访问(入队)一次。第一次入队时即为该状态的最少步数。
+1  Flood Fill (BFS)： 四连通、八连通遍历
 
-2  多源BFS: 0-1矩阵距离问题, 超级虚拟源点，第一次访问即最短
+2  最短路BFS: 问题只计最少步数，等价于在边权为1的图上求最短路。 使用普通的BFS,时间复杂度是O(n),每个状态只访问(入队)一次。第一次入队时即为该状态的最少步数。
 
-3  双端队列广搜：问题每次扩展的代价是0或1，等价于在边权只有0和1的图上求最短路, 时间复杂度是O(N), 如果这条分支边权为0，则从队首入队，否则从队尾入队。每个状态被更新(入队)多次，只扩展一次，第一次出队时即为该状态的最小代价。
+3  多源BFS: 0-1矩阵距离问题, 超级虚拟源点，第一次访问即最短
 
-4  双向广搜：密码锁问题、8数码问题、单词接龙
+4  双端队列广搜：问题每次扩展的代价是0或1，等价于在边权只有0和1的图上求最短路, 时间复杂度是O(N), 如果这条分支边权为0，则从队首入队，否则从队尾入队。每个状态被更新(入队)多次，只扩展一次，第一次出队时即为该状态的最小代价。
+
+5  双向广搜：密码锁问题、8数码问题、单词接龙
 
 
 (0)  模板题 AcWing 847. 图中点的层次
@@ -1514,7 +1541,40 @@ while (q.size())
 }
 ```	
 
-(1) 普通bfs(最短路bfs): AcWing 844 走迷宫
+(1) Flood Fill (BFS)
+
+AcWing 1097. 池塘计数: 8连通 遍历
+
+```cpp
+void bfs(int sx,int sy)
+{
+    int hh = 0, tt = 0;
+    q[0] = {sx,sy};
+    st[sx][sy] = true;
+
+    while (hh <= tt) {
+        auto t = q[hh++];
+
+        for (int i = t.x - 1; i <= t.x + 1; i++) {
+            for (int j = t.y - 1; j <= t.y + 1; j++) {
+                if (i == t.x && j == t.y) continue;
+                if (i < 0 || i >= n || j < 0 || j >= m) continue;
+                if (g[i][j] == '.' || st[i][j]) continue;
+                q[++tt] = {i, j};
+                st[i][j] = true;
+            }
+        }
+    }
+}
+```
+
+(2) 普通bfs(最短路bfs): 
+
+bfs最短路模型，首次访问即为最短距离
+
+dist 距离数组 st 判断访问数组（最短路情况下可以dist代替）
+
+AcWing 844 走迷宫
 
 ```cpp
 int bfs() {
@@ -1542,10 +1602,78 @@ int bfs() {
 }
 ```
 
+AcWing 1076. 迷宫问题
 
-(2) 多源bfs: leetcode 542 01 矩阵
+```cpp
+//反向bfs最短路 + 正向求方案
+int g[N][N];
+PII q[M];
+PII pre[N][N];
+int n;
 
-(3) 双向bfs: AcWing190 字串变换
+void bfs(int sx, int sy) {
+    int dx[4] = {-1, 0, 1, 0}, dy[4] = {0, 1, 0, -1};
+
+    int hh = 0, tt = 0;
+    q[0] = {sx, sy};
+    memset(pre, -1, sizeof(pre));
+    pre[sx][sy] = {0, 0};
+
+    while (hh <= tt) {
+        auto t = q[hh++];
+        for (int i = 0; i < 4; i++) {
+            int a = t.x + dx[i], b = t.y + dy[i];
+            if (a < 0 || a >= n || b < 0 || b >= n) continue;
+            if (g[a][b]) continue;
+            if (pre[a][b].x != -1) continue;
+
+            q[++tt] = {a, b};
+            pre[a][b] = t;
+        }
+    }
+}
+```
+
+
+(3) 多源bfs: 
+
+leetcode 542 01 矩阵
+
+```cpp
+class Solution {
+public:
+    vector<vector<int>> updateMatrix(vector<vector<int>>& matrix) {
+        int n = matrix.size(), m = matrix[0].size();
+        vector<vector<int>> dist(n, vector<int>(m, -1));
+        queue<pair<int,int>> q;
+        for (int i = 0; i < n; i ++ )
+            for (int j = 0; j < m; j ++ )
+                if (!matrix[i][j])
+                {
+                    dist[i][j] = 0;
+                    q.push(make_pair(i, j));
+                }
+        int dx[4] = {-1, 0, 1, 0}, dy[4] = {0, 1, 0, -1};
+        while (q.size())
+        {
+            auto t = q.front();
+            q.pop();
+            for (int i = 0; i < 4; i ++ )
+            {
+                int x = t.first + dx[i], y = t.second + dy[i];
+                if (x >= 0 && x < n && y >= 0 && y < m && dist[x][y] == -1)
+                {
+                    dist[x][y] = dist[t.first][t.second] + 1;
+                    q.push(make_pair(x, y));
+                }
+            }
+        }
+        return dist;
+    }
+};
+```
+
+(4) 双向bfs: AcWing190 字串变换
 
 ```cpp
 
@@ -1597,7 +1725,107 @@ int bfs()
 }
 ```
 
+#### Astar：图遍历 + BFS
 
+AcWing 178. 第K短路
+
+```cpp
+#include <iostream>
+#include <cstring>
+#include <queue>
+
+using namespace std;
+
+#define x first
+#define y second
+
+typedef pair<int,int> PII;
+typedef pair<int,pair<int,int>> PIII;
+
+const int N = 1010,M = 200010;
+int h[N],rh[N],e[M],w[M],ne[M],idx;
+int dist[N],cnt[N];
+bool st[N];
+int n,m,S,T,K;
+
+void add(int h[],int a, int b, int c) {
+    e[idx] = b, w[idx] = c, ne[idx] = h[a], h[a] = idx++;
+}
+
+void dijkstra() {
+    priority_queue<PII, vector<PII>, greater<PII>> heap; //小顶堆
+
+    memset(dist, 0x3f, sizeof(dist));
+    heap.push({0, T});
+    dist[T] = 0;
+
+    while (heap.size()) {
+        auto t = heap.top();
+        heap.pop();
+
+        int ver = t.y;
+        if (st[ver]) continue;
+        st[ver] = true;
+        
+        for (int i = rh[ver]; ~i; i = ne[i]) {
+            int j = e[i];
+            if (dist[j] > dist[ver] + w[i]) {
+                dist[j] = dist[ver] + w[i];
+                heap.push({dist[j], j});
+            }
+        }
+    }
+}
+
+int astar() {
+    priority_queue<PIII, vector<PIII>, greater<PIII>> heap;
+    //g(x) 到S距离, 真实值; h(x) 到T距离，估计值（参考最短距离估计）
+    heap.push({dist[S], {0, S}});  //{ 到S距离 + 到T距离，{到S距离，顶点}}
+
+    while (heap.size()) {
+        auto t = heap.top();
+        heap.pop();
+
+        int ver = t.y.y;
+        int distance = t.y.x;
+
+        cnt[ver]++;
+        //第k次弹出T,则为第k小
+        if (cnt[T] == K) return distance;
+
+        for (int i = h[ver]; ~i; i = ne[i]) {
+            int j = e[i];
+            if (cnt[j] < K) {
+                // 按真实值+估计值 = d[j]+f[j] = dist[S->t] + w[t->j] + dist[j->T] 堆排序
+                // 真实值 dist[S->t] = distance+w[i]
+                heap.push({distance + w[i] + dist[j], {distance + w[i], j}});
+            }
+        }
+    }
+    return -1;
+}
+
+int main() {
+    cin >> n >> m;
+
+    memset(h,-1, sizeof(h));
+    memset(rh,-1, sizeof(rh));
+    for(int i = 0;i < m;i++){
+        int a,b,c;
+        cin >> a >> b >> c;
+        add(h, a, b, c);
+        add(rh, b, a, c);
+    }
+    cin >> S >> T >> K;
+    if(S == T) K++;
+
+    dijkstra(); //求到终点的最短距离
+
+    cout << astar() << endl;
+
+    return 0;
+}
+```
 
 #### 模拟退火
 
