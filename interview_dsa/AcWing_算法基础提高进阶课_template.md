@@ -3477,6 +3477,94 @@ AcWing343 排序:传递闭包
     }
 ```
 
+#### 差分约束
+
+AcWing 1169. 糖果
+
+```cpp
+A=B　　->　A>=B, B>= A
+A < B　->　B >= A + 1
+A>=B -> A >= B
+A>B　　->　A >= B + 1
+A<=B　 ->　B >= A
+x>=1 -> x1>=x0+1
+
+添加0号点，虚拟源点;
+
+从0号点求一遍单源最长路
+
+void add(int a, int b, int c)
+{
+    e[idx] = b, w[idx] = c, ne[idx] = h[a], h[a] = idx++;
+}
+
+bool spfa()
+{
+    //求最长边
+    memset(dist, -0x3f, sizeof(dist));
+
+    int hh = 0, tt = 0;
+    dist[0] = 0;
+    q[tt++] = 0;
+    st[0] = true;
+
+    while (hh != tt)
+    {
+        auto t = q[--tt]; //求负环超时，将队列改成栈
+        st[t] = false;
+
+        for (int i = h[t]; ~i; i = ne[i])
+        {
+            auto j = e[i];
+            if (dist[j] < dist[t] + w[i])
+            {
+                dist[j] = dist[t] + w[i];
+                cnt[j] = cnt[t] + 1;
+                if (cnt[j] > n + 1)
+                    return false;
+                if (!st[j])
+                {
+                    q[tt++] = j;
+                    st[j] = true;
+                }
+            }
+        }
+    }
+
+    return true;
+}
+
+int main()
+{
+    memset(h, -1, sizeof(h));
+    cin >> n >> m;
+    for (int i = 0; i < m; i++)
+    {
+        int x,a,b;
+        cin >> x >> a >> b;
+        if(x == 1) add(a,b,0), add(b,a,0);
+        else if(x == 2) add(a,b,1);
+        else if(x == 3) add(b,a,0);
+        else if(x == 4) add(b,a,1);
+        else add(a,b,0);
+    }
+
+    for(int i = 1;i <= n;i++) add(0,i,1);
+
+    if (!spfa())
+        cout << "-1" << endl;
+    else{
+        LL res = 0;
+        for(int i = 1;i <= n;i++){
+            res += dist[i];
+        }
+        cout << res << endl;
+    }
+
+    return 0;
+}
+```
+
 #### 倍增求LCA
 ```C++
 void bfs(int root)  // 预处理倍增数组
