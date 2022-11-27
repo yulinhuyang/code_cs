@@ -65,10 +65,13 @@ Acwing 技术分享： https://www.acwing.com/blog/
 - void get_sa - 后缀数组
 - void extend - 后缀自动机
 
-0x50 动态规划   
+0x50 动态规划  
+- LCS/LIS 模型
 - 背包DP
-- 区间DP
+- 状态机模型
 - 状态压缩DP
+- 区间DP
+- 树形DP
 - 单调队列优化DP
 
 0x60 图论
