@@ -22,6 +22,7 @@ Acwing 技术分享： https://www.acwing.com/blog/
 - 快速排序/快选
 - void merge_sort - 归并排序
 - 区间合并
+- RMQ 区间最值
 - void manacher - 马拉车算法
 
 0x10 基本数据结构
@@ -671,6 +672,65 @@ sort(nums + 1, nums + n + 1, [](PII & a, PII & b) {
 	return a.first * a.second < b.first * b.second;
 });
 ```
+
+#### RMQ区间最值
+
+AcWing 1273. 天才的记忆
+
+```cpp
+#include <iostream>
+#include <cstring>
+#include <cmath>
+
+using namespace std;
+
+//RMQ 区间最大值
+//st表、跳表、倍增动态规划
+//f[i,j]表示从i开始，长度为2^j的区间中的最大值是多少
+//f[i,j] = max{f[i, j-1],f[i + 2^(j-1), j-1]}
+
+const int N = 200010, M = 18;
+int n,m;
+int w[N];
+int f[N][M];
+
+//预处理 f[i][j]
+void init(){
+    for (int j = 0; j < M; j++){
+        for (int i = 1; i + (1 << j) - 1 <= n; i++){
+            if (!j) f[i][j] = w[i];
+            else f[i][j] = max(f[i][j - 1], f[i + (1 <<j - 1)][j - 1]);
+        }
+    }
+}
+
+int query(int l,int r){
+    int len = r - l + 1;
+    int k = log(len) / log(2);
+    return max(f[l][k], f[r - (1 << k) + 1][k]);
+}
+
+int main()
+{
+    cin >> n;
+    for(int i = 1;i <= n;i++){
+        cin >> w[i];
+    }
+    
+    //预处理
+    init();
+    cin >> m;
+    while (m--)
+    {
+        int l,r;
+        cin >> l >> r;
+        cout << query(l,r) << endl;
+    }
+    
+    return 0;
+}
+```
+
 
 #### 马拉车算法
 
