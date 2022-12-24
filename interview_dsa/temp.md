@@ -52,3 +52,5 @@ C++/C++11中头文件sstream介绍 : https://blog.csdn.net/fengbingchun/article/
 
 当前目录下查找某个名字的文件夹：    find  ./ -name "*8DFZ1"   
 
+扫描线与自适应辛普森积分 求多边形面积并: https://blog.csdn.net/qq_45735851/article/details/115309408
+
