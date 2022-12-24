@@ -1,6 +1,8 @@
 
 vim dos to unix : https://remarkablemark.org/blog/2020/12/07/vim-convert-file-from-dos-to-unix/#dos-to-unix
 
+**Umask与权限**
+
 在Linux中设置UMASK值： https://www.cnblogs.com/wish123/p/7073114.html
 
 umask值用于设置用户在创建文件时的默认权限，当我们在系统中创建目录或文件时，目录或文件所具有的默认权限就是由umask值决定的。
