@@ -440,4 +440,17 @@ num = random.sample('zyxwvutsrqponmlkjihgfedcba',5)  #多个字符中生成指�
 ran_str = ''.join(random.sample(string.ascii_letters + string.digits, 8)) # 从a-z A-Z 0-9生成指定数量的随机字符
 ```
 
+#### 15 类型注解
 
+typing 用来对变量和函数的参数返回值类型做注解
+
+```python
+from typing import List, Tuple, Dict
+
+names: List[str] = ['lily', 'tom']
+version: Tuple[int, int, int] = (6, 6, 6)
+operations: Dict[str, bool] = {'sad': False, 'happy': True}
+
+def plus(num1: int, num2: int) -> int:
+    return num1 + num2
+```
