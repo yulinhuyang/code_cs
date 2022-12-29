@@ -406,11 +406,15 @@ b = 100
 a = 10 if b>0 else 5 #a = 10
 a = 100 if b<0 else 5 # a = 5
 
-**swap**
+**swap交换**
 
 a,b = b,a
 
 a,b = b,a+b
+
+**多行变一行**
+
+a = 1 ; b = 2 ; c = 3
 
 **极大极小值**
 
@@ -429,9 +433,16 @@ min_num = -(sys.maxsize-1)
 
 **位运算与二进制**
 
- bin(5) 二进制
+```python
+print("{0:b}".format(a))
+print(bin(a)[2:])
+```
 
 **format**
+
+```python
+
+```
 
 #### 14 随机数
 
