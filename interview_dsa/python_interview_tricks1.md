@@ -444,9 +444,10 @@ print(bin(a)[2:])
 **format**
 
 ```python
-print("hello {0}, this is {1}.".format("world", "python"))   # 根据位置下标进行填充
+print("hello {0}, this is {1}.".format("world", "python"))            # 根据位置下标进行填充
 print("hello {obj}, this is {name}.".format(obj = obj, name = name))  # key填充
-
+print("{:.2f}".format(3.1415926))    #小数点后两位输出
+print('{:b}'.format(11))             #二进制输出
 ```
 
 #### 14 随机数
