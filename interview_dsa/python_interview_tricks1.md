@@ -48,7 +48,8 @@ del list[2:4]
 
 ```python
 array = [0 for i in range(3)] #创建一维
-two_array = [[0 for i in range(3)] for i in range(3)] # 二维数组
+array = [0] * 3 #创建一维
+two_array = [[0 for i in range(3)] for i in range(3)] # 二维数组 只能这样创建
 #简单方法： [[0]*(n+1)]*(m+1)  (这种有问题，因为浅拷贝，数组一行的0指向了同一个位置)
 
 #for-in循环：
