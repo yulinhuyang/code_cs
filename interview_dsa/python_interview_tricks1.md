@@ -154,6 +154,7 @@ sd = SortedDict({'c': 3, 'a': 1, 'b': 2})
 
 
 #### 3 string
+
 ```python
 str = 'Hello World!'
 str[2:3]  #切片
@@ -180,6 +181,10 @@ str.replace("is", "was", 3)
 
 #isalnum()、isalpha()
 str.lstrip('8')#str.lstrip([chars]) 截掉字符串左边字符
+
+#字符串反转
+str1 = str[::-1] 
+str1 = ''.join(reversed(str))
 ```
 
 **字符数字转换**
