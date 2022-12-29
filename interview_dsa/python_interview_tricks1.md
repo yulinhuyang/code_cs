@@ -298,6 +298,7 @@ OrderedDict(sorted(d.items(), key=lambda t: t[0])) # 按照key排序的字典
 OrderedDict(sorted(d.items(), key=lambda t: t[1])) # 按照value排序的字典
 ```
 #### 9 bisect_left
+
 升序序列 
 
 a） bisect_left (同lower_bound)：返回插入位置的索引i，使得a[:i]的所有元素都 < 目标值，a[i:]的所有元素 >=目标值；
@@ -443,6 +444,8 @@ print(bin(a)[2:])
 **format**
 
 ```python
+print("hello {0}, this is {1}.".format("world", "python"))   # 根据位置下标进行填充
+print("hello {obj}, this is {name}.".format(obj = obj, name = name))  # key填充
 
 ```
 
