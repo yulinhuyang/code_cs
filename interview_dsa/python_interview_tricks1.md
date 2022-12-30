@@ -52,12 +52,14 @@ array = [0] * 3 #创建一维
 two_array = [[0 for i in range(3)] for i in range(3)] # 二维数组 只能这样创建
 #简单方法： [[0]*(n+1)]*(m+1)  (这种有问题，因为浅拷贝，数组一行的0指向了同一个位置)
 
+g = [[] for _ in range(n)]  ##创建二维空数组
+
 #for-in循环：
-for i in range(len(x)) : #range(start, stop[, step])
+for i in range(len(x)) :        #range(start, stop[, step])
 for i in range(len(a)-1,-1,-1): #反向循环
 
 seq = ['one', 'two', 'three']
-for element in seq:
+for element in seq:      #循环数据
 
 for f in sorted(set(basket)): #按顺序，循环遍历唯一元素
 
@@ -80,7 +82,9 @@ dict(zip(names, scores))     # 打包为元组的dict
 for q, a in zip(questions, answers):#同时迭代两个list
 for (k1, v1), (k2, v2) in zip(dict_one.items(), dict_two.items()): #同时迭代两个dict
 for temp in zip(*strs):  #迭代string的list数组，逐个取前缀
-...
+
+#判空
+if not vis[y]:
 
 ```    
 [Python zip()用法](https://blog.csdn.net/PaulZhn/article/details/104391756)
