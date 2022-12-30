@@ -192,7 +192,7 @@ str1 = str[::-1]
 str1 = ''.join(reversed(str))
 ```
 
-**字符数字转换**
+**字符数字类型**
 
 python没有char类型，一个字符也是字符串
 
@@ -200,8 +200,9 @@ python没有char类型，一个字符也是字符串
 int('12')
 float('12.5')
 str(123.45)
-ord('A') # 65   字符转ascii：
-chr(65)  # 'A'  ascii转char
+ord('A') # 65      字符转ascii：
+chr(65)  # 'A'     ascii转char
+bin(12)  # '0b1100'   转二进制 
 ```
 **字典序输出**
 
