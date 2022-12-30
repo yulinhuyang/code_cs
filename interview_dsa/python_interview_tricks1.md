@@ -193,11 +193,14 @@ str1 = ''.join(reversed(str))
 ```
 
 **字符数字转换**
+
+python没有char类型，一个字符也是字符串
+
 ```python
 int('12')
 float('12.5')
 str(123.45)
-ord('A') # 65   char转ascii：
+ord('A') # 65   字符转ascii：
 chr(65)  # 'A'  ascii转char
 ```
 **字典序输出**
