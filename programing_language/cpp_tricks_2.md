@@ -27,7 +27,7 @@ int main() {
 }
 ```
 
-**优先使用unique_ptr而不是 shared_ptr**
+**优先使用unique_ptr(独占式)而不是 shared_ptr(共享式)**
 
 更适合使用unique_ptr的场景：
 
