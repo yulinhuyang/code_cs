@@ -81,5 +81,22 @@ struct myComp
 set<int, myComp> s1;
 ```
 
+**decltype类型推导**
+
+decltype与auto关键字一样，用于进行编译时类型推导； decltype总是以一个普通表达式作为参数，返回该表达式的类型,而且decltype并不会对表达式进行求值
+
+```cpp
+int i = 4;
+decltype(i) a; //推导结果为int。a的类型为int。
+ 
+//泛型编程中结合auto，用于追踪函数的返回值类型
+template <typename _Tx, typename _Ty>
+auto multiply(_Tx x, _Ty y)->decltype(_Tx*_Ty)
+{
+    return x*y;
+}
+```
+
+
 
 
