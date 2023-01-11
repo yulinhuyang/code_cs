@@ -56,7 +56,7 @@ https://www.zhihu.com/question/61054439
 
 C++ STL无序容器自定义哈希函数和比较规则：https://www.xinbaoku.com/archive/1Bu2FBHA.html
 
-c++ unordered_set，unordered_map中自定义哈希函数： https://blog.csdn.net/qq_34525916/article/details/115896842
+C++ STL：unordered_map 自定义键值类型：https://blog.csdn.net/y109y/article/details/82669620
 
 unordered_set 需要所选对象具有哈希函数，而 set 要求所选对象的 key 有比较大小的函数
 
