@@ -52,5 +52,34 @@ C++ 保存vector到文件： https://blog.csdn.net/BlackCarDriver/article/detail
 https://www.zhihu.com/question/61054439
 
 
+**STL容器自定义哈希函数和比较函数**
+
+C++ STL无序容器自定义哈希函数和比较规则：https://www.xinbaoku.com/archive/1Bu2FBHA.html
+
+c++ unordered_set，unordered_map中自定义哈希函数： https://blog.csdn.net/qq_34525916/article/details/115896842
+
+unordered_set 需要所选对象具有哈希函数，而 set 要求所选对象的 key 有比较大小的函数
+
+```cpp
+//无序容器
+//将自定义类型作为unordered_map的键值，需如下两个步骤：
+//1.定义自定义key的哈希函数的函数对象，告知此容器如何生成hash的值；
+//2.定义等比函数的函数对象或者在自定义类里重载operator==()， 告知容器当出现hash冲突的时候，如何区分hash值相同的不同对象
+
+auto hash_function = [](const PII& o) {return hash<int>()(o.first) ^ hash<int>()(o.second);};
+unordered_set<PII, decltype(hash_function)> seen(0, hash_function);
+
+//有序容器
+struct myComp
+{
+	bool operator() (const int &a, const int &b)
+	{
+		return a > b;	//从大到小排序
+		//return a < b;	//从小到大排序
+	}
+};
+set<int, myComp> s1;
+```
+
 
 
