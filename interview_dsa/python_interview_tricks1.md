@@ -485,3 +485,9 @@ operations: Dict[str, bool] = {'sad': False, 'happy': True}
 def plus(num1: int, num2: int) -> int:
     return num1 + num2
 ```
+#### 16 递归深度
+
+Python的最大递归层数是可以设置的,默认的在window上的最大递归层数是 998。
+
+可以通过sys.setrecursionlimit()进行设置,但是一般默认不会超过3925-3929这个范围。
+
