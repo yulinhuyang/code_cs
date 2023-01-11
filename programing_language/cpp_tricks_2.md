@@ -75,7 +75,6 @@ struct myComp
 	bool operator() (const int &a, const int &b)
 	{
 		return a > b;	//从大到小排序
-		//return a < b;	//从小到大排序
 	}
 };
 set<int, myComp> s1;
