@@ -27,6 +27,21 @@ int main() {
 }
 ```
 
+**优先使用unique_ptr而不是 shared_ptr**
+
+更适合使用unique_ptr的场景：
+
+1.语义简单，即当你不确定使用的指针是不是被分享所有权的时候，默认选unique_ptr独占式所有权，当确定要被分享的时候可以转换成shared_ptr；
+
+2.unique_ptr效率比shared_ptr高，不需要维护引用计数和背后的控制块.
+
+**使用make_unique而不是new创建 unique_ptr**
+
+```cpp
+auto upv = std::make_unique<std::vector<int>>(10, 20);
+```
+
+
 size_t 反向循环，不能i >= 0,int的可以
 
 explicit关键字用来修饰类的构造函数，被修饰的构造函数的类，不能发生相应的隐式类型转换，只能以显示的方式进行类型转换。
