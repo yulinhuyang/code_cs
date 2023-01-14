@@ -115,9 +115,13 @@ auto multiply(_Tx x, _Ty y)->decltype(_Tx*_Ty)
 
 std::move基本等同于一个类型转换： static_cast<T&&>(lvalue);
 
-std::move函数可以以非常简单的方式将左值引用转换为右值引用。
+std::move函数可以以非常简单的方式将左值引用转换为右值引用, 注意move了之后，被move的对象不能再继续调用。
 
-std::swap 当需要交换类型更大的数据时，代价比较昂贵。
+std::swap 当需要交换类型更大的数据时，代价比较昂贵，swap的底层其实也是调用了move。
 
-
+```cpp
+_Tp __tmp = _GLIBCXX_MOVE(__a);
+__a = _GLIBCXX_MOVE(__b);
+__b = _GLIBCXX_MOVE(__tmp);
+```
 
