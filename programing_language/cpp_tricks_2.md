@@ -156,4 +156,13 @@ void assign(size_type n,const T& x = T());
 
 将区间[first,last)的元素赋值到当前的vector容器中，  或者赋n个值为x的元素到vector容器中，这个容器会清除掉vector容器中以前的内容。
 
+**rand()**
+
+生成[a,b)的随机整数，使用(rand() % (b-a))+ a;
+
+通用公式:a + rand() % n；其中的a是起始值，n是整数的范围。
+
+
+
+
 
