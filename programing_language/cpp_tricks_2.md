@@ -125,3 +125,27 @@ __a = _GLIBCXX_MOVE(__b);
 __b = _GLIBCXX_MOVE(__tmp);
 ```
 
+**map和set erase删除元素**
+
+//删除 set 容器中值为 val 的元素
+size_type erase (const value_type& val);
+
+//删除 position 迭代器指向的元素
+iterator  erase (const_iterator position);
+
+//删除 [ first, last)  区间内的所有元素
+
+iterator  erase (const_iterator first, const_iterator last);
+
+```cpp
+//1) 调用第一种格式的 erase() 方法
+int num = myset.erase(2); //删除元素 2，myset={1,3,4,5}
+    
+//2) 调用第二种格式的 erase() 方法
+set<int>::iterator iter = myset.erase(myset.begin()); //删除元素 1，myset={3,4,5}    
+
+//3) 调用第三种格式的 erase() 方法
+set<int>::iterator iter2 = myset.erase(myset.begin(), --myset.end());//删除元素 3,4，myset={5}
+```
+
+
