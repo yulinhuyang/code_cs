@@ -148,4 +148,12 @@ set<int>::iterator iter = myset.erase(myset.begin()); //删除元素 1，myset={
 set<int>::iterator iter2 = myset.erase(myset.begin(), --myset.end());//删除元素 3,4，myset={5}
 ```
 
+**vector assign**
+
+void assign(const_iterator first,const_iterator last);
+
+void assign(size_type n,const T& x = T());
+
+将区间[first,last)的元素赋值到当前的vector容器中，  或者赋n个值为x的元素到vector容器中，这个容器会清除掉vector容器中以前的内容。
+
 
