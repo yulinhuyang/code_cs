@@ -162,6 +162,29 @@ void assign(size_type n,const T& x = T());
 
 通用公式:a + rand() % n；其中的a是起始值，n是整数的范围。
 
+**shuffle**
+
+```cpp
+//shuffle, 使用时间作为种子，需要包含头文件<chrono>和<random>
+unsigned seed = std::chrono::system_clock::now().time_since_epoch().count();
+shuffle(vec.begin(), vec.end(), std::default_random_engine(seed));
+```
+
+**for_each**
+
+```cpp
+template<class InputIterator, class Function>
+  Function for_each(InputIterator first, InputIterator last, Function fn)
+{
+  while (first!=last) {
+    fn (*first);
+    ++first;
+  }
+  return fn;      // or, since C++11: return move(fn);
+}
+```
+
+
 
 
 
