@@ -196,5 +196,21 @@ join(): 调用了这个函数的线程对象，一定要等这个线程对象的
 才能继续往下走，另外如果线程对象在调用join()函数之前，就已经做完了自己的事情（在构造时传入的方法执行完毕）
 
 
+**std::bind函数适配器**
+
+C++11的std::function和std::bind用法详解: https://blog.csdn.net/qq_38410730/article/details/103637778
+
+将可调用对象和其参数绑定成一个仿函数；只绑定部分参数，减少可调用对象传入的参数。
+
+```cpp
+Base base;
+//bind绑定类成员函数时，第一个参数表示对象的成员函数的指针，第二个参数表示对象的地址。
+auto newiFunc = std::bind(&Base::display_sum, &base, 100, std::placeholders::_1);
+
+auto f2 = std::bind(fun_1, std::placeholders::_1, std::placeholders::_2, 3);
+//表示绑定函数 fun 的第三个参数为 3，而fun 的第一，二个参数分别由调用 f2 的第一，二个参数指定
+f2(1, 2);		//print: x=1,y=2,z=3
+```
+
 
 
