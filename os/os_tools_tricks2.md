@@ -29,3 +29,8 @@ umask值用于设置用户在创建文件时的默认权限，当我们在系统
 十位权限表示: owner + group + other
 
 -rwxrwxrwx (777)    所有用户都有读、写、执行权限。
+
+**sh获取当前工作路径**
+
+workdir=$(cd $(dirname $0); pwd)
+
