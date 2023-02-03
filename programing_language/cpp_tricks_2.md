@@ -212,5 +212,13 @@ auto f2 = std::bind(fun_1, std::placeholders::_1, std::placeholders::_2, 3);
 f2(1, 2);		//print: x=1,y=2,z=3
 ```
 
+**自定义比较函数**
+
+【C/C++】三种在C++里定义比较函数的方法： https://blog.csdn.net/woxiaohahaa/article/details/53191247
+
+sort()：operator<()、比较函数、operator()()
+
+map, set, priority_queue：operator<()、operator()()
+
 
 
