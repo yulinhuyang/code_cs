@@ -88,3 +88,24 @@ git merge Dev // Dev表示某分支，表示在当前分支合并Dev分支
 **git fetch + rebase**
 
 使用git fetch和git rebase处理多人开发同一分支的问题: https://blog.csdn.net/azureternite/article/details/76154807
+	
+** git rebase成功后，如何撤销**
+
+git rebase成功后，撤销： https://www.jianshu.com/p/e6241b7891bf
+
+```git
+git reflog，可以查看所有操作日志
+	
+git reset --hard HEAD@{26}  回到初始状态
+
+	
+```
+	
+	
+	
+	
+	
+	
+	
+	
+	
