@@ -85,7 +85,7 @@ git pull : 首先，基于本地的FETCH_HEAD记录，比对本地的FETCH_HEAD�
 
 git merge Dev // Dev表示某分支，表示在当前分支合并Dev分支
 	
-**git fetch + rebase**
+**git fetch + rebase **
 
 使用git fetch和git rebase处理多人开发同一分支的问题: https://blog.csdn.net/azureternite/article/details/76154807
 	
