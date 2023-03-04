@@ -221,4 +221,14 @@ sort()：operator<()、比较函数、operator()()
 map, set, priority_queue：operator<()、operator()()
 
 
+**greater和less**
+
+```cpp
+sort(vec.begin(),vec.end(),greater<int>());      // greater带括号
+priority_queue<int,vector<int>,greater<int>> minHeap;   //小顶堆
+```
+
+C++ 小顶堆： https://blog.csdn.net/qq_38210354/article/details/107506784
+
+
 
