@@ -1,12 +1,12 @@
 **leetcode**
 
-hot100:
+> hot100:
 
 https://github.com/doocs/leetcode
 
 https://soulmachine.gitbooks.io/algorithm-essentials/content/cpp/
 
-剑指 Offer（二版 + 专项突击版）：
+> 剑指 Offer（二版 + 专项突击版）：
 
 https://leetcode-cn.com/problem-list/xb9nqhhg/
 
@@ -24,7 +24,7 @@ yxc leetcode全解(究极班)： https://www.acwing.com/activity/content/activit
 
 **ACM_OI**
 
-ACM算法日常：
+> ACM算法日常：
 
 https://github.com/acm-clan/algorithm-stone
 
