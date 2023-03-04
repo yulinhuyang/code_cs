@@ -24,15 +24,21 @@ yxc leetcode全解(究极班)： https://www.acwing.com/activity/content/activit
 
 **ACM_OI**
 
-ACM算法日常：https://github.com/acm-clan/algorithm-stone
+ACM算法日常：
+
+https://github.com/acm-clan/algorithm-stone
 
 https://github.com/soulmachine/acm-cheat-sheet
 
-算法竞赛进阶指南: 
+> 算法竞赛进阶指南: 
 
 https://github.com/lydrainbowcat/tedukuri
 
+牛客竞赛 - 算法进阶指南：https://ac.nowcoder.com/acm/archive/oi-advance
+
 算法竞赛知识合集: https://blog.csdn.net/weixin_45697774/article/details/105603064
+
+> 提高课题解：
 
 牛蛙点点提高课题解：https://www.acwing.com/user/myspace/activity/52559/
 
@@ -40,9 +46,8 @@ wzc1995题解: https://www.acwing.com/user/myspace/index/21/
 
 秦淮岸灯火阑珊题解：https://www.acwing.com/user/myspace/solution/index/1130/
 
-牛客竞赛 - 算法进阶指南：https://ac.nowcoder.com/acm/archive/oi-advance
 
-算法竞赛 罗勇军：
+> 算法竞赛 罗勇军：
 
 https://blog.csdn.net/weixin_43914593
 
