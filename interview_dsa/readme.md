@@ -42,5 +42,7 @@ wzc1995题解: https://www.acwing.com/user/myspace/index/21/
 
 牛客竞赛 - 算法进阶指南：https://ac.nowcoder.com/acm/archive/oi-advance
 
+算法竞赛 罗勇军：
 
+https://blog.csdn.net/weixin_43914593
 
