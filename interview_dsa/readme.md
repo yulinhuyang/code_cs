@@ -48,5 +48,6 @@ wzc1995题解: https://www.acwing.com/user/myspace/index/21/
 
 算法竞赛 罗勇军：
 
-https://blog.csdn.net/weixin_43914593
+https://blog.csdn.net/weixin_43914593?type=blog
 
+https://blog.csdn.net/weixin_43914593/article/details/104381005
