@@ -12,7 +12,7 @@ labuladong:  https://labuladong.gitee.io/algo/
 
 代码随想录：https://gitee.com/programmercarl/leetcode-master
 
-yxc leetcode究极班： 
+yxc leetcode究极班 + 笔试面试辅导： 
 
 https://www.acwing.com/activity/content/31/
 
@@ -22,11 +22,7 @@ https://www.acwing.com/activity/content/23/
 
 **ACM_OI**
 
-ACM算法日常：
-
-https://github.com/acm-clan/algorithm-stone
-
-https://github.com/soulmachine/acm-cheat-sheet
+ACM算法日常： https://github.com/acm-clan/algorithm-stone
 
 算法竞赛进阶指南: 
 
@@ -36,7 +32,7 @@ https://github.com/lydrainbowcat/tedukuri
 
 算法竞赛知识合集: https://blog.csdn.net/weixin_45697774/article/details/105603064
 
-提高课题解：
+基础-提高课题解：
 
 牛蛙点点提高课题解：https://www.acwing.com/user/myspace/activity/52559/
 
