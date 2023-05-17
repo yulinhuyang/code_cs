@@ -74,3 +74,9 @@ C++/C++11中头文件sstream介绍 : https://blog.csdn.net/fengbingchun/article/
 任何一个整数模9同余与它的各数位上的数字之和
 
 
+**两个区间的关系**
+
+两个区间的关系：https://zhuanlan.zhihu.com/p/301507910
+
+远离、重叠、相交
+
