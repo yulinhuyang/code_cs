@@ -80,3 +80,5 @@ C++/C++11中头文件sstream介绍 : https://blog.csdn.net/fengbingchun/article/
 
 远离、重叠、相交
 
+iota(p.begin(), p.end(), 1); // 将一个区间内的元素赋值为连续的递增值
+
