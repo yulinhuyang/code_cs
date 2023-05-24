@@ -34,3 +34,6 @@ umask值用于设置用户在创建文件时的默认权限，当我们在系统
 
 workdir=$(cd $(dirname $0); pwd)
 
+
+ag搜索前后几行的数据： ag -C 2 example
+
