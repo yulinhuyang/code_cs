@@ -234,3 +234,8 @@ C++ 小顶堆： https://blog.csdn.net/qq_38210354/article/details/107506784
 
 
 
+**c++ 单元测试打桩技巧总结(stub、mock):**
+
+https://blog.csdn.net/coolxv_6533/article/details/79550197
+
+
