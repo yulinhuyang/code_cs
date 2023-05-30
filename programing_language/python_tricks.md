@@ -116,6 +116,10 @@ format 函数可以接受不限个参数，位置可以不按顺序。
 ->'world hello world'
 ```
 
+### 7 代码调试
+
+灵活使用pb.set_trace()调试python  
+
 
 
 
