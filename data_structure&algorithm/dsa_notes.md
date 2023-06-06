@@ -162,4 +162,11 @@ void Graph<Tv, Te>::DFS ( int v, int& clock ) { //assert: 0 <= v < n
 https://www.acwing.com/blog/content/8989/
 
 
+挑赛滑动窗口叫做虫取法，滑动窗口两个指针的移动过程很像。
+
+贪心：局部最优=全局最优
+
+模拟是指根据题意要求实现功能，通常操作多，代码量大，无复杂算法，考察熟练程度。
+
+
 
