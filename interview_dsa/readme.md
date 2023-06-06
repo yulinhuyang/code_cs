@@ -1,4 +1,4 @@
-#### leetcode 
+#### LeetCode 
 
 hot100:  https://leetcode-cn.com/problem-list/2cktkvj/
 
@@ -24,14 +24,6 @@ https://www.acwing.com/activity/content/23/
 
 ACM算法日常： https://github.com/acm-clan/algorithm-stone
 
-**算法竞赛进阶指南**
-
-https://github.com/lydrainbowcat/tedukuri
-
-牛客竞赛 - 算法进阶指南：https://ac.nowcoder.com/acm/archive/oi-advance
-
-算法竞赛知识合集: https://blog.csdn.net/weixin_45697774/article/details/105603064
-
 **基础-提高课题解**
 
 牛蛙点点提高课题解：https://www.acwing.com/user/myspace/activity/52559/
@@ -39,6 +31,14 @@ https://github.com/lydrainbowcat/tedukuri
 wzc1995题解: https://www.acwing.com/user/myspace/index/21/
 
 秦淮岸灯火阑珊题解：https://www.acwing.com/user/myspace/solution/index/1130/
+
+**算法竞赛进阶指南**
+
+https://github.com/lydrainbowcat/tedukuri
+
+牛客竞赛 - 算法进阶指南：https://ac.nowcoder.com/acm/archive/oi-advance
+
+算法竞赛知识合集: https://blog.csdn.net/weixin_45697774/article/details/105603064
 
 **算法竞赛 罗勇军**
 
