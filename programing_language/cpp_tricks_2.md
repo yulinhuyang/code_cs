@@ -229,9 +229,7 @@ sort(vec.begin(),vec.end(),greater<int>());           // greater带括号，降�
 priority_queue<int,vector<int>,less<int>> minHeap;    //大顶堆，默认
 priority_queue<int,vector<int>,greater<int>> minHeap;   //小顶堆
 ```
-
 C++ 小顶堆： https://blog.csdn.net/qq_38210354/article/details/107506784
-
 
 
 **c++ 单元测试打桩技巧总结(stub、mock):**
@@ -239,3 +237,13 @@ C++ 小顶堆： https://blog.csdn.net/qq_38210354/article/details/107506784
 https://blog.csdn.net/coolxv_6533/article/details/79550197
 
 https://github.com/coolxv/cpp-stub
+
+**C++/C++11中头文件sstream介绍**
+
+https://blog.csdn.net/fengbingchun/article/details/69788873
+
+万能头文件： #include<bits/stdc++.h>
+
+iota(p.begin(), p.end(), 1); // 将一个区间内的元素赋值为连续的递增值
+
+
