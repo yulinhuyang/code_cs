@@ -24,6 +24,8 @@ https://www.acwing.com/activity/content/23/
 
 ACM算法日常： https://github.com/acm-clan/algorithm-stone
 
+董晓算法： https://space.bilibili.com/517494241/
+
 **基础-提高课题解**
 
 牛蛙点点提高课题解：https://www.acwing.com/user/myspace/activity/52559/
