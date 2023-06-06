@@ -1,4 +1,4 @@
-#### LeetCode 
+### LeetCode 
 
 hot100:  https://leetcode-cn.com/problem-list/2cktkvj/
 
@@ -20,7 +20,7 @@ https://www.acwing.com/activity/content/23/
 
 宫水三叶： https://github.com/SharingSource/LogicStack-LeetCode
 
-#### ACM_OI 
+### ACM_OI 
 
 ACM算法日常： https://github.com/acm-clan/algorithm-stone
 
