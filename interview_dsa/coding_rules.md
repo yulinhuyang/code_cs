@@ -47,6 +47,13 @@ https://www.zhihu.com/question/62737868
 你能以不同的方式推导这个结果吗？你能一眼就看出它来吗？你能在别的什么题目中利用这个结果或这种方法吗？
 
 
+**4 编程工具**
+
+你为什么一定要使用 Google ?： https://zhuanlan.zhihu.com/p/21992724
+
+如何优雅地使用 Stack Overflow :  https://www.zhihu.com/question/20824615 
+
+https://stackoverflow.com/
 
 
 
