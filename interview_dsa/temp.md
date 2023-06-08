@@ -16,4 +16,16 @@
 2517. 礼盒的最大甜蜜度：二分转判定的时候，注意 l和r如何取。
 
 
+**双栈**
+
+`defaultdict` 的初始化需要传入一个函数作为默认值，这个函数会在访问不存在的键时被调用，返回值作为默认值。常见的用法是传入 `int`、`list`、`set` 等 Python 内置类型作为默认值，这样可以方便地进行计数、分组等操作。
+
+freq: int -> list
+
+895. 最大频率栈
+
+hash = defaultdict(int)
+freq = defaultdict(list)
+
+
 
