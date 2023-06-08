@@ -25,6 +25,7 @@ freq: int -> list
 895. 最大频率栈
 
 hash = defaultdict(int)
+
 freq = defaultdict(list)
 
 
