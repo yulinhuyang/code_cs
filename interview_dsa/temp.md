@@ -31,4 +31,9 @@ freq = defaultdict(list)
 
 代码在线格式化：https://www.bejson.com/format/c_formater/
 
+519. 随机翻转矩阵
+
+index = self.hash.get(val,val)  #查询不到返回默认值
+
+self.get(key, default=None)
 
