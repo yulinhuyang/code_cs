@@ -37,3 +37,7 @@ index = self.hash.get(val,val)  #查询不到返回默认值
 
 self.get(key, default=None)
 
+
+list 去重合：
+
+nums = list(set(nums))
