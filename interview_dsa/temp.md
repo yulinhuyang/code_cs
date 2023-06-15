@@ -48,4 +48,7 @@ list 去重合： nums = list(set(nums))
 
 翻转字符串：ans[:-1] 或者 ''.join(reversed(str))
 
+LeetCode 566. 重塑矩阵:
+
+ans[k // c][k % c] = mat[k // n][k % n]
 
