@@ -41,3 +41,11 @@ self.get(key, default=None)
 list 去重合： nums = list(set(nums))
 
 532. 数组中的 k-diff 数对: 双指针逻辑
+
+排序部分数组：arr[i + 1:] = sorted(arr[i + 1:])
+
+数组转字符串：ans = "".join(map(str,arr))
+
+翻转字符串：ans[:-1] 或者 ''.join(reversed(str))
+
+
