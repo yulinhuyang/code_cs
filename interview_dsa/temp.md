@@ -18,6 +18,8 @@
 
 **双栈**
 
+**defaultdict**
+
 `defaultdict` 的初始化需要传入一个函数作为默认值，这个函数会在访问不存在的键时被调用，返回值作为默认值。常见的用法是传入 `int`、`list`、`set` 等 Python 内置类型作为默认值，这样可以方便地进行计数、分组等操作。
 
 freq: int -> list
@@ -51,4 +53,22 @@ list 去重合： nums = list(set(nums))
 LeetCode 566. 重塑矩阵:
 
 ans[k // c][k % c] = mat[k // n][k % n]
+
+
+**Python f-string**
+
+Python f-string 教程: https://www.freecodecamp.org/chinese/news/python-f-strings-tutorial-how-to-use-f-strings-for-string-formatting/
+
+f"This is an f-string {var_name} and {var_name}."
+
+**enumerate**
+
+对于一个可迭代的（iterable）/可遍历的对象（list、str），enumerate将其组成一个索引序列，利用它可以同时获得索引和值
+```python
+for j,s in enumerate(list2):
+```
+
+
+
+
 
