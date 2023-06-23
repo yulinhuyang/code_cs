@@ -68,6 +68,19 @@ f"This is an f-string {var_name} and {var_name}."
 for j,s in enumerate(list2):
 ```
 
+**python deque**
+
+注意：正常队列的先进后出，对应python是：append (右添加) <->  popleft (左弹出)
+
+```python
+from collections import deque
+d = deque()
+queue = deque(["a", "b", "c"])
+d.append('a')   #右添加 
+d.pop()         #右弹出 
+d.appendleft('b') #左添加 
+d.popleft()       #左弹出
+```
 
 
 
