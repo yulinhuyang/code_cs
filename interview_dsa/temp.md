@@ -63,7 +63,7 @@ f"This is an f-string {var_name} and {var_name}."
 
 **enumerate**
 
-对于一个可迭代的（iterable）/可遍历的对象（list、str），enumerate将其组成一个索引序列，利用它可以同时获得索引和值
+对于一个可迭代的（iterable）的对象（list、str），enumerate将其组成一个索引序列，利用它可以同时获得索引和值
 ```python
 for j,s in enumerate(list2):
 ```
