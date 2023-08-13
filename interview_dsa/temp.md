@@ -82,6 +82,24 @@ d.appendleft('b') #左添加
 d.popleft()       #左弹出
 ```
 
+**python  卷积计算多维切片**
+
+```python
+padSig[:,  padSize: h + padSize,  padSize: w + padSize] = sig
+
+
+// conv2d
+# H = ( h - k + 2 * p ) / s + 1
+# W = ( w - k + 2 * p ) / s + 1
+
+# pooling
+# H=(H-K)/S+1
+# W=(W-K)/S+1
+
+# matrix multi
+num = np.sum(sig[:, i:i + kh, j:j + kw] * kernel)       // 方法1
+inputs[i:i+p, j:j+q].flatten().T.dot(kernel.flatten())  // 方法2
+```
 
 
 
