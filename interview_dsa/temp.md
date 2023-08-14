@@ -101,5 +101,36 @@ num = np.sum(sig[:, i:i + kh, j:j + kw] * kernel)       // 方法1
 inputs[i:i+p, j:j+q].flatten().T.dot(kernel.flatten())  // 方法2
 ```
 
+**numpy 常用API**
+
+```python
+#numpy
+a = np.array([[1, 2], [3, 4]])  # 2x2
+a = np.arange(6).reshape((2, -1))  # [0 1 2 3 4 5 6]
+a = np.arange(0,7,1,dtype=np.int16)
+a = np.ones((2, 3, 4), dtype=np.int16)
+a = np.zeros((2, 3, 4))  # 2x3x4
+
+
+a[2:5]    # [a,b)
+a[: :-1]  # inverse a
+a = np.arange(0,20).reshape((4,5))
+b = a.transpose()  # a.T
+
+c = a.dot(b)  # mul, np.dot(a, b)
+a.sum()
+a.sum(axis=1) # axis = 0 col; axis = 1 row
+a.min()
+a.max(axis=1)
+a.mean(axis=1)
+
+np.argmax(a)  # max num index
+np.argmix(a)  # min num index
+np.maximum(a, 0).flatten().tolist() # relu
+```
+
+
+
+
 
 
