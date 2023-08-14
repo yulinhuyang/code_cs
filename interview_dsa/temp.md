@@ -129,7 +129,7 @@ np.argmix(a)  # min num index
 np.maximum(a, 0).flatten().tolist() # relu
 ```
 
-
+flood fill 涂色法：涂色代替visit
 
 
 
