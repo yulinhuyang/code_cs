@@ -49,3 +49,6 @@ https://blog.csdn.net/weixin_43914593?type=blog
 https://blog.csdn.net/weixin_43914593/article/details/104381005
 
 题单：https://vjudge.net/article/3284
+
+算法竞赛快冲300题： https://blog.csdn.net/weixin_43914593/category_12377073.html
+
