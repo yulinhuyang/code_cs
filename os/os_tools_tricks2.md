@@ -37,3 +37,15 @@ workdir=$(cd $(dirname $0); pwd)
 
 ag搜索前后几行的数据： ag -C 2 example
 
+
+**vim的巧妙使用**
+
+vimdiff : https://www.freecodecamp.org/news/compare-two-files-in-linux-using-vim/
+
+vimdiff index.js index.js.bkp  --> 比较A和B文件
+
+
+
+
+
+
