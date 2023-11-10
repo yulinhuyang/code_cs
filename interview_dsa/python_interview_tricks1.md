@@ -2,6 +2,26 @@
 
 https://docs.python.org/zh-cn/3/tutorial/datastructures.html
 
+#### 0  C++与python的类型对应关系
+
+1. https://blog.csdn.net/qq_45985728/article/details/123850789
+
+| C++      | python       |
+|---------------|------------|
+| vector        | List       |
+| map           | SortedDict |
+| unordered_map | dict       |
+| set           | SortedSet  |
+| unordered_set | set        |
+|stack          | list       |
+|priority_queue | heapq      |
+| queue         |  queue     |
+| deque         |  deque(双端) |
+| binary_search |  bisect      |
+| lower_bound   | bisect_left  |
+| upper_bound   | bisect_right |
+
+
 #### 1 list  
 
 ```python
@@ -125,7 +145,11 @@ for i in range(len(strs)):
 	char_str = ''.join(sorted(strs[i]))
 	map[char_str].append(strs[i])
 return list(map.values())
+
+#key->list
+IdxToEmail = collections.defaultdict(list)
 ```
+
 **map排序**
 
 [python天天进步(3)--字典排序](https://www.cnblogs.com/vivilisa/archive/2009/03/01/1400972.html)
@@ -290,6 +314,10 @@ ss = SortedSet('abracadabra')
 
 #### 8 Collections
 
+collections ：https://docs.python.org/zh-cn/3/library/collections.html
+
+deque、Counter、OrderedDict、defaultdict
+
 **Counter**
 ```python
 A=['a','b','b','c','d','b','a']
@@ -306,7 +334,37 @@ d = {'banana': 3, 'apple': 4, 'pear': 1, 'orange': 2}
 OrderedDict(sorted(d.items(), key=lambda t: t[0])) # 按照key排序的字典
 OrderedDict(sorted(d.items(), key=lambda t: t[1])) # 按照value排序的字典
 ```
-#### 9 bisect_left
+
+#### 9  SortedDict和OrderedDict
+
+SortedDict和OrderedDict的区别
+
+所以对应C++的map的是sortedDict
+
+1 实现方式：SortedDict是通过使用红黑树来实现有序字典的，而OrderedDict则是通过使用双向链表和哈希表来实现的。
+
+2 排序方式：SortedDict会根据键的顺序进行排序，而OrderedDict则会根据插入顺序进行排序。
+
+3 性能：SortedDict的插入、删除和查找操作的时间复杂度为O(log n)，而OrderedDict的时间复杂度为O(1)
+
+```python
+SortedList & SortedDict & SortedSet
+
+from sortedcontainers import SortedList
+sl = SortedList(['e', 'a', 'c', 'd', 'b'])
+#sl -> SortedList(['a', 'b', 'c', 'd', 'e'])
+
+from sortedcontainers import SortedDict
+sd = SortedDict({'c': 3, 'a': 1, 'b': 2})
+#sd -> SortedDict({'a': 1, 'b': 2, 'c': 3})
+
+from sortedcontainers import SortedSet
+ss = SortedSet('abracadabra')
+#ss -> SortedSet(['a', 'b', 'c', 'd', 'r'])
+```
+
+
+#### 10 bisect_left
 
 升序序列 
 
@@ -322,7 +380,7 @@ point_left = bisect.bisect_left(num_list, 7)
 point_right = bisect.bisect_right(num_list, 8)
 ```
 
-#### 10 内置函数 
+#### 11 内置函数 
 
 **classmethod**
 
@@ -355,7 +413,7 @@ a = A()
 getattr(a, 'bar')        # 获取属性 bar 值
 ```
 
-#### 11 类与对象
+#### 12 类与对象
 
 **装饰器**
 
@@ -394,7 +452,7 @@ class Node:
 
 ```
 
-#### 12 值与引用
+#### 13 值与引用
 
 [Python值传递还是引用传递](https://blog.csdn.net/hohaizx/article/details/78427406)
 
@@ -408,7 +466,7 @@ Python中一切事物皆对象，变量是对对象在内存中的存储和地�
 
 深拷贝(deepcopy()):完全复制原变量的所有层的所有数据
 
-#### 13 数学运算
+#### 14 数学运算
 
 **三目运算**
 
@@ -443,6 +501,8 @@ min_num = -(sys.maxsize-1)
 
 //整除
 
+x, d = divmod(x, 10)  同时得到商和余数
+
 **位运算与二进制**
 
 ```python
@@ -459,7 +519,7 @@ print("{:.2f}".format(3.1415926))    #小数点后两位输出
 print('{:b}'.format(11))             #二进制输出
 ```
 
-#### 14 随机数
+#### 15 随机数
 
 ```python
 num = random.randint(1,50)  #随机整数
@@ -471,7 +531,7 @@ num = random.sample('zyxwvutsrqponmlkjihgfedcba',5)  #多个字符中生成指�
 ran_str = ''.join(random.sample(string.ascii_letters + string.digits, 8)) # 从a-z A-Z 0-9生成指定数量的随机字符
 ```
 
-#### 15 类型注解
+#### 16 类型注解
 
 typing 用来对变量和函数的参数返回值类型做注解
 
@@ -485,9 +545,14 @@ operations: Dict[str, bool] = {'sad': False, 'happy': True}
 def plus(num1: int, num2: int) -> int:
     return num1 + num2
 ```
-#### 16 递归深度
+#### 17 递归深度
 
 Python的最大递归层数是可以设置的,默认的在window上的最大递归层数是 998。
 
 可以通过sys.setrecursionlimit()进行设置,但是一般默认不会超过3925-3929这个范围。
+
+#### 18 python 读取输入
+
+abc = list(map(int,input().split(" ")))
+
 
