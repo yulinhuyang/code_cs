@@ -44,6 +44,9 @@ vimdiff : https://www.freecodecamp.org/news/compare-two-files-in-linux-using-vim
 
 vimdiff index.js index.js.bkp  --> 比较A和B文件
 
+**统计回显**
+
+搜索统计回显次数： ag Region | wc -l
 
 
 
