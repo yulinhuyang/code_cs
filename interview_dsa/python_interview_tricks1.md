@@ -181,6 +181,9 @@ from sortedcontainers import SortedDict
 sd = SortedDict({'c': 3, 'a': 1, 'b': 2})
 ```
 
+**defaultdict**
+
+`defaultdict` 的初始化需要传入一个函数作为默认值，这个函数会在访问不存在的键时被调用，返回值作为默认值。常见的用法是传入 `int`、`list`、`set` 等 Python 内置类型作为默认值，这样可以方便地进行计数、分组等操作。
 
 #### 3 string
 
@@ -259,12 +262,16 @@ l1 = list(tuple) #转list
 arr = tuple(l1)  #转tuple
 ```
 #### 5 deque
+
+注意：正常队列的先进后出，对应python是：append (右添加) <->  popleft (左弹出)
+
 ```python
 from collections import deque
+
 d = deque()
 queue = deque(["a", "b", "c"])
-d.append('a')   #添加 
-d.pop()         #弹出 
+d.append('a')   #右添加 
+d.pop()         #右弹出 
 d.appendleft('b') #左添加 
 d.popleft()       #左弹出
 ```
@@ -515,15 +522,6 @@ print("{0:b}".format(a))
 print(bin(a)[2:])
 ```
 
-**format**
-
-```python
-print("hello {0}, this is {1}.".format("world", "python"))            # 根据位置下标进行填充
-print("hello {obj}, this is {name}.".format(obj = obj, name = name))  # key填充
-print("{:.2f}".format(3.1415926))    #小数点后两位输出
-print('{:b}'.format(11))             #二进制输出
-```
-
 #### 15 随机数
 
 ```python
@@ -556,8 +554,66 @@ Python的最大递归层数是可以设置的,默认的在window上的最大递�
 
 可以通过sys.setrecursionlimit()进行设置,但是一般默认不会超过3925-3929这个范围。
 
-#### 18 python 读取输入
+#### 18 python 输入输出
 
 abc = list(map(int,input().split(" ")))
 
+**format**
 
+Python f-string 教程: https://www.freecodecamp.org/chinese/news/python-f-strings-tutorial-how-to-use-f-strings-for-string-formatting/
+
+f"This is an f-string {var_name} and {var_name}."
+
+```python
+print("hello {0}, this is {1}.".format("world", "python"))            # 根据位置下标进行填充
+print("hello {obj}, this is {name}.".format(obj = obj, name = name))  # key填充
+print("{:.2f}".format(3.1415926))    #小数点后两位输出
+print('{:b}'.format(11))             #二进制输出
+```
+
+#### 19 numpy 常用API
+
+```python
+#numpy
+a = np.array([[1, 2], [3, 4]])  # 2x2
+a = np.arange(6).reshape((2, -1))  # [0 1 2 3 4 5 6]
+a = np.arange(0,7,1,dtype=np.int16)
+a = np.ones((2, 3, 4), dtype=np.int16)
+a = np.zeros((2, 3, 4))  # 2x3x4
+
+
+a[2:5]    # [a,b)
+a[: :-1]  # inverse a
+a = np.arange(0,20).reshape((4,5))
+b = a.transpose()  # a.T
+
+c = a.dot(b)  # mul, np.dot(a, b)
+a.sum()
+a.sum(axis=1) # axis = 0 col; axis = 1 row
+a.min()
+a.max(axis=1)
+a.mean(axis=1)
+
+np.argmax(a)  # max num index
+np.argmix(a)  # min num index
+np.maximum(a, 0).flatten().tolist() # relu
+```
+
+#### 20 python  卷积计算多维切片
+
+```python
+padSig[:,  padSize: h + padSize,  padSize: w + padSize] = sig
+
+
+// conv2d
+# H = ( h - k + 2 * p ) / s + 1
+# W = ( w - k + 2 * p ) / s + 1
+
+# pooling
+# H=(H-K)/S+1
+# W=(W-K)/S+1
+
+# matrix multi
+num = np.sum(sig[:, i:i + kh, j:j + kw] * kernel)       // 方法1
+inputs[i:i+p, j:j+q].flatten().T.dot(kernel.flatten())  // 方法2
+```
