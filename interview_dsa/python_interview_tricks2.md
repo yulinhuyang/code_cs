@@ -225,6 +225,28 @@ def has_cycle(head:list_node)->bool:
 
 双向遍历：柱形面积、接雨水，左边一遍，右边一遍
 
+**计数法转相邻数组**
+
+740. 删除并获得点数： 通过计数法，将原数组转为相邻数组
+
+**最大次大值模型**
+
+```python
+class Solution:
+    def dominantIndex(self, nums: List[int]) -> int:
+        index = 0
+        d1 = 0
+        d2 = 0
+        for i in range(len(nums)):
+            if d1 < nums[i]:
+                d2 = d1
+                d1 = nums[i]
+                index = i
+            elif d2 < nums[i]:
+                d2 = nums[i]
+        return index if d1 >= d2 * 2 else -1
+```
+
 
 ### 0x05.5 回文问题
 
