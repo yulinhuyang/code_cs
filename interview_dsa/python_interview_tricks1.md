@@ -329,11 +329,16 @@ count.values()
 **OrderedDict**
 
 有序字典会记住其插入顺序
+
+python 3.7 开始 dict开始有序，dict 等同于OrderedDict  
+在此之前，dict无序，有序需要使用OrderedDict
+
 ```python
 d = {'banana': 3, 'apple': 4, 'pear': 1, 'orange': 2}
 OrderedDict(sorted(d.items(), key=lambda t: t[0])) # 按照key排序的字典
 OrderedDict(sorted(d.items(), key=lambda t: t[1])) # 按照value排序的字典
 ```
+
 
 #### 9  SortedDict和OrderedDict
 
