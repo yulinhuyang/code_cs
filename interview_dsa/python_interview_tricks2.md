@@ -89,6 +89,7 @@ def search(self, nums: List[int], target: int) -> int:
 	return right;
 ```
 
+2517. 礼盒的最大甜蜜度：二分转判定的时候，注意 l和r如何取。
 
 ## 0x05 双指针与排序
 
@@ -264,6 +265,10 @@ class Solution:
 打点标记法、区间合并法
 	
 会议室安排问题
+
+两个区间的关系：https://zhuanlan.zhihu.com/p/301507910
+
+远离、重叠、相交
 	
 
 # 0x10 基本数据结构
@@ -299,6 +304,22 @@ def nextGreatElement(nums):
 	    stack.append(nums[i])
 
 	return ans
+```
+
+freq: int -> list
+
+895. 最大频率栈
+```python
+hash = defaultdict(int)
+freq = defaultdict(list)
+```
+
+代码在线格式化：https://www.bejson.com/format/c_formater/
+
+519. 随机翻转矩阵
+```python
+index = self.hash.get(val,val)  #查询不到返回默认值
+self.get(key, default=None)
 ```
 
 
