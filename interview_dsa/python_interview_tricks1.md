@@ -62,6 +62,16 @@ stack.pop()
 
 #del 按索引不是值移除元素
 del list[2:4]
+
+#list 去重合：
+nums = list(set(nums))
+
+#排序部分数组：
+arr[i + 1:] = sorted(arr[i + 1:])
+
+#数组转字符串：
+ans = "".join(map(str,arr))
+
 ```
 
 **数组创建与循环**
@@ -113,6 +123,13 @@ if not vis[y]:
 ```python
 from sortedcontainers import SortedList
 sl = SortedList(['e', 'a', 'c', 'd', 'b'])
+```
+
+**enumerate**
+
+对于一个可迭代的（iterable）的对象（list、str），enumerate将其组成一个索引序列，利用它可以同时获得索引和值
+```python
+for j,s in enumerate(list2):
 ```
 
 
@@ -217,6 +234,9 @@ str.lstrip('8')#str.lstrip([chars]) 截掉字符串左边字符
 #字符串反转
 str1 = str[::-1] 
 str1 = ''.join(reversed(str))
+
+#翻转字符串：
+ans[:-1] 或者 ''.join(reversed(str))
 ```
 
 **字符数字类型**
