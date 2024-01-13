@@ -27,6 +27,24 @@ a[i] = a[i-1] + df[i]                      // 真实数据也�
 Ÿ   一维差分：主要用于对子数组（或区间）的元素整体加减固定值，特别是子数组较多时，可提高性能。
 
 Ÿ   二维差分：对子矩阵元素整体进行加减处理，在子矩阵较多时，为提高性能，可以考虑用差分数组来处理。
+
+```python
+# 974. 和可被 K 整除的子数组
+# 前缀和+同余定理
+class Solution:
+    def subarraysDivByK(self, nums: List[int], k: int) -> int:
+        sum = 0
+        record = {0:1}
+        ans = 0
+        for num in nums:
+            sum += num
+            mod = sum % k
+            same = record.get(mod,0)
+            ans += same
+            record[mod] = same + 1
+
+        return ans
+```
 	
 ## 0x04  二分和三分
 
@@ -198,6 +216,27 @@ python 三目运算符 max = a if a>b else b
 map必记录的api： keys、values、get、setdefault、pop、update、in
 
 hash表（用list 或者 dict()）: 用true 或者false表示是否出现过(a-z)；count计算出现的数量（32位宽）；记录上次出现的索引位置（滑窗）。
+
+前动后缩，
+  
+```python
+# 1004 最大连续1的个数
+class Solution:
+    def longestOnes(self, nums: List[int], k: int) -> int:
+        n = len(nums)
+        j = 0
+        ans = 0
+        sumInterval = 0
+        for i in range(n):
+            sumInterval += nums[i]
+            while i - j + 1 - sumInterval > k:
+                sumInterval -= nums[j]
+                j += 1
+            ans = max(ans, i - j + 1)
+        return ans
+```
+
+
 
 ### 0x05.3 链表成环
 
@@ -453,6 +492,35 @@ class MyLinkedList:
 
 ## 0x14  hash表与字符串hash
 
+981. 基于时间的键值存储 ：hash表套数组模板题
+
+```python
+class TimeMap:
+
+    def __init__(self):
+        self.map = defaultdict(list)
+
+    def set(self, key: str, value: str, timestamp: int) -> None:
+        self.map[key].append([timestamp,value])
+
+    # map：[key -> val(list)] 结构
+    def get(self, key: str, timestamp: int) -> str:
+        if key not in self.map:
+            return ""
+        else:
+            #bisec right
+            arr = self.map[key]
+            l = 0
+            r = len(arr) - 1
+            while l < r:
+                mid = l + r + 1 >> 1
+                if arr[mid][0] <= timestamp:
+                    l = mid
+                else:
+                    r = mid - 1
+            return arr[l][1] if arr[l][0] <= timestamp else ""
+```
+
 ## 0x15 字符串(KMP与最小表示法）
 
 
@@ -475,6 +543,31 @@ heapq有两种方式创建堆， 一种是使用一个空列表，然后使用he
 heapq默认的是小顶堆，如果需要实现大顶堆，则需要push -num
 
 可以使用可自动排序的map进行替代，也能够达到减少时间复杂度的目的。如 Python(SortedDict)
+
+```python
+# 973. 最接近原点的 K 个点
+class Solution:
+    def kClosest(self, points: List[List[int]], k: int) -> List[List[int]]:
+        heap = []
+        # heap template, first k sel
+        for i in range(k):
+            pt = points[i]
+            dist = pt[0] * pt[0] + pt[1] * pt[1]
+            heapq.heappush(heap, [-dist, pt[0], pt[1]])
+
+        n = len(points)
+        ans = []
+        for i in range(k,n):
+            pt = points[i]
+            dist = pt[0] * pt[0] + pt[1] * pt[1]
+            heapq.heappushpop(heap, [-dist, pt[0], pt[1]])
+
+        while heap:
+            t = heap[0]
+            ans.append([t[1], t[2]])
+            heapq.heappop(heap)
+        return ans
+```
 
 ### 0x17.2 双堆（Two Heaps） 
 
