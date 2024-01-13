@@ -14,6 +14,7 @@ Acwing 技术分享： https://www.acwing.com/blog/
 
 0x00 基本算法
 - int lowbit - 找末尾1
+- bitMap
 - add - 高精度加法
 - sub - 高精度减法
 - mul - 高精度乘低精度
@@ -21,6 +22,7 @@ Acwing 技术分享： https://www.acwing.com/blog/
 - 整数二分/浮点数二分
 - 快速排序/快选
 - void merge_sort - 归并排序
+- 计数排序/桶排序
 - 区间合并
 - RMQ 区间最值
 - void manacher - 马拉车算法
@@ -131,6 +133,30 @@ Acwing 技术分享： https://www.acwing.com/blog/
 
 返回n的最后一位1：lowbit(n) = n & -n
 
+**bitmap 模板**
+
+```cpp
+#include <limits.h>    /* for CHAR_BIT */
+#include <stdint.h>   /* for uint32_t */
+
+typedef uint32_t word_t;
+enum { BITS_PER_WORD = sizeof(word_t) * CHAR_BIT };
+#define WORD_OFFSET(b) ((b) / BITS_PER_WORD)
+#define BIT_OFFSET(b)  ((b) % BITS_PER_WORD)
+
+void set_bit(word_t *words, int n) { 
+    words[WORD_OFFSET(n)] |= (1 << BIT_OFFSET(n));
+}
+
+void clear_bit(word_t *words, int n) {
+    words[WORD_OFFSET(n)] &= ~(1 << BIT_OFFSET(n)); 
+}
+
+int get_bit(word_t *words, int n) {
+    word_t bit = words[WORD_OFFSET(n)] & (1 << BIT_OFFSET(n));
+    return bit != 0; 
+}
+```
 
 #### 高精度运算
 
@@ -475,6 +501,72 @@ while (i <= mid && j <= r) {
 	}
 }
 ```
+
+**计数排序模板**
+
+```cpp
+void CountSort(int a[], int n){
+    //遍历数组求得最大值和最小值
+    int minval = a[0], maxval = a[0];
+    for(int i = 0; i < n; i ++){ 
+        minval = min(minval, a[i]);
+        maxval = max(maxval, a[i]);
+    }
+
+    int d = maxval - minval + 1;// 计数数组的实际长度 
+    int cnt[d] = {0};//根据最大值开辟新数组空间 
+
+    //统计原数组中元素出现的次数
+    for(int i = 0; i < n; i ++) cnt[a[i] - minval] ++;//将元素映射到a[0...d-1] 
+
+    int sum = 0;
+    for(int i = 0; i < d; i ++){//本质为前缀和数组,用于求位次 
+        sum += cnt[i];//此处的cnt既为元素又为之前的元素和,即cnt[i] = cnt[i] + cnt[i - 1] 
+        cnt[i] = sum;// 比如, cnt[5] = 3,表示分数95, 排名第 3 
+    } 
+
+    int sortArray[d];//sortArray[]存元素真实序列 
+    for(int i = n - 1; i >= 0; i --){//将原数组元素从后往前遍历 
+        sortArray[cnt[a[i] - minval] - 1] = a[i];
+        cnt[a[i] - minval] --;
+    }
+
+    //将排序后的序列赋给原数组
+    for(int i = 0, k = 0; i < d; i ++){
+        data[k ++] = sortArray[i];
+    }
+}
+```
+
+**桶排序模板**
+```cpp
+void BucketSort(int a[], int n){
+    int minval = a[0], maxval = a[0];
+    for(int i = 0; i < n; i ++){//寻找原序列数组元素的最大值和最小值 
+        minval = min(minval, a[i]);
+        maxval = max(maxval, a[i]);
+    }
+
+    int bnum = 10;//桶中元素个数 
+    int m = (maxval - minval) / bnum + 1;//桶的个数 
+    vector< vector<int> > bucket(m);
+
+    //收集,将元素入相应的桶中. 减偏移量是为了将元素映射到更小的区间内,省内存 
+    for(int i = 0; i < n; i ++) bucket[(a[i] - minval) / bnum].push_back(a[i]);
+
+    //将桶内元素排序 
+    for(int i = 0; i < m; i ++) sort(bucket.begin(), bucket.end());
+
+    //收集, 将各个桶中的元素收集到一起 
+    for(int i = 0, k = 0; i < m; i ++){
+        for(int j = 0; j < bucket[i].size(); j ++){
+            data[k ++] = bucket[i][j];
+        }
+    }
+}
+
+```
+
 
 #### 中位数
 
