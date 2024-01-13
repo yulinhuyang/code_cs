@@ -134,6 +134,14 @@ vector<ii> vp{ { 1,1 },{ 1,2 },{ 2,2 },{ 2,3 },{ 3,3 } };
 sort(vp.begin(), vp.end(), [](const ii &l, const ii &r) {   // 按第一个数字升序，第二个降序
     return l.first != r.first ? l.first < r.first : l.second > r.second;
 });
+
+sort(arr1.begin(), arr1.end(), [&](int a, int b) {
+    if (hash.count(a)) {
+        return hash.count(b) ? hash[a] < hash[b] : true;
+    } else {
+        return hash.count(b) ? false : a < b;
+    }
+});
 ```
 	
 ##### C++ vector切片
