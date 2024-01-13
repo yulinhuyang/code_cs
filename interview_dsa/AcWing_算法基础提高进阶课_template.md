@@ -14,7 +14,7 @@ Acwing 技术分享： https://www.acwing.com/blog/
 
 0x00 基本算法
 - int lowbit - 找末尾1
-- bitMap
+- bitmap 位图
 - add - 高精度加法
 - sub - 高精度减法
 - mul - 高精度乘低精度
