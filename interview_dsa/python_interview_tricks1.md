@@ -72,6 +72,8 @@ arr[i + 1:] = sorted(arr[i + 1:])
 #数组转字符串：
 ans = "".join(map(str,arr))
 
+#python list传的是引用，赋值需要拷贝：
+clone = dist.copy()
 ```
 
 **数组创建与循环**
@@ -115,8 +117,37 @@ for temp in zip(*strs):  #迭代string的list数组，逐个取前缀
 
 #判空
 if not vis[y]:
+```
 
-```    
+**排序**
+
+sorted()是一个高阶函数，它可以接收一个比较函数来实现自定义排序，比较函数的定义是，传入两个待比较的元素 x, y，如果 x 应该排在 y 的前面，返回 -1，如果 x 应该排在 y 的后面，返回 1。如果 x 和 y 相等，返回 0。
+
+```python
+# lambda排序
+sorted(kids, key=lambda x: (x['score'], x['age']))
+
+#单关键字排序
+def cmp(x):
+    return (0, rank[x]) if x in rank else (1, x)
+ans = sorted(arr1, key=cmp)
+#arr1.sort(key = cmp)
+   
+#多关键字排序
+from functools import cmp_to_key
+def cmp(a, b):
+    nonlocal hash
+    if hash[a] < hash[b]:
+        return -1
+    elif hash[a] > hash[b]:
+        return 1
+    else:
+        return 0
+
+ans = sorted(arr1, key=cmp_to_key(cmp))
+#arr1.sort(key = cmp_to_key(cmp))
+```
+ 
 [Python zip()用法](https://blog.csdn.net/PaulZhn/article/details/104391756)
 
 **SortedList**
@@ -202,6 +233,12 @@ sd = SortedDict({'c': 3, 'a': 1, 'b': 2})
 
 `defaultdict` 的初始化需要传入一个函数作为默认值，这个函数会在访问不存在的键时被调用，返回值作为默认值。常见的用法是传入 `int`、`list`、`set` 等 Python 内置类型作为默认值，这样可以方便地进行计数、分组等操作。
 
+```python
+hash = defaultdict(list) ---> map vector list 结构
+for i in range(len(s)):
+    hash[s[i]].append(i)
+```
+
 #### 3 string
 
 ```python
@@ -237,6 +274,9 @@ str1 = ''.join(reversed(str))
 
 #翻转字符串：
 ans[:-1] 或者 ''.join(reversed(str))
+
+#python字符串连接：
+ans = ans + "" + ch * chs[ord(ch) - ord('a')]
 ```
 
 **字符数字类型**
@@ -307,6 +347,22 @@ heapq.heappush(A,num)
 heapq.heappop(A)
 heapq.heapreplace(heap, item) #返回并删除堆中的最小item，同时添加一个新item
 heapq.heapify(A)  #将list x 转换成堆
+
+h = []
+heappush(h, (5, 'write code'))
+heappop(h)
+heapq.heappushpop(h, item)  #item 放入堆中,再弹出并返回heap最小元素
+
+h = [1,2,3]
+heapq.heapify(h)
+heapq.heapreplace(h, item) #返回并删除堆中的最小item，同时添加一个新item
+
+heapq.nlargest(n,h)
+heapq.nsmallest(n,h)
+
+arr1 = [1,2,3]
+arr2 = [4,5,6]
+me = list(heapq.merge(arr1, arr2))
 ```
 
 #### 7 set(集合)
