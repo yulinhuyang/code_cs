@@ -7,4 +7,6 @@ LeetCode 566. 重塑矩阵:
 
 ans[k // c][k % c] = mat[k // n][k % n]
 
+矩阵的左对角线 i-j的值都相等, 矩阵的右对角线 i+j的值都相等
+
 flood fill 涂色法：涂色代替visit
