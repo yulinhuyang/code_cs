@@ -308,6 +308,59 @@ class Solution:
 两个区间的关系：https://zhuanlan.zhihu.com/p/301507910
 
 远离、重叠、相交
+
+**最少区间覆盖模板**
+
+贪心：区间排序后，在与前一个区间相交的情况下，下一个区间尽量覆盖的远一些
+
+```cpp
+class Solution {
+public:
+    int jump(vector<int> &nums) {
+        int step = 0;
+        int n = nums.size();
+        int end = 0, maxR = 0;
+        for (int i = 0; i < n - 1; i++) {
+            maxR = max(maxR, i + nums[i]);
+            if (i == end) {
+                end = maxR;
+                step++;
+            }
+        }
+
+        return step;
+    }
+};
+```
+```python
+#1326 灌溉花园的最少水龙头数目
+class Solution:
+    def minTaps(self, n: int, ranges: List[int]) -> int:
+        intervals = []
+        for i in range(n + 1):
+            start = max(0, i - ranges[i])
+            end = max(0, i + ranges[i])
+            intervals.append([start, end])
+
+        intervals.sort()
+        ans = 0
+        i = 0
+        end = 0
+        # greedy
+        while i <= n and end < n:
+            nxtEnd = 0
+            while i <= n and intervals[i][0] <= end:
+                nxtEnd = max(nxtEnd, intervals[i][1])
+                i += 1
+            if end == nxtEnd:
+                return -1
+            ans += 1
+            end = nxtEnd
+        return ans
+```
+
+
+
 	
 
 # 0x10 基本数据结构
