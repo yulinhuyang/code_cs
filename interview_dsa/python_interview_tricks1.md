@@ -92,6 +92,7 @@ for i in range(len(a)-1,-1,-1): #反向循环
 
 seq = ['one', 'two', 'three']
 for element in seq:      #循环数据
+for v in [t - arr[t], t + arr[t]]:
 
 for f in sorted(set(basket)): #按顺序，循环遍历唯一元素
 
@@ -156,15 +157,26 @@ from sortedcontainers import SortedList
 sl = SortedList(['e', 'a', 'c', 'd', 'b'])
 ```
 
-**enumerate**
+**enumerate索引+值遍历**
 
-对于一个可迭代的（iterable）的对象（list、str），enumerate将其组成一个索引序列，利用它可以同时获得索引和值
+对于一个可迭代的（iterable）的对象（list、str、set、tuple），enumerate将其组成一个索引序列，利用它可以同时获得索引和值
 ```python
 for j,s in enumerate(list2):
+# 序列映射成字典
+mapping = dict((i,v) for i,v in enumerate(s))  
+```
+**zip并行遍历**
+```python
+for (x,y) in zip(L1,L2):
+
+for k,v in  dict.items():
+
+for k,v in zip(dict.keys(),dict.values()):
 ```
 
 
 #### 2  dict字典 
+
 ```python
 map = {}    
 map = dict()
@@ -197,6 +209,7 @@ return list(map.values())
 #key->list
 IdxToEmail = collections.defaultdict(list)
 ```
+数组hash: list(vector)，使用26字符代替hash
 
 **map排序**
 
@@ -500,6 +513,10 @@ class A(object):
 a = A()
 getattr(a, 'bar')        # 获取属性 bar 值
 ```
+
+**all和any**
+
+iterable类型, list或者tuple
 
 #### 12 类与对象
 
